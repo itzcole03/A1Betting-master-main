@@ -503,6 +503,21 @@ class RealTimeMoneyMakingService extends EventEmitter {
       return { success: false, error: error.message };
     }
   }
+
+  // Convenience method for compatibility
+  startScanning(): void {
+    this.startRealTimeScanning({
+      sports: ['NBA', 'NFL', 'MLB', 'NHL'],
+      minConfidence: 0.65,
+      maxExposure: 1000,
+      scanIntervalMs: 30000, // 30 seconds
+      strategies: ['prizepicks', 'arbitrage', 'value_bet']
+    });
+  }
+
+  stopScanning(): void {
+    this.stopRealTimeScanning();
+  }
 }
 
 export default RealTimeMoneyMakingService;

@@ -274,6 +274,15 @@ class EnhancedAnalytics {
 // Create singleton instance
 export const analytics = new EnhancedAnalytics();
 
+// Add convenience method for quick tracking
+(analytics as any).track = (eventName: string, data?: any) => {
+  analytics.trackEvent({
+    name: eventName,
+    category: 'user_action',
+    data
+  });
+};
+
 // React hook for analytics
 export const useAnalytics = () => {
   return {
