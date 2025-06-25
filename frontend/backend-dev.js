@@ -282,6 +282,91 @@ app.get("/api/predictions", (req, res) => {
   });
 });
 
+// User Profile API endpoints
+app.get("/api/users/profile", (req, res) => {
+  res.json({
+    data: {
+      id: "user_123",
+      name: "Elite Bettor",
+      email: "elite@a1betting.com",
+      tier: "Elite Pro",
+      winRate: 87.3,
+      totalProfit: 45780,
+      accuracy: 92.1,
+      memberSince: "2023-01-15",
+      preferences: {
+        theme: "dark",
+        notifications: true,
+        autoInvest: false,
+      },
+      bankroll: {
+        total: 15000,
+        available: 12350,
+        allocated: 2650,
+      },
+    },
+  });
+});
+
+app.get("/api/users/profile/mock", (req, res) => {
+  res.json({
+    data: {
+      id: "mock_user_456",
+      name: "Cyber Elite",
+      email: "cyber@a1betting.com",
+      tier: "Quantum Pro",
+      winRate: 94.7,
+      totalProfit: 78450,
+      accuracy: 96.8,
+      memberSince: "2023-01-01",
+      preferences: {
+        theme: "cyber",
+        notifications: true,
+        autoInvest: true,
+        riskLevel: "aggressive",
+      },
+      bankroll: {
+        total: 25000,
+        available: 18750,
+        allocated: 6250,
+      },
+      stats: {
+        totalBets: 1247,
+        winningBets: 1180,
+        avgBetSize: 185,
+        maxWin: 2850,
+        streak: 23,
+      },
+    },
+  });
+});
+
+app.put("/api/users/profile", (req, res) => {
+  const updateData = req.body;
+  res.json({
+    data: {
+      id: "user_123",
+      ...updateData,
+      updatedAt: new Date().toISOString(),
+    },
+  });
+});
+
+app.get("/api/users/bankroll", (req, res) => {
+  res.json({
+    data: {
+      total: 15000,
+      available: 12350,
+      allocated: 2650,
+      pending: 0,
+      profit: 3450,
+      loss: 890,
+      roi: 23.4,
+      updated: new Date().toISOString(),
+    },
+  });
+});
+
 // Ultra-accuracy endpoints
 app.get("/api/ultra-accuracy/predictions", (req, res) => {
   res.json({
@@ -1319,75 +1404,6 @@ app.delete("/api/sportsradar/cache", (req, res) => {
   sportsRadarCache.clear();
   res.json({ message: "Cache cleared successfully" });
 });
-
-// =======================
-// OPTIMIZED SPORTSRADAR API ENDPOINTS
-// =======================
-
-const SPORTSRADAR_API_KEY =
-  process.env.VITE_SPORTRADAR_API_KEY ||
-  "R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s";
-const SPORTSRADAR_BASE_URL = "https://api.sportradar.com";
-
-// SportsRadar quota tracking
-let sportsRadarQuotaUsed = 0;
-const SPORTSRADAR_QUOTA_LIMIT = 1000;
-const sportsRadarCache = new Map();
-let lastSportsRadarRequest = 0;
-const RATE_LIMIT_MS = 1100; // 1.1 seconds for 1 QPS
-
-async function makeSportsRadarRequest(endpoint) {
-  // Check quota
-  if (sportsRadarQuotaUsed >= SPORTSRADAR_QUOTA_LIMIT) {
-    throw new Error("SportsRadar quota exceeded for trial period");
-  }
-
-  // Check cache first to conserve quota
-  const cached = sportsRadarCache.get(endpoint);
-  if (cached && Date.now() - cached.timestamp < 300000) {
-    // 5 minute cache
-    return cached.data;
-  }
-
-  // Rate limiting
-  const now = Date.now();
-  const timeSinceLastRequest = now - lastSportsRadarRequest;
-  if (timeSinceLastRequest < RATE_LIMIT_MS) {
-    await new Promise((resolve) =>
-      setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
-    );
-  }
-
-  const url = `${SPORTSRADAR_BASE_URL}${endpoint}?api_key=${SPORTSRADAR_API_KEY}`;
-
-  try {
-    lastSportsRadarRequest = Date.now();
-    const response = await fetch(url);
-
-    if (!response.ok) {
-      throw new Error(
-        `SportsRadar API error: ${response.status} ${response.statusText}`,
-      );
-    }
-
-    const data = await response.json();
-    sportsRadarQuotaUsed++;
-
-    // Cache the response to conserve quota
-    sportsRadarCache.set(endpoint, {
-      data,
-      timestamp: Date.now(),
-    });
-
-    console.log(
-      `SportsRadar quota used: ${sportsRadarQuotaUsed}/${SPORTSRADAR_QUOTA_LIMIT}`,
-    );
-    return data;
-  } catch (error) {
-    console.error("SportsRadar API request failed:", error);
-    throw error;
-  }
-}
 
 // SportsRadar Odds Comparison API
 app.get("/api/sportsradar/odds-comparison/:sport", async (req, res) => {

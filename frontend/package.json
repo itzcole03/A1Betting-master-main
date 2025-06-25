@@ -15,7 +15,8 @@
     "test": "jest --coverage --silent",
     "test:watch": "jest --watch",
     "test:debug": "jest --no-coverage --verbose",
-    "test:ci": "jest --coverage --ci --watchAll=false"
+    "test:ci": "jest --coverage --ci --watchAll=false",
+    "test:optimization": "jest --testPathPattern=optimization.test"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.21.0",
@@ -35,12 +36,14 @@
     "@radix-ui/react-tabs": "^1.1.12",
     "@reduxjs/toolkit": "^2.8.2",
     "@sentry/react": "^9.27.0",
+    "@tanstack/react-query": "^5.0.0",
     "@tensorflow/tfjs": "^4.22.0",
     "@types/chart.js": "^2.9.41",
     "@types/reflect-metadata": "^0.1.0",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.18.1",
     "@vitest/ui": "^3.2.4",
+    "axios": "^1.10.0",
     "chart.js": "^4.4.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -48,6 +51,7 @@
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
+    "dompurify": "^3.2.6",
     "eventemitter3": "^5.0.1",
     "express": "^5.1.0",
     "framer-motion": "^12.18.1",
@@ -56,7 +60,9 @@
     "lucide-react": "^0.515.0",
     "ml-matrix": "^6.12.1",
     "next": "^15.3.4",
+    "react": "^18.3.1",
     "react-chartjs-2": "^5.3.0",
+    "react-dom": "^18.3.1",
     "react-error-boundary": "^6.0.0",
     "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
@@ -69,14 +75,14 @@
     "uuid": "^11.1.0",
     "vitest": "^3.2.4",
     "ws": "^8.18.2",
-    "zod": "^3.25.61"
+    "zod": "^3.25.61",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.27.2",
     "@babel/preset-react": "^7.27.1",
     "@babel/preset-typescript": "^7.27.1",
     "@eslint/js": "^9.25.0",
-    "@tanstack/react-query": "^5.81.2",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -89,8 +95,6 @@
     "@types/react-router-dom": "^5.3.3",
     "@typescript-eslint/eslint-plugin": "^8.34.0",
     "@typescript-eslint/parser": "^8.34.0",
-    "@vitejs/plugin-react": "^4.5.2",
-    "axios": "^1.10.0",
     "axios-mock-adapter": "^2.1.0",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",
@@ -107,12 +111,9 @@
     "jest-canvas-mock": "^2.5.2",
     "jest-environment-jsdom": "^30.0.0",
     "msw": "^2.10.2",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
     "ts-jest": "^29.3.4",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5",
-    "zustand": "^5.0.5"
+    "vite": "^6.3.5"
   }
 }

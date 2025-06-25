@@ -1,38 +1,53 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
+import { QueryClientProvider } from "@tanstack/react-query";
+
+// Import Chart.js setup (must be imported early)
+import "./utils/chartSetup";
 
 // Import the user-friendly main interface
 import UserFriendlyApp from "./components/user-friendly/UserFriendlyApp";
 
+// Import theme provider
+import { ThemeProvider } from "./components/common/theme/ThemeProvider";
+
+// Import optimized performance utilities
+import { createOptimizedQueryClient } from "./utils/performance";
+
+// Import enhanced error boundary
+import EnhancedErrorBoundary from "./components/ui/EnhancedErrorBoundary";
+
+// Import analytics
+import { analytics } from "./utils/analytics";
+
 // Import styling
 import "./App.css";
 
-// Create query client for API state management
-const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            retry: 2,
-            staleTime: 5 * 60 * 1000, // 5 minutes
-            refetchOnWindowFocus: false,
-        },
-    },
-});
+// Create optimized query client with enhanced caching
+const queryClient = createOptimizedQueryClient();
 
 /**
- * Main App Component - Now using UserFriendlyApp as primary interface
+ * Main App Component - Enhanced with Performance Optimizations
  *
- * This provides:
- * - Simple user-friendly interface by default
- * - Advanced/admin mode toggle (🔄 emoji button)
- * - All ML/AI features working autonomously in background
- * - Real-time stats and updates
- * - Beautiful, sleek, modern design
- * - Responsive mobile support
+ * Features:
+ * - Performance-optimized query client with intelligent caching
+ * - Enhanced error boundaries with retry mechanisms
+ * - Real-time analytics and monitoring
+ * - Theme provider for consistent styling
+ * - Chart.js setup for advanced analytics
  */
 const App: React.FC = () => {
     return (
         <QueryClientProvider client={queryClient}>
-            <UserFriendlyApp />
+            <ThemeProvider defaultTheme="dark">
+                <EnhancedErrorBoundary
+                    showDetails={process.env.NODE_ENV === 'development'}
+                    onError={(error, errorInfo) => {
+                        analytics.trackError(error, 'App Component');
+                    }}
+                >
+                    <UserFriendlyApp />
+                </EnhancedErrorBoundary>
+            </ThemeProvider>
         </QueryClientProvider>
     );
 };
