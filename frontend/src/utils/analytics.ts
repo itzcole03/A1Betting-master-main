@@ -35,6 +35,15 @@ class EnhancedAnalytics {
     this.initializePerformanceTracking();
   }
 
+  // Add convenience track method
+  track(eventName: string, data?: any): void {
+    this.trackEvent({
+      name: eventName,
+      category: 'user_action',
+      data
+    });
+  }
+
   private generateSessionId(): string {
     return `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   }

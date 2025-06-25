@@ -47,7 +47,11 @@ export class TheOddsAdapter implements DataSource<TheOddsData> {
   constructor(config: TheOddsConfig) {
     this.eventBus = EventBus.getInstance();
     this.performanceMonitor = PerformanceMonitor.getInstance();
-    this.config = config;
+    this.config = {
+      apiKey: config.apiKey || import.meta.env.VITE_THEODDS_API_KEY || '8684be37505fc5ce63b0337d472af0ee',
+      baseUrl: config.baseUrl || 'https://api.the-odds-api.com/v4',
+      cacheTimeout: config.cacheTimeout || 300000 // 5 minutes
+    };
     this.cache = {
       data: null,
       timestamp: 0

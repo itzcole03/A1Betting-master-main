@@ -148,11 +148,10 @@ const EnhancedUserFriendlyApp: React.FC = () => {
       const moneyService = RealTimeMoneyMakingService.getInstance();
       moneyService.startRealTimeScanning({
         sports: ['nfl', 'nba', 'mlb', 'nhl', 'soccer', 'esports'],
-        includeArbitrage: true,
-        includePrizePicks: true,
-        includeValueBets: true,
-        confidenceThreshold: 0.7,
-        maxRiskLevel: 'medium'
+        minConfidence: 0.7,
+        maxExposure: 1000,
+        scanIntervalMs: 30000,
+        strategies: ['prizepicks', 'arbitrage', 'value_bet']
       });
 
       toast.success("🚀 Ultimate Money Making System Activated!", {

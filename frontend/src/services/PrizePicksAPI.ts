@@ -62,26 +62,30 @@ export class PrizePicksAPI {
     this.config = UnifiedConfigManager.getInstance();
 
     this.api = axios.create({
-      baseURL:
-        import.meta.env.VITE_PRIZEPICKS_API_URL ||
-        "https://api.prizepicks.com/v1",
+      baseURL: import.meta.env.VITE_PRIZEPICKS_PROJECTIONS_URL || "https://api.prizepicks.com/projections",
       timeout: 10000,
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${import.meta.env.VITE_PRIZEPICKS_API_KEY}`,
+        "Accept": "application/json",
+        "User-Agent": "A1Betting/1.0"
       },
     });
 
-    // Add request interceptor for rate limiting
+    // Add request interceptor for rate limiting and logging
     this.api.interceptors.request.use(async (config) => {
+      console.log(`PrizePicks API Request: ${config.method?.toUpperCase()} ${config.url}`);
       await this.rateLimiter();
       return config;
     });
 
     // Add response interceptor for error handling
     this.api.interceptors.response.use(
-      (response) => response,
+      (response) => {
+        console.log(`PrizePicks API Response: ${response.status} ${response.config.url}`);
+        return response;
+      },
       (error) => {
+        console.error('PrizePicks API Error:', error.response?.data || error.message);
         this.handleApiError(error);
         throw error;
       },

@@ -66,16 +66,16 @@ export class SportsRadarAdapter
     this.eventBus = EventBus.getInstance();
     this.performanceMonitor = PerformanceMonitor.getInstance();
     this.config = {
-      apiKey: import.meta.env.VITE_SPORTRADAR_API_KEY || "",
-      baseUrl: import.meta.env.VITE_SPORTRADAR_API_ENDPOINT || "https://api.sportradar.com",
+      apiKey: import.meta.env.VITE_SPORTRADAR_API_KEY || "R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s",
+      baseUrl: import.meta.env.VITE_SPORTRADAR_API_ENDPOINT || "https://api.sportradar.us",
       cacheTimeout: parseInt(import.meta.env.VITE_SPORTSRADAR_CACHE_TTL || "300000"),
     };
     this.cache = {
       data: null,
       timestamp: 0,
     };
-    this.apiKey = import.meta.env.VITE_SPORTRADAR_API_KEY || null;
-    this.baseUrl = import.meta.env.VITE_SPORTRADAR_API_ENDPOINT || "https://api.sportradar.com";
+    this.apiKey = import.meta.env.VITE_SPORTRADAR_API_KEY || "R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s";
+    this.baseUrl = import.meta.env.VITE_SPORTRADAR_API_ENDPOINT || "https://api.sportradar.us";
   }
 
   public async isAvailable(): Promise<boolean> {
