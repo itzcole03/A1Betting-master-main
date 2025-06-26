@@ -25,7 +25,9 @@ export default defineConfig({
       overlay: false, // Disable overlay to prevent WebSocket errors
       clientPort: 5173,
       port: 24678, // Use different port for HMR WebSocket
+      skipSSRCheck: true, // Skip SSR check for WebSocket
     },
+    strictPort: false, // Allow fallback ports
     proxy: {
       "/api": {
         target: "http://localhost:8000",

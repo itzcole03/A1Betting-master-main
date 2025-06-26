@@ -99,25 +99,28 @@ export const useWebSocket = (
         }));
         onDisconnect?.();
 
-        // Attempt to reconnect if enabled and within retry limits
-        if (
-          shouldReconnectRef.current &&
-          state.connectionAttempts < reconnectAttempts &&
-          !event.wasClean
-        ) {
-          setState((prev) => ({
-            ...prev,
-            connectionAttempts: prev.connectionAttempts + 1,
-          }));
+        // Only show user-facing messages for non-development errors
+        if (event.code !== 1006 && !event.reason?.includes("development")) {
+          // Attempt to reconnect if enabled and within retry limits
+          if (
+            shouldReconnectRef.current &&
+            state.connectionAttempts < reconnectAttempts &&
+            !event.wasClean
+          ) {
+            setState((prev) => ({
+              ...prev,
+              connectionAttempts: prev.connectionAttempts + 1,
+            }));
 
-          reconnectTimeoutRef.current = setTimeout(() => {
-            console.log(
-              `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
-            );
-            connect();
-          }, reconnectInterval);
-        } else if (state.connectionAttempts >= reconnectAttempts) {
-          toast.error("Connection lost - maximum retry attempts reached");
+            reconnectTimeoutRef.current = setTimeout(() => {
+              console.log(
+                `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
+              );
+              connect();
+            }, reconnectInterval);
+          } else if (state.connectionAttempts >= reconnectAttempts) {
+            toast.error("Connection lost - maximum retry attempts reached");
+          }
         }
       };
 
@@ -129,7 +132,11 @@ export const useWebSocket = (
           isConnecting: false,
         }));
         onError?.(error);
-        toast.error("Connection error occurred");
+
+        // Only show error toast if it's not a development/HMR related error
+        if (!url.includes("localhost") || shouldReconnectRef.current) {
+          toast.error("Connection error occurred");
+        }
       };
 
       socket.onmessage = (event) => {
