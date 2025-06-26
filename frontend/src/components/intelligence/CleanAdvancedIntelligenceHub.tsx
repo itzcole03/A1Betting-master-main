@@ -158,7 +158,7 @@ export const CleanAdvancedIntelligenceHub: React.FC = () => {
       id: "refresh",
       label: "Refresh System",
       icon: <RefreshCw className="w-4 h-4" />,
-      action: checkSystemHealth,
+      action: () => checkSystemHealth().catch(console.warn),
       status: isLoading ? "pending" : "active",
     },
     {
