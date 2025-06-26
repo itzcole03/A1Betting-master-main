@@ -148,7 +148,19 @@ const MegaPrizePicks: React.FC<{
     },
   ]);
 
-  const sports = ["All", "NBA", "NFL", "MLB", "NHL"];
+  const sports = [
+    "All",
+    "NBA",
+    "NFL",
+    "MLB",
+    "NHL",
+    "WNBA",
+    "Soccer",
+    "PGA",
+    "Tennis",
+    "Esports",
+    "MMA",
+  ];
 
   const filteredProps =
     selectedSport === "All"
