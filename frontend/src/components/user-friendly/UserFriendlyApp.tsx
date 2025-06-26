@@ -185,7 +185,7 @@ const UserFriendlyApp: React.FC = () => {
         label: "Intelligence Hub",
         icon: <BarChart3 className="w-5 h-5" />,
         component: CleanAdvancedIntelligenceHub,
-        badge: isOnline ? "🧠" : "��",
+        badge: isOnline ? "🧠" : "⚡",
       },
       {
         id: "settings",
@@ -229,6 +229,15 @@ const UserFriendlyApp: React.FC = () => {
 
   // Modal handlers - memoized to prevent re-renders
   const toggleSidebar = useCallback(() => setSidebarOpen((prev) => !prev), []);
+
+  // Handle retry functionality for failed connections
+  const handleRetry = useCallback(() => {
+    queryClient.invalidateQueries();
+    toast.success("🔄 Refreshing data...", {
+      duration: 2000,
+      icon: "⚡",
+    });
+  }, [queryClient]);
 
   const ActiveComponent = activeComponent;
 
