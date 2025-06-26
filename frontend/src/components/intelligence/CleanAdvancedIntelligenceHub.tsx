@@ -63,11 +63,28 @@ export const CleanAdvancedIntelligenceHub: React.FC = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
 
-  // Check system health
+  // Check system health with graceful fallback
   const checkSystemHealth = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("http://localhost:8000/api/health/all");
+      // Check if we're in development and backend is available
+      const backendUrl =
+        process.env.NODE_ENV === "development"
+          ? "http://localhost:8000/api/health/all"
+          : "/api/health/all";
+
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+
+      const response = await fetch(backendUrl, {
+        signal: controller.signal,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      clearTimeout(timeoutId);
+
       if (response.ok) {
         const data = await response.json();
         setSystemHealth((prev) => ({
@@ -87,23 +104,52 @@ export const CleanAdvancedIntelligenceHub: React.FC = () => {
                 ? "healthy"
                 : "degraded",
           },
+          accuracy: data.accuracy || prev.accuracy,
+          uptime: data.uptime || prev.uptime,
           lastUpdate: new Date().toLocaleTimeString(),
         }));
       } else {
-        setSystemHealth((prev) => ({ ...prev, backend: "degraded" }));
+        // Backend responded but with error status
+        setSystemHealth((prev) => ({
+          ...prev,
+          backend: "degraded",
+          lastUpdate: new Date().toLocaleTimeString(),
+        }));
       }
     } catch (error) {
-      setSystemHealth((prev) => ({ ...prev, backend: "offline" }));
+      // Network error, CORS error, timeout, or other fetch failure
+      console.warn("Health check failed, using fallback mode:", error);
+      setSystemHealth((prev) => ({
+        ...prev,
+        backend: "offline",
+        apis: {
+          sportsradar: "offline",
+          dailyfantasy: "offline",
+          theodds: "offline",
+        },
+        lastUpdate: new Date().toLocaleTimeString(),
+      }));
     } finally {
       setIsLoading(false);
     }
   };
 
-  // Auto-refresh system health
+  // Auto-refresh system health with error resilience
   useEffect(() => {
-    checkSystemHealth();
-    const interval = setInterval(checkSystemHealth, 30000); // Check every 30 seconds
-    return () => clearInterval(interval);
+    // Initial health check with delay to avoid immediate fetch on mount
+    const initialCheck = setTimeout(() => {
+      checkSystemHealth().catch(console.warn);
+    }, 1000);
+
+    // Less aggressive interval - check every 2 minutes instead of 30 seconds
+    const interval = setInterval(() => {
+      checkSystemHealth().catch(console.warn);
+    }, 120000);
+
+    return () => {
+      clearTimeout(initialCheck);
+      clearInterval(interval);
+    };
   }, []);
 
   // Quick actions for easy access
@@ -112,7 +158,7 @@ export const CleanAdvancedIntelligenceHub: React.FC = () => {
       id: "refresh",
       label: "Refresh System",
       icon: <RefreshCw className="w-4 h-4" />,
-      action: checkSystemHealth,
+      action: () => checkSystemHealth().catch(console.warn),
       status: isLoading ? "pending" : "active",
     },
     {

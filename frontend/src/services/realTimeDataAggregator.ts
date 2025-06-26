@@ -126,7 +126,18 @@ export class RealTimeDataAggregator {
   }
 
   private async connectToLiveScores(): Promise<void> {
-    const sports = ["nba", "nfl", "mlb", "nhl"];
+    const sports = [
+      "nba",
+      "nfl",
+      "mlb",
+      "nhl",
+      "wnba",
+      "soccer",
+      "pga",
+      "tennis",
+      "esports",
+      "mma",
+    ];
 
     for (const sport of sports) {
       try {
