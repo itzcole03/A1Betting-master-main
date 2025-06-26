@@ -1,0 +1,93 @@
+{
+  "timestamp": "2025-06-26T12:28:55.236767",
+  "overall_status": "unhealthy",
+  "checks": {
+    "system_resources": {
+      "healthy": true,
+      "details": {
+        "cpu_percent": 15.1,
+        "memory_percent": 36.9,
+        "disk_percent": 66.6
+      },
+      "alerts": []
+    },
+    "mongodb": {
+      "healthy": false,
+      "error": "No module named 'pymongo'"
+    },
+    "redis": {
+      "healthy": true,
+      "details": {
+        "ping_time_ms": 29.00242805480957,
+        "memory_usage_mb": 0.6609954833984375,
+        "connected_clients": 1,
+        "total_commands_processed": 18
+      }
+    },
+    "disk_space": {
+      "healthy": true,
+      "issues": []
+    },
+    "network_connectivity": {
+      "healthy": false,
+      "issues": [
+        "google.com",
+        "github.com",
+        "pypi.org",
+        "api.sportsradar.com"
+      ]
+    },
+    "docker_containers": {
+      "healthy": true,
+      "details": {
+        "running_containers": 0,
+        "containers": []
+      }
+    },
+    "external_apis": {
+      "healthy": true,
+      "note": "External API checks skipped in basic health check to avoid rate limits"
+    },
+    "api_health": {
+      "healthy": false,
+      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+    },
+    "service_backend": {
+      "healthy": false,
+      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+    },
+    "ml_service": {
+      "healthy": false,
+      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+    },
+    "api_predictions": {
+      "healthy": false,
+      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+    },
+    "websocket": {
+      "healthy": true,
+      "note": "WebSocket check skipped in basic health check"
+    },
+    "service_frontend": {
+      "healthy": false,
+      "error": "Cannot connect to host localhost:3000 ssl:default [The remote computer refused the network connection]"
+    },
+    "service_monitoring": {
+      "healthy": false,
+      "error": "Cannot connect to host localhost:9090 ssl:default [The remote computer refused the network connection]"
+    }
+  },
+  "metrics": {
+    "cpu_usage_percent": 15.1,
+    "memory_usage_percent": 36.9,
+    "memory_available_gb": 20.142147064208984,
+    "disk_usage_percent": 66.6,
+    "disk_free_gb": 621.2226943969727
+  },
+  "alerts": [
+    {
+      "level": "critical",
+      "message": "Failed health checks: mongodb, network_connectivity, api_health, service_backend, ml_service, api_predictions, service_frontend, service_monitoring"
+    }
+  ]
+}
