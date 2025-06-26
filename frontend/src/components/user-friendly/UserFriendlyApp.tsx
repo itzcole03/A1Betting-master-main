@@ -114,14 +114,39 @@ const UserFriendlyApp: React.FC = () => {
     [userStats],
   );
 
-  // Initialize settings only once
+  // Initialize settings and show startup animation
   useEffect(() => {
-    try {
-      initializeSettings();
-      toast.success("🧠 Ultimate Brain System Activated!");
-    } catch (error) {
-      toast.error("⚠️ Settings initialization failed");
-    }
+    const initializeApp = async () => {
+      try {
+        await initializeSettings();
+
+        // Show startup sequence
+        setTimeout(() => {
+          toast.success("🧠 Ultimate Brain System Activated!", {
+            duration: 3000,
+            icon: "🚀",
+          });
+        }, 500);
+
+        setTimeout(() => {
+          toast.success("⚡ Neural Networks Online", {
+            duration: 2000,
+            icon: "🧠",
+          });
+        }, 1500);
+
+        setTimeout(() => {
+          toast.success("💰 Money Maker Pro Ready", {
+            duration: 2000,
+            icon: "💎",
+          });
+        }, 2500);
+      } catch (error) {
+        toast.error("⚠️ Settings initialization failed");
+      }
+    };
+
+    initializeApp();
   }, []);
 
   // Navigation items with production components - memoized to prevent re-renders
@@ -406,7 +431,12 @@ const UserFriendlyApp: React.FC = () => {
             animate={{
               x: sidebarOpen ? 0 : "-100%",
             }}
-            className="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900/95 backdrop-blur-2xl border-r border-cyan-500/20 lg:relative lg:translate-x-0 lg:z-auto"
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+            }}
+            className="fixed inset-y-0 left-0 z-50 w-64 bg-gray-900/95 backdrop-blur-2xl border-r border-cyan-500/20 lg:relative lg:translate-x-0 lg:z-auto shadow-2xl shadow-cyan-500/10"
           >
             <div className="flex flex-col h-full">
               <div className="p-6">
@@ -415,22 +445,44 @@ const UserFriendlyApp: React.FC = () => {
                   Ultimate Navigation
                 </h2>
                 <nav className="space-y-2">
-                  {navigationItems.map((item) => (
-                    <button
+                  {navigationItems.map((item, index) => (
+                    <motion.button
                       key={item.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
                       onClick={() => handleNavigate(item.id)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all ${
+                      whileHover={{ scale: 1.02, x: 4 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all group ${
                         activeTab === item.id
-                          ? "bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 text-cyan-400"
-                          : "text-gray-300 hover:bg-gray-800/40 hover:text-white"
+                          ? "bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30 text-cyan-400 shadow-lg shadow-cyan-500/25"
+                          : "text-gray-300 hover:bg-gray-800/40 hover:text-white hover:shadow-md"
                       }`}
                     >
-                      {item.icon}
+                      <motion.div
+                        whileHover={{ rotate: 360 }}
+                        transition={{ duration: 0.3 }}
+                      >
+                        {item.icon}
+                      </motion.div>
                       <span className="font-medium">{item.label}</span>
                       {item.badge && (
-                        <span className="ml-auto text-xs">{item.badge}</span>
+                        <motion.span
+                          initial={{ scale: 0 }}
+                          animate={{ scale: 1 }}
+                          className="ml-auto text-xs bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent font-bold"
+                        >
+                          {item.badge}
+                        </motion.span>
                       )}
-                    </button>
+                      <motion.div
+                        className="ml-auto opacity-0 group-hover:opacity-100 transition-opacity"
+                        whileHover={{ x: 2 }}
+                      >
+                        →
+                      </motion.div>
+                    </motion.button>
                   ))}
                 </nav>
               </div>
