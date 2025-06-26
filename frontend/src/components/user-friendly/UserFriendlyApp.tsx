@@ -186,15 +186,29 @@ const UserFriendlyApp: React.FC = () => {
         }, 1500);
 
         setTimeout(() => {
+          toast.success(
+            `🏆 All ${SPORT_OPTIONS.length - 1} Sports Coverage Active`,
+            {
+              duration: 2000,
+              icon: "🎯",
+              style: {
+                background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+                color: "white",
+              },
+            },
+          );
+        }, 2500);
+
+        setTimeout(() => {
           toast.success("💰 Real Data Integration Complete", {
             duration: 2000,
             icon: "💎",
             style: {
-              background: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+              background: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
               color: "white",
             },
           });
-        }, 2500);
+        }, 3500);
       } catch (error) {
         toast.error("⚠️ System initialization failed");
       }
