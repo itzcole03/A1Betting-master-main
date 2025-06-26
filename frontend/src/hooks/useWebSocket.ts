@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import toast from "react-hot-toast";
+import { websocketHealthMonitor } from "../utils/websocketHealthMonitor";
 
 interface WebSocketMessage {
   type: string;
@@ -85,8 +86,15 @@ export const useWebSocket = (
           error: null,
           connectionAttempts: 0,
         }));
+
+        // Register with health monitor
+        websocketHealthMonitor.registerConnection(wsUrl);
+        websocketHealthMonitor.updateConnectionHealth(wsUrl, true);
+
         onConnect?.();
-        toast.success("Connected to real-time data stream");
+        if (!url.includes("localhost") || shouldReconnectRef.current) {
+          toast.success("Connected to real-time data stream");
+        }
       };
 
       socket.onclose = (event) => {
@@ -97,6 +105,17 @@ export const useWebSocket = (
           isConnected: false,
           isConnecting: false,
         }));
+
+        // Update health monitor
+        const wsUrl = url.startsWith("ws")
+          ? url
+          : `ws://${window.location.host}${url}`;
+        websocketHealthMonitor.updateConnectionHealth(
+          wsUrl,
+          false,
+          `Disconnected: ${event.code} ${event.reason}`,
+        );
+
         onDisconnect?.();
 
         // Only show user-facing messages for non-development errors
