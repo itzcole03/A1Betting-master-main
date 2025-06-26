@@ -25,6 +25,7 @@ import {
   getUserDisplayName,
   getUserEmail,
 } from "../../utils/userSettings";
+import { SPORT_OPTIONS } from "../../constants/sports";
 import { useWebSocket } from "../../hooks/useWebSocket";
 import useUserStats from "../../hooks/useUserStats";
 import { Settings } from "lucide-react";
@@ -70,38 +71,55 @@ interface UserData {
   todayProfit: number;
 }
 
-// Enhanced health check with advanced metrics
+// Enhanced health check with advanced metrics for all sports
 const useEnhancedHealthCheck = () => {
   const [isOnline, setIsOnline] = useState(true);
   const [accuracy, setAccuracy] = useState(94.7);
   const [opportunitiesFound, setOpportunitiesFound] = useState(0);
   const [systemLoad, setSystemLoad] = useState(0);
   const [dataQuality, setDataQuality] = useState(98.5);
+  const [activeSports, setActiveSports] = useState<string[]>([]);
 
   useEffect(() => {
     const healthTimer = setInterval(() => {
       try {
         setIsOnline(navigator.onLine);
-        // Simulate realistic fluctuations
+        // Simulate realistic fluctuations across all sports
+        const allSports = SPORT_OPTIONS.filter((sport) => sport !== "All");
+        const activeCount =
+          Math.floor(Math.random() * 3) + (allSports.length - 2); // Most sports active
+        setActiveSports(allSports.slice(0, activeCount));
+
+        // Opportunities scale with active sports
         setOpportunitiesFound((prev) =>
-          Math.max(0, prev + Math.floor(Math.random() * 3) - 1),
+          Math.max(0, prev + Math.floor(Math.random() * (activeCount / 2)) - 1),
         );
-        setSystemLoad(20 + Math.random() * 15);
-        setDataQuality(95 + Math.random() * 5);
+        setSystemLoad(15 + Math.random() * 20); // Lower load with better distribution
+        setDataQuality(96 + Math.random() * 4);
       } catch (error) {
         setIsOnline(false);
+        setActiveSports([]);
       }
     }, 30000);
 
-    // Initialize with realistic values
-    setOpportunitiesFound(12 + Math.floor(Math.random() * 8));
+    // Initialize with realistic values for all sports
+    const allSports = SPORT_OPTIONS.filter((sport) => sport !== "All");
+    setActiveSports(allSports);
+    setOpportunitiesFound(18 + Math.floor(Math.random() * 12)); // Higher with more sports
 
     return () => {
       clearInterval(healthTimer);
     };
   }, []);
 
-  return { isOnline, accuracy, opportunitiesFound, systemLoad, dataQuality };
+  return {
+    isOnline,
+    accuracy,
+    opportunitiesFound,
+    systemLoad,
+    dataQuality,
+    activeSports,
+  };
 };
 
 const UserFriendlyApp: React.FC = () => {
