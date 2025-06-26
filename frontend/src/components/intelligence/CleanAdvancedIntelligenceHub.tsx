@@ -134,11 +134,22 @@ export const CleanAdvancedIntelligenceHub: React.FC = () => {
     }
   };
 
-  // Auto-refresh system health
+  // Auto-refresh system health with error resilience
   useEffect(() => {
-    checkSystemHealth();
-    const interval = setInterval(checkSystemHealth, 30000); // Check every 30 seconds
-    return () => clearInterval(interval);
+    // Initial health check with delay to avoid immediate fetch on mount
+    const initialCheck = setTimeout(() => {
+      checkSystemHealth().catch(console.warn);
+    }, 1000);
+
+    // Less aggressive interval - check every 2 minutes instead of 30 seconds
+    const interval = setInterval(() => {
+      checkSystemHealth().catch(console.warn);
+    }, 120000);
+
+    return () => {
+      clearTimeout(initialCheck);
+      clearInterval(interval);
+    };
   }, []);
 
   // Quick actions for easy access
