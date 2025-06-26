@@ -1,36 +1,45 @@
-import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { useWebSocket } from '../hooks/useWebSocket';
-import { useShapData } from '../hooks/useShapData';
-import { useAuth } from '../hooks/useAuth';
-import { formatCurrency } from '@/utils/formatters';
+import React, { useState, useMemo } from "react";
+import { motion } from "framer-motion";
+import { useWebSocket } from "../hooks/useWebSocket";
+import { useShapData } from "../hooks/useShapData";
+import { useAuth } from "../hooks/useAuth";
+import { formatCurrency } from "@/utils/formatters";
 import {
   BetRecommendation,
   RiskProfileType,
   UserConstraints,
   ShapFeature,
-} from '@/types/betting';
-import { RiskProfileSelector } from './RiskProfileSelector';
-import ShapVisualization from './ShapVisualization';
-import { BettingOpportunities } from './BettingOpportunities';
-import { PerformanceMetrics } from './PerformanceMetrics';
-import { useUnifiedAnalytics } from '../hooks/useUnifiedAnalytics';
-import { Button, Card, Input, Select, Tabs, Tab, Badge, Spinner } from './ui/UnifiedUI';
-import { useFilterStore } from '../stores/filterStore';
+} from "@/types/betting";
+import { RiskProfileSelector } from "./RiskProfileSelector";
+import ShapVisualization from "./ShapVisualization";
+import { BettingOpportunities } from "./BettingOpportunities";
+import { PerformanceMetrics } from "./PerformanceMetrics";
+import { useUnifiedAnalytics } from "../hooks/useUnifiedAnalytics";
+import {
+  Button,
+  Card,
+  Input,
+  Select,
+  Tabs,
+  Tab,
+  Badge,
+  Spinner,
+} from "./ui/UnifiedUI";
+import { useFilterStore } from "../stores/filterStore";
 
 // Animation variants
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.3, ease: 'easeOut' },
+  transition: { duration: 0.3, ease: "easeOut" },
 };
 
 const scaleIn = {
   initial: { scale: 0.95, opacity: 0 },
   animate: { scale: 1, opacity: 1 },
   exit: { scale: 0.95, opacity: 0 },
-  transition: { duration: 0.2, ease: 'easeOut' },
+  transition: { duration: 0.2, ease: "easeOut" },
 };
 
 interface UnifiedBettingInterfaceProps {
@@ -42,35 +51,66 @@ interface UnifiedBettingInterfaceProps {
 
 interface BettingConfig {
   investment: number;
-  modelSet: 'ensemble' | 'traditional' | 'deeplearning' | 'timeseries' | 'optimization';
+  modelSet:
+    | "ensemble"
+    | "traditional"
+    | "deeplearning"
+    | "timeseries"
+    | "optimization";
   confidence: number;
-  strategy: 'maximum' | 'balanced' | 'conservative' | 'aggressive' | 'arbitrage' | 'ai_adaptive';
-  sports: 'all' | 'nba' | 'nfl' | 'mlb' | 'nhl' | 'soccer' | 'wnba' | 'mixed';
+  strategy:
+    | "maximum"
+    | "balanced"
+    | "conservative"
+    | "aggressive"
+    | "arbitrage"
+    | "ai_adaptive";
+  sports:
+    | "all"
+    | "nba"
+    | "nfl"
+    | "mlb"
+    | "nhl"
+    | "soccer"
+    | "wnba"
+    | "pga"
+    | "tennis"
+    | "esports"
+    | "mma"
+    | "mixed";
 }
 
-export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = ({
+export const UnifiedBettingInterface: React.FC<
+  UnifiedBettingInterfaceProps
+> = ({
   initialBankroll,
   onBetPlaced,
   darkMode: externalDarkMode,
   onDarkModeChange: _onDarkModeChange,
 }) => {
   const { token: _token } = useAuth();
-  const [activeTab, setActiveTab] = useState('opportunities');
+  const [activeTab, setActiveTab] = useState("opportunities");
   const [internalDarkMode, setInternalDarkMode] = useState(false);
   const [bankroll, _setBankroll] = useState(initialBankroll);
-  const [riskProfile, setRiskProfile] = useState<RiskProfileType>(RiskProfileType.MODERATE);
+  const [riskProfile, setRiskProfile] = useState<RiskProfileType>(
+    RiskProfileType.MODERATE,
+  );
   const [_userConstraints] = useState<UserConstraints>({
     max_bankroll_stake: 0.1,
     time_window_hours: 24,
     preferred_sports: [],
     preferred_markets: [],
   });
-  const [selectedEvent, _setSelectedEvent] = useState<BetRecommendation | null>(null);
+  const [selectedEvent, _setSelectedEvent] = useState<BetRecommendation | null>(
+    null,
+  );
   const [notification, _setNotification] = useState<{
     message: string;
-    type: 'success' | 'error';
+    type: "success" | "error";
   } | null>(null);
-  const [bettingOpportunities, setBettingOpportunities] = useState<BetRecommendation[]>([]);
+  const [bettingOpportunities, setBettingOpportunities] = useState<
+    BetRecommendation[]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
   const [alerts, _setAlerts] = useState<
     Array<{
@@ -82,10 +122,10 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
   >([]);
   const [config, setConfig] = useState<BettingConfig>({
     investment: 1000,
-    modelSet: 'ensemble',
+    modelSet: "ensemble",
     confidence: 0.8,
-    strategy: 'balanced',
-    sports: 'all',
+    strategy: "balanced",
+    sports: "all",
   });
 
   const darkMode = externalDarkMode ?? internalDarkMode;
@@ -98,12 +138,12 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
     confidenceThreshold: String(filterStore.confidenceThreshold),
     stakeSizing: String(filterStore.stakeSizing),
     model: filterStore.model,
-    activeFilters: Array.from(filterStore.activeFilters).join(','),
+    activeFilters: Array.from(filterStore.activeFilters).join(","),
   }).toString();
   const wsUrl = `${process.env.VITE_WS_URL}/ws/betting?${wsQuery}`;
   const { isConnected } = useWebSocket(wsUrl, {
     onMessage: (data: Record<string, unknown>) => {
-      if (data.type === 'betting_opportunities') {
+      if (data.type === "betting_opportunities") {
         setBettingOpportunities(data.opportunities as BetRecommendation[]);
         setIsLoading(false);
       }
@@ -124,8 +164,8 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
     loading: shapLoading,
     error: _shapError,
   } = useShapData({
-    eventId: selectedEvent?.id || '',
-    modelType: 'xgboost',
+    eventId: selectedEvent?.id || "",
+    modelType: "xgboost",
   });
 
   const shapFeatures: ShapFeature[] = useMemo(() => {
@@ -138,7 +178,10 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
   }, [shapData]);
 
   // Memoize selected model and metrics
-  const selectedModel = useMemo(() => performance?.data?.[0], [performance?.data]);
+  const selectedModel = useMemo(
+    () => performance?.data?.[0],
+    [performance?.data],
+  );
   const modelMetrics = useMemo(() => selectedModel?.metrics, [selectedModel]);
 
   // Calculate profit based on model performance
@@ -150,9 +193,9 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
 
   // Memoize recommendations from betting opportunities
   const bettingRecommendations = useMemo(() => {
-    return bettingOpportunities.map(opp => ({
+    return bettingOpportunities.map((opp) => ({
       ...opp,
-      result: 'pending' as const, // Add result field required by PerformanceMetrics
+      result: "pending" as const, // Add result field required by PerformanceMetrics
     }));
   }, [bettingOpportunities]);
 
@@ -176,13 +219,16 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <RiskProfileSelector currentProfile={riskProfile} onProfileChange={setRiskProfile} />
+            <RiskProfileSelector
+              currentProfile={riskProfile}
+              onProfileChange={setRiskProfile}
+            />
             <Button
               aria-label="Toggle dark mode"
               variant="ghost"
               onClick={() => setInternalDarkMode(!internalDarkMode)}
             >
-              {darkMode ? 'Light Mode' : 'Dark Mode'}
+              {darkMode ? "Light Mode" : "Dark Mode"}
             </Button>
           </div>
         </header>
@@ -202,7 +248,7 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
             initial="initial"
             variants={scaleIn}
           >
-            {activeTab === 'opportunities' && (
+            {activeTab === "opportunities" && (
               <motion.div
                 key="opportunities"
                 animate="animate"
@@ -226,7 +272,7 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
               </motion.div>
             )}
 
-            {activeTab === 'analytics' && (
+            {activeTab === "analytics" && (
               <motion.div
                 key="analytics"
                 animate="animate"
@@ -255,7 +301,7 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
               </motion.div>
             )}
 
-            {activeTab === 'settings' && (
+            {activeTab === "settings" && (
               <motion.div
                 key="settings"
                 animate="animate"
@@ -272,25 +318,28 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
                       label="Investment Amount"
                       type="number"
                       value={config.investment.toString()}
-                      onChange={value =>
-                        setConfig(prev => ({ ...prev, investment: Number(value) }))
+                      onChange={(value) =>
+                        setConfig((prev) => ({
+                          ...prev,
+                          investment: Number(value),
+                        }))
                       }
                     />
                     <Select
                       aria-label="Model Set"
                       label="Model Set"
                       options={[
-                        { value: 'ensemble', label: 'Ensemble' },
-                        { value: 'traditional', label: 'Traditional' },
-                        { value: 'deeplearning', label: 'Deep Learning' },
-                        { value: 'timeseries', label: 'Time Series' },
-                        { value: 'optimization', label: 'Optimization' },
+                        { value: "ensemble", label: "Ensemble" },
+                        { value: "traditional", label: "Traditional" },
+                        { value: "deeplearning", label: "Deep Learning" },
+                        { value: "timeseries", label: "Time Series" },
+                        { value: "optimization", label: "Optimization" },
                       ]}
                       value={config.modelSet}
-                      onChange={value =>
-                        setConfig(prev => ({
+                      onChange={(value) =>
+                        setConfig((prev) => ({
                           ...prev,
-                          modelSet: value as BettingConfig['modelSet'],
+                          modelSet: value as BettingConfig["modelSet"],
                         }))
                       }
                     />
@@ -298,18 +347,18 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
                       aria-label="Strategy"
                       label="Strategy"
                       options={[
-                        { value: 'maximum', label: 'Maximum' },
-                        { value: 'balanced', label: 'Balanced' },
-                        { value: 'conservative', label: 'Conservative' },
-                        { value: 'aggressive', label: 'Aggressive' },
-                        { value: 'arbitrage', label: 'Arbitrage' },
-                        { value: 'ai_adaptive', label: 'AI Adaptive' },
+                        { value: "maximum", label: "Maximum" },
+                        { value: "balanced", label: "Balanced" },
+                        { value: "conservative", label: "Conservative" },
+                        { value: "aggressive", label: "Aggressive" },
+                        { value: "arbitrage", label: "Arbitrage" },
+                        { value: "ai_adaptive", label: "AI Adaptive" },
                       ]}
                       value={config.strategy}
-                      onChange={value =>
-                        setConfig(prev => ({
+                      onChange={(value) =>
+                        setConfig((prev) => ({
                           ...prev,
-                          strategy: value as BettingConfig['strategy'],
+                          strategy: value as BettingConfig["strategy"],
                         }))
                       }
                     />
@@ -328,7 +377,9 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
             exit={{ opacity: 0, y: -20 }}
             initial={{ opacity: 0, y: 20 }}
           >
-            <Badge variant={notification.type === 'success' ? 'success' : 'danger'}>
+            <Badge
+              variant={notification.type === "success" ? "success" : "danger"}
+            >
               {notification.message}
             </Badge>
           </motion.div>
@@ -341,7 +392,9 @@ export const UnifiedBettingInterface: React.FC<UnifiedBettingInterfaceProps> = (
             className="mt-4"
             initial={{ opacity: 0 }}
           >
-            <Badge variant="warning">WebSocket disconnected. Attempting to reconnect...</Badge>
+            <Badge variant="warning">
+              WebSocket disconnected. Attempting to reconnect...
+            </Badge>
           </motion.div>
         )}
       </Card>
