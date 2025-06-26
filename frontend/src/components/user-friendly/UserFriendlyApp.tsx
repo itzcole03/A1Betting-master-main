@@ -128,8 +128,14 @@ const UserFriendlyApp: React.FC = () => {
   const [showAdvanced, setShowAdvanced] = useState(false);
 
   const queryClient = useQueryClient();
-  const { isOnline, accuracy, opportunitiesFound, systemLoad, dataQuality } =
-    useEnhancedHealthCheck();
+  const {
+    isOnline,
+    accuracy,
+    opportunitiesFound,
+    systemLoad,
+    dataQuality,
+    activeSports,
+  } = useEnhancedHealthCheck();
 
   // Fetch real user statistics from backend
   const { userStats, backendHealth, isLoading, error } = useUserStats();
@@ -403,6 +409,14 @@ const UserFriendlyApp: React.FC = () => {
                     <span className="text-gray-300">Quality:</span>
                     <span className="text-purple-400 font-bold">
                       {dataQuality.toFixed(1)}%
+                    </span>
+                  </div>
+                  <div className="w-px h-4 bg-gray-600" />
+                  <div className="flex items-center gap-1">
+                    <Gamepad2 className="w-3 h-3 text-pink-400" />
+                    <span className="text-gray-300">Sports:</span>
+                    <span className="text-pink-400 font-bold">
+                      {activeSports.length}/{SPORT_OPTIONS.length - 1}
                     </span>
                   </div>
                 </div>
