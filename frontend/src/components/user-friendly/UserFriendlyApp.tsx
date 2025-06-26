@@ -185,7 +185,7 @@ const UserFriendlyApp: React.FC = () => {
         label: "Intelligence Hub",
         icon: <BarChart3 className="w-5 h-5" />,
         component: CleanAdvancedIntelligenceHub,
-        badge: isOnline ? "🧠" : "⚡",
+        badge: isOnline ? "🧠" : "��",
       },
       {
         id: "settings",
@@ -344,11 +344,19 @@ const UserFriendlyApp: React.FC = () => {
             </div>
           </div>
 
-          {/* Stats Bar - Real Backend Data */}
+          {/* Enhanced Stats Bar - Real Backend Data */}
           <div className="px-6 pb-4">
-            <div className="flex items-center justify-between text-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="flex items-center justify-between text-sm bg-gray-800/20 rounded-lg p-3 backdrop-blur-sm"
+            >
               <div className="flex items-center gap-6">
-                <div className="flex items-center gap-2">
+                <motion.div
+                  className="flex items-center gap-2 hover:bg-gray-700/30 rounded-md px-2 py-1 transition-all cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => handleNavigate("profile")}
+                >
                   <DollarSign
                     className={`w-4 h-4 ${isLoading ? "animate-pulse" : ""} text-green-400`}
                   />
@@ -361,11 +369,16 @@ const UserFriendlyApp: React.FC = () => {
                   <div
                     className={`w-2 h-2 rounded-full ml-1 ${
                       error ? "bg-red-400" : "bg-green-400 animate-pulse"
-                    }`}
+                    } shadow-lg ${error ? "shadow-red-400/50" : "shadow-green-400/50"}`}
                     title={error ? "Using cached data" : "Live data"}
                   ></div>
-                </div>
-                <div className="flex items-center gap-2">
+                </motion.div>
+
+                <motion.div
+                  className="flex items-center gap-2 hover:bg-gray-700/30 rounded-md px-2 py-1 transition-all cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => handleNavigate("analytics")}
+                >
                   <TrendingUp
                     className={`w-4 h-4 ${isLoading ? "animate-pulse" : ""} text-cyan-400`}
                   />
@@ -375,8 +388,13 @@ const UserFriendlyApp: React.FC = () => {
                       ? "..."
                       : `${(userData.winRate * 100).toFixed(1)}%`}
                   </span>
-                </div>
-                <div className="flex items-center gap-2">
+                </motion.div>
+
+                <motion.div
+                  className="flex items-center gap-2 hover:bg-gray-700/30 rounded-md px-2 py-1 transition-all cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => handleNavigate("moneymaker")}
+                >
                   <Trophy
                     className={`w-4 h-4 ${isLoading ? "animate-pulse" : ""} text-purple-400`}
                   />
@@ -386,16 +404,21 @@ const UserFriendlyApp: React.FC = () => {
                       ? "..."
                       : `+$${userData.totalProfit.toLocaleString()}`}
                   </span>
-                </div>
-                <div className="flex items-center gap-2">
+                </motion.div>
+
+                <motion.div
+                  className="flex items-center gap-2 hover:bg-gray-700/30 rounded-md px-2 py-1 transition-all cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={() => handleNavigate("intelligence")}
+                >
                   <div
                     className={`w-3 h-3 rounded-full ${
                       backendHealth.status === "healthy"
-                        ? "bg-green-400"
+                        ? "bg-green-400 shadow-green-400/50"
                         : backendHealth.status === "degraded"
-                          ? "bg-yellow-400"
-                          : "bg-red-400"
-                    } animate-pulse`}
+                          ? "bg-yellow-400 shadow-yellow-400/50"
+                          : "bg-red-400 shadow-red-400/50"
+                    } animate-pulse shadow-lg`}
                   ></div>
                   <span className="text-gray-400 text-xs">
                     {backendHealth.status === "healthy"
@@ -404,10 +427,23 @@ const UserFriendlyApp: React.FC = () => {
                         ? "Degraded"
                         : "Offline"}
                   </span>
-                </div>
+                  <span className="text-xs text-cyan-400 ml-1">
+                    {accuracy.toFixed(1)}%
+                  </span>
+                </motion.div>
               </div>
-              <OfflineIndicator show={!isOnline} />
-            </div>
+
+              <div className="flex items-center gap-2">
+                <OfflineIndicator show={!isOnline} />
+                <motion.div
+                  className="text-xs text-gray-500 hover:text-gray-400 transition-colors cursor-pointer"
+                  whileHover={{ scale: 1.05 }}
+                  onClick={handleRetry}
+                >
+                  Last updated: {new Date().toLocaleTimeString()}
+                </motion.div>
+              </div>
+            </motion.div>
           </div>
         </header>
 
