@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import toast from "react-hot-toast";
+import { websocketHealthMonitor } from "../utils/websocketHealthMonitor";
 
 interface WebSocketMessage {
   type: string;
@@ -85,8 +86,15 @@ export const useWebSocket = (
           error: null,
           connectionAttempts: 0,
         }));
+
+        // Register with health monitor
+        websocketHealthMonitor.registerConnection(wsUrl);
+        websocketHealthMonitor.updateConnectionHealth(wsUrl, true);
+
         onConnect?.();
-        toast.success("Connected to real-time data stream");
+        if (!url.includes("localhost") || shouldReconnectRef.current) {
+          toast.success("Connected to real-time data stream");
+        }
       };
 
       socket.onclose = (event) => {
@@ -97,27 +105,41 @@ export const useWebSocket = (
           isConnected: false,
           isConnecting: false,
         }));
+
+        // Update health monitor
+        const wsUrl = url.startsWith("ws")
+          ? url
+          : `ws://${window.location.host}${url}`;
+        websocketHealthMonitor.updateConnectionHealth(
+          wsUrl,
+          false,
+          `Disconnected: ${event.code} ${event.reason}`,
+        );
+
         onDisconnect?.();
 
-        // Attempt to reconnect if enabled and within retry limits
-        if (
-          shouldReconnectRef.current &&
-          state.connectionAttempts < reconnectAttempts &&
-          !event.wasClean
-        ) {
-          setState((prev) => ({
-            ...prev,
-            connectionAttempts: prev.connectionAttempts + 1,
-          }));
+        // Only show user-facing messages for non-development errors
+        if (event.code !== 1006 && !event.reason?.includes("development")) {
+          // Attempt to reconnect if enabled and within retry limits
+          if (
+            shouldReconnectRef.current &&
+            state.connectionAttempts < reconnectAttempts &&
+            !event.wasClean
+          ) {
+            setState((prev) => ({
+              ...prev,
+              connectionAttempts: prev.connectionAttempts + 1,
+            }));
 
-          reconnectTimeoutRef.current = setTimeout(() => {
-            console.log(
-              `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
-            );
-            connect();
-          }, reconnectInterval);
-        } else if (state.connectionAttempts >= reconnectAttempts) {
-          toast.error("Connection lost - maximum retry attempts reached");
+            reconnectTimeoutRef.current = setTimeout(() => {
+              console.log(
+                `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
+              );
+              connect();
+            }, reconnectInterval);
+          } else if (state.connectionAttempts >= reconnectAttempts) {
+            toast.error("Connection lost - maximum retry attempts reached");
+          }
         }
       };
 
@@ -129,7 +151,11 @@ export const useWebSocket = (
           isConnecting: false,
         }));
         onError?.(error);
-        toast.error("Connection error occurred");
+
+        // Only show error toast if it's not a development/HMR related error
+        if (!url.includes("localhost") || shouldReconnectRef.current) {
+          toast.error("Connection error occurred");
+        }
       };
 
       socket.onmessage = (event) => {

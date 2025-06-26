@@ -54,6 +54,22 @@ window.addEventListener("error", (event) => {
 
 // Handle unhandled promise rejections
 window.addEventListener("unhandledrejection", (event) => {
+  // Suppress known Vite WebSocket errors
+  if (
+    event.reason?.message?.includes("WebSocket closed without opened") ||
+    event.reason?.message?.includes("WebSocket connection") ||
+    (event.reason instanceof Error &&
+      event.reason.message.includes("WebSocket"))
+  ) {
+    logger.warn(
+      "Vite WebSocket error suppressed",
+      { message: event.reason?.message },
+      "Bootstrap",
+    );
+    event.preventDefault();
+    return;
+  }
+
   // Properly serialize the error reason
   const errorDetails = {
     reasonType: typeof event.reason,
