@@ -1,0 +1,193 @@
+# A1Betting Master Automation System Requirements
+# Core automation and orchestration dependencies
+
+# Core Framework
+asyncio-mqtt==0.11.1
+schedule==1.2.0
+redis==4.6.0
+PyYAML==6.0.1
+click==8.1.7
+rich==13.7.0
+python-dotenv==1.0.0
+
+# Web Automation & Testing
+playwright==1.40.0
+selenium==4.15.2
+requests==2.31.0
+httpx==0.25.2
+beautifulsoup4==4.12.2
+
+# Performance Monitoring & Profiling
+psutil==5.9.6
+py-spy==0.3.14
+memory-profiler==0.61.0
+line-profiler==4.1.1
+pympler==0.9
+
+# Code Quality & Analysis
+pylint==3.0.3
+flake8==6.1.0
+black==23.11.0
+isort==5.12.0
+mypy==1.7.1
+bandit==1.7.5
+safety==2.3.5
+radon==6.0.1
+
+# Testing Framework
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-xdist==3.5.0
+pytest-mock==3.12.0
+pytest-asyncio==0.21.1
+coverage==7.3.2
+
+# Database & Data Analysis
+psycopg2-binary==2.9.9
+pymongo==4.6.0
+SQLAlchemy==2.0.23
+pandas==2.1.4
+numpy==1.25.2
+
+# Machine Learning & AI
+scikit-learn==1.3.2
+torch==2.1.1
+transformers==4.35.2
+joblib==1.3.2
+
+# Documentation Generation
+Sphinx==7.2.6
+sphinx-rtd-theme==1.3.0
+mkdocs==1.5.3
+mkdocs-material==9.4.8
+pydoc-markdown==4.8.2
+
+# Security & Vulnerability Scanning
+python-owasp-zap-v2.4==0.0.21
+cyclonedx-bom==4.0.4
+pip-audit==2.6.1
+
+# Infrastructure & DevOps
+docker==6.1.3
+kubernetes==28.1.0
+ansible==8.7.0
+terraform-compliance==1.3.44
+
+# API & Web Services
+fastapi==0.104.1
+uvicorn==0.24.0
+gunicorn==21.2.0
+celery==5.3.4
+
+# Monitoring & Logging
+prometheus-client==0.19.0
+grafana-api==1.0.3
+elasticsearch==8.11.0
+loguru==0.7.2
+
+# File & Data Processing
+watchdog==3.0.0
+jsonschema==4.20.0
+cerberus==1.3.5
+marshmallow==3.20.1
+
+# Network & Communication
+websockets==12.0
+aiohttp==3.9.1
+slack-sdk==3.26.1
+discord.py==2.3.2
+
+# Utility Libraries
+python-dateutil==2.8.2
+pytz==2023.3
+tqdm==4.66.1
+colorama==0.4.6
+tabulate==0.9.0
+
+# Development Tools
+pre-commit==3.6.0
+bump2version==1.0.1
+gitpython==3.1.40
+jinja2==3.1.2
+
+# Cloud Services
+boto3==1.34.0
+google-cloud-storage==2.10.0
+azure-storage-blob==12.19.0
+
+# Performance & Caching
+redis-py-cluster==2.1.3
+memcached==1.59
+diskcache==5.6.3
+
+# Serialization & Data Formats
+msgpack==1.0.7
+orjson==3.9.10
+toml==0.10.2
+configparser==6.0.0
+
+# Workflow & Task Management
+celery[redis]==5.3.4
+kombu==5.3.4
+flower==2.0.1
+
+# Browser Automation
+chromedriver-autoinstaller==0.6.2
+webdriver-manager==4.0.1
+
+# Load Testing
+locust==2.17.0
+artillery==1.7.9
+
+# Image & Media Processing
+Pillow==10.1.0
+opencv-python==4.8.1.78
+
+# Backup & Recovery
+duplicity==2.1.4
+restic==0.16.2
+
+# Encryption & Security
+cryptography==41.0.7
+passlib==1.7.4
+bcrypt==4.1.2
+
+# Configuration Management
+python-consul==1.1.0
+etcd3==0.12.0
+
+# Time Series & Analytics
+influxdb==5.3.1
+prometheus-api-client==0.5.3
+
+# PDF & Document Generation
+reportlab==4.0.7
+weasyprint==60.2
+matplotlib==3.8.2
+
+# Email & Notifications
+sendgrid==6.10.0
+twilio==8.11.0
+pushbullet.py==0.12.0
+
+# Social Media & External APIs
+tweepy==4.14.0
+python-telegram-bot==20.7
+
+# Data Validation & Schema
+great-expectations==0.18.8
+pandera==0.17.2
+
+# Deployment & Orchestration
+fabric==3.2.2
+paramiko==3.4.0
+invoke==2.2.0
+
+# Development Dependencies (for automation scripts)
+ipython==8.17.2
+jupyter==1.0.0
+notebook==7.0.6
+
+# OS & System Integration
+windows-curses==2.3.3; sys_platform == "win32"
+pywin32==306; sys_platform == "win32"

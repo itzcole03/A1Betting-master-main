@@ -43,8 +43,8 @@ CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 # Build stage
 FROM base as builder
 
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
+# Install dependencies (including dev dependencies for build)
+RUN npm ci && npm cache clean --force
 
 # Copy source code
 COPY . .

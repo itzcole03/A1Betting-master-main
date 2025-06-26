@@ -1,0 +1,464 @@
+# A1Betting Master Automation Configuration
+# This file defines all automation workflows, tasks, and system settings
+
+# System Configuration
+system:
+  project_root: "."
+  max_workers: 10
+  default_timeout: 300
+  max_retries: 3
+  log_level: "INFO"
+  
+# Redis Configuration (for distributed task queue)
+redis:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: null
+  
+# Monitoring Configuration
+monitoring:
+  enabled: true
+  metrics_interval: 60
+  prometheus_port: 9090
+  grafana_port: 3000
+  alert_webhooks:
+    slack: "${SLACK_WEBHOOK_URL}"
+    discord: "${DISCORD_WEBHOOK_URL}"
+    email: "${EMAIL_ALERT_ADDRESS}"
+
+# Security Configuration
+security:
+  enable_vulnerability_scanning: true
+  enable_penetration_testing: false  # Enable in production
+  security_scan_schedule: "0 2 * * 0"  # Weekly Sunday 2 AM
+  compliance_standards:
+    - "OWASP"
+    - "PCI-DSS"
+    - "GDPR"
+
+# Performance Configuration
+performance:
+  enable_profiling: true
+  benchmark_schedule: "0 14 * * 3"  # Wednesday 2 PM
+  performance_thresholds:
+    response_time_ms: 200
+    cpu_usage_percent: 80
+    memory_usage_percent: 85
+    disk_usage_percent: 90
+
+# Testing Configuration
+testing:
+  enable_unit_tests: true
+  enable_integration_tests: true
+  enable_e2e_tests: true
+  enable_performance_tests: true
+  enable_accessibility_tests: true
+  test_schedule: "*/30 * * * *"  # Every 30 minutes
+  coverage_threshold: 85
+
+# Documentation Configuration
+documentation:
+  auto_generate: true
+  update_schedule: "0 16 * * 5"  # Friday 4 PM
+  formats:
+    - "markdown"
+    - "html"
+    - "pdf"
+  include_api_docs: true
+  include_architecture_diagrams: true
+
+# Deployment Configuration
+deployment:
+  auto_deploy: false  # Set to true for CD
+  deployment_schedule: "0 0 * * 1"  # Monday midnight
+  environments:
+    - "development"
+    - "staging"
+    - "production"
+  rollback_enabled: true
+
+# Backup Configuration
+backup:
+  enabled: true
+  schedule: "0 3 * * *"  # Daily 3 AM
+  retention_days: 30
+  verification_enabled: true
+  backup_types:
+    - "database"
+    - "files"
+    - "configuration"
+    - "ml_models"
+
+# Custom Workflows
+workflows:
+  # Enhanced Testing Workflow
+  enhanced_testing:
+    name: "Enhanced Testing Suite"
+    description: "Comprehensive testing with all test types enabled"
+    enabled: true
+    schedule: "0 */4 * * *"  # Every 4 hours
+    steps:
+      - name: "preparation"
+        parallel: false
+        continue_on_error: false
+        tasks:
+          - id: "setup_test_env"
+            name: "Setup Test Environment"
+            description: "Prepare testing environment"
+            command: "python automation/scripts/setup_test_environment.py"
+            priority: "HIGH"
+            timeout: 180
+            
+      - name: "unit_testing"
+        parallel: true
+        continue_on_error: false
+        tasks:
+          - id: "backend_unit_tests"
+            name: "Backend Unit Tests"
+            description: "Run comprehensive backend unit tests"
+            command: "cd backend && python -m pytest tests/unit/ -v --cov=. --cov-report=json:../automation/reports/backend_unit_coverage.json --junitxml=../automation/reports/backend_unit_junit.xml"
+            priority: "HIGH"
+            timeout: 600
+            
+          - id: "frontend_unit_tests"
+            name: "Frontend Unit Tests"
+            description: "Run comprehensive frontend unit tests"
+            command: "cd frontend && npm test -- --coverage --coverageReporters=json --coverageDirectory=../automation/reports/frontend_unit_coverage --ci --watchAll=false"
+            priority: "HIGH"
+            timeout: 600
+            
+      - name: "integration_testing"
+        parallel: true
+        continue_on_error: false
+        tasks:
+          - id: "api_integration_tests"
+            name: "API Integration Tests"
+            description: "Test API integrations"
+            command: "cd backend && python -m pytest tests/integration/ -v --junitxml=../automation/reports/integration_junit.xml"
+            priority: "HIGH"
+            timeout: 900
+            
+          - id: "database_integration_tests"
+            name: "Database Integration Tests"
+            description: "Test database operations"
+            command: "python automation/scripts/test_database_integration.py"
+            priority: "HIGH"
+            timeout: 600
+            
+      - name: "e2e_testing"
+        parallel: false
+        continue_on_error: true
+        tasks:
+          - id: "playwright_e2e_tests"
+            name: "Playwright E2E Tests"
+            description: "Run end-to-end tests with Playwright"
+            command: "cd frontend && npx playwright test --reporter=json --output-dir=../automation/reports/e2e"
+            priority: "MEDIUM"
+            timeout: 1800
+            
+      - name: "accessibility_testing"
+        parallel: false
+        continue_on_error: true
+        tasks:
+          - id: "axe_accessibility_tests"
+            name: "Accessibility Tests"
+            description: "Run accessibility tests with axe-core"
+            command: "python automation/scripts/run_accessibility_tests.py"
+            priority: "MEDIUM"
+            timeout: 600
+
+  # ML Model Optimization Workflow
+  ml_optimization:
+    name: "ML Model Optimization"
+    description: "Optimize and validate ML models"
+    enabled: true
+    schedule: "0 1 * * *"  # Daily 1 AM
+    steps:
+      - name: "data_validation"
+        parallel: false
+        continue_on_error: false
+        tasks:
+          - id: "validate_training_data"
+            name: "Validate Training Data"
+            description: "Validate ML training data quality"
+            command: "python automation/scripts/validate_ml_data.py"
+            priority: "CRITICAL"
+            timeout: 600
+            
+      - name: "model_training"
+        parallel: true
+        continue_on_error: false
+        tasks:
+          - id: "retrain_prediction_models"
+            name: "Retrain Prediction Models"
+            description: "Retrain ML prediction models with latest data"
+            command: "python backend/enhanced_revolutionary_engine.py --retrain"
+            priority: "HIGH"
+            timeout: 3600
+            environment:
+              CUDA_VISIBLE_DEVICES: "0"
+              
+          - id: "optimize_ensemble"
+            name: "Optimize Ensemble Models"
+            description: "Optimize ensemble model weights"
+            command: "python backend/ensemble_optimizer.py --optimize"
+            priority: "HIGH"
+            timeout: 1800
+            
+      - name: "model_validation"
+        parallel: false
+        continue_on_error: false
+        tasks:
+          - id: "validate_model_accuracy"
+            name: "Validate Model Accuracy"
+            description: "Validate model accuracy against benchmarks"
+            command: "python automation/scripts/validate_model_accuracy.py"
+            priority: "CRITICAL"
+            timeout: 900
+            
+          - id: "benchmark_model_performance"
+            name: "Benchmark Model Performance"
+            description: "Benchmark model inference performance"
+            command: "python automation/scripts/benchmark_ml_performance.py"
+            priority: "HIGH"
+            timeout: 600
+
+  # Security Hardening Workflow
+  security_hardening:
+    name: "Security Hardening"
+    description: "Comprehensive security analysis and hardening"
+    enabled: true
+    schedule: "0 2 * * 0"  # Weekly Sunday 2 AM
+    steps:
+      - name: "vulnerability_scanning"
+        parallel: true
+        continue_on_error: false
+        tasks:
+          - id: "python_security_scan"
+            name: "Python Security Scan"
+            description: "Scan Python code for security vulnerabilities"
+            command: "bandit -r backend/ -f json -o automation/reports/bandit_security.json && safety check --json > automation/reports/safety_check.json"
+            priority: "CRITICAL"
+            timeout: 300
+            
+          - id: "javascript_security_scan"
+            name: "JavaScript Security Scan"
+            description: "Scan JavaScript code for security vulnerabilities"
+            command: "cd frontend && npm audit --json > ../automation/reports/npm_security_audit.json"
+            priority: "CRITICAL"
+            timeout: 300
+            
+          - id: "docker_security_scan"
+            name: "Docker Security Scan"
+            description: "Scan Docker images for vulnerabilities"
+            command: "python automation/scripts/scan_docker_security.py"
+            priority: "HIGH"
+            timeout: 600
+            
+      - name: "penetration_testing"
+        parallel: false
+        continue_on_error: true
+        tasks:
+          - id: "web_penetration_test"
+            name: "Web Application Penetration Test"
+            description: "Automated penetration testing of web application"
+            command: "python automation/scripts/run_penetration_tests.py"
+            priority: "HIGH"
+            timeout: 1800
+            
+      - name: "compliance_check"
+        parallel: false
+        continue_on_error: false
+        tasks:
+          - id: "gdpr_compliance_check"
+            name: "GDPR Compliance Check"
+            description: "Verify GDPR compliance"
+            command: "python automation/scripts/check_gdpr_compliance.py"
+            priority: "HIGH"
+            timeout: 300
+
+  # Performance Optimization Workflow
+  advanced_performance_optimization:
+    name: "Advanced Performance Optimization"
+    description: "Deep performance analysis and optimization"
+    enabled: true
+    schedule: "0 14 * * 3"  # Wednesday 2 PM
+    steps:
+      - name: "performance_profiling"
+        parallel: true
+        continue_on_error: false
+        tasks:
+          - id: "backend_profiling"
+            name: "Backend Performance Profiling"
+            description: "Profile backend performance bottlenecks"
+            command: "python automation/scripts/profile_backend_advanced.py"
+            priority: "HIGH"
+            timeout: 1200
+            
+          - id: "frontend_profiling"
+            name: "Frontend Performance Profiling"
+            description: "Profile frontend performance with Lighthouse"
+            command: "python automation/scripts/profile_frontend_lighthouse.py"
+            priority: "HIGH"
+            timeout: 900
+            
+          - id: "database_profiling"
+            name: "Database Performance Profiling"
+            description: "Profile database query performance"
+            command: "python automation/scripts/profile_database_performance.py"
+            priority: "HIGH"
+            timeout: 600
+            
+      - name: "load_testing"
+        parallel: false
+        continue_on_error: true
+        tasks:
+          - id: "api_load_test"
+            name: "API Load Testing"
+            description: "Perform load testing on API endpoints"
+            command: "python automation/scripts/run_load_tests.py"
+            priority: "MEDIUM"
+            timeout: 1800
+            
+      - name: "optimization_recommendations"
+        parallel: false
+        continue_on_error: false
+        tasks:
+          - id: "generate_optimization_report"
+            name: "Generate Optimization Report"
+            description: "Generate performance optimization recommendations"
+            command: "python automation/scripts/generate_performance_report.py"
+            priority: "MEDIUM"
+            timeout: 300
+
+  # Documentation Generation Workflow
+  documentation_generation:
+    name: "Documentation Generation"
+    description: "Automated documentation generation and updates"
+    enabled: true
+    schedule: "0 16 * * 5"  # Friday 4 PM
+    steps:
+      - name: "api_documentation"
+        parallel: true
+        continue_on_error: false
+        tasks:
+          - id: "generate_openapi_docs"
+            name: "Generate OpenAPI Documentation"
+            description: "Generate API documentation from OpenAPI specs"
+            command: "python automation/scripts/generate_api_docs.py"
+            priority: "MEDIUM"
+            timeout: 300
+            
+          - id: "generate_code_docs"
+            name: "Generate Code Documentation"
+            description: "Generate code documentation with Sphinx/JSDoc"
+            command: "python automation/scripts/generate_code_docs.py"
+            priority: "MEDIUM"
+            timeout: 600
+            
+      - name: "architecture_documentation"
+        parallel: false
+        continue_on_error: false
+        tasks:
+          - id: "generate_architecture_diagrams"
+            name: "Generate Architecture Diagrams"
+            description: "Generate system architecture diagrams"
+            command: "python automation/scripts/generate_architecture_diagrams.py"
+            priority: "MEDIUM"
+            timeout: 300
+            
+      - name: "user_documentation"
+        parallel: false
+        continue_on_error: false
+        tasks:
+          - id: "generate_user_guides"
+            name: "Generate User Guides"
+            description: "Generate comprehensive user guides"
+            command: "python automation/scripts/generate_user_guides.py"
+            priority: "MEDIUM"
+            timeout: 600
+
+# Tool Configuration
+tools:
+  vscode_extensions:
+    required:
+      - "ms-python.python"
+      - "ms-vscode.vscode-typescript-next"
+      - "ms-azuretools.vscode-docker"
+      - "eamodio.gitlens"
+      - "ms-playwright.playwright"
+      - "bradlc.vscode-tailwindcss"
+      - "ms-vscode.vscode-json"
+      - "redhat.vscode-yaml"
+      - "ms-vscode-remote.remote-containers"
+    optional:
+      - "ms-vsliveshare.vsliveshare"
+      - "github.copilot"
+      - "ms-vscode.hexdump"
+      
+  external_tools:
+    required:
+      - "docker"
+      - "docker-compose"
+      - "git"
+      - "node"
+      - "npm"
+      - "python"
+      - "pip"
+    optional:
+      - "kubectl"
+      - "terraform"
+      - "ansible"
+
+# Notification Configuration
+notifications:
+  enabled: true
+  channels:
+    slack:
+      enabled: false
+      webhook_url: "${SLACK_WEBHOOK_URL}"
+      channel: "#a1betting-automation"
+    discord:
+      enabled: false
+      webhook_url: "${DISCORD_WEBHOOK_URL}"
+    email:
+      enabled: false
+      smtp_server: "${SMTP_SERVER}"
+      smtp_port: 587
+      username: "${SMTP_USERNAME}"
+      password: "${SMTP_PASSWORD}"
+      recipients:
+        - "devops@a1betting.com"
+        - "security@a1betting.com"
+  
+  alert_levels:
+    critical:
+      - "system_down"
+      - "security_breach"
+      - "data_loss"
+    high:
+      - "performance_degradation"
+      - "test_failures"
+      - "deployment_failure"
+    medium:
+      - "coverage_drop"
+      - "documentation_outdated"
+    low:
+      - "optimization_opportunity"
+      - "maintenance_reminder"
+
+# Environment Variables
+environment:
+  development:
+    DEBUG: "true"
+    LOG_LEVEL: "DEBUG"
+    REDIS_URL: "redis://localhost:6379/0"
+  staging:
+    DEBUG: "false"
+    LOG_LEVEL: "INFO"
+    REDIS_URL: "redis://staging-redis:6379/0"
+  production:
+    DEBUG: "false"
+    LOG_LEVEL: "WARNING"
+    REDIS_URL: "redis://production-redis:6379/0"

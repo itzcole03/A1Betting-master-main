@@ -57,7 +57,7 @@ COPY backend/ /app/
 RUN mkdir -p /app/models && chown -R app:app /app
 
 # Copy environment file (if exists)
-COPY .env* /app/ || true
+COPY .env /app/
 
 # Switch to non-root user
 USER app
