@@ -484,7 +484,7 @@ app.get("/api/prizepicks/projections/:sport", async (req, res) => {
 
       filteredLeagues = leagues.filter(
         (league) =>
-          league.attributes.sport;
+          league.attributes.sport
             ?.toLowerCase()
             .includes(sport.toLowerCase()) ||
           league.attributes.name?.toLowerCase().includes(sport.toLowerCase()),
