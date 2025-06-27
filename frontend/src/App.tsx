@@ -60,9 +60,14 @@ const App: React.FC = () => {
             fallback={
               <div className='min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center'>
                 <div className='text-center'>
-                  <div className='w-16 h-16 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto mb-4'></div>
-                  <h2 className='text-2xl font-bold text-yellow-400 mb-2'>A1 Betting</h2>
-                  <p className='text-gray-400'>Loading AI-Powered Sports Intelligence...</p>
+                  <div className='w-20 h-20 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin mx-auto mb-6'></div>
+                  <h2 className='text-3xl font-bold text-yellow-400 mb-2'>A1 Betting Platform</h2>
+                  <p className='text-xl text-gray-400 mb-4'>Enterprise Sports Intelligence</p>
+                  <div className='flex items-center justify-center space-x-4 text-sm text-gray-500'>
+                    <span>• 73.8% Win Rate</span>
+                    <span>• 47+ ML Models</span>
+                    <span>• Real-time APIs</span>
+                  </div>
                 </div>
               </div>
             }
