@@ -33,7 +33,7 @@ import {
 
 // Import consolidated systems;
 import { MegaCard, MegaButton, MegaInput, MegaAlert } from '@/mega/MegaUI';
-import { useTheme } from '@/providers/SafeThemeProvider';
+import { useTheme } from '@/components/common/theme/ThemeProvider';
 import {
   usePredictions,
   useEngineMetrics,

@@ -39,7 +39,7 @@ import {
   Filter,
   SortDesc,
 } from 'lucide-react';
-import { useTheme } from '@/providers/SafeThemeProvider';
+import { useTheme } from '@/components/common/theme/ThemeProvider';
 // Import hook directly to avoid module resolution issues;
 import useUltimateSettings from '@/hooks/useUltimateSettings';
 // Use direct imports to avoid module resolution issues;

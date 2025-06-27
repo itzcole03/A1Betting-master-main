@@ -1,7 +1,7 @@
 import React, { useState, useEffect, ReactNode  } from 'react';
 import { createPortal } from 'react-dom';
 // Removed unused CyberTheme imports;
-import { useTheme } from '@/providers/SafeThemeProvider';
+import { useTheme } from '@/components/common/theme/ThemeProvider';
 import { MegaButton } from './MegaUI';
 // Removed problematic import;
 import {
