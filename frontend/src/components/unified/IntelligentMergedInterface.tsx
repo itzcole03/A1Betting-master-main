@@ -59,7 +59,7 @@ const IntelligentMergedInterface: React.FC = () => {
   const [activeView, setActiveView] = useState<string>("dashboard");
   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [stats, setStats] = useState<DashboardStats key={506295}>({
+  const [stats, setStats] = useState<DashboardStats>({
     totalProfit: 48390,
     aiWinRate: 94.7,
     liveAccuracy: 97.3,
