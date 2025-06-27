@@ -163,8 +163,8 @@ app.get("/api/arbitrage-opportunities", (req, res) => {
 // Value bets endpoint (v4 API)
 app.get("/api/v4/betting/value-bets", (req, res) => {
   const { limit = 10 } = req.query;
-  const valueBets = mockBettingOpportunities;
-    .filter((opp) => opp.expected_value > 0.05) // Only high value bets;
+  const valueBets = mockBettingOpportunities
+    .filter((opp) => opp.expected_value > 0.05) // Only high value bets
     .map((opp) => ({
       id: opp.id,
       sport: opp.sport,
