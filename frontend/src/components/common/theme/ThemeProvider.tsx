@@ -1,6 +1,4 @@
-import React from 'react.ts';
-import { createContext, useContext, useEffect, useState, ReactNode } from 'react.ts';
-
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 type Theme = 'dark' | 'light' | 'system';
 
@@ -20,21 +18,27 @@ const initialState: ThemeProviderState = {
   setTheme: () => null,
 };
 
-export function ThemeProvider({ 
-  children, 
-  defaultTheme = 'system', 
-  storageKey = 'vite-ui-theme', 
-  ...props; 
+const ThemeProviderContext = createContext<ThemeProviderState>(initialState);
+
+export function ThemeProvider({
+  children,
+  defaultTheme = 'system',
+  storageKey = 'vite-ui-theme',
+  ...props
 }: ThemeProviderProps) {
-  const [theme, setTheme] = useState<Theme key={382340}>(
-    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme;
+  const [theme, setTheme] = useState<Theme>(
+    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
   );
 
   useEffect(() => {
+    const root = window.document.documentElement;
 
     root.classList.remove('light', 'dark');
 
     if (theme === 'system') {
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'light';
 
       root.classList.add(systemTheme);
       return;
@@ -45,23 +49,25 @@ export function ThemeProvider({
 
   const value = {
     theme,
-    setTheme: (newTheme: Theme) => {
-      localStorage.setItem(storageKey, newTheme);
-      setTheme(newTheme);
+    setTheme: (theme: Theme) => {
+      localStorage.setItem(storageKey, theme);
+      setTheme(theme);
     },
   };
 
   return (
-    <ThemeProviderContext.Provider {...props} value={value} key={332622}>
+    <ThemeProviderContext.Provider {...props} value={value}>
       {children}
     </ThemeProviderContext.Provider>
   );
 }
 
 export const useTheme = () => {
+  const context = useContext(ThemeProviderContext);
 
   if (context === undefined) {
     throw new Error('useTheme must be used within a ThemeProvider');
   }
+
   return context;
-}; 
+};
