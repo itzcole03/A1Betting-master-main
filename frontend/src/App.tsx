@@ -3,8 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from './components/common/theme/ThemeProvider';
 import ErrorBoundary from './components/ViteErrorBoundary';
 
-// Import the immediate loading platform for testing
-import A1BettingPlatform from './components/A1BettingPlatformImmediate';
+// Import the quantum platform that matches poe-preview (8).html exactly
+import A1BettingPlatform from './components/A1BettingQuantumPlatform';
 
 // Import essential styles
 import './App.css';
