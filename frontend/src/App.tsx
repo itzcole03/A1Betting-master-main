@@ -1,17 +1,17 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query.ts';
-import React from 'react.ts';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import React from 'react';
 
 // Import Chart.js setup (must be imported early)
-import "./utils/chartSetup";
+import './utils/chartSetup';
 
 // Import the user-friendly main interface;
-import UserFriendlyApp from './components/user-friendly/UserFriendlyApp.ts';
+import UserFriendlyApp from './components/user-friendly/UserFriendlyApp';
 
 // Import theme provider;
-import { ThemeProvider } from './components/common/theme/ThemeProvider.ts';
+import { ThemeProvider } from './components/common/theme/ThemeProvider';
 
 // Import styling;
-import "./App.css";
+import './App.css';
 
 // Create query client for API state management;
 const queryClient = new QueryClient({
@@ -37,9 +37,9 @@ const queryClient = new QueryClient({
  */
 const App: React.FC = () => {
   return (
-    <QueryClientProvider client={queryClient} key={826303}>
-      <ThemeProvider defaultTheme="dark" key={871271}>
-        <UserFriendlyApp / key={406081}>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider defaultTheme='dark'>
+        <UserFriendlyApp />
       </ThemeProvider>
     </QueryClientProvider>
   );
