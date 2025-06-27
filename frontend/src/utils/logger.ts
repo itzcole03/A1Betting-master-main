@@ -122,6 +122,9 @@ export const logApiCall = (
   success: boolean,
   duration?: number
 ) => {
+  const message = `API ${method} ${endpoint} ${success ? 'succeeded' : 'failed'}`;
+  const data = { endpoint, method, success, duration };
+
   if (success) {
     logger.info(message, data, 'API');
   } else {
