@@ -456,7 +456,7 @@ const A1BettingPlatform: React.FC = () => {
       <div className='flex'>
         {/* Enhanced Sidebar */}
         <AnimatePresence>
-          {(isMobileMenuOpen || window.innerWidth >= 1024) && (
+          {(isMobileMenuOpen || (typeof window !== 'undefined' && window.innerWidth >= 1024)) && (
             <motion.div
               initial={{ x: -300 }}
               animate={{ x: 0 }}
