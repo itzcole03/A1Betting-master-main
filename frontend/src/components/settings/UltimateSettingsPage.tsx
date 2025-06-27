@@ -38,10 +38,10 @@ import {
   Sliders,
   Filter,
   SortDesc,
-} from 'lucide-react.ts';
-import { useTheme } from '@/providers/SafeThemeProvider.ts';
+} from 'lucide-react';
+import { useTheme } from '@/providers/SafeThemeProvider';
 // Import hook directly to avoid module resolution issues;
-import useUltimateSettings from '@/hooks/useUltimateSettings.ts';
+import useUltimateSettings from '@/hooks/useUltimateSettings';
 // Use direct imports to avoid module resolution issues;
 const Card = ({
   children,

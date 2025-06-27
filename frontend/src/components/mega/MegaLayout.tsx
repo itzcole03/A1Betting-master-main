@@ -1,8 +1,8 @@
-import React, { useState, useEffect, ReactNode  } from 'react.ts';
-import { createPortal } from 'react-dom.ts';
+import React, { useState, useEffect, ReactNode  } from 'react';
+import { createPortal } from 'react-dom';
 // Removed unused CyberTheme imports;
-import { useTheme } from '@/providers/SafeThemeProvider.ts';
-import { MegaButton } from './MegaUI.ts';
+import { useTheme } from '@/providers/SafeThemeProvider';
+import { MegaButton } from './MegaUI';
 // Removed problematic import;
 import {
   Brain,

@@ -32,15 +32,15 @@ import {
 } from 'lucide-react.ts';
 
 // Import consolidated systems;
-import { MegaCard, MegaButton, MegaInput, MegaAlert } from '@/mega/MegaUI.ts';
-import { useTheme } from '@/providers/SafeThemeProvider.ts';
+import { MegaCard, MegaButton, MegaInput, MegaAlert } from '@/mega/MegaUI';
+import { useTheme } from '@/providers/SafeThemeProvider';
 import {
   usePredictions,
   useEngineMetrics,
   useToast,
   useDebounce,
-} from '@/hooks/UniversalHooks.ts';
-import { UniversalServiceFactory } from '@/services/UniversalServiceLayer.ts';
+} from '@/hooks/UniversalHooks';
+import { UniversalServiceFactory } from '@/services/UniversalServiceLayer';
 import {
   formatters,
   analytics as analyticsUtils,
