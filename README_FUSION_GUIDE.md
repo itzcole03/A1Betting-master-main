@@ -1161,9 +1161,10 @@ docker-compose down       # Stop all services
 ### 🎯 Builder.io Fusion Setup Form Values:
 - **Project Name**: `A1Betting`
 - **Development Server Port**: `3000`
-- **Setup Script**: `pip install -r backend/requirements.txt && cd frontend && npm install`
+- **Setup Script**: `cd frontend && npm install`
 - **Development Server Command**: `cd frontend && npm run dev`
 - **Main Branch Name**: `main`
+- **Root Directory**: `frontend`
 - **Environment Variables**: Add these in the form:
   - `VITE_API_URL=http://localhost:8000`
   - `VITE_THE_ODDS_API_KEY=8684be37505fc5ce63b0337d472af0ee`
