@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode  } from 'react.ts';
+import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
@@ -18,25 +18,15 @@ class ViteErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI;
-    return { hasError: true, error, errorInfo: null };
+    return {
+      hasError: true,
+      error,
+      errorInfo: null,
+    };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    // console statement removed
-
-    // Check if this is a Vite error overlay issue;
-    if (
-      error.message?.includes(
-        "Cannot read properties of undefined (reading 'frame')",
-      )
-    ) {
-      // console statement removed
-      // Don't show error UI for Vite overlay issues;
-      this.setState({ hasError: false, error: null, errorInfo: null });
-      return;
-    }
-
+    console.error('Uncaught error:', error, errorInfo);
     this.setState({
       error,
       errorInfo,
@@ -45,79 +35,69 @@ class ViteErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI;
       return (
-        <div;
+        <div
           style={{
-            padding: "20px",
-            margin: "20px",
-            border: "2px solid #ef4444",
-            borderRadius: "12px",
-            backgroundColor: "rgba(239, 68, 68, 0.1)",
-            color: "#ef4444",
+            padding: '20px',
+            margin: '20px',
+            border: '2px solid #ef4444',
+            borderRadius: '12px',
+            backgroundColor: 'rgba(239, 68, 68, 0.1)',
+            color: '#ef4444',
             fontFamily: "'Inter', system-ui, sans-serif",
           }}
-         key={540033}>
-          <h2;
+        >
+          <h2
             style={{
-              margin: "0 0 16px 0",
-              fontSize: "1.5rem",
-              fontWeight: "bold",
+              margin: '0 0 16px 0',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
             }}
-           key={168733}>
-            Something went wrong;
+          >
+            Something went wrong
           </h2>
-          <p style={{ margin: "0 0 16px 0" }} key={561855}>
-            An error occurred in the application. Please refresh the page to;
-            continue.
+          <p style={{ margin: '0 0 16px 0' }}>
+            An error occurred in the application. Please refresh the page to continue.
           </p>
-          <details style={{ marginTop: "16px" }} key={225254}>
-            <summary;
+          <details style={{ marginTop: '16px' }}>
+            <summary
               style={{
-                cursor: "pointer",
-                marginBottom: "8px",
-                fontWeight: "600",
+                cursor: 'pointer',
+                marginBottom: '8px',
+                fontWeight: '600',
               }}
-             key={58656}>
+            >
               Error details (click to expand)
             </summary>
-            <pre;
+            <pre
               style={{
-                backgroundColor: "rgba(0, 0, 0, 0.2)",
-                padding: "12px",
-                borderRadius: "8px",
-                fontSize: "12px",
-                overflow: "auto",
-                whiteSpace: "pre-wrap",
-                wordBreak: "break-word",
+                backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                padding: '12px',
+                borderRadius: '8px',
+                fontSize: '12px',
+                overflow: 'auto',
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
               }}
-             key={608148}>
+            >
               {this.state.error && this.state.error.toString()}
               {this.state.errorInfo && this.state.errorInfo.componentStack}
             </pre>
           </details>
-          <button;
-            onClick={() = key={919301}> window.location.reload()}
+          <button
+            onClick={() => window.location.reload()}
             style={{
-              marginTop: "16px",
-              padding: "12px 24px",
-              backgroundColor: "#ef4444",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              fontSize: "14px",
-              fontWeight: "600",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-            onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = "#dc2626";
-            }}
-            onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = "#ef4444";
+              marginTop: '16px',
+              padding: '8px 16px',
+              backgroundColor: '#ef4444',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontWeight: '600',
             }}
           >
-            Refresh Page;
+            Reload Page
           </button>
         </div>
       );
