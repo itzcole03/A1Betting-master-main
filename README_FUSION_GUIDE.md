@@ -1156,7 +1156,76 @@ docker-compose down       # Stop all services
 
 **Everything else is complete and functional.** The authentication system works, the backend infrastructure is solid, and the automation system will handle testing and validation.
 
-**For Builder.io Fusion specifically:** This project is optimized for your visual development platform. Connect the GitHub repo, reference the existing components and design system, and focus on completing the missing UI components first. The backend will support your frontend development immediately.
+**For Builder.io Fusion specifically:** This project is optimized for your visual development platform. Use these exact setup form values:
+
+### 🎯 Builder.io Fusion Setup Form Values:
+- **Project Name**: `A1Betting`
+- **Development Server Port**: `3000`
+- **Setup Script**: `pip install -r backend/requirements.txt && cd frontend && npm install`
+- **Development Server Command**: `cd frontend && npm run dev`
+- **Main Branch Name**: `main`
+- **Environment Variables**: Add these in the form:
+  - `VITE_API_URL=http://localhost:8000`
+  - `VITE_THE_ODDS_API_KEY=8684be37505fc5ce63b0337d472af0ee`
+  - `VITE_SPORTRADAR_API_KEY=R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s`
+
+### 🎨 Design System Instructions for AI:
+
+**MEGA COMPONENT ARCHITECTURE (95%+ Consolidated)**
+Our design system uses "Mega Components" located in `frontend/src/components/mega/` - always use these instead of creating atomic components:
+
+**Core Components:**
+- `MegaUI.tsx` - All UI elements (buttons, cards, modals, inputs) with 6 consolidated variants each
+- `MegaLayout.tsx` - Navigation, sidebars, headers with responsive patterns  
+- `MegaDashboard.tsx` - Complete dashboard system with real-time data integration
+- `MegaBetting.tsx` - Full betting interface with Kelly calculator and arbitrage tools
+- `MegaFeatures.tsx` - Advanced features like PrizePicks integration and AI predictions
+
+**CYBER THEME SYSTEM (Mandatory):**
+- **Colors**: Electric green (#06ffa5, #00ff88), Cyber purple (#7c3aed), Dark navy (#0f172a to #1a202c gradients)
+- **Effects**: Glassmorphism (`backdrop-blur-lg`, `bg-white/20`), Neon glows (`shadow-neon`), Cyber-pulse animations
+- **Typography**: Inter (headings), JetBrains Mono (code/data), holographic text effects with gradients
+- **CSS Variables**: Use `--electric-500`, `--neon-green`, `--cyber-purple` from `frontend/src/index.css`
+
+**STYLING PATTERNS:**
+```tsx
+// Always use CVA (Class Variance Authority) for component variants
+const componentVariants = cva("base-classes", {
+  variants: { variant: { cyber: "cyber-classes", premium: "premium-classes" } }
+});
+
+// Glass morphism pattern (use everywhere)
+className="bg-white/20 backdrop-blur-lg border border-white/30 shadow-glass"
+
+// Cyber gradient text
+className="bg-gradient-to-r from-electric-500 to-neon-green bg-clip-text text-transparent"
+```
+
+**FILE STRUCTURE RULES:**
+- Main app: `frontend/src/components/user-friendly/UserFriendlyApp.tsx` (987 lines, production-ready)
+- UI Components: Always extend from `frontend/src/components/ui/design-system.tsx` 
+- Styles: Import cyber theme from `frontend/src/styles/cyber-theme.css`
+- Utils: Use `frontend/src/lib/utils.ts` for className merging with `cn()` function
+
+**ANIMATION REQUIREMENTS:**
+- Float effects: `animate-float` for icons
+- Glow pulse: `animate-glow-pulse` for active elements  
+- Cyber pulse: `animate-cyber-pulse` for text
+- Slide transitions: `animate-slide-in-up` for modals
+
+**INTEGRATION PATTERNS:**
+- Real-time: WebSocket connections via `useWebSocket` hook
+- API: TanStack Query for data fetching with proper error boundaries
+- State: React state + localStorage for persistence
+- TypeScript: Strict typing with interfaces in `frontend/src/types/`
+
+**RESPONSIVE DESIGN:**
+- Mobile-first approach with Tailwind breakpoints
+- Touch-friendly targets (min 44px)
+- Collapsible navigation with mobile menu
+- Optimized for betting workflows on mobile devices
+
+Connect the GitHub repo, reference these exact component patterns, and maintain the consolidated architecture. Focus on enhancing existing Mega Components rather than creating new atomic ones.
 
 **Estimated completion time:** 2-4 hours for an autonomous agent with access to the codebase and this comprehensive guide.
 
