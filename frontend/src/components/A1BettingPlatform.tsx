@@ -302,7 +302,8 @@ const A1BettingPlatform: React.FC = () => {
         setStats(prev => ({ ...prev, apiHealth: 'critical' }));
       } finally {
         setIsInitializing(false);
-        setIsLoading(false);
+        // Small delay to ensure state updates are processed
+        setTimeout(() => setIsLoading(false), 100);
       }
     };
 
