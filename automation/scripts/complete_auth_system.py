@@ -4,24 +4,25 @@ Complete the authentication system for A1Betting application.
 This script creates a comprehensive JWT-based authentication system.
 """
 
-import os
 import logging
+import os
 from pathlib import Path
 
 logger = logging.getLogger(__name__)
 
+
 def create_backend_auth_system():
     """Create complete backend authentication system."""
-    
+
     # Create backend/models directory if it doesn't exist
     models_dir = Path("backend/models")
     models_dir.mkdir(exist_ok=True)
-    
+
     # Create __init__.py for models package
     init_file = models_dir / "__init__.py"
     if not init_file.exists():
         init_file.write_text("")
-    
+
     # Create User model
     user_model = '''from sqlalchemy import Column, Integer, String, DateTime, Boolean
 from sqlalchemy.ext.declarative import declarative_base
@@ -99,10 +100,10 @@ class User(Base):
             "updated_at": self.updated_at.isoformat() if self.updated_at else None
         }
 '''
-    
+
     with open(models_dir / "user.py", "w", encoding="utf-8") as f:
         f.write(user_model)
-    
+
     # Create authentication service
     auth_service = '''from fastapi import HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
@@ -204,10 +205,10 @@ class AuthService:
         """Create access token for user."""
         return user.generate_token(SECRET_KEY)
 '''
-    
+
     with open("backend/auth.py", "w", encoding="utf-8") as f:
         f.write(auth_service)
-    
+
     # Create database configuration
     database_config = '''from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
@@ -239,29 +240,30 @@ def create_tables():
     """Create all database tables."""
     Base.metadata.create_all(bind=engine)
 '''
-    
+
     with open("backend/database.py", "w", encoding="utf-8") as f:
         f.write(database_config)
-    
+
     logger.info("✅ Backend authentication system created")
+
 
 def create_auth_endpoints():
     """Add authentication endpoints to main.py or simple_healthy_backend.py."""
-    
+
     # Check which backend file to modify
     main_file = Path("backend/main.py")
     simple_file = Path("backend/simple_healthy_backend.py")
-    
+
     target_file = main_file if main_file.exists() else simple_file
-    
+
     if not target_file.exists():
         logger.error("❌ No backend file found to add auth endpoints")
         return
-    
+
     # Read existing content
     with open(target_file, "r", encoding="utf-8") as f:
         content = f.read()
-    
+
     # Add auth endpoints if not already present
     if "/auth/login" not in content:
         auth_endpoints = '''
@@ -350,33 +352,34 @@ async def get_user_profile(current_user: User = Depends(AuthService.get_current_
     """Get user profile information."""
     return current_user.to_dict()
 '''
-        
+
         # Insert auth endpoints before the main block
         if "if __name__ ==" in content:
             parts = content.split("if __name__ ==")
             content = parts[0] + auth_endpoints + "\n\nif __name__ ==" + parts[1]
         else:
             content += auth_endpoints
-        
+
         # Write back to file
         with open(target_file, "w", encoding="utf-8") as f:
             f.write(content)
-        
+
         logger.info(f"✅ Auth endpoints added to {target_file}")
+
 
 def create_frontend_auth_components():
     """Create frontend authentication components."""
-    
+
     # Create frontend directories
     frontend_src = Path("frontend/src")
     components_dir = frontend_src / "components"
     auth_dir = frontend_src / "auth"
-    
+
     for directory in [frontend_src, components_dir, auth_dir]:
         directory.mkdir(exist_ok=True)
-    
+
     # Create AuthContext
-    auth_context = '''import React, { createContext, useContext, useState, useEffect } from 'react';
+    auth_context = """import React, { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext();
 
@@ -496,13 +499,13 @@ export const AuthProvider = ({ children }) => {
     </AuthContext.Provider>
   );
 };
-'''
-    
+"""
+
     with open(auth_dir / "AuthContext.jsx", "w", encoding="utf-8") as f:
         f.write(auth_context)
-    
+
     # Create Login component
-    login_component = '''import React, { useState } from 'react';
+    login_component = """import React, { useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -616,13 +619,13 @@ const Login = () => {
 };
 
 export default Login;
-'''
-    
+"""
+
     with open(components_dir / "Login.jsx", "w", encoding="utf-8") as f:
         f.write(login_component)
-    
+
     # Create Register component
-    register_component = '''import React, { useState } from 'react';
+    register_component = """import React, { useState } from 'react';
 import { useAuth } from '../auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -803,40 +806,44 @@ const Register = () => {
 };
 
 export default Register;
-'''
-    
+"""
+
     with open(components_dir / "Register.jsx", "w", encoding="utf-8") as f:
         f.write(register_component)
-    
+
     logger.info("✅ Frontend authentication components created")
+
 
 def main():
     """Main function to complete authentication system."""
     logging.basicConfig(level=logging.INFO)
-    
+
     logger.info("🔐 Starting authentication system completion...")
-    
+
     try:
         # Create backend authentication system
         create_backend_auth_system()
-        
+
         # Add auth endpoints to backend
         create_auth_endpoints()
-        
+
         # Create frontend auth components
         create_frontend_auth_components()
-        
+
         logger.info("✅ Authentication system completion successful!")
         logger.info("📋 Next steps:")
-        logger.info("   1. Install required dependencies: pip install sqlalchemy psycopg2-binary PyJWT werkzeug")
+        logger.info(
+            "   1. Install required dependencies: pip install sqlalchemy psycopg2-binary PyJWT werkzeug"
+        )
         logger.info("   2. Run database migrations to create tables")
         logger.info("   3. Test authentication endpoints")
-        
+
         return True
-        
+
     except Exception as e:
         logger.error(f"❌ Authentication system completion failed: {e}")
         return False
+
 
 if __name__ == "__main__":
     main()

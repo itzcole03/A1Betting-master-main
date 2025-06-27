@@ -1,6 +1,6 @@
 # Backend Performance Profiling Report
 
-**Generated:** 2025-06-27T09:46:59.639939
+**Generated:** 2025-06-27T10:14:54.910455
 
 ## Summary
 
@@ -12,18 +12,18 @@
 ## Key Performance Metrics
 
 ### Startup Performance
-- **Cold start (fresh process):** 13.755s
-- **Warm start (cached imports):** 10.325s
-- **Production mode startup:** 10.342s
+- **Cold start (fresh process):** 11.023s
+- **Warm start (cached imports):** 10.894s
+- **Production mode startup:** 10.607s
 
 ### Memory Usage
-- **System Memory Usage:** 60.5%
+- **System Memory Usage:** 60.8%
 - **Process Memory:** 21.1 MB
 
 ## Performance Recommendations
 
-- Optimize cold_start: 13.75s startup time is too slow
-- Optimize warm_start: 10.33s startup time is too slow
-- Optimize production_mode: 10.34s startup time is too slow
+- Optimize cold_start: 11.02s startup time is too slow
+- Optimize warm_start: 10.89s startup time is too slow
+- Optimize production_mode: 10.61s startup time is too slow
 - Investigate potential memory leaks detected during profiling
 

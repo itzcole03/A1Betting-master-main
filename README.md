@@ -1,4 +1,8 @@
-# A1Betting - Ultimate Sports Betting Platform 🚀
+# 🏆 A1Betting - AI-Powered Sports Betting Platform
+
+> **🚀 Ready for Builder.io Fusion Autonomous Development**
+> 
+> This comprehensive guide enables autonomous agents (Builder.io Fusion, Cursor AI, GitHub Copilot, etc.) to complete the A1Betting application within hours. All necessary code, architecture, and automation systems are included.
 
 **Live API Integrations • Real-Time Money Making • Advanced Analytics**
 
@@ -9,6 +13,60 @@
 - **TheOdds API**: `8684be37505fc5ce63b0337d472af0ee` ✅
 - **PrizePicks API**: Public access configured ✅
 - **ESPN API**: Public access configured ✅
+
+---
+
+## 🤖 FOR BUILDER.IO FUSION AGENTS
+
+### 🎯 IMMEDIATE TASKS (Complete these first)
+- [ ] **Fix Jest configuration** in `frontend/jest.config.js` (module.exports → ES6)
+- [ ] **Complete missing React components** in `frontend/src/components/`:
+  - [ ] `Dashboard.tsx` - Main user dashboard with live stats
+  - [ ] `BettingInterface.tsx` - Core betting functionality  
+  - [ ] `UserProfile.tsx` - User account management
+  - [ ] `PredictionDisplay.tsx` - AI predictions showcase
+- [ ] **Implement missing API endpoints** in `backend/main.py`:
+  - [ ] `POST /api/bets` - Create new bets
+  - [ ] `GET /api/bets` - Get user betting history
+  - [ ] `GET /api/predictions/{match_id}` - AI predictions
+- [ ] **Create missing database models** in `backend/models/`:
+  - [ ] `bet.py` - Bet tracking and management
+  - [ ] `prediction.py` - AI prediction storage
+  - [ ] `match.py` - Sports match data
+
+### 🎨 Design System (Use these exact specifications)
+```css
+/* Primary Colors - Use consistently */
+--gold: #FFD700;
+--navy: #1a202c;
+--white: #ffffff;
+
+/* Secondary Colors */
+--success: #48bb78;
+--danger: #f56565;
+--warning: #ed8936;
+--info: #4299e1;
+```
+
+### 🏗️ Component Architecture
+```typescript
+// Dashboard Component Requirements
+interface DashboardProps {
+  user: User;
+  accountBalance: number;
+  recentBets: Bet[];
+  livePredictions: Prediction[];
+  performanceStats: UserStats;
+}
+
+// BettingInterface Component Requirements  
+interface BettingInterfaceProps {
+  availableMatches: Match[];
+  liveOdds: OddsUpdate[];
+  onPlaceBet: (bet: NewBet) => Promise<BetResult>;
+  userBalance: number;
+}
+```
 
 ---
 

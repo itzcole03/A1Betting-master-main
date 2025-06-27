@@ -1,0 +1,3202 @@
+{
+  "timestamp": "2025-06-27T10:12:53.001459",
+  "status": "success",
+  "scan_results": {
+    "docker_check": {
+      "status": "success",
+      "docker_version": "Docker version 28.2.2, build e6534b4",
+      "daemon_running": true,
+      "daemon_info": "Client:\n Version:    28.2.2\n Context:    desktop-linux\n Debug Mode: false\n Plugins:\n  ai: Docker AI Agent - Ask Gordon (Docker Inc.)\n    Version:  v1.4.0\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-ai.exe\n  buildx: Docker Buildx (Docker Inc.)\n    Version:  v0.24.0-desktop.2\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-buildx.exe\n  cloud: Docker Cloud (Docker Inc.)\n    Version:  v0.3.9\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-cloud.exe\n  compose: Docker Compose (Docker Inc.)\n    Version:  v2.37.1-desktop.1\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-compose.exe\n  debug: Get a shell into any image or container (Docker Inc.)\n    Version:  0.0.41\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-debug.exe\n  desktop: Docker Desktop commands (Docker Inc.)\n    Version:  v0.1.9\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-desktop.exe\n  extension: Manages Docker extensions (Docker Inc.)\n    Version:  v0.2.29\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-extension.exe\n  init: Creates Docker-related starter files for your project (Docker Inc.)\n    Version:  v1.4.0\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-init.exe\n  mcp: Docker MCP Plugin (Docker Inc.)\n    Version:  dev\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-mcp.exe\n  model: Docker Model Runner (Docker Inc.)\n    Version:  v0.1.24\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-model.exe\n  sbom: View the packaged-based Software Bill Of Materials (SBOM) for an image (Anchore Inc.)\n    Version:  0.6.0\n    Path:     C:\\Program Files\\Docker\\cli-plugins\\docker-sbom.exe\n  scout: Docker Scout (Docker Inc.)\n    Version:  v1.18.1\n    Path:     C:\\Users\\bcmad\\.docker\\cli-plugins\\docker-scout.exe\n\nServer:\n Containers: 22\n  Running: 9\n  Paused: 0\n  Stopped: 13\n Images: 45\n Server Version: 28.2.2\n Storage Driver: overlay2\n  Backing Filesystem: extfs\n  Supports d_type: true\n  Using metacopy: false\n  Native Overlay Diff: true\n  userxattr: false\n Logging Driver: json-file\n Cgroup Driver: cgroupfs\n Cgroup Version: 2\n Plugins:\n  Volume: local\n  Network: bridge host ipvlan macvlan null overlay\n  Log: awslogs fluentd gcplogs gelf journald json-file local splunk syslog\n CDI spec directories:\n  /etc/cdi\n  /var/run/cdi\n Discovered Devices:\n  cdi: docker.com/gpu=webgpu\n Swarm: inactive\n Runtimes: io.containerd.runc.v2 nvidia runc\n Default Runtime: runc\n Init Binary: docker-init\n containerd version: 05044ec0a9a75232cad458027ca83437aae3f4da\n runc version: v1.2.5-0-g59923ef\n init version: de40ad0\n Security Options:\n  seccomp\n   Profile: builtin\n  cgroupns\n Kernel Version: 6.6.87.1-microsoft-standard-WSL2\n Operating System: Docker Desktop\n OSType: linux\n Architecture: x86_64\n CPUs: 24\n Total Memory: 15.58GiB\n Name: docker-desktop\n ID: f1ea1d96-7d3c-450c-ad5c-1bb455774bfa\n Docker Root Dir: /var/lib/docker\n Debug Mode: false\n HTTP Proxy: http.docker.internal:3128\n HTTPS Proxy: http.docker.internal:3128\n No Proxy: hubproxy.docker.internal\n Labels:\n  com.docker.desktop.address=npipe://\\\\.\\pipe\\docker_cli\n Experimental: false\n Insecure Registries:\n  hubproxy.docker.internal:5555\n  ::1/128\n  127.0.0.0/8\n Live Restore Enabled: false\n\n"
+    },
+    "dockerfile_scans": {
+      ".\\Dockerfile": {
+        "status": "success",
+        "dockerfile_path": ".\\Dockerfile",
+        "security_issues": [
+          {
+            "line": 11,
+            "issue": "apt-get without --no-install-recommends",
+            "severity": "low",
+            "description": "Installing recommended packages increases attack surface"
+          }
+        ],
+        "recommendations": [],
+        "summary": {
+          "total_issues": 1,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 1,
+          "runs_as_root": false,
+          "has_healthcheck": true,
+          "exposed_ports": [
+            "8000",
+            "8000",
+            "8001"
+          ]
+        }
+      },
+      ".\\frontend\\Dockerfile": {
+        "status": "success",
+        "dockerfile_path": ".\\frontend\\Dockerfile",
+        "security_issues": [],
+        "recommendations": [],
+        "summary": {
+          "total_issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0,
+          "runs_as_root": false,
+          "has_healthcheck": true,
+          "exposed_ports": [
+            "5173",
+            "3000",
+            "3000"
+          ]
+        }
+      }
+    },
+    "image_scan": {
+      "status": "success",
+      "images_scanned": 5,
+      "vulnerabilities_found": 508,
+      "image_results": {
+        "a1betting-master-main-backend:latest": {
+          "status": "success",
+          "scanner": "docker_scout",
+          "vulnerabilities": [
+            {
+              "cve_id": "CVE-2025-47273",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2025-47273 [Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-47273",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-47273?s=github&n=setuptools&t=pypi&vr=%3C78.1.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6345",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2024-6345 [Improper Control of Generation of Code ('Code Injection')]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6345",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-6345?s=github&n=setuptools&t=pypi&vr=%3C70.0.0",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-6020",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2025-6020",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-6020",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-6020?s=debian&n=pam&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.5.2-6%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3730",
+              "severity": "unknown",
+              "description": "x MEDIUM CVE-2025-3730 [Improper Resource Shutdown or Release]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3730",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-3730?s=github&n=torch&t=pypi&vr=%3C%3D2.7.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5245",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5245",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5245",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5245?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5244",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5244",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5244",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5244?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3198",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-3198",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3198",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-3198?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1182",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1182",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1182",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1182?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1181",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1181",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1181",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1181?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1180",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1180",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1180",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1180?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1179",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1179",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1179",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1179?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1178",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1178",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1178",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1178?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1176",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1176",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1176",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1176?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1153",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1153",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1153",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1153?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1152",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1152",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1152",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1152?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1151",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1151",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1151",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1151?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1150",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1150",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1150",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1150?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1149",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1149",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1149",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1149?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1148",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1148",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1148",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1148?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1147",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1147",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1147",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1147?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0840",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-0840",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0840",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-0840?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-57360",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-57360",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-57360",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-57360?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-53589",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-53589",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-53589",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-53589?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1972",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-1972",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1972",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-1972?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-32256",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-32256",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-32256",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-32256?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-9996",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-9996",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-9996",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-9996?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20712",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20712",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20712",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20712?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20673",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20673",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20673",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20673?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-13716",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-13716",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-13716",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-13716?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6716",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-6716",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6716",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-6716?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-6228",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-6228",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-6228",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-6228?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-3164",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-3164",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-3164",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-3164?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1916",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-1916",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1916",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-1916?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-1210",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-1210",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-1210",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-1210?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-10126",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-10126",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-10126",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-10126?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9117",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-9117",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9117",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-9117?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-5563",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-5563",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-5563",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-5563?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17973",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-17973",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17973",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-17973?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-16232",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-16232",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-16232",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-16232?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38289",
+              "severity": "unknown",
+              "description": "x UNSPECIFIED CVE-2023-38289",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38289",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-38289?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38288",
+              "severity": "unknown",
+              "description": "x UNSPECIFIED CVE-2023-38288",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38288",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-38288?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-9192",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-9192",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-9192",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-9192?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010025",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010025",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010025",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010025?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010024",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010024",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010024",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010024?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010023",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010023",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010023",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010023?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010022",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010022",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010022",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010022?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20796",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20796",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20796",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20796?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-4756",
+              "severity": "unknown",
+              "description": "x LOW CVE-2010-4756",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-4756",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2010-4756?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31439",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31439",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31439",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31439?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31438",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31438",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31438",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31438?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31437",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31437",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31437",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31437?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2013-4392",
+              "severity": "unknown",
+              "description": "x LOW CVE-2013-4392",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2013-4392",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2013-4392?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-15719",
+              "severity": "unknown",
+              "description": "x LOW CVE-2020-15719",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-15719",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2020-15719?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17740",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-17740",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17740",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-17740?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-14159",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-14159",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-14159",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-14159?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2015-3276",
+              "severity": "unknown",
+              "description": "x LOW CVE-2015-3276",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2015-3276",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2015-3276?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26461",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-26461",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26461",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-26461?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26458",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-26458",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26458",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-26458?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-5709",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-5709",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-5709",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-5709?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31486",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31486",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31486",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31486?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D5.36.0-7%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-4116",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-4116",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-4116",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-4116?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D5.36.0-7%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-27587",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-27587",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-27587",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-27587?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.0.16-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-0928",
+              "severity": "unknown",
+              "description": "x LOW CVE-2010-0928",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-0928",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2010-0928?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.0.11-1%7Edeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2236",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-2236",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2236",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-2236?s=debian&n=libgcrypt20&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.10.1-3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-6829",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-6829",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-6829",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-6829?s=debian&n=libgcrypt20&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.10.1-3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-25269",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-25269",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-25269",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-25269?s=debian&n=libheif&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.15.1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-49463",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-49463",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-49463",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-49463?s=debian&n=libheif&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.15.1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0725",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-0725",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0725",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-0725?s=debian&n=curl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D7.88.1-10%2Bdeb12u12",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2379",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-2379",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2379",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-2379?s=debian&n=curl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D7.88.1-10%2Bdeb12u12",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5278",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5278",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5278",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5278?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D9.1-1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-18018",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-18018",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-18018",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-18018?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D9.1-1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-28757",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-28757",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-28757",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-28757?s=debian&n=expat&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.0-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-52426",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-52426",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-52426",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-52426?s=debian&n=expat&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.0-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-0563",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-0563",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-0563",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-0563?s=debian&n=util-linux&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.38.1-5%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9937",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-9937",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9937",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-9937?s=debian&n=jbigkit&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.1-6.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2005-2541",
+              "severity": "unknown",
+              "description": "x LOW CVE-2005-2541",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2005-2541",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2005-2541?s=debian&n=tar&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.34%2Bdfsg-1.2%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3374",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-3374",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3374",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-3374?s=debian&n=apt&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.6.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-45346",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-45346",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-45346",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-45346?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.40.1-2%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-36325",
+              "severity": "unknown",
+              "description": "x LOW CVE-2020-36325",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-36325",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2020-36325?s=debian&n=jansson&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.14-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-27943",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-27943",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-27943",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-27943?s=debian&n=gcc-12&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D12.2.0-14%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-4214",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-4214",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-4214",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-4214?s=debian&n=libpng1.6&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.6.39-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3389",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-3389",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3389",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-3389?s=debian&n=gnutls28&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.7.9-2%2Bdeb12u4",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-3219",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-3219",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-3219",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-3219?s=debian&n=gnupg2&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.2.40-1.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2007-5686",
+              "severity": "unknown",
+              "description": "x LOW CVE-2007-5686",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2007-5686",
+              "severity": "low",
+              "description": "https://scout.docker.com/v/CVE-2007-5686?s=debian&n=shadow&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1%3A4.13%2Bdfsg1-1%2Bdeb12u1",
+              "package": "unknown"
+            }
+          ],
+          "total_vulnerabilities": 168
+        },
+        "a1betting-master-main-frontend:latest": {
+          "status": "success",
+          "scanner": "docker_scout",
+          "vulnerabilities": [
+            {
+              "cve_id": "CVE-2025-32414",
+              "severity": "unknown",
+              "description": "x MEDIUM CVE-2025-32414",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-32414",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-32414?s=alpine&n=libxml2&ns=alpine&t=apk&osn=alpine&osv=3.21&vr=%3C2.13.4-r6",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-32415",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-32415",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-32415",
+              "severity": "low",
+              "description": "https://scout.docker.com/v/CVE-2025-32415?s=alpine&n=libxml2&ns=alpine&t=apk&osn=alpine&osv=3.21&vr=%3C2.13.4-r6",
+              "package": "unknown"
+            }
+          ],
+          "total_vulnerabilities": 4
+        },
+        "<none>:<none>": {
+          "status": "error",
+          "message": "Failed to inspect image"
+        },
+        "a1betting-master-main-model-service:latest": {
+          "status": "success",
+          "scanner": "docker_scout",
+          "vulnerabilities": [
+            {
+              "cve_id": "CVE-2025-47273",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2025-47273 [Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-47273",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-47273?s=github&n=setuptools&t=pypi&vr=%3C78.1.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6345",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2024-6345 [Improper Control of Generation of Code ('Code Injection')]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6345",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-6345?s=github&n=setuptools&t=pypi&vr=%3C70.0.0",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-6020",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2025-6020",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-6020",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-6020?s=debian&n=pam&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.5.2-6%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3730",
+              "severity": "unknown",
+              "description": "x MEDIUM CVE-2025-3730 [Improper Resource Shutdown or Release]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3730",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-3730?s=github&n=torch&t=pypi&vr=%3C%3D2.7.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5245",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5245",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5245",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5245?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5244",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5244",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5244",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5244?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3198",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-3198",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3198",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-3198?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1182",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1182",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1182",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1182?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1181",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1181",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1181",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1181?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1180",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1180",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1180",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1180?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1179",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1179",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1179",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1179?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1178",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1178",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1178",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1178?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1176",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1176",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1176",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1176?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1153",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1153",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1153",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1153?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1152",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1152",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1152",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1152?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1151",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1151",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1151",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1151?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1150",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1150",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1150",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1150?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1149",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1149",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1149",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1149?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1148",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1148",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1148",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1148?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1147",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1147",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1147",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1147?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0840",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-0840",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0840",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-0840?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-57360",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-57360",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-57360",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-57360?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-53589",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-53589",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-53589",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-53589?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1972",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-1972",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1972",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-1972?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-32256",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-32256",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-32256",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-32256?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-9996",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-9996",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-9996",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-9996?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20712",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20712",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20712",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20712?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20673",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20673",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20673",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20673?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-13716",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-13716",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-13716",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-13716?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6716",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-6716",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6716",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-6716?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-6228",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-6228",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-6228",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-6228?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-3164",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-3164",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-3164",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-3164?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1916",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-1916",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1916",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-1916?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-1210",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-1210",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-1210",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-1210?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-10126",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-10126",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-10126",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-10126?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9117",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-9117",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9117",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-9117?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-5563",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-5563",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-5563",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-5563?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17973",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-17973",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17973",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-17973?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-16232",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-16232",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-16232",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-16232?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38289",
+              "severity": "unknown",
+              "description": "x UNSPECIFIED CVE-2023-38289",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38289",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-38289?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38288",
+              "severity": "unknown",
+              "description": "x UNSPECIFIED CVE-2023-38288",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38288",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-38288?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-9192",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-9192",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-9192",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-9192?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010025",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010025",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010025",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010025?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010024",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010024",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010024",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010024?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010023",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010023",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010023",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010023?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010022",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010022",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010022",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010022?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20796",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20796",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20796",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20796?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-4756",
+              "severity": "unknown",
+              "description": "x LOW CVE-2010-4756",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-4756",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2010-4756?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-15719",
+              "severity": "unknown",
+              "description": "x LOW CVE-2020-15719",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-15719",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2020-15719?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17740",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-17740",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17740",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-17740?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-14159",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-14159",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-14159",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-14159?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2015-3276",
+              "severity": "unknown",
+              "description": "x LOW CVE-2015-3276",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2015-3276",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2015-3276?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31439",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31439",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31439",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31439?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31438",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31438",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31438",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31438?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31437",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31437",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31437",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31437?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2013-4392",
+              "severity": "unknown",
+              "description": "x LOW CVE-2013-4392",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2013-4392",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2013-4392?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26461",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-26461",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26461",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-26461?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26458",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-26458",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26458",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-26458?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-5709",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-5709",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-5709",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-5709?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2236",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-2236",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2236",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-2236?s=debian&n=libgcrypt20&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.10.1-3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-6829",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-6829",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-6829",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-6829?s=debian&n=libgcrypt20&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.10.1-3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-27587",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-27587",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-27587",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-27587?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.0.16-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-0928",
+              "severity": "unknown",
+              "description": "x LOW CVE-2010-0928",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-0928",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2010-0928?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.0.11-1%7Edeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31486",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31486",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31486",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31486?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D5.36.0-7%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-4116",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-4116",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-4116",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-4116?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D5.36.0-7%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-28757",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-28757",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-28757",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-28757?s=debian&n=expat&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.0-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-52426",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-52426",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-52426",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-52426?s=debian&n=expat&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.0-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-25269",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-25269",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-25269",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-25269?s=debian&n=libheif&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.15.1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-49463",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-49463",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-49463",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-49463?s=debian&n=libheif&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.15.1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5278",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5278",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5278",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5278?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D9.1-1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-18018",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-18018",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-18018",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-18018?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D9.1-1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0725",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-0725",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0725",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-0725?s=debian&n=curl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D7.88.1-10%2Bdeb12u12",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2379",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-2379",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2379",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-2379?s=debian&n=curl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D7.88.1-10%2Bdeb12u12",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9937",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-9937",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9937",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-9937?s=debian&n=jbigkit&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.1-6.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-4214",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-4214",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-4214",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-4214?s=debian&n=libpng1.6&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.6.39-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-45346",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-45346",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-45346",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-45346?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.40.1-2%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-27943",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-27943",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-27943",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-27943?s=debian&n=gcc-12&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D12.2.0-14%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3374",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-3374",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3374",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-3374?s=debian&n=apt&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.6.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-36325",
+              "severity": "unknown",
+              "description": "x LOW CVE-2020-36325",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-36325",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2020-36325?s=debian&n=jansson&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.14-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2005-2541",
+              "severity": "unknown",
+              "description": "x LOW CVE-2005-2541",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2005-2541",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2005-2541?s=debian&n=tar&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.34%2Bdfsg-1.2%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-0563",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-0563",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-0563",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-0563?s=debian&n=util-linux&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.38.1-5%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3389",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-3389",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3389",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-3389?s=debian&n=gnutls28&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.7.9-2%2Bdeb12u4",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2007-5686",
+              "severity": "unknown",
+              "description": "x LOW CVE-2007-5686",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2007-5686",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2007-5686?s=debian&n=shadow&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1%3A4.13%2Bdfsg1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-3219",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-3219",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-3219",
+              "severity": "low",
+              "description": "https://scout.docker.com/v/CVE-2022-3219?s=debian&n=gnupg2&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.2.40-1.1",
+              "package": "unknown"
+            }
+          ],
+          "total_vulnerabilities": 168
+        },
+        "a1betting-master-main-flower:latest": {
+          "status": "success",
+          "scanner": "docker_scout",
+          "vulnerabilities": [
+            {
+              "cve_id": "CVE-2025-47273",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2025-47273 [Improper Limitation of a Pathname to a Restricted Directory ('Path Traversal')]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-47273",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-47273?s=github&n=setuptools&t=pypi&vr=%3C78.1.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6345",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2024-6345 [Improper Control of Generation of Code ('Code Injection')]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6345",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-6345?s=github&n=setuptools&t=pypi&vr=%3C70.0.0",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-6020",
+              "severity": "unknown",
+              "description": "x HIGH CVE-2025-6020",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-6020",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-6020?s=debian&n=pam&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.5.2-6%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3730",
+              "severity": "unknown",
+              "description": "x MEDIUM CVE-2025-3730 [Improper Resource Shutdown or Release]",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3730",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-3730?s=github&n=torch&t=pypi&vr=%3C%3D2.7.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5245",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5245",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5245",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5245?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5244",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5244",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5244",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5244?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3198",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-3198",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-3198",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-3198?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1182",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1182",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1182",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1182?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1181",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1181",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1181",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1181?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1180",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1180",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1180",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1180?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1179",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1179",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1179",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1179?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1178",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1178",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1178",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1178?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1176",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1176",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1176",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1176?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1153",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1153",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1153",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1153?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1152",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1152",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1152",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1152?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1151",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1151",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1151",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1151?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1150",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1150",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1150",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1150?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1149",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1149",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1149",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1149?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1148",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1148",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1148",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1148?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1147",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-1147",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-1147",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-1147?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0840",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-0840",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0840",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-0840?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-57360",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-57360",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-57360",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-57360?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-53589",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-53589",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-53589",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-53589?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1972",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-1972",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1972",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-1972?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-32256",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-32256",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-32256",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-32256?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-9996",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-9996",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-9996",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-9996?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20712",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20712",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20712",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20712?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20673",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20673",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20673",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20673?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-13716",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-13716",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-13716",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-13716?s=debian&n=binutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.40-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6716",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-6716",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-6716",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-6716?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-6228",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-6228",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-6228",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-6228?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-3164",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-3164",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-3164",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-3164?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1916",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-1916",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-1916",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-1916?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-1210",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-1210",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-1210",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-1210?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-10126",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-10126",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-10126",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-10126?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9117",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-9117",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9117",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-9117?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-5563",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-5563",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-5563",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-5563?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17973",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-17973",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17973",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-17973?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-16232",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-16232",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-16232",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-16232?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38289",
+              "severity": "unknown",
+              "description": "x UNSPECIFIED CVE-2023-38289",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38289",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-38289?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38288",
+              "severity": "unknown",
+              "description": "x UNSPECIFIED CVE-2023-38288",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-38288",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-38288?s=debian&n=tiff&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D4.5.0-6",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-9192",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-9192",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-9192",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-9192?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010025",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010025",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010025",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010025?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010024",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010024",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010024",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010024?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010023",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010023",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010023",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010023?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010022",
+              "severity": "unknown",
+              "description": "x LOW CVE-2019-1010022",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2019-1010022",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2019-1010022?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20796",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-20796",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-20796",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-20796?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-4756",
+              "severity": "unknown",
+              "description": "x LOW CVE-2010-4756",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-4756",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2010-4756?s=debian&n=glibc&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.36-9%2Bdeb12u10",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31439",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31439",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31439",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31439?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31438",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31438",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31438",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31438?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31437",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31437",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31437",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31437?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2013-4392",
+              "severity": "unknown",
+              "description": "x LOW CVE-2013-4392",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2013-4392",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2013-4392?s=debian&n=systemd&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D252.36-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-15719",
+              "severity": "unknown",
+              "description": "x LOW CVE-2020-15719",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-15719",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2020-15719?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17740",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-17740",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-17740",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-17740?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-14159",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-14159",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-14159",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-14159?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2015-3276",
+              "severity": "unknown",
+              "description": "x LOW CVE-2015-3276",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2015-3276",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2015-3276?s=debian&n=openldap&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.13%2Bdfsg-5",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26461",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-26461",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26461",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-26461?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26458",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-26458",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-26458",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-26458?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-5709",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-5709",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-5709",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-5709?s=debian&n=krb5&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.20.1-2%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-28757",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-28757",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-28757",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-28757?s=debian&n=expat&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.0-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-52426",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-52426",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-52426",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-52426?s=debian&n=expat&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.5.0-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5278",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-5278",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-5278",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-5278?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D9.1-1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-18018",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-18018",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-18018",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2017-18018?s=debian&n=coreutils&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D9.1-1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-25269",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-25269",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-25269",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-25269?s=debian&n=libheif&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.15.1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-49463",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-49463",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-49463",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-49463?s=debian&n=libheif&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.15.1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31486",
+              "severity": "unknown",
+              "description": "x LOW CVE-2023-31486",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2023-31486",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2023-31486?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D5.36.0-7%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-4116",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-4116",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-4116",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-4116?s=debian&n=perl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D5.36.0-7%2Bdeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2236",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-2236",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2236",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-2236?s=debian&n=libgcrypt20&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.10.1-3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-6829",
+              "severity": "unknown",
+              "description": "x LOW CVE-2018-6829",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2018-6829",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2018-6829?s=debian&n=libgcrypt20&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.10.1-3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-27587",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-27587",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-27587",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-27587?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.0.16-1%7Edeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-0928",
+              "severity": "unknown",
+              "description": "x LOW CVE-2010-0928",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2010-0928",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2010-0928?s=debian&n=openssl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.0.11-1%7Edeb12u2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0725",
+              "severity": "unknown",
+              "description": "x LOW CVE-2025-0725",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2025-0725",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2025-0725?s=debian&n=curl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D7.88.1-10%2Bdeb12u12",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2379",
+              "severity": "unknown",
+              "description": "x LOW CVE-2024-2379",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2024-2379",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2024-2379?s=debian&n=curl&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D7.88.1-10%2Bdeb12u12",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2005-2541",
+              "severity": "unknown",
+              "description": "x LOW CVE-2005-2541",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2005-2541",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2005-2541?s=debian&n=tar&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.34%2Bdfsg-1.2%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2007-5686",
+              "severity": "unknown",
+              "description": "x LOW CVE-2007-5686",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2007-5686",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2007-5686?s=debian&n=shadow&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1%3A4.13%2Bdfsg1-1%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-3219",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-3219",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-3219",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-3219?s=debian&n=gnupg2&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.2.40-1.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-36325",
+              "severity": "unknown",
+              "description": "x LOW CVE-2020-36325",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2020-36325",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2020-36325?s=debian&n=jansson&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.14-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-27943",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-27943",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-27943",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-27943?s=debian&n=gcc-12&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D12.2.0-14%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-0563",
+              "severity": "unknown",
+              "description": "x LOW CVE-2022-0563",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2022-0563",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2022-0563?s=debian&n=util-linux&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.38.1-5%2Bdeb12u3",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-4214",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-4214",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-4214",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-4214?s=debian&n=libpng1.6&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D1.6.39-2",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3374",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-3374",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3374",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-3374?s=debian&n=apt&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.6.1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3389",
+              "severity": "unknown",
+              "description": "x LOW CVE-2011-3389",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2011-3389",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2011-3389?s=debian&n=gnutls28&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.7.9-2%2Bdeb12u4",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-45346",
+              "severity": "unknown",
+              "description": "x LOW CVE-2021-45346",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2021-45346",
+              "severity": "unknown",
+              "description": "https://scout.docker.com/v/CVE-2021-45346?s=debian&n=sqlite3&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D3.40.1-2%2Bdeb12u1",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9937",
+              "severity": "unknown",
+              "description": "x LOW CVE-2017-9937",
+              "package": "unknown"
+            },
+            {
+              "cve_id": "CVE-2017-9937",
+              "severity": "low",
+              "description": "https://scout.docker.com/v/CVE-2017-9937?s=debian&n=jbigkit&ns=debian&t=deb&osn=debian&osv=12&vr=%3E%3D2.1-6.1",
+              "package": "unknown"
+            }
+          ],
+          "total_vulnerabilities": 168
+        }
+      }
+    },
+    "compose_scans": {
+      "docker-compose.yml": {
+        "status": "success",
+        "compose_file": "docker-compose.yml",
+        "services_scanned": 13,
+        "security_issues": [],
+        "recommendations": [
+          "Use secrets management for sensitive data",
+          "Implement least privilege principle for containers",
+          "Regular security updates for base images"
+        ],
+        "summary": {
+          "total_issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0
+        }
+      },
+      "docker-compose.prod.yml": {
+        "status": "success",
+        "compose_file": "docker-compose.prod.yml",
+        "services_scanned": 2,
+        "security_issues": [],
+        "recommendations": [
+          "Use secrets management for sensitive data",
+          "Implement least privilege principle for containers",
+          "Regular security updates for base images"
+        ],
+        "summary": {
+          "total_issues": 0,
+          "high_severity": 0,
+          "medium_severity": 0,
+          "low_severity": 0
+        }
+      }
+    }
+  },
+  "security_summary": {
+    "total_issues": 509,
+    "critical_issues": 0,
+    "high_issues": 0,
+    "medium_issues": 0,
+    "low_issues": 1,
+    "dockerfiles_scanned": 2,
+    "images_scanned": 5,
+    "compose_files_scanned": 2,
+    "security_score": 99
+  },
+  "recommendations": [
+    "Regularly update base images to latest security patches",
+    "Use multi-stage builds to reduce image size and attack surface",
+    "Implement Docker Content Trust for image signing",
+    "Use secrets management instead of environment variables for sensitive data",
+    "Run containers with non-root users when possible",
+    "Implement network segmentation for Docker containers",
+    "Monitor container runtime for anomalous behavior"
+  ]
+}

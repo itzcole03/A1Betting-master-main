@@ -1,0 +1,256 @@
+{
+  "timestamp": "2025-06-27T10:14:54.910455",
+  "summary": {
+    "total_profiles": 5,
+    "successful_profiles": 5,
+    "failed_profiles": 0,
+    "success_rate": 100.0
+  },
+  "profile_results": {
+    "startup_time": {
+      "cold_start": {
+        "description": "Cold start (fresh process)",
+        "average_time": 11.022720575332642,
+        "min_time": 8.841662645339966,
+        "max_time": 13.276387214660645,
+        "attempts": [
+          10.950111865997314,
+          8.841662645339966,
+          13.276387214660645
+        ]
+      },
+      "warm_start": {
+        "description": "Warm start (cached imports)",
+        "average_time": 10.894415537516275,
+        "min_time": 10.618836879730225,
+        "max_time": 11.15066409111023,
+        "attempts": [
+          11.15066409111023,
+          10.913745641708374,
+          10.618836879730225
+        ]
+      },
+      "production_mode": {
+        "description": "Production mode startup",
+        "average_time": 10.60744055112203,
+        "min_time": 8.961440324783325,
+        "max_time": 12.079205513000488,
+        "attempts": [
+          8.961440324783325,
+          12.079205513000488,
+          10.781675815582275
+        ]
+      }
+    },
+    "memory_usage": {
+      "system_memory": {
+        "total": 34276843520,
+        "available": 13452660736,
+        "percent_used": 60.8,
+        "free": 13452660736,
+        "cached": 0
+      },
+      "process_memory": {
+        "rss": 22147072,
+        "vms": 14327808,
+        "percent": 0.06462429361990447,
+        "memory_maps": 41
+      },
+      "memory_leaks": [
+        {
+          "type": "increasing_memory_trend",
+          "description": "Memory usage is consistently increasing",
+          "severity": "medium"
+        }
+      ],
+      "memory_timeline": [
+        {
+          "timestamp": 1751037286.42426,
+          "total_size": 60647,
+          "block_count": 18
+        },
+        {
+          "timestamp": 1751037286.9292977,
+          "total_size": 64543,
+          "block_count": 30
+        },
+        {
+          "timestamp": 1751037287.4332,
+          "total_size": 66951,
+          "block_count": 30
+        },
+        {
+          "timestamp": 1751037287.9382474,
+          "total_size": 67087,
+          "block_count": 31
+        },
+        {
+          "timestamp": 1751037288.4428833,
+          "total_size": 67367,
+          "block_count": 32
+        },
+        {
+          "timestamp": 1751037288.9474661,
+          "total_size": 67663,
+          "block_count": 32
+        },
+        {
+          "timestamp": 1751037289.4527216,
+          "total_size": 67759,
+          "block_count": 32
+        },
+        {
+          "timestamp": 1751037289.958245,
+          "total_size": 67855,
+          "block_count": 32
+        },
+        {
+          "timestamp": 1751037290.464285,
+          "total_size": 67935,
+          "block_count": 32
+        },
+        {
+          "timestamp": 1751037290.970175,
+          "total_size": 68159,
+          "block_count": 33
+        }
+      ]
+    },
+    "cpu_performance": {
+      "system_cpu": {
+        "logical_cores": 24,
+        "physical_cores": 12,
+        "current_freq": 3801.0,
+        "max_freq": 3801.0,
+        "cpu_percent": 64.2,
+        "per_cpu_percent": [
+          84.8,
+          93.8,
+          92.2,
+          76.6,
+          92.3,
+          84.4,
+          83.3,
+          67.7,
+          73.8,
+          67.7,
+          81.5,
+          56.9,
+          67.2,
+          46.2,
+          80.0,
+          43.1,
+          72.3,
+          46.9,
+          53.8,
+          40.6,
+          60.0,
+          40.9,
+          57.6,
+          35.9
+        ]
+      },
+      "process_cpu": {
+        "cpu_percent": 0.0,
+        "cpu_times": {
+          "user": 0.125,
+          "system": 0.171875,
+          "children_user": 0.0,
+          "children_system": 0.0
+        },
+        "num_threads": 3,
+        "cpu_affinity": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23
+        ]
+      },
+      "cpu_intensive_operations": [
+        {
+          "test_name": "fibonacci_calculation",
+          "execution_time": 0.18496370315551758,
+          "cpu_usage_start": 70.6,
+          "cpu_usage_end": 76.5,
+          "result": 832040
+        },
+        {
+          "test_name": "string_processing",
+          "execution_time": 0.040306806564331055,
+          "cpu_usage_start": 0.0,
+          "cpu_usage_end": 69.9,
+          "result": 5588890
+        },
+        {
+          "test_name": "mathematical_operations",
+          "execution_time": 0.03294515609741211,
+          "cpu_usage_start": 0.0,
+          "cpu_usage_end": 76.0,
+          "result": 3264.0463556813597
+        }
+      ]
+    },
+    "i/o_performance": {
+      "disk_io": {
+        "total": 1998155935744,
+        "used": 1480127934464,
+        "free": 518028001280,
+        "percent": 74.07469597275872
+      },
+      "network_io": {
+        "bytes_sent": 1877313094,
+        "bytes_recv": 30134684029,
+        "packets_sent": 4254922,
+        "packets_recv": 79757
+      },
+      "file_operations": [
+        {
+          "operation": "write_1mb",
+          "time": 0.008008718490600586,
+          "throughput_mb_per_sec": 124.86392188383793
+        },
+        {
+          "operation": "read_1mb",
+          "time": 0.01502847671508789,
+          "throughput_mb_per_sec": 66.54034330678681
+        }
+      ]
+    },
+    "code_complexity": {
+      "cyclomatic_complexity": {},
+      "code_metrics": {
+        "total_python_files": 77,
+        "total_lines_of_code": 40925,
+        "average_lines_per_file": 531.4935064935065
+      },
+      "hotspots": []
+    }
+  },
+  "errors": [],
+  "recommendations": [
+    "Optimize cold_start: 11.02s startup time is too slow",
+    "Optimize warm_start: 10.89s startup time is too slow",
+    "Optimize production_mode: 10.61s startup time is too slow",
+    "Investigate potential memory leaks detected during profiling"
+  ]
+}
