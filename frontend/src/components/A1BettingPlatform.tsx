@@ -34,11 +34,27 @@ import {
   Gamepad2,
 } from 'lucide-react';
 
-// Lazy load major components for performance
-const Dashboard = React.lazy(() => import('./Dashboard'));
-const BettingInterface = React.lazy(() => import('./BettingInterface'));
-const PredictionDisplay = React.lazy(() => import('./PredictionDisplay'));
-const UserProfile = React.lazy(() => import('./UserProfile'));
+// Lazy load major components for performance with fallbacks
+const Dashboard = React.lazy(() =>
+  import('./Dashboard').catch(() => ({
+    default: () => <div className='p-8 text-white'>Dashboard loading...</div>,
+  }))
+);
+const BettingInterface = React.lazy(() =>
+  import('./BettingInterface').catch(() => ({
+    default: () => <div className='p-8 text-white'>Betting Interface loading...</div>,
+  }))
+);
+const PredictionDisplay = React.lazy(() =>
+  import('./PredictionDisplay').catch(() => ({
+    default: () => <div className='p-8 text-white'>Predictions loading...</div>,
+  }))
+);
+const UserProfile = React.lazy(() =>
+  import('./UserProfile').catch(() => ({
+    default: () => <div className='p-8 text-white'>Profile loading...</div>,
+  }))
+);
 
 /**
  * A1Betting Platform - Enterprise-Grade Sports Betting Intelligence
