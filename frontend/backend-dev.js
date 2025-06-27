@@ -185,11 +185,11 @@ app.get("/api/v4/betting/value-bets", (req, res) => {
   });
 });
 
-// Backward compatibility endpoint for value-bets;
+// Backward compatibility endpoint for value-bets
 app.get("/api/value-bets", (req, res) => {
   const { limit = 10 } = req.query;
-  const valueBets = mockBettingOpportunities;
-    .filter((opp) => opp.expected_value > 0.05) // Only high value bets;
+  const valueBets = mockBettingOpportunities
+    .filter((opp) => opp.expected_value > 0.05) // Only high value bets
     .map((opp) => ({
       id: opp.id,
       sport: opp.sport,
