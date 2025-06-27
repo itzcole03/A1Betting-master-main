@@ -1,5 +1,5 @@
-import React from 'react';
-import { MotionProps } from 'framer-motion';
+import React from 'react.ts';
+import { MotionProps } from 'framer-motion.ts';
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
     size?: 'sm' | 'md' | 'lg';

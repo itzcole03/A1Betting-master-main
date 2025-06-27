@@ -40,10 +40,10 @@ export class ErrorHandler {
     error: Error | unknown,
     source: string,
     severity: ErrorSeverity = 'medium',
-    details?: ErrorDetails
+    details?: ErrorDetails;
   ): void {
     try {
-      const errorObj = error instanceof Error ? error : new Error(String(error));
+
       const errorEntry = {
         error: errorObj,
         source,
@@ -59,25 +59,25 @@ export class ErrorHandler {
 
       this.eventBus.emit('error:occurred', errorEntry);
 
-      // Log error based on severity
+      // Log error based on severity;
       switch (severity) {
         case 'high':
-          console.error(`[${source}] Critical error:`, errorObj, details);
+          // console statement removed
           break;
         case 'medium':
-          console.warn(`[${source}] Warning:`, errorObj, details);
+          // console statement removed
           break;
         case 'low':
           console.info(`[${source}] Info:`, errorObj, details);
           break;
       }
 
-      // Handle high severity errors
+      // Handle high severity errors;
       if (severity === 'high') {
         this.handleCriticalError(errorEntry);
       }
     } catch (e) {
-      console.error('Error in error handler:', e);
+      // console statement removed
     }
   }
 
@@ -96,7 +96,7 @@ export class ErrorHandler {
     source?: string,
     severity?: ErrorSeverity,
     startTime?: number,
-    endTime?: number
+    endTime?: number;
   ): Array<{
     error: Error;
     source: string;

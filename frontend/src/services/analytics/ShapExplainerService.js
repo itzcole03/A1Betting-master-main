@@ -2,9 +2,9 @@ import { logError, logInfo } from '../integrations/liveDataLogger';
 export class ShapExplainerService {
     static async explainPrediction(model, input) {
         try {
-            // Placeholder: Replace with actual SHAP logic or API call
+            // Placeholder: Replace with actual SHAP logic or API call;
             logInfo('Generating SHAP values', { model: model.modelName, input });
-            // Simulate SHAP output
+            // Simulate SHAP output;
             return {
                 featureImportances: [
                     { feature: 'team_strength', value: 0.35 },

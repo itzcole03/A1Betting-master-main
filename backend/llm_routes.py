@@ -41,7 +41,7 @@ def llm_endpoint(endpoint_name: str, timeout: float = 30.0, retries: int = 1):
                     ).inc()
                     llm_cache[key] = result
                     return result
-                except Exception:
+                except Exception:  # pylint: disable=broad-exception-caught
                     llm_request_count.labels(
                         endpoint=endpoint_name, status="error"
                     ).inc()
@@ -170,7 +170,7 @@ async def explain_bet(request: ExplainBetRequest):
         )
         explanation = await llm_engine.generate_text(prompt)
         return ExplainBetResponse(explanation=explanation)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         raise HTTPException(status_code=500, detail=str(e))
 
 
@@ -203,7 +203,7 @@ async def generate_scenarios(request: ScenarioRequest):
             line.strip("- • ").strip() for line in text.splitlines() if line.strip()
         ]
         return ScenarioResponse(scenarios=items)
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         raise HTTPException(status_code=500, detail=str(e))
 
 

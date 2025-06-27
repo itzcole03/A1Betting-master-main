@@ -35,11 +35,11 @@ const MoneyMakerAdvanced = () => {
     const handlePlaceBet = useCallback(async (opportunity) => {
         try {
             await axios.post('/api/place-bet', { opportunityId: opportunity.id });
-            // Optionally refresh opportunities or show toast
+            // Optionally refresh opportunities or show toast;
         }
         catch (err) {
-            // Optionally show error toast
-            console.error('Error placing bet:', err);
+            // Optionally show error toast;
+            // console statement removed
         }
     }, []);
     if (loading) {

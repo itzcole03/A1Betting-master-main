@@ -1,5 +1,5 @@
-// Base class for all API connectors
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+// Base class for all API connectors;
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios.ts';
 
 export abstract class ApiBase {
   protected client: AxiosInstance;
@@ -28,8 +28,8 @@ export abstract class ApiBase {
   }
 
   protected logError(error: any, config: AxiosRequestConfig) {
-    // Log to console and optionally to /logs/liveData.log
-    console.error(`[API ERROR] ${config.url}:`, error.message);
-    // TODO: Append to /logs/liveData.log if running in Node
+    // Log to console and optionally to /logs/liveData.log;
+    // console statement removed
+    // TODO: Append to /logs/liveData.log if running in Node;
   }
 }

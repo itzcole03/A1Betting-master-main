@@ -1,32 +1,32 @@
 import { EventEmitter } from 'events';
 import { apiService } from './api/ApiService';
 /**
- * Modern OddsService with proper TypeScript and error handling
+ * Modern OddsService with proper TypeScript and error handling;
  */
 export class OddsService extends EventEmitter {
     constructor() {
         super();
         this.cache = new Map();
-        this.CACHE_TTL = 30000; // 30 seconds
+        this.CACHE_TTL = 30000; // 30 seconds;
         this.initializeHealthChecking();
     }
     initializeHealthChecking() {
-        // Report status for monitoring
+        // Report status for monitoring;
         setInterval(() => {
             this.reportStatus('odds-service', true, 0.9);
         }, 30000);
     }
     /**
-     * Fetch live odds for sports events
+     * Fetch live odds for sports events;
      */
     async getLiveOdds(sport = 'americanfootball_nfl') {
-        const cacheKey = `live-odds-${sport}`;
-        // Check cache first
-        const cached = this.getCachedData(cacheKey);
+
+        // Check cache first;
+
         if (cached)
             return cached;
         try {
-            const response = await apiService.getOdds({ sport });
+
             if (response.success && response.data) {
                 this.setCachedData(cacheKey, response.data);
                 this.emit('odds:updated', { sport, data: response.data });
@@ -36,13 +36,13 @@ export class OddsService extends EventEmitter {
             throw new Error('Failed to fetch live odds');
         }
         catch (error) {
-            console.error('Error fetching live odds:', error);
+            // console statement removed
             this.reportStatus('live-odds', false, 0.1);
             return this.getFallbackOdds(sport);
         }
     }
     /**
-     * Get market analysis for a specific market
+     * Get market analysis for a specific market;
      */
     async getMarketAnalysis(market, options) {
         try {
@@ -56,12 +56,12 @@ export class OddsService extends EventEmitter {
             return response;
         }
         catch (error) {
-            console.error('Error fetching market analysis:', error);
+            // console statement removed
             throw error;
         }
     }
     /**
-     * Get available bookmakers
+     * Get available bookmakers;
      */
     async getBookmakers() {
         try {
@@ -73,12 +73,12 @@ export class OddsService extends EventEmitter {
             return response;
         }
         catch (error) {
-            console.error('Error fetching bookmakers:', error);
+            // console statement removed
             return ['draftkings', 'fanduel', 'betmgm', 'caesars'];
         }
     }
     /**
-     * Get historical odds data
+     * Get historical odds data;
      */
     async getHistoricalOdds(market, options) {
         try {
@@ -95,12 +95,12 @@ export class OddsService extends EventEmitter {
             return [];
         }
         catch (error) {
-            console.error('Error fetching historical odds:', error);
+            // console statement removed
             return [];
         }
     }
     /**
-     * Get arbitrage opportunities
+     * Get arbitrage opportunities;
      */
     async getArbitrageOpportunities(options) {
         try {
@@ -117,28 +117,28 @@ export class OddsService extends EventEmitter {
             return [];
         }
         catch (error) {
-            console.error('Error fetching arbitrage opportunities:', error);
+            // console statement removed
             return [];
         }
     }
     /**
-     * Get cached data if still valid
+     * Get cached data if still valid;
      */
     getCachedData(key) {
-        const cached = this.cache.get(key);
+
         if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
             return cached.data;
         }
         return null;
     }
     /**
-     * Set data in cache
+     * Set data in cache;
      */
     setCachedData(key, data) {
         this.cache.set(key, { data, timestamp: Date.now() });
     }
     /**
-     * Report service status for monitoring
+     * Report service status for monitoring;
      */
     reportStatus(source, connected, quality) {
         if (typeof window !== 'undefined') {
@@ -148,7 +148,7 @@ export class OddsService extends EventEmitter {
         console.info(`[OddsService] ${source} status:`, { connected, quality });
     }
     /**
-     * Fallback odds data when API fails
+     * Fallback odds data when API fails;
      */
     getFallbackOdds(sport) {
         return [
@@ -178,5 +178,5 @@ export class OddsService extends EventEmitter {
         ];
     }
 }
-// Export singleton instance
+// Export singleton instance;
 export const oddsService = new OddsService();

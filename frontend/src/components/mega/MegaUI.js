@@ -89,7 +89,7 @@ export const MegaButton = ({ children, onClick, variant = "secondary", size = "m
         }, onMouseLeave: (e) => {
             if (!disabled && !loading) {
                 e.currentTarget.style.transform = "translateY(0)";
-                const originalStyle = getVariantStyle();
+
                 e.currentTarget.style.boxShadow = originalStyle.boxShadow || "none";
                 e.currentTarget.style.background = originalStyle.background;
             }
@@ -168,7 +168,7 @@ export const MegaCard = ({ children, title, subtitle, headerActions, footer, var
         }, children: [(title || subtitle || headerActions) && (_jsx("div", { style: {
                     padding: getPaddingStyle(),
                     paddingBottom: children ? "16px" : getPaddingStyle(),
-                    borderBottom: children
+                    borderBottom: children;
                         ? "1px solid rgba(255, 255, 255, 0.05)"
                         : "none",
                 }, children: _jsxs("div", { style: {
@@ -176,7 +176,7 @@ export const MegaCard = ({ children, title, subtitle, headerActions, footer, var
                         justifyContent: "space-between",
                         alignItems: "flex-start",
                     }, children: [_jsxs("div", { children: [title && (_jsx(CyberText, { variant: "title", style: { marginBottom: subtitle ? "4px" : "0" }, children: title })), subtitle && (_jsx(CyberText, { variant: "body", color: "muted", children: subtitle }))] }), headerActions && _jsx("div", { children: headerActions })] }) })), children && (_jsx("div", { style: {
-                    padding: title || subtitle || headerActions
+                    padding: title || subtitle || headerActions;
                         ? `0 ${getPaddingStyle()} ${getPaddingStyle()}`
                         : getPaddingStyle(),
                 }, children: children })), footer && (_jsx("div", { style: {
@@ -245,13 +245,13 @@ export const MegaInput = ({ type = "text", placeholder, value, onChange, label, 
                             pointerEvents: "none",
                         }, children: icon })), _jsx("input", { type: type, placeholder: placeholder, value: value, onChange: (e) => onChange?.(e.target.value), disabled: disabled, style: {
                             width: "100%",
-                            padding: icon
+                            padding: icon;
                                 ? iconPosition === "left"
                                     ? "14px 18px 14px 44px"
                                     : "14px 44px 14px 18px"
                                 : "14px 18px",
                             borderRadius: "12px",
-                            border: error
+                            border: error;
                                 ? "1px solid #ff6b6b"
                                 : "1px solid rgba(255, 255, 255, 0.08)",
                             backgroundColor: "rgba(255, 255, 255, 0.04)",
@@ -268,7 +268,7 @@ export const MegaInput = ({ type = "text", placeholder, value, onChange, label, 
                             e.target.style.boxShadow = `0 8px 32px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(6, 255, 165, 0.2)`;
                             e.target.style.transform = "translateY(-1px)";
                         }, onBlur: (e) => {
-                            e.target.style.border = error
+                            e.target.style.border = error;
                                 ? "1px solid #ff6b6b"
                                 : "1px solid rgba(255, 255, 255, 0.08)";
                             e.target.style.backgroundColor = "rgba(255, 255, 255, 0.04)";
@@ -370,7 +370,7 @@ export const MegaSkeleton = ({ width = "100%", height = "20px", variant = "rect"
             ...animationStyle[animation],
         } }));
 };
-// Default export object for convenience
+// Default export object for convenience;
 export default {
     MegaButton,
     MegaCard,

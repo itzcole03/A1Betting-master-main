@@ -68,7 +68,7 @@ export const CleanMoneyMaker = () => {
     });
     const [isScanning, setIsScanning] = useState(false);
     const [lastScan, setLastScan] = useState(new Date());
-    // Simulate opportunity scanning
+    // Simulate opportunity scanning;
     useEffect(() => {
         const interval = setInterval(() => {
             setOpportunities((prev) => prev.map((opp) => ({
@@ -84,7 +84,7 @@ export const CleanMoneyMaker = () => {
     }, []);
     const runScan = async () => {
         setIsScanning(true);
-        // Simulate AI scanning process
+        // Simulate AI scanning process;
         await new Promise((resolve) => setTimeout(resolve, 3000));
         setIsScanning(false);
         setLastScan(new Date());

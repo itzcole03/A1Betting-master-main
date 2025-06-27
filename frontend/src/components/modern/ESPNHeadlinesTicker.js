@@ -2,15 +2,15 @@ import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
 import React, { useEffect, useRef, useState } from 'react';
 import { useWebSocket } from '../../hooks/useWebSocket';
 const getSentimentBadge = (sentiment) => {
-    // Simple badge: green if positive, red if negative, gray if neutral/undefined
+    // Simple badge: green if positive, red if negative, gray if neutral/undefined;
     const avg = sentiment &&
         [sentiment.twitter, sentiment.reddit, sentiment.news]
             .filter(v => typeof v === 'number')
             .reduce((a, b) => a + (b || 0), 0) /
             ([sentiment.twitter, sentiment.reddit, sentiment.news].filter(v => typeof v === 'number')
                 .length || 1);
-    let color = 'bg-gray-300 text-gray-700';
-    let icon = '−';
+    const color = 'bg-gray-300 text-gray-700';
+    const icon = '−';
     if (avg > 0.2) {
         color = 'bg-green-200 text-green-700';
         icon = '▲';
@@ -25,13 +25,13 @@ const ESPNHeadlinesTicker = () => {
     const [headlines, setHeadlines] = useState([]);
     const [playerSentiments, setPlayerSentiments] = useState({});
     const [paused, setPaused] = useState(false);
-    const tickerRef = useRef(null);
-    // WebSocket connection for ESPN feed
+
+    // WebSocket connection for ESPN feed;
     useWebSocket({
         url: 'ws://localhost:3001/espn-feed',
         onMessage: msg => {
-            // Assume msg.data is a Headline or array of Headline
-            let newHeadlines = [];
+            // Assume msg.data is a Headline or array of Headline;
+            const newHeadlines = [];
             if (Array.isArray(msg.data)) {
                 newHeadlines = msg.data;
             }
@@ -39,11 +39,11 @@ const ESPNHeadlinesTicker = () => {
                 newHeadlines = [msg.data];
             }
             setHeadlines(prev => {
-                // Merge, deduplicate by headline+timestamp
-                const all = [...newHeadlines, ...prev];
-                const seen = new Set();
+                // Merge, deduplicate by headline+timestamp;
+
+
                 return all.filter(h => {
-                    const key = h.headline + h.timestamp;
+
                     if (seen.has(key))
                         return false;
                     seen.add(key);
@@ -52,46 +52,46 @@ const ESPNHeadlinesTicker = () => {
             });
         },
     });
-    // Fetch sentiment for each related player
+    // Fetch sentiment for each related player;
     useEffect(() => {
         const fetchSentiment = async (playerId) => {
             try {
-                const res = await fetch(`/api/sentiment/${playerId}`);
+
                 if (!res.ok)
                     return;
-                const data = await res.json();
+
                 setPlayerSentiments(prev => ({ ...prev, [playerId]: data }));
             }
             catch { }
         };
-        const playerIds = headlines.flatMap(h => h.relatedPlayers.map(p => p.id));
+
         Array.from(new Set(playerIds)).forEach(id => {
             if (!playerSentiments[id])
                 fetchSentiment(id);
         });
-        // Optionally, poll every 30s for live update
+        // Optionally, poll every 30s for live update;
         const interval = setInterval(() => {
             Array.from(new Set(playerIds)).forEach(fetchSentiment);
         }, 30000);
         return () => clearInterval(interval);
-        // eslint-disable-next-line
+        // eslint-disable-next-line;
     }, [headlines]);
-    // Auto-scroll logic
+    // Auto-scroll logic;
     useEffect(() => {
         if (paused || !tickerRef.current)
             return;
-        const ticker = tickerRef.current;
+
         let frame;
-        let start = null;
-        const scrollWidth = ticker.scrollWidth;
-        const clientWidth = ticker.clientWidth;
-        const maxScroll = scrollWidth - clientWidth;
-        const speed = 40; // px/sec
+        const start = null;
+
+
+
+        const speed = 40; // px/sec;
         function step(ts) {
             if (start === null)
                 start = ts;
-            const elapsed = ts - start;
-            const px = ((elapsed / 1000) * speed) % (maxScroll + 100);
+
+
             ticker.scrollLeft = px;
             frame = requestAnimationFrame(step);
         }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface Column<T> {
     key: keyof T | string;
     title: string;

@@ -11,31 +11,31 @@ export class FinalPredictionEngineImpl {
         this.riskProfiles = new Map(Object.entries(initialConfig.riskProfiles));
     }
     async generatePrediction(modelOutputs, riskProfile, context) {
-        const startTime = Date.now();
-        const decisionPath = [];
+
+
         try {
-            // Validate inputs
+            // Validate inputs;
             this.validateModelOutputs(modelOutputs);
             this.validateRiskProfile(riskProfile);
-            // Calculate weighted scores
-            const weightedScores = this.calculateWeightedScores(modelOutputs);
+            // Calculate weighted scores;
+
             decisionPath.push('Calculated weighted scores');
-            // Determine risk level
-            const riskLevel = this.determineRiskLevel(weightedScores, riskProfile);
+            // Determine risk level;
+
             decisionPath.push(`Determined risk level: ${riskLevel}`);
-            // Calculate final score
-            const finalScore = this.calculateFinalScore(weightedScores, riskProfile);
+            // Calculate final score;
+
             decisionPath.push(`Calculated final score: ${finalScore}`);
-            // Check for sure odds
-            const isSureOdds = this.checkSureOdds(weightedScores);
+            // Check for sure odds;
+
             decisionPath.push(`Sure odds check: ${isSureOdds}`);
-            // Calculate payout range
-            const payoutRange = this.calculatePayoutRange(finalScore, riskProfile);
+            // Calculate payout range;
+
             decisionPath.push('Calculated payout range');
-            // Aggregate features
+            // Aggregate features;
             const { topFeatures, supportingFeatures } = this.aggregateFeatures(modelOutputs);
             decisionPath.push('Aggregated features');
-            // Create final prediction
+            // Create final prediction;
             const prediction = {
                 id: uuidv4(),
                 timestamp: Date.now(),
@@ -58,7 +58,7 @@ export class FinalPredictionEngineImpl {
                     decisionPath,
                 },
             };
-            // Log and track metrics
+            // Log and track metrics;
             this.logPrediction(prediction);
             this.trackMetrics(prediction);
             return prediction;
@@ -74,7 +74,7 @@ export class FinalPredictionEngineImpl {
         if (!outputs.length) {
             throw new FinalPredictionError('No model outputs provided');
         }
-        const uniqueTypes = new Set(outputs.map(o => o.type));
+
         if (uniqueTypes.size !== outputs.length) {
             throw new FinalPredictionError('Duplicate model types detected');
         }
@@ -91,11 +91,11 @@ export class FinalPredictionEngineImpl {
             sentiment: { weight: 0, confidence: 0, score: 0 },
             correlation: { weight: 0, confidence: 0, score: 0 },
         };
-        let totalWeight = 0;
-        let weightedScore = 0;
-        let totalConfidence = 0;
+        const totalWeight = 0;
+        const weightedScore = 0;
+        const totalConfidence = 0;
         for (const output of modelOutputs) {
-            const weight = this.modelWeights.get(output.type);
+
             if (!weight)
                 continue;
             const contribution = {
@@ -116,7 +116,7 @@ export class FinalPredictionEngineImpl {
     }
     determineRiskLevel(weightedScores, riskProfile) {
         const { weightedScore, averageConfidence } = weightedScores;
-        const riskScore = (1 - averageConfidence) * (1 + Math.abs(weightedScore - 0.5));
+
         if (riskScore < 0.3)
             return 'low';
         if (riskScore < 0.6)
@@ -125,15 +125,15 @@ export class FinalPredictionEngineImpl {
     }
     calculateFinalScore(weightedScores, riskProfile) {
         const { weightedScore, averageConfidence } = weightedScores;
-        const riskMultiplier = riskProfile.multiplier;
+
         return weightedScore * (averageConfidence * riskMultiplier);
     }
     checkSureOdds(weightedScores) {
         return weightedScores.averageConfidence >= this.config.sureOddsThreshold;
     }
     calculatePayoutRange(finalScore, riskProfile) {
-        const baseMultiplier = riskProfile.multiplier;
-        const confidenceRange = 0.2; // 20% range
+
+        const confidenceRange = 0.2; // 20% range;
         return {
             min: finalScore * (1 - confidenceRange) * baseMultiplier,
             max: finalScore * (1 + confidenceRange) * baseMultiplier,
@@ -141,11 +141,11 @@ export class FinalPredictionEngineImpl {
         };
     }
     aggregateFeatures(modelOutputs) {
-        const featureMap = new Map();
-        // Convert features to FeatureImpact objects
+
+        // Convert features to FeatureImpact objects;
         for (const output of modelOutputs) {
             Object.entries(output.features).forEach(([name, value]) => {
-                const existing = featureMap.get(name);
+
                 if (existing) {
                     existing.weight = (existing.weight + value) / 2;
                     existing.impact = (existing.impact + value) / 2;
@@ -159,24 +159,24 @@ export class FinalPredictionEngineImpl {
                 }
             });
         }
-        // Sort by impact
-        const sortedFeatures = Array.from(featureMap.values()).sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact));
+        // Sort by impact;
+
         return {
             topFeatures: sortedFeatures.slice(0, this.config.maxFeatures),
             supportingFeatures: sortedFeatures.slice(this.config.maxFeatures, this.config.maxFeatures * 2),
         };
     }
     calculateDataFreshness(modelOutputs) {
-        const now = Date.now();
+
         const freshnessScores = modelOutputs.map(output => {
-            const age = now - output.timestamp;
-            return Math.max(0, 1 - age / (24 * 60 * 60 * 1000)); // 24 hours max
+
+            return Math.max(0, 1 - age / (24 * 60 * 60 * 1000)); // 24 hours max;
         });
         return freshnessScores.reduce((a, b) => a + b, 0) / freshnessScores.length;
     }
     calculateSignalQuality(modelOutputs) {
         return modelOutputs.reduce((quality, output) => {
-            return (quality * (output.metadata.signalStrength * (1 - output.metadata.latency / 1000)) // Normalize latency
+            return (quality * (output.metadata.signalStrength * (1 - output.metadata.latency / 1000)) // Normalize latency;
             );
         }, 1);
     }
@@ -216,19 +216,19 @@ export class FinalPredictionEngineImpl {
     }
     async validatePrediction(prediction) {
         try {
-            // Validate required fields
+            // Validate required fields;
             if (!prediction.id || !prediction.timestamp || !prediction.finalScore) {
                 return false;
             }
-            // Validate confidence window
+            // Validate confidence window;
             if (prediction.confidenceWindow.start > prediction.confidenceWindow.end) {
                 return false;
             }
-            // Validate risk level
+            // Validate risk level;
             if (!['low', 'medium', 'high'].includes(prediction.riskLevel)) {
                 return false;
             }
-            // Validate payout range
+            // Validate payout range;
             if (prediction.payoutRange.min > prediction.payoutRange.max ||
                 prediction.payoutRange.expected < prediction.payoutRange.min ||
                 prediction.payoutRange.expected > prediction.payoutRange.max) {
@@ -242,15 +242,15 @@ export class FinalPredictionEngineImpl {
         }
     }
     calculateShapValues(modelName, features, prediction) {
-        const baseValue = 0.5; // Default base value
-        const shapValues = [];
-        // Get feature importance for this model
-        const featureImportance = this.getFeatureImportance(modelName);
-        // Calculate SHAP values based on feature importance and prediction
+        const baseValue = 0.5; // Default base value;
+
+        // Get feature importance for this model;
+
+        // Calculate SHAP values based on feature importance and prediction;
         Object.entries(features).forEach(([feature, value]) => {
-            const importance = featureImportance[feature] || 0;
-            const normalizedValue = (value - this.featureStats[feature]?.mean || 0.5) / (this.featureStats[feature]?.std || 1);
-            const impact = importance * normalizedValue;
+
+
+
             shapValues.push({
                 feature,
                 value,
@@ -259,7 +259,7 @@ export class FinalPredictionEngineImpl {
                 confidence: this.calculateFeatureConfidence(feature, value),
             });
         });
-        // Sort by absolute impact
+        // Sort by absolute impact;
         shapValues.sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact));
         return {
             baseValue,
@@ -270,48 +270,48 @@ export class FinalPredictionEngineImpl {
         };
     }
     calculateFeatureConfidence(feature, value) {
-        const stats = this.featureStats[feature];
+
         if (!stats)
             return 0.5;
-        // Calculate how far the value is from the mean in terms of standard deviations
-        const zScore = Math.abs((value - stats.mean) / stats.std);
+        // Calculate how far the value is from the mean in terms of standard deviations;
+
         // Convert to confidence score (higher confidence for values closer to mean)
-        return Math.max(0, 1 - zScore / 3); // 3 standard deviations = 0 confidence
+        return Math.max(0, 1 - zScore / 3); // 3 standard deviations = 0 confidence;
     }
     calculateConfidence(shapValues) {
-        // Calculate confidence based on multiple factors
+        // Calculate confidence based on multiple factors;
         const factors = [
             this.calculateShapConsistency(shapValues),
             this.calculateFeatureConfidence(shapValues),
             this.calculateModelAgreement(shapValues),
         ];
-        // Weighted average of confidence factors
+        // Weighted average of confidence factors;
         return factors.reduce((sum, factor, index) => sum + factor * this.confidenceWeights[index], 0);
     }
     calculateShapConsistency(shapValues) {
-        // Calculate how consistent the SHAP values are in their direction
-        const positiveImpacts = shapValues.filter(sv => sv.impact > 0).length;
-        const negativeImpacts = shapValues.filter(sv => sv.impact < 0).length;
-        const totalImpacts = shapValues.length;
+        // Calculate how consistent the SHAP values are in their direction;
+
+
+
         if (totalImpacts === 0)
             return 0.5;
-        // Higher confidence when impacts are more consistent in direction
+        // Higher confidence when impacts are more consistent in direction;
         return Math.max(positiveImpacts, negativeImpacts) / totalImpacts;
     }
     calculateModelAgreement(shapValues) {
-        // Calculate how well the features agree with the model's prediction
-        const predictionDirection = this.currentPrediction > 0.5 ? 1 : -1;
-        const agreeingFeatures = shapValues.filter(sv => (sv.impact > 0 && predictionDirection > 0) || (sv.impact < 0 && predictionDirection < 0)).length;
+        // Calculate how well the features agree with the model's prediction;
+
+
         return agreeingFeatures / shapValues.length;
     }
     getFeatureImportance(modelName) {
-        // Get feature importance from model metrics
-        const modelMetrics = this.dependencies.metricsService.getModelMetrics(modelName);
+        // Get feature importance from model metrics;
+
         return modelMetrics.featureImportance || {};
     }
     async generatePredictions(features) {
-        const predictions = {};
-        // Generate predictions from each model
+
+        // Generate predictions from each model;
         for (const [modelName, weight] of this.modelWeights.entries()) {
             try {
                 const modelOutputs = [
@@ -328,7 +328,7 @@ export class FinalPredictionEngineImpl {
                         },
                     },
                 ];
-                const output = await this.generatePrediction(modelOutputs, this.riskProfiles.get('default'));
+
                 predictions[modelName] = {
                     type: modelName,
                     score: output.finalScore,
@@ -352,27 +352,27 @@ export class FinalPredictionEngineImpl {
         return predictions;
     }
     combinePredictions(predictions) {
-        let weightedSum = 0;
-        let totalWeight = 0;
+        const weightedSum = 0;
+        const totalWeight = 0;
         for (const [modelName, output] of Object.entries(predictions)) {
-            const weight = this.modelWeights.get(modelName)?.weight || 0;
+
             weightedSum += output.prediction * weight;
             totalWeight += weight;
         }
-        const finalPrediction = totalWeight > 0 ? weightedSum / totalWeight : 0;
-        const confidence = this.calculateOverallConfidence(predictions);
+
+
         return { prediction: finalPrediction, confidence };
     }
     calculateOverallConfidence(predictions) {
-        const confidences = Object.values(predictions).map(p => p.confidence);
+
         return confidences.length > 0 ? confidences.reduce((a, b) => a + b, 0) / confidences.length : 0;
     }
     async generatePredictionWithExplanation(features, riskLevel = 'medium') {
-        const modelOutputs = await this.generatePredictions(features);
-        const explanations = [];
-        // Calculate SHAP values for each model
+
+
+        // Calculate SHAP values for each model;
         for (const [modelName, output] of Object.entries(modelOutputs)) {
-            const shapExplanation = this.calculateShapValues(modelName, features, output.prediction);
+
             explanations.push({
                 modelName,
                 shapExplanation,
@@ -380,8 +380,8 @@ export class FinalPredictionEngineImpl {
                 confidence: output.confidence,
             });
         }
-        // Combine predictions with explanations
-        const finalPrediction = this.combinePredictions(modelOutputs);
+        // Combine predictions with explanations;
+
         return {
             prediction: finalPrediction.prediction,
             confidence: finalPrediction.confidence,

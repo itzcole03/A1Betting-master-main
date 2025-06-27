@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react.ts';
 import {
   Box,
   Card,
@@ -12,14 +12,14 @@ import {
   ListItemText,
   Divider,
   useTheme,
-} from '@mui/material';
-import { DataIntegrationHub } from '../../core/DataIntegrationHub';
-import { useAppState } from './StateProvider';
-import { useThemeStore } from '@/stores/themeStore';
+} from '@mui/material.ts';
+import { DataIntegrationHub } from '@/core/DataIntegrationHub.ts';
+import { useAppState } from './StateProvider.ts';
+import { useThemeStore } from '@/stores/themeStore.ts';
 
 const Settings: React.FC = () => {
   const { props, entries } = useAppState();
-  const theme = useTheme();
+
   const { mode, toggleTheme } = useThemeStore();
   const [lastSync, setLastSync] = useState(new Date());
   const [liveUpdates, setLiveUpdates] = useState(true);
@@ -28,12 +28,12 @@ const Settings: React.FC = () => {
   const [compactView, setCompactView] = useState(false);
 
   const handleExport = (type: 'csv' | 'json') => {
-    const data = { props, entries };
+
     const blob = new Blob([type === 'json' ? JSON.stringify(data, null, 2) : toCSV(data)], {
       type: type === 'json' ? 'application/json' : 'text/csv',
     });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+
+
     a.href = url;
     a.download = `betting-data.${type}`;
     document.body.appendChild(a);
@@ -43,7 +43,7 @@ const Settings: React.FC = () => {
   };
 
   function toCSV(data: any) {
-    // Simple CSV export for demo
+    // Simple CSV export for demo;
     const propRows = data.props.map(
       (p: any) => `${p.id},${p.player},${p.team},${p.stat},${p.line},${p.type},${p.percentage}`
     );
@@ -53,25 +53,24 @@ const Settings: React.FC = () => {
     return `Props\nID,Player,Team,Stat,Line,Type,Percentage\n${propRows.join('\n')}\n\nEntries\nID,Date,Legs,Entry,PotentialPayout,Status\n${entryRows.join('\n')}`;
   }
 
-  // Data source health
-  const hub = DataIntegrationHub.getInstance();
-  const metrics = Array.from(hub.getSourceMetrics().entries());
+  // Data source health;
+
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
-      <Card>
-        <CardContent>
-          <Typography sx={{ mb: 3 }} variant="h6">
-            Appearance
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }} key={115175}>
+      <Card key={650115}>
+        <CardContent key={452065}>
+          <Typography sx={{ mb: 3 }} variant="h6" key={382748}>
+            Appearance;
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <FormControlLabel
-              control={<Switch checked={mode === 'dark'} onChange={toggleTheme} />}
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }} key={832020}>
+            <FormControlLabel;
+              control={<Switch checked={mode === 'dark'} onChange={toggleTheme} / key={479641}>}
               label="Dark Mode"
             />
-            <FormControlLabel
+            <FormControlLabel;
               control={
-                <Switch checked={compactView} onChange={e => setCompactView(e.target.checked)} />
+                <Switch checked={compactView} onChange={e = key={173481}> setCompactView(e.target.checked)} />
               }
               label="Compact View"
             />
@@ -79,75 +78,75 @@ const Settings: React.FC = () => {
         </CardContent>
       </Card>
 
-      <Card>
-        <CardContent>
-          <Typography sx={{ mb: 3 }} variant="h6">
-            Notifications
+      <Card key={650115}>
+        <CardContent key={452065}>
+          <Typography sx={{ mb: 3 }} variant="h6" key={382748}>
+            Notifications;
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <FormControlLabel
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }} key={832020}>
+            <FormControlLabel;
               control={
-                <Switch checked={liveUpdates} onChange={e => setLiveUpdates(e.target.checked)} />
+                <Switch checked={liveUpdates} onChange={e = key={294186}> setLiveUpdates(e.target.checked)} />
               }
               label="Live Updates"
             />
-            <FormControlLabel control={<Switch checked={true} />} label="Arbitrage Alerts" />
-            <FormControlLabel control={<Switch checked={true} />} label="High Confidence Picks" />
+            <FormControlLabel control={<Switch checked={true} / key={730890}>} label="Arbitrage Alerts" />
+            <FormControlLabel control={<Switch checked={true} / key={730890}>} label="High Confidence Picks" />
           </Box>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardContent>
-          <Typography sx={{ mb: 3 }} variant="h6">
-            Data & Privacy
+      <Card key={650115}>
+        <CardContent key={452065}>
+          <Typography sx={{ mb: 3 }} variant="h6" key={382748}>
+            Data & Privacy;
           </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <Button fullWidth variant="outlined" onClick={() => handleExport('csv')}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }} key={832020}>
+            <Button fullWidth variant="outlined" onClick={() = key={290735}> handleExport('csv')}>
               Export Betting Data (CSV)
             </Button>
-            <Button fullWidth variant="outlined" onClick={() => handleExport('json')}>
+            <Button fullWidth variant="outlined" onClick={() = key={290735}> handleExport('json')}>
               Export Betting Data (JSON)
             </Button>
-            <Button fullWidth color="error" variant="outlined">
-              Clear All Data
+            <Button fullWidth color="error" variant="outlined" key={546406}>
+              Clear All Data;
             </Button>
           </Box>
 
-          <Box sx={{ mt: 4 }}>
-            <Typography sx={{ mb: 2 }} variant="subtitle1">
-              Data Source Health
+          <Box sx={{ mt: 4 }} key={154362}>
+            <Typography sx={{ mb: 2 }} variant="subtitle1" key={657769}>
+              Data Source Health;
             </Typography>
-            <List>
+            <List key={733302}>
               {metrics.map(([id, m]) => (
-                <ListItem key={id}>
-                  <ListItemText
+                <ListItem key={id} key={791079}>
+                  <ListItemText;
                     primary={id}
                     secondary={`Latency ${m.latency.toFixed(0)}ms, Reliability ${(m.reliability * 100).toFixed(1)}%, Last Sync ${new Date(m.lastSync).toLocaleTimeString()}`}
-                  />
+                  / key={758202}>
                 </ListItem>
               ))}
             </List>
-            <Typography color="text.secondary" variant="caption">
+            <Typography color="text.secondary" variant="caption" key={290635}>
               Last Sync: {lastSync.toLocaleTimeString()}
             </Typography>
           </Box>
 
-          <Divider sx={{ my: 3 }} />
+          <Divider sx={{ my: 3 }} / key={261132}>
 
-          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <FormControlLabel
+          <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }} key={832020}>
+            <FormControlLabel;
               control={
-                <Switch
+                <Switch;
                   checked={analyticsEnabled}
-                  onChange={e => setAnalyticsEnabled(e.target.checked)}
+                  onChange={e = key={296029}> setAnalyticsEnabled(e.target.checked)}
                 />
               }
               label="Enable Analytics"
             />
-            <FormControlLabel
+            <FormControlLabel;
               control={
-                <Switch checked={dataSharing} onChange={e => setDataSharing(e.target.checked)} />
+                <Switch checked={dataSharing} onChange={e = key={503227}> setDataSharing(e.target.checked)} />
               }
               label="Allow Data Sharing"
             />

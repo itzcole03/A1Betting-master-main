@@ -153,8 +153,8 @@ class IntegrationValidator:
                 },
             }
 
-        except Exception as e:
-            logger.error(f"Enhanced Revolutionary Engine validation failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Enhanced Revolutionary Engine validation failed: {e}")
             return {
                 "status": "failed",
                 "error": str(e),
@@ -226,8 +226,8 @@ class IntegrationValidator:
                 },
             }
 
-        except Exception as e:
-            logger.error(f"Enhanced Prediction Engine validation failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Enhanced Prediction Engine validation failed: {e}")
             return {
                 "status": "failed",
                 "error": str(e),
@@ -308,8 +308,8 @@ class IntegrationValidator:
                 },
             }
 
-        except Exception as e:
-            logger.error(f"Enhanced Feature Engineering validation failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Enhanced Feature Engineering validation failed: {e}")
             return {
                 "status": "failed",
                 "error": str(e),
@@ -388,8 +388,8 @@ class IntegrationValidator:
                 },
             }
 
-        except Exception as e:
-            logger.error(f"Enhanced Risk Management validation failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Enhanced Risk Management validation failed: {e}")
             return {
                 "status": "failed",
                 "error": str(e),
@@ -484,8 +484,8 @@ class IntegrationValidator:
                 },
             }
 
-        except Exception as e:
-            logger.error(f"Enhanced Data Pipeline validation failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Enhanced Data Pipeline validation failed: {e}")
             return {
                 "status": "failed",
                 "error": str(e),
@@ -566,8 +566,8 @@ class IntegrationValidator:
                 },
             }
 
-        except Exception as e:
-            logger.error(f"Enhanced Model Service validation failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Enhanced Model Service validation failed: {e}")
             return {
                 "status": "failed",
                 "error": str(e),
@@ -599,12 +599,12 @@ class IntegrationValidator:
         results = {}
         for name, task in validation_tasks:
             try:
-                logger.info(f"Running validation: {name}")
+                logger.info("Running validation: {name}")
                 results[name] = await task
                 status = results[name]["status"]
-                logger.info(f"✅ {name}: {status}")
-            except Exception as e:
-                logger.error(f"❌ {name}: failed with {e}")
+                logger.info("✅ {name}: {status}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("❌ {name}: failed with {e}")
                 results[name] = {"status": "failed", "error": str(e)}
 
         overall_processing_time = time.time() - overall_start_time
@@ -887,7 +887,7 @@ async def main():
             print("\n💥 Integration validation FAILED!")
             return 1
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"\n💥 Validation failed with error: {e}")
         traceback.print_exc()
         return 1

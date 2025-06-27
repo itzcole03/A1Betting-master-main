@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { DataSource } from '../UnifiedDataService';
+import { z } from 'zod.ts';
+import { DataSource } from '@/UnifiedDataService.ts';
 export declare const HistoricalGameDataSchema: z.ZodObject<{
     gameId: z.ZodString;
     date: z.ZodString;

@@ -1,6 +1,6 @@
-import React from 'react';
-import { cn } from '@/utils/classNames';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react.ts';
+import { cn } from '@/utils/classNames.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 
 
 
@@ -20,23 +20,23 @@ export interface AlertProps {
 
 const icons = {
   info: (
-    <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <svg className="w-5 h-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" key={129219}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" / key={675230}>
     </svg>
   ),
   success: (
-    <svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <svg className="w-5 h-5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" key={456579}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" / key={913169}>
     </svg>
   ),
   warning: (
-    <svg className="w-5 h-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+    <svg className="w-5 h-5 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" key={604880}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" / key={113548}>
     </svg>
   ),
   error: (
-    <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" key={588230}>
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" / key={306736}>
     </svg>
   )
 };
@@ -64,7 +64,7 @@ const variants = {
   }
 };
 
-export const Alert: React.FC<AlertProps> = ({
+export const Alert: React.FC<AlertProps key={895913}> = ({
   type = 'info',
   title,
   message,
@@ -72,36 +72,36 @@ export const Alert: React.FC<AlertProps> = ({
   className,
   closable = true,
   icon,
-  action
+  action;
 }) => {
   return (
-    <AnimatePresence>
-      <motion.div
+    <AnimatePresence key={359944}>
+      <motion.div;
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
         className={cn(
           'rounded-lg border p-4',
           variants[type].container,
-          className
+          className;
         )}
-      >
-        <div className="flex">
-          <div className="flex-shrink-0">
+       key={234156}>
+        <div className="flex" key={916621}>
+          <div className="flex-shrink-0" key={11962}>
             {icon || icons[type]}
           </div>
-          <div className="ml-3 flex-1">
+          <div className="ml-3 flex-1" key={865051}>
             {title && (
-              <h3 className={cn('text-sm font-medium', variants[type].title)}>
+              <h3 className={cn('text-sm font-medium', variants[type].title)} key={221763}>
                 {title}
               </h3>
             )}
-            <div className={cn('text-sm', variants[type].message)}>
+            <div className={cn('text-sm', variants[type].message)} key={38016}>
               {message}
             </div>
             {action && (
-              <div className="mt-4">
-                <button
+              <div className="mt-4" key={139982}>
+                <button;
                   type="button"
                   className={cn(
                     'rounded-md px-3 py-1.5 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2',
@@ -111,15 +111,15 @@ export const Alert: React.FC<AlertProps> = ({
                     type === 'error' && 'bg-red-100 text-red-800 hover:bg-red-200 focus:ring-red-500'
                   )}
                   onClick={action.onClick}
-                >
+                 key={61296}>
                   {action.label}
                 </button>
               </div>
             )}
           </div>
           {closable && onClose && (
-            <div className="ml-auto pl-3">
-              <button
+            <div className="ml-auto pl-3" key={98956}>
+              <button;
                 type="button"
                 className={cn(
                   'inline-flex rounded-md p-1.5 focus:outline-none focus:ring-2 focus:ring-offset-2',
@@ -129,18 +129,18 @@ export const Alert: React.FC<AlertProps> = ({
                   type === 'error' && 'text-red-500 hover:bg-red-100 focus:ring-red-500'
                 )}
                 onClick={onClose}
-              >
-                <span className="sr-only">Dismiss</span>
-                <svg
+               key={496669}>
+                <span className="sr-only" key={658352}>Dismiss</span>
+                <svg;
                   className="h-5 w-5"
                   viewBox="0 0 20 20"
                   fill="currentColor"
-                >
-                  <path
+                 key={485165}>
+                  <path;
                     fillRule="evenodd"
                     d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                     clipRule="evenodd"
-                  />
+                  / key={356623}>
                 </svg>
               </button>
             </div>

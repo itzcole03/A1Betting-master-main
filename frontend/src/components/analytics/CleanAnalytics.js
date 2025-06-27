@@ -67,7 +67,7 @@ export const CleanAnalytics = () => {
         riskScore: 3.7,
         confidenceScore: 94.2,
     });
-    // Simulate real-time updates
+    // Simulate real-time updates;
     useEffect(() => {
         const interval = setInterval(() => {
             setModels((prev) => prev.map((model) => ({

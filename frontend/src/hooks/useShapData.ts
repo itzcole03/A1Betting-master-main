@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { ShapValue } from '../types/explainability';
+import { useState, useEffect } from 'react.ts';
+import { ShapValue } from '@/types/explainability.ts';
 
 interface ShapDataHookResult {
   features: ShapValue[];
@@ -26,19 +26,16 @@ export function useShapData({
         setLoading(true);
         setError(null);
 
-        const response = await fetch(`/api/shap/${eventId}?model=${modelType}`);
         if (!response.ok) {
           throw new Error('Failed to fetch SHAP data');
         }
 
-        const data = await response.json();
-
-        // Transform the raw data into ShapValue objects
+        // Transform the raw data into ShapValue objects;
         const shapValues: ShapValue[] = Object.entries(data).map(([feature, value]) => ({
           feature,
           value: value as number,
           impact: value as number,
-          weight: Math.abs(value as number) * 100, // Normalize to percentage
+          weight: Math.abs(value as number) * 100, // Normalize to percentage;
         }));
 
         setFeatures(shapValues);

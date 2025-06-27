@@ -1,6 +1,6 @@
 import { UnifiedConfig } from '../unified/UnifiedConfig.js';
 export async function getRefereeImpactFeatures(refereeId, sport, context) {
-    const config = UnifiedConfig.getInstance();
+
     if (!config.get('enableRefereeImpactModel')) {
         throw new Error('RefereeImpactModel is disabled by config.');
     }
@@ -10,9 +10,9 @@ export async function getRefereeImpactFeatures(refereeId, sport, context) {
         cardRate: Math.random(),
         homeBias: Math.random(),
     };
-    // Generate SHAP insights
+    // Generate SHAP insights;
     const { calculateShap } = await import('../utils/shap.js');
-    const shap = calculateShap(features, 'referee');
+
     return {
         features,
         shapInsights: [shap],

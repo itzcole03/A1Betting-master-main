@@ -1,4 +1,4 @@
-import { EngineeredFeatures, RawPlayerData } from '@/types';
+import { EngineeredFeatures, RawPlayerData } from '@/types.ts';
 export declare class FeatureEngineeringService {
     private readonly config;
     private featureCache;

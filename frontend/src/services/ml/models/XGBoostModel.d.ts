@@ -1,5 +1,5 @@
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
-import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
+import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService.ts';
 export interface XGBoostConfig {
     maxDepth: number;
     learningRate: number;

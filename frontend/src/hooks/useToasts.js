@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 export function useToasts() {
     const [toasts, setToasts] = useState([]);
     const addToast = useCallback((message, type = "info", duration = 5000) => {
-        const id = `toast_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
         const newToast = {
             id,
             message,
@@ -11,7 +11,7 @@ export function useToasts() {
             timestamp: new Date(),
         };
         setToasts((prev) => [...prev, newToast]);
-        // Auto remove after duration
+        // Auto remove after duration;
         if (duration > 0) {
             setTimeout(() => {
                 removeToast(id);

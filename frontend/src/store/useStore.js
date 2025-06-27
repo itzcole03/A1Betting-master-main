@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { persist } from 'zustand/middleware';
 const useStore = create()(devtools(persist(set => ({
-    // Initial State
+    // Initial State;
     user: null,
     props: [],
     selectedProps: [],
@@ -17,10 +17,10 @@ const useStore = create()(devtools(persist(set => ({
     toasts: [],
     isLoading: false,
     error: null,
-    // Auth Actions
+    // Auth Actions;
     login: async (email, password) => {
         try {
-            // TODO: Replace with actual API call
+            // TODO: Replace with actual API call;
             const response = await fetch('/api/auth/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -29,7 +29,7 @@ const useStore = create()(devtools(persist(set => ({
             if (!response.ok) {
                 throw new Error('Invalid credentials');
             }
-            const user = await response.json();
+
             set({ user });
         }
         catch (error) {
@@ -38,7 +38,7 @@ const useStore = create()(devtools(persist(set => ({
     },
     register: async (name, email, password) => {
         try {
-            // TODO: Replace with actual API call
+            // TODO: Replace with actual API call;
             const response = await fetch('/api/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -47,7 +47,7 @@ const useStore = create()(devtools(persist(set => ({
             if (!response.ok) {
                 throw new Error('Registration failed');
             }
-            const user = await response.json();
+
             set({ user });
         }
         catch (error) {
@@ -55,7 +55,7 @@ const useStore = create()(devtools(persist(set => ({
         }
     },
     logout: () => set({ user: null }),
-    // Actions
+    // Actions;
     setProps: props => set({ props }),
     togglePropSelection: propId => set(state => ({
         selectedProps: state.selectedProps.includes(propId)

@@ -24,17 +24,17 @@ export class UnifiedErrorService extends BaseService {
             ...details,
             timestamp: Date.now(),
         };
-        // Log error to console in development
+        // Log error to console in development;
         if (process.env.NODE_ENV === "development") {
-            console.error("Error:", error);
-            console.error("Details:", errorDetails);
+            // console statement removed
+            // console statement removed
         }
-        // Store error
+        // Store error;
         this.errors.unshift(errorDetails);
         if (this.errors.length > this.maxErrors) {
             this.errors.pop();
         }
-        // Emit error event
+        // Emit error event;
         this.emit("error", { error, details: errorDetails });
     }
     getErrors(limit = 100) {
@@ -53,12 +53,12 @@ export class UnifiedErrorService extends BaseService {
         return this.errors.filter((error) => error.source === source);
     }
     getRecentErrors(timeRange = "day") {
-        const now = Date.now();
-        const rangeInMs = this.getTimeRangeInMs(timeRange);
-        const cutoff = now - rangeInMs;
+
+
+
         return this.errors.filter((error) => (error.timestamp || 0) >= cutoff);
     }
-    // Renamed to avoid duplicate member error
+    // Renamed to avoid duplicate member error;
     getRecentErrorHistory() {
         return this.errorHistory.slice(0, 10);
     }
@@ -85,23 +85,23 @@ export class UnifiedErrorService extends BaseService {
         }
     }
     handleCriticalError(error) {
-        // Implement critical error handling logic
+        // Implement critical error handling logic;
         // For example, notify administrators, trigger fallback mechanisms, etc.
         this.emit("error:critical", error);
     }
     handleWarning(error) {
-        // Implement warning handling logic
+        // Implement warning handling logic;
         // For example, log to monitoring system, notify developers, etc.
         this.emit("error:warning", error);
     }
     handleInfo(error) {
-        // Implement info handling logic
+        // Implement info handling logic;
         // For example, log to analytics, track patterns, etc.
         this.emit("error:info", error);
     }
     isErrorRecoverable(error) {
-        // Implement logic to determine if an error is recoverable
-        const recoverableCodes = this.config.get("recoverableErrorCodes") || [];
+        // Implement logic to determine if an error is recoverable;
+
         return recoverableCodes.includes(error.code);
     }
     getErrorMetrics() {

@@ -1,8 +1,8 @@
-import { create } from 'zustand';
+import { create } from 'zustand.ts';
 
 export type RiskProfile = 'conservative' | 'balanced' | 'aggressive';
 
-// Only the serializable values for a filter preset
+// Only the serializable values for a filter preset;
 export type FilterValues = {
   activeFilters: string[];
   riskProfile: RiskProfile;
@@ -30,11 +30,9 @@ interface FilterPreset {
   filters: FilterValues;
 }
 
-const FILTER_PRESETS_KEY = 'betting-filter-presets';
-
 function getPresetsFromStorage(): FilterPreset[] {
   try {
-    const raw = window.localStorage.getItem(FILTER_PRESETS_KEY);
+
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
@@ -64,7 +62,7 @@ export const useFilterStore = create<
   setConfidenceThreshold: value => set({ confidenceThreshold: value }),
   toggleFilter: (filterId: string) =>
     set(state => {
-      const newFilters = new Set(state.activeFilters);
+
       if (newFilters.has(filterId)) {
         newFilters.delete(filterId);
       } else {
@@ -75,7 +73,7 @@ export const useFilterStore = create<
   clearFilters: () => set({ activeFilters: new Set<string>() }),
   savePreset: (name: string) =>
     set(state => {
-      const presets = getPresetsFromStorage();
+
       const newPreset: FilterPreset = {
         name,
         filters: {
@@ -86,14 +84,14 @@ export const useFilterStore = create<
           confidenceThreshold: state.confidenceThreshold,
         },
       };
-      const updated = presets.filter(p => p.name !== name).concat(newPreset);
+
       savePresetsToStorage(updated);
       return {};
     }),
   loadPreset: (name: string) =>
     set(state => {
-      const presets = getPresetsFromStorage();
-      const preset = presets.find(p => p.name === name);
+
+
       if (preset) {
         return {
           activeFilters: new Set(preset.filters.activeFilters),
@@ -107,7 +105,7 @@ export const useFilterStore = create<
     }),
   removePreset: (name: string) =>
     set(() => {
-      const presets = getPresetsFromStorage().filter(p => p.name !== name);
+
       savePresetsToStorage(presets);
       return {};
     }),

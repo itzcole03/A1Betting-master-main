@@ -36,20 +36,16 @@ export class AdvancedAnalytics {
     line: number,
     dataSources: Map<string, any>,
   ): Promise<PlayerAnalysis> {
-    // Run multiple ML models
-    const models = await this.runMLModels(player, statType, line);
+    // Run multiple ML models;
 
-    // Calculate ensemble prediction
-    const prediction = this.calculateEnsemblePrediction(models);
-    const confidence = this.calculateEnsembleConfidence(models);
+    // Calculate ensemble prediction;
 
-    // Calculate advanced metrics
-    const metrics = this.calculateAdvancedMetrics(prediction, line, confidence);
 
-    // Analyze external factors
-    const injuries = await this.analyzeInjuries(player);
-    const weather = await this.analyzeWeather(player);
-    const sentiment = await this.analyzeSentiment(player);
+    // Calculate advanced metrics;
+
+    // Analyze external factors;
+
+
 
     return {
       player,
@@ -72,20 +68,20 @@ export class AdvancedAnalytics {
   ): Promise<ModelPrediction[]> {
     const models: ModelPrediction[] = [];
 
-    // Random Forest Model
-    const rfPrediction = await this.runRandomForest(player, statType, line);
+    // Random Forest Model;
+
     models.push(rfPrediction);
 
-    // XGBoost Model
-    const xgbPrediction = await this.runXGBoost(player, statType, line);
+    // XGBoost Model;
+
     models.push(xgbPrediction);
 
-    // Neural Network Model
-    const nnPrediction = await this.runNeuralNetwork(player, statType, line);
+    // Neural Network Model;
+
     models.push(nnPrediction);
 
-    // Linear Regression Model
-    const lrPrediction = await this.runLinearRegression(player, statType, line);
+    // Linear Regression Model;
+
     models.push(lrPrediction);
 
     return models;
@@ -96,10 +92,9 @@ export class AdvancedAnalytics {
     statType: string,
     line: number,
   ): Promise<ModelPrediction> {
-    // Simulate Random Forest prediction
-    const baseValue = player.stats?.[statType.toLowerCase()] || line;
-    const formFactor = this.calculateFormFactor(player.recentForm);
-    const prediction = baseValue * (0.9 + formFactor * 0.2);
+    // Simulate Random Forest prediction;
+
+
 
     return {
       prediction,
@@ -120,10 +115,9 @@ export class AdvancedAnalytics {
     statType: string,
     line: number,
   ): Promise<ModelPrediction> {
-    // Simulate XGBoost prediction
-    const baseValue = player.stats?.[statType.toLowerCase()] || line;
-    const formFactor = this.calculateFormFactor(player.recentForm);
-    const prediction = baseValue * (0.88 + formFactor * 0.24);
+    // Simulate XGBoost prediction;
+
+
 
     return {
       prediction,
@@ -144,10 +138,9 @@ export class AdvancedAnalytics {
     statType: string,
     line: number,
   ): Promise<ModelPrediction> {
-    // Simulate Neural Network prediction
-    const baseValue = player.stats?.[statType.toLowerCase()] || line;
-    const formFactor = this.calculateFormFactor(player.recentForm);
-    const prediction = baseValue * (0.92 + formFactor * 0.16);
+    // Simulate Neural Network prediction;
+
+
 
     return {
       prediction,
@@ -168,10 +161,9 @@ export class AdvancedAnalytics {
     statType: string,
     line: number,
   ): Promise<ModelPrediction> {
-    // Simulate Linear Regression prediction
-    const baseValue = player.stats?.[statType.toLowerCase()] || line;
-    const formFactor = this.calculateFormFactor(player.recentForm);
-    const prediction = baseValue * (0.94 + formFactor * 0.12);
+    // Simulate Linear Regression prediction;
+
+
 
     return {
       prediction,
@@ -188,18 +180,17 @@ export class AdvancedAnalytics {
 
   private calculateFormFactor(recentForm?: number[]): number {
     if (!recentForm || recentForm.length === 0) {
-      return 0.5; // Neutral
+      return 0.5; // Neutral;
     }
 
-    // Weight recent games more heavily
-    const weights = [0.1, 0.1, 0.15, 0.15, 0.2, 0.3];
-    const recent = recentForm.slice(-6);
+    // Weight recent games more heavily;
 
-    let weightedSum = 0;
-    let totalWeight = 0;
+
+    const weightedSum = 0;
+    const totalWeight = 0;
 
     recent.forEach((form, index) => {
-      const weight = weights[index] || 0.1;
+
       weightedSum += form * weight;
       totalWeight += weight;
     });
@@ -208,12 +199,12 @@ export class AdvancedAnalytics {
   }
 
   private calculateEnsemblePrediction(models: ModelPrediction[]): number {
-    // Weighted average based on model confidence
-    let weightedSum = 0;
-    let totalWeight = 0;
+    // Weighted average based on model confidence;
+    const weightedSum = 0;
+    const totalWeight = 0;
 
     models.forEach((model) => {
-      const weight = model.confidence;
+
       weightedSum += model.prediction * weight;
       totalWeight += weight;
     });
@@ -222,12 +213,12 @@ export class AdvancedAnalytics {
   }
 
   private calculateEnsembleConfidence(models: ModelPrediction[]): number {
-    // Average confidence adjusted for model agreement
+    // Average confidence adjusted for model agreement;
     const avgConfidence =
       models.reduce((sum, model) => sum + model.confidence, 0) / models.length;
 
     // Calculate prediction variance (lower variance = higher confidence)
-    const predictions = models.map((m) => m.prediction);
+
     const avgPrediction =
       predictions.reduce((sum, pred) => sum + pred, 0) / predictions.length;
     const variance =
@@ -235,10 +226,8 @@ export class AdvancedAnalytics {
         (sum, pred) => sum + Math.pow(pred - avgPrediction, 2),
         0,
       ) / predictions.length;
-    const standardDeviation = Math.sqrt(variance);
 
-    // Lower std dev = higher confidence
-    const agreementFactor = Math.max(0, 1 - standardDeviation / avgPrediction);
+    // Lower std dev = higher confidence;
 
     return avgConfidence * (0.8 + agreementFactor * 0.2);
   }
@@ -253,8 +242,7 @@ export class AdvancedAnalytics {
       line,
       confidence,
     );
-    const kellyOptimal = this.calculateKellyOptimal(prediction, line);
-    const sharpeRatio = this.calculateSharpeRatio(expectedValue, confidence);
+
 
     return {
       kellyOptimal,
@@ -273,19 +261,18 @@ export class AdvancedAnalytics {
     line: number,
     confidence: number,
   ): number {
-    const probability = confidence;
-    const isOver = prediction > line;
-    const winProbability = isOver ? probability : 1 - probability;
-    const odds = 1.91; // -110 odds
+
+
+
+    const odds = 1.91; // -110 odds;
 
     return (winProbability * (odds - 1) - (1 - winProbability)) * 100;
   }
 
   private calculateKellyOptimal(prediction: number, line: number): number {
-    const probability = prediction > line ? 0.52 : 0.48; // Slight edge
-    const odds = 1.91; // -110 odds
-    const q = 1 - probability;
-    const b = odds - 1;
+    const probability = prediction > line ? 0.52 : 0.48; // Slight edge;
+    const odds = 1.91; // -110 odds;
+
 
     return Math.max(0, (b * probability - q) / b);
   }
@@ -294,12 +281,12 @@ export class AdvancedAnalytics {
     expectedValue: number,
     confidence: number,
   ): number {
-    const risk = 1 - confidence;
+
     return Math.max(0, expectedValue / Math.max(0.1, risk * 100));
   }
 
   private async analyzeInjuries(player: any): Promise<any[]> {
-    // Simulate injury analysis
+    // Simulate injury analysis;
     return [
       {
         type: "Minor",
@@ -310,7 +297,7 @@ export class AdvancedAnalytics {
   }
 
   private async analyzeWeather(player: any): Promise<any> {
-    // Simulate weather analysis
+    // Simulate weather analysis;
     return {
       gameImpactScore: Math.random() * 0.05,
       conditions: "Clear",
@@ -320,7 +307,7 @@ export class AdvancedAnalytics {
   }
 
   private async analyzeSentiment(player: any): Promise<any> {
-    // Simulate sentiment analysis
+    // Simulate sentiment analysis;
     return {
       socialMediaScore: (Math.random() - 0.5) * 0.2,
       newsScore: (Math.random() - 0.5) * 0.1,

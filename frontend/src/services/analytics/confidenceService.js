@@ -1,5 +1,5 @@
-// confidenceService.ts
-// Singleton service for prediction confidence bands and win probability analytics
+// confidenceService.ts;
+// Singleton service for prediction confidence bands and win probability analytics;
 class ConfidenceService {
     constructor() {
         this.cache = new Map();
@@ -10,14 +10,14 @@ class ConfidenceService {
         }
         return ConfidenceService._instance;
     }
-    // Simulate or fetch prediction with confidence
+    // Simulate or fetch prediction with confidence;
     getPredictionWithConfidence(eventId, player, market) {
-        const cacheKey = `${eventId}:${player}:${market}`;
+
         if (this.cache.has(cacheKey)) {
             return this.cache.get(cacheKey);
         }
         // Simulate (replace with real logic or API call)
-        const now = new Date().toISOString();
+
         const confidenceBand = {
             lower: Math.random() * 10 + 10,
             upper: Math.random() * 10 + 20,

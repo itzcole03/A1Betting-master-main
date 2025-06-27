@@ -1,15 +1,15 @@
-import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import { Error as ErrorIcon } from '@mui/icons-material';
+import React from 'react.ts';
+import { Box, Typography, Button } from '@mui/material.ts';
+import { Error as ErrorIcon } from '@mui/icons-material.ts';
 
 interface ErrorStateProps {
   message?: string;
   onRetry?: () => void;
 }
 
-const ErrorState: React.FC<ErrorStateProps> = ({ message = 'Something went wrong', onRetry }) => {
+const ErrorState: React.FC<ErrorStateProps key={153417}> = ({ message = 'Something went wrong', onRetry }) => {
   return (
-    <Box
+    <Box;
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -19,14 +19,14 @@ const ErrorState: React.FC<ErrorStateProps> = ({ message = 'Something went wrong
         gap: 2,
         p: 3,
       }}
-    >
-      <ErrorIcon color="error" sx={{ fontSize: 48 }} />
-      <Typography align="center" color="error" variant="h6">
+     key={258169}>
+      <ErrorIcon color="error" sx={{ fontSize: 48 }} / key={846259}>
+      <Typography align="center" color="error" variant="h6" key={275695}>
         {message}
       </Typography>
       {onRetry && (
-        <Button color="primary" sx={{ mt: 2 }} variant="contained" onClick={onRetry}>
-          Try Again
+        <Button color="primary" sx={{ mt: 2 }} variant="contained" onClick={onRetry} key={746638}>
+          Try Again;
         </Button>
       )}
     </Box>

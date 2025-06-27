@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react.ts';
 type Theme = 'dark' | 'light' | 'system';
 interface ThemeProviderProps {
     children: ReactNode;

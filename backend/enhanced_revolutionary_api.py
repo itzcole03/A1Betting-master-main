@@ -236,8 +236,8 @@ async def predict_enhanced_revolutionary(
                     "homeostatic_balance": 0.89,
                 }
                 component_times["neuromorphic"] = time.time() - neuro_start
-            except Exception as e:
-                logger.error(f"Neuromorphic analysis error: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Neuromorphic analysis error: {e}")
                 neuromorphic_metrics = {"error": str(e)}
                 component_times["neuromorphic"] = time.time() - neuro_start
 
@@ -260,8 +260,8 @@ async def predict_enhanced_revolutionary(
                     "parallel_scan_efficiency": 0.92,
                 }
                 component_times["mamba"] = time.time() - mamba_start
-            except Exception as e:
-                logger.error(f"Mamba analysis error: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Mamba analysis error: {e}")
                 mamba_metrics = {"error": str(e)}
                 component_times["mamba"] = time.time() - mamba_start
 
@@ -282,8 +282,8 @@ async def predict_enhanced_revolutionary(
                     "interventional_effects": {"X1": 0.45, "X2": 0.32, "X3": 0.18},
                 }
                 component_times["causal"] = time.time() - causal_start
-            except Exception as e:
-                logger.error(f"Causal analysis error: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Causal analysis error: {e}")
                 causal_metrics = {"error": str(e)}
                 component_times["causal"] = time.time() - causal_start
 
@@ -308,8 +308,8 @@ async def predict_enhanced_revolutionary(
                     + enhanced_prediction.persistent_betti_numbers.get("H2", 0),
                 }
                 component_times["topological"] = time.time() - topo_start
-            except Exception as e:
-                logger.error(f"Topological analysis error: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Topological analysis error: {e}")
                 topological_metrics = {"error": str(e)}
                 component_times["topological"] = time.time() - topo_start
 
@@ -332,8 +332,8 @@ async def predict_enhanced_revolutionary(
                     "injectivity_radius": 1.8,
                 }
                 component_times["riemannian"] = time.time() - riemann_start
-            except Exception as e:
-                logger.error(f"Riemannian analysis error: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Riemannian analysis error: {e}")
                 riemannian_metrics = {"error": str(e)}
                 component_times["riemannian"] = time.time() - riemann_start
 
@@ -521,8 +521,8 @@ async def predict_enhanced_revolutionary(
 
         return response
 
-    except Exception as e:
-        logger.error(f"Enhanced revolutionary prediction failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Enhanced revolutionary prediction failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Enhanced prediction failed: {e!s}"
         )
@@ -534,7 +534,7 @@ async def analyze_mathematical_rigor(request: MathematicalAnalysisRequest):
     try:
         analysis_start = time.time()
 
-        logger.info(f"Performing {request.analysis_depth} mathematical analysis")
+        logger.info("Performing {request.analysis_depth} mathematical analysis")
 
         # Extract data for analysis
         features_list = []
@@ -614,8 +614,8 @@ async def analyze_mathematical_rigor(request: MathematicalAnalysisRequest):
             "timestamp": datetime.now().isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Mathematical analysis failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Mathematical analysis failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Mathematical analysis failed: {e!s}"
         )
@@ -752,7 +752,7 @@ async def perform_deep_mathematical_analysis(
 ):
     """Background task for deep mathematical analysis"""
     try:
-        logger.info(f"Performing deep mathematical analysis for {event_id}")
+        logger.info("Performing deep mathematical analysis for {event_id}")
 
         # Analyze mathematical consistency
         consistency_score = 0.0
@@ -803,8 +803,8 @@ async def perform_deep_mathematical_analysis(
 
         # Store analysis results (would integrate with database)
 
-    except Exception as e:
-        logger.error(f"Deep mathematical analysis failed for {event_id}: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Deep mathematical analysis failed for {event_id}: {e}")
 
 
 def perform_stability_analysis(

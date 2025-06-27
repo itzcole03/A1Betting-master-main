@@ -10,18 +10,18 @@ export const PredictionDisplay = ({ propId, initialFeatures, context }) => {
         opponent_points: 0,
         minutes_played: 0,
         home_game: 0,
-        days_rest: 0
+        days_rest: 0;
     });
     const [featureContributions, setFeatureContributions] = useState([]);
     const [showAdvancedMetrics, setShowAdvancedMetrics] = useState(false);
     useEffect(() => {
         const loadInsights = async () => {
             try {
-                const data = await getInsights();
+
                 setInsights(data);
             }
             catch (err) {
-                console.error('Failed to load insights:', err);
+                // console statement removed
             }
         };
         loadInsights();
@@ -29,25 +29,25 @@ export const PredictionDisplay = ({ propId, initialFeatures, context }) => {
     const handleFeatureChange = (key, value) => {
         setFeatures(prev => ({
             ...prev,
-            [key]: value
+            [key]: value;
         }));
     };
     const handlePredict = async () => {
         try {
-            const response = await makePrediction(features, propId, context);
+
             if (response.insights?.feature_contributions) {
                 const contributions = Object.entries(response.insights.feature_contributions)
                     .map(([name, importance]) => ({
                     name,
                     value: features[name],
-                    importance: importance
+                    importance: importance;
                 }))
                     .sort((a, b) => b.importance - a.importance);
                 setFeatureContributions(contributions);
             }
         }
         catch (err) {
-            console.error('Prediction failed:', err);
+            // console statement removed
         }
     };
     const getConfidenceColor = (confidence) => {

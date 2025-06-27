@@ -1,17 +1,17 @@
-// betaTest4/src/test/unit/useAppStore.test.ts
+// betaTest4/src/test/unit/useAppStore.test.ts;
 import { useAppStore, getInitialState } from '@/store/useAppStore';
-import { act } from '@testing-library/react'; // For store actions
-// Mock services that the store might call indirectly via actions
+import { act } from '@testing-library/react'; // For store actions;
+// Mock services that the store might call indirectly via actions;
 // We only mock them if an action we test directly calls a service.
 // For simple state changes, direct service mocking might not be needed.
-// Example: Mock authService if testing login/logout actions that use it
+// Example: Mock authService if testing login/logout actions that use it;
 jest.mock('../../services/authService', () => ({
     authService: {
         login: jest.fn(),
         logout: jest.fn(),
     },
 }));
-// Mock UnifiedConfig to always provide a config object
+// Mock UnifiedConfig to always provide a config object;
 jest.mock('../../core/UnifiedConfig', () => {
     const apiEndpoints = {
         users: '/api/users',
@@ -41,10 +41,10 @@ jest.mock('../../core/UnifiedConfig', () => {
     };
 });
 jest.mock('../../store/useAppStore', () => {
-    const real = jest.requireActual('../../store/useAppStore');
-    // Zustand store hybrid mock
-    let state = {
-        // Arrays
+
+    // Zustand store hybrid mock;
+    const state = {
+        // Arrays;
         props: [],
         legs: [],
         entries: [],
@@ -52,20 +52,20 @@ jest.mock('../../store/useAppStore', () => {
         betSlipLegs: [],
         selectedPropIds: [],
         safeSelectedPropIds: [],
-        // Booleans
+        // Booleans;
         isLoadingProps: false,
         isLoadingAppProps: false,
         isLoadingEntries: false,
-        // Errors
+        // Errors;
         error: null,
         errorAppProps: null,
-        // Objects
+        // Objects;
         user: null,
         token: null,
-        // WebSocket
+        // WebSocket;
         setWebSocketClientId: jest.fn(),
         webSocketClientId: '',
-        // Functions
+        // Functions;
         fetchProps: jest.fn(),
         fetchAppProps: jest.fn(),
         fetchEntries: jest.fn(),
@@ -73,7 +73,7 @@ jest.mock('../../store/useAppStore', () => {
         addLeg: jest.fn(),
         removeLeg: jest.fn(),
         addToast: jest.fn((toast) => {
-            const id = Math.random().toString(36).substring(2, 10);
+
             state.toasts.push({ ...toast, id });
             return id;
         }),
@@ -89,11 +89,11 @@ jest.mock('../../store/useAppStore', () => {
         submitSlip: jest.fn(),
         setProps: jest.fn(),
         updateEntry: jest.fn(),
-        // Additional for store
+        // Additional for store;
         stake: 0,
         potentialPayout: 0,
     };
-    const useAppStore = (selector) => selector(state);
+
     useAppStore.getState = () => state;
     useAppStore.setState = (partial) => {
         state = { ...state, ...(typeof partial === 'function' ? partial(state) : partial) };
@@ -104,11 +104,11 @@ jest.mock('../../store/useAppStore', () => {
 });
 describe('useAppStore Zustand Store', () => {
     beforeEach(() => {
-        // Reset store to initial state before each test
+        // Reset store to initial state before each test;
         act(() => {
             useAppStore.setState(getInitialState());
         });
-        // Clear any mocks if they were called
+        // Clear any mocks if they were called;
         jest.clearAllMocks();
     });
     it('should initialize with default auth state', () => {
@@ -118,7 +118,7 @@ describe('useAppStore Zustand Store', () => {
         expect(token).toBeNull();
     });
     it('should allow adding and removing a toast notification', () => {
-        let toastId = '';
+        const toastId = '';
         act(() => {
             toastId = useAppStore.getState().addToast({ message: 'Test Toast', type: 'info' });
         });
@@ -131,16 +131,16 @@ describe('useAppStore Zustand Store', () => {
         expect(useAppStore.getState().toasts).toHaveLength(0);
     });
     it('should update stake and calculate potential payout correctly for BetSlip', () => {
-        // Scaffold: If the store does not auto-set stake/payout, skip real assertion
-        expect(true).toBe(true); // TODO: Implement real assertion if feature is implemented
+        // Scaffold: If the store does not auto-set stake/payout, skip real assertion;
+        expect(true).toBe(true); // TODO: Implement real assertion if feature is implemented;
     });
     it('clearSlip action should reset bet slip state', () => {
-        // Scaffold: If the store does not auto-set stake/payout, skip real assertion
-        expect(true).toBe(true); // TODO: Implement real assertion if feature is implemented
+        // Scaffold: If the store does not auto-set stake/payout, skip real assertion;
+        expect(true).toBe(true); // TODO: Implement real assertion if feature is implemented;
     });
     // Add more tests for other actions and state aspects:
     // - login success/failure (mocking authService.login responses)
-    // - fetchProps success/failure
-    // - fetchEntries behavior with/without auth
+    // - fetchProps success/failure;
+    // - fetchEntries behavior with/without auth;
     // - etc.
 });

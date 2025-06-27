@@ -5,9 +5,9 @@ import React from 'react';
  * Supports different shapes, sizes, and counts.
  */
 const SkeletonLoader = ({ className = '', count = 1, height = '1rem', width = '100%', variant = 'text', style = {}, }) => {
-    const elements = [];
-    const baseStyle = 'animate-pulse bg-gradient-to-r from-primary-700/10 via-primary-500/10 to-white/10 glass shadow-inner';
-    let variantStyle = '';
+
+
+    const variantStyle = '';
     switch (variant) {
         case 'circle':
             variantStyle = `rounded-full`;
@@ -20,11 +20,11 @@ const SkeletonLoader = ({ className = '', count = 1, height = '1rem', width = '1
             variantStyle = `rounded`;
             break;
     }
-    for (let i = 0; i < count; i++) {
+    for (const i = 0; i < count; i++) {
         elements.push(_jsx("div", { className: `${baseStyle} ${variantStyle} ${className}`, style: {
                 height,
                 width,
-                ...(variant === 'text' && i > 0 && { marginTop: '0.5rem' }), // Add margin for multi-line text skeletons
+                ...(variant === 'text' && i > 0 && { marginTop: '0.5rem' }), // Add margin for multi-line text skeletons;
                 ...style,
             } }, i));
     }

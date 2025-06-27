@@ -1,4 +1,4 @@
-import type { GameContext, ShapVector } from '../types/core.js';
+import type { GameContext, ShapVector } from '@/types/core.js';
 export interface VenueEffectModelOutput {
     features: Record<string, number>;
     shapInsights: ShapVector[];

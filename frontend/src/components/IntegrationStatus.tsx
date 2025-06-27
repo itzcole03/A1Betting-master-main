@@ -1,10 +1,10 @@
 /**
- * Integration Status Component
- * Shows the status of backend-frontend integration with live data
+ * Integration Status Component;
+ * Shows the status of backend-frontend integration with live data;
  */
 
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   CheckCircle,
   XCircle,
@@ -12,8 +12,8 @@ import {
   TrendingUp,
   Database,
   Wifi,
-} from "lucide-react";
-import { integrationService } from "../services/integrationService";
+} from 'lucide-react.ts';
+import { integrationService } from '@/services/integrationService.ts';
 
 interface StatusItem {
   name: string;
@@ -23,15 +23,15 @@ interface StatusItem {
 }
 
 export const IntegrationStatus: React.FC = () => {
-  const [statuses, setStatuses] = useState<StatusItem[]>([]);
+  const [statuses, setStatuses] = useState<StatusItem[] key={496611}>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastUpdate, setLastUpdate] = useState(new Date());
 
   useEffect(() => {
     checkAllIntegrations();
 
-    // Check every 30 seconds
-    const interval = setInterval(checkAllIntegrations, 30000);
+    // Check every 30 seconds;
+
     return () => clearInterval(interval);
   }, []);
 
@@ -39,9 +39,9 @@ export const IntegrationStatus: React.FC = () => {
     setIsLoading(true);
     const newStatuses: StatusItem[] = [];
 
-    // Check system health
+    // Check system health;
     try {
-      const health = await integrationService.checkSystemHealth();
+
       newStatuses.push({
         name: "Backend API",
         status: health.status === "online" ? "success" : "error",
@@ -60,7 +60,7 @@ export const IntegrationStatus: React.FC = () => {
       });
     }
 
-    // Check betting opportunities
+    // Check betting opportunities;
     try {
       const opportunities = await integrationService.getBettingOpportunities(
         undefined,
@@ -81,9 +81,9 @@ export const IntegrationStatus: React.FC = () => {
       });
     }
 
-    // Check analytics
+    // Check analytics;
     try {
-      const analytics = await integrationService.getUserAnalytics("test-user");
+
       newStatuses.push({
         name: "Analytics Service",
         status: analytics.current_balance !== undefined ? "success" : "error",
@@ -99,9 +99,9 @@ export const IntegrationStatus: React.FC = () => {
       });
     }
 
-    // Check model performance
+    // Check model performance;
     try {
-      const accuracy = await integrationService.getAccuracyMetrics();
+
       newStatuses.push({
         name: "ML Models",
         status: accuracy.overall_accuracy > 0 ? "success" : "error",
@@ -117,9 +117,9 @@ export const IntegrationStatus: React.FC = () => {
       });
     }
 
-    // Check transactions
+    // Check transactions;
     try {
-      const transactions = await integrationService.getTransactions();
+
       newStatuses.push({
         name: "Transaction System",
         status: "success",
@@ -143,13 +143,13 @@ export const IntegrationStatus: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "success":
-        return <CheckCircle className="w-5 h-5 text-green-400" />;
+        return <CheckCircle className="w-5 h-5 text-green-400" / key={94912}>;
       case "error":
-        return <XCircle className="w-5 h-5 text-red-400" />;
+        return <XCircle className="w-5 h-5 text-red-400" / key={673140}>;
       case "loading":
-        return <Clock className="w-5 h-5 text-yellow-400 animate-spin" />;
+        return <Clock className="w-5 h-5 text-yellow-400 animate-spin" / key={180477}>;
       default:
-        return <Database className="w-5 h-5 text-gray-400" />;
+        return <Database className="w-5 h-5 text-gray-400" / key={680506}>;
     }
   };
 
@@ -173,17 +173,17 @@ export const IntegrationStatus: React.FC = () => {
       : "error";
 
   return (
-    <div className="p-6 bg-gray-900 rounded-lg shadow-2xl max-w-6xl mx-auto">
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center space-x-3">
-          <Wifi className="w-6 h-6 text-cyan-400" />
-          <h2 className="text-2xl font-bold text-white">
-            Backend Integration Status
+    <div className="p-6 bg-gray-900 rounded-lg shadow-2xl max-w-6xl mx-auto" key={87849}>
+      <div className="flex items-center justify-between mb-6" key={530716}>
+        <div className="flex items-center space-x-3" key={602729}>
+          <Wifi className="w-6 h-6 text-cyan-400" / key={620046}>
+          <h2 className="text-2xl font-bold text-white" key={416278}>
+            Backend Integration Status;
           </h2>
         </div>
 
-        <div className="flex items-center space-x-4">
-          <div
+        <div className="flex items-center space-x-4" key={787951}>
+          <div;
             className={`px-3 py-1 rounded-full text-sm font-medium ${
               overallStatus === "success"
                 ? "bg-green-500/20 text-green-400"
@@ -191,7 +191,7 @@ export const IntegrationStatus: React.FC = () => {
                   ? "bg-yellow-500/20 text-yellow-400"
                   : "bg-red-500/20 text-red-400"
             }`}
-          >
+           key={418177}>
             {overallStatus === "success"
               ? "✅ All Systems Operational"
               : overallStatus === "partial"
@@ -199,52 +199,52 @@ export const IntegrationStatus: React.FC = () => {
                 : "❌ Integration Issues"}
           </div>
 
-          <button
+          <button;
             onClick={checkAllIntegrations}
             disabled={isLoading}
             className="px-4 py-2 bg-cyan-600 text-white rounded hover:bg-cyan-700 transition-colors disabled:opacity-50"
-          >
+           key={178624}>
             {isLoading ? "Checking..." : "Refresh"}
           </button>
         </div>
       </div>
 
-      <div className="text-sm text-gray-400 mb-4">
+      <div className="text-sm text-gray-400 mb-4" key={853865}>
         Last updated: {lastUpdate.toLocaleTimeString()}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" key={696568}>
         {statuses.map((item, index) => (
-          <motion.div
+          <motion.div;
             key={item.name}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
             className={`p-4 rounded-lg border backdrop-blur-sm ${getStatusBg(item.status)}`}
-          >
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="font-semibold text-white">{item.name}</h3>
+           key={850864}>
+            <div className="flex items-center justify-between mb-3" key={56204}>
+              <h3 className="font-semibold text-white" key={766242}>{item.name}</h3>
               {getStatusIcon(item.status)}
             </div>
 
-            <p className="text-sm text-gray-300 mb-3">{item.message}</p>
+            <p className="text-sm text-gray-300 mb-3" key={11613}>{item.message}</p>
 
             {item.data && (
-              <div className="space-y-2">
+              <div className="space-y-2" key={725977}>
                 {item.name === "Backend API" && item.data && (
-                  <div className="text-xs space-y-1">
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Status:</span>
-                      <span className="text-green-400">{item.data.status}</span>
+                  <div className="text-xs space-y-1" key={937692}>
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>Status:</span>
+                      <span className="text-green-400" key={40612}>{item.data.status}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Version:</span>
-                      <span className="text-white">{item.data.version}</span>
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>Version:</span>
+                      <span className="text-white" key={453983}>{item.data.version}</span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Uptime:</span>
-                      <span className="text-white">
-                        {Math.round(item.data.uptime)}s
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>Uptime:</span>
+                      <span className="text-white" key={453983}>
+                        {Math.round(item.data.uptime)}s;
                       </span>
                     </div>
                   </div>
@@ -253,36 +253,36 @@ export const IntegrationStatus: React.FC = () => {
                 {item.name === "Betting Data" &&
                   item.data &&
                   item.data.length > 0 && (
-                    <div className="text-xs space-y-1">
+                    <div className="text-xs space-y-1" key={937692}>
                       {item.data.slice(0, 2).map((opp: any) => (
-                        <div
+                        <div;
                           key={opp.id}
                           className="flex justify-between text-gray-300"
-                        >
-                          <span className="truncate">{opp.event}</span>
-                          <span className="text-cyan-400">{opp.odds}</span>
+                         key={585030}>
+                          <span className="truncate" key={201964}>{opp.event}</span>
+                          <span className="text-cyan-400" key={797516}>{opp.odds}</span>
                         </div>
                       ))}
                     </div>
                   )}
 
                 {item.name === "Analytics Service" && item.data && (
-                  <div className="text-xs space-y-1">
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Win Rate:</span>
-                      <span className="text-green-400">
+                  <div className="text-xs space-y-1" key={937692}>
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>Win Rate:</span>
+                      <span className="text-green-400" key={40612}>
                         {(item.data.win_rate * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">ROI:</span>
-                      <span className="text-cyan-400">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>ROI:</span>
+                      <span className="text-cyan-400" key={797516}>
                         {item.data.roi.toFixed(1)}%
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Total Wagered:</span>
-                      <span className="text-white">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>Total Wagered:</span>
+                      <span className="text-white" key={453983}>
                         ${item.data.total_wagered?.toLocaleString() || 0}
                       </span>
                     </div>
@@ -290,22 +290,22 @@ export const IntegrationStatus: React.FC = () => {
                 )}
 
                 {item.name === "ML Models" && item.data && (
-                  <div className="text-xs space-y-1">
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Precision:</span>
-                      <span className="text-green-400">
+                  <div className="text-xs space-y-1" key={937692}>
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>Precision:</span>
+                      <span className="text-green-400" key={40612}>
                         {(item.data.precision * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">Recall:</span>
-                      <span className="text-cyan-400">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>Recall:</span>
+                      <span className="text-cyan-400" key={797516}>
                         {(item.data.recall * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-gray-400">F1 Score:</span>
-                      <span className="text-purple-400">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-gray-400" key={912100}>F1 Score:</span>
+                      <span className="text-purple-400" key={846332}>
                         {(item.data.f1_score * 100).toFixed(1)}%
                       </span>
                     </div>
@@ -318,30 +318,30 @@ export const IntegrationStatus: React.FC = () => {
       </div>
 
       {/* Summary Stats */}
-      <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700">
-        <h3 className="text-lg font-semibold text-white mb-3 flex items-center">
-          <TrendingUp className="w-5 h-5 text-green-400 mr-2" />
-          Integration Summary
+      <div className="mt-6 p-4 bg-gray-800/50 rounded-lg border border-gray-700" key={644452}>
+        <h3 className="text-lg font-semibold text-white mb-3 flex items-center" key={810298}>
+          <TrendingUp className="w-5 h-5 text-green-400 mr-2" / key={554464}>
+          Integration Summary;
         </h3>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-          <div>
-            <div className="text-2xl font-bold text-green-400">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center" key={472236}>
+          <div key={241917}>
+            <div className="text-2xl font-bold text-green-400" key={77409}>
               {statuses.filter((s) => s.status === "success").length}
             </div>
-            <div className="text-sm text-gray-400">Services Online</div>
+            <div className="text-sm text-gray-400" key={372957}>Services Online</div>
           </div>
 
-          <div>
-            <div className="text-2xl font-bold text-red-400">
+          <div key={241917}>
+            <div className="text-2xl font-bold text-red-400" key={683097}>
               {statuses.filter((s) => s.status === "error").length}
             </div>
-            <div className="text-sm text-gray-400">Services Offline</div>
+            <div className="text-sm text-gray-400" key={372957}>Services Offline</div>
           </div>
 
-          <div>
-            <div className="text-2xl font-bold text-cyan-400">
-              {statuses.length > 0
+          <div key={241917}>
+            <div className="text-2xl font-bold text-cyan-400" key={312838}>
+              {statuses.length > 0;
                 ? Math.round(
                     (statuses.filter((s) => s.status === "success").length /
                       statuses.length) *
@@ -350,14 +350,14 @@ export const IntegrationStatus: React.FC = () => {
                 : 0}
               %
             </div>
-            <div className="text-sm text-gray-400">System Health</div>
+            <div className="text-sm text-gray-400" key={372957}>System Health</div>
           </div>
 
-          <div>
-            <div className="text-2xl font-bold text-white">
-              {Math.round((Date.now() - lastUpdate.getTime()) / 1000)}s
+          <div key={241917}>
+            <div className="text-2xl font-bold text-white" key={868017}>
+              {Math.round((Date.now() - lastUpdate.getTime()) / 1000)}s;
             </div>
-            <div className="text-sm text-gray-400">Last Check</div>
+            <div className="text-sm text-gray-400" key={372957}>Last Check</div>
           </div>
         </div>
       </div>

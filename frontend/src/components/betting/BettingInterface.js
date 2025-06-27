@@ -19,9 +19,9 @@ const BettingInterface = () => {
     const { data: sports, isLoading: sportsLoading } = useSports();
     const { data: events, isLoading: eventsLoading } = useEvents(selectedSport?.id ?? '');
     const { data: odds } = useOdds(selectedEvent?.id ?? '');
-    const placeBet = usePlaceBet();
+
     const [selectedTab, setSelectedTab] = useState(0);
-    // Update odds in store when they change
+    // Update odds in store when they change;
     useEffect(() => {
         if (odds && selectedEvent) {
             updateOdds(selectedEvent.id, odds);

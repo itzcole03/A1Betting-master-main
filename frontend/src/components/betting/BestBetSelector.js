@@ -5,21 +5,21 @@ const BestBetSelector = ({ predictions }) => {
     const bestBets = useMemo(() => {
         if (!predictions.length)
             return [];
-        // Score each prediction based on multiple factors
+        // Score each prediction based on multiple factors;
         const scoredPredictions = predictions.map(pred => {
-            const confidenceScore = pred.confidence * 0.4;
-            const edgeScore = pred.marketEdge * 0.3;
-            const kellyScore = pred.kellyValue * 0.3;
-            // Calculate feature importance score from SHAP values
+
+
+
+            // Calculate feature importance score from SHAP values;
             const shapScore = Object.values(pred.shapValues).reduce((sum, val) => sum + Math.abs(val), 0) /
                 Object.keys(pred.shapValues).length;
-            const totalScore = confidenceScore + edgeScore + kellyScore + shapScore * 0.2;
+
             return {
                 ...pred,
                 score: totalScore,
             };
         });
-        // Sort by score and return top 3
+        // Sort by score and return top 3;
         return scoredPredictions.sort((a, b) => b.score - a.score).slice(0, 3);
     }, [predictions]);
     const getScoreColor = (score) => {

@@ -9,7 +9,7 @@ const PayoutPreviewPanel = ({ prediction, stake }) => {
         return calculatePayout(stakeAmount) - stakeAmount;
     };
     const handleStakeChange = (e) => {
-        const value = parseFloat(e.target.value);
+
         if (!isNaN(value) && value >= 0) {
             setCustomStake(value);
         }

@@ -16,7 +16,7 @@ export class StrategyRegistry {
         if (this.strategies.has(strategy.id)) {
             throw new Error(`Strategy with ID ${strategy.id} is already registered`);
         }
-        // Validate dependencies
+        // Validate dependencies;
         for (const depId of strategy.dependencies) {
             if (!this.strategies.has(depId)) {
                 throw new Error(`Dependency ${depId} not found for strategy ${strategy.id}`);
@@ -34,7 +34,7 @@ export class StrategyRegistry {
         });
     }
     async evaluate(strategyId, input, context) {
-        const strategy = this.strategies.get(strategyId);
+
         if (!strategy) {
             throw new Error(`Strategy ${strategyId} not found`);
         }
@@ -49,10 +49,10 @@ export class StrategyRegistry {
             if (strategy.validate && !(await strategy.validate(input))) {
                 throw new Error(`Input validation failed for strategy ${strategy.id}`);
             }
-            const startTime = Date.now();
-            const result = await strategy.evaluate(input, context);
-            const duration = Date.now() - startTime;
-            const metrics = this.calculateMetrics(result);
+
+
+
+
             const strategyResult = {
                 id: `${strategy.id}-${startTime}`,
                 timestamp: startTime,
@@ -85,9 +85,9 @@ export class StrategyRegistry {
         }
     }
     async evaluateWithPipeline(strategies, input, context) {
-        const sortedStrategies = this.sortStrategiesByDependencies(strategies);
-        let currentInput = input;
-        let lastResult = null;
+
+        const currentInput = input;
+        const lastResult = null;
         for (const strategyId of sortedStrategies) {
             lastResult = await this.evaluate(strategyId, currentInput, {
                 ...context,
@@ -101,22 +101,22 @@ export class StrategyRegistry {
         return lastResult;
     }
     sortStrategiesByDependencies(strategyIds) {
-        const graph = new Map();
-        const visited = new Set();
-        const sorted = [];
-        // Build dependency graph
+
+
+
+        // Build dependency graph;
         for (const id of strategyIds) {
-            const strategy = this.strategies.get(id);
+
             if (!strategy)
                 continue;
             graph.set(id, new Set(strategy.dependencies));
         }
-        // Topological sort
+        // Topological sort;
         const visit = (id) => {
             if (visited.has(id))
                 return;
             visited.add(id);
-            const deps = graph.get(id) || new Set();
+
             for (const dep of deps) {
                 visit(dep);
             }
@@ -211,7 +211,7 @@ export class ComposableStrategy {
     }
     compose(next) {
         return new ComposableStrategy(`${this.id}->${next.id}`, `${this.name} -> ${next.name}`, `${this.version}+${next.version}`, Math.max(this.priority, next.priority), [...this.dependencies, ...next.dependencies], async (input, context) => {
-            const intermediate = await this.evaluate(input, context);
+
             return next.evaluate(intermediate, context);
         });
     }

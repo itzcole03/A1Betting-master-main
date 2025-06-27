@@ -1,8 +1,8 @@
-import { Analyzer } from '../core/Analyzer.js';
+import { Analyzer } from '@/core/Analyzer.js';
 import { ProjectionAnalysis } from './ProjectionAnalyzer.js';
-import { SocialSentimentData } from '../adapters/SocialSentimentAdapter.js';
-import { SportsRadarData } from '../adapters/SportsRadarAdapter.js';
-import { TheOddsData } from '../adapters/TheOddsAdapter.js';
+import { SocialSentimentData } from '@/adapters/SocialSentimentAdapter.js';
+import { SportsRadarData } from '@/adapters/SportsRadarAdapter.js';
+import { TheOddsData } from '@/adapters/TheOddsAdapter.js';
 export interface EnhancedAnalysis extends ProjectionAnalysis {
     sentiment: {
         score: number;

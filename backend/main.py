@@ -749,6 +749,93 @@ except Exception as e:
 # MAIN APPLICATION RUNNER
 # ============================================================================
 
+
+from backend.auth import AuthService
+from backend.database import get_db
+from backend.models.user import User
+from sqlalchemy.orm import Session
+from pydantic import BaseModel
+from fastapi import Depends, HTTPException, status
+
+# Pydantic models for requests
+class UserRegistration(BaseModel):
+    username: str
+    email: str
+    password: str
+    first_name: str = None
+    last_name: str = None
+
+class UserLogin(BaseModel):
+    username: str
+    password: str
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str
+    user: dict
+
+# Authentication endpoints
+@app.post("/auth/register", response_model=TokenResponse)
+async def register_user(user_data: UserRegistration, db: Session = Depends(get_db)):
+    """Register a new user."""
+    try:
+        user = AuthService.create_user(
+            db=db,
+            username=user_data.username,
+            email=user_data.email,
+            password=user_data.password,
+            first_name=user_data.first_name,
+            last_name=user_data.last_name
+        )
+        
+        token = AuthService.create_access_token(user)
+        
+        return TokenResponse(
+            access_token=token,
+            token_type="bearer",
+            user=user.to_dict()
+        )
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+@app.post("/auth/login", response_model=TokenResponse)
+async def login_user(login_data: UserLogin, db: Session = Depends(get_db)):
+    """Login user and return access token."""
+    user = AuthService.authenticate_user(
+        db=db,
+        username=login_data.username,
+        password=login_data.password
+    )
+    
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect username or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    token = AuthService.create_access_token(user)
+    
+    return TokenResponse(
+        access_token=token,
+        token_type="bearer",
+        user=user.to_dict()
+    )
+
+@app.get("/auth/me")
+async def get_current_user_info(current_user: User = Depends(AuthService.get_current_user)):
+    """Get current user information."""
+    return current_user.to_dict()
+
+@app.get("/api/user/profile")
+async def get_user_profile(current_user: User = Depends(AuthService.get_current_user)):
+    """Get user profile information."""
+    return current_user.to_dict()
+
+
 if __name__ == "__main__":
     logger.info("🚀 Starting A1Betting Backend Server...")
 

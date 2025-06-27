@@ -39,18 +39,18 @@ const ValueDisplay = styled(Box)(({ theme, changed }) => ({
     transition: `background-color 0.3s`,
 }));
 export const PredictionDisplay = ({ eventId }) => {
-    // Unified analytics for prediction data
+    // Unified analytics for prediction data;
     const { ml } = useUnifiedAnalytics({ ml: { autoUpdate: false } });
     const [sortOrder, setSortOrder] = useState('desc');
     const [filterType, setFilterType] = useState('all');
     const [filterAnchorEl, setFilterAnchorEl] = useState(null);
     const [sortAnchorEl, setSortAnchorEl] = useState(null);
     const [changedValues, setChangedValues] = useState(new Set());
-    // Memoize prediction for performance
+    // Memoize prediction for performance;
     const prediction = useMemo(() => {
         if (!ml || !ml.mlResult)
             return null;
-        // Find prediction for this eventId if available
+        // Find prediction for this eventId if available;
         // (Assume mlResult.predictions is an array of objects with eventId)
         if (Array.isArray(ml.mlResult.predictions)) {
             return ml.mlResult.predictions.find((p) => p.eventId === eventId) || null;
@@ -59,13 +59,13 @@ export const PredictionDisplay = ({ eventId }) => {
     }, [ml, eventId]);
     useEffect(() => {
         if (prediction) {
-            const newChangedValues = new Set();
+
             if (prediction.confidence)
                 newChangedValues.add('confidence');
             if (prediction.recommended_stake)
                 newChangedValues.add('stake');
             setChangedValues(newChangedValues);
-            const timeout = setTimeout(() => setChangedValues(new Set()), 1000);
+
             return () => clearTimeout(timeout);
         }
     }, [prediction]);
@@ -78,7 +78,7 @@ export const PredictionDisplay = ({ eventId }) => {
     if (!prediction) {
         return _jsx(NoResultsFallback, {});
     }
-    // Transform SHAP values for visualization
+    // Transform SHAP values for visualization;
     const shapData = useMemo(() => {
         if (!prediction.shap_values)
             return [];
@@ -96,15 +96,15 @@ export const PredictionDisplay = ({ eventId }) => {
             return true;
         })
             .sort((a, b) => {
-            const multiplier = sortOrder === 'desc' ? -1 : 1;
+
             return multiplier * (b.absValue - a.absValue);
         })
             .slice(0, 10);
     }, [prediction, filterType, sortOrder]);
-    const handleFilterClick = (event) => setFilterAnchorEl(event.currentTarget);
-    const handleSortClick = (event) => setSortAnchorEl(event.currentTarget);
-    const handleFilterClose = () => setFilterAnchorEl(null);
-    const handleSortClose = () => setSortAnchorEl(null);
+
+
+
+
     return (_jsxs(PredictionContainer, { children: [_jsx(Typography, { gutterBottom: true, variant: "h6", children: "Prediction Analysis" }), _jsxs(ValueDisplay, { changed: changedValues.has('confidence'), children: [_jsx(Typography, { gutterBottom: true, variant: "subtitle2", children: "Confidence Level" }), _jsx(ConfidenceBar, { color: prediction.confidence > 0.7 ? 'success' : 'primary', value: prediction.confidence * 100, variant: "determinate" }), _jsxs(Typography, { color: "textSecondary", mt: 1, variant: "body2", children: [prediction.confidence.toFixed(2), " (", prediction.risk_level, ")"] })] }), _jsxs(ValueDisplay, { changed: changedValues.has('stake'), children: [_jsx(Typography, { gutterBottom: true, variant: "subtitle2", children: "Recommended Stake" }), _jsxs(Typography, { color: "primary", variant: "h6", children: ["$", prediction.recommended_stake?.toFixed(2) ?? '0.00'] })] }), _jsxs(Box, { mt: 2, children: [_jsxs(Box, { alignItems: "center", display: "flex", justifyContent: "space-between", mb: 1, children: [_jsx(Typography, { variant: "subtitle2", children: "Feature Impact (SHAP Values)" }), _jsxs(ControlsContainer, { children: [_jsx(Tooltip, { title: "Filter", children: _jsx(IconButton, { "aria-label": "Filter SHAP values", size: "small", onClick: handleFilterClick, children: _jsx(FilterListIcon, {}) }) }), _jsx(Tooltip, { title: "Sort", children: _jsx(IconButton, { "aria-label": "Sort SHAP values", size: "small", onClick: handleSortClick, children: _jsx(SortIcon, {}) }) })] })] }), _jsxs(Menu, { anchorEl: filterAnchorEl, open: Boolean(filterAnchorEl), onClose: handleFilterClose, children: [_jsx(MenuItem, { onClick: () => {
                                     setFilterType('all');
                                     handleFilterClose();
@@ -121,7 +121,7 @@ export const PredictionDisplay = ({ eventId }) => {
                                     setSortOrder('asc');
                                     handleSortClose();
                                 }, children: "Lowest Impact First" })] }), _jsx(ShapContainer, { children: _jsx(ResponsiveContainer, { height: "100%", width: "100%", children: _jsxs(BarChart, { "aria-label": "SHAP Feature Impact Bar Chart", data: shapData, layout: "vertical", children: [_jsx(XAxis, { type: "number" }), _jsx(YAxis, { dataKey: "feature", tick: { fontSize: 12 }, type: "category", width: 150 }), _jsx(RechartsTooltip, { formatter: (value, name, props) => {
-                                            const item = shapData[props.payload.index];
+
                                             return [
                                                 `${item.value.toFixed(4)} (${item.value > 0 ? 'Positive' : 'Negative'} Impact)`,
                                                 'SHAP Value',

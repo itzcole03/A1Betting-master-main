@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import GlassCard from '../components/ui/GlassCard';
-import EnhancedPropCard from '../components/ui/EnhancedPropCard';
-import GlowButton from '../components/ui/GlowButton';
-import Tooltip from '../components/ui/Tooltip';
-import { Container, Typography, Box, Grid, TextField, MenuItem } from '@mui/material';
-import { notificationService } from '@/services/notification';
-import { sportsAnalytics, Sport, PropPrediction } from '@/services/sportsAnalytics';
+import React, { useState, useEffect  } from 'react.ts';
+import GlassCard from '@/components/ui/GlassCard.ts';
+import EnhancedPropCard from '@/components/ui/EnhancedPropCard.ts';
+import GlowButton from '@/components/ui/GlowButton.ts';
+import Tooltip from '@/components/ui/Tooltip.ts';
+import { Container, Typography, Box, Grid, TextField, MenuItem } from '@mui/material.ts';
+import { notificationService } from '@/services/notification.ts';
+import { sportsAnalytics, Sport, PropPrediction } from '@/services/sportsAnalytics.ts';
 
-// Sample data for demonstration
+// Sample data for demonstration;
 const samplePlayers = [
   {
     player: {
@@ -139,7 +139,7 @@ const samplePlayers = [
   },
 ];
 
-// Sample trending props
+// Sample trending props;
 const sampleTrendingProps = [
   {
     id: 'trend_1',
@@ -168,9 +168,9 @@ const sampleTrendingProps = [
 
 export const PropsPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedSport, setSelectedSport] = useState<Sport>('NBA');
-  const [selectedProp, setSelectedProp] = useState<string | null>(null);
-  const [propPrediction, setPropPrediction] = useState<PropPrediction | null>(null);
+  const [selectedSport, setSelectedSport] = useState<Sport key={206430}>('NBA');
+  const [selectedProp, setSelectedProp] = useState<string | null key={121216}>(null);
+  const [propPrediction, setPropPrediction] = useState<PropPrediction | null key={988256}>(null);
   const [minConfidence, setMinConfidence] = useState(60);
   const [minFireCount, setMinFireCount] = useState(50);
 
@@ -183,7 +183,7 @@ export const PropsPage: React.FC = () => {
   const loadPropPrediction = async (propId: string) => {
     setIsLoading(true);
     try {
-      const prediction = await sportsAnalytics.analyzeProp(selectedSport, propId);
+
       setPropPrediction(prediction);
     } catch (error) {
       notificationService.notify('error', 'Error loading prediction', 'Please try again later');
@@ -223,13 +223,13 @@ export const PropsPage: React.FC = () => {
   };
 
   return (
-    <div className="p-6 space-y-8 min-h-screen bg-gradient-to-br from-blue-900/80 to-blue-700/80 dark:from-gray-900 dark:to-gray-800 transition-colors">
-      <GlassCard className="mb-8">
-        <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-4">Player Props</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div className="p-6 space-y-8 min-h-screen bg-gradient-to-br from-blue-900/80 to-blue-700/80 dark:from-gray-900 dark:to-gray-800 transition-colors" key={832183}>
+      <GlassCard className="mb-8" key={170857}>
+        <h2 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-4" key={839291}>Player Props</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" key={456537}>
           {samplePlayers.map((player, idx) =>
             player.props.map((prop, pidx) => (
-              <EnhancedPropCard
+              <EnhancedPropCard;
                 key={prop.id}
                 playerName={player.player.name}
                 team={player.player.team}
@@ -242,7 +242,7 @@ export const PropsPage: React.FC = () => {
                 trendValue={prop.fireCount}
                 gameInfo={{ opponent: 'TBD', day: 'Fri', time: '7:30pm' }}
                 playerImageUrl={player.player.imageUrl}
-                onSelect={() => {}}
+                onSelect={() = key={303050}> {}}
                 onViewDetails={() => {}}
               />
             ))

@@ -214,8 +214,8 @@ class UltraHighAccuracyEngine:
 
             return prediction
 
-        except Exception as e:
-            logger.error(f"Error in ultra-accuracy prediction: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error in ultra-accuracy prediction: {e}")
             return None
 
     async def update_model_performance(self, prediction_id: str, actual_outcome: float):

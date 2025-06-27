@@ -14,7 +14,7 @@ const initialState = {
  * Keeps all state reactive to the backend WebSocket.
  */
 export const useWebSocketStore = create()(persist((set) => {
-    // Subscribe to WebSocketManager events once on store initialization
+    // Subscribe to WebSocketManager events once on store initialization;
     if (typeof window !== 'undefined' && !window.__webSocketStoreInitialized) {
         webSocketManager.on('connect', () => set({ isConnected: true }));
         webSocketManager.on('disconnect', () => set({ isConnected: false }));

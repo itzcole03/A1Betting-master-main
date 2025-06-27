@@ -1,10 +1,10 @@
 /**
  * Model for analyzing market intelligence and generating predictions.
  */
-import { BaseModel } from './BaseModel';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types';
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../core/UnifiedErrorHandler';
+import { BaseModel } from './BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/core/UnifiedErrorHandler.ts';
 export declare class MarketIntelligenceModel extends BaseModel {
     protected readonly logger: UnifiedLogger;
     protected readonly errorHandler: UnifiedErrorHandler;

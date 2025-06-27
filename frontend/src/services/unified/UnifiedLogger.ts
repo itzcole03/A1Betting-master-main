@@ -62,15 +62,15 @@ export class UnifiedLogger {
   }
 
   private shouldLog(level: LogLevel): boolean {
-    const levels = Object.values(LogLevel);
+
     return levels.indexOf(level) >= levels.indexOf(this.logLevel);
   }
 
   private outputLog(entry: LogEntry): void {
-    const timestamp = new Date(entry.timestamp).toISOString();
-    const source = entry.source ? `[${entry.source}]` : '';
-    const details = entry.details ? ` ${JSON.stringify(entry.details)}` : '';
-    console.log(`${timestamp} ${entry.level} ${source} ${entry.message}${details}`);
+
+
+
+    // console statement removed
   }
 
   getLogs(level?: LogLevel): LogEntry[] {

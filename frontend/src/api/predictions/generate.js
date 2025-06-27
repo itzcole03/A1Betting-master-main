@@ -1,8 +1,8 @@
-import { getLogger } from './../../core/logging/logger.ts'; // Added .ts extension
-import { getMetrics } from './../../core/metrics/metrics.ts'; // Added .ts extension
-// import { predictionService } from './../../services/predictions'; // Flagged as missing file, commented out
-const logger = getLogger('PredictionGenerator');
-const metrics = getMetrics();
+import { getLogger } from './../../core/logging/logger.ts'; // Added .ts extension;
+import { getMetrics } from './../../core/metrics/metrics.ts'; // Added .ts extension;
+// import { predictionService } from './../../services/predictions'; // Flagged as missing file, commented out;
+
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
@@ -12,9 +12,9 @@ export default async function handler(req, res) {
         return res.status(400).json({ error: 'Model name and date are required' });
     }
     try {
-        const startTime = Date.now();
-        const predictions = await predictionService.generatePredictions(modelName, date);
-        const duration = Date.now() - startTime;
+
+
+
         metrics.timing('prediction_generation_duration', duration, {
             modelName,
             date,
@@ -27,7 +27,7 @@ export default async function handler(req, res) {
         return res.status(200).json(predictions);
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
         logger.error('Error generating predictions', {
             error: errorMessage,
             modelName,

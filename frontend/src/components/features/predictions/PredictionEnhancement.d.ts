@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ModelPrediction } from '../types/prediction';
+import React from 'react.ts';
+import type { ModelPrediction } from '@/types/prediction.ts';
 interface PredictionEnhancementProps {
     predictions: ModelPrediction[];
     onStakeOptimize: (prediction: ModelPrediction) => void;

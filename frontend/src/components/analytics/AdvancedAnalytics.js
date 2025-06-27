@@ -8,38 +8,38 @@ import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import { Chart, ArcElement, BarElement, CategoryScale, LinearScale, Tooltip as ChartTooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useUnifiedAnalytics } from '../../hooks/useUnifiedAnalytics.js'; // Add .js extension if required by tsconfig
+import { useUnifiedAnalytics } from '../../hooks/useUnifiedAnalytics.js'; // Add .js extension if required by tsconfig;
 import { useTheme } from '../../hooks/useTheme.js';
-// If the following import fails, see the comment below for a dynamic workaround
+// If the following import fails, see the comment below for a dynamic workaround;
 // If you see TypeScript errors for icon imports below, ensure your react-icons version is >=5.5.0 and your tsconfig.json includes "esModuleInterop": true and "allowSyntheticDefaultImports": true. If problems persist, use a dynamic import workaround (see comment below).
 // Example dynamic icon usage: const Icon = require('react-icons/fa').FaRobot;
 import { FaRobot, FaBolt, FaArrowUp, FaArrowDown, FaHeartbeat, FaExclamationTriangle } from 'react-icons/fa';
 Chart.register(ArcElement, BarElement, CategoryScale, LinearScale, ChartTooltip, Legend);
-const StatusChip = ({ label, color, icon }) => (_jsx(Chip, { icon: icon, label: label, color: color, size: "small", sx: { mr: 1, mb: 1 } }));
+
 const AdvancedAnalytics = () => {
-    const theme = useTheme();
-    // Use the unified analytics hook
+
+    // Use the unified analytics hook;
     const { ml, performance } = useUnifiedAnalytics();
     // --- Types removed for build robustness. If you want to restore strict typing, define interfaces for your analytics slices. ---
-    const enhancedAnalysis = (ml?.data || {});
-    const loading = ml?.loading || false;
-    const error = ml?.error || null;
-    const modelStatus = (performance?.data?.[0] || {});
-    const lastUpdate = performance?.data?.[0]?.timestamp || '';
-    const fallbackActive = false; // Set as needed or infer from data
-    const simulationMode = false; // Set as needed or infer from data
-    // Only assign these from enhancedAnalysis (not from drift/realtime) to avoid duplicate declarations
-    const sentiment = enhancedAnalysis.sentiment || {};
-    const odds = enhancedAnalysis.marketData?.odds || {};
-    const consensus = enhancedAnalysis.marketData?.consensus || {};
-    const injuries = enhancedAnalysis.injuries || [];
-    const patterns = enhancedAnalysis.patterns || [];
-    const explainability = enhancedAnalysis.explainability || {};
-    const aiStatus = modelStatus || {};
-    // THEME: Replace theme.palette.* with hardcoded values for now
-    const primaryColor = theme.theme === 'dark' ? '#1976d2' : '#1976d2'; // fallback to MUI blue
-    const textColor = theme.theme === 'dark' ? '#fff' : '#222';
-    // Local loading overlay
+
+
+
+
+
+    const fallbackActive = false; // Set as needed or infer from data;
+    const simulationMode = false; // Set as needed or infer from data;
+    // Only assign these from enhancedAnalysis (not from drift/realtime) to avoid duplicate declarations;
+
+
+
+
+
+
+
+    // THEME: Replace theme.palette.* with hardcoded values for now;
+    const primaryColor = theme.theme === 'dark' ? '#1976d2' : '#1976d2'; // fallback to MUI blue;
+
+    // Local loading overlay;
     if (loading || !enhancedAnalysis) {
         return (_jsxs(Box, { className: "flex flex-col items-center justify-center min-h-[300px]", children: [_jsx(CircularProgress, {}), _jsx(Typography, { variant: "body2", className: "mt-2 text-gray-400", children: "Loading advanced analytics..." })] }));
     }

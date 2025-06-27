@@ -1,7 +1,7 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-import { UnifiedLogger } from '../../core/UnifiedLogger';
-import { UnifiedServiceRegistry } from '../unified/UnifiedServiceRegistry';
+import { promises as fs } from 'fs.ts';
+import path from 'path.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedServiceRegistry } from '@/unified/UnifiedServiceRegistry.ts';
 
 export class UnifiedSettingsService {
   private static instance: UnifiedSettingsService;
@@ -25,15 +25,15 @@ export class UnifiedSettingsService {
 
   private async loadSettings(): Promise<void> {
     try {
-      const data = await fs.readFile(this.settingsFile, 'utf-8');
-      const settings = JSON.parse(data);
+
+
       Object.entries(settings).forEach(([key, value]) => {
         this.settings.set(key, value);
       });
       this.logger.info('Settings loaded successfully', 'settings');
     } catch (error) {
       this.logger.error('Failed to load settings', 'settings');
-      // Initialize with default settings
+      // Initialize with default settings;
       this.initializeDefaultSettings();
     }
   }
@@ -63,7 +63,7 @@ export class UnifiedSettingsService {
   }
 
   public get<T>(key: string, defaultValue: T): T {
-    const value = this.settings.get(key);
+
     return value !== undefined ? (value as T) : defaultValue;
   }
 
@@ -74,7 +74,7 @@ export class UnifiedSettingsService {
 
   private async saveSettings(): Promise<void> {
     try {
-      const settings = Object.fromEntries(this.settings);
+
       await fs.mkdir(path.dirname(this.settingsFile), { recursive: true });
       await fs.writeFile(this.settingsFile, JSON.stringify(settings, null, 2));
       this.logger.info('Settings saved successfully', 'settings');

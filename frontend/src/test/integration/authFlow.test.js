@@ -1,8 +1,8 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-// betaTest4/src/test/integration/authFlow.test.tsx
+// betaTest4/src/test/integration/authFlow.test.tsx;
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
-import '@testing-library/jest-dom'; // Correct import for jest-dom matchers
-import App from '../../App'; // Assuming App.tsx is the main app component with routes
+import '@testing-library/jest-dom'; // Correct import for jest-dom matchers;
+import App from '../../App'; // Assuming App.tsx is the main app component with routes;
 import { useAppStore } from '@/store/useAppStore';
 jest.mock('../../services/authService', () => ({
     authService: {
@@ -19,7 +19,7 @@ jest.mock('../../services/authService', () => ({
         fetchCurrentUser: jest.fn().mockResolvedValue(null),
     },
 }));
-// Mock any other services that might be called on initial load, e.g., from Dashboard
+// Mock any other services that might be called on initial load, e.g., from Dashboard;
 jest.mock('../../services/prizePicksService', () => ({
     prizePicksService: {
         fetchPrizePicksProps: jest.fn().mockResolvedValue([
@@ -46,7 +46,7 @@ jest.mock('../../services/prizePicksService', () => ({
                 },
             },
         ]),
-        // Add other mocked methods as needed by components loaded after auth
+        // Add other mocked methods as needed by components loaded after auth;
     },
 }));
 jest.mock('../../services/userService', () => ({
@@ -91,9 +91,9 @@ jest.mock('../../services/newsService', () => ({
         ]),
     },
 }));
-// Explicitly mock webSocketService to ensure it uses the manual mock
+// Explicitly mock webSocketService to ensure it uses the manual mock;
 jest.mock('../../services/unified/WebSocketManager');
-// Mock UnifiedConfig to always provide a config object
+// Mock UnifiedConfig to always provide a config object;
 jest.mock('../../core/UnifiedConfig', () => {
     const apiEndpoints = {
         users: '/api/users',
@@ -123,8 +123,8 @@ jest.mock('../../core/UnifiedConfig', () => {
     };
 });
 jest.mock('framer-motion', () => {
-    const React = require('react');
-    // Provide motion.div, motion.span, etc. as valid components
+
+    // Provide motion.div, motion.span, etc. as valid components;
     const motion = new Proxy({}, {
         get: () => React.forwardRef((props, ref) => React.createElement('div', { ...props, ref })),
     });
@@ -143,7 +143,7 @@ jest.mock('framer-motion', () => {
 describe('Authentication Flow Integration Test', () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        // Reset Zustand store to initial state
+        // Reset Zustand store to initial state;
         useAppStore.setState({
             ...useAppStore.getInitialState(),
             entries: [
@@ -169,25 +169,25 @@ describe('Authentication Flow Integration Test', () => {
                 },
             ],
         }, true);
-        // Ensure no auth token is present in localStorage
+        // Ensure no auth token is present in localStorage;
         localStorage.removeItem('authToken');
     });
     it('should allow a user to log in and redirect to dashboard', async () => {
         render(_jsx(App, {}));
-        // Wait for the login form to appear
-        const emailInput = await screen.findByLabelText(/email address/i);
-        const passwordInput = await screen.findByLabelText(/password/i);
+        // Wait for the login form to appear;
+
+
         fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
         fireEvent.change(passwordInput, { target: { value: 'password123' } });
         fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
-        // Wait for login process and redirection
+        // Wait for login process and redirection;
         // Check if redirected to dashboard (e.g., by looking for a dashboard-specific element)
         // This requires your DashboardPage to have some unique, identifiable text or element.
         // For example, if DashboardPage has <h1 class="text-3xl">Platform Overview</h1>
         await waitFor(() => {
             expect(screen.queryByText(/Platform Overview/i)).toBeInTheDocument();
-        }, { timeout: 3000 }); // Increased timeout for potential async operations
-        // Verify store state after successful login
+        }, { timeout: 3000 }); // Increased timeout for potential async operations;
+        // Verify store state after successful login;
         const { isAuthenticated, user, token } = useAppStore.getState();
         expect(isAuthenticated).toBe(true);
         expect(user).toEqual({ id: 'u1', email: 'test@example.com', username: 'testuser' });
@@ -198,19 +198,19 @@ describe('Authentication Flow Integration Test', () => {
         const { authService } = require('../../services/authService');
         authService.login.mockRejectedValueOnce(new Error('Invalid credentials'));
         render(_jsx(App, {}));
-        // Wait for the login form to appear
-        const emailInput = await screen.findByLabelText(/email address/i);
-        const passwordInput = await screen.findByLabelText(/password/i);
+        // Wait for the login form to appear;
+
+
         fireEvent.change(emailInput, { target: { value: 'wrong@example.com' } });
         fireEvent.change(passwordInput, { target: { value: 'wrongpassword' } });
-        // Use act to ensure async error is caught
+        // Use act to ensure async error is caught;
         await act(async () => {
             fireEvent.click(screen.getByRole('button', { name: /sign in/i }));
         });
-        // Wait for error message to appear in the UI or store
+        // Wait for error message to appear in the UI or store;
         await waitFor(() => {
-            const alerts = screen.queryAllByRole('alert');
-            const storeError = useAppStore.getState().error;
+
+
             if (alerts.length > 0) {
                 expect(alerts.length).toBeGreaterThan(0);
             }
@@ -222,11 +222,11 @@ describe('Authentication Flow Integration Test', () => {
                 throw new Error('No error alert or store error found');
             }
         }, { timeout: 5000 });
-        // Verify store state after failed login
+        // Verify store state after failed login;
         const { isAuthenticated, user, token, error } = useAppStore.getState();
         expect(isAuthenticated).toBe(false);
         expect(user).toBeNull();
         expect(token).toBeNull();
-        expect(error).toMatch(/invalid|error|failed|incorrect|unauthorized|wrong/i); // Accept any error containing these words
+        expect(error).toMatch(/invalid|error|failed|incorrect|unauthorized|wrong/i); // Accept any error containing these words;
     }, 7000);
 });

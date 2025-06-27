@@ -1,4 +1,4 @@
-import { apiClient } from '../api/client';
+import { apiClient } from '@/api/client.ts';
 
 export class PredictionService {
     static async updateConfig(config: any) {
@@ -6,17 +6,17 @@ export class PredictionService {
             await apiClient.post('/ml/prediction/config', config);
             return true;
         } catch (error) {
-            console.error('PredictionService.updateConfig failed:', error);
+            // console statement removed
             return false;
         }
     }
 
     static async getPredictionHistory() {
         try {
-            const response = await apiClient.get('/ml/prediction/history');
+
             return response.data;
         } catch (error) {
-            console.error('PredictionService.getPredictionHistory failed:', error);
+            // console statement removed
             return [];
         }
     }

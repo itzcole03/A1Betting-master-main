@@ -1,5 +1,5 @@
-import React from 'react';
-import { UnifiedLogger } from '../unified/logging/types';
+import React from 'react.ts';
+import { UnifiedLogger } from '@/unified/logging/types.ts';
 export declare const LoggerContext: React.Context<any>;
 interface LoggerProviderProps {
     logger: UnifiedLogger;

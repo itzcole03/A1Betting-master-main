@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface WebSocketContextType {
     isConnected: boolean;
     lastMessage: any;

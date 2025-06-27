@@ -1,28 +1,28 @@
 /**
- * API Error Handler - Graceful error handling for production without mock data
- * Provides user-friendly error messages and retry mechanisms
+ * API Error Handler - Graceful error handling for production without mock data;
+ * Provides user-friendly error messages and retry mechanisms;
  */
 
-import { AxiosError } from "axios";
-import toast from "react-hot-toast";
-import { consoleManager } from "../utils/consoleUtils";
+import { AxiosError } from 'axios.ts';
+import toast from 'react-hot-toast.ts';
+import { consoleManager } from '@/utils/consoleUtils.ts';
 
 export class ApiErrorHandler {
   static handleError<T>(error: any, operation: string, defaultValue: T): T {
     const isNetworkError =
       error.code === "NETWORK_ERROR" || error.message === "Network Error";
 
-    let userMessage = "Service temporarily unavailable";
-    let technicalMessage = error.message || "Unknown error";
+    const userMessage = "Service temporarily unavailable";
+    const technicalMessage = error.message || "Unknown error";
 
     if (isNetworkError) {
       userMessage = "Unable to connect to betting services";
       technicalMessage = "Backend services are currently offline";
-      // Use console manager for clean offline logging
+      // Use console manager for clean offline logging;
       consoleManager.logBackendOffline();
     } else {
-      // Only log non-network errors
-      const errorLogger = consoleManager.createErrorLogger(operation);
+      // Only log non-network errors;
+
       errorLogger(error);
 
       if (error.response?.status === 404) {
@@ -37,7 +37,7 @@ export class ApiErrorHandler {
       }
     }
 
-    // Return default value instead of throwing
+    // Return default value instead of throwing;
     return defaultValue;
   }
 

@@ -1,6 +1,6 @@
-import React from 'react';
-import { PredictionData } from '@/types/betting';
-import { StrategyRecommendation } from '../types/core';
+import React from 'react.ts';
+import { PredictionData } from '@/types/betting.ts';
+import { StrategyRecommendation } from '@/types/core.ts';
 export interface MLInsight {
     factor: string;
     impact: number;

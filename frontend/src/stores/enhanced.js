@@ -28,13 +28,13 @@ export const useUserStore = create()(persist(devtools(immer(set => ({
     ...initialState,
     setState: updater => {
         set(state => {
-            const start = performance.now();
+
             const { setState, ...userState } = state;
-            const newState = updater(userState);
-            const end = performance.now();
+
+
             updatePerformanceMetrics(end - start);
-            // Validate state
-            const errors = [];
+            // Validate state;
+
             if (!newState.data.name) {
                 errors.push('Name is required');
             }
@@ -44,7 +44,7 @@ export const useUserStore = create()(persist(devtools(immer(set => ({
             else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newState.data.email)) {
                 errors.push('Invalid email format');
             }
-            // Update validation and metrics
+            // Update validation and metrics;
             newState.validation.isValid = errors.length === 0;
             newState.validation.errors = errors;
             newState.metrics.updateCount += 1;

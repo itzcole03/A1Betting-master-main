@@ -13,15 +13,15 @@ export interface VenueData {
 }
 export declare class VenueService {
     /**
-     * Fetch venue by ID from external API
+     * Fetch venue by ID from external API;
      */
     getVenueById(venueId: string): Promise<VenueData | null>;
     /**
-     * Search venues by name/city/state
+     * Search venues by name/city/state;
      */
     searchVenues(query: string): Promise<VenueData[]>;
     /**
-     * Batch fetch venues by IDs
+     * Batch fetch venues by IDs;
      */
     getVenuesByIds(ids: string[]): Promise<VenueData[]>;
     /**

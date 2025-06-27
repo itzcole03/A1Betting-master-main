@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import BetRecommendationList from '../BetRecommendationList.js';
-import { BetRecommendation } from '../../../core/types/prediction.js';
+import React from 'react.ts';
+import { render, screen, fireEvent } from '@testing-library/react.ts';
+import BetRecommendationList from '@/BetRecommendationList.js';
+import { BetRecommendation } from '@/../core/types/prediction.js';
 
 // TODO: Skipped all tests in this file due to unstable BetRecommendationList logic or outdated mocks. Fix and re-enable.
 describe.skip('BetRecommendationList', () => {
@@ -66,24 +66,24 @@ describe.skip('BetRecommendationList', () => {
   ];
 
   it('renders loading state correctly', () => {
-    render(<BetRecommendationList loading={true} recommendations={[]} />);
+    render(<BetRecommendationList loading={true} recommendations={[]} / key={449707}>);
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
   it('renders error state correctly', () => {
-    const errorMessage = 'Failed to load recommendations';
-    render(<BetRecommendationList error={errorMessage} loading={false} recommendations={[]} />);
+
+    render(<BetRecommendationList error={errorMessage} loading={false} recommendations={[]} / key={548311}>);
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
   });
 
   it('renders empty state correctly', () => {
-    render(<BetRecommendationList loading={false} recommendations={[]} />);
+    render(<BetRecommendationList loading={false} recommendations={[]} / key={715157}>);
     expect(screen.getByText('No bet recommendations available')).toBeInTheDocument();
   });
 
   it.skip('renders all recommendations correctly', () => {
   // TODO: Fix component or test for rendering recommendations. Skipped for stabilization.
-    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} />);
+    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} / key={444985}>);
 
     expect(screen.getByText('model1')).toBeInTheDocument();
     expect(screen.getByText('model2')).toBeInTheDocument();
@@ -93,9 +93,9 @@ describe.skip('BetRecommendationList', () => {
   it.skip('filters recommendations by risk level', () => {
   // TODO: Fix component or test for filtering recommendations. Skipped for stabilization.
 
-    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} />);
+    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} / key={444985}>);
 
-    // Select low risk filter
+    // Select low risk filter;
     fireEvent.mouseDown(screen.getByLabelText('Filter By Risk'));
     fireEvent.click(screen.getByText('Low Risk'));
 
@@ -105,39 +105,36 @@ describe.skip('BetRecommendationList', () => {
   });
 
   it('sorts recommendations by confidence', () => {
-    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} />);
+    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} / key={444985}>);
 
-    // Select confidence sort
+    // Select confidence sort;
     fireEvent.mouseDown(screen.getByLabelText('Sort By'));
     fireEvent.click(screen.getByText('Confidence'));
 
-    const recommendations = screen.getAllByText(/model\d/);
     expect(recommendations[0]).toHaveTextContent('model1');
     expect(recommendations[1]).toHaveTextContent('model2');
     expect(recommendations[2]).toHaveTextContent('model3');
   });
 
   it('sorts recommendations by stake amount', () => {
-    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} />);
+    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} / key={444985}>);
 
-    // Select stake sort
+    // Select stake sort;
     fireEvent.mouseDown(screen.getByLabelText('Sort By'));
     fireEvent.click(screen.getByText('Stake Amount'));
 
-    const recommendations = screen.getAllByText(/model\d/);
     expect(recommendations[0]).toHaveTextContent('model3');
     expect(recommendations[1]).toHaveTextContent('model2');
     expect(recommendations[2]).toHaveTextContent('model1');
   });
 
   it('sorts recommendations by expected value', () => {
-    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} />);
+    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} / key={444985}>);
 
-    // Select expected value sort
+    // Select expected value sort;
     fireEvent.mouseDown(screen.getByLabelText('Sort By'));
     fireEvent.click(screen.getByText('Expected Value'));
 
-    const recommendations = screen.getAllByText(/model\d/);
     expect(recommendations[0]).toHaveTextContent('model1');
     expect(recommendations[1]).toHaveTextContent('model2');
     expect(recommendations[2]).toHaveTextContent('model3');
@@ -146,13 +143,12 @@ describe.skip('BetRecommendationList', () => {
   it.skip('sorts recommendations by risk level', () => {
   // TODO: Fix component or test for sorting recommendations. Skipped for stabilization.
 
-    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} />);
+    render(<BetRecommendationList loading={false} recommendations={mockRecommendations} / key={444985}>);
 
-    // Select risk level sort
+    // Select risk level sort;
     fireEvent.mouseDown(screen.getByLabelText('Sort By'));
     fireEvent.click(screen.getByText('Risk Level'));
 
-    const recommendations = screen.getAllByText(/model\d/);
     expect(recommendations[0]).toHaveTextContent('model1');
     expect(recommendations[1]).toHaveTextContent('model2');
     expect(recommendations[2]).toHaveTextContent('model3');

@@ -1,4 +1,4 @@
-import { EventEmitter } from "eventemitter3";
+import { EventEmitter } from 'eventemitter3.ts';
 export interface GameData {
     id: string;
     sport: string;

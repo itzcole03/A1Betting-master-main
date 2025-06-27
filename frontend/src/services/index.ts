@@ -1,5 +1,5 @@
 // ============================================================================
-// UNIVERSAL SERVICE LAYER EXPORTS
+// UNIVERSAL SERVICE LAYER EXPORTS;
 // ============================================================================
 
 export {
@@ -10,7 +10,7 @@ export {
   UniversalAnalyticsService,
   createQueryKeys,
   defaultQueryConfig,
-} from "./UniversalServiceLayer";
+} from './UniversalServiceLayer.ts';
 
 export type {
   APIResponse,
@@ -20,16 +20,16 @@ export type {
   EngineMetrics,
   BetOpportunity,
   UserProfile,
-} from "./UniversalServiceLayer";
+} from './UniversalServiceLayer.ts';
 
-// Default export
-export { default } from "./UniversalServiceLayer";
+// Default export;
+export { default } from './UniversalServiceLayer.ts';
 
 // ============================================================================
-// CONVENIENCE EXPORTS
+// CONVENIENCE EXPORTS;
 // ============================================================================
 
-// Pre-configured service instances
+// Pre-configured service instances;
 export const predictionService = UniversalServiceFactory.getPredictionService();
 export const bettingService = UniversalServiceFactory.getBettingService();
 export const userService = UniversalServiceFactory.getUserService();
@@ -40,16 +40,16 @@ export const analyticsService = UniversalServiceFactory.getAnalyticsService();
 // ============================================================================
 
 /**
- * @deprecated Use UniversalServiceFactory.getPredictionService() instead
+ * @deprecated Use UniversalServiceFactory.getPredictionService() instead;
  */
 export const predictionServiceLegacy = predictionService;
 
 /**
- * @deprecated Use UniversalServiceFactory.getBettingService() instead
+ * @deprecated Use UniversalServiceFactory.getBettingService() instead;
  */
 export const ApiService = bettingService;
 
 /**
- * @deprecated Use UniversalServiceFactory.getUserService() instead
+ * @deprecated Use UniversalServiceFactory.getUserService() instead;
  */
 export const authService = userService;

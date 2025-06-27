@@ -1,12 +1,12 @@
 /**
- * Enhanced DailyFantasy Service - Production Ready
- * Integrates with real DFS providers and aggregates data from multiple sources
- * Now includes PrizePicks free projections API
+ * Enhanced DailyFantasy Service - Production Ready;
+ * Integrates with real DFS providers and aggregates data from multiple sources;
+ * Now includes PrizePicks free projections API;
  */
 
-import { prizePicksProjectionsService } from "./PrizePicksProjectionsService";
+import { prizePicksProjectionsService } from './PrizePicksProjectionsService.ts';
 
-// DraftKings unofficial endpoints
+// DraftKings unofficial endpoints;
 interface DraftKingsContest {
   id: string;
   name: string;
@@ -35,7 +35,7 @@ interface DraftKingsPlayer {
   };
 }
 
-// SportsDataIO integration
+// SportsDataIO integration;
 interface SportsDataIOProjection {
   PlayerID: number;
   Name: string;
@@ -52,7 +52,7 @@ interface SportsDataIOProjection {
   InjuryStatus: string;
 }
 
-// FairPlay API integration
+// FairPlay API integration;
 interface FairPlayLineup {
   players: Array<{
     id: string;
@@ -73,15 +73,15 @@ interface FairPlayLineup {
 export class EnhancedDailyFantasyService {
   private readonly baseUrl: string;
   private readonly cache: Map<string, { data: any; timestamp: number }>;
-  private readonly cacheTTL: number = 300000; // 5 minutes
+  private readonly cacheTTL: number = 300000; // 5 minutes;
 
-  // API Keys - to be set from environment
+  // API Keys - to be set from environment;
   private readonly sportsDataIOKey: string;
   private readonly fairPlayKey: string;
 
-  // Rate limiting
+  // Rate limiting;
   private lastRequestTime: number = 0;
-  private readonly rateLimitMs: number = 1000; // 1 second between requests
+  private readonly rateLimitMs: number = 1000; // 1 second between requests;
 
   constructor() {
     this.baseUrl =
@@ -92,19 +92,19 @@ export class EnhancedDailyFantasyService {
     this.fairPlayKey = import.meta.env.VITE_FAIRPLAY_API_KEY || "";
     this.cache = new Map();
 
-    // Production validation
-    console.log("✓ Enhanced DailyFantasy Service initialized for production");
+    // Production validation;
+    // console statement removed
     if (this.sportsDataIOKey) {
-      console.log("✓ SportsDataIO API key configured");
+      // console statement removed
     }
     if (this.fairPlayKey) {
-      console.log("✓ FairPlay API key configured");
+      // console statement removed
     }
   }
 
   private async enforceRateLimit(): Promise<void> {
-    const now = Date.now();
-    const timeSinceLastRequest = now - this.lastRequestTime;
+
+
     if (timeSinceLastRequest < this.rateLimitMs) {
       await new Promise((resolve) =>
         setTimeout(resolve, this.rateLimitMs - timeSinceLastRequest),
@@ -118,11 +118,10 @@ export class EnhancedDailyFantasyService {
     options: RequestInit = {},
     useCache: boolean = true,
   ): Promise<T> {
-    const cacheKey = `${endpoint}:${JSON.stringify(options)}`;
 
-    // Check cache first
+    // Check cache first;
     if (useCache) {
-      const cached = this.cache.get(cacheKey);
+
       if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
         return cached.data;
       }
@@ -131,7 +130,7 @@ export class EnhancedDailyFantasyService {
     await this.enforceRateLimit();
 
     const url = endpoint.startsWith("http")
-      ? endpoint
+      ? endpoint;
       : `${this.baseUrl}${endpoint}`;
 
     try {
@@ -147,9 +146,7 @@ export class EnhancedDailyFantasyService {
         throw new Error(`API error: ${response.status} ${response.statusText}`);
       }
 
-      const data = await response.json();
-
-      // Cache the response
+      // Cache the response;
       if (useCache) {
         this.cache.set(cacheKey, {
           data,
@@ -159,26 +156,26 @@ export class EnhancedDailyFantasyService {
 
       return data;
     } catch (error) {
-      console.error("DailyFantasy API request failed:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get DraftKings contests using unofficial API
+   * Get DraftKings contests using unofficial API;
    */
   async getDraftKingsContests(
     sport: string = "NBA",
   ): Promise<DraftKingsContest[]> {
     try {
-      // Try backend endpoint first
+      // Try backend endpoint first;
       const backendData = await this.makeRequest<DraftKingsContest[]>(
         `/api/dailyfantasy/contests/${sport.toLowerCase()}`,
       );
       return backendData;
     } catch (error) {
-      console.warn("Backend unavailable, using mock data");
-      // Return realistic mock data
+      // console statement removed
+      // Return realistic mock data;
       return [
         {
           id: "contest_1",
@@ -207,7 +204,7 @@ export class EnhancedDailyFantasyService {
   }
 
   /**
-   * Get players for DraftKings draft group
+   * Get players for DraftKings draft group;
    */
   async getDraftKingsPlayers(
     draftGroupId: string,
@@ -218,8 +215,8 @@ export class EnhancedDailyFantasyService {
       );
       return backendData;
     } catch (error) {
-      console.warn("Backend unavailable, using mock data");
-      // Return realistic mock players
+      // console statement removed
+      // Return realistic mock players;
       return [
         {
           id: "player_1",
@@ -255,14 +252,14 @@ export class EnhancedDailyFantasyService {
   }
 
   /**
-   * Get SportsDataIO projections
+   * Get SportsDataIO projections;
    */
   async getSportsDataIOProjections(
     sport: string,
     date: string,
   ): Promise<SportsDataIOProjection[]> {
     if (!this.sportsDataIOKey) {
-      console.warn("SportsDataIO API key not configured");
+      // console statement removed
       return [];
     }
 
@@ -274,8 +271,6 @@ export class EnhancedDailyFantasyService {
         NHL: "nhl",
       };
 
-      const mappedSport = sportMap[sport.toUpperCase()] || sport.toLowerCase();
-      const endpoint = `https://api.sportsdata.io/v3/${mappedSport}/projections/json/DfsSlatesByDate/${date}`;
 
       return await this.makeRequest<SportsDataIOProjection[]>(endpoint, {
         headers: {
@@ -283,13 +278,13 @@ export class EnhancedDailyFantasyService {
         },
       });
     } catch (error) {
-      console.error("SportsDataIO API error:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Generate optimal lineup using FairPlay API
+   * Generate optimal lineup using FairPlay API;
    */
   async getOptimalLineup(
     sport: string,
@@ -298,7 +293,7 @@ export class EnhancedDailyFantasyService {
     strategy: "cash" | "gpp" | "balanced" = "balanced",
   ): Promise<FairPlayLineup | null> {
     if (!this.fairPlayKey) {
-      console.warn("FairPlay API key not configured");
+      // console statement removed
       return null;
     }
 
@@ -325,9 +320,9 @@ export class EnhancedDailyFantasyService {
         }),
       });
     } catch (error) {
-      console.error("FairPlay API error:", error);
+      // console statement removed
 
-      // Return mock optimal lineup
+      // Return mock optimal lineup;
       return {
         players: [
           {
@@ -357,10 +352,9 @@ export class EnhancedDailyFantasyService {
   }
 
   /**
-   * Get comprehensive DFS data aggregating multiple sources
+   * Get comprehensive DFS data aggregating multiple sources;
    */
   async getComprehensiveDFSData(sport: string, date?: string) {
-    const currentDate = date || new Date().toISOString().split("T")[0];
 
     try {
       const [contests, sportsDataProjections, prizePicksProjections] =
@@ -370,7 +364,7 @@ export class EnhancedDailyFantasyService {
           prizePicksProjectionsService.getProjectionsBySport(sport),
         ]);
 
-      // Get players for the first contest if available
+      // Get players for the first contest if available;
       let players: DraftKingsPlayer[] = [];
       if (contests.status === "fulfilled" && contests.value.length > 0) {
         const playerResult = await this.getDraftKingsPlayers(
@@ -379,19 +373,18 @@ export class EnhancedDailyFantasyService {
         players = playerResult;
       }
 
-      // Get optimal lineup
-      const optimalLineup = await this.getOptimalLineup(sport);
+      // Get optimal lineup;
 
       return {
         contests: contests.status === "fulfilled" ? contests.value : [],
         players,
         projections:
           sportsDataProjections.status === "fulfilled"
-            ? sportsDataProjections.value
+            ? sportsDataProjections.value;
             : [],
         prizePicksProjections:
           prizePicksProjections.status === "fulfilled"
-            ? prizePicksProjections.value
+            ? prizePicksProjections.value;
             : [],
         optimalLineup,
         lastUpdated: new Date().toISOString(),
@@ -409,7 +402,7 @@ export class EnhancedDailyFantasyService {
         },
       };
     } catch (error) {
-      console.error("Error aggregating DFS data:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -425,15 +418,14 @@ export class EnhancedDailyFantasyService {
       projected_ownership: number;
     }>
   > {
-    // This would integrate with services that track ownership
-    // For now, return estimated ownership based on salary/projection ratio
+    // This would integrate with services that track ownership;
+    // For now, return estimated ownership based on salary/projection ratio;
     try {
-      const players = await this.getDraftKingsPlayers(contestId);
 
       return players.map((player) => ({
         playerId: player.id,
         name: player.name,
-        ownership: Math.random() * 30, // Mock current ownership
+        ownership: Math.random() * 30, // Mock current ownership;
         projected_ownership: Math.min(
           (player.projected_fantasy_points / player.salary) * 100000 +
             Math.random() * 10,
@@ -441,13 +433,13 @@ export class EnhancedDailyFantasyService {
         ),
       }));
     } catch (error) {
-      console.error("Error getting ownership data:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Health check for all DFS services
+   * Health check for all DFS services;
    */
   async healthCheck(): Promise<{
     overall: string;
@@ -460,7 +452,7 @@ export class EnhancedDailyFantasyService {
       prizePicks: { status: "unknown", message: "" },
     };
 
-    // Test backend
+    // Test backend;
     try {
       await this.getDraftKingsContests("NBA");
       results.backend = { status: "healthy", message: "Backend responsive" };
@@ -468,7 +460,7 @@ export class EnhancedDailyFantasyService {
       results.backend = { status: "degraded", message: "Backend unavailable" };
     }
 
-    // Test SportsDataIO
+    // Test SportsDataIO;
     if (this.sportsDataIOKey) {
       try {
         await this.getSportsDataIOProjections(
@@ -486,7 +478,7 @@ export class EnhancedDailyFantasyService {
       };
     }
 
-    // Test FairPlay
+    // Test FairPlay;
     if (this.fairPlayKey) {
       try {
         await this.getOptimalLineup("NBA");
@@ -503,7 +495,7 @@ export class EnhancedDailyFantasyService {
 
     // Test PrizePicks (free API)
     try {
-      const prizePicksHealth = await prizePicksProjectionsService.healthCheck();
+
       results.prizePicks = {
         status: prizePicksHealth.status === "healthy" ? "healthy" : "degraded",
         message: `${prizePicksHealth.projections_available} projections available`,
@@ -515,30 +507,29 @@ export class EnhancedDailyFantasyService {
     const healthyCount = Object.values(results).filter(
       (r) => r.status === "healthy",
     ).length;
-    const overall = healthyCount >= 1 ? "healthy" : "degraded";
 
     return { overall, services: results };
   }
 
   /**
-   * Clear all caches
+   * Clear all caches;
    */
   clearCache(): void {
     this.cache.clear();
   }
 
   /**
-   * Get cache statistics
+   * Get cache statistics;
    */
   getCacheStats(): { size: number; totalRequests: number; hitRate: number } {
     return {
       size: this.cache.size,
-      totalRequests: this.cache.size, // Simplified
-      hitRate: 0.75, // Estimated
+      totalRequests: this.cache.size, // Simplified;
+      hitRate: 0.75, // Estimated;
     };
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const enhancedDailyFantasyService = new EnhancedDailyFantasyService();
 export default enhancedDailyFantasyService;

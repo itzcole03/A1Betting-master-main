@@ -1,24 +1,24 @@
-import * as Sentry from "@sentry/react"; // For error tracking and some performance monitoring
+import * as Sentry from '@sentry/react.ts'; // For error tracking and some performance monitoring;
 import {
   Span,
   Transaction,
   MeasurementUnit,
   Primitive,
   SeverityLevel,
-} from "@sentry/types";
+} from '@sentry/types.ts';
 
-import type { User } from "../types/core.ts"; // Assuming User type might be used for context
-// import { PerformanceTrackingService } from '../services/performanceTracking'; // Uncomment if used
+import type { User } from '@/types/core.ts'; // Assuming User type might be used for context;
+// import { PerformanceTrackingService } from '@/services/performanceTracking.ts'; // Uncomment if used;
 
-// src/core/UnifiedMonitor.ts
+// src/core/UnifiedMonitor.ts;
 
-// import { EventBus } from '@/core/EventBus'; // To be created
+// import { EventBus } from '@/core/EventBus.ts'; // To be created;
 
 /**
- * UnifiedMonitor
+ * UnifiedMonitor;
  *
  * Provides a unified interface for application monitoring, encompassing error reporting,
- * performance tracing, and custom metric collection. It acts as an abstraction layer
+ * performance tracing, and custom metric collection. It acts as an abstraction layer;
  * over Sentry and the performanceTrackingService.
  *
  * Key Responsibilities:
@@ -62,11 +62,11 @@ export class UnifiedMonitor {
   }
 
   endTrace(trace: any) {
-    const duration = Date.now() - trace.startTime;
+
   }
 
   reportError(error: any, context: any) {
-    console.error("Error:", error, "Context:", context);
+    // console statement removed
   }
 
   recordMetric(
@@ -74,12 +74,12 @@ export class UnifiedMonitor {
     value: number,
     tags?: Record<string, string | number | boolean>,
   ) {
-    // Simple implementation - in production this would integrate with monitoring services
+    // Simple implementation - in production this would integrate with monitoring services;
     if (typeof console !== "undefined") {
       console.debug(`[METRIC] ${name}: ${value}`, tags || {});
     }
 
-    // Store metrics for potential retrieval
+    // Store metrics for potential retrieval;
     if (!this.metrics) {
       this.metrics = new Map();
     }
@@ -87,17 +87,17 @@ export class UnifiedMonitor {
   }
 
   captureMessage(message: string, level: string = "info", extra?: any) {
-    console.log(`[${level.toUpperCase()}] ${message}`, extra || {});
+    // console statement removed}] ${message}`, extra || {});
   }
 
   captureException(error: Error, context?: any) {
-    console.error("Exception captured:", error, context || {});
+    // console statement removed
     this.reportError(error, context);
   }
 
   trackEvent(eventName: string, data?: any) {
     console.debug(`[EVENT] ${eventName}`, data || {});
-    // In production, this would send events to analytics services
+    // In production, this would send events to analytics services;
   }
 
   private metrics?: Map<

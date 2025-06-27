@@ -1,7 +1,7 @@
-// Legacy compatibility wrapper for advanced ML service
+// Legacy compatibility wrapper for advanced ML service;
 export class AdvancedMLService {
     constructor() {
-        // Initialize service
+        // Initialize service;
     }
     static getInstance() {
         if (!AdvancedMLService.instance) {
@@ -9,12 +9,12 @@ export class AdvancedMLService {
         }
         return AdvancedMLService.instance;
     }
-    // Legacy compatibility methods with safe fallbacks
+    // Legacy compatibility methods with safe fallbacks;
     async predict(features) {
-        console.warn("Using legacy ML service - migrating to unified services recommended");
-        // Simple mock prediction for compatibility
-        const prediction = Math.random() * 0.6 + 0.2; // 0.2 to 0.8
-        const confidence = Math.random() * 0.4 + 0.6; // 0.6 to 1.0
+        // console statement removed
+        // Simple mock prediction for compatibility;
+        const prediction = Math.random() * 0.6 + 0.2; // 0.2 to 0.8;
+        const confidence = Math.random() * 0.4 + 0.6; // 0.6 to 1.0;
         return {
             prediction,
             confidence,
@@ -24,7 +24,7 @@ export class AdvancedMLService {
         };
     }
     async analyzeMarket(marketData) {
-        console.warn("Using legacy market analysis - migrating to unified services recommended");
+        // console statement removed
         return {
             analysis: "Legacy market analysis - limited functionality",
             confidence: 0.7,
@@ -36,8 +36,8 @@ export class AdvancedMLService {
         };
     }
     async generateFeatures(rawData) {
-        console.warn("Using legacy feature generation - migrating to unified services recommended");
-        // Return simplified features
+        // console statement removed
+        // Return simplified features;
         return {
             basic_feature_1: Math.random(),
             basic_feature_2: Math.random(),
@@ -46,7 +46,7 @@ export class AdvancedMLService {
         };
     }
 }
-// Export default instance for legacy compatibility
+// Export default instance for legacy compatibility;
 export const advancedMLService = AdvancedMLService.getInstance();
-// Default export for ES6 compatibility
+// Default export for ES6 compatibility;
 export default AdvancedMLService;

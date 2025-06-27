@@ -23,7 +23,7 @@ export const BettingRecommendations = ({ sport }) => {
     const [betType, setBetType] = useState('straight');
     useEffect(() => {
         const loadRecommendations = async () => {
-            const sportRecommendations = await sportsAnalytics.getRecommendations(sport);
+
             setRecommendations(sportRecommendations);
         };
         loadRecommendations();
@@ -40,7 +40,7 @@ export const BettingRecommendations = ({ sport }) => {
     };
     const handlePlaceBet = () => {
         if (selectedRecommendation && betAmount) {
-            const amount = parseFloat(betAmount);
+
             riskManagement.placeBet({
                 recommendationId: selectedRecommendation.id,
                 amount,
@@ -52,7 +52,7 @@ export const BettingRecommendations = ({ sport }) => {
         }
     };
     const toggleFavorite = (recommendationId) => {
-        setRecommendations(prev => prev.map(rec => rec.id === recommendationId
+        setRecommendations(prev => prev.map(rec => rec.id === recommendationId;
             ? { ...rec, favorite: !rec.favorite }
             : rec));
     };

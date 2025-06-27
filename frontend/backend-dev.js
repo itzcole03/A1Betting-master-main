@@ -1,6 +1,6 @@
 /**
- * Development Backend Server
- * Provides a lightweight backend for development purposes
+ * Development Backend Server;
+ * Provides a lightweight backend for development purposes;
  */
 
 import express from "express";
@@ -8,20 +8,18 @@ import cors from "cors";
 import { WebSocketServer } from "ws";
 import http from "http";
 
-// Ensure fetch is available in Node.js
+// Ensure fetch is available in Node.js;
 if (!globalThis.fetch) {
   try {
     const { default: fetch } = await import("node-fetch");
     globalThis.fetch = fetch;
   } catch (e) {
-    console.warn("node-fetch not available, using built-in fetch");
+    // console statement removed
   }
 }
 
-const app = express();
-const PORT = 8000;
 
-// Middleware
+// Middleware;
 app.use(
   cors({
     origin: true,
@@ -30,7 +28,7 @@ app.use(
 );
 app.use(express.json());
 
-// Mock data
+// Mock data;
 const mockBettingOpportunities = [
   {
     id: "opp_1",
@@ -113,7 +111,7 @@ const mockPredictions = [
   },
 ];
 
-// Routes
+// Routes;
 app.get("/", (req, res) => {
   res.json({
     name: "A1Betting Development Backend",
@@ -145,10 +143,10 @@ app.get("/health", (req, res) => {
   });
 });
 
-// API Routes
+// API Routes;
 app.get("/api/betting-opportunities", (req, res) => {
   const { sport, limit = 10 } = req.query;
-  let opportunities = [...mockBettingOpportunities];
+  const opportunities = [...mockBettingOpportunities];
 
   if (sport) {
     opportunities = opportunities.filter((opp) => opp.sport === sport);
@@ -165,8 +163,8 @@ app.get("/api/arbitrage-opportunities", (req, res) => {
 // Value bets endpoint (v4 API)
 app.get("/api/v4/betting/value-bets", (req, res) => {
   const { limit = 10 } = req.query;
-  const valueBets = mockBettingOpportunities
-    .filter((opp) => opp.expected_value > 0.05) // Only high value bets
+  const valueBets = mockBettingOpportunities;
+    .filter((opp) => opp.expected_value > 0.05) // Only high value bets;
     .map((opp) => ({
       id: opp.id,
       sport: opp.sport,
@@ -187,11 +185,11 @@ app.get("/api/v4/betting/value-bets", (req, res) => {
   });
 });
 
-// Backward compatibility endpoint for value-bets
+// Backward compatibility endpoint for value-bets;
 app.get("/api/value-bets", (req, res) => {
   const { limit = 10 } = req.query;
-  const valueBets = mockBettingOpportunities
-    .filter((opp) => opp.expected_value > 0.05) // Only high value bets
+  const valueBets = mockBettingOpportunities;
+    .filter((opp) => opp.expected_value > 0.05) // Only high value bets;
     .map((opp) => ({
       id: opp.id,
       sport: opp.sport,
@@ -206,7 +204,7 @@ app.get("/api/value-bets", (req, res) => {
     }))
     .slice(0, parseInt(limit));
 
-  res.json(valueBets); // Return array directly for backward compatibility
+  res.json(valueBets); // Return array directly for backward compatibility;
 });
 
 app.get("/api/transactions", (req, res) => {
@@ -270,7 +268,7 @@ app.get("/api/risk-profiles", (req, res) => {
 
 app.get("/api/predictions", (req, res) => {
   const { sport, limit = 10 } = req.query;
-  let predictions = [...mockPredictions];
+  const predictions = [...mockPredictions];
 
   if (sport) {
     predictions = predictions.filter((pred) => pred.sport === sport);
@@ -282,7 +280,7 @@ app.get("/api/predictions", (req, res) => {
   });
 });
 
-// User Profile API endpoints
+// User Profile API endpoints;
 app.get("/api/users/profile", (req, res) => {
   res.json({
     data: {
@@ -342,7 +340,7 @@ app.get("/api/users/profile/mock", (req, res) => {
 });
 
 app.put("/api/users/profile", (req, res) => {
-  const updateData = req.body;
+
   res.json({
     data: {
       id: "user_123",
@@ -367,7 +365,7 @@ app.get("/api/users/bankroll", (req, res) => {
   });
 });
 
-// Ultra-accuracy endpoints
+// Ultra-accuracy endpoints;
 app.get("/api/ultra-accuracy/predictions", (req, res) => {
   res.json({
     predictions: mockPredictions.map((pred) => ({
@@ -407,7 +405,7 @@ app.get("/api/ultra-accuracy/model-performance", (req, res) => {
   });
 });
 
-// Enhanced analytics endpoints
+// Enhanced analytics endpoints;
 app.get("/api/analytics/advanced", (req, res) => {
   res.json({
     roi_analysis: {
@@ -429,10 +427,10 @@ app.get("/api/analytics/advanced", (req, res) => {
 });
 
 // =======================
-// PRIZEPICKS FREE API PROXY ENDPOINTS
+// PRIZEPICKS FREE API PROXY ENDPOINTS;
 // =======================
 
-// PrizePicks projections proxy
+// PrizePicks projections proxy;
 app.get("/api/prizepicks/projections", async (req, res) => {
   try {
     const response = await fetch("https://api.prizepicks.com/projections", {
@@ -445,8 +443,6 @@ app.get("/api/prizepicks/projections", async (req, res) => {
     if (!response.ok) {
       throw new Error(`PrizePicks API error: ${response.status}`);
     }
-
-    const data = await response.json();
 
     res.json({
       ...data,
@@ -465,7 +461,7 @@ app.get("/api/prizepicks/projections", async (req, res) => {
   }
 });
 
-// PrizePicks projections by sport
+// PrizePicks projections by sport;
 app.get("/api/prizepicks/projections/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
@@ -480,23 +476,20 @@ app.get("/api/prizepicks/projections/:sport", async (req, res) => {
       throw new Error(`PrizePicks API error: ${response.status}`);
     }
 
-    const data = await response.json();
-
-    // Filter by sport if leagues are included
-    let filteredProjections = data.data || [];
-    let filteredLeagues = [];
+    // Filter by sport if leagues are included;
+    const filteredProjections = data.data || [];
+    const filteredLeagues = [];
 
     if (data.included) {
-      const leagues = data.included.filter((item) => item.type === "league");
+
       filteredLeagues = leagues.filter(
         (league) =>
-          league.attributes.sport
+          league.attributes.sport;
             ?.toLowerCase()
             .includes(sport.toLowerCase()) ||
           league.attributes.name?.toLowerCase().includes(sport.toLowerCase()),
       );
 
-      const leagueIds = filteredLeagues.map((league) => league.id);
       filteredProjections = filteredProjections.filter((projection) =>
         leagueIds.includes(projection.relationships?.league?.data?.id),
       );
@@ -522,7 +515,7 @@ app.get("/api/prizepicks/projections/:sport", async (req, res) => {
   }
 });
 
-// Enhanced DailyFantasy API endpoints
+// Enhanced DailyFantasy API endpoints;
 app.get("/api/dailyfantasy/contests/:sport", (req, res) => {
   const { sport } = req.params;
   const contests = [
@@ -604,7 +597,7 @@ app.get("/api/dailyfantasy/contests/:contestId/players", (req, res) => {
   res.json(players);
 });
 
-// Enhanced TheOdds API endpoints
+// Enhanced TheOdds API endpoints;
 app.get("/api/theodds/sports", (req, res) => {
   const sports = [
     {
@@ -702,7 +695,7 @@ app.get("/api/theodds/odds/:sport", (req, res) => {
   res.json(events);
 });
 
-// Sportsbook aggregation endpoints
+// Sportsbook aggregation endpoints;
 app.get("/api/sportsbook/aggregated-odds/:sport", (req, res) => {
   const { sport } = req.params;
   const { league } = req.query;
@@ -786,8 +779,8 @@ app.get("/api/sportsbook/aggregated-odds/:sport", (req, res) => {
 app.get("/api/sportsbook/health/:sportsbook", (req, res) => {
   const { sportsbook } = req.params;
 
-  // Simulate varying availability
-  const isHealthy = Math.random() > 0.2; // 80% uptime
+  // Simulate varying availability;
+  const isHealthy = Math.random() > 0.2; // 80% uptime;
 
   if (isHealthy) {
     res.json({
@@ -807,8 +800,7 @@ app.get("/api/sportsbook/health/:sportsbook", (req, res) => {
 });
 
 app.get("/api/sportsbook/health", (req, res) => {
-  const sportsbooks = ["draftkings", "fanduel", "betmgm", "caesars"];
-  const health = {};
+
 
   sportsbooks.forEach((book) => {
     health[book] = {
@@ -827,7 +819,7 @@ app.get("/api/sportsbook/health", (req, res) => {
   });
 });
 
-// Ollama LLM endpoints
+// Ollama LLM endpoints;
 app.get("/api/ollama/status", (req, res) => {
   res.json({
     connected: false,
@@ -839,11 +831,11 @@ app.get("/api/ollama/status", (req, res) => {
   });
 });
 
-// PropOllama Chat endpoint
+// PropOllama Chat endpoint;
 app.post("/api/propollama/chat", (req, res) => {
   const { message, context, analysisType } = req.body;
 
-  // Mock response for PropOllama AI
+  // Mock response for PropOllama AI;
   const mockResponse = {
     content: `🤖 **PropOllama AI Analysis**
 
@@ -853,16 +845,16 @@ Your question: "${message}"
 Based on current market data and advanced algorithms:
 
 🎯 **Key Insights:**
-- Line movement suggests value on the under
-- Weather conditions favor defensive play
-- Recent team performance indicates trend reversal
+- Line movement suggests value on the under;
+- Weather conditions favor defensive play;
+- Recent team performance indicates trend reversal;
 - Public betting heavily on the favorite (fade opportunity)
 
 📊 **Statistical Edge:**
-- Model prediction: 73% confidence
+- Model prediction: 73% confidence;
 - Expected value: +4.2%
-- Recommended bet size: 2.5% of bankroll
-- Risk level: Moderate
+- Recommended bet size: 2.5% of bankroll;
+- Risk level: Moderate;
 
 ⚡ **PropOllama Recommendation:**
 LEAN UNDER with moderate confidence. Line shopping recommended.
@@ -881,7 +873,7 @@ LEAN UNDER with moderate confidence. Line shopping recommended.
     timestamp: new Date().toISOString(),
   };
 
-  // Simulate AI processing time
+  // Simulate AI processing time;
   setTimeout(
     () => {
       res.json(mockResponse);
@@ -893,7 +885,7 @@ LEAN UNDER with moderate confidence. Line shopping recommended.
 app.post("/api/ollama/chat", (req, res) => {
   const { message, context, analysisType } = req.body;
 
-  // Mock response when Ollama is not available
+  // Mock response when Ollama is not available;
   const mockResponse = {
     content: `🤖 **PropOllama Analysis** (Mock Mode)
 
@@ -902,21 +894,21 @@ Your question: "${message}"
 **Quick Analysis:**
 This is a development mock response. To get real AI-powered analysis:
 
-1. **Install Ollama**: Download from https://ollama.ai
+1. **Install Ollama**: Download from https://ollama.ai;
 2. **Install a model**: Run \`ollama pull llama3.2\`
-3. **Start Ollama**: Ensure it's running on localhost:11434
+3. **Start Ollama**: Ensure it's running on localhost:11434;
 
 **General Betting Advice:**
-- Always practice responsible gambling
-- Never bet more than you can afford to lose
-- Research thoroughly before placing bets
-- Consider using bankroll management strategies
+- Always practice responsible gambling;
+- Never bet more than you can afford to lose;
+- Research thoroughly before placing bets;
+- Consider using bankroll management strategies;
 
 🎯 **Value Betting Tips:**
-- Look for positive expected value (+EV) bets
-- Compare odds across multiple sportsbooks
-- Track your betting performance over time
-- Focus on sports/markets you understand best
+- Look for positive expected value (+EV) bets;
+- Compare odds across multiple sportsbooks;
+- Track your betting performance over time;
+- Focus on sports/markets you understand best;
 
 *This is a mock response. Real AI analysis requires Ollama installation.*`,
     confidence: 75,
@@ -931,7 +923,7 @@ This is a development mock response. To get real AI-powered analysis:
     analysis_type: analysisType || "general",
   };
 
-  // Simulate AI thinking time
+  // Simulate AI thinking time;
   setTimeout(
     () => {
       res.json(mockResponse);
@@ -960,39 +952,35 @@ app.get("/api/ollama/models", (req, res) => {
   });
 });
 
-// SportsRadar API Integration
+// SportsRadar API Integration;
 const SPORTSRADAR_API_KEY =
   process.env.VITE_SPORTRADAR_API_KEY ||
   "R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s";
-const SPORTSRADAR_BASE_URL = "https://api.sportradar.com";
 
-// Rate limiting for SportsRadar API
-const sportsRadarCache = new Map();
-const CACHE_TTL = 300000; // 5 minutes
-let lastSportsRadarRequest = 0;
-const RATE_LIMIT_MS = 1000; // 1 request per second
+// Rate limiting for SportsRadar API;
+
+const CACHE_TTL = 300000; // 5 minutes;
+const lastSportsRadarRequest = 0;
+const RATE_LIMIT_MS = 1000; // 1 request per second;
 
 async function makeSportsRadarRequest(endpoint) {
-  // Check cache first
-  const cached = sportsRadarCache.get(endpoint);
+  // Check cache first;
+
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     return cached.data;
   }
 
-  // Rate limiting
-  const now = Date.now();
-  const timeSinceLastRequest = now - lastSportsRadarRequest;
+  // Rate limiting;
+
+
   if (timeSinceLastRequest < RATE_LIMIT_MS) {
     await new Promise((resolve) =>
       setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
     );
   }
 
-  const url = `${SPORTSRADAR_BASE_URL}${endpoint}?api_key=${SPORTSRADAR_API_KEY}`;
-
   try {
     lastSportsRadarRequest = Date.now();
-    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(
@@ -1000,9 +988,7 @@ async function makeSportsRadarRequest(endpoint) {
       );
     }
 
-    const data = await response.json();
-
-    // Cache the response
+    // Cache the response;
     sportsRadarCache.set(endpoint, {
       data,
       timestamp: Date.now(),
@@ -1010,25 +996,24 @@ async function makeSportsRadarRequest(endpoint) {
 
     return data;
   } catch (error) {
-    console.error("SportsRadar API request failed:", error);
+    // console statement removed
     throw error;
   }
 }
 
-// SportsRadar Health Check
+// SportsRadar Health Check;
 app.get("/api/sportsradar/health", async (req, res) => {
   try {
-    const availableAPIs = [];
-    const apiStatus = {};
 
-    // Test different NBA API endpoints
+
+    // Test different NBA API endpoints;
     const nbaEndpoints = [
       "/nba/trial/v8/en/league/hierarchy.json",
       "/nba/v7/en/league/hierarchy.json",
       "/nba/trial/v7/en/league/hierarchy.json",
     ];
 
-    let nbaWorking = false;
+    const nbaWorking = false;
     for (const endpoint of nbaEndpoints) {
       try {
         await makeSportsRadarRequest(endpoint);
@@ -1037,7 +1022,7 @@ app.get("/api/sportsradar/health", async (req, res) => {
         nbaWorking = true;
         break;
       } catch (e) {
-        console.warn(`NBA API endpoint ${endpoint} not accessible:`, e.message);
+        // console statement removed
       }
     }
 
@@ -1048,13 +1033,13 @@ app.get("/api/sportsradar/health", async (req, res) => {
       };
     }
 
-    // Test Odds Comparison API with fallback endpoints
+    // Test Odds Comparison API with fallback endpoints;
     const oddsEndpoints = [
       "/odds-comparison/trial/v2/en/us/sports.json",
       "/odds-comparison/v2/en/us/sports.json",
     ];
 
-    let oddsWorking = false;
+    const oddsWorking = false;
     for (const endpoint of oddsEndpoints) {
       try {
         await makeSportsRadarRequest(endpoint);
@@ -1063,10 +1048,7 @@ app.get("/api/sportsradar/health", async (req, res) => {
         oddsWorking = true;
         break;
       } catch (e) {
-        console.warn(
-          `Odds API endpoint ${endpoint} not accessible:`,
-          e.message,
-        );
+        // console statement removed
       }
     }
 
@@ -1082,7 +1064,7 @@ app.get("/api/sportsradar/health", async (req, res) => {
       availableAPIs,
       apiStatus,
       message:
-        availableAPIs.length === 0
+        availableAPIs.length === 0;
           ? "All APIs unavailable - check API keys and network connectivity"
           : "API integration operational",
       timestamp: new Date().toISOString(),
@@ -1097,20 +1079,19 @@ app.get("/api/sportsradar/health", async (req, res) => {
   }
 });
 
-// NBA Games - with date
+// NBA Games - with date;
 app.get("/api/sportsradar/nba/games/:date", async (req, res) => {
   try {
-    const date = req.params.date;
 
-    // Try multiple endpoint versions
+    // Try multiple endpoint versions;
     const endpoints = [
       `/nba/trial/v8/en/games/${date}/schedule.json`,
       `/nba/v7/en/games/${date}/schedule.json`,
       `/nba/trial/v7/en/games/${date}/schedule.json`,
     ];
 
-    let data = null;
-    let lastError = null;
+    const data = null;
+    const lastError = null;
 
     for (const endpoint of endpoints) {
       try {
@@ -1118,12 +1099,12 @@ app.get("/api/sportsradar/nba/games/:date", async (req, res) => {
         break;
       } catch (error) {
         lastError = error;
-        console.warn(`Failed to fetch from ${endpoint}:`, error.message);
+        // console statement removed
       }
     }
 
     if (!data) {
-      // Return development fallback data when APIs are unavailable
+      // Return development fallback data when APIs are unavailable;
       const fallbackGames = [
         {
           gameId: "dev-game-1",
@@ -1168,7 +1149,7 @@ app.get("/api/sportsradar/nba/games/:date", async (req, res) => {
           abbreviation: game.away.alias,
         },
         score:
-          game.home_points !== undefined
+          game.home_points !== undefined;
             ? {
                 home: game.home_points,
                 away: game.away_points,
@@ -1188,9 +1169,8 @@ app.get("/api/sportsradar/nba/games/:date", async (req, res) => {
 // NBA Games - today's games (without date parameter)
 app.get("/api/sportsradar/nba/games", async (req, res) => {
   try {
-    const date = new Date().toISOString().split("T")[0];
-    const endpoint = `/nba/trial/v8/en/games/${date}/schedule.json`;
-    const data = await makeSportsRadarRequest(endpoint);
+
+
 
     const games =
       data.games?.map((game) => ({
@@ -1209,7 +1189,7 @@ app.get("/api/sportsradar/nba/games", async (req, res) => {
           abbreviation: game.away.alias,
         },
         score:
-          game.home_points !== undefined
+          game.home_points !== undefined;
             ? {
                 home: game.home_points,
                 away: game.away_points,
@@ -1226,7 +1206,7 @@ app.get("/api/sportsradar/nba/games", async (req, res) => {
   }
 });
 
-// Player Stats
+// Player Stats;
 app.get("/api/sportsradar/:sport/players/:playerId/stats", async (req, res) => {
   try {
     const { sport, playerId } = req.params;
@@ -1250,8 +1230,6 @@ app.get("/api/sportsradar/:sport/players/:playerId/stats", async (req, res) => {
         return res.status(400).json({ error: `Unsupported sport: ${sport}` });
     }
 
-    const endpoint = `${sportEndpoint}/players/${playerId}/profile.json`;
-    const data = await makeSportsRadarRequest(endpoint);
 
     if (!data.player) {
       return res.status(404).json({ error: "Player not found" });
@@ -1276,18 +1254,16 @@ app.get("/api/sportsradar/:sport/players/:playerId/stats", async (req, res) => {
   }
 });
 
-// Odds Comparison
+// Odds Comparison;
 app.get("/api/sportsradar/odds/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
     const { eventId } = req.query;
 
-    let endpoint = `/odds-comparison/trial/v2/en/us/sports/${sport.toLowerCase()}/events.json`;
+    const endpoint = `/odds-comparison/trial/v2/en/us/sports/${sport.toLowerCase()}/events.json`;
     if (eventId) {
       endpoint += `?event_id=${eventId}`;
     }
-
-    const data = await makeSportsRadarRequest(endpoint);
 
     const odds =
       data.events?.map((event) => ({
@@ -1302,12 +1278,12 @@ app.get("/api/sportsradar/odds/:sport", async (req, res) => {
         odds: {
           moneyline: {
             home:
-              event.markets
+              event.markets;
                 ?.find((m) => m.type === "moneyline")
                 ?.books?.[0]?.outcomes?.find((o) => o.type === "home")?.price ||
               0,
             away:
-              event.markets
+              event.markets;
                 ?.find((m) => m.type === "moneyline")
                 ?.books?.[0]?.outcomes?.find((o) => o.type === "away")?.price ||
               0,
@@ -1317,12 +1293,12 @@ app.get("/api/sportsradar/odds/:sport", async (req, res) => {
               event.markets?.find((m) => m.type === "spread")?.books?.[0]
                 ?.outcomes?.[0]?.spread || 0,
             home:
-              event.markets
+              event.markets;
                 ?.find((m) => m.type === "spread")
                 ?.books?.[0]?.outcomes?.find((o) => o.type === "home")?.price ||
               0,
             away:
-              event.markets
+              event.markets;
                 ?.find((m) => m.type === "spread")
                 ?.books?.[0]?.outcomes?.find((o) => o.type === "away")?.price ||
               0,
@@ -1332,12 +1308,12 @@ app.get("/api/sportsradar/odds/:sport", async (req, res) => {
               event.markets?.find((m) => m.type === "total")?.books?.[0]
                 ?.outcomes?.[0]?.total || 0,
             over:
-              event.markets
+              event.markets;
                 ?.find((m) => m.type === "total")
                 ?.books?.[0]?.outcomes?.find((o) => o.type === "over")?.price ||
               0,
             under:
-              event.markets
+              event.markets;
                 ?.find((m) => m.type === "total")
                 ?.books?.[0]?.outcomes?.find((o) => o.type === "under")
                 ?.price || 0,
@@ -1355,18 +1331,15 @@ app.get("/api/sportsradar/odds/:sport", async (req, res) => {
   }
 });
 
-// Player Props
+// Player Props;
 app.get(
   "/api/sportsradar/odds/:sport/events/:eventId/player-props",
   async (req, res) => {
     try {
       const { sport, eventId } = req.params;
-      const endpoint = `/odds-comparison/trial/v2/en/us/sports/${sport.toLowerCase()}/events/${eventId}/markets.json`;
-
-      const data = await makeSportsRadarRequest(endpoint);
 
       const playerProps =
-        data.markets
+        data.markets;
           ?.filter((market) => market.type === "player_prop")
           ?.map((market) => ({
             playerId: market.player?.id || "",
@@ -1391,7 +1364,7 @@ app.get(
   },
 );
 
-// SportsRadar Cache Stats
+// SportsRadar Cache Stats;
 app.get("/api/sportsradar/cache/stats", (req, res) => {
   res.json({
     size: sportsRadarCache.size,
@@ -1399,18 +1372,17 @@ app.get("/api/sportsradar/cache/stats", (req, res) => {
   });
 });
 
-// Clear SportsRadar Cache
+// Clear SportsRadar Cache;
 app.delete("/api/sportsradar/cache", (req, res) => {
   sportsRadarCache.clear();
   res.json({ message: "Cache cleared successfully" });
 });
 
-// SportsRadar Odds Comparison API
+// SportsRadar Odds Comparison API;
 app.get("/api/sportsradar/odds-comparison/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
-    const endpoint = `/odds-comparison/trial/v2/en/us/sports/${sport}/events.json`;
-    const data = await makeSportsRadarRequest(endpoint);
+
 
     res.json({
       sport,
@@ -1428,12 +1400,11 @@ app.get("/api/sportsradar/odds-comparison/:sport", async (req, res) => {
   }
 });
 
-// SportsRadar Player Props API
+// SportsRadar Player Props API;
 app.get("/api/sportsradar/player-props/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
-    const endpoint = `/odds-comparison-player-props/trial/v1/en/us/sports/${sport}/events.json`;
-    const data = await makeSportsRadarRequest(endpoint);
+
 
     res.json({
       sport,
@@ -1451,12 +1422,11 @@ app.get("/api/sportsradar/player-props/:sport", async (req, res) => {
   }
 });
 
-// SportsRadar NBA API
+// SportsRadar NBA API;
 app.get("/api/sportsradar/nba/:endpoint", async (req, res) => {
   try {
     const { endpoint } = req.params;
-    const apiEndpoint = `/nba/trial/v8/en/${endpoint}.json`;
-    const data = await makeSportsRadarRequest(apiEndpoint);
+
 
     res.json({
       ...data,
@@ -1473,12 +1443,11 @@ app.get("/api/sportsradar/nba/:endpoint", async (req, res) => {
   }
 });
 
-// SportsRadar NFL API
+// SportsRadar NFL API;
 app.get("/api/sportsradar/nfl/:endpoint", async (req, res) => {
   try {
     const { endpoint } = req.params;
-    const apiEndpoint = `/nfl/trial/v7/en/${endpoint}.json`;
-    const data = await makeSportsRadarRequest(apiEndpoint);
+
 
     res.json({
       ...data,
@@ -1495,7 +1464,7 @@ app.get("/api/sportsradar/nfl/:endpoint", async (req, res) => {
   }
 });
 
-// SportsRadar Quota Status
+// SportsRadar Quota Status;
 app.get("/api/sportsradar/quota", (req, res) => {
   res.json({
     quota_used: sportsRadarQuotaUsed,
@@ -1504,7 +1473,7 @@ app.get("/api/sportsradar/quota", (req, res) => {
     quota_percentage: (sportsRadarQuotaUsed / SPORTSRADAR_QUOTA_LIMIT) * 100,
     cache_size: sportsRadarCache.size,
     recommendations:
-      sportsRadarQuotaUsed > 800
+      sportsRadarQuotaUsed > 800;
         ? [
             "⚠ Quota getting low - increase cache TTL",
             "💡 Consider using autonomous data sources",
@@ -1514,7 +1483,7 @@ app.get("/api/sportsradar/quota", (req, res) => {
 });
 
 // =======================
-// DAILY FANTASY API ENDPOINTS
+// DAILY FANTASY API ENDPOINTS;
 // =======================
 
 const DAILYFANTASY_API_KEY =
@@ -1522,21 +1491,19 @@ const DAILYFANTASY_API_KEY =
 const DAILYFANTASY_BASE_URL =
   process.env.VITE_DAILYFANTASY_API_ENDPOINT || "https://api.draftkings.com";
 
-const dailyFantasyCache = new Map();
-let lastDailyFantasyRequest = 0;
+const lastDailyFantasyRequest = 0;
 
 async function makeDailyFantasyRequest(endpoint, params = {}) {
-  const cacheKey = `${endpoint}:${JSON.stringify(params)}`;
 
-  // Check cache first
-  const cached = dailyFantasyCache.get(cacheKey);
+  // Check cache first;
+
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     return cached.data;
   }
 
-  // Rate limiting
-  const now = Date.now();
-  const timeSinceLastRequest = now - lastDailyFantasyRequest;
+  // Rate limiting;
+
+
   if (timeSinceLastRequest < RATE_LIMIT_MS) {
     await new Promise((resolve) =>
       setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
@@ -1546,8 +1513,6 @@ async function makeDailyFantasyRequest(endpoint, params = {}) {
   const queryParams = new URLSearchParams({
     ...params,
   });
-
-  const url = `${DAILYFANTASY_BASE_URL}${endpoint}?${queryParams}`;
 
   try {
     lastDailyFantasyRequest = Date.now();
@@ -1564,9 +1529,7 @@ async function makeDailyFantasyRequest(endpoint, params = {}) {
       );
     }
 
-    const data = await response.json();
-
-    // Cache the response
+    // Cache the response;
     dailyFantasyCache.set(cacheKey, {
       data,
       timestamp: Date.now(),
@@ -1574,19 +1537,16 @@ async function makeDailyFantasyRequest(endpoint, params = {}) {
 
     return data;
   } catch (error) {
-    console.error("DailyFantasy API request failed:", error);
+    // console statement removed
     throw error;
   }
 }
 
-// DailyFantasy Contests
+// DailyFantasy Contests;
 app.get("/api/dailyfantasy/contests/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
-    const endpoint = `/contests/v1/contests`;
-    const params = { sport: sport.toLowerCase() };
 
-    const data = await makeDailyFantasyRequest(endpoint, params);
 
     const contests =
       data.contests?.map((contest) => ({
@@ -1609,13 +1569,10 @@ app.get("/api/dailyfantasy/contests/:sport", async (req, res) => {
   }
 });
 
-// DailyFantasy Players
+// DailyFantasy Players;
 app.get("/api/dailyfantasy/contests/:contestId/players", async (req, res) => {
   try {
     const { contestId } = req.params;
-    const endpoint = `/contests/v1/contests/${contestId}/draftables`;
-
-    const data = await makeDailyFantasyRequest(endpoint);
 
     const players =
       data.draftables?.map((player) => ({
@@ -1638,13 +1595,10 @@ app.get("/api/dailyfantasy/contests/:contestId/players", async (req, res) => {
   }
 });
 
-// DailyFantasy Player Projections
+// DailyFantasy Player Projections;
 app.get("/api/dailyfantasy/players/:playerId/projections", async (req, res) => {
   try {
     const { playerId } = req.params;
-    const endpoint = `/players/v1/players/${playerId}/projections`;
-
-    const data = await makeDailyFantasyRequest(endpoint);
 
     res.json({
       playerId: data.player_id,
@@ -1661,11 +1615,10 @@ app.get("/api/dailyfantasy/players/:playerId/projections", async (req, res) => {
   }
 });
 
-// DailyFantasy Optimal Lineups
+// DailyFantasy Optimal Lineups;
 app.post("/api/dailyfantasy/lineups/optimize", async (req, res) => {
   try {
     const { contestId, strategy = "balanced", budget } = req.body;
-    const endpoint = `/optimization/v1/lineups`;
 
     const requestBody = {
       contest_id: contestId,
@@ -1689,8 +1642,6 @@ app.post("/api/dailyfantasy/lineups/optimize", async (req, res) => {
       );
     }
 
-    const data = await response.json();
-
     res.json({
       lineup: data.lineup,
       projectedPoints: data.projected_points,
@@ -1706,7 +1657,7 @@ app.post("/api/dailyfantasy/lineups/optimize", async (req, res) => {
 });
 
 // =======================
-// THE ODDS API ENDPOINTS
+// THE ODDS API ENDPOINTS;
 // =======================
 
 const THEODDS_API_KEY =
@@ -1714,21 +1665,19 @@ const THEODDS_API_KEY =
 const THEODDS_BASE_URL =
   process.env.VITE_THEODDS_API_ENDPOINT || "https://api.the-odds-api.com";
 
-const theoddsCache = new Map();
-let lastTheOddsRequest = 0;
+const lastTheOddsRequest = 0;
 
 async function makeTheOddsRequest(endpoint, params = {}) {
-  const cacheKey = `${endpoint}:${JSON.stringify(params)}`;
 
-  // Check cache first
-  const cached = theoddsCache.get(cacheKey);
+  // Check cache first;
+
   if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
     return cached.data;
   }
 
-  // Rate limiting
-  const now = Date.now();
-  const timeSinceLastRequest = now - lastTheOddsRequest;
+  // Rate limiting;
+
+
   if (timeSinceLastRequest < RATE_LIMIT_MS) {
     await new Promise((resolve) =>
       setTimeout(resolve, RATE_LIMIT_MS - timeSinceLastRequest),
@@ -1740,11 +1689,8 @@ async function makeTheOddsRequest(endpoint, params = {}) {
     ...params,
   });
 
-  const url = `${THEODDS_BASE_URL}${endpoint}?${queryParams}`;
-
   try {
     lastTheOddsRequest = Date.now();
-    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(
@@ -1752,9 +1698,7 @@ async function makeTheOddsRequest(endpoint, params = {}) {
       );
     }
 
-    const data = await response.json();
-
-    // Cache the response
+    // Cache the response;
     theoddsCache.set(cacheKey, {
       data,
       timestamp: Date.now(),
@@ -1762,35 +1706,34 @@ async function makeTheOddsRequest(endpoint, params = {}) {
 
     return data;
   } catch (error) {
-    console.error("TheOdds API request failed:", error);
+    // console statement removed
     throw error;
   }
 }
 
-// TheOdds Sports
+// TheOdds Sports;
 app.get("/api/theodds/sports", async (req, res) => {
   try {
-    const endpoint = "/v4/sports";
-    const data = await makeTheOddsRequest(endpoint);
+
 
     res.json(data);
   } catch (error) {
-    console.warn("TheOdds API error:", error.message);
+    // console statement removed
 
-    // Return structured error response for API unavailability
+    // Return structured error response for API unavailability;
     res.status(503).json({
       error: "TheOdds API temporarily unavailable",
       message:
         "Unable to fetch sports data. This may be due to API key restrictions or rate limiting.",
       suggestion:
         "The service will retry automatically. Sports data is temporarily unavailable.",
-      sports: [], // Return empty array for frontend compatibility
+      sports: [], // Return empty array for frontend compatibility;
       timestamp: new Date().toISOString(),
     });
   }
 });
 
-// TheOdds Odds
+// TheOdds Odds;
 app.get("/api/theodds/odds/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
@@ -1800,14 +1743,11 @@ app.get("/api/theodds/odds/:sport", async (req, res) => {
       oddsFormat = "decimal",
     } = req.query;
 
-    const endpoint = `/v4/sports/${sport}/odds`;
     const params = {
       regions,
       markets,
       oddsFormat,
     };
-
-    const data = await makeTheOddsRequest(endpoint, params);
 
     res.json(data);
   } catch (error) {
@@ -1818,7 +1758,7 @@ app.get("/api/theodds/odds/:sport", async (req, res) => {
   }
 });
 
-// TheOdds Event Odds
+// TheOdds Event Odds;
 app.get("/api/theodds/odds/:sport/events/:eventId", async (req, res) => {
   try {
     const { sport, eventId } = req.params;
@@ -1828,14 +1768,11 @@ app.get("/api/theodds/odds/:sport/events/:eventId", async (req, res) => {
       oddsFormat = "decimal",
     } = req.query;
 
-    const endpoint = `/v4/sports/${sport}/events/${eventId}/odds`;
     const params = {
       regions,
       markets,
       oddsFormat,
     };
-
-    const data = await makeTheOddsRequest(endpoint, params);
 
     res.json(data);
   } catch (error) {
@@ -1846,7 +1783,7 @@ app.get("/api/theodds/odds/:sport/events/:eventId", async (req, res) => {
   }
 });
 
-// TheOdds Odds
+// TheOdds Odds;
 app.get("/api/theodds/odds/:sport", async (req, res) => {
   try {
     const { sport } = req.params;
@@ -1856,33 +1793,30 @@ app.get("/api/theodds/odds/:sport", async (req, res) => {
       oddsFormat = "decimal",
     } = req.query;
 
-    const endpoint = `/v4/sports/${sport}/odds`;
     const params = {
       regions,
       markets,
       oddsFormat,
     };
 
-    const data = await makeTheOddsRequest(endpoint, params);
-
     res.json(data);
   } catch (error) {
-    console.warn("TheOdds API error for odds:", error.message);
+    // console statement removed
 
-    // Return structured error response
+    // Return structured error response;
     res.status(503).json({
       error: "TheOdds API temporarily unavailable",
       message:
         "Unable to fetch odds data. This may be due to API key restrictions or rate limiting.",
       suggestion:
         "The service will retry automatically. Odds data is temporarily unavailable.",
-      odds: [], // Return empty array for frontend compatibility
+      odds: [], // Return empty array for frontend compatibility;
       timestamp: new Date().toISOString(),
     });
   }
 });
 
-// API Health Check - Combined
+// API Health Check - Combined;
 app.get("/api/health/all", async (req, res) => {
   const health = {
     timestamp: new Date().toISOString(),
@@ -1893,7 +1827,7 @@ app.get("/api/health/all", async (req, res) => {
     },
   };
 
-  // Test SportsRadar
+  // Test SportsRadar;
   try {
     const sportsRadarHealth = await makeSportsRadarRequest(
       "/nba/trial/v8/en/league/hierarchy.json",
@@ -1904,7 +1838,7 @@ app.get("/api/health/all", async (req, res) => {
     health.services.sportsradar.status = "degraded";
   }
 
-  // Test DailyFantasy
+  // Test DailyFantasy;
   try {
     await makeDailyFantasyRequest("/contests/v1/contests", { limit: 1 });
     health.services.dailyfantasy.status = "healthy";
@@ -1912,7 +1846,7 @@ app.get("/api/health/all", async (req, res) => {
     health.services.dailyfantasy.status = "degraded";
   }
 
-  // Test TheOdds
+  // Test TheOdds;
   try {
     await makeTheOddsRequest("/v4/sports", { limit: 1 });
     health.services.theodds.status = "healthy";
@@ -1923,7 +1857,7 @@ app.get("/api/health/all", async (req, res) => {
   res.json(health);
 });
 
-// Cache Management for all APIs
+// Cache Management for all APIs;
 app.delete("/api/cache/clear", (req, res) => {
   sportsRadarCache.clear();
   dailyFantasyCache.clear();
@@ -1941,24 +1875,24 @@ app.get("/api/cache/stats", (req, res) => {
 });
 
 // ============================================================================
-// Missing v4 API endpoints to fix 404 errors
+// Missing v4 API endpoints to fix 404 errors;
 // ============================================================================
 
-// System Resources endpoint
+// System Resources endpoint;
 app.get("/api/v4/monitoring/resources", (req, res) => {
   res.json({
     cpu_usage: 45 + Math.random() * 30, // 45-75%
     memory_usage: 60 + Math.random() * 25, // 60-85%
     disk_usage: 30 + Math.random() * 20, // 30-50%
-    network_latency: 5 + Math.random() * 15, // 5-20ms
+    network_latency: 5 + Math.random() * 15, // 5-20ms;
     timestamp: new Date().toISOString(),
   });
 });
 
-// Data Drift Report endpoint
+// Data Drift Report endpoint;
 app.get("/api/v4/data/drift", (req, res) => {
   res.json({
-    drift_score: 0.05 + Math.random() * 0.15, // 0.05-0.20
+    drift_score: 0.05 + Math.random() * 0.15, // 0.05-0.20;
     status: "stable",
     features_with_drift: [
       { name: "player_efficiency", drift: 0.08 },
@@ -1968,22 +1902,22 @@ app.get("/api/v4/data/drift", (req, res) => {
   });
 });
 
-// Data Quality Report endpoint
+// Data Quality Report endpoint;
 app.get("/api/v4/data/quality", (req, res) => {
   res.json({
-    quality_score: 0.85 + Math.random() * 0.12, // 0.85-0.97
-    completeness: 0.95 + Math.random() * 0.04, // 0.95-0.99
-    accuracy: 0.88 + Math.random() * 0.1, // 0.88-0.98
-    consistency: 0.92 + Math.random() * 0.06, // 0.92-0.98
-    timeliness: 0.9 + Math.random() * 0.08, // 0.90-0.98
+    quality_score: 0.85 + Math.random() * 0.12, // 0.85-0.97;
+    completeness: 0.95 + Math.random() * 0.04, // 0.95-0.99;
+    accuracy: 0.88 + Math.random() * 0.1, // 0.88-0.98;
+    consistency: 0.92 + Math.random() * 0.06, // 0.92-0.98;
+    timeliness: 0.9 + Math.random() * 0.08, // 0.90-0.98;
     timestamp: new Date().toISOString(),
   });
 });
 
-// Ensemble Diversity Metrics endpoint
+// Ensemble Diversity Metrics endpoint;
 app.get("/api/v4/ensemble/diversity", (req, res) => {
   res.json({
-    diversity_score: 0.75 + Math.random() * 0.2, // 0.75-0.95
+    diversity_score: 0.75 + Math.random() * 0.2, // 0.75-0.95;
     models: [
       { name: "XGBoost-V3", contribution: 0.25 },
       { name: "Neural-Net-Pro", contribution: 0.3 },
@@ -2000,7 +1934,7 @@ app.get("/api/v4/ensemble/diversity", (req, res) => {
   });
 });
 
-// Ensemble Candidates endpoint
+// Ensemble Candidates endpoint;
 app.get("/api/v4/ensemble/candidates", (req, res) => {
   res.json({
     candidate_models: [
@@ -2028,11 +1962,10 @@ app.get("/api/v4/ensemble/candidates", (req, res) => {
   });
 });
 
-// Accuracy Alerts endpoint
+// Accuracy Alerts endpoint;
 app.get("/api/v4/monitoring/accuracy-alerts", (req, res) => {
-  const alerts = [];
 
-  // Randomly add some alerts
+  // Randomly add some alerts;
   if (Math.random() > 0.7) {
     alerts.push({
       id: "alert_1",
@@ -2058,7 +1991,7 @@ app.get("/api/v4/monitoring/accuracy-alerts", (req, res) => {
   res.json(alerts);
 });
 
-// PrizePicks endpoints
+// PrizePicks endpoints;
 app.get("/api/prizepicks/props", (req, res) => {
   const { sport, minConfidence = 0.6 } = req.query;
 
@@ -2110,7 +2043,7 @@ app.get("/api/prizepicks/props", (req, res) => {
     },
   ];
 
-  let filteredProps = mockProps.filter(
+  const filteredProps = mockProps.filter(
     (prop) => prop.confidence >= parseFloat(minConfidence),
   );
 
@@ -2149,7 +2082,7 @@ app.get("/api/prizepicks/recommendations", (req, res) => {
     },
   ];
 
-  let filteredRecs = mockRecommendations.filter(
+  const filteredRecs = mockRecommendations.filter(
     (rec) => rec.confidence >= parseFloat(minConfidence),
   );
 
@@ -2164,7 +2097,7 @@ app.get("/api/prizepicks/recommendations", (req, res) => {
   res.json(filteredRecs);
 });
 
-// Portfolio endpoints
+// Portfolio endpoints;
 app.get("/api/portfolio/:userId/analysis", (req, res) => {
   const { userId } = req.params;
 
@@ -2238,11 +2171,11 @@ app.get("/api/portfolio/:userId/analysis", (req, res) => {
   res.json(mockPortfolioAnalysis);
 });
 
-// PropOllama chat endpoint
+// PropOllama chat endpoint;
 app.post("/api/propollama/chat", (req, res) => {
   const { message, context } = req.body;
 
-  // Mock AI chat response for PropOllama
+  // Mock AI chat response for PropOllama;
   const mockResponses = [
     "Based on historical data, LeBron James averages 28.2 points in games against Western Conference teams. The over looks favorable tonight.",
     "Weather conditions are clear with no wind, which typically benefits passing games. Travis Kelce's receiving yards prop has good value.",
@@ -2256,11 +2189,11 @@ app.post("/api/propollama/chat", (req, res) => {
 
   res.json({
     response: randomResponse,
-    confidence: 0.75 + Math.random() * 0.2, // Random confidence between 0.75-0.95
+    confidence: 0.75 + Math.random() * 0.2, // Random confidence between 0.75-0.95;
     context: {
       messageId: `msg_${Date.now()}`,
       timestamp: new Date().toISOString(),
-      tokensUsed: Math.floor(Math.random() * 50) + 20, // Random tokens 20-70
+      tokensUsed: Math.floor(Math.random() * 50) + 20, // Random tokens 20-70;
     },
     suggestions: [
       "Tell me more about this player's recent performance",
@@ -2271,9 +2204,9 @@ app.post("/api/propollama/chat", (req, res) => {
   });
 });
 
-// Error handling middleware
+// Error handling middleware;
 app.use((err, req, res, next) => {
-  console.error(err.stack);
+  // console statement removed
   res.status(500).json({
     error: "Internal Server Error",
     message: err.message,
@@ -2281,7 +2214,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-// 404 handler
+// 404 handler;
 app.use((req, res) => {
   res.status(404).json({
     error: "Not Found",
@@ -2290,16 +2223,14 @@ app.use((req, res) => {
   });
 });
 
-// Create HTTP server
-const server = http.createServer(app);
+// Create HTTP server;
 
-// WebSocket server for real-time updates
-const wss = new WebSocketServer({ server });
+// WebSocket server for real-time updates;
 
 wss.on("connection", (ws) => {
-  console.log("WebSocket client connected");
+  // console statement removed
 
-  // Send initial data
+  // Send initial data;
   ws.send(
     JSON.stringify({
       type: "connection",
@@ -2307,7 +2238,7 @@ wss.on("connection", (ws) => {
     }),
   );
 
-  // Send periodic updates
+  // Send periodic updates;
   const interval = setInterval(() => {
     if (ws.readyState === ws.OPEN) {
       ws.send(
@@ -2324,22 +2255,22 @@ wss.on("connection", (ws) => {
   }, 10000);
 
   ws.on("close", () => {
-    console.log("WebSocket client disconnected");
+    // console statement removed
     clearInterval(interval);
   });
 
   ws.on("error", (error) => {
-    console.error("WebSocket error:", error);
+    // console statement removed
     clearInterval(interval);
   });
 });
 
-// Start server
+// Start server;
 server.listen(PORT, () => {
-  console.log(`🚀 Development Backend Server running on port ${PORT}`);
-  console.log(`📊 API endpoints available at http://localhost:${PORT}/api/`);
-  console.log(`🔌 WebSocket server available at ws://localhost:${PORT}`);
-  console.log(`💾 Health check: http://localhost:${PORT}/health`);
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
 });
 
 export default app;

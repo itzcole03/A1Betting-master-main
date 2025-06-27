@@ -1,6 +1,6 @@
-import { StateCreator } from "zustand";
-import { ParlayLeg } from "../../../../shared/betting";
-import { AppStore } from "../../stores/useAppStore";
+import { StateCreator } from 'zustand.ts';
+import { ParlayLeg } from '@/../../shared/betting.ts';
+import { AppStore } from '@/stores/useAppStore.ts';
 export interface BetSlipSlice {
     legs: ParlayLeg[];
     stake: number;

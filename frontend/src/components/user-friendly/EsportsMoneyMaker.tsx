@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useMemo  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   Gamepad2,
   TrendingUp,
@@ -13,8 +13,8 @@ import {
   Users,
   Target,
   AlertTriangle,
-} from 'lucide-react';
-import { logger } from '@/utils/logger';
+} from 'lucide-react.ts';
+import { logger } from '@/utils/logger.ts';
 
 interface EsportsMatch {
   id: string;
@@ -57,11 +57,11 @@ interface EsportsMetrics {
 }
 
 const EsportsMoneyMaker: React.FC = () => {
-  const [bets, setBets] = useState<EsportsBet[]>([]);
+  const [bets, setBets] = useState<EsportsBet[] key={892378}>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedGame, setSelectedGame] = useState<string>('all');
-  const [selectedMarket, setSelectedMarket] = useState<string>('all');
-  const [metrics, setMetrics] = useState<EsportsMetrics>({
+  const [selectedGame, setSelectedGame] = useState<string key={278855}>('all');
+  const [selectedMarket, setSelectedMarket] = useState<string key={278855}>('all');
+  const [metrics, setMetrics] = useState<EsportsMetrics key={407484}>({
     total_matches: 0,
     active_bets: 0,
     daily_profit: 0,
@@ -70,10 +70,8 @@ const EsportsMoneyMaker: React.FC = () => {
     roi: 0,
   });
 
-  const games = ['all', 'League of Legends', 'CS2', 'Dota 2', 'Valorant', 'Overwatch 2'];
-  const markets = ['all', 'Match Winner', 'Map Winner', 'Total Maps', 'First Blood', 'Total Kills'];
 
-  // Mock esports betting opportunities
+  // Mock esports betting opportunities;
   const mockBets: EsportsBet[] = useMemo(() => [
     {
       id: '1',
@@ -99,7 +97,7 @@ const EsportsMoneyMaker: React.FC = () => {
         recent_form: 'T1 won 4/5 recent matches',
         head_to_head: 'T1 leads 3-2 in last 5 meetings',
         map_advantage: 'Strong on current patch meta',
-        momentum: 0.75
+        momentum: 0.75;
       }
     },
     {
@@ -127,7 +125,7 @@ const EsportsMoneyMaker: React.FC = () => {
         recent_form: 'FaZe undefeated on Dust2 this tournament',
         head_to_head: 'FaZe 75% win rate vs Navi on Dust2',
         map_advantage: 'Historically strong on this map',
-        momentum: 0.85
+        momentum: 0.85;
       }
     },
     {
@@ -154,7 +152,7 @@ const EsportsMoneyMaker: React.FC = () => {
         recent_form: 'Both teams have close recent matches',
         head_to_head: '80% of their matches go to 3 maps',
         map_advantage: 'Very even map pool',
-        momentum: 0.65
+        momentum: 0.65;
       }
     },
     {
@@ -181,7 +179,7 @@ const EsportsMoneyMaker: React.FC = () => {
         recent_form: 'Spirit aggressive early game style',
         head_to_head: '60% first blood rate vs BetBoom',
         map_advantage: 'Strong laning phase',
-        momentum: 0.55
+        momentum: 0.55;
       }
     }
   ], []);
@@ -199,7 +197,7 @@ const EsportsMoneyMaker: React.FC = () => {
           daily_profit: 342.75,
           win_rate: 73.5,
           avg_odds: mockBets.reduce((acc, bet) => acc + bet.odds, 0) / mockBets.length,
-          roi: 15.8
+          roi: 15.8;
         });
       } catch (error) {
         logger.error('Failed to initialize esports money maker', error);
@@ -238,121 +236,121 @@ const EsportsMoneyMaker: React.FC = () => {
   };
 
   const getGameIcon = (game: string) => {
-    // In a real app, you'd have specific icons for each game
-    return <Gamepad2 className="w-5 h-5" />;
+    // In a real app, you'd have specific icons for each game;
+    return <Gamepad2 className="w-5 h-5" / key={276805}>;
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto"></div>
-          <p className="mt-4 text-gray-400">Loading Esports Opportunities...</p>
+      <div className="flex items-center justify-center h-96" key={797634}>
+        <div className="text-center" key={120206}>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-400 mx-auto" key={296358}></div>
+          <p className="mt-4 text-gray-400" key={301158}>Loading Esports Opportunities...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Esports Money Maker
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent" key={233760}>
+            Esports Money Maker;
           </h1>
-          <p className="text-gray-400 mt-2">
-            Professional esports betting with advanced analytics and real-time data
+          <p className="text-gray-400 mt-2" key={874357}>
+            Professional esports betting with advanced analytics and real-time data;
           </p>
         </div>
         
-        <div className="flex items-center gap-2 px-4 py-2 bg-purple-500/20 rounded-lg">
-          <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse"></div>
-          <span className="text-sm text-purple-300">Live Tracking</span>
+        <div className="flex items-center gap-2 px-4 py-2 bg-purple-500/20 rounded-lg" key={234136}>
+          <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse" key={242492}></div>
+          <span className="text-sm text-purple-300" key={682676}>Live Tracking</span>
         </div>
       </div>
 
       {/* Metrics Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-6 gap-4">
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Trophy className="w-5 h-5 text-purple-400" />
-            <span className="text-sm text-gray-400">Total Matches</span>
+      <div className="grid grid-cols-1 md:grid-cols-6 gap-4" key={851616}>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Trophy className="w-5 h-5 text-purple-400" / key={406383}>
+            <span className="text-sm text-gray-400" key={257018}>Total Matches</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.total_matches}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.total_matches}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Target className="w-5 h-5 text-cyan-400" />
-            <span className="text-sm text-gray-400">Active Bets</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Target className="w-5 h-5 text-cyan-400" / key={16195}>
+            <span className="text-sm text-gray-400" key={257018}>Active Bets</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.active_bets}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.active_bets}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <DollarSign className="w-5 h-5 text-green-400" />
-            <span className="text-sm text-gray-400">Daily Profit</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <DollarSign className="w-5 h-5 text-green-400" / key={238943}>
+            <span className="text-sm text-gray-400" key={257018}>Daily Profit</span>
           </div>
-          <p className="text-2xl font-bold text-white">${metrics.daily_profit.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>${metrics.daily_profit.toFixed(2)}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Star className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm text-gray-400">Win Rate</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Star className="w-5 h-5 text-yellow-400" / key={976743}>
+            <span className="text-sm text-gray-400" key={257018}>Win Rate</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.win_rate}%</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.win_rate}%</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <BarChart3 className="w-5 h-5 text-orange-400" />
-            <span className="text-sm text-gray-400">Avg Odds</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <BarChart3 className="w-5 h-5 text-orange-400" / key={26794}>
+            <span className="text-sm text-gray-400" key={257018}>Avg Odds</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.avg_odds.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.avg_odds.toFixed(2)}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <TrendingUp className="w-5 h-5 text-pink-400" />
-            <span className="text-sm text-gray-400">ROI</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <TrendingUp className="w-5 h-5 text-pink-400" / key={356152}>
+            <span className="text-sm text-gray-400" key={257018}>ROI</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.roi}%</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.roi}%</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-        <h3 className="text-lg font-semibold mb-4">Filters</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm text-gray-400 mb-2">Game</label>
-            <select 
+      <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+        <h3 className="text-lg font-semibold mb-4" key={792268}>Filters</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4" key={476625}>
+          <div key={241917}>
+            <label className="block text-sm text-gray-400 mb-2" key={475782}>Game</label>
+            <select; 
               value={selectedGame}
-              onChange={(e) => setSelectedGame(e.target.value)}
+              onChange={(e) = key={81622}> setSelectedGame(e.target.value)}
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
               aria-label="Select game"
             >
               {games.map(game => (
-                <option key={game} value={game}>
+                <option key={game} value={game} key={919306}>
                   {game === 'all' ? 'All Games' : game}
                 </option>
               ))}
             </select>
           </div>
 
-          <div>
-            <label className="block text-sm text-gray-400 mb-2">Market Type</label>
-            <select 
+          <div key={241917}>
+            <label className="block text-sm text-gray-400 mb-2" key={475782}>Market Type</label>
+            <select; 
               value={selectedMarket}
-              onChange={(e) => setSelectedMarket(e.target.value)}
+              onChange={(e) = key={238627}> setSelectedMarket(e.target.value)}
               className="w-full bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
               aria-label="Select market type"
             >
               {markets.map(market => (
-                <option key={market} value={market}>
+                <option key={market} value={market} key={684143}>
                   {market === 'all' ? 'All Markets' : market}
                 </option>
               ))}
@@ -362,120 +360,120 @@ const EsportsMoneyMaker: React.FC = () => {
       </div>
 
       {/* Betting Opportunities */}
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Esports Opportunities ({filteredBets.length})</h3>
+      <div className="space-y-4" key={160407}>
+        <h3 className="text-xl font-semibold" key={18928}>Esports Opportunities ({filteredBets.length})</h3>
         
         {filteredBets.length === 0 ? (
-          <div className="text-center py-12">
-            <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-400">No opportunities found for the selected filters.</p>
+          <div className="text-center py-12" key={752807}>
+            <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" / key={43269}>
+            <p className="text-gray-400" key={545335}>No opportunities found for the selected filters.</p>
           </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-4" key={449070}>
             {filteredBets.map((bet) => (
-              <motion.div
+              <motion.div;
                 key={bet.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-6 hover:border-purple-500/50 transition-all"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-purple-500/20 rounded-lg">
+               key={180023}>
+                <div className="flex items-start justify-between mb-4" key={886571}>
+                  <div className="flex items-center gap-3" key={443099}>
+                    <div className="p-2 bg-purple-500/20 rounded-lg" key={193372}>
                       {getGameIcon(bet.match.game)}
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-white">{bet.description}</h4>
-                      <p className="text-sm text-gray-400">
+                    <div key={241917}>
+                      <h4 className="font-semibold text-white" key={684150}>{bet.description}</h4>
+                      <p className="text-sm text-gray-400" key={965781}>
                         {bet.match.game} • {bet.match.tournament}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500" key={212051}>
                         {bet.match.team1} vs {bet.match.team2}
                       </p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(bet.match.status)}`}>
+                  <div className="flex items-center gap-2" key={100294}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusColor(bet.match.status)}`} key={693475}>
                       {bet.match.status.toUpperCase()}
                     </span>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRiskColor(bet.risk_level)}`}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRiskColor(bet.risk_level)}`} key={326088}>
                       {bet.risk_level.toUpperCase()}
                     </span>
-                    <div className="flex items-center gap-1 text-yellow-400">
-                      <Star className="w-4 h-4" />
-                      <span className="text-sm">{bet.confidence}%</span>
+                    <div className="flex items-center gap-1 text-yellow-400" key={462499}>
+                      <Star className="w-4 h-4" / key={274600}>
+                      <span className="text-sm" key={887361}>{bet.confidence}%</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Key Metrics */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                  <div>
-                    <p className="text-xs text-gray-400">Expected Value</p>
-                    <p className="text-lg font-semibold text-green-400">${bet.expected_value.toFixed(2)}</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4" key={477110}>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Expected Value</p>
+                    <p className="text-lg font-semibold text-green-400" key={101239}>${bet.expected_value.toFixed(2)}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Odds</p>
-                    <p className="text-lg font-semibold text-white">{bet.odds.toFixed(2)}</p>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Odds</p>
+                    <p className="text-lg font-semibold text-white" key={917428}>{bet.odds.toFixed(2)}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Recommended Stake</p>
-                    <p className="text-lg font-semibold text-cyan-400">${bet.stake_recommendation}</p>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Recommended Stake</p>
+                    <p className="text-lg font-semibold text-cyan-400" key={615962}>${bet.stake_recommendation}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Potential Profit</p>
-                    <p className="text-lg font-semibold text-purple-400">${bet.potential_profit.toFixed(2)}</p>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Potential Profit</p>
+                    <p className="text-lg font-semibold text-purple-400" key={524097}>${bet.potential_profit.toFixed(2)}</p>
                   </div>
                 </div>
 
                 {/* Analysis */}
-                <div className="bg-gray-700/50 rounded-lg p-4 mb-4">
-                  <h5 className="text-sm font-medium text-gray-300 mb-3">Analysis</h5>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-                    <div>
-                      <span className="text-gray-400">Recent Form:</span>
-                      <span className="text-white ml-2">{bet.analysis.recent_form}</span>
+                <div className="bg-gray-700/50 rounded-lg p-4 mb-4" key={925695}>
+                  <h5 className="text-sm font-medium text-gray-300 mb-3" key={948933}>Analysis</h5>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm" key={225557}>
+                    <div key={241917}>
+                      <span className="text-gray-400" key={912100}>Recent Form:</span>
+                      <span className="text-white ml-2" key={788436}>{bet.analysis.recent_form}</span>
                     </div>
-                    <div>
-                      <span className="text-gray-400">Head-to-Head:</span>
-                      <span className="text-white ml-2">{bet.analysis.head_to_head}</span>
+                    <div key={241917}>
+                      <span className="text-gray-400" key={912100}>Head-to-Head:</span>
+                      <span className="text-white ml-2" key={788436}>{bet.analysis.head_to_head}</span>
                     </div>
-                    <div>
-                      <span className="text-gray-400">Map Advantage:</span>
-                      <span className="text-white ml-2">{bet.analysis.map_advantage}</span>
+                    <div key={241917}>
+                      <span className="text-gray-400" key={912100}>Map Advantage:</span>
+                      <span className="text-white ml-2" key={788436}>{bet.analysis.map_advantage}</span>
                     </div>
-                    <div className="flex items-center">
-                      <span className="text-gray-400">Momentum:</span>
-                      <div className="ml-2 flex items-center gap-2">
-                        <div className="w-16 h-2 bg-gray-600 rounded-full overflow-hidden">
-                          <div 
+                    <div className="flex items-center" key={520222}>
+                      <span className="text-gray-400" key={912100}>Momentum:</span>
+                      <div className="ml-2 flex items-center gap-2" key={658188}>
+                        <div className="w-16 h-2 bg-gray-600 rounded-full overflow-hidden" key={620397}>
+                          <div; 
                             className="h-full bg-gradient-to-r from-purple-500 to-pink-500 rounded-full transition-all"
                             style={{ width: `${bet.analysis.momentum * 100}%` }}
-                          />
+                          / key={312857}>
                         </div>
-                        <span className="text-white text-xs">{(bet.analysis.momentum * 100).toFixed(0)}%</span>
+                        <span className="text-white text-xs" key={934608}>{(bet.analysis.momentum * 100).toFixed(0)}%</span>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-sm text-gray-400">
-                    <span>Format: {bet.match.format}</span>
-                    {bet.match.map && <span>Map: {bet.match.map}</span>}
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
+                <div className="flex items-center justify-between" key={96335}>
+                  <div className="flex items-center gap-4 text-sm text-gray-400" key={890363}>
+                    <span key={595076}>Format: {bet.match.format}</span>
+                    {bet.match.map && <span key={595076}>Map: {bet.match.map}</span>}
+                    <span className="flex items-center gap-1" key={136445}>
+                      <Clock className="w-4 h-4" / key={414649}>
                       {bet.match.status === 'live' ? 'LIVE NOW' : new Date(bet.match.start_time).toLocaleTimeString()}
                     </span>
                   </div>
                   
-                  <motion.button
+                  <motion.button;
                     className="px-6 py-2 bg-gradient-to-r from-purple-500 to-pink-600 rounded-lg font-medium hover:from-purple-400 hover:to-pink-500 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                  >
-                    Place Bet
+                   key={531775}>
+                    Place Bet;
                   </motion.button>
                 </div>
               </motion.div>

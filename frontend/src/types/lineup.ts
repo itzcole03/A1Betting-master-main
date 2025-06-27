@@ -1,6 +1,6 @@
-import { MoneyMakerLeg } from './predictions';
-import { LineupBuilderStrategy } from './predictions';
-import { LineupBuilderOutput } from './predictions';
+import { MoneyMakerLeg } from './predictions.ts';
+import { LineupBuilderStrategy } from './predictions.ts';
+import { LineupBuilderOutput } from './predictions.ts';
 
 export interface LineupLeg {
   propType: string;

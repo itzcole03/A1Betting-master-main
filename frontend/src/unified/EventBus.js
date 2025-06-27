@@ -4,7 +4,7 @@ export class EventBus {
      * @param event The event object with type and payload.
      */
     async publish(event) {
-        const handlers = this.handlers.get(event.type);
+
         if (handlers) {
             handlers.forEach((handler) => {
                 handler(event.payload);
@@ -27,7 +27,7 @@ export class EventBus {
         this.handlers.get(event).add(handler);
     }
     off(event, handler) {
-        const handlers = this.handlers.get(event);
+
         if (handlers) {
             handlers.delete(handler);
             if (handlers.size === 0) {
@@ -36,14 +36,14 @@ export class EventBus {
         }
     }
     emit(event, data) {
-        const handlers = this.handlers.get(event);
+
         if (handlers) {
             handlers.forEach(handler => {
                 try {
                     handler(data);
                 }
                 catch (error) {
-                    console.error(`Error in event handler for ${event}:`, error);
+                    // console statement removed
                 }
             });
         }

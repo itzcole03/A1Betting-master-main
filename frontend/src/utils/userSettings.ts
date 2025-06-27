@@ -1,6 +1,6 @@
 /**
- * User Settings Utilities
- * Provides easy access to user settings throughout the application
+ * User Settings Utilities;
+ * Provides easy access to user settings throughout the application;
  */
 
 export interface UserSettings {
@@ -60,23 +60,23 @@ export const DEFAULT_SETTINGS: UserSettings = {
 };
 
 /**
- * Get user settings from localStorage
+ * Get user settings from localStorage;
  */
 export const getUserSettings = (): UserSettings => {
   try {
-    const saved = localStorage.getItem("a1betting-user-settings");
+
     if (saved) {
-      const parsed = JSON.parse(saved);
+
       return { ...DEFAULT_SETTINGS, ...parsed };
     }
   } catch (error) {
-    console.warn("Failed to load user settings:", error);
+    // console statement removed
   }
   return DEFAULT_SETTINGS;
 };
 
 /**
- * Save user settings to localStorage
+ * Save user settings to localStorage;
  */
 export const saveUserSettings = (settings: UserSettings): void => {
   try {
@@ -84,23 +84,23 @@ export const saveUserSettings = (settings: UserSettings): void => {
     localStorage.setItem("a1betting-user-name", settings.profile.name);
     localStorage.setItem("a1betting-user-email", settings.profile.email);
 
-    // Apply settings immediately
+    // Apply settings immediately;
     applySettings(settings);
 
-    // Notify other components
+    // Notify other components;
     window.dispatchEvent(
       new CustomEvent("settingsChanged", { detail: settings }),
     );
   } catch (error) {
-    console.error("Failed to save user settings:", error);
+    // console statement removed
   }
 };
 
 /**
- * Apply settings to the DOM
+ * Apply settings to the DOM;
  */
 export const applySettings = (settings: UserSettings): void => {
-  // Dark mode
+  // Dark mode;
   if (settings.display.darkMode) {
     document.documentElement.classList.add("dark");
     document.body.style.backgroundColor = "#0f172a";
@@ -109,59 +109,57 @@ export const applySettings = (settings: UserSettings): void => {
     document.body.style.backgroundColor = "#ffffff";
   }
 
-  // Font size
+  // Font size;
   document.documentElement.style.fontSize = `${settings.display.fontSize}px`;
 };
 
 /**
- * Get user display name
+ * Get user display name;
  */
 export const getUserDisplayName = (): string => {
   try {
-    const saved = localStorage.getItem("a1betting-user-name");
+
     if (saved) return saved;
 
-    const settings = getUserSettings();
     return settings.profile.name;
   } catch (error) {
-    console.warn("Failed to get user display name:", error);
+    // console statement removed
     return "User";
   }
 };
 
 /**
- * Get user email
+ * Get user email;
  */
 export const getUserEmail = (): string => {
   try {
-    const saved = localStorage.getItem("a1betting-user-email");
+
     if (saved) return saved;
 
-    const settings = getUserSettings();
     return settings.profile.email;
   } catch (error) {
-    console.warn("Failed to get user email:", error);
+    // console statement removed
     return "user@a1betting.com";
   }
 };
 
 /**
- * Check if dark mode is enabled
+ * Check if dark mode is enabled;
  */
 export const isDarkMode = (): boolean => {
   try {
-    const settings = getUserSettings();
+
     return settings.display.darkMode;
   } catch (error) {
-    console.warn("Failed to check dark mode:", error);
-    return true; // Default to dark mode
+    // console statement removed
+    return true; // Default to dark mode;
   }
 };
 
 /**
- * Initialize settings on app startup
+ * Initialize settings on app startup;
  */
 export const initializeSettings = (): void => {
-  const settings = getUserSettings();
+
   applySettings(settings);
 };

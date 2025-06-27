@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { UnifiedLogger } from '../../../core/UnifiedLogger';
 import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-// Feature schemas
+// Feature schemas;
 export const FeatureSchema = z.object({
     name: z.string(),
     value: z.number(),
@@ -31,7 +31,7 @@ export class AdvancedFeatureEngineeringService {
     }
     async generateFeatures(data, options = {}) {
         try {
-            const features = [];
+
             if (data.gameData) {
                 features.push(...(await this.generateGameFeatures(data.gameData, options)));
             }
@@ -47,8 +47,8 @@ export class AdvancedFeatureEngineeringService {
             if (data.officialStats) {
                 features.push(...(await this.generateOfficialFeatures(data.officialStats, options)));
             }
-            // Filter features by importance
-            const filteredFeatures = features.filter(feature => feature.importance >= this.config.importanceThreshold);
+            // Filter features by importance;
+
             const featureSet = {
                 features: filteredFeatures,
                 timestamp: new Date().toISOString(),
@@ -68,197 +68,197 @@ export class AdvancedFeatureEngineeringService {
         }
     }
     async generateGameFeatures(games, options) {
-        const features = [];
-        // Basic game features
+
+        // Basic game features;
         features.push(...this.calculateBasicGameFeatures(games));
-        // Rolling averages
+        // Rolling averages;
         if (options.includeRolling) {
             features.push(...this.calculateRollingAverages(games));
         }
-        // Exponential smoothing
+        // Exponential smoothing;
         if (options.includeExponential) {
             features.push(...this.calculateExponentialSmoothing(games));
         }
-        // Interaction features
+        // Interaction features;
         if (options.includeInteraction) {
             features.push(...this.calculateInteractionFeatures(games));
         }
-        // Advanced features
+        // Advanced features;
         if (options.includeAdvanced) {
             features.push(...this.calculateAdvancedGameFeatures(games));
         }
         return features;
     }
     async generatePlayerFeatures(players, options) {
-        const features = [];
-        // Basic player features
+
+        // Basic player features;
         features.push(...this.calculateBasicPlayerFeatures(players));
-        // Rolling averages
+        // Rolling averages;
         if (options.includeRolling) {
             features.push(...this.calculatePlayerRollingAverages(players));
         }
-        // Exponential smoothing
+        // Exponential smoothing;
         if (options.includeExponential) {
             features.push(...this.calculatePlayerExponentialSmoothing(players));
         }
-        // Interaction features
+        // Interaction features;
         if (options.includeInteraction) {
             features.push(...this.calculatePlayerInteractionFeatures(players));
         }
-        // Advanced features
+        // Advanced features;
         if (options.includeAdvanced) {
             features.push(...this.calculateAdvancedPlayerFeatures(players));
         }
         return features;
     }
     async generateTeamFeatures(teams, options) {
-        const features = [];
-        // Basic team features
+
+        // Basic team features;
         features.push(...this.calculateBasicTeamFeatures(teams));
-        // Rolling averages
+        // Rolling averages;
         if (options.includeRolling) {
             features.push(...this.calculateTeamRollingAverages(teams));
         }
-        // Exponential smoothing
+        // Exponential smoothing;
         if (options.includeExponential) {
             features.push(...this.calculateTeamExponentialSmoothing(teams));
         }
-        // Interaction features
+        // Interaction features;
         if (options.includeInteraction) {
             features.push(...this.calculateTeamInteractionFeatures(teams));
         }
-        // Advanced features
+        // Advanced features;
         if (options.includeAdvanced) {
             features.push(...this.calculateAdvancedTeamFeatures(teams));
         }
         return features;
     }
     async generateVenueFeatures(venues, options) {
-        const features = [];
-        // Basic venue features
+
+        // Basic venue features;
         features.push(...this.calculateBasicVenueFeatures(venues));
-        // Weather impact features
+        // Weather impact features;
         if (options.includeAdvanced) {
             features.push(...this.calculateWeatherImpactFeatures(venues));
         }
-        // Surface impact features
+        // Surface impact features;
         if (options.includeAdvanced) {
             features.push(...this.calculateSurfaceImpactFeatures(venues));
         }
-        // Altitude impact features
+        // Altitude impact features;
         if (options.includeAdvanced) {
             features.push(...this.calculateAltitudeImpactFeatures(venues));
         }
         return features;
     }
     async generateOfficialFeatures(officials, options) {
-        const features = [];
-        // Basic official features
+
+        // Basic official features;
         features.push(...this.calculateBasicOfficialFeatures(officials));
-        // Tendency features
+        // Tendency features;
         if (options.includeAdvanced) {
             features.push(...this.calculateOfficialTendencyFeatures(officials));
         }
-        // Bias features
+        // Bias features;
         if (options.includeAdvanced) {
             features.push(...this.calculateOfficialBiasFeatures(officials));
         }
-        // Consistency features
+        // Consistency features;
         if (options.includeAdvanced) {
             features.push(...this.calculateOfficialConsistencyFeatures(officials));
         }
         return features;
     }
     calculateBasicGameFeatures(games) {
-        // Implement basic game feature calculation
+        // Implement basic game feature calculation;
         return [];
     }
     calculateRollingAverages(games) {
-        // Implement rolling average calculation
+        // Implement rolling average calculation;
         return [];
     }
     calculateExponentialSmoothing(games) {
-        // Implement exponential smoothing calculation
+        // Implement exponential smoothing calculation;
         return [];
     }
     calculateInteractionFeatures(games) {
-        // Implement interaction feature calculation
+        // Implement interaction feature calculation;
         return [];
     }
     calculateAdvancedGameFeatures(games) {
-        // Implement advanced game feature calculation
+        // Implement advanced game feature calculation;
         return [];
     }
     calculateBasicPlayerFeatures(players) {
-        // Implement basic player feature calculation
+        // Implement basic player feature calculation;
         return [];
     }
     calculatePlayerRollingAverages(players) {
-        // Implement player rolling average calculation
+        // Implement player rolling average calculation;
         return [];
     }
     calculatePlayerExponentialSmoothing(players) {
-        // Implement player exponential smoothing calculation
+        // Implement player exponential smoothing calculation;
         return [];
     }
     calculatePlayerInteractionFeatures(players) {
-        // Implement player interaction feature calculation
+        // Implement player interaction feature calculation;
         return [];
     }
     calculateAdvancedPlayerFeatures(players) {
-        // Implement advanced player feature calculation
+        // Implement advanced player feature calculation;
         return [];
     }
     calculateBasicTeamFeatures(teams) {
-        // Implement basic team feature calculation
+        // Implement basic team feature calculation;
         return [];
     }
     calculateTeamRollingAverages(teams) {
-        // Implement team rolling average calculation
+        // Implement team rolling average calculation;
         return [];
     }
     calculateTeamExponentialSmoothing(teams) {
-        // Implement team exponential smoothing calculation
+        // Implement team exponential smoothing calculation;
         return [];
     }
     calculateTeamInteractionFeatures(teams) {
-        // Implement team interaction feature calculation
+        // Implement team interaction feature calculation;
         return [];
     }
     calculateAdvancedTeamFeatures(teams) {
-        // Implement advanced team feature calculation
+        // Implement advanced team feature calculation;
         return [];
     }
     calculateBasicVenueFeatures(venues) {
-        // Implement basic venue feature calculation
+        // Implement basic venue feature calculation;
         return [];
     }
     calculateWeatherImpactFeatures(venues) {
-        // Implement weather impact feature calculation
+        // Implement weather impact feature calculation;
         return [];
     }
     calculateSurfaceImpactFeatures(venues) {
-        // Implement surface impact feature calculation
+        // Implement surface impact feature calculation;
         return [];
     }
     calculateAltitudeImpactFeatures(venues) {
-        // Implement altitude impact feature calculation
+        // Implement altitude impact feature calculation;
         return [];
     }
     calculateBasicOfficialFeatures(officials) {
-        // Implement basic official feature calculation
+        // Implement basic official feature calculation;
         return [];
     }
     calculateOfficialTendencyFeatures(officials) {
-        // Implement official tendency feature calculation
+        // Implement official tendency feature calculation;
         return [];
     }
     calculateOfficialBiasFeatures(officials) {
-        // Implement official bias feature calculation
+        // Implement official bias feature calculation;
         return [];
     }
     calculateOfficialConsistencyFeatures(officials) {
-        // Implement official consistency feature calculation
+        // Implement official consistency feature calculation;
         return [];
     }
     validateData(data, schema) {

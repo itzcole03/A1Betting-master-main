@@ -38,7 +38,7 @@ describe('PredictionService', () => {
             },
         ];
         it('should generate prediction when confidence threshold is met', () => {
-            const prediction = service.generatePrediction(mockMarketContext, mockHistoricalData);
+
             if (prediction) {
                 expect(prediction.propId).toBe('event1_market1_selection1');
                 expect(prediction.confidence).toBeGreaterThanOrEqual(0.7);
@@ -55,11 +55,11 @@ describe('PredictionService', () => {
                 ...mockMarketContext,
                 liquidity: 0.3,
             };
-            const prediction = service.generatePrediction(lowConfidenceContext, mockHistoricalData);
+
             expect(prediction).toBeNull();
         });
         it('should emit newPrediction event when prediction is generated', () => {
-            const emitSpy = jest.spyOn(service, 'emit');
+
             service.generatePrediction(mockMarketContext, mockHistoricalData);
             expect(emitSpy).toHaveBeenCalledWith('newPrediction', expect.any(Object));
         });
@@ -81,12 +81,12 @@ describe('PredictionService', () => {
                 timestamp: Date.now(),
             };
             mockService.getPrediction.mockReturnValue(mockPrediction);
-            const prediction = service.getPrediction('prop1');
+
             expect(prediction).toEqual(mockPrediction);
         });
         it('should return null if prediction does not exist', () => {
             mockService.getPrediction.mockReturnValue(undefined);
-            const prediction = service.getPrediction('nonexistent');
+
             expect(prediction).toBeUndefined();
         });
     });
@@ -108,7 +108,7 @@ describe('PredictionService', () => {
                     eventId: 'event1',
                 },
             ];
-            const factor = service['calculateHistoricalPerformance'](mockHistoricalData);
+
             expect(factor).toBeGreaterThanOrEqual(0);
             expect(factor).toBeLessThanOrEqual(1);
         });
@@ -123,7 +123,7 @@ describe('PredictionService', () => {
                     eventId: 'event1',
                 },
             ];
-            const factor = service['calculateOddsMovement'](mockHistoricalData);
+
             expect(factor).toBeGreaterThanOrEqual(0);
             expect(factor).toBeLessThanOrEqual(1);
         });
@@ -142,7 +142,7 @@ describe('PredictionService', () => {
                     value: 0.7,
                 },
             ];
-            const confidence = service['calculateConfidence'](mockFactors);
+
             expect(confidence).toBeGreaterThanOrEqual(0);
             expect(confidence).toBeLessThanOrEqual(1);
         });
@@ -161,7 +161,7 @@ describe('PredictionService', () => {
                     value: 0.7,
                 },
             ];
-            const predictedValue = service['calculatePredictedValue'](mockFactors);
+
             expect(predictedValue).toBeGreaterThanOrEqual(0);
             expect(predictedValue).toBeLessThanOrEqual(1);
         });

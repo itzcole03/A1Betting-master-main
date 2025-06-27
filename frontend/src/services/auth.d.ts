@@ -1,4 +1,4 @@
-import { User } from '@/types';
+import { User } from '@/types.ts';
 declare class AuthService {
     private static instance;
     private currentUser;

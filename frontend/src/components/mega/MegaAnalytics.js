@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
 import { CYBER_COLORS, CYBER_GRADIENTS, CyberContainer, CyberText, CyberButton, } from "./CyberTheme";
 import { Brain, BarChart3, TrendingUp, Target, Activity, Cpu, Eye, AlertCircle, CheckCircle, } from "lucide-react";
-// MEGA ANALYTICS COMPONENT - Consolidates all analytics and ML insights
+// MEGA ANALYTICS COMPONENT - Consolidates all analytics and ML insights;
 const MegaAnalytics = ({ timeRange = "24h", autoRefresh = true, showAdvanced = true, className = "", }) => {
     const [activeTab, setActiveTab] = useState("overview");
     const [refreshing, setRefreshing] = useState(false);
@@ -47,7 +47,7 @@ const MegaAnalytics = ({ timeRange = "24h", autoRefresh = true, showAdvanced = t
             memoryUsage: 84.3,
         },
     });
-    // Auto-refresh data every 10 seconds
+    // Auto-refresh data every 10 seconds;
     useEffect(() => {
         if (!autoRefresh)
             return;
@@ -128,7 +128,7 @@ const MegaAnalytics = ({ timeRange = "24h", autoRefresh = true, showAdvanced = t
                     color: CYBER_COLORS.purple,
                 },
             ].map((metric, index) => {
-                const Icon = metric.icon;
+
                 return (_jsx(CyberContainer, { variant: "card", style: { padding: "20px" }, children: _jsxs("div", { style: {
                             display: "flex",
                             justifyContent: "space-between",
@@ -273,7 +273,7 @@ const MegaAnalytics = ({ timeRange = "24h", autoRefresh = true, showAdvanced = t
                             threshold: { good: 50, warning: 100 },
                         },
                     ].map((metric, index) => {
-                        const color = getStatusColor(metric.value, metric.threshold);
+
                         return (_jsxs("div", { style: {
                                 display: "flex",
                                 justifyContent: "space-between",
@@ -298,7 +298,7 @@ const MegaAnalytics = ({ timeRange = "24h", autoRefresh = true, showAdvanced = t
                                                 padding: "6px 12px",
                                                 fontSize: "12px",
                                             }, children: range.label }, range.key))) })] })] }), _jsx("div", { style: { display: "flex", gap: "8px" }, children: tabs.map((tab) => {
-                            const Icon = tab.icon;
+
                             return (_jsx(CyberButton, { variant: activeTab === tab.key ? "primary" : "secondary", active: activeTab === tab.key, onClick: () => setActiveTab(tab.key), icon: _jsx(Icon, { size: 16 }), style: { marginBottom: 0, width: "auto", padding: "8px 16px" }, children: tab.label }, tab.key));
                         }) })] }), _jsxs("div", { style: { minHeight: "500px" }, children: [activeTab === "overview" && renderOverviewTab(), activeTab === "models" && renderModelsTab(), activeTab === "performance" && (_jsxs(CyberContainer, { variant: "card", style: { padding: "40px", textAlign: "center" }, children: [_jsx(TrendingUp, { size: 48, color: CYBER_COLORS.accent, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "Performance Analytics" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Deep performance metrics and trend analysis" })] })), activeTab === "realtime" && (_jsxs(CyberContainer, { variant: "card", style: { padding: "40px", textAlign: "center" }, children: [_jsx(Activity, { size: 48, color: CYBER_COLORS.primary, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "Real-time Monitoring" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Live system metrics and prediction streams" })] })), activeTab === "insights" && (_jsxs(CyberContainer, { variant: "card", style: { padding: "40px", textAlign: "center" }, children: [_jsx(Eye, { size: 48, color: CYBER_COLORS.secondary, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "AI Insights Engine" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Intelligent pattern recognition and market insights" })] }))] })] }));
 };

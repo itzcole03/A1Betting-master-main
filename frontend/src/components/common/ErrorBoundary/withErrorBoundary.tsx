@@ -1,5 +1,5 @@
-import React from 'react';
-import ErrorBoundary from '../ErrorBoundary';
+import React from 'react.ts';
+import ErrorBoundary from '@/ErrorBoundary.ts';
 
 
 
@@ -8,16 +8,15 @@ interface WithErrorBoundaryOptions {
   onError?: (error: Error, errorInfo: React.ErrorInfo) => void;
 }
 
-export function withErrorBoundary<P extends object>(
-  WrappedComponent: React.ComponentType<P>,
+export function withErrorBoundary<P extends object key={938344}>(
+  WrappedComponent: React.ComponentType<P key={657497}>,
   options: WithErrorBoundaryOptions = {}
 ) {
-  const displayName = WrappedComponent.displayName || WrappedComponent.name || 'Component';
 
   function WithErrorBoundary(props: P) {
     return (
-      <ErrorBoundary>
-        <WrappedComponent {...props} />
+      <ErrorBoundary key={390256}>
+        <WrappedComponent {...props} / key={649848}>
       </ErrorBoundary>
     );
   }
@@ -29,9 +28,9 @@ export function withErrorBoundary<P extends object>(
 
 // Example usage:
 // const SafeComponent = withErrorBoundary(RiskyComponent, {
-//   fallback: <CustomErrorFallback />,
+//   fallback: <CustomErrorFallback / key={875176}>,
 //   onError: (error, errorInfo) => {
-//     // Log to error tracking service
-//     console.error('Component error:', error, errorInfo);
+//     // Log to error tracking service;
+//     // console statement removed
 //   }
 // });

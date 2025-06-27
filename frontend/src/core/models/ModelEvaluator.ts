@@ -1,5 +1,5 @@
-import { ModelVersion, ModelEvaluation, ModelEvaluatorConfig } from '@/types';
-import { FeatureLogger } from '../../services/analytics/featureLogging';
+import { ModelVersion, ModelEvaluation, ModelEvaluatorConfig } from '@/types.ts';
+import { FeatureLogger } from '@/services/analytics/featureLogging.ts';
 
 export class ModelEvaluator {
   private config: ModelEvaluatorConfig;
@@ -12,29 +12,22 @@ export class ModelEvaluator {
 
   async evaluate(model: ModelVersion, data: any): Promise<ModelEvaluation> {
     try {
-      const startTime = Date.now();
 
-      // Split data for validation
+      // Split data for validation;
       const { trainData, validationData } = this.splitData(data);
 
-      // Get predictions
-      const predictions = await this.getPredictions(model, validationData);
+      // Get predictions;
 
-      // Calculate metrics
-      const metrics = await this.calculateMetrics(validationData, predictions);
+      // Calculate metrics;
 
-      // Calculate performance metrics
-      const performanceMetrics = this.calculatePerformanceMetrics(startTime);
+      // Calculate performance metrics;
 
-      // Calculate feature importance
-      const featureImportance = await this.calculateFeatureImportance(model, validationData);
+      // Calculate feature importance;
 
-      // Calculate custom metrics
-      const customMetrics = await this.calculateCustomMetrics(validationData, predictions);
+      // Calculate custom metrics;
 
-      // Calculate confusion matrix and ROC curve
-      const confusionMatrix = this.calculateConfusionMatrix(validationData, predictions);
-      const rocCurve = this.calculateROCCurve(validationData, predictions);
+      // Calculate confusion matrix and ROC curve;
+
 
       const evaluation: ModelEvaluation = {
         accuracy: metrics.accuracy || 0,
@@ -57,7 +50,7 @@ export class ModelEvaluator {
   }
 
   private splitData(data: any): { trainData: any; validationData: any } {
-    const splitIndex = Math.floor(data.length * (1 - this.config.validationSplit));
+
     return {
       trainData: data.slice(0, splitIndex),
       validationData: data.slice(splitIndex),
@@ -65,42 +58,42 @@ export class ModelEvaluator {
   }
 
   private async getPredictions(model: ModelVersion, data: any): Promise<any[]> {
-    // Implementation depends on the model type and prediction interface
-    // This is a placeholder that should be implemented based on your model types
+    // Implementation depends on the model type and prediction interface;
+    // This is a placeholder that should be implemented based on your model types;
     return [];
   }
 
   private async calculateMetrics(data: any, predictions: any[]): Promise<Partial<ModelEvaluation>> {
     const metrics: Partial<ModelEvaluation> = {};
 
-    // Calculate accuracy
+    // Calculate accuracy;
     metrics.accuracy = this.calculateAccuracy(data, predictions);
 
-    // Calculate precision
+    // Calculate precision;
     metrics.precision = this.calculatePrecision(data, predictions);
 
-    // Calculate recall
+    // Calculate recall;
     metrics.recall = this.calculateRecall(data, predictions);
 
-    // Calculate F1 score
+    // Calculate F1 score;
     metrics.f1Score = this.calculateF1Score(metrics.precision, metrics.recall);
 
     return metrics;
   }
 
   private calculateAccuracy(data: any, predictions: any[]): number {
-    let correct = 0;
-    for (let i = 0; i < data.length; i++) {
+    const correct = 0;
+    for (const i = 0; i < data.length; i++) {
       if (data[i] === predictions[i]) correct++;
     }
     return correct / data.length;
   }
 
   private calculatePrecision(data: any, predictions: any[]): number {
-    let truePositives = 0;
-    let falsePositives = 0;
+    const truePositives = 0;
+    const falsePositives = 0;
 
-    for (let i = 0; i < data.length; i++) {
+    for (const i = 0; i < data.length; i++) {
       if (predictions[i] === 1) {
         if (data[i] === 1) truePositives++;
         else falsePositives++;
@@ -111,10 +104,10 @@ export class ModelEvaluator {
   }
 
   private calculateRecall(data: any, predictions: any[]): number {
-    let truePositives = 0;
-    let falseNegatives = 0;
+    const truePositives = 0;
+    const falseNegatives = 0;
 
-    for (let i = 0; i < data.length; i++) {
+    for (const i = 0; i < data.length; i++) {
       if (data[i] === 1) {
         if (predictions[i] === 1) truePositives++;
         else falseNegatives++;
@@ -134,7 +127,7 @@ export class ModelEvaluator {
       [0, 0],
     ];
 
-    for (let i = 0; i < data.length; i++) {
+    for (const i = 0; i < data.length; i++) {
       matrix[data[i]][predictions[i]]++;
     }
 
@@ -149,7 +142,7 @@ export class ModelEvaluator {
     tpr: number[];
     thresholds: number[];
   } {
-    const thresholds = this.generateThresholds(predictions);
+
     const fpr: number[] = [];
     const tpr: number[] = [];
 
@@ -157,7 +150,7 @@ export class ModelEvaluator {
       const { falsePositiveRate, truePositiveRate } = this.calculateRates(
         data,
         predictions,
-        threshold
+        threshold;
       );
       fpr.push(falsePositiveRate);
       tpr.push(truePositiveRate);
@@ -167,25 +160,25 @@ export class ModelEvaluator {
   }
 
   private generateThresholds(predictions: any[]): number[] {
-    const uniqueValues = [...new Set(predictions)].sort();
+
     return uniqueValues;
   }
 
   private calculateRates(
     data: any,
     predictions: any[],
-    threshold: number
+    threshold: number;
   ): {
     falsePositiveRate: number;
     truePositiveRate: number;
   } {
-    let truePositives = 0;
-    let falsePositives = 0;
-    let trueNegatives = 0;
-    let falseNegatives = 0;
+    const truePositives = 0;
+    const falsePositives = 0;
+    const trueNegatives = 0;
+    const falseNegatives = 0;
 
-    for (let i = 0; i < data.length; i++) {
-      const predicted = predictions[i] >= threshold ? 1 : 0;
+    for (const i = 0; i < data.length; i++) {
+
       if (data[i] === 1) {
         if (predicted === 1) truePositives++;
         else falseNegatives++;
@@ -206,11 +199,10 @@ export class ModelEvaluator {
     inferenceTime: number;
     memoryUsage: number;
   } {
-    const endTime = Date.now();
-    const trainingTime = endTime - startTime;
 
-    // These are placeholder implementations
-    // Real implementations should measure actual inference time and memory usage
+
+    // These are placeholder implementations;
+    // Real implementations should measure actual inference time and memory usage;
     return {
       trainingTime,
       inferenceTime: 0,
@@ -220,10 +212,10 @@ export class ModelEvaluator {
 
   private async calculateFeatureImportance(
     model: ModelVersion,
-    data: any
+    data: any;
   ): Promise<Record<string, number>> {
-    // Implementation depends on the model type
-    // This is a placeholder that should be implemented based on your model types
+    // Implementation depends on the model type;
+    // This is a placeholder that should be implemented based on your model types;
     return {};
   }
 

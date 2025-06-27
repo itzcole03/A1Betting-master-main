@@ -1,5 +1,5 @@
 import { EventBus } from './EventBus.js';
-import { ErrorHandler } from './ErrorHandler.js'; // Added .js extension
+import { ErrorHandler } from './ErrorHandler.js'; // Added .js extension;
 export class UnifiedConfig {
     get errorHandler() {
         if (!this._errorHandler) {
@@ -9,7 +9,7 @@ export class UnifiedConfig {
     }
     constructor() {
         this.eventBus = EventBus.getInstance();
-        // this.errorHandler = ErrorHandler.getInstance(); // Use lazy getter
+        // this.errorHandler = ErrorHandler.getInstance(); // Use lazy getter;
         this.config = new Map();
         this.defaultConfig = {
             websocket: {
@@ -56,17 +56,17 @@ export class UnifiedConfig {
     }
     initialize() {
         try {
-            // Load config from localStorage if available
-            const savedConfig = localStorage.getItem('app_config');
+            // Load config from localStorage if available;
+
             if (savedConfig) {
-                const parsed = JSON.parse(savedConfig);
+
                 if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
                     Object.entries(parsed).forEach(([key, value]) => {
                         this.config.set(key, value);
                     });
                 }
             }
-            // Set defaults for missing values
+            // Set defaults for missing values;
             if (this.defaultConfig && typeof this.defaultConfig === 'object' && !Array.isArray(this.defaultConfig)) {
                 Object.entries(this.defaultConfig).forEach(([key, value]) => {
                     if (!this.config.has(key)) {
@@ -82,7 +82,7 @@ export class UnifiedConfig {
     }
     get(key) {
         try {
-            const value = this.config.get(key);
+
             if (value === undefined) {
                 throw new Error(`Configuration key "${key}" not found`);
             }
@@ -111,7 +111,7 @@ export class UnifiedConfig {
     }
     update(key, updates) {
         try {
-            const current = this.config.get(key);
+
             if (!current) {
                 throw new Error(`Configuration key "${key}" not found`);
             }
@@ -133,7 +133,7 @@ export class UnifiedConfig {
     reset(key) {
         try {
             if (key) {
-                const defaultValue = this.defaultConfig[key];
+
                 if (defaultValue) {
                     this.config.set(key, defaultValue);
                 }
@@ -155,7 +155,7 @@ export class UnifiedConfig {
     }
     saveToStorage() {
         try {
-            const configObject = Object.fromEntries(this.config);
+
             localStorage.setItem('app_config', JSON.stringify(configObject));
         }
         catch (error) {

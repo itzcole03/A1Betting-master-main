@@ -1,4 +1,4 @@
-import { WSMessage } from "../types";
+import { WSMessage } from '@/types.ts';
 interface UseWebSocketOptions {
     url: string;
     onMessage?: (message: WSMessage) => void;

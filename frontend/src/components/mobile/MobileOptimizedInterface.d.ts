@@ -1,3 +1,3 @@
-import React from "react";
+import React from 'react.ts';
 export declare const MobileOptimizedInterface: React.FC;
 export default MobileOptimizedInterface;

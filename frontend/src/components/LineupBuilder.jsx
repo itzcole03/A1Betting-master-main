@@ -32,7 +32,7 @@ const LineupBuilder = () => {
   const [teams, setTeams] = useState([]);
   const [sports, setSports] = useState([]);
   const [refreshing, setRefreshing] = useState(false);
-  const toast = useToast();
+
   const [predictions, setPredictions] = useState([]);
   const [selectedPredictions, setSelectedPredictions] = useState([]);
   const [optimizedLineup, setOptimizedLineup] = useState(null);
@@ -43,8 +43,8 @@ const LineupBuilder = () => {
   const fetchLineup = async (refresh = false) => {
     setLoading(true);
     setError('');
-    let url = '/api/lineup';
-    const params = [];
+    const url = '/api/lineup';
+
     if (filterDate) params.push(`date=${filterDate}`);
     if (filterStatus !== 'All') params.push(`status=${filterStatus}`);
     if (filterTeam !== 'All') params.push(`team=${filterTeam}`);
@@ -52,8 +52,8 @@ const LineupBuilder = () => {
     if (refresh) params.push('refresh=true');
     if (params.length) url += '?' + params.join('&');
     try {
-      const res = await axios.get(url);
-      const data = res.data.lineup || (Array.isArray(res.data) ? res.data : []);
+
+
       setPlayers(Array.isArray(data) ? data : []);
       if (res.data.teams) setTeams(res.data.teams);
       if (res.data.sports) setSports(res.data.sports);
@@ -67,21 +67,21 @@ const LineupBuilder = () => {
     }
   };
 
-  // Fetch predictions for selected sport
+  // Fetch predictions for selected sport;
   const fetchPredictions = useCallback(async () => {
     try {
       setLoading(true);
-      const data = await predictionsApi.getPredictions(sport, new Date().toISOString());
+
       setPredictions(data);
     } catch (error) {
       toast('Error fetching predictions', 'error');
-      console.error('Error fetching predictions:', error);
+      // console statement removed
     } finally {
       setLoading(false);
     }
   }, [sport, toast]);
 
-  // Optimize lineup
+  // Optimize lineup;
   const optimizeLineup = useCallback(async () => {
     if (selectedPredictions.length < legs) {
       toast(`Please select at least ${legs} predictions`, 'warning');
@@ -90,22 +90,22 @@ const LineupBuilder = () => {
 
     try {
       setLoading(true);
-      const data = await predictionsApi.getOptimizedLineup(selectedPredictions, legs);
+
       setOptimizedLineup(data);
       toast('Lineup optimized successfully', 'success');
     } catch (error) {
       toast('Error optimizing lineup', 'error');
-      console.error('Error optimizing lineup:', error);
+      // console statement removed
     } finally {
       setLoading(false);
     }
   }, [selectedPredictions, legs, toast]);
 
-  // Run at startup and on filter change
+  // Run at startup and on filter change;
   useEffect(() => {
     fetchLineup();
     fetchPredictions();
-    // eslint-disable-next-line
+    // eslint-disable-next-line;
   }, [filterDate, filterStatus, filterTeam, filterSport, fetchPredictions]);
 
   const handleSelect = player => {
@@ -116,7 +116,7 @@ const LineupBuilder = () => {
     );
   };
 
-  // Save lineup POST
+  // Save lineup POST;
   const handleSave = async () => {
     try {
       await axios.post('/api/lineup/save', selectedPlayers);
@@ -129,17 +129,17 @@ const LineupBuilder = () => {
   const handleExport = (type) => {
     let dataStr, fileName;
     if (type === 'csv') {
-      const header = Object.keys(selectedPlayers[0] || {}).join(',');
-      const rows = selectedPlayers.map(p => Object.values(p).join(','));
+
+
       dataStr = [header, ...rows].join('\n');
       fileName = 'lineup.csv';
     } else {
       dataStr = JSON.stringify(selectedPlayers, null, 2);
       fileName = 'lineup.json';
     }
-    const blob = new Blob([dataStr], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+
+
+
     a.href = url;
     a.download = fileName;
     a.click();
@@ -148,21 +148,20 @@ const LineupBuilder = () => {
     toast('Lineup exported!', 'success');
   };
 
-  // Unique filter options
-  const positions = Array.from(new Set(players.map(p => p.position))).filter(Boolean);
+  // Unique filter options;
 
-  // Advanced filtering logic
+  // Advanced filtering logic;
   const filteredPlayers = players.filter(player => {
-    const teamMatch = filterTeam === 'All' || player.team === filterTeam;
-    const sportMatch = filterSport === 'All' || player.sport === filterSport;
-    const positionMatch = advancedFilters.position === 'All' || player.position === advancedFilters.position;
-    const minStatMatch = !advancedFilters.minStat || (player.stats && player.stats.value >= parseFloat(advancedFilters.minStat));
-    const maxStatMatch = !advancedFilters.maxStat || (player.stats && player.stats.value <= parseFloat(advancedFilters.maxStat));
-    const playerMatch = !advancedFilters.player || (player.name && player.name.toLowerCase().includes(advancedFilters.player.toLowerCase()));
+
+
+
+
+
+
     return teamMatch && sportMatch && positionMatch && minStatMatch && maxStatMatch && playerMatch;
   });
 
-  // Handle prediction selection
+  // Handle prediction selection;
   const handlePredictionSelect = (prediction) => {
     if (selectedPredictions.find(p => p.id === prediction.id)) {
       setSelectedPredictions(prev => prev.filter(p => p.id !== prediction.id));
@@ -175,7 +174,7 @@ const LineupBuilder = () => {
     }
   };
 
-  // Handle legs change
+  // Handle legs change;
   const handleLegsChange = (newLegs) => {
     if (newLegs < 2 || newLegs > 6) {
       toast('Number of legs must be between 2 and 6', 'warning');
@@ -187,7 +186,7 @@ const LineupBuilder = () => {
     }
   };
 
-  // Handle sport change
+  // Handle sport change;
   const handleSportChange = (newSport) => {
     setSport(newSport);
     setSelectedPredictions([]);
@@ -263,46 +262,46 @@ const LineupBuilder = () => {
         {/* Selected count and clear button */}
         <div className="ml-auto flex items-center gap-2">
           <span className="text-sm text-gray-700">Selected: {selectedPlayers.length}</span>
-          <button
+          <button;
             className="px-2 py-1 text-xs bg-gray-200 rounded hover:bg-gray-300"
             onClick={() => setSelectedPlayers([])}
             disabled={selectedPlayers.length === 0}
             title="Clear selection"
           >
-            Clear
+            Clear;
           </button>
         </div>
 
         {/* Export dropdown */}
         <div className="relative">
-          <button
+          <button;
             className="px-2 py-1 text-xs bg-green-600 text-white rounded hover:bg-green-700"
             onClick={() => setShowExport(prev => !prev)}
             disabled={selectedPlayers.length === 0}
             title="Export lineup"
           >
-            ⬇️ Export
+            ⬇️ Export;
           </button>
           {showExport && selectedPlayers.length > 0 && (
             <div className="absolute right-0 mt-1 bg-white border rounded shadow z-10">
-              <button
+              <button;
                 className="block w-full px-4 py-2 text-left hover:bg-gray-100"
                 onClick={() => handleExport('csv')}
               >
-                Export as CSV
+                Export as CSV;
               </button>
-              <button
+              <button;
                 className="block w-full px-4 py-2 text-left hover:bg-gray-100"
                 onClick={() => handleExport('json')}
               >
-                Export as JSON
+                Export as JSON;
               </button>
             </div>
           )}
         </div>
 
         {/* Refresh button */}
-        <button
+        <button;
           className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 flex items-center gap-2"
           onClick={fetchLineup}
           disabled={refreshing || loading}
@@ -313,13 +312,13 @@ const LineupBuilder = () => {
           ) : (
             <span>🔄</span>
           )}
-          Refresh
+          Refresh;
         </button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredPlayers.map(player => (
-          <div
+          <div;
             key={player.id}
             className={`border p-3 rounded shadow cursor-pointer ${
               selectedPlayers.some(p => p.id === player.id)
@@ -333,12 +332,12 @@ const LineupBuilder = () => {
           >
             <div className="font-bold flex items-center justify-between">
               {player.name}
-              <button
+              <button;
                 className="ml-2 text-xs text-blue-600 underline hover:text-blue-800"
                 onClick={e => { e.stopPropagation(); setModalPlayer(player); }}
                 title="Show details"
               >
-                Details
+                Details;
               </button>
             </div>
             <div className="text-sm text-gray-600">{player.team} - {player.sport}</div>
@@ -350,7 +349,7 @@ const LineupBuilder = () => {
       {modalPlayer && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg max-w-md w-full relative">
-            <button
+            <button;
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
               onClick={() => setModalPlayer(null)}
               title="Close"
@@ -367,22 +366,22 @@ const LineupBuilder = () => {
         </div>
       )}
 
-      <button
+      <button;
         onClick={handleSave}
         className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
         disabled={selectedPlayers.length === 0}
         aria-disabled={selectedPlayers.length === 0}
         aria-label="Save lineup"
       >
-        💾 Save Lineup
+        💾 Save Lineup;
       </button>
 
       {/* Sport Selection */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Select Sport
+          Select Sport;
         </label>
-        <select
+        <select;
           value={sport}
           onChange={(e) => handleSportChange(e.target.value)}
           className="w-full p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600"
@@ -398,9 +397,9 @@ const LineupBuilder = () => {
       {/* Legs Selection */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-          Number of Legs
+          Number of Legs;
         </label>
-        <input
+        <input;
           type="number"
           min="2"
           max="6"
@@ -413,11 +412,11 @@ const LineupBuilder = () => {
       {/* Predictions List */}
       <div className="mb-4">
         <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-          Available Predictions
+          Available Predictions;
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {predictions.map((prediction) => (
-            <div
+            <div;
               key={prediction.id}
               onClick={() => handlePredictionSelect(prediction)}
               className={`p-4 border rounded-lg cursor-pointer transition-colors ${
@@ -450,7 +449,7 @@ const LineupBuilder = () => {
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {selectedPredictions.map((prediction) => (
-              <div
+              <div;
                 key={prediction.id}
                 className="p-4 border border-blue-500 rounded-lg bg-blue-50 dark:bg-blue-900"
               >
@@ -472,11 +471,11 @@ const LineupBuilder = () => {
       )}
 
       {/* Optimize Button */}
-      <button
+      <button;
         onClick={optimizeLineup}
         disabled={loading || selectedPredictions.length < legs}
         className={`w-full py-2 px-4 rounded-md text-white font-medium ${
-          loading || selectedPredictions.length < legs
+          loading || selectedPredictions.length < legs;
             ? 'bg-gray-400 cursor-not-allowed'
             : 'bg-blue-600 hover:bg-blue-700'
         }`}
@@ -488,11 +487,11 @@ const LineupBuilder = () => {
       {optimizedLineup && (
         <div className="mt-4 p-4 border border-green-500 rounded-lg bg-green-50 dark:bg-green-900">
           <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
-            Optimized Lineup
+            Optimized Lineup;
           </h3>
           <div className="grid grid-cols-1 gap-4">
             {optimizedLineup.predictions.map((prediction) => (
-              <div
+              <div;
                 key={prediction.id}
                 className="p-4 border border-green-500 rounded-lg"
               >
@@ -512,7 +511,7 @@ const LineupBuilder = () => {
           </div>
           <div className="mt-4">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Expected Payout: {optimizedLineup.expectedPayout}x
+              Expected Payout: {optimizedLineup.expectedPayout}x;
             </p>
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Confidence Score: {optimizedLineup.confidenceScore}%

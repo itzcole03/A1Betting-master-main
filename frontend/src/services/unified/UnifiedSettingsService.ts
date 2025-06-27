@@ -1,6 +1,6 @@
-import { BaseService } from './BaseService';
-import { UnifiedServiceRegistry } from './UnifiedServiceRegistry';
-import { UnifiedErrorService } from './UnifiedErrorService';
+import { BaseService } from './BaseService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
+import { UnifiedErrorService } from './UnifiedErrorService.ts';
 
 export interface AppSettings {
   theme: 'light' | 'dark' | 'system';
@@ -55,7 +55,7 @@ export class UnifiedSettingsService extends BaseService {
 
   public updateSettings(updates: Partial<AppSettings>): void {
     try {
-      const previousSettings = { ...this.settings };
+
       this.settings = { ...this.settings, ...updates };
 
       this.saveSettings();
@@ -76,7 +76,7 @@ export class UnifiedSettingsService extends BaseService {
 
   public resetSettings(): void {
     try {
-      const previousSettings = { ...this.settings };
+
       this.settings = this.getDefaultSettings();
 
       this.saveSettings();
@@ -105,7 +105,7 @@ export class UnifiedSettingsService extends BaseService {
 
   private loadSettings(): AppSettings {
     try {
-      const savedSettings = localStorage.getItem('app_settings');
+
       if (savedSettings) {
         return JSON.parse(savedSettings);
       }
@@ -169,7 +169,7 @@ export class UnifiedSettingsService extends BaseService {
 
   public setSettingValue<T>(key: string, value: T): void {
     try {
-      const previousValue = this.getNestedValue(this.settings, key);
+
       this.setNestedValue(this.settings, key, value);
 
       this.saveSettings();
@@ -201,8 +201,8 @@ export class UnifiedSettingsService extends BaseService {
    * Safely set a nested value in an object using a dot-separated path.
    */
   private setNestedValue<T = unknown>(obj: Record<string, unknown>, path: string, value: T): void {
-    const keys = path.split('.');
-    const lastKey = keys.pop()!;
+
+
     let target: Record<string, unknown> = obj;
     for (const key of keys) {
       if (!(key in target) || typeof target[key] !== 'object' || target[key] === null) {

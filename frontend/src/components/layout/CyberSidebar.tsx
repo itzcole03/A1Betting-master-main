@@ -1,9 +1,8 @@
-import React from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import React from 'react.ts';
+import { useNavigate, useLocation } from 'react-router-dom.ts';
 
 const CyberSidebar: React.FC = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+
 
   const navigation = [
     {
@@ -71,7 +70,7 @@ const CyberSidebar: React.FC = () => {
     },
   ];
 
-  const categories: Record<string, string> = {
+  const categories: Record<string, string key={248182}> = {
     main: "Core Features",
     premium: "Premium",
     ai: "AI & ML",
@@ -80,7 +79,7 @@ const CyberSidebar: React.FC = () => {
   };
 
   const groupedNav = navigation.reduce(
-    (acc: Record<string, typeof navigation>, item) => {
+    (acc: Record<string, typeof navigation key={957534}>, item) => {
       if (!acc[item.category]) acc[item.category] = [];
       acc[item.category].push(item);
       return acc;
@@ -97,7 +96,7 @@ const CyberSidebar: React.FC = () => {
   };
 
   return (
-    <div
+    <div;
       className="w-80 h-screen border-r"
       style={{
         background: "rgba(255, 255, 255, 0.02)",
@@ -106,26 +105,26 @@ const CyberSidebar: React.FC = () => {
         boxShadow:
           "0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255,255,255,0.05)",
       }}
-    >
-      <div className="p-6">
-        <div className="mb-8">
-          <h2 className="text-lg font-bold text-electric-400 mb-2">
-            Navigation
+     key={404957}>
+      <div className="p-6" key={935494}>
+        <div className="mb-8" key={286587}>
+          <h2 className="text-lg font-bold text-electric-400 mb-2" key={611029}>
+            Navigation;
           </h2>
-          <div className="text-sm text-gray-400">36 Advanced Features</div>
+          <div className="text-sm text-gray-400" key={372957}>36 Advanced Features</div>
         </div>
 
-        <nav className="space-y-6">
+        <nav className="space-y-6" key={813655}>
           {Object.entries(groupedNav).map(([category, items]) => (
-            <div key={category}>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+            <div key={category} key={313056}>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3" key={803772}>
                 {categories[category]}
               </h3>
-              <ul className="space-y-1">
+              <ul className="space-y-1" key={662051}>
                 {items.map((item) => (
-                  <li key={item.key}>
-                    <button
-                      onClick={() => handleNavigation(item.path)}
+                  <li key={item.key} key={383386}>
+                    <button;
+                      onClick={() = key={190260}> handleNavigation(item.path)}
                       className={`nav-item w-full flex items-center px-4 py-3 text-left text-sm font-medium transition-all duration-300 ${
                         isActive(item.path)
                           ? "active text-electric-400"
@@ -151,14 +150,14 @@ const CyberSidebar: React.FC = () => {
                             }),
                       }}
                     >
-                      <i
+                      <i;
                         className={`fas ${item.icon} mr-3`}
                         style={{
                           width: "16px",
                           color: isActive(item.path) ? "#06ffa5" : "#9ca3af",
                         }}
-                      />
-                      <span>{item.name}</span>
+                      / key={262615}>
+                      <span key={595076}>{item.name}</span>
                     </button>
                   </li>
                 ))}

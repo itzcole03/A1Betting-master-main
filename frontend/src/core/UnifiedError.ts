@@ -1,8 +1,8 @@
-import * as Sentry from '@sentry/react';
+import * as Sentry from '@sentry/react.ts';
 
 
 /**
- * UnifiedError
+ * UnifiedError;
  *
  * Centralized error handling, logging, and reporting utilities.
  * Can extend base Error class for custom error types specific to the application.
@@ -26,7 +26,7 @@ export interface ErrorContext {
   [key: string]: any;
 }
 
-// Base custom error class
+// Base custom error class;
 export class AppError extends Error {
   public readonly context?: ErrorContext;
   public readonly originalError?: any;
@@ -40,7 +40,7 @@ export class AppError extends Error {
   }
 }
 
-// Specific error types
+// Specific error types;
 export class APIError extends Error {
   public readonly status?: number;
   public readonly response?: any;
@@ -68,7 +68,7 @@ export class SystemError extends AppError {
   }
 }
 
-// Centralized error handler function
+// Centralized error handler function;
 export const handleAppError = (error: any, customContext?: ErrorContext): void => {
   let appError: AppError;
 
@@ -80,13 +80,8 @@ export const handleAppError = (error: any, customContext?: ErrorContext): void =
     appError = new AppError('An unknown error occurred', customContext, error);
   }
 
-  // 1. Log to console
-  console.error(`[UnifiedError] ${appError.name}: ${appError.message}`, {
-    severity: ErrorSeverity.Error,
-    context: { ...appError.context, ...customContext },
-    stack: appError.stack,
-    originalError: appError.originalError,
-  });
+  // 1. Log to console;
+  // console statement removed
 
   // 2. Report to Sentry (or other error tracking service)
   Sentry.captureException(appError.originalError || appError, {

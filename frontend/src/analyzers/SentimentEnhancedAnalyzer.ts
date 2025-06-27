@@ -1,10 +1,10 @@
-import { SocialSentimentData } from '../adapters/SocialSentimentAdapter';
-import { SportsRadarData } from '../adapters/SportsRadarAdapter';
-import { TheOddsData } from '../adapters/TheOddsAdapter';
-import { EventBus } from '../unified/EventBus';
-import { PerformanceMonitor } from '../unified/PerformanceMonitor';
-import { Analyzer } from '../utils/Analyzer';
-import { ProjectionAnalysis } from './ProjectionAnalyzer';
+import { SocialSentimentData } from '@/adapters/SocialSentimentAdapter.ts';
+import { SportsRadarData } from '@/adapters/SportsRadarAdapter.ts';
+import { TheOddsData } from '@/adapters/TheOddsAdapter.ts';
+import { EventBus } from '@/unified/EventBus.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
+import { Analyzer } from '@/utils/Analyzer.ts';
+import { ProjectionAnalysis } from './ProjectionAnalyzer.ts';
 
 export interface EnhancedAnalysis extends ProjectionAnalysis {
   confidence: number;
@@ -68,19 +68,17 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
   }
 
   public async analyze(input: AnalysisInput): Promise<EnhancedAnalysis[]> {
-    const traceId = this.performanceMonitor.startTrace('enhanced-analysis');
 
     try {
       const enhancedAnalyses = input.projectionAnalysis.map(projection => {
-        const sentiment = this.findPlayerSentiment(projection.player, input.sentimentData);
-        const injuries = this.findPlayerInjuries(projection.player, input.sportsRadarData);
-        const odds = this.findPlayerOdds(projection.player, input.oddsData);
+
+
 
         const enhancedConfidence = this.calculateEnhancedConfidence(
           projection.confidence,
           sentiment,
           odds,
-          injuries
+          injuries;
         );
 
         return {
@@ -128,7 +126,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
   }
 
   public async confidence(input: AnalysisInput): Promise<number> {
-    const analyses = await this.analyze(input);
+
     return analyses.reduce((acc, analysis) => acc + analysis.confidence, 0) / analyses.length;
   }
 
@@ -141,7 +139,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
 
   private findPlayerInjuries(
     player: string,
-    sportsData: SportsRadarData
+    sportsData: SportsRadarData;
   ): Array<{ player: string; status: string; type: string }> {
     const injuries: Array<{ player: string; status: string; type: string }> = [];
 
@@ -170,7 +168,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
       under: number;
     };
   } | null {
-    // Simplified implementation - return null since odds structure doesn't match
+    // Simplified implementation - return null since odds structure doesn't match;
     return null;
   }
   private calculateEnhancedConfidence(
@@ -179,33 +177,33 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
     odds?: unknown,
     injuries: Array<{ player: string; status: string; type: string }> = []
   ): number {
-    let confidence = baseConfidence;
+    const confidence = baseConfidence;
 
-    // Apply sentiment adjustment
+    // Apply sentiment adjustment;
     if (sentiment) {
       confidence += this.sentimentWeight * sentiment.sentiment.score;
     }
 
-    // Apply odds adjustment
+    // Apply odds adjustment;
     if (odds) {
-      // Implement odds-based confidence adjustment
+      // Implement odds-based confidence adjustment;
     }
 
-    // Apply injury adjustment
+    // Apply injury adjustment;
     if (injuries.length > 0) {
       const injuryImpact = injuries.reduce(
         (acc, injury) => acc + this.calculateInjuryImpact(injury),
-        0
+        0;
       );
       confidence -= this.injuryWeight * injuryImpact;
     }
 
-    // Ensure confidence stays within 0-1 range
+    // Ensure confidence stays within 0-1 range;
     return Math.max(0, Math.min(1, confidence));
   }
 
   private calculateInjuryImpact(injury: { status: string; type: string }): number {
-    // Implement injury impact calculation
+    // Implement injury impact calculation;
     switch (injury.status.toLowerCase()) {
       case 'out':
         return 1;

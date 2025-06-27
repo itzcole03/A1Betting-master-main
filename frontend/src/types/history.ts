@@ -1,11 +1,11 @@
-// Types for historical prediction and bet performance tracking
+// Types for historical prediction and bet performance tracking;
 
-import type { ConfidenceBand, WinProbability } from './confidence';
+import type { ConfidenceBand, WinProbability } from './confidence.ts';
 
 export interface UserBetHistoryEntry {
   betId: string;
   eventId: string;
-  date: string; // ISO date
+  date: string; // ISO date;
   betType: string;
   stake: number;
   odds: number;

@@ -71,7 +71,7 @@ export const RealTimeUpdates = ({ sport }) => {
                 }));
             }
             else if (data.type === 'model:metrics') {
-                console.log('Model metrics:', data.payload);
+                // console statement removed
             }
         },
     });
@@ -84,7 +84,7 @@ export const RealTimeUpdates = ({ sport }) => {
         try {
             setLoading(true);
             setError(null);
-            const sportUpdates = await realTimeUpdates.getSportUpdates(sport);
+
             setUpdates(prev => ({
                 ...prev,
                 ...sportUpdates,
@@ -104,7 +104,7 @@ export const RealTimeUpdates = ({ sport }) => {
         setValue(newValue);
     };
     const formatTimestamp = (timestamp) => {
-        const date = new Date(timestamp);
+
         return date.toLocaleTimeString();
     };
     const handleRefresh = () => {
@@ -121,9 +121,9 @@ export const RealTimeUpdates = ({ sport }) => {
                                                                     ? 'error'
                                                                     : news.impact === 'medium'
                                                                         ? 'warning'
-                                                                        : 'info' }) }), _jsx(ListItemText, { primary: news.title, secondary: _jsxs(_Fragment, { children: [_jsx(Typography, { color: "textPrimary", component: "span", variant: "body2", children: news.type.toUpperCase() }), ` - ${news.content}`, _jsx(Typography, { color: "textSecondary", component: "span", variant: "body2", children: ` - ${formatTimestamp(news.timestamp)}` })] }) })] }), index < updates.news.length - 1 && _jsx(Divider, {})] }, news.id))) }) }), _jsx(TabPanel, { index: 4, value: value, children: _jsx(List, { children: updates.predictions.map((prediction, index) => (_jsxs(React.Fragment, { children: [_jsxs(ListItem, { children: [_jsx(ListItemIcon, { children: _jsx(Tooltip, { title: `Confidence: ${(prediction.confidence * 100).toFixed(1)}%`, children: _jsx(Box, { children: prediction.confidence > 0.8 ? (_jsx(TrendingUpIcon, { color: "success" })) : prediction.confidence > 0.6 ? (_jsx(InfoIcon, { color: "info" })) : (_jsx(WarningIcon, { color: "warning" })) }) }) }), _jsx(ListItemText, { primary: `${prediction.event} - ${prediction.market}`, secondary: _jsxs(_Fragment, { children: [_jsxs(Typography, { color: "textPrimary", component: "span", variant: "body2", children: ["Prediction: ", prediction.prediction] }), _jsx("br", {}), _jsxs(Typography, { color: "textSecondary", component: "span", variant: "body2", children: ["Updated ", formatTimestamp(prediction.timestamp)] })] }) }), _jsx(Box, { display: "flex", gap: 1, children: _jsx(Chip, { color: prediction.confidence > 0.8
+                                                                        : 'info' }) }), _jsx(ListItemText, { primary: news.title, secondary: _jsxs(_Fragment, { children: [_jsx(Typography, { color: "textPrimary", component: "span", variant: "body2", children: news.type.toUpperCase() }), ` - ${news.content}`, _jsx(Typography, { color: "textSecondary", component: "span", variant: "body2", children: ` - ${formatTimestamp(news.timestamp)}` })] }) })] }), index < updates.news.length - 1 && _jsx(Divider, {})] }, news.id))) }) }), _jsx(TabPanel, { index: 4, value: value, children: _jsx(List, { children: updates.predictions.map((prediction, index) => (_jsxs(React.Fragment, { children: [_jsxs(ListItem, { children: [_jsx(ListItemIcon, { children: _jsx(Tooltip, { title: `Confidence: ${(prediction.confidence * 100).toFixed(1)}%`, children: _jsx(Box, { children: prediction.confidence > 0.8 ? (_jsx(TrendingUpIcon, { color: "success" })) : prediction.confidence > 0.6 ? (_jsx(InfoIcon, { color: "info" })) : (_jsx(WarningIcon, { color: "warning" })) }) }) }), _jsx(ListItemText, { primary: `${prediction.event} - ${prediction.market}`, secondary: _jsxs(_Fragment, { children: [_jsxs(Typography, { color: "textPrimary", component: "span", variant: "body2", children: ["Prediction: ", prediction.prediction] }), _jsx("br", {}), _jsxs(Typography, { color: "textSecondary", component: "span", variant: "body2", children: ["Updated ", formatTimestamp(prediction.timestamp)] })] }) }), _jsx(Box, { display: "flex", gap: 1, children: _jsx(Chip, { color: prediction.confidence > 0.8;
                                                                     ? 'success'
-                                                                    : prediction.confidence > 0.6
+                                                                    : prediction.confidence > 0.6;
                                                                         ? 'info'
                                                                         : 'warning', label: `Confidence: ${(prediction.confidence * 100).toFixed(1)}%`, size: "small" }) })] }), index < updates.predictions.length - 1 && _jsx(Divider, {})] }, prediction.id))) }) })] }))] })] }) }));
 };

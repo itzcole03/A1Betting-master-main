@@ -1,13 +1,13 @@
-import { EventBus } from './EventBus';
-import { PerformanceMonitor } from './PerformanceMonitor';
-import { UnifiedConfigManager } from './UnifiedConfigManager';
-import { unifiedDataEngine } from './UnifiedDataEngine';
-import { unifiedMonitor } from './UnifiedMonitor';
-import { UnifiedPredictionEngine, PredictionFactor } from './UnifiedPredictionEngine';
+import { EventBus } from './EventBus.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
+import { UnifiedConfigManager } from './UnifiedConfigManager.ts';
+import { unifiedDataEngine } from './UnifiedDataEngine.ts';
+import { unifiedMonitor } from './UnifiedMonitor.ts';
+import { UnifiedPredictionEngine, PredictionFactor } from './UnifiedPredictionEngine.ts';
 import {
   UnifiedPredictionService,
   PredictionResult,
-} from '../services/unified/UnifiedPredictionService';
+} from '@/services/unified/UnifiedPredictionService.ts';
 import {
   StrategyRecommendation,
   AnalysisResult,
@@ -16,7 +16,7 @@ import {
   TimestampedData,
   BettingOpportunity,
   BetRecord,
-} from '../types/core';
+} from '@/types/core.ts';
 
 interface PredictionContext {
   playerId: string;
@@ -191,12 +191,10 @@ export class UnifiedStrategyEngine {
   public async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
-    const traceId = this.performanceMonitor.startTrace('strategy-engine-init');
     try {
-      // Load configuration
-      const config = await this.configManager.getConfig();
+      // Load configuration;
 
-      // Initialize strategy configuration
+      // Initialize strategy configuration;
       this.strategyConfig = {
         ...this.strategyConfig,
         ...config.strategy,
@@ -216,16 +214,16 @@ export class UnifiedStrategyEngine {
 
     this.eventBus.on('data:updated', async ({ data }) => {
       try {
-        const opportunities = await this.analyzeOpportunities(data);
+
         this.eventBus.emit('strategy:opportunities', { opportunities });
       } catch (error) {
-        console.error('Error analyzing opportunities:', error);
+        // console statement removed
       }
     });
   }
 
   private async handleMarketUpdate(update: MarketUpdate): Promise<void> {
-    const traceId = this.performanceMonitor.startTrace('strategy-market-update');
+
     try {
       const context: StrategyContext = {
         playerId: update.data.playerId,
@@ -239,7 +237,6 @@ export class UnifiedStrategyEngine {
         predictionState: await this.getPredictionState(update.data.playerId, update.data.metric),
       };
 
-      const recommendation = await this.generateRecommendation(context);
       this.eventBus.emit('strategy:recommendation', recommendation);
 
       this.performanceMonitor.endTrace(traceId);
@@ -250,7 +247,7 @@ export class UnifiedStrategyEngine {
   }
 
   private async handlePredictionUpdate(update: BettingOpportunity): Promise<void> {
-    const traceId = this.performanceMonitor.startTrace('strategy-prediction-update');
+
     try {
       const context: StrategyContext = {
         playerId: update.propId.split(':')[0],
@@ -264,7 +261,6 @@ export class UnifiedStrategyEngine {
         },
       };
 
-      const recommendation = await this.generateRecommendation(context);
       this.eventBus.emit('strategy:recommendation', recommendation);
 
       this.performanceMonitor.endTrace(traceId);
@@ -275,15 +271,14 @@ export class UnifiedStrategyEngine {
   }
 
   private async generateRecommendation(context: StrategyContext): Promise<StrategyRecommendation> {
-    const traceId = this.performanceMonitor.startTrace('generate-recommendation');
 
     try {
-      // Execute all registered strategies
+      // Execute all registered strategies;
       const recommendations = await Promise.all(
         Array.from(this.strategies.entries()).map(async ([id, strategy]) => {
-          const strategyTraceId = this.performanceMonitor.startTrace(`strategy-${id}`);
+
           try {
-            const result = await strategy(context);
+
             this.updateMetrics(id, result);
             this.performanceMonitor.endTrace(strategyTraceId);
             return result;
@@ -294,11 +289,10 @@ export class UnifiedStrategyEngine {
         })
       );
 
-      // Filter out failed strategies and combine recommendations
+      // Filter out failed strategies and combine recommendations;
       const validRecommendations = recommendations.filter(
-        r => r !== null
+        r => r !== null;
       ) as StrategyRecommendation[];
-      const combinedRecommendation = this.combineRecommendations(validRecommendations);
 
       this.performanceMonitor.endTrace(traceId);
       return combinedRecommendation;
@@ -310,7 +304,7 @@ export class UnifiedStrategyEngine {
 
   private async getPredictionState(
     playerId: string,
-    metric: string
+    metric: string;
   ): Promise<StrategyContext['predictionState']> {
     const prediction = await this.predictionEngine.generatePrediction({
       playerId,
@@ -326,7 +320,7 @@ export class UnifiedStrategyEngine {
   }
 
   private async getMarketState(propId: string): Promise<StrategyContext['marketState']> {
-    const marketData = await this.dataEngine.getMarketData(propId);
+
     return {
       line: marketData.line,
       volume: marketData.volume,
@@ -361,19 +355,17 @@ export class UnifiedStrategyEngine {
       throw new Error('No valid recommendations to combine');
     }
 
-    // Weight recommendations by strategy performance and confidence
+    // Weight recommendations by strategy performance and confidence;
     const weightedRecommendations = recommendations.map(rec => {
-      const metrics = this.metrics.get(rec.strategyId);
-      const successRate = metrics
-        ? metrics.successfulRecommendations / metrics.totalRecommendations
+
+      const successRate = metrics;
+        ? metrics.successfulRecommendations / metrics.totalRecommendations;
         : 0.5;
       return {
         ...rec,
         weight: rec.confidence * successRate,
       };
     });
-
-    const totalWeight = weightedRecommendations.reduce((sum, rec) => sum + rec.weight, 0);
 
     return {
       strategyId: 'combined',
@@ -388,7 +380,7 @@ export class UnifiedStrategyEngine {
         weightedRecommendations.map(r => r.riskAssessment)
       ),
       timestamp: Date.now(),
-      success: false, // Will be updated when outcome is known
+      success: false, // Will be updated when outcome is known;
     };
   }
 
@@ -407,8 +399,8 @@ export class UnifiedStrategyEngine {
   }
 
   private combineRiskAssessments(assessments: RiskAssessment[]): RiskAssessment {
-    const riskFactors = new Set<string>();
-    let totalRiskScore = 0;
+
+    const totalRiskScore = 0;
 
     assessments.forEach(assessment => {
       assessment.factors.forEach(factor => riskFactors.add(factor));
@@ -423,9 +415,9 @@ export class UnifiedStrategyEngine {
   }
 
   private initializeStrategies(): void {
-    // Register default strategies
+    // Register default strategies;
     this.registerStrategy('momentum', async (context: StrategyContext) => {
-      const momentum = this.calculateMomentum(context);
+
       return {
         strategyId: 'momentum',
         type: momentum > 0 ? 'OVER' : 'UNDER',
@@ -497,13 +489,12 @@ export class UnifiedStrategyEngine {
       ),
     };
 
-    const recommendation = await this.generateRecommendation(context);
     return recommendation.riskAssessment;
   }
 
   public async updatePerformance(bet: BetRecord): Promise<void> {
-    const key = bet.id.split('_')[0];
-    let performance = this.performance.get(key);
+
+    const performance = this.performance.get(key);
 
     if (!performance) {
       performance = {
@@ -517,7 +508,7 @@ export class UnifiedStrategyEngine {
       this.performance.set(key, performance);
     }
 
-    // Update performance metrics
+    // Update performance metrics;
     performance.totalBets++;
     if (bet.result === 'WIN') {
       performance.wins++;
@@ -530,7 +521,7 @@ export class UnifiedStrategyEngine {
     performance.roi = performance.profitLoss / (performance.totalBets * bet.stake);
     performance.lastUpdate = Date.now();
 
-    // Emit performance update event
+    // Emit performance update event;
     this.eventBus.emit('metric:recorded', {
       name: 'strategy_performance',
       value: performance.roi,
@@ -547,35 +538,33 @@ export class UnifiedStrategyEngine {
   public async analyzeOpportunities(data: DataPoint[]): Promise<BettingOpportunity[]> {
     const opportunities: BettingOpportunity[] = [];
 
-    // Group props by game
-    const propsByGame = this.groupPropsByGame(data);
+    // Group props by game;
 
-    // Analyze single props
+    // Analyze single props;
     for (const prop of data) {
       if (prop.type === 'prop') {
-        const opportunity = await this.analyzeSingleProp(prop);
+
         if (opportunity) {
           opportunities.push(opportunity);
         }
       }
     }
 
-    // Analyze potential parlays
+    // Analyze potential parlays;
     for (const [, gameProps] of propsByGame) {
-      const parlayOpportunities = await this.analyzeParlayOpportunities(gameProps);
+
       opportunities.push(...parlayOpportunities);
     }
 
-    // Sort by expected value
+    // Sort by expected value;
     return opportunities.sort((a, b) => b.expectedValue - a.expectedValue);
   }
 
   private groupPropsByGame(data: DataPoint[]): Map<string, DataPoint[]> {
-    const propsByGame = new Map<string, DataPoint[]>();
 
     for (const point of data) {
       if (point.type === 'prop' && point.metadata?.gameId) {
-        const gameId = point.metadata.gameId;
+
         if (!propsByGame.has(gameId)) {
           propsByGame.set(gameId, []);
         }
@@ -590,16 +579,14 @@ export class UnifiedStrategyEngine {
     const prediction = await this.predictionService.analyzeProp(
       prop.value,
       prop.metadata?.playerStats,
-      prop.metadata?.gameDetails
+      prop.metadata?.gameDetails;
     );
 
     if (prediction.confidence < this.strategyConfig.minConfidence) {
       return null;
     }
 
-    const risk = this.calculateRiskLevel(prediction.confidence);
-    const stake = this.calculateOptimalStake(prediction.confidence, risk);
-    const expectedValue = this.calculateExpectedValue(prediction.confidence, prop.value.odds);
+
 
     return {
       id: `single_${prop.id}`,
@@ -621,14 +608,13 @@ export class UnifiedStrategyEngine {
 
   private async analyzeParlayOpportunities(props: DataPoint[]): Promise<BettingOpportunity[]> {
     const opportunities: BettingOpportunity[] = [];
-    const maxLegs = 4; // Maximum number of legs in a parlay
+    const maxLegs = 4; // Maximum number of legs in a parlay;
 
-    // Generate combinations of 2-4 legs
-    for (let legs = 2; legs <= maxLegs; legs++) {
-      const combinations = this.generateCombinations(props, legs);
+    // Generate combinations of 2-4 legs;
+    for (const legs = 2; legs <= maxLegs; legs++) {
 
       for (const combo of combinations) {
-        const opportunity = await this.analyzeParlay(combo);
+
         if (opportunity) {
           opportunities.push(opportunity);
         }
@@ -644,24 +630,20 @@ export class UnifiedStrategyEngine {
         this.predictionService.analyzeProp(
           prop.value,
           prop.metadata?.playerStats,
-          prop.metadata?.gameDetails
+          prop.metadata?.gameDetails;
         )
       )
     );
 
-    // Calculate combined confidence
-    const combinedConfidence = predictions.reduce((acc, pred) => acc * pred.confidence, 1);
+    // Calculate combined confidence;
 
     if (combinedConfidence < this.strategyConfig.minConfidence) {
       return null;
     }
 
-    const risk = this.calculateRiskLevel(combinedConfidence);
-    const stake = this.calculateOptimalStake(combinedConfidence, risk);
 
-    // Calculate combined odds and expected value
-    const combinedOdds = props.reduce((acc, prop) => acc * prop.value.odds, 1);
-    const expectedValue = this.calculateExpectedValue(combinedConfidence, combinedOdds);
+    // Calculate combined odds and expected value;
+
 
     return {
       id: `parlay_${props.map(p => p.id).join('_')}`,
@@ -686,8 +668,8 @@ export class UnifiedStrategyEngine {
   }
 
   private calculateOptimalStake(confidence: number, risk: 'low' | 'medium' | 'high'): number {
-    // Kelly Criterion calculation with risk adjustment
-    const riskMultiplier = risk === 'low' ? 1 : risk === 'medium' ? 0.75 : 0.5;
+    // Kelly Criterion calculation with risk adjustment;
+
     const kellyStake =
       (confidence - (1 - confidence)) * this.strategyConfig.kellyMultiplier * riskMultiplier;
 
@@ -695,7 +677,7 @@ export class UnifiedStrategyEngine {
   }
 
   private calculateMaxStake(risk: 'low' | 'medium' | 'high'): number {
-    const baseMax = this.strategyConfig.maxRiskPerBet;
+
     switch (risk) {
       case 'low':
         return baseMax;
@@ -714,10 +696,7 @@ export class UnifiedStrategyEngine {
     if (size === 0) return [[]];
     if (items.length === 0) return [];
 
-    const first = items[0];
-    const rest = items.slice(1);
 
-    const combosWithoutFirst = this.generateCombinations(rest, size);
     const combosWithFirst = this.generateCombinations(rest, size - 1).map(combo => [
       first,
       ...combo,
@@ -727,12 +706,7 @@ export class UnifiedStrategyEngine {
   }
 
   public assessRisk(currentBets: BettingOpportunity[]): RiskAssessment {
-    const currentExposure = currentBets.reduce((total, bet) => total + bet.recommendedStake, 0);
 
-    const maxAllowedStake = Math.max(0, this.strategyConfig.maxExposure - currentExposure);
-
-    const riskLevel = this.calculatePortfolioRisk(currentBets);
-    const factors = this.identifyRiskFactors(currentBets, currentExposure);
 
     return {
       currentExposure,
@@ -743,8 +717,7 @@ export class UnifiedStrategyEngine {
   }
 
   private calculatePortfolioRisk(bets: BettingOpportunity[]): 'low' | 'medium' | 'high' {
-    const totalExposure = bets.reduce((sum, bet) => sum + bet.recommendedStake, 0);
-    const exposureRatio = totalExposure / this.strategyConfig.maxExposure;
+
 
     if (exposureRatio >= 0.8) return 'high';
     if (exposureRatio >= 0.5) return 'medium';
@@ -754,27 +727,26 @@ export class UnifiedStrategyEngine {
   private identifyRiskFactors(bets: BettingOpportunity[], exposure: number): string[] {
     const factors: string[] = [];
 
-    // Check exposure
+    // Check exposure;
     if (exposure > this.strategyConfig.maxExposure * 0.8) {
       factors.push('High total exposure');
     }
 
-    // Check concentration
-    const gameConcentration = new Map<string, number>();
+    // Check concentration;
+
     for (const bet of bets) {
       for (const prop of bet.props) {
-        const gameId = prop.id.split('_')[0];
+
         gameConcentration.set(gameId, (gameConcentration.get(gameId) || 0) + bet.recommendedStake);
       }
     }
 
-    const maxGameExposure = Math.max(...Array.from(gameConcentration.values()));
     if (maxGameExposure > this.strategyConfig.maxExposure * 0.4) {
       factors.push('High game concentration');
     }
 
-    // Check correlation
-    const correlatedBets = this.findCorrelatedBets(bets);
+    // Check correlation;
+
     if (correlatedBets.length > 0) {
       factors.push('Correlated bets detected');
     }
@@ -785,8 +757,8 @@ export class UnifiedStrategyEngine {
   private findCorrelatedBets(bets: BettingOpportunity[]): [string, string][] {
     const correlated: [string, string][] = [];
 
-    for (let i = 0; i < bets.length; i++) {
-      for (let j = i + 1; j < bets.length; j++) {
+    for (const i = 0; i < bets.length; i++) {
+      for (const j = i + 1; j < bets.length; j++) {
         if (this.areCorrelated(bets[i], bets[j])) {
           correlated.push([bets[i].id, bets[j].id]);
         }
@@ -797,16 +769,13 @@ export class UnifiedStrategyEngine {
   }
 
   private areCorrelated(bet1: BettingOpportunity, bet2: BettingOpportunity): boolean {
-    // Check if bets are from the same game
-    const game1 = new Set(bet1.props.map(p => p.id.split('_')[0]));
-    const game2 = new Set(bet2.props.map(p => p.id.split('_')[0]));
+    // Check if bets are from the same game;
 
-    const sameGame = Array.from(game1).some(g => game2.has(g));
+
     if (!sameGame) return false;
 
-    // Check if bets involve the same player
-    const players1 = new Set(bet1.props.map(p => p.id.split('_')[1]));
-    const players2 = new Set(bet2.props.map(p => p.id.split('_')[1]));
+    // Check if bets involve the same player;
+
 
     return Array.from(players1).some(p => players2.has(p));
   }
@@ -814,7 +783,7 @@ export class UnifiedStrategyEngine {
 
 function isMarketUpdate(payload: unknown): payload is MarketUpdate {
   if (!payload || typeof payload !== 'object') return false;
-  const update = payload as MarketUpdate;
+
   return (
     typeof update.data.playerId === 'string' &&
     typeof update.data.metric === 'string' &&
@@ -825,7 +794,7 @@ function isMarketUpdate(payload: unknown): payload is MarketUpdate {
 
 function isStrategyRecommendation(payload: unknown): payload is StrategyRecommendation {
   if (!payload || typeof payload !== 'object') return false;
-  const rec = payload as StrategyRecommendation;
+
   return (
     typeof rec.id === 'string' &&
     typeof rec.propId === 'string' &&

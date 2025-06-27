@@ -1,7 +1,7 @@
-import { adapterManager } from '../adapters';
-import { SportsRadarAdapter } from '../adapters';
-import { measurePerformance, handleApiError, transformData } from '../utils';
-import { LiveScore, GameDetails, PlayerStats } from '@/types';
+import { adapterManager } from '@/adapters.ts';
+import { SportsRadarAdapter } from '@/adapters.ts';
+import { measurePerformance, handleApiError, transformData } from '@/utils.ts';
+import { LiveScore, GameDetails, PlayerStats } from '@/types.ts';
 
 class SportsRadarService {
   private adapter: SportsRadarAdapter;
@@ -13,7 +13,7 @@ class SportsRadarService {
   async fetchLiveScores(): Promise<LiveScore[]> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchLiveScores();
+
         return transformData(data, this.transformLiveScores, 'sportsradar.fetchLiveScores');
       } catch (error) {
         handleApiError(error, 'sportsradar.fetchLiveScores');
@@ -24,7 +24,7 @@ class SportsRadarService {
   async fetchGameDetails(gameId: string): Promise<GameDetails> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchGameDetails(gameId);
+
         return transformData(data, this.transformGameDetails, 'sportsradar.fetchGameDetails');
       } catch (error) {
         handleApiError(error, 'sportsradar.fetchGameDetails');
@@ -35,7 +35,7 @@ class SportsRadarService {
   async fetchPlayerStats(playerId: string): Promise<PlayerStats> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchPlayerStats(playerId);
+
         return transformData(data, this.transformPlayerStats, 'sportsradar.fetchPlayerStats');
       } catch (error) {
         handleApiError(error, 'sportsradar.fetchPlayerStats');
@@ -130,5 +130,5 @@ class SportsRadarService {
   }
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const sportsRadarService = new SportsRadarService();

@@ -1,5 +1,5 @@
 /**
- * UnifiedError
+ * UnifiedError;
  *
  * Centralized error handling, logging, and reporting utilities.
  * Can extend base Error class for custom error types specific to the application.

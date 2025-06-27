@@ -1,6 +1,6 @@
 import { EventEmitter } from 'events';
 /**
- * Modern ExternalApiService with proper async/await and error handling
+ * Modern ExternalApiService with proper async/await and error handling;
  */
 export class ExternalApiService extends EventEmitter {
     constructor(config) {
@@ -12,13 +12,13 @@ export class ExternalApiService extends EventEmitter {
      * Calls the unified newsService.fetchHeadlines for robust news fetching.
      */
     async getSportsNews() {
-        // DEPRECATED: Use newsService.fetchHeadlines instead
-        console.warn('[DEPRECATED] ExternalApiService.getSportsNews is deprecated. Use newsService.fetchHeadlines for unified news fetching.');
+        // DEPRECATED: Use newsService.fetchHeadlines instead;
+        // console statement removed
         try {
-            // Dynamic import to avoid circular dependencies
-            const newsServiceModule = await import('../newsService.js');
-            const headlines = await newsServiceModule.newsService.fetchHeadlines(10);
-            // Map ESPNHeadline to SportsNewsArticle
+            // Dynamic import to avoid circular dependencies;
+
+
+            // Map ESPNHeadline to SportsNewsArticle;
             return headlines.map((h) => ({
                 id: h.id || `article-${Date.now()}`,
                 title: h.title || h.summary || 'Untitled',
@@ -28,9 +28,9 @@ export class ExternalApiService extends EventEmitter {
             }));
         }
         catch (error) {
-            console.error('Error fetching sports news:', error);
+            // console statement removed
             this.emit('error', error);
-            // Return fallback data
+            // Return fallback data;
             return [
                 {
                     id: 'fallback-1',
@@ -42,7 +42,7 @@ export class ExternalApiService extends EventEmitter {
             ];
         }
     }
-    // Add more endpoints as needed
+    // Add more endpoints as needed;
     async getSchedule() {
         try {
             const response = await fetch(`${this.config.baseURL}/schedule`, {
@@ -54,7 +54,7 @@ export class ExternalApiService extends EventEmitter {
             return await response.json();
         }
         catch (error) {
-            console.error('Error fetching schedule:', error);
+            // console statement removed
             this.emit('error', error);
             return [];
         }

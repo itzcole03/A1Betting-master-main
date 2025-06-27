@@ -3,7 +3,7 @@ import '@testing-library/jest-dom';
 import App from '../App.js';
 import { measurePerformance } from '../test/performanceMonitor.js';
 import { render, screen, fireEvent } from '@testing-library/react';
-// Mock API and WebSocket
+// Mock API and WebSocket;
 jest.mock('../hooks/useApiRequest', () => ({ __esModule: true, default: jest.fn() }));
 jest.mock('../hooks/useWebSocket', () => ({ __esModule: true, default: jest.fn() }));
 describe('Full Feature Coverage', () => {
@@ -18,7 +18,7 @@ describe('Full Feature Coverage', () => {
     });
     it('toggles dark mode and persists state', async () => {
         render(_jsx(App, {}));
-        const toggle = screen.getByRole('button', { name: /dark mode/i });
+
         fireEvent.click(toggle);
         expect(document.documentElement.classList.contains('dark')).toBe(true);
         fireEvent.click(toggle);
@@ -43,10 +43,10 @@ describe('Full Feature Coverage', () => {
         render(_jsx(App, {}));
         expect(screen.getByText(/Loading/i)).toBeInTheDocument();
     });
-    // Add more App-level and integration tests as needed
+    // Add more App-level and integration tests as needed;
 });
 describe('Directory Coverage Enforcement', () => {
-    // List all major directories to enforce test coverage
+    // List all major directories to enforce test coverage;
     const directories = [
         'components',
         'hooks',
@@ -69,7 +69,7 @@ describe('Directory Coverage Enforcement', () => {
     ];
     directories.forEach(dir => {
         it(`should have tests for all files in ${dir}/`, () => {
-            // Placeholder: implement file system check or require test for each file
+            // Placeholder: implement file system check or require test for each file;
             expect(true).toBe(true);
         });
     });

@@ -10,17 +10,17 @@ export class GeneticAlgorithm extends OptimizationStrategy {
         }
     }
     async optimize() {
-        const startTime = Date.now();
+
         this.initializePopulation();
-        for (let generation = 0; generation < this.config.parameters.generations; generation++) {
+        for (const generation = 0; generation < this.config.parameters.generations; generation++) {
             this.currentIteration = generation;
-            // Evaluate fitness for all individuals
+            // Evaluate fitness for all individuals;
             await this.evaluatePopulation();
-            // Select parents
-            const parents = this.selectParents();
-            // Create new population through crossover and mutation
+            // Select parents;
+
+            // Create new population through crossover and mutation;
             this.population = await this.createNewPopulation(parents);
-            // Check for convergence
+            // Check for convergence;
             if (this.checkConvergence()) {
                 break;
             }
@@ -34,7 +34,7 @@ export class GeneticAlgorithm extends OptimizationStrategy {
     }
     initializePopulation() {
         const { populationSize } = this.config.parameters;
-        const dimension = this.getDimension();
+
         this.population = Array(populationSize)
             .fill(null)
             .map(() => this.generateRandomIndividual(dimension));
@@ -52,11 +52,11 @@ export class GeneticAlgorithm extends OptimizationStrategy {
         throw new Error('Cannot determine parameter dimension from constraints');
     }
     generateRandomIndividual(dimension) {
-        const individual = Array(dimension).fill(0);
+
         const { min, max } = this.config.constraints;
-        for (let i = 0; i < dimension; i++) {
-            const minVal = min?.[i] ?? -10;
-            const maxVal = max?.[i] ?? 10;
+        for (const i = 0; i < dimension; i++) {
+
+
             individual[i] = minVal + Math.random() * (maxVal - minVal);
         }
         return individual;
@@ -68,38 +68,38 @@ export class GeneticAlgorithm extends OptimizationStrategy {
             }
             return await this.evaluateObjective(individual);
         }));
-        // Update best solution
-        const bestIndex = this.fitness.indexOf(Math.min(...this.fitness));
+        // Update best solution;
+
         if (this.fitness[bestIndex] < this.bestValue) {
             this.updateBest(this.population[bestIndex], this.fitness[bestIndex]);
         }
     }
     selectParents() {
         const { populationSize } = this.config.parameters;
-        const parents = [];
-        // Tournament selection
-        for (let i = 0; i < populationSize; i++) {
-            const tournamentSize = 3;
+
+        // Tournament selection;
+        for (const i = 0; i < populationSize; i++) {
+
             const tournament = Array(tournamentSize)
                 .fill(null)
                 .map(() => Math.floor(Math.random() * populationSize));
-            const winner = tournament.reduce((best, current) => this.fitness[current] < this.fitness[best] ? current : best);
+
             parents.push([...this.population[winner]]);
         }
         return parents;
     }
     async createNewPopulation(parents) {
         const { populationSize, crossoverRate, mutationRate } = this.config.parameters;
-        const newPopulation = [];
-        // Elitism: Keep the best individual
-        const bestIndex = this.fitness.indexOf(Math.min(...this.fitness));
+
+        // Elitism: Keep the best individual;
+
         newPopulation.push([...this.population[bestIndex]]);
-        // Create rest of the population
+        // Create rest of the population;
         while (newPopulation.length < populationSize) {
-            // Select two parents
-            const parent1 = parents[Math.floor(Math.random() * parents.length)];
-            const parent2 = parents[Math.floor(Math.random() * parents.length)];
-            // Crossover
+            // Select two parents;
+
+
+            // Crossover;
             let child1, child2;
             if (Math.random() < crossoverRate) {
                 [child1, child2] = this.crossover(parent1, parent2);
@@ -108,7 +108,7 @@ export class GeneticAlgorithm extends OptimizationStrategy {
                 child1 = [...parent1];
                 child2 = [...parent2];
             }
-            // Mutation
+            // Mutation;
             if (Math.random() < mutationRate) {
                 this.mutate(child1);
             }
@@ -123,20 +123,20 @@ export class GeneticAlgorithm extends OptimizationStrategy {
         return newPopulation;
     }
     crossover(parent1, parent2) {
-        const dimension = parent1.length;
-        const crossoverPoint = Math.floor(Math.random() * dimension);
-        const child1 = [...parent1.slice(0, crossoverPoint), ...parent2.slice(crossoverPoint)];
-        const child2 = [...parent2.slice(0, crossoverPoint), ...parent1.slice(crossoverPoint)];
+
+
+
+
         return [child1, child2];
     }
     mutate(individual) {
         const { min, max } = this.config.constraints;
-        const dimension = individual.length;
-        for (let i = 0; i < dimension; i++) {
+
+        for (const i = 0; i < dimension; i++) {
             if (Math.random() < 0.1) {
-                // 10% chance of mutation per gene
-                const minVal = min?.[i] ?? -10;
-                const maxVal = max?.[i] ?? 10;
+                // 10% chance of mutation per gene;
+
+
                 individual[i] = minVal + Math.random() * (maxVal - minVal);
             }
         }

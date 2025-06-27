@@ -17,7 +17,7 @@ export class RiskManagerService {
         return RiskManagerService.instance;
     }
     initializeConfig() {
-        const config = this.configManager.getConfig();
+
         return {
             maxExposure: 10000,
             maxExposurePerBet: 1000,
@@ -31,12 +31,12 @@ export class RiskManagerService {
             confidenceThresholds: {
                 low: 0.3,
                 medium: 0.6,
-                high: 0.8
+                high: 0.8;
             },
             volatilityThresholds: {
                 low: 0.1,
                 medium: 0.3,
-                high: 0.5
+                high: 0.5;
             }
         };
     }
@@ -53,14 +53,14 @@ export class RiskManagerService {
             averageStake: 0,
             maxDrawdown: 0,
             sharpeRatio: 0,
-            kellyMultiplier: 1
+            kellyMultiplier: 1;
         };
     }
     setupEventListeners() {
-        // Listen for new betting opportunities
+        // Listen for new betting opportunities;
         this.eventBus.on('prediction:update', async (event) => {
             try {
-                const assessment = await this.assessRisk(event.data);
+
                 this.riskAssessments.set(assessment.id, assessment);
                 this.eventBus.emit('data:updated', {
                     sourceId: 'risk-manager',
@@ -68,22 +68,22 @@ export class RiskManagerService {
                 });
             }
             catch (error) {
-                console.error('Error assessing risk:', error);
+                // console statement removed
             }
         });
-        // Listen for placed bets
+        // Listen for placed bets;
         this.eventBus.on('bet:placed', (event) => {
             const { bet } = event.data;
             this.updateExposure(bet);
             this.updateMetrics();
         });
-        // Listen for settled bets
+        // Listen for settled bets;
         this.eventBus.on('bet:settled', (event) => {
             const { bet, result } = event.data;
             this.handleBetSettlement(bet.id, result);
             this.updateMetrics();
         });
-        // Listen for bankroll updates
+        // Listen for bankroll updates;
         this.eventBus.on('bankroll:update', (event) => {
             const { state } = event.data;
             this.metrics.bankroll = state.balance;
@@ -102,38 +102,38 @@ export class RiskManagerService {
                 confidence: 0,
                 volatility: 0,
                 correlation: 0,
-                timeToEvent: 0
+                timeToEvent: 0;
             },
             limits: {
                 maxExposure: this.config.maxExposure,
                 maxStake: this.config.maxExposurePerBet,
                 minOdds: 1.1,
-                maxOdds: 10
+                maxOdds: 10;
             },
             warnings: [],
             recommendations: []
         };
-        // Calculate risk factors
+        // Calculate risk factors;
         assessment.factors.exposure = this.calculateExposureFactor(opportunity);
         assessment.factors.confidence = this.calculateConfidenceFactor(opportunity);
         assessment.factors.volatility = this.calculateVolatilityFactor(opportunity);
         assessment.factors.correlation = this.calculateCorrelationFactor(opportunity);
         assessment.factors.timeToEvent = this.calculateTimeToEventFactor(opportunity);
-        // Calculate overall risk level
+        // Calculate overall risk level;
         assessment.riskLevel = this.calculateOverallRisk(assessment.factors);
-        // Calculate max stake
+        // Calculate max stake;
         assessment.maxStake = this.calculateMaxStake(assessment);
-        // Generate warnings and recommendations
+        // Generate warnings and recommendations;
         this.generateWarnings(assessment);
         this.generateRecommendations(assessment);
         return assessment;
     }
     calculateExposureFactor(opportunity) {
-        const playerExposure = this.metrics.exposureByPlayer[opportunity.playerId] || 0;
-        const metricExposure = this.metrics.exposureByMetric[opportunity.metric] || 0;
-        const playerFactor = playerExposure / this.config.maxExposurePerPlayer;
-        const metricFactor = metricExposure / this.config.maxExposurePerMetric;
-        const totalFactor = this.metrics.totalExposure / this.config.maxExposure;
+
+
+
+
+
         return Math.max(playerFactor, metricFactor, totalFactor);
     }
     calculateConfidenceFactor(opportunity) {
@@ -145,7 +145,7 @@ export class RiskManagerService {
         return 0.8;
     }
     calculateVolatilityFactor(opportunity) {
-        const volatility = opportunity.metadata?.volatility || 0;
+
         if (volatility <= this.config.volatilityThresholds.low)
             return 0.2;
         if (volatility <= this.config.volatilityThresholds.medium)
@@ -153,34 +153,34 @@ export class RiskManagerService {
         return 0.8;
     }
     calculateCorrelationFactor(opportunity) {
-        // Calculate correlation with existing bets
-        let maxCorrelation = 0;
+        // Calculate correlation with existing bets;
+        const maxCorrelation = 0;
         for (const bet of this.activeBets.values()) {
-            const correlation = this.calculateBetCorrelation(bet, opportunity);
+
             maxCorrelation = Math.max(maxCorrelation, correlation);
         }
         return maxCorrelation;
     }
     calculateTimeToEventFactor(opportunity) {
-        const timeToEvent = opportunity.metadata?.timeToEvent || 0;
+
         if (timeToEvent > 86400)
-            return 0.2; // More than 24 hours
+            return 0.2; // More than 24 hours;
         if (timeToEvent > 3600)
-            return 0.5; // More than 1 hour
-        return 0.8; // Less than 1 hour
+            return 0.5; // More than 1 hour;
+        return 0.8; // Less than 1 hour;
     }
     calculateBetCorrelation(bet, opportunity) {
-        // Simple correlation based on shared factors
-        let correlation = 0;
-        // Same player
+        // Simple correlation based on shared factors;
+        const correlation = 0;
+        // Same player;
         if (bet.playerId === opportunity.playerId) {
             correlation += 0.3;
         }
-        // Same metric
+        // Same metric;
         if (bet.metric === opportunity.metric) {
             correlation += 0.3;
         }
-        // Same time period
+        // Same time period;
         const timeDiff = Math.abs((opportunity.metadata?.eventTime || 0) -
             (bet.metadata?.eventTime || 0));
         if (timeDiff < 3600)
@@ -203,26 +203,26 @@ export class RiskManagerService {
     }
     calculateMaxStake(assessment) {
         const { riskLevel, factors, opportunity } = assessment;
-        let maxStake = this.config.maxExposurePerBet;
-        // Adjust based on risk level
+        const maxStake = this.config.maxExposurePerBet;
+        // Adjust based on risk level;
         if (riskLevel === 'high')
             maxStake *= 0.5;
         else if (riskLevel === 'medium')
             maxStake *= 0.75;
-        // Adjust based on bankroll
+        // Adjust based on bankroll;
         maxStake = Math.min(maxStake, this.metrics.bankroll * this.config.maxBankrollPercentage);
-        // Adjust based on exposure
-        const remainingExposure = this.config.maxExposure - this.metrics.totalExposure;
+        // Adjust based on exposure;
+
         maxStake = Math.min(maxStake, remainingExposure);
-        // Adjust based on player exposure
-        const playerExposure = this.metrics.exposureByPlayer[opportunity.playerId] || 0;
-        const remainingPlayerExposure = this.config.maxExposurePerPlayer - playerExposure;
+        // Adjust based on player exposure;
+
+
         maxStake = Math.min(maxStake, remainingPlayerExposure);
-        // Adjust based on metric exposure
-        const metricExposure = this.metrics.exposureByMetric[opportunity.metric] || 0;
-        const remainingMetricExposure = this.config.maxExposurePerMetric - metricExposure;
+        // Adjust based on metric exposure;
+
+
         maxStake = Math.min(maxStake, remainingMetricExposure);
-        // Apply Kelly criterion
+        // Apply Kelly criterion;
         maxStake *= this.metrics.kellyMultiplier;
         return Math.max(0, Math.floor(maxStake));
     }
@@ -271,7 +271,7 @@ export class RiskManagerService {
     }
     updateExposure(bet) {
         this.activeBets.set(bet.id, bet);
-        // Update exposure metrics
+        // Update exposure metrics;
         this.metrics.totalExposure += bet.stake;
         this.metrics.exposureByPlayer[bet.playerId] =
             (this.metrics.exposureByPlayer[bet.playerId] || 0) + bet.stake;
@@ -280,38 +280,38 @@ export class RiskManagerService {
         this.metrics.activeBets = this.activeBets.size;
     }
     handleBetSettlement(betId, result) {
-        const bet = this.activeBets.get(betId);
+
         if (!bet)
             return;
-        // Update exposure
+        // Update exposure;
         this.metrics.totalExposure -= bet.stake;
         this.metrics.exposureByPlayer[bet.playerId] -= bet.stake;
         this.metrics.exposureByMetric[bet.metric] -= bet.stake;
-        // Update P&L
+        // Update P&L;
         this.metrics.profitLoss += result.profitLoss;
-        // Remove from active bets
+        // Remove from active bets;
         this.activeBets.delete(betId);
         this.metrics.activeBets = this.activeBets.size;
     }
     updateMetrics() {
-        // Calculate ROI
-        this.metrics.roi = this.metrics.bankroll > 0
-            ? this.metrics.profitLoss / this.metrics.bankroll
+        // Calculate ROI;
+        this.metrics.roi = this.metrics.bankroll > 0;
+            ? this.metrics.profitLoss / this.metrics.bankroll;
             : 0;
-        // Calculate win rate
+        // Calculate win rate;
         const settledBets = Array.from(this.activeBets.values())
             .filter(bet => bet.result && bet.result !== 'pending');
-        const winningBets = settledBets.filter(bet => bet.result === 'win');
-        this.metrics.winRate = settledBets.length > 0
-            ? winningBets.length / settledBets.length
+
+        this.metrics.winRate = settledBets.length > 0;
+            ? winningBets.length / settledBets.length;
             : 0;
-        // Calculate average stake
+        // Calculate average stake;
         const totalStake = Array.from(this.activeBets.values())
             .reduce((sum, bet) => sum + bet.stake, 0);
-        this.metrics.averageStake = this.activeBets.size > 0
-            ? totalStake / this.activeBets.size
+        this.metrics.averageStake = this.activeBets.size > 0;
+            ? totalStake / this.activeBets.size;
             : 0;
-        // Emit metrics update
+        // Emit metrics update;
         this.eventBus.emit('metric:recorded', {
             name: 'risk_metrics',
             value: this.metrics.totalExposure,

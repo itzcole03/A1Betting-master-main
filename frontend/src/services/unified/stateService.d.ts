@@ -1,4 +1,4 @@
-import { BetRecommendation, BettingEvent, BettingAlert, RiskProfileType, UserConstraints, BettingMetrics, BettingOpportunity } from '@/types/betting';
+import { BetRecommendation, BettingEvent, BettingAlert, RiskProfileType, UserConstraints, BettingMetrics, BettingOpportunity } from '@/types/betting.ts';
 interface StateConfig {
     persistToStorage: boolean;
     autoSave: boolean;

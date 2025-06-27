@@ -1,4 +1,4 @@
-import { ESPNHeadline } from '../types.js';
+import { ESPNHeadline } from '@/types.js';
 /**
  * Strict, production-ready NewsService for Ultimate Sports Betting App.
  * No mocks, simulation, or fallback logic. Strict typing, ESM imports, UnifiedConfig, EventBus, real API only.
@@ -13,7 +13,7 @@ declare class NewsService {
      * Emits 'news:update' event with timestamped payload.
      * @param source - News source (default: 'espn')
      * @param limit - Max number of headlines (default: 10)
-     * @returns Array of ESPNHeadline objects
+     * @returns Array of ESPNHeadline objects;
      */
     fetchHeadlines(source?: string, limit?: number): Promise<ESPNHeadline[]>;
     getBreakingNews(): Promise<ESPNHeadline[]>;

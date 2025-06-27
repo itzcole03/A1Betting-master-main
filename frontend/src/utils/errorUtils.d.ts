@@ -1,4 +1,4 @@
-import { APIError } from '../services/api';
+import { APIError } from '@/services/api.ts';
 export interface ErrorDetails {
     code: string;
     message: string;

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react.ts';
 
 export interface RealDataValidationResult {
   isValid: boolean;
@@ -28,7 +28,7 @@ export function useRealDataValidation() {
     const warnings: string[] = [];
     const errors: string[] = [];
 
-    // Check for required API keys
+    // Check for required API keys;
     const requiredKeys = [
       "VITE_ODDS_API_KEY",
       "VITE_SPORTRADAR_API_KEY",
@@ -43,7 +43,7 @@ export function useRealDataValidation() {
       }
     });
 
-    // Generate warnings based on missing keys
+    // Generate warnings based on missing keys;
     if (missingKeys.includes("VITE_ODDS_API_KEY")) {
       warnings.push("Odds API key missing - live odds unavailable");
     }
@@ -66,12 +66,12 @@ export function useRealDataValidation() {
       );
     }
 
-    // Simulate connected sources
-    const totalSources = 8;
+    // Simulate connected sources;
+
     const connectedSources =
       totalSources - Math.floor(missingKeys.length * 0.6);
 
-    // Errors for critical issues
+    // Errors for critical issues;
     if (connectedSources === 0) {
       errors.push(
         "No data sources available - add API keys to enable functionality",

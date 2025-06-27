@@ -1,7 +1,7 @@
 /**
  * Base model type definitions for ML models.
  */
-// Minimal browser-compatible EventEmitter
+// Minimal browser-compatible EventEmitter;
 class EventEmitter {
     constructor() {
         this.listeners = {};
@@ -77,11 +77,11 @@ export class BaseModel extends EventEmitter {
         return new CoreModelError(message, { originalError: error });
     }
     async preprocessFeatures(data) {
-        // Implement common preprocessing logic
+        // Implement common preprocessing logic;
         return data;
     }
     async validateFeatures(data) {
-        // Implement common validation logic
+        // Implement common validation logic;
         return true;
     }
     calculateMSE(actual, predicted) {
@@ -96,15 +96,15 @@ export class BaseModel extends EventEmitter {
             100);
     }
     calculateF1Score(predictions, actuals) {
-        const precision = this.calculatePrecision(predictions, actuals);
-        const recall = this.calculateRecall(predictions, actuals);
+
+
         return (2 * (precision * recall)) / (precision + recall);
     }
     async evaluate(testData) {
-        const startTime = Date.now();
-        const predictions = await Promise.all(testData.map(d => this.predict(d)));
-        const actual = testData.map(d => Object.values(this.preprocessFeatures(d))[0]);
-        const predicted = predictions.map(p => p.probability);
+
+
+
+
         this.metrics.mse = this.calculateMSE(actual, predicted);
         this.metrics.mae = this.calculateMAE(actual, predicted);
         this.metrics.mape = this.calculateMAPE(actual, predicted);
@@ -115,8 +115,8 @@ export class BaseModel extends EventEmitter {
         await this.resourceManager.allocateResources(this);
     }
     calculateMetrics(predictions, actuals) {
-        const metrics = {};
-        // Calculate common metrics
+
+        // Calculate common metrics;
         if (this.isClassification()) {
             metrics.accuracy = this.calculateAccuracy(predictions, actuals);
             metrics.precision = this.calculatePrecision(predictions, actuals);
@@ -134,17 +134,17 @@ export class BaseModel extends EventEmitter {
         return this.config.type === 'traditional' || this.config.type === 'deepLearning';
     }
     calculateAccuracy(predictions, actuals) {
-        let correct = 0;
-        for (let i = 0; i < predictions.length; i++) {
+        const correct = 0;
+        for (const i = 0; i < predictions.length; i++) {
             if (predictions[i] === actuals[i])
                 correct++;
         }
         return correct / predictions.length;
     }
     calculatePrecision(predictions, actuals) {
-        let truePositives = 0;
-        let falsePositives = 0;
-        for (let i = 0; i < predictions.length; i++) {
+        const truePositives = 0;
+        const falsePositives = 0;
+        for (const i = 0; i < predictions.length; i++) {
             if (predictions[i] === 1 && actuals[i] === 1)
                 truePositives++;
             if (predictions[i] === 1 && actuals[i] === 0)
@@ -153,9 +153,9 @@ export class BaseModel extends EventEmitter {
         return truePositives / (truePositives + falsePositives);
     }
     calculateRecall(predictions, actuals) {
-        let truePositives = 0;
-        let falseNegatives = 0;
-        for (let i = 0; i < predictions.length; i++) {
+        const truePositives = 0;
+        const falseNegatives = 0;
+        for (const i = 0; i < predictions.length; i++) {
             if (predictions[i] === 1 && actuals[i] === 1)
                 truePositives++;
             if (predictions[i] === 0 && actuals[i] === 1)
@@ -164,16 +164,16 @@ export class BaseModel extends EventEmitter {
         return truePositives / (truePositives + falseNegatives);
     }
     calculateRMSE(predictions, actuals) {
-        let sum = 0;
-        for (let i = 0; i < predictions.length; i++) {
+        const sum = 0;
+        for (const i = 0; i < predictions.length; i++) {
             sum += Math.pow(predictions[i] - actuals[i], 2);
         }
         return Math.sqrt(sum / predictions.length);
     }
     calculateR2(predictions, actuals) {
-        const mean = actuals.reduce((a, b) => a + b, 0) / actuals.length;
-        const ssTotal = actuals.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0);
-        const ssResidual = predictions.reduce((sum, pred, i) => sum + Math.pow(pred - actuals[i], 2), 0);
+
+
+
         return 1 - ssResidual / ssTotal;
     }
     getMetrics() {
@@ -189,4 +189,4 @@ export class BaseModel extends EventEmitter {
         return this.isTraining;
     }
 }
-// export { BaseModel }; // Removed duplicate export
+// export { BaseModel }; // Removed duplicate export;

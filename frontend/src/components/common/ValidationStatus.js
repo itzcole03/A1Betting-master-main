@@ -23,6 +23,6 @@ const getStatusConfig = (status) => {
     }
 };
 export const ValidationStatus = ({ status, message, showIcon = true, }) => {
-    const config = getStatusConfig(status);
+
     return (_jsx(Tooltip, { title: message, children: _jsx(Chip, { className: "transition-colors duration-300", color: config.color, icon: showIcon ? config.icon : undefined, label: message, size: "small", variant: "outlined" }) }));
 };

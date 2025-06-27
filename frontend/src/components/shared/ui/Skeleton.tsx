@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from 'react.ts';
+import { motion } from 'framer-motion.ts';
 
 interface SkeletonProps {
   className?: string;
@@ -9,14 +9,14 @@ interface SkeletonProps {
   animate?: boolean;
 }
 
-export const Skeleton: React.FC<SkeletonProps> = ({
+export const Skeleton: React.FC<SkeletonProps key={572000}> = ({
   className = '',
   variant = 'text',
   height,
   width,
   animate = true,
 }) => {
-  const baseClasses = 'bg-gray-200 dark:bg-gray-700';
+
   const variantClasses = {
     text: 'rounded',
     rectangular: 'rounded-md',
@@ -30,16 +30,16 @@ export const Skeleton: React.FC<SkeletonProps> = ({
 
   if (!animate) {
     return (
-      <div className={`${baseClasses} ${variantClasses[variant]} ${className}`} style={style} />
+      <div className={`${baseClasses} ${variantClasses[variant]} ${className}`} style={style} / key={690885}>
     );
   }
 
   return (
-    <motion.div
+    <motion.div;
       className={`${baseClasses} ${variantClasses[variant]} ${className} overflow-hidden relative`}
       style={style}
-    >
-      <motion.div
+     key={465052}>
+      <motion.div;
         animate={{
           translateX: ['-100%', '100%'],
         }}
@@ -49,21 +49,21 @@ export const Skeleton: React.FC<SkeletonProps> = ({
           repeat: Infinity,
           ease: 'linear',
         }}
-      >
-        <div className="w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+       key={772034}>
+        <div className="w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent" / key={487552}>
       </motion.div>
     </motion.div>
   );
 };
 
-export const SkeletonText: React.FC<{ lines?: number } & Omit<SkeletonProps, 'variant'>> = ({
+export const SkeletonText: React.FC<{ lines?: number } & Omit<SkeletonProps, 'variant' key={485281}>> = ({
   lines = 1,
-  ...props
+  ...props;
 }) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" key={725977}>
       {Array.from({ length: lines }).map((_, i) => (
-        <Skeleton key={i} variant="text" width={i === lines - 1 ? '75%' : '100%'} {...props} />
+        <Skeleton key={i} variant="text" width={i === lines - 1 ? '75%' : '100%'} {...props} / key={758506}>
       ))}
     </div>
   );
@@ -71,9 +71,9 @@ export const SkeletonText: React.FC<{ lines?: number } & Omit<SkeletonProps, 'va
 
 export const SkeletonCard: React.FC<{ rows?: number }> = ({ rows = 3 }) => {
   return (
-    <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 space-y-4">
-      <Skeleton height={200} variant="rectangular" />
-      <SkeletonText lines={rows} />
+    <div className="p-4 rounded-lg border border-gray-200 dark:border-gray-700 space-y-4" key={624179}>
+      <Skeleton height={200} variant="rectangular" / key={190341}>
+      <SkeletonText lines={rows} / key={756070}>
     </div>
   );
 };

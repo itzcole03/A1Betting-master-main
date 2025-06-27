@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 interface OddsData {
     id: string;
     sport: string;
@@ -37,7 +37,7 @@ interface MarketAnalysis {
     }[];
 }
 /**
- * Modern OddsService with proper TypeScript and error handling
+ * Modern OddsService with proper TypeScript and error handling;
  */
 export declare class OddsService extends EventEmitter {
     private cache;
@@ -45,11 +45,11 @@ export declare class OddsService extends EventEmitter {
     constructor();
     private initializeHealthChecking;
     /**
-     * Fetch live odds for sports events
+     * Fetch live odds for sports events;
      */
     getLiveOdds(sport?: string): Promise<OddsData[]>;
     /**
-     * Get market analysis for a specific market
+     * Get market analysis for a specific market;
      */
     getMarketAnalysis(market: string, options?: {
         sport?: string;
@@ -57,11 +57,11 @@ export declare class OddsService extends EventEmitter {
         endTime?: string;
     }): Promise<MarketAnalysis>;
     /**
-     * Get available bookmakers
+     * Get available bookmakers;
      */
     getBookmakers(): Promise<string[]>;
     /**
-     * Get historical odds data
+     * Get historical odds data;
      */
     getHistoricalOdds(market: string, options?: {
         startTime?: string;
@@ -73,7 +73,7 @@ export declare class OddsService extends EventEmitter {
         probability: number;
     }[]>;
     /**
-     * Get arbitrage opportunities
+     * Get arbitrage opportunities;
      */
     getArbitrageOpportunities(options?: {
         sport?: string;
@@ -90,19 +90,19 @@ export declare class OddsService extends EventEmitter {
         confidence: number;
     }[]>;
     /**
-     * Get cached data if still valid
+     * Get cached data if still valid;
      */
     private getCachedData;
     /**
-     * Set data in cache
+     * Set data in cache;
      */
     private setCachedData;
     /**
-     * Report service status for monitoring
+     * Report service status for monitoring;
      */
     private reportStatus;
     /**
-     * Fallback odds data when API fails
+     * Fallback odds data when API fails;
      */
     private getFallbackOdds;
 }

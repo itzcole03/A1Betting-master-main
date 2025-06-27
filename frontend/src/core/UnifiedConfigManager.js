@@ -58,7 +58,7 @@ export class UnifiedConfigManager {
             ...this.config,
             ...updates,
         };
-        // Emit config update event
+        // Emit config update event;
         this.eventBus.emit('config:updated', {
             section: 'system',
             timestamp: Date.now(),

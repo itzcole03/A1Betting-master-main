@@ -4,15 +4,15 @@ import { UnifiedServiceRegistry } from '../../services/unified/UnifiedServiceReg
 import { useEventAnalytics } from '../../hooks/useUnifiedAnalytics';
 import { Card, Button, Input, Select, Slider, Spinner, Toast, Badge, Modal, Tabs, Tab, } from '../ui/UnifiedUI';
 export const UnifiedStrategyConfig = () => {
-    // Initialize services
-    const serviceRegistry = UnifiedServiceRegistry.getInstance();
-    const predictionService = serviceRegistry.getService('prediction');
-    const analyticsService = serviceRegistry.getService('analytics');
-    const stateService = serviceRegistry.getService('state');
-    const notificationService = serviceRegistry.getService('notification');
-    const errorService = serviceRegistry.getService('error');
-    const webSocketService = serviceRegistry.getService('websocket');
-    // State
+    // Initialize services;
+
+
+
+
+
+
+
+    // State;
     const [config, setConfig] = useState({
         investmentAmount: 1000,
         modelSet: {},
@@ -40,22 +40,22 @@ export const UnifiedStrategyConfig = () => {
     const [recommendations, setRecommendations] = useState([]);
     const [showRecommendations, setShowRecommendations] = useState(false);
     const [activeTab, setActiveTab] = useState('basic');
-    // Analytics state
+    // Analytics state;
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [selectedMarket, setSelectedMarket] = useState(null);
     const [selectedSelection, setSelectedSelection] = useState(null);
-    const analytics = useEventAnalytics(selectedEvent || '', selectedMarket || '', selectedSelection || '');
+
     const { metrics, trendDelta, riskProfile, explainabilityMap, modelMetadata, isLoading: analyticsLoading, error: analyticsError, getMetricColor, getTrendIcon, getRiskLevelColor, } = analytics;
-    // Load available models
+    // Load available models;
     useEffect(() => {
         loadModels();
     }, []);
     const loadModels = async () => {
         try {
             setLoading(true);
-            const availableModels = await predictionService.getAvailableModels();
+
             setModels(availableModels);
-            // Initialize model set with default weights
+            // Initialize model set with default weights;
             const modelSet = availableModels.reduce((acc, model) => ({
                 ...acc,
                 [model.id]: {
@@ -102,7 +102,7 @@ export const UnifiedStrategyConfig = () => {
     const generateRecommendations = async () => {
         try {
             setLoading(true);
-            const recommendations = await predictionService.generatePortfolioRecommendations(config);
+
             setRecommendations(recommendations);
             setShowRecommendations(true);
         }
@@ -135,13 +135,13 @@ export const UnifiedStrategyConfig = () => {
             maximumFractionDigits: 1,
         }).format(value / 100);
     };
-    // Subscribe to real-time updates
+    // Subscribe to real-time updates;
     useEffect(() => {
         if (!selectedEvent || !selectedMarket || !selectedSelection)
             return;
         const unsubscribe = webSocketService?.subscribe?.('analytics', (data) => {
             if (data.eventId === selectedEvent && data.marketId === selectedMarket) {
-                // Analytics hook will auto-update via its own effect
+                // Analytics hook will auto-update via its own effect;
             }
         });
         return () => unsubscribe && unsubscribe();
@@ -149,13 +149,13 @@ export const UnifiedStrategyConfig = () => {
     if (loading) {
         return (_jsx("div", { className: "flex items-center justify-center min-h-screen", children: _jsx(Spinner, { size: "large" }) }));
     }
-    return (_jsxs("div", { className: "container mx-auto px-4 py-8", children: [_jsxs("div", { className: "max-w-7xl mx-auto", children: [_jsx("h1", { className: "text-3xl font-bold mb-8", children: "Strategy Configuration" }), selectedEvent && selectedMarket && selectedSelection && (_jsxs("div", { className: "mb-6 p-4 bg-gray-50 rounded-lg", children: [_jsx("h2", { className: "text-2xl font-bold mb-6", children: "Strategy Configuration" }), analyticsLoading ? (_jsx("div", { className: "flex justify-center py-4", children: _jsx(Spinner, { size: "medium" }) })) : analyticsError ? (_jsx("div", { className: "text-red-500 text-center", children: _jsx("p", { children: analyticsError }) })) : (_jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4", children: metrics && (_jsxs(_Fragment, { children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Accuracy" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [(metrics.accuracy * 100).toFixed(1), "%"] }), trendDelta && (_jsx(Icon, { className: `w-4 h-4 ${getMetricColor(trendDelta.accuracyDelta, 'positive')}`, name: getTrendIcon(trendDelta.accuracyDelta) }))] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Precision" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [(metrics.precision * 100).toFixed(1), "%"] }), trendDelta && (_jsx(Icon, { className: `w-4 h-4 ${getMetricColor(trendDelta.precisionDelta, 'positive')}`, name: getTrendIcon(trendDelta.precisionDelta) }))] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Recall" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [(metrics.recall * 100).toFixed(1), "%"] }), trendDelta && (_jsx(Icon, { className: `w-4 h-4 ${getMetricColor(trendDelta.recallDelta, 'positive')}`, name: getTrendIcon(trendDelta.recallDelta) }))] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Profit/Loss" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [metrics.profitLoss.toFixed(2), "%"] }), _jsx(Icon, { className: `w-4 h-4 ${getMetricColor(metrics.profitLoss, 'positive')}`, name: getTrendIcon(metrics.profitLoss) })] })] })] })) })), riskProfile && (_jsxs("div", { className: "mt-4", children: [_jsx("h4", { className: "text-sm font-medium mb-2", children: "Risk Profile" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx(Badge, { variant: riskProfile.riskLevel.toLowerCase(), children: riskProfile.riskLevel }), _jsx("p", { className: "text-sm text-gray-600", children: riskProfile.recommendation })] })] })), modelMetadata && (_jsxs("div", { className: "mt-4", children: [_jsx("h4", { className: "text-sm font-medium mb-2", children: "Model Stability" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx(Badge, { variant: modelMetadata.stability > 0.8
+    return (_jsxs("div", { className: "container mx-auto px-4 py-8", children: [_jsxs("div", { className: "max-w-7xl mx-auto", children: [_jsx("h1", { className: "text-3xl font-bold mb-8", children: "Strategy Configuration" }), selectedEvent && selectedMarket && selectedSelection && (_jsxs("div", { className: "mb-6 p-4 bg-gray-50 rounded-lg", children: [_jsx("h2", { className: "text-2xl font-bold mb-6", children: "Strategy Configuration" }), analyticsLoading ? (_jsx("div", { className: "flex justify-center py-4", children: _jsx(Spinner, { size: "medium" }) })) : analyticsError ? (_jsx("div", { className: "text-red-500 text-center", children: _jsx("p", { children: analyticsError }) })) : (_jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4", children: metrics && (_jsxs(_Fragment, { children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Accuracy" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [(metrics.accuracy * 100).toFixed(1), "%"] }), trendDelta && (_jsx(Icon, { className: `w-4 h-4 ${getMetricColor(trendDelta.accuracyDelta, 'positive')}`, name: getTrendIcon(trendDelta.accuracyDelta) }))] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Precision" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [(metrics.precision * 100).toFixed(1), "%"] }), trendDelta && (_jsx(Icon, { className: `w-4 h-4 ${getMetricColor(trendDelta.precisionDelta, 'positive')}`, name: getTrendIcon(trendDelta.precisionDelta) }))] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Recall" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [(metrics.recall * 100).toFixed(1), "%"] }), trendDelta && (_jsx(Icon, { className: `w-4 h-4 ${getMetricColor(trendDelta.recallDelta, 'positive')}`, name: getTrendIcon(trendDelta.recallDelta) }))] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Profit/Loss" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("p", { className: "text-lg font-semibold", children: [metrics.profitLoss.toFixed(2), "%"] }), _jsx(Icon, { className: `w-4 h-4 ${getMetricColor(metrics.profitLoss, 'positive')}`, name: getTrendIcon(metrics.profitLoss) })] })] })] })) })), riskProfile && (_jsxs("div", { className: "mt-4", children: [_jsx("h4", { className: "text-sm font-medium mb-2", children: "Risk Profile" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx(Badge, { variant: riskProfile.riskLevel.toLowerCase(), children: riskProfile.riskLevel }), _jsx("p", { className: "text-sm text-gray-600", children: riskProfile.recommendation })] })] })), modelMetadata && (_jsxs("div", { className: "mt-4", children: [_jsx("h4", { className: "text-sm font-medium mb-2", children: "Model Stability" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx(Badge, { variant: modelMetadata.stability > 0.8;
                                                     ? 'success'
-                                                    : modelMetadata.stability > 0.6
+                                                    : modelMetadata.stability > 0.6;
                                                         ? 'warning'
-                                                        : 'danger', children: modelMetadata.stability > 0.8
+                                                        : 'danger', children: modelMetadata.stability > 0.8;
                                                     ? 'High'
-                                                    : modelMetadata.stability > 0.6
+                                                    : modelMetadata.stability > 0.6;
                                                         ? 'Medium'
                                                         : 'Low' }), _jsxs("p", { className: "text-sm text-gray-600", children: ["Last updated: ", new Date(modelMetadata.lastUpdated).toLocaleString()] })] })] }))] })), _jsxs(Tabs, { className: "mb-8", value: activeTab, onChange: setActiveTab, children: [_jsx(Tab, { label: "Basic Settings", value: "basic" }), _jsx(Tab, { label: "Advanced Settings", value: "advanced" }), _jsx(Tab, { label: "Risk Management", value: "risk" }), _jsx(Tab, { label: "Model Selection", value: "models" })] }), activeTab === 'basic' && (_jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8", children: [_jsxs(Card, { children: [_jsx("h2", { className: "text-xl font-bold mb-4", children: "Investment & Strategy" }), _jsxs("div", { className: "space-y-6", children: [_jsxs("div", { children: [_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Investment Amount" }), _jsx(Input, { max: "100000", min: "10", type: "number", value: config.investmentAmount, onChange: e => handleConfigChange('investmentAmount', parseFloat(e.target.value)) }), _jsx("p", { className: "mt-1 text-sm text-gray-500", children: "Range: $10 - $100,000" })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Strategy Mode" }), _jsx(Select, { options: [
                                                             { value: 'maximum_profit', label: 'Maximum Profit' },
@@ -204,14 +204,14 @@ export const UnifiedStrategyConfig = () => {
                                                             ...config.riskProfile,
                                                             correlationLimit: value,
                                                         }) }), _jsxs("div", { className: "flex justify-between text-sm text-gray-600 dark:text-gray-400", children: [_jsx("span", { children: "0.0" }), _jsxs("span", { children: ["Current: ", config.riskProfile.correlationLimit] }), _jsx("span", { children: "1.0" })] })] })] })] })] })), activeTab === 'models' && (_jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-8", children: models.map(model => (_jsxs(Card, { children: [_jsxs("div", { className: "flex items-center justify-between mb-4", children: [_jsx("h3", { className: "text-lg font-medium", children: model.name }), _jsxs(Badge, { variant: model.accuracy >= 90 ? 'success' : model.accuracy >= 80 ? 'warning' : 'danger', children: [formatPercentage(model.accuracy), " Accuracy"] })] }), _jsxs("div", { className: "space-y-4", children: [_jsx("p", { className: "text-gray-600 dark:text-gray-400", children: model.description }), _jsxs("div", { className: "grid grid-cols-2 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Type" }), _jsx("p", { className: "font-medium", children: model.type })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Profit Factor" }), _jsx("p", { className: "font-medium", children: model.profitFactor.toFixed(2) })] })] }), _jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("span", { className: "text-sm text-gray-600 dark:text-gray-400", children: ["Last Updated: ", new Date(model.lastUpdated).toLocaleDateString()] }), _jsx("input", { checked: config.modelSet[model.id]?.enabled, className: "h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded", type: "checkbox", onChange: e => handleModelToggle(model.id, e.target.checked) })] })] })] }, model.id))) })), _jsxs("div", { className: "flex justify-end mt-8 space-x-4", children: [_jsx(Button, { variant: "secondary", onClick: () => {
-                                    // Reset to default configuration
+                                    // Reset to default configuration;
                                     loadModels();
-                                }, children: "Reset" }), _jsx(Button, { disabled: loading, variant: "primary", onClick: generateRecommendations, children: loading ? _jsx(Spinner, { size: "small" }) : 'Generate Recommendations' })] })] }), _jsx(Modal, { isOpen: showRecommendations, title: "Portfolio Recommendations", onClose: () => setShowRecommendations(false), children: _jsx("div", { className: "space-y-6", children: recommendations.map((recommendation, index) => (_jsxs(Card, { children: [_jsxs("div", { className: "flex items-center justify-between mb-4", children: [_jsxs("h3", { className: "text-lg font-medium", children: ["Portfolio ", index + 1] }), _jsxs(Badge, { variant: recommendation.expectedValue > 0
+                                }, children: "Reset" }), _jsx(Button, { disabled: loading, variant: "primary", onClick: generateRecommendations, children: loading ? _jsx(Spinner, { size: "small" }) : 'Generate Recommendations' })] })] }), _jsx(Modal, { isOpen: showRecommendations, title: "Portfolio Recommendations", onClose: () => setShowRecommendations(false), children: _jsx("div", { className: "space-y-6", children: recommendations.map((recommendation, index) => (_jsxs(Card, { children: [_jsxs("div", { className: "flex items-center justify-between mb-4", children: [_jsxs("h3", { className: "text-lg font-medium", children: ["Portfolio ", index + 1] }), _jsxs(Badge, { variant: recommendation.expectedValue > 0;
                                             ? 'success'
-                                            : recommendation.expectedValue < 0
+                                            : recommendation.expectedValue < 0;
                                                 ? 'danger'
                                                 : 'warning', children: [formatPercentage(recommendation.expectedValue), " Expected Value"] })] }), _jsxs("div", { className: "space-y-4", children: [_jsxs("div", { children: [_jsx("h4", { className: "font-medium mb-2", children: "Legs" }), _jsx("div", { className: "space-y-2", children: recommendation.legs.map((leg, legIndex) => (_jsxs("div", { className: "p-2 bg-gray-50 dark:bg-gray-800 rounded", children: [_jsxs("div", { className: "flex justify-between mb-1", children: [_jsx("span", { className: "font-medium", children: leg.selection }), _jsx("span", { children: leg.odds.toFixed(2) })] }), _jsxs("div", { className: "flex justify-between text-sm text-gray-600 dark:text-gray-400", children: [_jsx("span", { children: leg.marketType }), _jsxs("span", { children: ["Confidence: ", formatPercentage(leg.confidence)] })] })] }, legIndex))) })] }), _jsxs("div", { className: "grid grid-cols-2 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Total Odds" }), _jsx("p", { className: "font-medium", children: recommendation.totalOdds.toFixed(2) })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Risk Score" }), _jsx("p", { className: "font-medium", children: recommendation.riskScore.toFixed(2) })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Confidence" }), _jsx("p", { className: "font-medium", children: formatPercentage(recommendation.confidence) })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Expected Value" }), _jsx("p", { className: `font-medium ${recommendation.expectedValue > 0 ? 'text-green-600' : 'text-red-600'}`, children: formatPercentage(recommendation.expectedValue) })] })] }), _jsx(Button, { className: "w-full", variant: "primary", onClick: () => {
-                                            // Handle portfolio selection
+                                            // Handle portfolio selection;
                                             setShowRecommendations(false);
                                         }, children: "Select Portfolio" })] })] }, index))) }) }), toast && _jsx(Toast, { message: toast.message, type: toast.type, onClose: () => setToast(null) })] }));
 };

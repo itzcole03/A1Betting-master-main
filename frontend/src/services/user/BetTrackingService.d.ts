@@ -23,11 +23,11 @@ export interface BetAnalytics {
 }
 export declare class BetTrackingService {
     /**
-     * Fetch all bets for a user from backend persistent storage
+     * Fetch all bets for a user from backend persistent storage;
      */
     getUserBets: (userId: string) => Promise<BetRecord[]>;
     /**
-     * Fetch analytics (ROI, streak, win/loss, etc.) for a user
+     * Fetch analytics (ROI, streak, win/loss, etc.) for a user;
      */
     getUserBetAnalytics: (userId: string) => Promise<BetAnalytics>;
 }

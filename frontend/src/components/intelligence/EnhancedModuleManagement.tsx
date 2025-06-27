@@ -1,8 +1,8 @@
-import React, { useState, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import React, { useState, useMemo, useCallback  } from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.ts';
+import { Badge } from '@/components/ui/badge.ts';
+import { Button } from '@/components/ui/button.ts';
 import {
   Grid,
   List,
@@ -26,10 +26,10 @@ import {
   Gem,
   ArrowUp,
   ArrowDown,
-} from "lucide-react";
-import { toast } from "react-hot-toast";
+} from 'lucide-react.ts';
+import { toast } from 'react-hot-toast.ts';
 
-// Enhanced module scoring system for money-making potential
+// Enhanced module scoring system for money-making potential;
 const MODULE_SCORES = {
   "advanced-analytics": {
     money: 95,
@@ -126,7 +126,7 @@ interface ModuleConfig {
 
 interface EnhancedModuleManagementProps {
   modules: ModuleConfig[];
-  activeModules: Set<string>;
+  activeModules: Set<string key={278855}>;
   onToggleModule: (moduleId: string) => void;
   onBatchActivate?: (moduleIds: string[]) => void;
 }
@@ -167,131 +167,131 @@ const EnhancedModuleCard: React.FC<{
   };
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: rank * 0.1 }}
       whileHover={{
         scale: 1.03,
         rotateY: 2,
-        boxShadow: isActive
+        boxShadow: isActive;
           ? "0 25px 50px -12px rgba(34, 197, 94, 0.4)"
           : "0 20px 40px -12px rgba(0, 0, 0, 0.3)",
       }}
       whileTap={{ scale: 0.98 }}
       className={`relative p-6 rounded-2xl border-2 cursor-pointer transition-all duration-500 backdrop-blur-lg ${
-        isActive
+        isActive;
           ? "bg-gradient-to-br from-green-500/20 via-emerald-500/15 to-blue-500/20 border-green-400/60 shadow-2xl"
           : "bg-slate-800/40 border-slate-600/40 hover:border-slate-500/60 hover:bg-slate-700/30 shadow-lg"
       }`}
       onClick={onToggle}
-    >
+     key={869768}>
       {/* Top Ranking Badge */}
       {rank <= 3 && (
-        <div className="absolute -top-3 -left-3 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold text-sm shadow-lg">
+        <div className="absolute -top-3 -left-3 flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold text-sm shadow-lg" key={89086}>
           {rank === 1 ? (
-            <Crown className="w-4 h-4" />
+            <Crown className="w-4 h-4" / key={712222}>
           ) : rank === 2 ? (
-            <Award className="w-4 h-4" />
+            <Award className="w-4 h-4" / key={96455}>
           ) : (
-            <Star className="w-4 h-4" />
+            <Star className="w-4 h-4" / key={274600}>
           )}
         </div>
       )}
 
       {/* Money-Making Score Badge */}
       {scores.money >= 80 && (
-        <motion.div
+        <motion.div;
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.5, type: "spring" }}
           className={`absolute -top-2 -right-2 bg-gradient-to-r ${getMoneyScoreColor(scores.money)} text-black text-xs font-bold px-3 py-1 rounded-full shadow-xl`}
-        >
-          <div className="flex items-center gap-1">
-            <DollarSign className="w-3 h-3" />
+         key={588395}>
+          <div className="flex items-center gap-1" key={238246}>
+            <DollarSign className="w-3 h-3" / key={112866}>
             {scores.money}%
           </div>
         </motion.div>
       )}
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <motion.div
+      <div className="flex items-center justify-between mb-4" key={810034}>
+        <div className="flex items-center gap-3" key={443099}>
+          <motion.div;
             className={`p-3 rounded-xl transition-all duration-300 ${
-              isActive
+              isActive;
                 ? "bg-gradient-to-br from-green-500/30 to-blue-500/30 shadow-lg"
                 : "bg-slate-600/30"
             }`}
             whileHover={{ rotate: 360 }}
             transition={{ duration: 0.5 }}
-          >
+           key={980229}>
             {module.icon}
           </motion.div>
-          <div>
-            <h3 className="font-bold text-sm leading-tight">{module.name}</h3>
-            <p className="text-xs text-slate-400 capitalize">
+          <div key={241917}>
+            <h3 className="font-bold text-sm leading-tight" key={157548}>{module.name}</h3>
+            <p className="text-xs text-slate-400 capitalize" key={945919}>
               {module.category}
             </p>
           </div>
         </div>
-        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+        <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }} key={795676}>
           {isActive ? (
-            <div className="flex items-center gap-2">
-              <motion.div
+            <div className="flex items-center gap-2" key={100294}>
+              <motion.div;
                 className="w-2 h-2 bg-green-400 rounded-full"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ repeat: Infinity, duration: 2 }}
-              />
-              <ToggleRight className="w-6 h-6 text-green-400" />
+              / key={719034}>
+              <ToggleRight className="w-6 h-6 text-green-400" / key={987619}>
             </div>
           ) : (
-            <ToggleLeft className="w-6 h-6 text-slate-400" />
+            <ToggleLeft className="w-6 h-6 text-slate-400" / key={730092}>
           )}
         </motion.div>
       </div>
 
       {/* Description */}
-      <p className="text-xs text-slate-300 mb-4 leading-relaxed line-clamp-2">
+      <p className="text-xs text-slate-300 mb-4 leading-relaxed line-clamp-2" key={254256}>
         {scores.description}
       </p>
 
       {/* Performance Metrics Grid */}
-      <div className="space-y-3 mb-4">
+      <div className="space-y-3 mb-4" key={843290}>
         {/* Money Impact Bar */}
-        <div className="space-y-1">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-slate-400 font-medium">
-              Money Impact
+        <div className="space-y-1" key={204202}>
+          <div className="flex items-center justify-between" key={96335}>
+            <span className="text-xs text-slate-400 font-medium" key={82175}>
+              Money Impact;
             </span>
-            <span className="text-xs font-bold text-green-400">
+            <span className="text-xs font-bold text-green-400" key={955322}>
               {scores.money}%
             </span>
           </div>
-          <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
-            <motion.div
+          <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden" key={624552}>
+            <motion.div;
               className={`h-full rounded-full bg-gradient-to-r ${getMoneyScoreColor(scores.money)}`}
               initial={{ width: 0 }}
               animate={{ width: `${scores.money}%` }}
               transition={{ delay: 0.3, duration: 1 }}
-            />
+            / key={456077}>
           </div>
         </div>
 
         {/* Performance Metrics Row */}
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-blue-500/10 rounded-lg p-2 border border-blue-500/20">
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-blue-300">Accuracy</span>
-              <span className="text-xs font-bold text-blue-400">
+        <div className="grid grid-cols-2 gap-3" key={437166}>
+          <div className="bg-blue-500/10 rounded-lg p-2 border border-blue-500/20" key={842757}>
+            <div className="flex items-center justify-between" key={96335}>
+              <span className="text-xs text-blue-300" key={988881}>Accuracy</span>
+              <span className="text-xs font-bold text-blue-400" key={494006}>
                 +{scores.accuracy}%
               </span>
             </div>
           </div>
-          <div className="bg-green-500/10 rounded-lg p-2 border border-green-500/20">
-            <div className="flex items-center justify-between">
-              <span className="text-xs text-green-300">ROI</span>
-              <span className="text-xs font-bold text-green-400">
+          <div className="bg-green-500/10 rounded-lg p-2 border border-green-500/20" key={321971}>
+            <div className="flex items-center justify-between" key={96335}>
+              <span className="text-xs text-green-300" key={353142}>ROI</span>
+              <span className="text-xs font-bold text-green-400" key={955322}>
                 {scores.roi}%
               </span>
             </div>
@@ -299,10 +299,10 @@ const EnhancedModuleCard: React.FC<{
         </div>
 
         {/* Daily Profit */}
-        <div className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-lg p-2 border border-emerald-500/20">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-emerald-300">Daily Profit</span>
-            <span className="text-xs font-bold text-emerald-400">
+        <div className="bg-gradient-to-r from-emerald-500/10 to-green-500/10 rounded-lg p-2 border border-emerald-500/20" key={389132}>
+          <div className="flex items-center justify-between" key={96335}>
+            <span className="text-xs text-emerald-300" key={278347}>Daily Profit</span>
+            <span className="text-xs font-bold text-emerald-400" key={470830}>
               +${scores.profit.toLocaleString()}
             </span>
           </div>
@@ -310,23 +310,23 @@ const EnhancedModuleCard: React.FC<{
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Badge
+      <div className="flex items-center justify-between" key={96335}>
+        <div className="flex items-center gap-2" key={100294}>
+          <Badge;
             variant="outline"
             className={`text-xs bg-gradient-to-r ${getPriorityColor(module.priority)} text-white border-0`}
-          >
+           key={218236}>
             {module.priority}
           </Badge>
           {scores.reliability >= 90 && (
-            <CheckCircle className="w-3 h-3 text-green-400" />
+            <CheckCircle className="w-3 h-3 text-green-400" / key={918294}>
           )}
         </div>
-        <div className="flex items-center gap-1">
-          <span className="text-xs text-slate-500 capitalize">
+        <div className="flex items-center gap-1" key={238246}>
+          <span className="text-xs text-slate-500 capitalize" key={296767}>
             {module.computationLevel}
           </span>
-          <div
+          <div;
             className={`w-2 h-2 rounded-full ${
               module.computationLevel === "light"
                 ? "bg-green-400"
@@ -336,14 +336,14 @@ const EnhancedModuleCard: React.FC<{
                     ? "bg-orange-400"
                     : "bg-red-400"
             }`}
-          />
+          / key={809809}>
         </div>
       </div>
 
       {/* Active Glow Effect */}
-      <AnimatePresence>
+      <AnimatePresence key={359944}>
         {isActive && (
-          <motion.div
+          <motion.div;
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -353,7 +353,7 @@ const EnhancedModuleCard: React.FC<{
                 "linear-gradient(45deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1))",
               animation: "pulse 3s ease-in-out infinite",
             }}
-          />
+          / key={451865}>
         )}
       </AnimatePresence>
     </motion.div>
@@ -361,7 +361,7 @@ const EnhancedModuleCard: React.FC<{
 };
 
 const PerformanceDashboard: React.FC<{
-  activeModules: Set<string>;
+  activeModules: Set<string key={278855}>;
   moduleConfigs: ModuleConfig[];
 }> = ({ activeModules, moduleConfigs }) => {
   const activeConfigs = moduleConfigs.filter((config) =>
@@ -370,28 +370,28 @@ const PerformanceDashboard: React.FC<{
 
   const metrics = useMemo(() => {
     const totalProfitContribution = activeConfigs.reduce((sum, m) => {
-      const scores = MODULE_SCORES[m.id as keyof typeof MODULE_SCORES];
+
       return sum + (scores?.profit || 5000);
     }, 0);
 
     const avgAccuracyBoost =
-      activeConfigs.length > 0
+      activeConfigs.length > 0;
         ? activeConfigs.reduce((sum, m) => {
-            const scores = MODULE_SCORES[m.id as keyof typeof MODULE_SCORES];
+
             return sum + (scores?.accuracy || 3);
           }, 0)
         : 0;
 
     const avgMoneyScore =
-      activeConfigs.length > 0
+      activeConfigs.length > 0;
         ? activeConfigs.reduce((sum, m) => {
-            const scores = MODULE_SCORES[m.id as keyof typeof MODULE_SCORES];
+
             return sum + (scores?.money || 50);
-          }, 0) / activeConfigs.length
+          }, 0) / activeConfigs.length;
         : 0;
 
     const totalROI = activeConfigs.reduce((sum, m) => {
-      const scores = MODULE_SCORES[m.id as keyof typeof MODULE_SCORES];
+
       return sum + (scores?.roi || 50);
     }, 0);
 
@@ -443,31 +443,31 @@ const PerformanceDashboard: React.FC<{
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8" key={264809}>
       {dashboardCards.map((card, index) => (
-        <motion.div
+        <motion.div;
           key={card.title}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: index * 0.1 }}
-        >
-          <Card
+         key={605155}>
+          <Card;
             className={`bg-gradient-to-br ${card.gradient} ${card.border} relative overflow-hidden hover:scale-105 transition-transform duration-300`}
-          >
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-xs uppercase tracking-wide font-semibold opacity-80 mb-1">
+           key={52987}>
+            <CardContent className="p-6" key={184394}>
+              <div className="flex items-center justify-between" key={96335}>
+                <div key={241917}>
+                  <p className="text-xs uppercase tracking-wide font-semibold opacity-80 mb-1" key={748331}>
                     {card.title}
                   </p>
-                  <p className={`text-3xl font-bold ${card.iconColor} mb-1`}>
+                  <p className={`text-3xl font-bold ${card.iconColor} mb-1`} key={92112}>
                     {card.value}
                   </p>
-                  <p className="text-xs opacity-70">{card.subtitle}</p>
+                  <p className="text-xs opacity-70" key={82621}>{card.subtitle}</p>
                 </div>
-                <card.icon className={`w-10 h-10 ${card.iconColor}`} />
+                <card.icon className={`w-10 h-10 ${card.iconColor}`} / key={705388}>
               </div>
-              <motion.div
+              <motion.div;
                 className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent"
                 animate={{ x: [-100, 300] }}
                 transition={{
@@ -475,7 +475,7 @@ const PerformanceDashboard: React.FC<{
                   duration: 3,
                   ease: "easeInOut",
                 }}
-              />
+              / key={66168}>
             </CardContent>
           </Card>
         </motion.div>
@@ -485,51 +485,51 @@ const PerformanceDashboard: React.FC<{
 };
 
 export const EnhancedModuleManagement: React.FC<
-  EnhancedModuleManagementProps
+  EnhancedModuleManagementProps;
 > = ({ modules, activeModules, onToggleModule, onBatchActivate }) => {
   const [moduleLayout, setModuleLayout] = useState<"grid" | "list">("grid");
   const [sortBy, setSortBy] = useState<"money" | "accuracy" | "profit">(
     "money",
   );
 
-  // Smart recommendations
+  // Smart recommendations;
   const getSmartRecommendations = useCallback(() => {
-    const profitOptimized = modules
+    const profitOptimized = modules;
       .filter((m) => {
-        const scores = MODULE_SCORES[m.id as keyof typeof MODULE_SCORES];
+
         return scores && scores.money >= 85;
       })
       .sort((a, b) => {
-        const scoresA = MODULE_SCORES[a.id as keyof typeof MODULE_SCORES];
-        const scoresB = MODULE_SCORES[b.id as keyof typeof MODULE_SCORES];
+
+
         return (scoresB?.profit || 0) - (scoresA?.profit || 0);
       })
       .slice(0, 6)
       .map((m) => m.id);
 
-    const accuracyOptimized = modules
+    const accuracyOptimized = modules;
       .filter((m) => {
-        const scores = MODULE_SCORES[m.id as keyof typeof MODULE_SCORES];
+
         return scores && scores.accuracy >= 10;
       })
       .sort((a, b) => {
-        const scoresA = MODULE_SCORES[a.id as keyof typeof MODULE_SCORES];
-        const scoresB = MODULE_SCORES[b.id as keyof typeof MODULE_SCORES];
+
+
         return (scoresB?.accuracy || 0) - (scoresA?.accuracy || 0);
       })
       .slice(0, 6)
       .map((m) => m.id);
 
-    const balanced = modules
+    const balanced = modules;
       .filter((m) => {
-        const scores = MODULE_SCORES[m.id as keyof typeof MODULE_SCORES];
+
         return scores && scores.money >= 70 && scores.accuracy >= 5;
       })
       .sort((a, b) => {
-        const scoresA = MODULE_SCORES[a.id as keyof typeof MODULE_SCORES];
-        const scoresB = MODULE_SCORES[b.id as keyof typeof MODULE_SCORES];
-        const totalA = (scoresA?.money || 0) + (scoresA?.accuracy || 0) * 5;
-        const totalB = (scoresB?.money || 0) + (scoresB?.accuracy || 0) * 5;
+
+
+
+
         return totalB - totalA;
       })
       .slice(0, 8)
@@ -538,13 +538,10 @@ export const EnhancedModuleManagement: React.FC<
     return { profitOptimized, accuracyOptimized, balanced };
   }, [modules]);
 
-  const recommendations = getSmartRecommendations();
-
-  // Sort modules by selected criteria
+  // Sort modules by selected criteria;
   const sortedModules = useMemo(() => {
     return [...modules].sort((a, b) => {
-      const scoresA = MODULE_SCORES[a.id as keyof typeof MODULE_SCORES];
-      const scoresB = MODULE_SCORES[b.id as keyof typeof MODULE_SCORES];
+
 
       if (sortBy === "money") {
         return (scoresB?.money || 0) - (scoresA?.money || 0);
@@ -573,7 +570,7 @@ export const EnhancedModuleManagement: React.FC<
         toast.success("⚖️ Activated balanced configuration!");
         break;
       case "critical":
-        const criticalModules = modules
+        const criticalModules = modules;
           .filter((m) => m.priority === "critical")
           .map((m) => m.id);
         onBatchActivate(criticalModules);
@@ -591,156 +588,156 @@ export const EnhancedModuleManagement: React.FC<
   };
 
   return (
-    <Card className="bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-sm border border-slate-700/50 shadow-2xl">
-      <CardHeader>
-        <CardTitle className="flex items-center justify-between">
-          <motion.div
+    <Card className="bg-gradient-to-br from-slate-900/95 to-slate-800/95 backdrop-blur-sm border border-slate-700/50 shadow-2xl" key={4159}>
+      <CardHeader key={236869}>
+        <CardTitle className="flex items-center justify-between" key={997359}>
+          <motion.div;
             className="flex items-center gap-3"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-          >
-            <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500/20 to-purple-500/20">
-              <Brain className="w-6 h-6" />
+           key={382883}>
+            <div className="p-3 rounded-xl bg-gradient-to-r from-blue-500/20 to-purple-500/20" key={317889}>
+              <Brain className="w-6 h-6" / key={674415}>
             </div>
-            <div>
-              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Intelligent Module Management
+            <div key={241917}>
+              <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent" key={329851}>
+                Intelligent Module Management;
               </h2>
-              <p className="text-sm text-slate-400 font-normal">
-                Optimize for maximum profitability
+              <p className="text-sm text-slate-400 font-normal" key={344190}>
+                Optimize for maximum profitability;
               </p>
             </div>
           </motion.div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3" key={443099}>
             {/* Sort Controls */}
-            <div className="flex items-center gap-1 bg-slate-800/50 rounded-lg p-1">
+            <div className="flex items-center gap-1 bg-slate-800/50 rounded-lg p-1" key={309022}>
               {[
                 { key: "money", icon: DollarSign, label: "Money" },
                 { key: "accuracy", icon: Target, label: "Accuracy" },
                 { key: "profit", icon: TrendingUp, label: "Profit" },
               ].map(({ key, icon: Icon, label }) => (
-                <Button
+                <Button;
                   key={key}
                   size="sm"
                   variant={sortBy === key ? "default" : "ghost"}
-                  onClick={() => setSortBy(key as any)}
+                  onClick={() = key={389529}> setSortBy(key as any)}
                   className="h-8 px-2"
                   title={`Sort by ${label}`}
                 >
-                  <Icon className="w-3 h-3" />
+                  <Icon className="w-3 h-3" / key={539592}>
                 </Button>
               ))}
             </div>
 
             {/* Layout Controls */}
-            <div className="flex items-center gap-1 bg-slate-800/50 rounded-lg p-1">
-              <Button
+            <div className="flex items-center gap-1 bg-slate-800/50 rounded-lg p-1" key={309022}>
+              <Button;
                 size="sm"
                 variant={moduleLayout === "grid" ? "default" : "ghost"}
-                onClick={() => setModuleLayout("grid")}
+                onClick={() = key={903340}> setModuleLayout("grid")}
                 className="h-8 px-2"
               >
-                <Grid className="w-3 h-3" />
+                <Grid className="w-3 h-3" / key={363591}>
               </Button>
-              <Button
+              <Button;
                 size="sm"
                 variant={moduleLayout === "list" ? "default" : "ghost"}
-                onClick={() => setModuleLayout("list")}
+                onClick={() = key={996292}> setModuleLayout("list")}
                 className="h-8 px-2"
               >
-                <List className="w-3 h-3" />
+                <List className="w-3 h-3" / key={368704}>
               </Button>
             </div>
           </div>
         </CardTitle>
       </CardHeader>
 
-      <CardContent className="space-y-8">
+      <CardContent className="space-y-8" key={110093}>
         {/* Performance Dashboard */}
-        <PerformanceDashboard
+        <PerformanceDashboard;
           activeModules={activeModules}
           moduleConfigs={modules}
-        />
+        / key={463986}>
 
         {/* Smart Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Button
-            onClick={() => handleQuickAction("profit-optimized")}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4" key={223180}>
+          <Button;
+            onClick={() = key={773178}> handleQuickAction("profit-optimized")}
             className="h-12 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <DollarSign className="w-5 h-5 mr-2" />
-            Max Profit Setup
-            <Badge variant="secondary" className="ml-2 bg-white/20 text-white">
+            <DollarSign className="w-5 h-5 mr-2" / key={495368}>
+            Max Profit Setup;
+            <Badge variant="secondary" className="ml-2 bg-white/20 text-white" key={219765}>
               {recommendations.profitOptimized.length}
             </Badge>
           </Button>
-          <Button
-            onClick={() => handleQuickAction("accuracy-optimized")}
+          <Button;
+            onClick={() = key={773178}> handleQuickAction("accuracy-optimized")}
             className="h-12 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <Target className="w-5 h-5 mr-2" />
-            Max Accuracy Setup
-            <Badge variant="secondary" className="ml-2 bg-white/20 text-white">
+            <Target className="w-5 h-5 mr-2" / key={175988}>
+            Max Accuracy Setup;
+            <Badge variant="secondary" className="ml-2 bg-white/20 text-white" key={219765}>
               {recommendations.accuracyOptimized.length}
             </Badge>
           </Button>
-          <Button
-            onClick={() => handleQuickAction("balanced")}
+          <Button;
+            onClick={() = key={773178}> handleQuickAction("balanced")}
             className="h-12 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
-            <Sparkles className="w-5 h-5 mr-2" />
-            Balanced Setup
-            <Badge variant="secondary" className="ml-2 bg-white/20 text-white">
+            <Sparkles className="w-5 h-5 mr-2" / key={853155}>
+            Balanced Setup;
+            <Badge variant="secondary" className="ml-2 bg-white/20 text-white" key={219765}>
               {recommendations.balanced.length}
             </Badge>
           </Button>
         </div>
 
         {/* Enhanced Module Grid */}
-        <div
+        <div;
           className={`grid gap-6 ${
             moduleLayout === "grid"
               ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
               : "grid-cols-1"
           }`}
-        >
+         key={320965}>
           {sortedModules.map((module, index) => (
-            <EnhancedModuleCard
+            <EnhancedModuleCard;
               key={module.id}
               module={module}
               isActive={activeModules.has(module.id)}
-              onToggle={() => onToggleModule(module.id)}
+              onToggle={() = key={636537}> onToggleModule(module.id)}
               rank={index + 1}
             />
           ))}
         </div>
 
         {/* Traditional Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-4 border-t border-slate-700/50">
-          <Button
-            onClick={() => handleQuickAction("critical")}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 pt-4 border-t border-slate-700/50" key={387417}>
+          <Button;
+            onClick={() = key={773178}> handleQuickAction("critical")}
             variant="outline"
             className="border-red-500/30 text-red-400 hover:bg-red-500/10 hover:border-red-500/50"
           >
-            <Zap className="w-4 h-4 mr-2" />
-            Critical Only
+            <Zap className="w-4 h-4 mr-2" / key={559151}>
+            Critical Only;
           </Button>
-          <Button
-            onClick={() => handleQuickAction("all")}
+          <Button;
+            onClick={() = key={773178}> handleQuickAction("all")}
             variant="outline"
             className="border-blue-500/30 text-blue-400 hover:bg-blue-500/10 hover:border-blue-500/50"
           >
-            <Power className="w-4 h-4 mr-2" />
-            Full Power
+            <Power className="w-4 h-4 mr-2" / key={704518}>
+            Full Power;
           </Button>
-          <Button
-            onClick={() => handleQuickAction("minimal")}
+          <Button;
+            onClick={() = key={773178}> handleQuickAction("minimal")}
             variant="outline"
             className="border-slate-500/30 text-slate-400 hover:bg-slate-500/10 hover:border-slate-500/50"
           >
-            <Minimize className="w-4 h-4 mr-2" />
-            Reset All
+            <Minimize className="w-4 h-4 mr-2" / key={636851}>
+            Reset All;
           </Button>
         </div>
       </CardContent>

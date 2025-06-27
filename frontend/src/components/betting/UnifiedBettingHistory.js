@@ -3,13 +3,13 @@ import { useState, useEffect } from 'react';
 import { UnifiedServiceRegistry } from '../../services/unified/UnifiedServiceRegistry';
 import { Card, Button, Input, Select, Spinner, Toast, Badge, Modal } from '../ui/UnifiedUI';
 export const UnifiedBettingHistory = () => {
-    // Initialize services
-    const serviceRegistry = UnifiedServiceRegistry.getInstance();
-    const analyticsService = serviceRegistry.getService('analytics');
-    const stateService = serviceRegistry.getService('state');
-    const notificationService = serviceRegistry.getService('notification');
-    const errorService = serviceRegistry.getService('error');
-    // State
+    // Initialize services;
+
+
+
+
+
+    // State;
     const [bets, setBets] = useState([]);
     const [stats, setStats] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -28,7 +28,7 @@ export const UnifiedBettingHistory = () => {
     const [showFilters, setShowFilters] = useState(false);
     const [selectedBet, setSelectedBet] = useState(null);
     const [showBetDetails, setShowBetDetails] = useState(false);
-    // Load betting history
+    // Load betting history;
     useEffect(() => {
         loadBettingHistory();
     }, [filters]);
@@ -115,7 +115,7 @@ export const UnifiedBettingHistory = () => {
                                                     { value: 'match_winner', label: 'Match Winner' },
                                                     { value: 'over_under', label: 'Over/Under' },
                                                     { value: 'both_teams_to_score', label: 'Both Teams to Score' },
-                                                    // Add more market types
+                                                    // Add more market types;
                                                 ], value: filters.marketType, onChange: e => handleFilterChange('marketType', e.target.value) })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Search" }), _jsx(Input, { placeholder: "Search bets...", type: "text", value: filters.searchQuery, onChange: e => handleFilterChange('searchQuery', e.target.value) })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Min Odds" }), _jsx(Input, { min: "0", step: "0.01", type: "number", value: filters.minOdds, onChange: e => handleFilterChange('minOdds', parseFloat(e.target.value)) })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Max Odds" }), _jsx(Input, { min: "0", step: "0.01", type: "number", value: filters.maxOdds, onChange: e => handleFilterChange('maxOdds', parseFloat(e.target.value)) })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Min Stake" }), _jsx(Input, { min: "0", step: "0.01", type: "number", value: filters.minStake, onChange: e => handleFilterChange('minStake', parseFloat(e.target.value)) })] }), _jsxs("div", { children: [_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Max Stake" }), _jsx(Input, { min: "0", step: "0.01", type: "number", value: filters.maxStake, onChange: e => handleFilterChange('maxStake', parseFloat(e.target.value)) })] })] }), _jsxs("div", { className: "flex justify-end mt-4", children: [_jsx(Button, { className: "mr-4", variant: "secondary", onClick: resetFilters, children: "Reset Filters" }), _jsx(Button, { variant: "primary", onClick: loadBettingHistory, children: "Apply Filters" })] })] })), _jsx(Card, { children: _jsx("div", { className: "overflow-x-auto", children: _jsxs("table", { className: "min-w-full divide-y divide-gray-200 dark:divide-gray-700", children: [_jsx("thead", { className: "bg-gray-50 dark:bg-gray-800", children: _jsxs("tr", { children: [_jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Event" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Market" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Selection" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Odds" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Stake" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Potential Return" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Status" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Placed" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider", children: "Actions" })] }) }), _jsx("tbody", { className: "bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700", children: bets.map(bet => (_jsxs("tr", { className: "hover:bg-gray-50 dark:hover:bg-gray-800", children: [_jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "text-sm font-medium text-gray-900 dark:text-white", children: bet.eventName }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "text-sm text-gray-500 dark:text-gray-400", children: bet.marketType }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "text-sm text-gray-900 dark:text-white", children: bet.selection }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "text-sm text-gray-900 dark:text-white", children: bet.odds.toFixed(2) }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "text-sm text-gray-900 dark:text-white", children: formatCurrency(bet.stake) }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "text-sm text-gray-900 dark:text-white", children: formatCurrency(bet.potentialReturn) }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: getStatusBadge(bet.status) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "text-sm text-gray-500 dark:text-gray-400", children: new Date(bet.placedAt).toLocaleString() }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap text-right text-sm font-medium", children: _jsx(Button, { size: "small", variant: "secondary", onClick: () => {
                                                             setSelectedBet(bet);
                                                             setShowBetDetails(true);

@@ -1,7 +1,7 @@
 /**
- * Optimized SportsRadar Service - Production Ready
- * Leverages all available SportsRadar trial APIs for comprehensive sports data
- * Quota: 1,000 requests per API, 1 QPS limit
+ * Optimized SportsRadar Service - Production Ready;
+ * Leverages all available SportsRadar trial APIs for comprehensive sports data;
+ * Quota: 1,000 requests per API, 1 QPS limit;
  */
 
 interface SportsRadarConfig {
@@ -49,20 +49,20 @@ interface SportsRadarPlayerProps {
 export class OptimizedSportsRadarService {
   private readonly config: SportsRadarConfig;
   private readonly cache: Map<string, { data: any; timestamp: number }>;
-  private readonly cacheTTL: number = 300000; // 5 minutes to conserve API quota
+  private readonly cacheTTL: number = 300000; // 5 minutes to conserve API quota;
   private lastRequestTime: number = 0;
-  private readonly rateLimitMs: number = 1100; // 1.1 seconds to stay under 1 QPS
+  private readonly rateLimitMs: number = 1100; // 1.1 seconds to stay under 1 QPS;
 
-  // Available SportsRadar APIs based on trial access
+  // Available SportsRadar APIs based on trial access;
   private readonly apiEndpoints = {
-    // Odds Comparison APIs
+    // Odds Comparison APIs;
     odds_comparison_prematch: "/odds-comparison/trial/v2/en/us",
     odds_comparison_player_props:
       "/odds-comparison-player-props/trial/v1/en/us",
     odds_comparison_futures: "/odds-comparison-futures/trial/v1/en/us",
     odds_comparison_regular: "/odds-comparison/trial/v2/en/us",
 
-    // Sports APIs
+    // Sports APIs;
     nba: "/nba/trial/v8/en",
     nfl: "/nfl/trial/v7/en",
     nhl: "/nhl/trial/v7/en",
@@ -87,18 +87,16 @@ export class OptimizedSportsRadarService {
     this.cache = new Map();
 
     if (this.config.apiKey) {
-      console.log(
-        "✓ SportsRadar API configured with comprehensive trial access",
-      );
-      console.log(`✓ Available APIs: ${this.config.availableAPIs.join(", ")}`);
+      // console statement removed
+      // console statement removed}`);
     } else {
-      console.warn("⚠ SportsRadar API key not configured");
+      // console statement removed
     }
   }
 
   private async enforceRateLimit(): Promise<void> {
-    const now = Date.now();
-    const timeSinceLastRequest = now - this.lastRequestTime;
+
+
     if (timeSinceLastRequest < this.rateLimitMs) {
       await new Promise((resolve) =>
         setTimeout(resolve, this.rateLimitMs - timeSinceLastRequest),
@@ -117,12 +115,10 @@ export class OptimizedSportsRadarService {
       ...params,
     });
 
-    const url = `${this.config.baseUrl}${endpoint}?${queryParams}`;
-    const cacheKey = url;
 
-    // Check cache first to conserve quota
+    // Check cache first to conserve quota;
     if (useCache) {
-      const cached = this.cache.get(cacheKey);
+
       if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
         return cached.data;
       }
@@ -144,9 +140,7 @@ export class OptimizedSportsRadarService {
         );
       }
 
-      const data = await response.json();
-
-      // Cache to conserve quota
+      // Cache to conserve quota;
       if (useCache) {
         this.cache.set(cacheKey, {
           data,
@@ -156,13 +150,13 @@ export class OptimizedSportsRadarService {
 
       return data;
     } catch (error) {
-      console.error("SportsRadar API request failed:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get comprehensive odds from Odds Comparison APIs
+   * Get comprehensive odds from Odds Comparison APIs;
    */
   async getOddsComparison(
     sport: string,
@@ -171,7 +165,7 @@ export class OptimizedSportsRadarService {
     try {
       const endpoint =
         market === "player_props"
-          ? this.apiEndpoints.odds_comparison_player_props
+          ? this.apiEndpoints.odds_comparison_player_props;
           : this.apiEndpoints.odds_comparison_prematch;
 
       const data = await this.makeRequest(
@@ -180,43 +174,41 @@ export class OptimizedSportsRadarService {
 
       return this.transformOddsData(data, sport);
     } catch (error) {
-      console.error("Error fetching odds comparison:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get player props from SportsRadar
+   * Get player props from SportsRadar;
    */
   async getPlayerProps(
     sport: string,
     eventId?: string,
   ): Promise<SportsRadarPlayerProps[]> {
     try {
-      const endpoint = this.apiEndpoints.odds_comparison_player_props;
-      const path = eventId
+
+      const path = eventId;
         ? `${endpoint}/sports/${sport}/events/${eventId}/markets.json`
         : `${endpoint}/sports/${sport}/events.json`;
 
-      const data = await this.makeRequest(path);
-
       return this.transformPlayerPropsData(data);
     } catch (error) {
-      console.error("Error fetching player props:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get NBA data using NBA API
+   * Get NBA data using NBA API;
    */
   async getNBAData(
     dataType: "games" | "standings" | "players" = "games",
     date?: string,
   ): Promise<any> {
     try {
-      const currentDate = date || new Date().toISOString().split("T")[0];
-      let path = "";
+
+      const path = "";
 
       switch (dataType) {
         case "games":
@@ -232,24 +224,24 @@ export class OptimizedSportsRadarService {
 
       return await this.makeRequest(`${this.apiEndpoints.nba}${path}`);
     } catch (error) {
-      console.error("Error fetching NBA data:", error);
+      // console statement removed
       return null;
     }
   }
 
   /**
-   * Get NFL data using NFL API
+   * Get NFL data using NFL API;
    */
   async getNFLData(
     dataType: "games" | "standings" | "teams" = "games",
     week?: number,
   ): Promise<any> {
     try {
-      let path = "";
+      const path = "";
 
       switch (dataType) {
         case "games":
-          const currentWeek = week || 1;
+
           path = `/games/2024/REG/${currentWeek}/schedule.json`;
           break;
         case "standings":
@@ -262,27 +254,27 @@ export class OptimizedSportsRadarService {
 
       return await this.makeRequest(`${this.apiEndpoints.nfl}${path}`);
     } catch (error) {
-      console.error("Error fetching NFL data:", error);
+      // console statement removed
       return null;
     }
   }
 
   /**
-   * Get multi-sport data efficiently
+   * Get multi-sport data efficiently;
    */
   async getMultiSportData(sports: string[]): Promise<Record<string, any>> {
     const results: Record<string, any> = {};
 
-    // Process sports in batches to respect rate limits
+    // Process sports in batches to respect rate limits;
     for (const sport of sports) {
       try {
         if (this.apiEndpoints[sport as keyof typeof this.apiEndpoints]) {
           results[sport] = await this.getSportData(sport);
         } else {
-          console.warn(`Sport ${sport} not available in SportsRadar trial`);
+          // console statement removed
         }
       } catch (error) {
-        console.error(`Error fetching ${sport} data:`, error);
+        // console statement removed
         results[sport] = null;
       }
     }
@@ -291,31 +283,31 @@ export class OptimizedSportsRadarService {
   }
 
   /**
-   * Get specific sport data
+   * Get specific sport data;
    */
   private async getSportData(sport: string): Promise<any> {
-    const endpoint = this.apiEndpoints[sport as keyof typeof this.apiEndpoints];
+
     if (!endpoint) return null;
 
     try {
-      // Try to get current games/schedule
-      const currentDate = new Date().toISOString().split("T")[0];
+      // Try to get current games/schedule;
+
       return await this.makeRequest(
         `${endpoint}/games/${currentDate}/schedule.json`,
       );
     } catch (error) {
-      // Fallback to league info
+      // Fallback to league info;
       try {
         return await this.makeRequest(`${endpoint}/league/hierarchy.json`);
       } catch (fallbackError) {
-        console.error(`Failed to get ${sport} data:`, fallbackError);
+        // console statement removed
         return null;
       }
     }
   }
 
   /**
-   * Transform odds data to unified format
+   * Transform odds data to unified format;
    */
   private transformOddsData(data: any, sport: string): SportsRadarOdds[] {
     if (!data || !data.events) return [];
@@ -357,16 +349,13 @@ export class OptimizedSportsRadarService {
   }
 
   /**
-   * Transform player props data
+   * Transform player props data;
    */
   private transformPlayerPropsData(data: any): SportsRadarPlayerProps[] {
     if (!data || !data.markets) return [];
 
-    const playerPropsMap = new Map<string, SportsRadarPlayerProps>();
-
     data.markets.forEach((market: any) => {
       if (market.player) {
-        const playerId = market.player.id;
 
         if (!playerPropsMap.has(playerId)) {
           playerPropsMap.set(playerId, {
@@ -378,7 +367,6 @@ export class OptimizedSportsRadarService {
           });
         }
 
-        const playerProp = playerPropsMap.get(playerId)!;
         playerProp.props.push({
           prop_type: market.specifier || "Unknown",
           line: market.handicap || 0,
@@ -395,7 +383,7 @@ export class OptimizedSportsRadarService {
   }
 
   /**
-   * Get quota usage and remaining requests
+   * Get quota usage and remaining requests;
    */
   getQuotaUsage(): {
     used_requests: number;
@@ -403,14 +391,13 @@ export class OptimizedSportsRadarService {
     cache_hits: number;
     recommendations: string[];
   } {
-    const cacheHits = this.cache.size;
-    const estimatedUsedRequests = Math.max(0, cacheHits - 50); // Estimate based on cache
+
+    const estimatedUsedRequests = Math.max(0, cacheHits - 50); // Estimate based on cache;
     const remainingRequests = Math.max(
       0,
       this.config.quotaLimit - estimatedUsedRequests,
     );
 
-    const recommendations = [];
     if (remainingRequests < 100) {
       recommendations.push("⚠ Low quota remaining - increase cache usage");
     }
@@ -427,7 +414,7 @@ export class OptimizedSportsRadarService {
   }
 
   /**
-   * Health check for all available APIs
+   * Health check for all available APIs;
    */
   async healthCheck(): Promise<{
     overall: string;
@@ -436,8 +423,7 @@ export class OptimizedSportsRadarService {
   }> {
     const apiResults: Record<string, { status: string; message: string }> = {};
 
-    // Test core APIs
-    const coreAPIs = ["odds_comparison_prematch", "nba", "nfl"];
+    // Test core APIs;
 
     for (const api of coreAPIs) {
       try {
@@ -456,7 +442,6 @@ export class OptimizedSportsRadarService {
     const healthyAPIs = Object.values(apiResults).filter(
       (r) => r.status === "healthy",
     ).length;
-    const overall = healthyAPIs > 0 ? "healthy" : "degraded";
 
     return {
       overall,
@@ -466,14 +451,14 @@ export class OptimizedSportsRadarService {
   }
 
   /**
-   * Clear cache to free memory
+   * Clear cache to free memory;
    */
   clearCache(): void {
     this.cache.clear();
   }
 
   /**
-   * Get cache statistics
+   * Get cache statistics;
    */
   getCacheStats(): {
     size: number;
@@ -481,7 +466,7 @@ export class OptimizedSportsRadarService {
     cache_efficiency: number;
   } {
     const apisCovered = Array.from(this.cache.keys())
-      .map((key) => key.split("/")[3]) // Extract API name from URL
+      .map((key) => key.split("/")[3]) // Extract API name from URL;
       .filter((api, index, arr) => arr.indexOf(api) === index);
 
     return {
@@ -495,6 +480,6 @@ export class OptimizedSportsRadarService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const optimizedSportsRadarService = new OptimizedSportsRadarService();
 export default optimizedSportsRadarService;

@@ -1,5 +1,5 @@
-// simulationSlice.ts
-// Zustand slice for bet simulation input/result state
+// simulationSlice.ts;
+// Zustand slice for bet simulation input/result state;
 import { create } from 'zustand';
 export const useSimulationStore = create((set) => ({
     input: null,

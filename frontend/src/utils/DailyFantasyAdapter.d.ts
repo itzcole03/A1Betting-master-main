@@ -1,4 +1,4 @@
-import { DataSource } from '../core/DataSource';
+import { DataSource } from '@/core/DataSource.ts';
 interface DailyFantasyConfig {
     apiKey: string;
     baseUrl: string;

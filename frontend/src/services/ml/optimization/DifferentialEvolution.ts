@@ -1,2 +1,2 @@
-// Ported from Newfolder: Differential Evolution optimization model
+// Ported from Newfolder: Differential Evolution optimization model;
 // ...existing code from Newfolder's DifferentialEvolution.ts...

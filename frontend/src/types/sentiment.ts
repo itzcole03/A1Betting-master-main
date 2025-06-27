@@ -1,4 +1,4 @@
-// Types for social sentiment data
+// Types for social sentiment data;
 export interface SocialSentimentData {
   id: string;
   topic: string;

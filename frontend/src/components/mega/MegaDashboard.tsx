@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from 'react.ts';
 import {
   CYBER_COLORS,
   CYBER_GRADIENTS,
@@ -6,7 +6,7 @@ import {
   CyberContainer,
   CyberText,
   CyberButton,
-} from "./CyberTheme";
+} from './CyberTheme.ts';
 import {
   Brain,
   Target,
@@ -20,9 +20,9 @@ import {
   Cpu,
   Database,
   Wifi,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// MEGA DASHBOARD - Consolidates all dashboard components with cyber theme
+// MEGA DASHBOARD - Consolidates all dashboard components with cyber theme;
 const MegaDashboard: React.FC<{
   currentSection?: string;
   connectedSources?: number;
@@ -49,7 +49,7 @@ const MegaDashboard: React.FC<{
     success: 87.6,
   });
 
-  // Auto-refresh metrics every 10 seconds
+  // Auto-refresh metrics every 10 seconds;
   useEffect(() => {
     if (!autoRefresh) return;
 
@@ -116,60 +116,60 @@ const MegaDashboard: React.FC<{
   ];
 
   const renderOverviewTab = () => (
-    <div
+    <div;
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
         gap: "24px",
       }}
-    >
+     key={641337}>
       {/* Metric Cards */}
       {dashboardCards.map((card, index) => {
-        const Icon = card.icon;
+
         return (
-          <CyberContainer
+          <CyberContainer;
             key={index}
             variant="card"
             style={{ padding: "20px" }}
-          >
-            <div
+           key={118299}>
+            <div;
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
                 marginBottom: "16px",
               }}
-            >
-              <div>
-                <CyberText variant="caption" color="muted">
+             key={155985}>
+              <div key={241917}>
+                <CyberText variant="caption" color="muted" key={505352}>
                   {card.title}
                 </CyberText>
-                <CyberText
+                <CyberText;
                   variant="title"
                   style={{
                     fontSize: "24px",
                     color: card.color,
                     marginBottom: "4px",
                   }}
-                >
+                 key={154727}>
                   {card.value}
                 </CyberText>
-                <CyberText
+                <CyberText;
                   variant="caption"
                   style={{ color: CYBER_COLORS.primary }}
-                >
-                  {card.trend} this week
+                 key={220200}>
+                  {card.trend} this week;
                 </CyberText>
               </div>
-              <div
+              <div;
                 style={{
                   padding: "12px",
                   borderRadius: "8px",
                   backgroundColor: "rgba(255, 255, 255, 0.05)",
                   border: `1px solid ${card.color}30`,
                 }}
-              >
-                <Icon size={20} color={card.color} />
+               key={987001}>
+                <Icon size={20} color={card.color} / key={608812}>
               </div>
             </div>
           </CyberContainer>
@@ -177,25 +177,25 @@ const MegaDashboard: React.FC<{
       })}
 
       {/* Live Activity Feed */}
-      <CyberContainer
+      <CyberContainer;
         variant="card"
         style={{ gridColumn: "span 2", padding: "20px" }}
-      >
-        <CyberText
+       key={437785}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <Activity
+         key={738204}>
+          <Activity;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.primary }}
-          />
-          Live Activity Feed
+          / key={571017}>
+          Live Activity Feed;
         </CyberText>
-        <div style={{ space: "12px" }}>
+        <div style={{ space: "12px" }} key={938776}>
           {[
             {
               time: "2:34 PM",
@@ -222,7 +222,7 @@ const MegaDashboard: React.FC<{
               color: CYBER_COLORS.purple,
             },
           ].map((activity, index) => (
-            <div
+            <div;
               key={index}
               style={{
                 display: "flex",
@@ -232,17 +232,17 @@ const MegaDashboard: React.FC<{
                 borderBottom:
                   index < 3 ? "1px solid rgba(255, 255, 255, 0.05)" : "none",
               }}
-            >
-              <div>
-                <CyberText variant="body">{activity.event}</CyberText>
-                <CyberText variant="caption" color="muted">
+             key={976083}>
+              <div key={241917}>
+                <CyberText variant="body" key={794207}>{activity.event}</CyberText>
+                <CyberText variant="caption" color="muted" key={505352}>
                   {activity.time}
                 </CyberText>
               </div>
-              <CyberText
+              <CyberText;
                 variant="body"
                 style={{ color: activity.color, fontWeight: "600" }}
-              >
+               key={334620}>
                 {activity.value}
               </CyberText>
             </div>
@@ -253,31 +253,31 @@ const MegaDashboard: React.FC<{
   );
 
   const renderSystemTab = () => (
-    <div
+    <div;
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
         gap: "24px",
       }}
-    >
+     key={260114}>
       {/* System Health */}
-      <CyberContainer variant="card" style={{ padding: "20px" }}>
-        <CyberText
+      <CyberContainer variant="card" style={{ padding: "20px" }} key={24342}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <Cpu
+         key={738204}>
+          <Cpu;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.primary }}
-          />
-          System Health
+          / key={877620}>
+          System Health;
         </CyberText>
         {systemStats.map((stat, index) => (
-          <div
+          <div;
             key={index}
             style={{
               display: "flex",
@@ -285,18 +285,18 @@ const MegaDashboard: React.FC<{
               alignItems: "center",
               padding: "8px 0",
               borderBottom:
-                index < systemStats.length - 1
+                index < systemStats.length - 1;
                   ? "1px solid rgba(255, 255, 255, 0.05)"
                   : "none",
             }}
-          >
-            <CyberText variant="body" color="secondary">
+           key={315612}>
+            <CyberText variant="body" color="secondary" key={196444}>
               {stat.label}
             </CyberText>
-            <CyberText
+            <CyberText;
               variant="body"
               style={{ color: stat.color, fontWeight: "600" }}
-            >
+             key={46982}>
               {stat.value}
             </CyberText>
           </div>
@@ -304,22 +304,22 @@ const MegaDashboard: React.FC<{
       </CyberContainer>
 
       {/* Data Quality */}
-      <CyberContainer variant="card" style={{ padding: "20px" }}>
-        <CyberText
+      <CyberContainer variant="card" style={{ padding: "20px" }} key={24342}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <Database
+         key={738204}>
+          <Database;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.secondary }}
-          />
+          / key={455036}>
           Data Quality: {dataQuality}%
         </CyberText>
-        <div
+        <div;
           style={{
             width: "100%",
             height: "8px",
@@ -328,25 +328,25 @@ const MegaDashboard: React.FC<{
             overflow: "hidden",
             marginBottom: "16px",
           }}
-        >
-          <div
+         key={927990}>
+          <div;
             style={{
               width: `${dataQuality}%`,
               height: "100%",
               backgroundImage: CYBER_GRADIENTS.button,
               transition: "width 0.3s ease",
             }}
-          />
+          / key={796215}>
         </div>
-        <CyberText variant="caption" color="muted">
-          {connectedSources} active data sources connected
+        <CyberText variant="caption" color="muted" key={505352}>
+          {connectedSources} active data sources connected;
         </CyberText>
       </CyberContainer>
     </div>
   );
 
   return (
-    <div
+    <div;
       className={`mega-dashboard ${className}`}
       style={{
         minHeight: "100vh",
@@ -354,41 +354,41 @@ const MegaDashboard: React.FC<{
         padding: "24px",
         color: CYBER_COLORS.text.primary,
       }}
-    >
+     key={686553}>
       {/* Header */}
-      <CyberContainer
+      <CyberContainer;
         variant="panel"
         style={{ marginBottom: "24px", padding: "20px" }}
-      >
-        <div
+       key={555499}>
+        <div;
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             marginBottom: "16px",
           }}
-        >
-          <div>
-            <CyberText
+         key={580818}>
+          <div key={241917}>
+            <CyberText;
               variant="title"
               style={{ fontSize: "28px", marginBottom: "4px" }}
-            >
-              A1Betting Dashboard
+             key={851908}>
+              A1Betting Dashboard;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Quantum-powered sports betting intelligence platform
+            <CyberText variant="body" color="muted" key={892775}>
+              Quantum-powered sports betting intelligence platform;
             </CyberText>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <Wifi size={16} color={CYBER_COLORS.primary} />
-              <CyberText variant="caption" color="accent">
-                Live
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }} key={333019}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }} key={537788}>
+              <Wifi size={16} color={CYBER_COLORS.primary} / key={180682}>
+              <CyberText variant="caption" color="accent" key={194784}>
+                Live;
               </CyberText>
             </div>
-            <CyberButton
+            <CyberButton;
               variant={autoRefresh ? "primary" : "secondary"}
-              onClick={() => setAutoRefresh(!autoRefresh)}
+              onClick={() = key={703652}> setAutoRefresh(!autoRefresh)}
             >
               Auto-refresh: {autoRefresh ? "ON" : "OFF"}
             </CyberButton>
@@ -396,16 +396,16 @@ const MegaDashboard: React.FC<{
         </div>
 
         {/* Tab Navigation */}
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div style={{ display: "flex", gap: "8px" }} key={772482}>
           {tabs.map((tab) => {
-            const Icon = tab.icon;
+
             return (
-              <CyberButton
+              <CyberButton;
                 key={tab.key}
                 variant={activeTab === tab.key ? "primary" : "secondary"}
                 active={activeTab === tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                icon={<Icon size={16} />}
+                onClick={() = key={287146}> setActiveTab(tab.key)}
+                icon={<Icon size={16} / key={856509}>}
                 style={{ marginBottom: 0, width: "auto", padding: "8px 16px" }}
               >
                 {tab.label}
@@ -416,42 +416,42 @@ const MegaDashboard: React.FC<{
       </CyberContainer>
 
       {/* Content */}
-      <div style={{ minHeight: "500px" }}>
+      <div style={{ minHeight: "500px" }} key={298126}>
         {activeTab === "overview" && renderOverviewTab()}
         {activeTab === "system" && renderSystemTab()}
         {activeTab === "realtime" && (
-          <CyberContainer
+          <CyberContainer;
             variant="card"
             style={{ padding: "40px", textAlign: "center" }}
-          >
-            <Zap
+           key={933437}>
+            <Zap;
               size={48}
               color={CYBER_COLORS.primary}
               style={{ marginBottom: "16px", margin: "0 auto" }}
-            />
-            <CyberText variant="title" style={{ marginBottom: "8px" }}>
-              Real-time Feed Coming Soon
+            / key={198184}>
+            <CyberText variant="title" style={{ marginBottom: "8px" }} key={813364}>
+              Real-time Feed Coming Soon;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Live predictions and betting opportunities will be displayed here
+            <CyberText variant="body" color="muted" key={892775}>
+              Live predictions and betting opportunities will be displayed here;
             </CyberText>
           </CyberContainer>
         )}
         {activeTab === "analytics" && (
-          <CyberContainer
+          <CyberContainer;
             variant="card"
             style={{ padding: "40px", textAlign: "center" }}
-          >
-            <Brain
+           key={933437}>
+            <Brain;
               size={48}
               color={CYBER_COLORS.secondary}
               style={{ marginBottom: "16px", margin: "0 auto" }}
-            />
-            <CyberText variant="title" style={{ marginBottom: "8px" }}>
-              Advanced Analytics
+            / key={944476}>
+            <CyberText variant="title" style={{ marginBottom: "8px" }} key={813364}>
+              Advanced Analytics;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Deep ML insights and performance analytics
+            <CyberText variant="body" color="muted" key={892775}>
+              Deep ML insights and performance analytics;
             </CyberText>
           </CyberContainer>
         )}

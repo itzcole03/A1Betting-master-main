@@ -1,4 +1,4 @@
-import { FeatureConfig, EngineeredFeatures, FeatureValidationResult } from '@/types';
+import { FeatureConfig, EngineeredFeatures, FeatureValidationResult } from '@/types.ts';
 export declare class FeatureValidator {
     private readonly config;
     private readonly logger;

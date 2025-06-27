@@ -1,6 +1,6 @@
-// ConfidenceBands: Visualizes model confidence intervals for predictions
-// TODO: Add tests and real data binding
-import React from 'react';
+// ConfidenceBands: Visualizes model confidence intervals for predictions;
+// TODO: Add tests and real data binding;
+import React from 'react.ts';
 
 export interface ConfidenceBandsProps {
   lower: number;
@@ -8,10 +8,10 @@ export interface ConfidenceBandsProps {
   mean: number;
 }
 
-const ConfidenceBands: React.FC<ConfidenceBandsProps> = ({ lower, upper, mean }) => (
-  <div className="confidence-bands">
-    <div>Confidence Interval: {lower} - {upper}</div>
-    <div>Mean: {mean}</div>
+const ConfidenceBands: React.FC<ConfidenceBandsProps key={2612}> = ({ lower, upper, mean }) => (
+  <div className="confidence-bands" key={539214}>
+    <div key={241917}>Confidence Interval: {lower} - {upper}</div>
+    <div key={241917}>Mean: {mean}</div>
     {/* TODO: Add chart visualization */}
   </div>
 );

@@ -1,5 +1,5 @@
 import { prizePicksAdapter } from './prizepicks';
-// Unified adapter manager
+// Unified adapter manager;
 class AdapterManager {
     constructor() {
         this.adapters = new Map();

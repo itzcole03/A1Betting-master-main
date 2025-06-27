@@ -1,7 +1,7 @@
-import React from 'react';
-import { cn } from '@/utils/classNames';
+import React from 'react.ts';
+import { cn } from '@/utils/classNames.ts';
 
-export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement key={92993}> {
   src?: string;
   alt?: string;
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
@@ -27,7 +27,7 @@ const statusColors = {
   busy: 'bg-red-500',
 };
 
-export const Avatar: React.FC<AvatarProps> = ({
+export const Avatar: React.FC<AvatarProps key={305433}> = ({
   src,
   alt,
   size = 'md',
@@ -36,7 +36,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   fallback,
   bordered = false,
   className,
-  ...props
+  ...props;
 }) => {
   const [imageError, setImageError] = React.useState(false);
 
@@ -46,7 +46,7 @@ export const Avatar: React.FC<AvatarProps> = ({
 
   const getFallbackInitials = () => {
     if (!fallback) return '';
-    return fallback
+    return fallback;
       .split(' ')
       .map(word => word[0])
       .join('')
@@ -55,37 +55,37 @@ export const Avatar: React.FC<AvatarProps> = ({
   };
 
   return (
-    <div className="relative inline-block">
-      <div
+    <div className="relative inline-block" key={46364}>
+      <div;
         className={cn(
           'relative flex items-center justify-center bg-gray-200 dark:bg-gray-700 overflow-hidden',
           sizes[size],
           shape === 'circle' ? 'rounded-full' : 'rounded-lg',
           bordered && 'ring-2 ring-white dark:ring-gray-800',
-          className
+          className;
         )}
         {...props}
-      >
+       key={212552}>
         {src && !imageError ? (
-          <img
+          <img;
             alt={alt}
             className="h-full w-full object-cover"
             src={src}
             onError={handleImageError}
-          />
+          / key={619297}>
         ) : (
-          <span className="font-medium text-gray-600 dark:text-gray-300">
+          <span className="font-medium text-gray-600 dark:text-gray-300" key={396045}>
             {getFallbackInitials()}
           </span>
         )}
       </div>
       {status && (
-        <span
+        <span;
           className={cn(
             'absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-gray-800',
             statusColors[status]
           )}
-        />
+        / key={164887}>
       )}
     </div>
   );
@@ -97,26 +97,25 @@ export const AvatarGroup: React.FC<{
   size?: AvatarProps['size'];
   className?: string;
 }> = ({ avatars, max = 4, size = 'md', className }) => {
-  const visibleAvatars = avatars.slice(0, max);
-  const remainingCount = avatars.length - max;
+
 
   return (
-    <div className={cn('flex -space-x-2', className)}>
+    <div className={cn('flex -space-x-2', className)} key={616073}>
       {visibleAvatars.map((avatar, index) => (
-        <Avatar
+        <Avatar;
           key={index}
           {...avatar}
           className="ring-2 ring-white dark:ring-gray-800"
           size={size}
-        />
+        / key={110289}>
       ))}
       {remainingCount > 0 && (
-        <div
+        <div;
           className={cn(
             'relative flex items-center justify-center bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300 font-medium ring-2 ring-white dark:ring-gray-800 rounded-full',
             sizes[size]
           )}
-        >
+         key={429657}>
           +{remainingCount}
         </div>
       )}

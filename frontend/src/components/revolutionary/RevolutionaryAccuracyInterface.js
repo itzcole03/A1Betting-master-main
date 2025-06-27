@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Atom, Zap, Target, Brain, Activity, BarChart3, Network, Layers, TrendingUp, Settings, Eye, RefreshCw, CheckCircle, Cpu, Sparkles, Radar, GitBranch, Microscope, Gauge, Workflow, } from "lucide-react";
 import { Radar as RadarChart, Bar, } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, RadialLinearScale, Title, Tooltip, Legend, ArcElement, Filler, } from "chart.js";
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, RadialLinearScale, Title, Tooltip, Legend, ArcElement, Filler);
 export const RevolutionaryAccuracyInterface = () => {
     const [predictionRequest, setPredictionRequest] = useState({
@@ -32,23 +32,23 @@ export const RevolutionaryAccuracyInterface = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [processingStage, setProcessingStage] = useState("");
     const [selectedAnalysis, setSelectedAnalysis] = useState("prediction");
-    // Fetch breakthrough summary on component mount
+    // Fetch breakthrough summary on component mount;
     useEffect(() => {
         fetchBreakthroughSummary();
     }, []);
     const fetchBreakthroughSummary = useCallback(async () => {
         try {
-            const response = await fetch("/api/revolutionary/research/breakthrough-summary");
+
             if (response.ok) {
-                const data = await response.json();
+
                 setBreakthroughSummary(data);
             }
         }
         catch (error) {
-            console.error("Error fetching breakthrough summary:", error);
+            // console statement removed
         }
     }, []);
-    // Generate revolutionary prediction
+    // Generate revolutionary prediction;
     const generateRevolutionaryPrediction = useCallback(async () => {
         if (!predictionRequest.event_id) {
             alert("Please provide an event ID");
@@ -57,7 +57,7 @@ export const RevolutionaryAccuracyInterface = () => {
         setIsProcessing(true);
         setProcessingStage("Initializing revolutionary ML systems...");
         try {
-            // Simulate processing stages
+            // Simulate processing stages;
             const stages = [
                 "Initializing neuromorphic spiking networks...",
                 "Applying physics-informed constraints...",
@@ -69,7 +69,7 @@ export const RevolutionaryAccuracyInterface = () => {
                 "Fusing revolutionary predictions...",
                 "Finalizing breakthrough analysis...",
             ];
-            for (let i = 0; i < stages.length; i++) {
+            for (const i = 0; i < stages.length; i++) {
                 setProcessingStage(stages[i]);
                 await new Promise((resolve) => setTimeout(resolve, 800));
             }
@@ -79,11 +79,11 @@ export const RevolutionaryAccuracyInterface = () => {
                 body: JSON.stringify(predictionRequest),
             });
             if (response.ok) {
-                const result = await response.json();
+
                 setPredictionResult(result);
             }
             else {
-                // Fallback with simulated revolutionary data
+                // Fallback with simulated revolutionary data;
                 const simulatedResult = {
                     event_id: predictionRequest.event_id,
                     strategy_used: predictionRequest.strategy,
@@ -152,41 +152,41 @@ export const RevolutionaryAccuracyInterface = () => {
             }
         }
         catch (error) {
-            console.error("Revolutionary prediction failed:", error);
+            // console statement removed
         }
         finally {
             setIsProcessing(false);
             setProcessingStage("");
         }
     }, [predictionRequest]);
-    // Add sample features
+    // Add sample features;
     const addAdvancedSampleFeatures = useCallback(() => {
         const advancedFeatures = {
-            // Player performance metrics
+            // Player performance metrics;
             player_efficiency_rating: Math.random() * 35 + 15,
             usage_rate: Math.random() * 25 + 15,
             true_shooting_percentage: Math.random() * 0.3 + 0.45,
-            // Team dynamics
+            // Team dynamics;
             team_offensive_rating: Math.random() * 20 + 100,
             team_defensive_rating: Math.random() * 15 + 95,
             pace_factor: Math.random() * 10 + 95,
-            // Advanced analytics
+            // Advanced analytics;
             expected_value_added: Math.random() * 5 - 2.5,
             win_probability_added: Math.random() * 0.2 - 0.1,
             clutch_performance: Math.random() * 10 + 5,
-            // Contextual factors
+            // Contextual factors;
             rest_days: Math.floor(Math.random() * 5),
             travel_distance: Math.random() * 3000,
             altitude_effect: Math.random() * 1000 + 500,
-            // Market dynamics
+            // Market dynamics;
             betting_volume: Math.random() * 1000000 + 100000,
             market_sentiment: Math.random() * 2 - 1,
             sharp_money_percentage: Math.random() * 100,
-            // Weather and venue
+            // Weather and venue;
             temperature: Math.random() * 40 + 40,
             humidity: Math.random() * 60 + 20,
             wind_speed: Math.random() * 15,
-            // Psychological factors
+            // Psychological factors;
             momentum_score: Math.random() * 20 - 10,
             pressure_index: Math.random() * 100,
             confidence_rating: Math.random() * 10 + 5,
@@ -196,7 +196,7 @@ export const RevolutionaryAccuracyInterface = () => {
             features: advancedFeatures,
         }));
     }, []);
-    // Revolutionary enhancement breakdown chart
+    // Revolutionary enhancement breakdown chart;
     const enhancementBreakdownData = useMemo(() => {
         if (!predictionResult)
             return null;
@@ -245,7 +245,7 @@ export const RevolutionaryAccuracyInterface = () => {
             ],
         };
     }, [predictionResult]);
-    // Advanced metrics radar chart
+    // Advanced metrics radar chart;
     const advancedMetricsData = useMemo(() => {
         if (!predictionResult)
             return null;
@@ -281,11 +281,11 @@ export const RevolutionaryAccuracyInterface = () => {
             ],
         };
     }, [predictionResult]);
-    // Accuracy improvements comparison
+    // Accuracy improvements comparison;
     const accuracyImprovementsData = useMemo(() => {
         if (!predictionResult)
             return null;
-        const improvements = predictionResult.accuracy_improvements;
+
         return {
             labels: Object.keys(improvements),
             datasets: [
@@ -348,7 +348,7 @@ export const RevolutionaryAccuracyInterface = () => {
                                                         ].map(({ key, label, icon: Icon }) => (_jsxs("div", { className: "flex items-center space-x-3", children: [_jsx("input", { type: "checkbox", id: key, checked: predictionRequest[key], onChange: (e) => setPredictionRequest((prev) => ({
                                                                         ...prev,
                                                                         [key]: e.target.checked,
-                                                                    })), className: "rounded" }), _jsx(Icon, { className: "w-4 h-4 text-purple-600" }), _jsx("label", { htmlFor: key, className: "text-sm font-medium", children: label })] }, key)))] }), _jsxs("div", { className: "flex gap-3", children: [_jsxs(Button, { onClick: addAdvancedSampleFeatures, variant: "outline", className: "flex-1", children: [_jsx(Microscope, { className: "w-4 h-4 mr-2" }), "Advanced Sample Data"] }), _jsxs(Button, { onClick: generateRevolutionaryPrediction, disabled: isProcessing, className: "flex-1 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700", children: [isProcessing ? (_jsx(RefreshCw, { className: "w-4 h-4 animate-spin mr-2" })) : (_jsx(Zap, { className: "w-4 h-4 mr-2" })), isProcessing
+                                                                    })), className: "rounded" }), _jsx(Icon, { className: "w-4 h-4 text-purple-600" }), _jsx("label", { htmlFor: key, className: "text-sm font-medium", children: label })] }, key)))] }), _jsxs("div", { className: "flex gap-3", children: [_jsxs(Button, { onClick: addAdvancedSampleFeatures, variant: "outline", className: "flex-1", children: [_jsx(Microscope, { className: "w-4 h-4 mr-2" }), "Advanced Sample Data"] }), _jsxs(Button, { onClick: generateRevolutionaryPrediction, disabled: isProcessing, className: "flex-1 bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700", children: [isProcessing ? (_jsx(RefreshCw, { className: "w-4 h-4 animate-spin mr-2" })) : (_jsx(Zap, { className: "w-4 h-4 mr-2" })), isProcessing;
                                                                     ? "Processing..."
                                                                     : "Generate Revolutionary Prediction"] })] })] })] }), _jsxs(Card, { children: [_jsx(CardHeader, { children: _jsx(CardTitle, { children: "Advanced Feature Vector" }) }), _jsxs(CardContent, { children: [_jsx("div", { className: "grid grid-cols-2 gap-3 max-h-96 overflow-y-auto", children: Object.entries(predictionRequest.features).map(([key, value]) => (_jsxs("div", { children: [_jsx(Label, { htmlFor: key, className: "text-xs", children: key.replace(/_/g, " ").toUpperCase() }), _jsx(Input, { id: key, type: "number", step: "0.001", value: value, onChange: (e) => setPredictionRequest((prev) => ({
                                                                     ...prev,
@@ -358,7 +358,7 @@ export const RevolutionaryAccuracyInterface = () => {
                                                                     },
                                                                 })), className: "text-xs" })] }, key))) }), Object.keys(predictionRequest.features).length === 0 && (_jsxs("div", { className: "text-center py-8", children: [_jsx("p", { className: "text-gray-500 mb-4", children: "No features configured" }), _jsx(Button, { onClick: addAdvancedSampleFeatures, variant: "outline", children: "Add Advanced Sample Features" })] }))] })] })] }) }), _jsx(TabsContent, { value: "results", children: predictionResult ? (_jsxs("div", { className: "space-y-6", children: [_jsxs(Card, { className: "border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-violet-50", children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Target, { className: "w-6 h-6 mr-2 text-purple-600" }), "Revolutionary Prediction Result"] }) }), _jsx(CardContent, { children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-6", children: [_jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Base Prediction" }), _jsx("p", { className: "text-3xl font-bold text-gray-900", children: predictionResult.base_prediction.toFixed(2) })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Revolutionary Enhancement" }), _jsxs("p", { className: "text-3xl font-bold text-purple-600", children: [predictionResult.final_prediction -
                                                                         predictionResult.base_prediction >
-                                                                        0
+                                                                        0;
                                                                         ? "+"
                                                                         : "", (predictionResult.final_prediction -
                                                                         predictionResult.base_prediction).toFixed(2)] })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-sm font-medium text-purple-800", children: "Final Revolutionary Prediction" }), _jsx("p", { className: "text-4xl font-bold text-purple-900", children: predictionResult.final_prediction.toFixed(2) }), _jsxs("p", { className: "text-sm text-purple-700 mt-1", children: ["Uncertainty: [", predictionResult.uncertainty_bounds[0].toFixed(1), ",", " ", predictionResult.uncertainty_bounds[1].toFixed(1), "]"] })] })] }) })] }), _jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: [_jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(BarChart3, { className: "w-5 h-5 mr-2 text-blue-600" }), "Enhancement Breakdown"] }) }), _jsx(CardContent, { children: enhancementBreakdownData && (_jsx("div", { className: "h-64", children: _jsx(Bar, { data: enhancementBreakdownData, options: {
@@ -414,20 +414,20 @@ export const RevolutionaryAccuracyInterface = () => {
                                                                 },
                                                             },
                                                         },
-                                                    } }) }) })] }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4", children: [_jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Gauge, { className: "w-8 h-8 mx-auto mb-2 text-blue-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Causal Strength" }), _jsxs("p", { className: "text-xl font-bold text-blue-600", children: [(predictionResult.causal_strength * 100).toFixed(1), "%"] })] }) }), _jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Activity, { className: "w-8 h-8 mx-auto mb-2 text-green-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Temporal Coherence" }), _jsxs("p", { className: "text-xl font-bold text-green-600", children: [(predictionResult.temporal_coherence * 100).toFixed(1), "%"] })] }) }), _jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Network, { className: "w-8 h-8 mx-auto mb-2 text-purple-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Topological Persistence" }), _jsxs("p", { className: "text-xl font-bold text-purple-600", children: [(predictionResult.topological_persistence * 100).toFixed(1), "%"] })] }) }), _jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Brain, { className: "w-8 h-8 mx-auto mb-2 text-orange-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Neuromorphic Activity" }), _jsxs("p", { className: "text-xl font-bold text-orange-600", children: [(predictionResult.neuromorphic_spike_rate * 100).toFixed(1), "%"] })] }) })] }), _jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Cpu, { className: "w-5 h-5 mr-2 text-gray-600" }), "Computational Analysis"] }) }), _jsx(CardContent, { children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Processing Time" }), _jsxs("p", { className: "text-lg font-bold text-gray-900", children: [predictionResult.processing_time.toFixed(3), "s"] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Theoretical Complexity" }), _jsx("p", { className: "text-lg font-bold text-gray-900", children: predictionResult.computational_complexity
-                                                                    .total_theoretical_complexity })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Memory Optimization" }), _jsx("p", { className: "text-lg font-bold text-gray-900", children: predictionResult.computational_complexity
-                                                                    .memory_optimization })] })] }) })] })] })) : (_jsx(Card, { children: _jsxs(CardContent, { className: "p-8 text-center", children: [_jsx(BarChart3, { className: "w-12 h-12 mx-auto mb-4 text-gray-400" }), _jsx("p", { className: "text-gray-500", children: "No analysis data available" }), _jsx("p", { className: "text-sm text-gray-400 mt-2", children: "Generate a revolutionary prediction to view detailed analysis" })] }) })) }), _jsx(TabsContent, { value: "breakthroughs", children: breakthroughSummary ? (_jsxs("div", { className: "space-y-6", children: [_jsxs(Card, { className: "border-l-4 border-l-green-500 bg-green-50", children: [_jsx(CardHeader, { children: _jsx(CardTitle, { className: "text-green-800", children: "Overall System Performance" }) }), _jsx(CardContent, { children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Theoretical Maximum" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance
-                                                                    .theoretical_maximum_improvement })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Practical Achieved" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance
-                                                                    .practical_achieved_improvement })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Computational Efficiency" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance
-                                                                    .computational_efficiency })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Memory Efficiency" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance
-                                                                    .memory_efficiency })] })] }) })] }), _jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: Object.entries(breakthroughSummary.breakthrough_technologies).map(([tech, details]) => (_jsxs(Card, { className: "hover:shadow-lg transition-shadow", children: [_jsxs(CardHeader, { children: [_jsx(CardTitle, { className: "text-lg capitalize", children: tech.replace(/_/g, " ") }), _jsxs(Badge, { className: "w-fit bg-blue-100 text-blue-800", children: [details.accuracy_improvement, " improvement"] })] }), _jsxs(CardContent, { children: [_jsx("p", { className: "text-sm text-gray-600 mb-3", children: details.description }), _jsxs("p", { className: "text-xs text-gray-500 mb-3 font-medium", children: ["Research: ", details.research_basis] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-700 mb-2", children: "Key Innovations:" }), _jsx("ul", { className: "space-y-1", children: details.key_innovations.map((innovation, idx) => (_jsxs("li", { className: "flex items-center gap-2 text-xs", children: [_jsx("div", { className: "w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0" }), _jsx("span", { className: "text-gray-600", children: innovation })] }, idx))) })] })] })] }, tech))) })] })) : (_jsx(Card, { children: _jsxs(CardContent, { className: "p-8 text-center", children: [_jsx(RefreshCw, { className: "w-8 h-8 animate-spin mx-auto mb-4 text-gray-400" }), _jsx("p", { className: "text-gray-500", children: "Loading breakthrough technologies..." })] }) })) }), _jsx(TabsContent, { value: "research", children: breakthroughSummary ? (_jsxs("div", { className: "space-y-6", children: [_jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Workflow, { className: "w-5 h-5 mr-2 text-purple-600" }), "Research Integration Statistics"] }) }), _jsx(CardContent, { children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4", children: [_jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-purple-600", children: breakthroughSummary.research_integration
-                                                                    .total_papers_implemented }), _jsx("p", { className: "text-sm text-gray-600", children: "Papers Implemented" })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-blue-600", children: breakthroughSummary.research_integration
-                                                                    .cutting_edge_methods }), _jsx("p", { className: "text-sm text-gray-600", children: "Cutting-Edge Methods" })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-green-600", children: breakthroughSummary.research_integration
-                                                                    .novel_combinations }), _jsx("p", { className: "text-sm text-gray-600", children: "Novel Combinations" })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-orange-600", children: breakthroughSummary.research_integration
+                                                    } }) }) })] }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4", children: [_jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Gauge, { className: "w-8 h-8 mx-auto mb-2 text-blue-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Causal Strength" }), _jsxs("p", { className: "text-xl font-bold text-blue-600", children: [(predictionResult.causal_strength * 100).toFixed(1), "%"] })] }) }), _jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Activity, { className: "w-8 h-8 mx-auto mb-2 text-green-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Temporal Coherence" }), _jsxs("p", { className: "text-xl font-bold text-green-600", children: [(predictionResult.temporal_coherence * 100).toFixed(1), "%"] })] }) }), _jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Network, { className: "w-8 h-8 mx-auto mb-2 text-purple-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Topological Persistence" }), _jsxs("p", { className: "text-xl font-bold text-purple-600", children: [(predictionResult.topological_persistence * 100).toFixed(1), "%"] })] }) }), _jsx(Card, { children: _jsxs(CardContent, { className: "p-4 text-center", children: [_jsx(Brain, { className: "w-8 h-8 mx-auto mb-2 text-orange-600" }), _jsx("p", { className: "text-sm font-medium text-gray-600", children: "Neuromorphic Activity" }), _jsxs("p", { className: "text-xl font-bold text-orange-600", children: [(predictionResult.neuromorphic_spike_rate * 100).toFixed(1), "%"] })] }) })] }), _jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Cpu, { className: "w-5 h-5 mr-2 text-gray-600" }), "Computational Analysis"] }) }), _jsx(CardContent, { children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Processing Time" }), _jsxs("p", { className: "text-lg font-bold text-gray-900", children: [predictionResult.processing_time.toFixed(3), "s"] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Theoretical Complexity" }), _jsx("p", { className: "text-lg font-bold text-gray-900", children: predictionResult.computational_complexity;
+                                                                    .total_theoretical_complexity })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Memory Optimization" }), _jsx("p", { className: "text-lg font-bold text-gray-900", children: predictionResult.computational_complexity;
+                                                                    .memory_optimization })] })] }) })] })] })) : (_jsx(Card, { children: _jsxs(CardContent, { className: "p-8 text-center", children: [_jsx(BarChart3, { className: "w-12 h-12 mx-auto mb-4 text-gray-400" }), _jsx("p", { className: "text-gray-500", children: "No analysis data available" }), _jsx("p", { className: "text-sm text-gray-400 mt-2", children: "Generate a revolutionary prediction to view detailed analysis" })] }) })) }), _jsx(TabsContent, { value: "breakthroughs", children: breakthroughSummary ? (_jsxs("div", { className: "space-y-6", children: [_jsxs(Card, { className: "border-l-4 border-l-green-500 bg-green-50", children: [_jsx(CardHeader, { children: _jsx(CardTitle, { className: "text-green-800", children: "Overall System Performance" }) }), _jsx(CardContent, { children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Theoretical Maximum" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance;
+                                                                    .theoretical_maximum_improvement })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Practical Achieved" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance;
+                                                                    .practical_achieved_improvement })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Computational Efficiency" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance;
+                                                                    .computational_efficiency })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-green-700", children: "Memory Efficiency" }), _jsx("p", { className: "text-xl font-bold text-green-900", children: breakthroughSummary.overall_system_performance;
+                                                                    .memory_efficiency })] })] }) })] }), _jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: Object.entries(breakthroughSummary.breakthrough_technologies).map(([tech, details]) => (_jsxs(Card, { className: "hover:shadow-lg transition-shadow", children: [_jsxs(CardHeader, { children: [_jsx(CardTitle, { className: "text-lg capitalize", children: tech.replace(/_/g, " ") }), _jsxs(Badge, { className: "w-fit bg-blue-100 text-blue-800", children: [details.accuracy_improvement, " improvement"] })] }), _jsxs(CardContent, { children: [_jsx("p", { className: "text-sm text-gray-600 mb-3", children: details.description }), _jsxs("p", { className: "text-xs text-gray-500 mb-3 font-medium", children: ["Research: ", details.research_basis] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-700 mb-2", children: "Key Innovations:" }), _jsx("ul", { className: "space-y-1", children: details.key_innovations.map((innovation, idx) => (_jsxs("li", { className: "flex items-center gap-2 text-xs", children: [_jsx("div", { className: "w-1.5 h-1.5 bg-blue-500 rounded-full flex-shrink-0" }), _jsx("span", { className: "text-gray-600", children: innovation })] }, idx))) })] })] })] }, tech))) })] })) : (_jsx(Card, { children: _jsxs(CardContent, { className: "p-8 text-center", children: [_jsx(RefreshCw, { className: "w-8 h-8 animate-spin mx-auto mb-4 text-gray-400" }), _jsx("p", { className: "text-gray-500", children: "Loading breakthrough technologies..." })] }) })) }), _jsx(TabsContent, { value: "research", children: breakthroughSummary ? (_jsxs("div", { className: "space-y-6", children: [_jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Workflow, { className: "w-5 h-5 mr-2 text-purple-600" }), "Research Integration Statistics"] }) }), _jsx(CardContent, { children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4", children: [_jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-purple-600", children: breakthroughSummary.research_integration;
+                                                                    .total_papers_implemented }), _jsx("p", { className: "text-sm text-gray-600", children: "Papers Implemented" })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-blue-600", children: breakthroughSummary.research_integration;
+                                                                    .cutting_edge_methods }), _jsx("p", { className: "text-sm text-gray-600", children: "Cutting-Edge Methods" })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-green-600", children: breakthroughSummary.research_integration;
+                                                                    .novel_combinations }), _jsx("p", { className: "text-sm text-gray-600", children: "Novel Combinations" })] }), _jsxs("div", { className: "text-center", children: [_jsx("p", { className: "text-3xl font-bold text-orange-600", children: breakthroughSummary.research_integration;
                                                                     .breakthrough_conferences.length }), _jsx("p", { className: "text-sm text-gray-600", children: "Top Conferences" })] })] }) })] }), _jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(TrendingUp, { className: "w-5 h-5 mr-2 text-green-600" }), "Future Research Roadmap"] }) }), _jsx(CardContent, { children: _jsx("div", { className: "space-y-4", children: Object.entries(breakthroughSummary.future_roadmap).map(([area, timeline]) => (_jsxs("div", { className: "flex justify-between items-center p-3 bg-gray-50 rounded-lg", children: [_jsx("span", { className: "font-medium text-gray-800 capitalize", children: area.replace(/_/g, " ") }), _jsx(Badge, { variant: "outline", children: timeline })] }, area))) }) })] }), _jsxs(Card, { children: [_jsx(CardHeader, { children: _jsx(CardTitle, { children: "Theoretical Guarantees" }) }), _jsx(CardContent, { children: _jsx("div", { className: "space-y-3", children: breakthroughSummary.research_integration.theoretical_guarantees.map((guarantee, idx) => (_jsxs("div", { className: "flex items-start gap-3", children: [_jsx(CheckCircle, { className: "w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" }), _jsx("span", { className: "text-sm text-gray-700", children: guarantee })] }, idx))) }) })] })] })) : (_jsx(Card, { children: _jsxs(CardContent, { className: "p-8 text-center", children: [_jsx(RefreshCw, { className: "w-8 h-8 animate-spin mx-auto mb-4 text-gray-400" }), _jsx("p", { className: "text-gray-500", children: "Loading research integration data..." })] }) })) })] })] }));
 };
 export default RevolutionaryAccuracyInterface;
-// Helper data for processing stages
+// Helper data for processing stages;
 const stages = [
     "Initializing neuromorphic spiking networks...",
     "Applying physics-informed constraints...",

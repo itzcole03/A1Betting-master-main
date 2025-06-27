@@ -28,7 +28,7 @@ export class UnifiedStateService extends BaseService {
     loadState() {
         try {
             if (this.persistState) {
-                const savedState = localStorage.getItem(this.storageKey);
+
                 if (savedState) {
                     this.state = JSON.parse(savedState);
                 }

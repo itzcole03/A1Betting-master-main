@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react.ts';
 
 interface MetricCardProps {
   label: string;
@@ -8,7 +8,7 @@ interface MetricCardProps {
   trend?: "up" | "down" | "neutral";
 }
 
-const MetricCard: React.FC<MetricCardProps> = ({
+const MetricCard: React.FC<MetricCardProps key={656645}> = ({
   label,
   value,
   icon,
@@ -29,19 +29,19 @@ const MetricCard: React.FC<MetricCardProps> = ({
         ? "fa-arrow-down"
         : "fa-minus";
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLDivElement key={92993}>) => {
     e.currentTarget.style.boxShadow =
       "0 0 20px rgba(0,255,136,0.6), 0 0 40px rgba(0,255,136,0.4)";
     e.currentTarget.style.borderColor = "rgba(0,255,136,0.3)";
   };
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement key={92993}>) => {
     e.currentTarget.style.boxShadow = "0 8px 32px rgba(0, 0, 0, 0.1)";
     e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.1)";
   };
 
   return (
-    <div
+    <div;
       className="glass-card rounded-xl p-6 text-center transition-all duration-300 transform hover:scale-105 cursor-pointer"
       style={{
         background: "rgba(255, 255, 255, 0.05)",
@@ -51,17 +51,17 @@ const MetricCard: React.FC<MetricCardProps> = ({
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-    >
-      <div className="text-3xl mb-3 text-electric-400">
-        <i className={icon} />
+     key={596679}>
+      <div className="text-3xl mb-3 text-electric-400" key={686990}>
+        <i className={icon} / key={115001}>
       </div>
-      <div className="text-2xl font-bold mb-2 text-white">{value}</div>
-      <div className="text-gray-400 text-sm mb-2">{label}</div>
+      <div className="text-2xl font-bold mb-2 text-white" key={82513}>{value}</div>
+      <div className="text-gray-400 text-sm mb-2" key={180484}>{label}</div>
       {change && (
-        <div
+        <div;
           className={`flex items-center justify-center text-xs ${trendColor}`}
-        >
-          <i className={`${trendIcon} mr-1`} />
+         key={749114}>
+          <i className={`${trendIcon} mr-1`} / key={651006}>
           {change}
         </div>
       )}

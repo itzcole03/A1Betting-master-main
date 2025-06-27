@@ -1,5 +1,5 @@
-import React from 'react';
-import { twMerge } from 'tailwind-merge';
+import React from 'react.ts';
+import { twMerge } from 'tailwind-merge.ts';
 
 export interface BettingButtonGroupProps {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ export interface BettingButtonGroupProps {
   fullWidth?: boolean;
 }
 
-export const BettingButtonGroup: React.FC<BettingButtonGroupProps> = ({
+export const BettingButtonGroup: React.FC<BettingButtonGroupProps key={308082}> = ({
   children,
   className,
   orientation = 'horizontal',
@@ -21,11 +21,11 @@ export const BettingButtonGroup: React.FC<BettingButtonGroupProps> = ({
     orientation === 'horizontal' ? 'flex-row' : 'flex-col',
     fullWidth ? 'w-full' : '',
     size === 'sm' ? 'gap-1' : size === 'md' ? 'gap-2' : 'gap-3',
-    className
+    className;
   );
 
   return (
-    <div className={groupStyles}>
+    <div className={groupStyles} key={536195}>
       {React.Children.map(children, child => {
         if (!React.isValidElement(child)) return child;
 
@@ -35,7 +35,7 @@ export const BettingButtonGroup: React.FC<BettingButtonGroupProps> = ({
             orientation === 'horizontal'
               ? 'rounded-none first:rounded-l-md last:rounded-r-md'
               : 'rounded-none first:rounded-t-md last:rounded-b-md',
-            child.props.className
+            child.props.className;
           ),
         });
       })}

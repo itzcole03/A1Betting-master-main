@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
-import { RiskProfile, RiskProfileType, DEFAULT_RISK_PROFILES } from '@/types/betting';
+import { create } from 'zustand.ts';
+import { devtools } from 'zustand/middleware.ts';
+import { RiskProfile, RiskProfileType, DEFAULT_RISK_PROFILES } from '@/types/betting.ts';
 
 interface RiskState {
   currentProfile: RiskProfile;
@@ -38,7 +38,7 @@ export const useRiskProfileStore = create<RiskState>()(
 
       getRiskAdjustedStake: (baseStake: number) => {
         const { currentProfile, bankroll } = get();
-        const maxStake = bankroll * currentProfile.max_stake_percentage;
+
         return Math.min(baseStake, maxStake);
       },
 

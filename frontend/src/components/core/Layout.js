@@ -3,12 +3,12 @@ import React from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography, useTheme, useMediaQuery, } from '@mui/material';
 import { Menu as MenuIcon, Dashboard as DashboardIcon, AdminPanelSettings as AdminIcon, ShowChart as ChartIcon, AttachMoney as MoneyIcon, } from '@mui/icons-material';
-const drawerWidth = 240;
+
 export const Layout = ({ children }) => {
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-    const location = useLocation();
+
+
+
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };
@@ -18,7 +18,7 @@ export const Layout = ({ children }) => {
         { text: 'Predictions', icon: _jsx(ChartIcon, {}), path: '/predictions' },
         { text: 'Admin', icon: _jsx(AdminIcon, {}), path: '/admin' },
     ];
-    const drawer = (_jsxs("div", { children: [_jsx(Toolbar, { children: _jsx(Typography, { noWrap: true, component: "div", variant: "h6", children: "Elite Sports Analytics" }) }), _jsx(List, { children: menuItems.map(item => (_jsx(ListItem, { disablePadding: true, children: _jsxs(ListItemButton, { component: RouterLink, selected: location.pathname === item.path, to: item.path, onClick: () => isMobile && setMobileOpen(false), children: [_jsx(ListItemIcon, { children: item.icon }), _jsx(ListItemText, { primary: item.text })] }) }, item.text))) })] }));
+
     return (_jsxs(Box, { sx: { display: 'flex' }, children: [_jsx(AppBar, { position: "fixed", sx: {
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     ml: { sm: `${drawerWidth}px` },

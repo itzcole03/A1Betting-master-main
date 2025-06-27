@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useMemo  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   Zap,
   TrendingUp,
@@ -11,8 +11,8 @@ import {
   BarChart3,
   Target,
   Shield,
-} from 'lucide-react';
-import { logger } from '@/utils/logger';
+} from 'lucide-react.ts';
+import { logger } from '@/utils/logger.ts';
 
 interface ArbitrageOpportunity {
   id: string;
@@ -43,11 +43,11 @@ interface ArbitrageMetrics {
 }
 
 const ArbitrageHunter: React.FC = () => {
-  const [opportunities, setOpportunities] = useState<ArbitrageOpportunity[]>([]);
+  const [opportunities, setOpportunities] = useState<ArbitrageOpportunity[] key={128378}>([]);
   const [loading, setLoading] = useState(true);
   const [scanning, setScanning] = useState(false);
   const [autoScan, setAutoScan] = useState(false);
-  const [metrics, setMetrics] = useState<ArbitrageMetrics>({
+  const [metrics, setMetrics] = useState<ArbitrageMetrics key={32013}>({
     total_opportunities: 0,
     avg_profit_margin: 0,
     total_guaranteed_profit: 0,
@@ -55,7 +55,7 @@ const ArbitrageHunter: React.FC = () => {
     execution_speed: 0,
   });
 
-  // Mock arbitrage opportunities
+  // Mock arbitrage opportunities;
   const mockOpportunities: ArbitrageOpportunity[] = useMemo(() => [
     {
       id: '1',
@@ -122,7 +122,7 @@ const ArbitrageHunter: React.FC = () => {
           avg_profit_margin: mockOpportunities.reduce((acc, opp) => acc + opp.profit_percentage, 0) / mockOpportunities.length,
           total_guaranteed_profit: mockOpportunities.reduce((acc, opp) => acc + opp.guaranteed_profit, 0),
           success_rate: 97.3,
-          execution_speed: 2.4
+          execution_speed: 2.4;
         });
       } catch (error) {
         logger.error('Failed to initialize arbitrage hunter', error);
@@ -134,7 +134,7 @@ const ArbitrageHunter: React.FC = () => {
     initializeHunter();
   }, [mockOpportunities]);
 
-  // Auto-scan functionality
+  // Auto-scan functionality;
   useEffect(() => {
     if (!autoScan) return;
 
@@ -142,7 +142,7 @@ const ArbitrageHunter: React.FC = () => {
       setScanning(true);
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Simulate finding new opportunities
+      // Simulate finding new opportunities;
       if (Math.random() > 0.7) {
         const newOpp: ArbitrageOpportunity = {
           id: Date.now().toString(),
@@ -159,7 +159,7 @@ const ArbitrageHunter: React.FC = () => {
           ],
           risk_score: Math.floor(Math.random() * 5) + 1,
           confidence: Math.floor(Math.random() * 10) + 90,
-          execution_complexity: ['simple', 'moderate', 'complex'][Math.floor(Math.random() * 3)] as any
+          execution_complexity: ['simple', 'moderate', 'complex'][Math.floor(Math.random() * 3)] as any;
         };
 
         setOpportunities(prev => [newOpp, ...prev.slice(0, 9)]);
@@ -175,7 +175,7 @@ const ArbitrageHunter: React.FC = () => {
     setScanning(true);
     try {
       await new Promise(resolve => setTimeout(resolve, 2000));
-      // Refresh opportunities
+      // Refresh opportunities;
       setOpportunities([...mockOpportunities]);
     } catch (error) {
       logger.error('Manual scan failed', error);
@@ -201,59 +201,59 @@ const ArbitrageHunter: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto"></div>
-          <p className="mt-4 text-gray-400">Initializing Arbitrage Hunter...</p>
+      <div className="flex items-center justify-center h-96" key={797634}>
+        <div className="text-center" key={120206}>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto" key={758177}></div>
+          <p className="mt-4 text-gray-400" key={301158}>Initializing Arbitrage Hunter...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
-            Arbitrage Hunter
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent" key={586860}>
+            Arbitrage Hunter;
           </h1>
-          <p className="text-gray-400 mt-2">
-            Guaranteed profit opportunities with zero risk - Real-time arbitrage detection
+          <p className="text-gray-400 mt-2" key={874357}>
+            Guaranteed profit opportunities with zero risk - Real-time arbitrage detection;
           </p>
         </div>
         
-        <div className="flex items-center gap-4">
-          <label className="flex items-center gap-2 text-sm">
-            <input
+        <div className="flex items-center gap-4" key={782146}>
+          <label className="flex items-center gap-2 text-sm" key={846897}>
+            <input;
               type="checkbox"
               checked={autoScan}
-              onChange={(e) => setAutoScan(e.target.checked)}
+              onChange={(e) = key={675983}> setAutoScan(e.target.checked)}
               className="rounded"
             />
-            <span className="text-gray-300">Auto-Scan</span>
+            <span className="text-gray-300" key={110058}>Auto-Scan</span>
           </label>
           
-          <motion.button
+          <motion.button;
             onClick={handleManualScan}
             disabled={scanning}
             className={`px-6 py-3 rounded-lg font-medium transition-all ${
-              scanning 
+              scanning; 
                 ? 'bg-gray-600 cursor-not-allowed' 
                 : 'bg-gradient-to-r from-yellow-500 to-orange-600 hover:from-yellow-400 hover:to-orange-500'
             }`}
             whileHover={{ scale: scanning ? 1 : 1.05 }}
             whileTap={{ scale: scanning ? 1 : 0.95 }}
-          >
+           key={12605}>
             {scanning ? (
-              <div className="flex items-center gap-2">
-                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+              <div className="flex items-center gap-2" key={100294}>
+                <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" key={412073}></div>
                 Hunting...
               </div>
             ) : (
-              <div className="flex items-center gap-2">
-                <Zap className="w-4 h-4" />
-                Hunt Now
+              <div className="flex items-center gap-2" key={100294}>
+                <Zap className="w-4 h-4" / key={768470}>
+                Hunt Now;
               </div>
             )}
           </motion.button>
@@ -261,166 +261,166 @@ const ArbitrageHunter: React.FC = () => {
       </div>
 
       {/* Metrics Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Target className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm text-gray-400">Live Opportunities</span>
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4" key={517940}>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Target className="w-5 h-5 text-yellow-400" / key={854702}>
+            <span className="text-sm text-gray-400" key={257018}>Live Opportunities</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.total_opportunities}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.total_opportunities}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <BarChart3 className="w-5 h-5 text-green-400" />
-            <span className="text-sm text-gray-400">Avg Profit Margin</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <BarChart3 className="w-5 h-5 text-green-400" / key={890399}>
+            <span className="text-sm text-gray-400" key={257018}>Avg Profit Margin</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.avg_profit_margin.toFixed(2)}%</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.avg_profit_margin.toFixed(2)}%</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <DollarSign className="w-5 h-5 text-purple-400" />
-            <span className="text-sm text-gray-400">Total Guaranteed</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <DollarSign className="w-5 h-5 text-purple-400" / key={356824}>
+            <span className="text-sm text-gray-400" key={257018}>Total Guaranteed</span>
           </div>
-          <p className="text-2xl font-bold text-white">${metrics.total_guaranteed_profit.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>${metrics.total_guaranteed_profit.toFixed(2)}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Star className="w-5 h-5 text-cyan-400" />
-            <span className="text-sm text-gray-400">Success Rate</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Star className="w-5 h-5 text-cyan-400" / key={470175}>
+            <span className="text-sm text-gray-400" key={257018}>Success Rate</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.success_rate}%</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.success_rate}%</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Clock className="w-5 h-5 text-orange-400" />
-            <span className="text-sm text-gray-400">Avg Execution</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Clock className="w-5 h-5 text-orange-400" / key={884878}>
+            <span className="text-sm text-gray-400" key={257018}>Avg Execution</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.execution_speed}s</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.execution_speed}s</p>
         </div>
       </div>
 
       {/* Status Indicator */}
-      <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className={`w-3 h-3 rounded-full ${scanning ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`}></div>
-            <span className="font-medium">
+      <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+        <div className="flex items-center justify-between" key={96335}>
+          <div className="flex items-center gap-3" key={443099}>
+            <div className={`w-3 h-3 rounded-full ${scanning ? 'bg-yellow-400 animate-pulse' : 'bg-green-400'}`} key={436292}></div>
+            <span className="font-medium" key={514486}>
               {scanning ? 'Scanning for arbitrage opportunities...' : 'Ready - Monitoring live markets'}
             </span>
           </div>
-          <div className="text-sm text-gray-400">
+          <div className="text-sm text-gray-400" key={372957}>
             Auto-scan: {autoScan ? 'Enabled' : 'Disabled'} • Next scan in {scanning ? '--' : '8s'}
           </div>
         </div>
       </div>
 
       {/* Opportunities List */}
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Guaranteed Profit Opportunities ({opportunities.length})</h3>
+      <div className="space-y-4" key={160407}>
+        <h3 className="text-xl font-semibold" key={18928}>Guaranteed Profit Opportunities ({opportunities.length})</h3>
         
         {opportunities.length === 0 ? (
-          <div className="text-center py-12">
-            <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-400">No arbitrage opportunities currently available.</p>
-            <p className="text-sm text-gray-500 mt-2">Market conditions are not favorable for arbitrage at the moment.</p>
+          <div className="text-center py-12" key={752807}>
+            <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" / key={43269}>
+            <p className="text-gray-400" key={545335}>No arbitrage opportunities currently available.</p>
+            <p className="text-sm text-gray-500 mt-2" key={101703}>Market conditions are not favorable for arbitrage at the moment.</p>
           </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-4" key={449070}>
             {opportunities.map((opportunity) => (
-              <motion.div
+              <motion.div;
                 key={opportunity.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-6 hover:border-yellow-500/50 transition-all"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-yellow-500/20 rounded-lg">
-                      <Zap className="w-5 h-5 text-yellow-400" />
+               key={190333}>
+                <div className="flex items-start justify-between mb-4" key={886571}>
+                  <div className="flex items-center gap-3" key={443099}>
+                    <div className="p-2 bg-yellow-500/20 rounded-lg" key={66577}>
+                      <Zap className="w-5 h-5 text-yellow-400" / key={315149}>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-white">{opportunity.market}</h4>
-                      <p className="text-sm text-gray-400">{opportunity.sport} • {opportunity.game}</p>
+                    <div key={241917}>
+                      <h4 className="font-semibold text-white" key={684150}>{opportunity.market}</h4>
+                      <p className="text-sm text-gray-400" key={965781}>{opportunity.sport} • {opportunity.game}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getComplexityColor(opportunity.execution_complexity)}`}>
+                  <div className="flex items-center gap-2" key={100294}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getComplexityColor(opportunity.execution_complexity)}`} key={786312}>
                       {opportunity.execution_complexity.toUpperCase()}
                     </span>
-                    <div className="flex items-center gap-1">
-                      <CheckCircle className="w-4 h-4 text-green-400" />
-                      <span className="text-sm text-green-400">{opportunity.confidence}%</span>
+                    <div className="flex items-center gap-1" key={238246}>
+                      <CheckCircle className="w-4 h-4 text-green-400" / key={917642}>
+                      <span className="text-sm text-green-400" key={232194}>{opportunity.confidence}%</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Key Metrics */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                  <div>
-                    <p className="text-xs text-gray-400">Guaranteed Profit</p>
-                    <p className="text-lg font-bold text-green-400">${opportunity.guaranteed_profit.toFixed(2)}</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4" key={477110}>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Guaranteed Profit</p>
+                    <p className="text-lg font-bold text-green-400" key={91726}>${opportunity.guaranteed_profit.toFixed(2)}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Profit Margin</p>
-                    <p className="text-lg font-bold text-yellow-400">{opportunity.profit_percentage.toFixed(2)}%</p>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Profit Margin</p>
+                    <p className="text-lg font-bold text-yellow-400" key={235577}>{opportunity.profit_percentage.toFixed(2)}%</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Total Stake</p>
-                    <p className="text-lg font-bold text-white">${opportunity.total_stake}</p>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Total Stake</p>
+                    <p className="text-lg font-bold text-white" key={428053}>${opportunity.total_stake}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Time Left</p>
-                    <p className="text-lg font-bold text-orange-400 flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Time Left</p>
+                    <p className="text-lg font-bold text-orange-400 flex items-center gap-1" key={356070}>
+                      <Clock className="w-4 h-4" / key={414649}>
                       {opportunity.time_remaining}
                     </p>
                   </div>
                 </div>
 
                 {/* Bookmaker Details */}
-                <div className="bg-gray-700/50 rounded-lg p-4 mb-4">
-                  <h5 className="text-sm font-medium text-gray-300 mb-3">Betting Strategy</h5>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="bg-gray-700/50 rounded-lg p-4 mb-4" key={925695}>
+                  <h5 className="text-sm font-medium text-gray-300 mb-3" key={948933}>Betting Strategy</h5>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4" key={476625}>
                     {opportunity.bookmakers.map((book, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-gray-600/50 rounded-lg">
-                        <div>
-                          <p className="font-medium text-white">{book.name}</p>
-                          <p className="text-sm text-gray-400">{book.outcome}</p>
+                      <div key={index} className="flex items-center justify-between p-3 bg-gray-600/50 rounded-lg" key={417216}>
+                        <div key={241917}>
+                          <p className="font-medium text-white" key={229614}>{book.name}</p>
+                          <p className="text-sm text-gray-400" key={965781}>{book.outcome}</p>
                         </div>
-                        <div className="text-right">
-                          <p className="text-sm text-gray-400">Odds: {book.odds}</p>
-                          <p className="font-medium text-cyan-400">${book.stake.toFixed(2)}</p>
+                        <div className="text-right" key={144468}>
+                          <p className="text-sm text-gray-400" key={965781}>Odds: {book.odds}</p>
+                          <p className="font-medium text-cyan-400" key={838202}>${book.stake.toFixed(2)}</p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4 text-sm">
-                    <span className="flex items-center gap-1">
-                      <Shield className="w-4 h-4" />
-                      <span className="text-gray-400">Risk:</span>
-                      <span className={getRiskColor(opportunity.risk_score)}>
-                        {opportunity.risk_score}/5
+                <div className="flex items-center justify-between" key={96335}>
+                  <div className="flex items-center gap-4 text-sm" key={485740}>
+                    <span className="flex items-center gap-1" key={136445}>
+                      <Shield className="w-4 h-4" / key={613330}>
+                      <span className="text-gray-400" key={912100}>Risk:</span>
+                      <span className={getRiskColor(opportunity.risk_score)} key={65621}>
+                        {opportunity.risk_score}/5;
                       </span>
                     </span>
-                    <span className="text-gray-400">
+                    <span className="text-gray-400" key={912100}>
                       ROI: {((opportunity.guaranteed_profit / opportunity.total_stake) * 100).toFixed(2)}%
                     </span>
                   </div>
                   
-                  <motion.button
+                  <motion.button;
                     className="px-6 py-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg font-medium hover:from-green-400 hover:to-green-500 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                  >
-                    Execute Arbitrage
+                   key={670897}>
+                    Execute Arbitrage;
                   </motion.button>
                 </div>
               </motion.div>

@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React, { useState, useEffect, useCallback, useMemo  } from 'react.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.ts';
+import { Button } from '@/components/ui/button.ts';
+import { Badge } from '@/components/ui/badge.ts';
+import { Progress } from '@/components/ui/progress.ts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.ts';
+import { Input } from '@/components/ui/input.ts';
+import { Label } from '@/components/ui/label.ts';
 import {
   Atom,
   Brain,
@@ -41,8 +41,8 @@ import {
   Award,
   Play,
   Pause,
-} from "lucide-react";
-import SafeChart from "../ui/SafeChart";
+} from 'lucide-react.ts';
+import SafeChart from '@/ui/SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -57,22 +57,22 @@ import {
   ArcElement,
   Filler,
 } from "chart.js";
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast.ts';
 
-// Types for the prediction system
+// Types for the prediction system;
 interface EnhancedPredictionRequest {
   event_id: string;
   sport: string;
-  features: Record<string, number>;
+  features: Record<string, number key={817366}>;
   enable_neuromorphic: boolean;
   enable_mamba: boolean;
   enable_causal_inference: boolean;
   enable_topological: boolean;
   enable_riemannian: boolean;
 }
-import { useLogger } from "../../hooks/useLogger";
+import { useLogger } from '@/hooks/useLogger.ts';
 
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -88,23 +88,23 @@ ChartJS.register(
 );
 
 const EnhancedRevolutionaryInterface: React.FC = () => {
-  // State management
+  // State management;
   const [selectedTab, setSelectedTab] = useState("enhanced-engine");
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStage, setProcessingStage] = useState("");
   const [predictionResult, setPredictionResult] =
-    useState<EnhancedPredictionResponse | null>(null);
+    useState<EnhancedPredictionResponse | null key={73783}>(null);
   const [mathematicalAnalysis, setMathematicalAnalysis] =
-    useState<MathematicalAnalysisResponse | null>(null);
+    useState<MathematicalAnalysisResponse | null key={410711}>(null);
   const [mathematicalFoundations, setMathematicalFoundations] = useState<Record<
     string,
-    any
-  > | null>(null);
+    any;
+   key={525275}> | null>(null);
   const [realTimeMonitoring, setRealTimeMonitoring] = useState(false);
 
-  // Enhanced prediction request state
+  // Enhanced prediction request state;
   const [predictionRequest, setPredictionRequest] =
-    useState<EnhancedPredictionRequest>({
+    useState<EnhancedPredictionRequest key={192042}>({
       event_id: "",
       sport: "basketball",
       features: {
@@ -135,22 +135,21 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
       context: {},
     });
 
-  // Hooks
-  const logger = useLogger();
+  // Hooks;
 
-  // Load mathematical foundations on mount
+  // Load mathematical foundations on mount;
   useEffect(() => {
     loadMathematicalFoundations();
   }, []);
 
-  // Real-time monitoring effect
+  // Real-time monitoring effect;
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
     if (realTimeMonitoring && predictionResult) {
       intervalId = setInterval(() => {
         performRealTimeAnalysis();
-      }, 30000); // Every 30 seconds
+      }, 30000); // Every 30 seconds;
     }
 
     return () => {
@@ -162,7 +161,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
 
   const loadMathematicalFoundations = async () => {
     try {
-      // Mock mathematical foundations data - replace with actual API call when backend is available
+      // Mock mathematical foundations data - replace with actual API call when backend is available;
       const mockFoundations = {
         hodgkin_huxley: {
           enabled: true,
@@ -201,17 +200,17 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         },
       };
 
-      // Simulate network delay
+      // Simulate network delay;
       await new Promise((resolve) => setTimeout(resolve, 500));
 
       setMathematicalFoundations(mockFoundations);
       logger.info("Mathematical foundations loaded (using mock data)");
     } catch (error) {
       logger.error("Failed to load mathematical foundations", error);
-      // Don't show error toast for mock data - just log it
-      console.warn("Using fallback mathematical foundations");
+      // Don't show error toast for mock data - just log it;
+      // console statement removed
 
-      // Set minimal fallback data
+      // Set minimal fallback data;
       setMathematicalFoundations({
         hodgkin_huxley: { enabled: false },
         mamba_ssm: { enabled: false },
@@ -226,7 +225,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
     if (!predictionResult) return;
 
     try {
-      // Mock mathematical analysis data
+      // Mock mathematical analysis data;
       const mockAnalysis = {
         stability_analysis: {
           lyapunov_exponents: [-0.23, 0.45, -1.2],
@@ -269,14 +268,14 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         },
       };
 
-      // Simulate network delay
+      // Simulate network delay;
       await new Promise((resolve) => setTimeout(resolve, 200));
 
       setMathematicalAnalysis(mockAnalysis);
       logger.info("Real-time mathematical analysis updated (using mock data)");
     } catch (error) {
       logger.error("Real-time analysis failed", error);
-      // Just log the error, don't disrupt the UI
+      // Just log the error, don't disrupt the UI;
     }
   };
 
@@ -291,7 +290,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
     setMathematicalAnalysis(null);
 
     try {
-      // Processing stages with realistic timing
+      // Processing stages with realistic timing;
       const stages = [
         "Initializing Enhanced Mathematical Engine...",
         "Loading Hodgkin-Huxley Neuromorphic Networks...",
@@ -304,7 +303,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         "Generating Comprehensive Analysis...",
       ];
 
-      for (let i = 0; i < stages.length; i++) {
+      for (const i = 0; i < stages.length; i++) {
         setProcessingStage(stages[i]);
         if (i < stages.length - 1) {
           await new Promise((resolve) =>
@@ -325,10 +324,10 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         },
       });
 
-      // Mock enhanced prediction result
+      // Mock enhanced prediction result;
       const mockResult = {
-        final_prediction: 0.847 + Math.random() * 0.1 - 0.05, // 0.797-0.897
-        prediction_confidence: 0.923 + Math.random() * 0.05 - 0.025, // 0.898-0.948
+        final_prediction: 0.847 + Math.random() * 0.1 - 0.05, // 0.797-0.897;
+        prediction_confidence: 0.923 + Math.random() * 0.05 - 0.025, // 0.898-0.948;
         convergence_rate: 0.0234 + Math.random() * 0.01 - 0.005,
         stability_coefficient: 0.891 + Math.random() * 0.05 - 0.025,
         total_processing_time: 2.34 + Math.random() * 0.5 - 0.25,
@@ -358,7 +357,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
             acc[key] = Math.random();
             return acc;
           },
-          {} as Record<string, number>,
+          {} as Record<string, number key={817366}>,
         ),
         uncertainty_quantification: {
           aleatoric: 0.023 + Math.random() * 0.01 - 0.005,
@@ -369,7 +368,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
 
       setPredictionResult(mockResult);
 
-      // Mock mathematical analysis
+      // Mock mathematical analysis;
       const mockAnalysis = {
         stability_analysis: {
           lyapunov_exponents: [-0.23, 0.45, -1.2],
@@ -438,7 +437,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
     }
   };
 
-  // Memoized chart data
+  // Memoized chart data;
   const convergenceChartData = useMemo(() => {
     if (!predictionResult) return null;
 
@@ -448,7 +447,7 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         {
           label: "Convergence Rate",
           data: Array.from({ length: 50 }, (_, i) => {
-            const progress = (i + 1) / 50;
+
             return (
               predictionResult.convergence_rate * (1 - Math.exp(-progress * 3))
             );
@@ -475,13 +474,13 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
           data: predictionResult.mamba_eigenvalue_spectrum.map(Math.abs),
           backgroundColor: predictionResult.mamba_eigenvalue_spectrum.map(
             (val, i) =>
-              Math.abs(val) < 1
+              Math.abs(val) < 1;
                 ? "rgba(34, 197, 94, 0.8)"
                 : "rgba(239, 68, 68, 0.8)",
           ),
           borderColor: predictionResult.mamba_eigenvalue_spectrum.map(
             (val, i) =>
-              Math.abs(val) < 1
+              Math.abs(val) < 1;
                 ? "rgba(34, 197, 94, 1)"
                 : "rgba(239, 68, 68, 1)",
           ),
@@ -524,79 +523,79 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
     };
   }, [predictionResult]);
 
-  // Mathematical guarantees summary
+  // Mathematical guarantees summary;
   const guaranteesScore = useMemo(() => {
     if (!predictionResult?.mathematical_guarantees) return 0;
-    const guarantees = Object.values(predictionResult.mathematical_guarantees);
+
     return (guarantees.filter(Boolean).length / guarantees.length) * 100;
   }, [predictionResult]);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6" key={80798}>
       {/* Enhanced Header */}
-      <div className="text-center">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Calculator className="w-10 h-10 text-purple-600 animate-pulse" />
-          <h1 className="text-4xl font-bold text-gray-900">
-            Enhanced Revolutionary Engine
+      <div className="text-center" key={120206}>
+        <div className="flex items-center justify-center gap-3 mb-4" key={915248}>
+          <Calculator className="w-10 h-10 text-purple-600 animate-pulse" / key={378271}>
+          <h1 className="text-4xl font-bold text-gray-900" key={253253}>
+            Enhanced Revolutionary Engine;
           </h1>
-          <Infinity className="w-10 h-10 text-blue-500 animate-bounce" />
+          <Infinity className="w-10 h-10 text-blue-500 animate-bounce" / key={675802}>
         </div>
-        <p className="text-xl text-gray-600 max-w-4xl mx-auto">
+        <p className="text-xl text-gray-600 max-w-4xl mx-auto" key={9912}>
           Mathematically Rigorous Implementation: Hodgkin-Huxley Neuromorphics,
-          Mamba State Space, PC Algorithm Causal Discovery, GUDHI Topological
-          Analysis & Riemannian Geometry
+          Mamba State Space, PC Algorithm Causal Discovery, GUDHI Topological;
+          Analysis & Riemannian Geometry;
         </p>
 
         {/* Mathematical Rigor Badges */}
-        <div className="flex flex-wrap justify-center gap-2 mt-4">
-          <Badge className="bg-purple-100 text-purple-800">
-            <Sigma className="w-3 h-3 mr-1" />
-            Hodgkin-Huxley ODEs
+        <div className="flex flex-wrap justify-center gap-2 mt-4" key={788098}>
+          <Badge className="bg-purple-100 text-purple-800" key={544126}>
+            <Sigma className="w-3 h-3 mr-1" / key={424176}>
+            Hodgkin-Huxley ODEs;
           </Badge>
-          <Badge className="bg-green-100 text-green-800">
-            <Calculator className="w-3 h-3 mr-1" />
-            PC Algorithm
+          <Badge className="bg-green-100 text-green-800" key={993567}>
+            <Calculator className="w-3 h-3 mr-1" / key={337371}>
+            PC Algorithm;
           </Badge>
-          <Badge className="bg-blue-100 text-blue-800">
-            <Pi className="w-3 h-3 mr-1" />
-            Do-Calculus
+          <Badge className="bg-blue-100 text-blue-800" key={686571}>
+            <Pi className="w-3 h-3 mr-1" / key={64459}>
+            Do-Calculus;
           </Badge>
-          <Badge className="bg-yellow-100 text-yellow-800">
-            <Triangle className="w-3 h-3 mr-1" />
-            GUDHI Persistent Homology
+          <Badge className="bg-yellow-100 text-yellow-800" key={182254}>
+            <Triangle className="w-3 h-3 mr-1" / key={275589}>
+            GUDHI Persistent Homology;
           </Badge>
-          <Badge className="bg-red-100 text-red-800">
-            <Binary className="w-3 h-3 mr-1" />
-            Mamba O(L) Scaling
+          <Badge className="bg-red-100 text-red-800" key={501402}>
+            <Binary className="w-3 h-3 mr-1" / key={316808}>
+            Mamba O(L) Scaling;
           </Badge>
-          <Badge className="bg-indigo-100 text-indigo-800">
-            <Minimize className="w-3 h-3 mr-1" />
-            Riemannian Geodesics
+          <Badge className="bg-indigo-100 text-indigo-800" key={991779}>
+            <Minimize className="w-3 h-3 mr-1" / key={433058}>
+            Riemannian Geodesics;
           </Badge>
         </div>
 
         {/* Real-time monitoring toggle */}
-        <div className="flex items-center justify-center gap-2 mt-4">
-          <Button
+        <div className="flex items-center justify-center gap-2 mt-4" key={882487}>
+          <Button;
             variant={realTimeMonitoring ? "default" : "outline"}
             size="sm"
-            onClick={() => setRealTimeMonitoring(!realTimeMonitoring)}
+            onClick={() = key={835518}> setRealTimeMonitoring(!realTimeMonitoring)}
             className="flex items-center gap-2"
           >
             {realTimeMonitoring ? (
-              <Pause className="w-4 h-4" />
+              <Pause className="w-4 h-4" / key={272884}>
             ) : (
-              <Play className="w-4 h-4" />
+              <Play className="w-4 h-4" / key={139624}>
             )}
-            {realTimeMonitoring ? "Pause" : "Start"} Real-time Monitoring
+            {realTimeMonitoring ? "Pause" : "Start"} Real-time Monitoring;
           </Button>
           {predictionResult && (
-            <Badge
+            <Badge;
               variant={
-                guaranteesScore > 80
+                guaranteesScore  key={238230}> 80;
                   ? "success"
-                  : guaranteesScore > 60
+                  : guaranteesScore > 60;
                     ? "warning"
                     : "destructive"
               }
@@ -609,16 +608,16 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
 
       {/* Processing Status */}
       {isProcessing && (
-        <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <RefreshCw className="w-6 h-6 animate-spin text-purple-600" />
-              <div className="flex-1">
-                <p className="font-medium text-purple-800">{processingStage}</p>
-                <p className="text-sm text-purple-600">
+        <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-blue-50" key={601862}>
+          <CardContent className="p-4" key={706827}>
+            <div className="flex items-center gap-3" key={443099}>
+              <RefreshCw className="w-6 h-6 animate-spin text-purple-600" / key={823740}>
+              <div className="flex-1" key={745195}>
+                <p className="font-medium text-purple-800" key={901227}>{processingStage}</p>
+                <p className="text-sm text-purple-600" key={638013}>
                   Enhanced mathematical computation in progress...
                 </p>
-                <Progress value={Math.random() * 100} className="mt-2" />
+                <Progress value={Math.random() * 100} className="mt-2" / key={697351}>
               </div>
             </div>
           </CardContent>
@@ -626,42 +625,42 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
       )}
 
       {/* Enhanced Interface */}
-      <Tabs
+      <Tabs;
         value={selectedTab}
         onValueChange={setSelectedTab}
         className="w-full"
-      >
-        <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="enhanced-engine">Enhanced Engine</TabsTrigger>
-          <TabsTrigger value="mathematical-results">
-            Mathematical Results
+       key={959423}>
+        <TabsList className="grid w-full grid-cols-6" key={223897}>
+          <TabsTrigger value="enhanced-engine" key={937694}>Enhanced Engine</TabsTrigger>
+          <TabsTrigger value="mathematical-results" key={200771}>
+            Mathematical Results;
           </TabsTrigger>
-          <TabsTrigger value="rigor-analysis">Rigor Analysis</TabsTrigger>
-          <TabsTrigger value="foundations">
-            Mathematical Foundations
+          <TabsTrigger value="rigor-analysis" key={453079}>Rigor Analysis</TabsTrigger>
+          <TabsTrigger value="foundations" key={694052}>
+            Mathematical Foundations;
           </TabsTrigger>
-          <TabsTrigger value="validation">Validation & Proofs</TabsTrigger>
-          <TabsTrigger value="complexity">Complexity Analysis</TabsTrigger>
+          <TabsTrigger value="validation" key={8113}>Validation & Proofs</TabsTrigger>
+          <TabsTrigger value="complexity" key={776742}>Complexity Analysis</TabsTrigger>
         </TabsList>
 
         {/* Enhanced Engine Configuration */}
-        <TabsContent value="enhanced-engine">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <TabsContent value="enhanced-engine" key={99372}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
             {/* Enhanced Configuration Panel */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <Settings className="w-5 h-5 mr-2 text-purple-600" />
-                  Enhanced Mathematical Configuration
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="flex items-center" key={762707}>
+                  <Settings className="w-5 h-5 mr-2 text-purple-600" / key={696866}>
+                  Enhanced Mathematical Configuration;
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="event-id">Event ID</Label>
-                  <Input
+              <CardContent className="space-y-4" key={796196}>
+                <div key={241917}>
+                  <Label htmlFor="event-id" key={870362}>Event ID</Label>
+                  <Input;
                     id="event-id"
                     value={predictionRequest.event_id}
-                    onChange={(e) =>
+                    onChange={(e) = key={273884}>
                       setPredictionRequest((prev) => ({
                         ...prev,
                         event_id: e.target.value,
@@ -671,12 +670,12 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                   />
                 </div>
 
-                <div>
-                  <Label htmlFor="sport">Sport</Label>
-                  <select
+                <div key={241917}>
+                  <Label htmlFor="sport" key={208532}>Sport</Label>
+                  <select;
                     id="sport"
                     value={predictionRequest.sport}
-                    onChange={(e) =>
+                    onChange={(e) = key={569775}>
                       setPredictionRequest((prev) => ({
                         ...prev,
                         sport: e.target.value,
@@ -684,53 +683,53 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                     }
                     className="w-full p-2 border rounded"
                   >
-                    <option value="basketball">Basketball</option>
-                    <option value="football">Football</option>
-                    <option value="baseball">Baseball</option>
-                    <option value="hockey">Hockey</option>
-                    <option value="soccer">Soccer</option>
+                    <option value="basketball" key={32898}>Basketball</option>
+                    <option value="football" key={465014}>Football</option>
+                    <option value="baseball" key={560777}>Baseball</option>
+                    <option value="hockey" key={942764}>Hockey</option>
+                    <option value="soccer" key={890296}>Soccer</option>
                   </select>
                 </div>
 
                 {/* Mathematical Rigor Settings */}
-                <div className="space-y-4 border-t pt-4">
-                  <h4 className="font-medium text-gray-800 flex items-center">
-                    <Calculator className="w-4 h-4 mr-2" />
-                    Mathematical Rigor Settings
+                <div className="space-y-4 border-t pt-4" key={147685}>
+                  <h4 className="font-medium text-gray-800 flex items-center" key={568750}>
+                    <Calculator className="w-4 h-4 mr-2" / key={396316}>
+                    Mathematical Rigor Settings;
                   </h4>
 
                   {/* Neuromorphic Settings */}
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-3">
-                      <input
+                  <div className="space-y-2" key={725977}>
+                    <div className="flex items-center space-x-3" key={602729}>
+                      <input;
                         type="checkbox"
                         id="enable-neuromorphic"
                         checked={predictionRequest.enable_neuromorphic}
-                        onChange={(e) =>
+                        onChange={(e) = key={31764}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             enable_neuromorphic: e.target.checked,
                           }))
                         }
                       />
-                      <Brain className="w-4 h-4 text-purple-600" />
-                      <label
+                      <Brain className="w-4 h-4 text-purple-600" / key={134827}>
+                      <label;
                         htmlFor="enable-neuromorphic"
                         className="text-sm font-medium"
-                      >
-                        Hodgkin-Huxley Neuromorphic
+                       key={427981}>
+                        Hodgkin-Huxley Neuromorphic;
                       </label>
                     </div>
                     {predictionRequest.enable_neuromorphic && (
-                      <div className="ml-7">
-                        <Label htmlFor="timesteps" className="text-xs">
-                          Temporal Simulation Steps
+                      <div className="ml-7" key={464398}>
+                        <Label htmlFor="timesteps" className="text-xs" key={43188}>
+                          Temporal Simulation Steps;
                         </Label>
-                        <Input
+                        <Input;
                           id="timesteps"
                           type="number"
                           value={predictionRequest.neuromorphic_timesteps}
-                          onChange={(e) =>
+                          onChange={(e) = key={71684}>
                             setPredictionRequest((prev) => ({
                               ...prev,
                               neuromorphic_timesteps:
@@ -744,37 +743,37 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                   </div>
 
                   {/* Mamba Settings */}
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-3">
-                      <input
+                  <div className="space-y-2" key={725977}>
+                    <div className="flex items-center space-x-3" key={602729}>
+                      <input;
                         type="checkbox"
                         id="enable-mamba"
                         checked={predictionRequest.enable_mamba}
-                        onChange={(e) =>
+                        onChange={(e) = key={38499}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             enable_mamba: e.target.checked,
                           }))
                         }
                       />
-                      <Activity className="w-4 h-4 text-green-600" />
-                      <label
+                      <Activity className="w-4 h-4 text-green-600" / key={473949}>
+                      <label;
                         htmlFor="enable-mamba"
                         className="text-sm font-medium"
-                      >
+                       key={140126}>
                         Mamba State Space O(L)
                       </label>
                     </div>
                     {predictionRequest.enable_mamba && (
-                      <div className="ml-7">
-                        <Label htmlFor="sequence-length" className="text-xs">
-                          Sequence Length
+                      <div className="ml-7" key={464398}>
+                        <Label htmlFor="sequence-length" className="text-xs" key={117089}>
+                          Sequence Length;
                         </Label>
-                        <Input
+                        <Input;
                           id="sequence-length"
                           type="number"
                           value={predictionRequest.mamba_sequence_length}
-                          onChange={(e) =>
+                          onChange={(e) = key={747970}>
                             setPredictionRequest((prev) => ({
                               ...prev,
                               mamba_sequence_length:
@@ -788,38 +787,38 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                   </div>
 
                   {/* Causal Settings */}
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-3">
-                      <input
+                  <div className="space-y-2" key={725977}>
+                    <div className="flex items-center space-x-3" key={602729}>
+                      <input;
                         type="checkbox"
                         id="enable-causal"
                         checked={predictionRequest.enable_causal_inference}
-                        onChange={(e) =>
+                        onChange={(e) = key={226200}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             enable_causal_inference: e.target.checked,
                           }))
                         }
                       />
-                      <GitBranch className="w-4 h-4 text-blue-600" />
-                      <label
+                      <GitBranch className="w-4 h-4 text-blue-600" / key={294311}>
+                      <label;
                         htmlFor="enable-causal"
                         className="text-sm font-medium"
-                      >
-                        PC Algorithm + Do-Calculus
+                       key={750167}>
+                        PC Algorithm + Do-Calculus;
                       </label>
                     </div>
                     {predictionRequest.enable_causal_inference && (
-                      <div className="ml-7">
-                        <Label htmlFor="significance-level" className="text-xs">
+                      <div className="ml-7" key={464398}>
+                        <Label htmlFor="significance-level" className="text-xs" key={157175}>
                           Statistical Significance (α)
                         </Label>
-                        <Input
+                        <Input;
                           id="significance-level"
                           type="number"
                           step="0.001"
                           value={predictionRequest.causal_significance_level}
-                          onChange={(e) =>
+                          onChange={(e) = key={251078}>
                             setPredictionRequest((prev) => ({
                               ...prev,
                               causal_significance_level:
@@ -833,37 +832,37 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                   </div>
 
                   {/* Topological Settings */}
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-3">
-                      <input
+                  <div className="space-y-2" key={725977}>
+                    <div className="flex items-center space-x-3" key={602729}>
+                      <input;
                         type="checkbox"
                         id="enable-topological"
                         checked={predictionRequest.enable_topological}
-                        onChange={(e) =>
+                        onChange={(e) = key={562264}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             enable_topological: e.target.checked,
                           }))
                         }
                       />
-                      <Network className="w-4 h-4 text-yellow-600" />
-                      <label
+                      <Network className="w-4 h-4 text-yellow-600" / key={255835}>
+                      <label;
                         htmlFor="enable-topological"
                         className="text-sm font-medium"
-                      >
-                        GUDHI Persistent Homology
+                       key={456277}>
+                        GUDHI Persistent Homology;
                       </label>
                     </div>
                     {predictionRequest.enable_topological && (
-                      <div className="ml-7">
-                        <Label htmlFor="max-dimension" className="text-xs">
-                          Max Homological Dimension
+                      <div className="ml-7" key={464398}>
+                        <Label htmlFor="max-dimension" className="text-xs" key={948358}>
+                          Max Homological Dimension;
                         </Label>
-                        <Input
+                        <Input;
                           id="max-dimension"
                           type="number"
                           value={predictionRequest.topological_max_dimension}
-                          onChange={(e) =>
+                          onChange={(e) = key={126090}>
                             setPredictionRequest((prev) => ({
                               ...prev,
                               topological_max_dimension:
@@ -877,37 +876,37 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                   </div>
 
                   {/* Riemannian Settings */}
-                  <div className="space-y-2">
-                    <div className="flex items-center space-x-3">
-                      <input
+                  <div className="space-y-2" key={725977}>
+                    <div className="flex items-center space-x-3" key={602729}>
+                      <input;
                         type="checkbox"
                         id="enable-riemannian"
                         checked={predictionRequest.enable_riemannian}
-                        onChange={(e) =>
+                        onChange={(e) = key={359701}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             enable_riemannian: e.target.checked,
                           }))
                         }
                       />
-                      <Minimize className="w-4 h-4 text-indigo-600" />
-                      <label
+                      <Minimize className="w-4 h-4 text-indigo-600" / key={795020}>
+                      <label;
                         htmlFor="enable-riemannian"
                         className="text-sm font-medium"
-                      >
-                        Riemannian Geometry
+                       key={866136}>
+                        Riemannian Geometry;
                       </label>
                     </div>
                     {predictionRequest.enable_riemannian && (
-                      <div className="ml-7">
-                        <Label htmlFor="manifold-dim" className="text-xs">
-                          Manifold Dimension
+                      <div className="ml-7" key={464398}>
+                        <Label htmlFor="manifold-dim" className="text-xs" key={243087}>
+                          Manifold Dimension;
                         </Label>
-                        <Input
+                        <Input;
                           id="manifold-dim"
                           type="number"
                           value={predictionRequest.riemannian_manifold_dim}
-                          onChange={(e) =>
+                          onChange={(e) = key={117655}>
                             setPredictionRequest((prev) => ({
                               ...prev,
                               riemannian_manifold_dim:
@@ -922,38 +921,38 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                 </div>
 
                 {/* Advanced Computation Settings */}
-                <div className="space-y-4 border-t pt-4">
-                  <h4 className="font-medium text-gray-800 flex items-center">
-                    <Cpu className="w-4 h-4 mr-2" />
-                    Computation Settings
+                <div className="space-y-4 border-t pt-4" key={147685}>
+                  <h4 className="font-medium text-gray-800 flex items-center" key={568750}>
+                    <Cpu className="w-4 h-4 mr-2" / key={873376}>
+                    Computation Settings;
                   </h4>
 
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="flex items-center space-x-2">
-                      <input
+                  <div className="grid grid-cols-2 gap-4" key={354810}>
+                    <div className="flex items-center space-x-2" key={740830}>
+                      <input;
                         type="checkbox"
                         id="use-gpu"
                         checked={predictionRequest.use_gpu}
-                        onChange={(e) =>
+                        onChange={(e) = key={724783}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             use_gpu: e.target.checked,
                           }))
                         }
                       />
-                      <label htmlFor="use-gpu" className="text-xs">
-                        GPU Acceleration
+                      <label htmlFor="use-gpu" className="text-xs" key={644586}>
+                        GPU Acceleration;
                       </label>
                     </div>
 
-                    <div>
-                      <Label htmlFor="precision" className="text-xs">
-                        Numerical Precision
+                    <div key={241917}>
+                      <Label htmlFor="precision" className="text-xs" key={710253}>
+                        Numerical Precision;
                       </Label>
-                      <select
+                      <select;
                         id="precision"
                         value={predictionRequest.numerical_precision}
-                        onChange={(e) =>
+                        onChange={(e) = key={443352}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             numerical_precision: e.target.value,
@@ -961,22 +960,22 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                         }
                         className="w-full p-1 border rounded text-xs"
                       >
-                        <option value="float32">Float32</option>
-                        <option value="float64">Float64</option>
+                        <option value="float32" key={804652}>Float32</option>
+                        <option value="float64" key={332138}>Float64</option>
                       </select>
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="tolerance" className="text-xs">
-                      Convergence Tolerance
+                  <div key={241917}>
+                    <Label htmlFor="tolerance" className="text-xs" key={340066}>
+                      Convergence Tolerance;
                     </Label>
-                    <Input
+                    <Input;
                       id="tolerance"
                       type="number"
                       step="1e-8"
                       value={predictionRequest.convergence_tolerance}
-                      onChange={(e) =>
+                      onChange={(e) = key={69806}>
                         setPredictionRequest((prev) => ({
                           ...prev,
                           convergence_tolerance:
@@ -988,20 +987,20 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                   </div>
                 </div>
 
-                <Button
+                <Button;
                   onClick={executeEnhancedPrediction}
                   disabled={isProcessing || !predictionRequest.event_id.trim()}
                   className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
-                >
+                 key={882557}>
                   {isProcessing ? (
                     <>
-                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" / key={710108}>
                       Computing...
                     </>
                   ) : (
                     <>
-                      <Sparkles className="w-4 h-4 mr-2" />
-                      Execute Enhanced Prediction
+                      <Sparkles className="w-4 h-4 mr-2" / key={200545}>
+                      Execute Enhanced Prediction;
                     </>
                   )}
                 </Button>
@@ -1009,26 +1008,26 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
             </Card>
 
             {/* Feature Input Panel */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center">
-                  <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
-                  Feature Configuration
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="flex items-center" key={762707}>
+                  <BarChart3 className="w-5 h-5 mr-2 text-blue-600" / key={226737}>
+                  Feature Configuration;
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-3" key={445386}>
                 {Object.entries(predictionRequest.features).map(
                   ([key, value]) => (
-                    <div key={key}>
-                      <Label htmlFor={key} className="text-xs capitalize">
+                    <div key={key} key={360951}>
+                      <Label htmlFor={key} className="text-xs capitalize" key={91797}>
                         {key.replace(/_/g, " ")}
                       </Label>
-                      <Input
+                      <Input;
                         id={key}
                         type="number"
                         step="0.1"
                         value={value}
-                        onChange={(e) =>
+                        onChange={(e) = key={253954}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             features: {
@@ -1048,31 +1047,31 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         </TabsContent>
 
         {/* Mathematical Results */}
-        <TabsContent value="mathematical-results">
+        <TabsContent value="mathematical-results" key={515885}>
           {predictionResult ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
               {/* Core Predictions */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Target className="w-5 h-5 mr-2 text-green-600" />
-                    Enhanced Prediction Results
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Target className="w-5 h-5 mr-2 text-green-600" / key={902291}>
+                    Enhanced Prediction Results;
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="text-center">
-                    <div className="text-4xl font-bold text-green-600 mb-2">
+                <CardContent className="space-y-4" key={796196}>
+                  <div className="text-center" key={120206}>
+                    <div className="text-4xl font-bold text-green-600 mb-2" key={798245}>
                       {predictionResult.final_prediction.toFixed(2)}
                     </div>
-                    <div className="text-sm text-gray-600">
-                      Final Enhanced Prediction
+                    <div className="text-sm text-gray-600" key={847282}>
+                      Final Enhanced Prediction;
                     </div>
-                    <div className="mt-2">
-                      <Badge
+                    <div className="mt-2" key={848027}>
+                      <Badge;
                         variant={
-                          predictionResult.prediction_confidence > 0.8
+                          predictionResult.prediction_confidence  key={733573}> 0.8;
                             ? "success"
-                            : predictionResult.prediction_confidence > 0.6
+                            : predictionResult.prediction_confidence > 0.6;
                               ? "warning"
                               : "destructive"
                         }
@@ -1086,75 +1085,75 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">
+                  <div className="space-y-2" key={725977}>
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-sm text-gray-600" key={279234}>
                         Base Prediction:
                       </span>
-                      <span className="font-medium">
+                      <span className="font-medium" key={514486}>
                         {predictionResult.base_prediction.toFixed(2)}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-sm text-gray-600" key={279234}>
                         Neuromorphic Enhancement:
                       </span>
-                      <span className="font-medium text-purple-600">
+                      <span className="font-medium text-purple-600" key={892758}>
                         +{predictionResult.neuromorphic_enhancement.toFixed(2)}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-sm text-gray-600" key={279234}>
                         Mamba Refinement:
                       </span>
-                      <span className="font-medium text-green-600">
+                      <span className="font-medium text-green-600" key={6962}>
                         +{predictionResult.mamba_temporal_refinement.toFixed(2)}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-sm text-gray-600" key={279234}>
                         Causal Adjustment:
                       </span>
-                      <span className="font-medium text-blue-600">
+                      <span className="font-medium text-blue-600" key={472080}>
                         {predictionResult.causal_adjustment >= 0 ? "+" : ""}
                         {predictionResult.causal_adjustment.toFixed(2)}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-sm text-gray-600" key={279234}>
                         Topological Smoothing:
                       </span>
-                      <span className="font-medium text-yellow-600">
+                      <span className="font-medium text-yellow-600" key={195927}>
                         {predictionResult.topological_smoothing >= 0 ? "+" : ""}
                         {predictionResult.topological_smoothing.toFixed(2)}
                       </span>
                     </div>
-                    <div className="flex justify-between">
-                      <span className="text-sm text-gray-600">
+                    <div className="flex justify-between" key={588832}>
+                      <span className="text-sm text-gray-600" key={279234}>
                         Riemannian Projection:
                       </span>
-                      <span className="font-medium text-indigo-600">
+                      <span className="font-medium text-indigo-600" key={460275}>
                         {predictionResult.riemannian_projection >= 0 ? "+" : ""}
                         {predictionResult.riemannian_projection.toFixed(2)}
                       </span>
                     </div>
                   </div>
 
-                  <div className="border-t pt-3">
-                    <div className="text-xs text-gray-500 space-y-1">
-                      <div>
+                  <div className="border-t pt-3" key={750496}>
+                    <div className="text-xs text-gray-500 space-y-1" key={458356}>
+                      <div key={241917}>
                         Processing Time:{" "}
-                        {predictionResult.total_processing_time.toFixed(2)}s
+                        {predictionResult.total_processing_time.toFixed(2)}s;
                       </div>
-                      <div>
+                      <div key={241917}>
                         Convergence Rate:{" "}
                         {(predictionResult.convergence_rate * 100).toFixed(1)}%
                       </div>
-                      <div>
+                      <div key={241917}>
                         Stability Margin:{" "}
                         {predictionResult.stability_margin.toFixed(3)}
                       </div>
-                      <div>
+                      <div key={241917}>
                         Lyapunov Exponent:{" "}
                         {predictionResult.lyapunov_exponent.toFixed(6)}
                       </div>
@@ -1164,17 +1163,17 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
               </Card>
 
               {/* Convergence Analysis */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
-                    Convergence Analysis
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <TrendingUp className="w-5 h-5 mr-2 text-blue-600" / key={329707}>
+                    Convergence Analysis;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent key={452065}>
                   {convergenceChartData && (
-                    <div className="h-64">
-                      <Line
+                    <div className="h-64" key={118048}>
+                      <Line;
                         data={convergenceChartData}
                         options={{
                           responsive: true,
@@ -1195,24 +1194,24 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                             },
                           },
                         }}
-                      />
+                      / key={581949}>
                     </div>
                   )}
                 </CardContent>
               </Card>
 
               {/* Eigenvalue Spectrum */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Activity className="w-5 h-5 mr-2 text-green-600" />
-                    Mamba Eigenvalue Spectrum
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Activity className="w-5 h-5 mr-2 text-green-600" / key={493064}>
+                    Mamba Eigenvalue Spectrum;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent key={452065}>
                   {eigenvalueSpectrumData && (
-                    <div className="h-64">
-                      <Bar
+                    <div className="h-64" key={118048}>
+                      <Bar;
                         data={eigenvalueSpectrumData}
                         options={{
                           responsive: true,
@@ -1226,28 +1225,28 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                             y: { title: { display: true, text: "Magnitude" } },
                           },
                         }}
-                      />
+                      / key={574579}>
                     </div>
                   )}
-                  <div className="mt-2 text-xs text-gray-500">
-                    Stability guaranteed when all eigenvalues have magnitude
-                    &lt; 1
+                  <div className="mt-2 text-xs text-gray-500" key={914503}>
+                    Stability guaranteed when all eigenvalues have magnitude;
+                    &lt; 1;
                   </div>
                 </CardContent>
               </Card>
 
               {/* Topological Persistence */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Network className="w-5 h-5 mr-2 text-yellow-600" />
-                    Topological Persistence Barcode
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Network className="w-5 h-5 mr-2 text-yellow-600" / key={507118}>
+                    Topological Persistence Barcode;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent key={452065}>
                   {topologicalBarcodeData && (
-                    <div className="h-64">
-                      <Scatter
+                    <div className="h-64" key={118048}>
+                      <Scatter;
                         data={topologicalBarcodeData}
                         options={{
                           responsive: true,
@@ -1264,21 +1263,21 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                             },
                           },
                         }}
-                      />
+                      / key={998594}>
                     </div>
                   )}
                 </CardContent>
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Microscope className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  No Results Yet
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <Microscope className="w-16 h-16 mx-auto text-gray-400 mb-4" / key={507909}>
+                <h3 className="text-lg font-medium text-gray-900 mb-2" key={906428}>
+                  No Results Yet;
                 </h3>
-                <p className="text-gray-600">
-                  Execute an enhanced prediction to see mathematical results
+                <p className="text-gray-600" key={486863}>
+                  Execute an enhanced prediction to see mathematical results;
                 </p>
               </CardContent>
             </Card>
@@ -1286,56 +1285,56 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         </TabsContent>
 
         {/* Mathematical Rigor Analysis */}
-        <TabsContent value="rigor-analysis">
+        <TabsContent value="rigor-analysis" key={939202}>
           {mathematicalAnalysis ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Award className="w-5 h-5 mr-2 text-purple-600" />
-                    Mathematical Rigor Score
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Award className="w-5 h-5 mr-2 text-purple-600" / key={890586}>
+                    Mathematical Rigor Score;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="text-center">
-                    <div className="text-6xl font-bold text-purple-600 mb-2">
+                <CardContent key={452065}>
+                  <div className="text-center" key={120206}>
+                    <div className="text-6xl font-bold text-purple-600 mb-2" key={515309}>
                       {mathematicalAnalysis.mathematical_rigor_score.toFixed(0)}
                     </div>
-                    <div className="text-lg text-gray-600">
-                      Overall Rigor Score
+                    <div className="text-lg text-gray-600" key={123167}>
+                      Overall Rigor Score;
                     </div>
-                    <Progress
+                    <Progress;
                       value={mathematicalAnalysis.mathematical_rigor_score}
                       className="mt-4"
-                    />
+                    / key={488697}>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
-                    Theoretical Guarantees
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <CheckCircle className="w-5 h-5 mr-2 text-green-600" / key={258018}>
+                    Theoretical Guarantees;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent key={452065}>
                   {predictionResult && (
-                    <div className="space-y-2">
+                    <div className="space-y-2" key={725977}>
                       {Object.entries(
                         predictionResult.mathematical_guarantees,
                       ).map(([key, value]) => (
-                        <div
+                        <div;
                           key={key}
                           className="flex items-center justify-between"
-                        >
-                          <span className="text-sm text-gray-600 capitalize">
+                         key={63314}>
+                          <span className="text-sm text-gray-600 capitalize" key={435668}>
                             {key.replace(/_/g, " ")}
                           </span>
                           {value ? (
-                            <CheckCircle className="w-4 h-4 text-green-600" />
+                            <CheckCircle className="w-4 h-4 text-green-600" / key={227144}>
                           ) : (
-                            <AlertCircle className="w-4 h-4 text-red-600" />
+                            <AlertCircle className="w-4 h-4 text-red-600" / key={506085}>
                           )}
                         </div>
                       ))}
@@ -1345,14 +1344,14 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Gauge className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  No Analysis Available
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <Gauge className="w-16 h-16 mx-auto text-gray-400 mb-4" / key={328272}>
+                <h3 className="text-lg font-medium text-gray-900 mb-2" key={906428}>
+                  No Analysis Available;
                 </h3>
-                <p className="text-gray-600">
-                  Execute an enhanced prediction to see rigor analysis
+                <p className="text-gray-600" key={486863}>
+                  Execute an enhanced prediction to see rigor analysis;
                 </p>
               </CardContent>
             </Card>
@@ -1360,44 +1359,44 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         </TabsContent>
 
         {/* Mathematical Foundations */}
-        <TabsContent value="foundations">
+        <TabsContent value="foundations" key={759943}>
           {mathematicalFoundations ? (
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <BookOpen className="w-5 h-5 mr-2 text-blue-600" />
-                    Theoretical Foundations
+            <div className="space-y-6" key={501869}>
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <BookOpen className="w-5 h-5 mr-2 text-blue-600" / key={951915}>
+                    Theoretical Foundations;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <CardContent key={452065}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6" key={151516}>
                     {Object.entries(
                       mathematicalFoundations.theoretical_foundations || {},
                     ).map(([key, value]: [string, any]) => (
-                      <div key={key} className="space-y-2">
-                        <h4 className="font-medium text-gray-900 capitalize">
+                      <div key={key} className="space-y-2" key={943392}>
+                        <h4 className="font-medium text-gray-900 capitalize" key={794578}>
                           {key.replace(/_/g, " ")}
                         </h4>
-                        <div className="text-sm text-gray-600 space-y-1">
-                          <div>
-                            <strong>Basis:</strong> {value.mathematical_basis}
+                        <div className="text-sm text-gray-600 space-y-1" key={869838}>
+                          <div key={241917}>
+                            <strong key={829099}>Basis:</strong> {value.mathematical_basis}
                           </div>
                           {value.differential_equations && (
-                            <div>
-                              <strong>Equations:</strong>
-                              <ul className="list-disc list-inside ml-2 font-mono text-xs">
+                            <div key={241917}>
+                              <strong key={829099}>Equations:</strong>
+                              <ul className="list-disc list-inside ml-2 font-mono text-xs" key={420915}>
                                 {value.differential_equations.map(
                                   (eq: string, i: number) => (
-                                    <li key={i}>{eq}</li>
+                                    <li key={i} key={742895}>{eq}</li>
                                   ),
                                 )}
                               </ul>
                             </div>
                           )}
                           {value.computational_complexity && (
-                            <div>
-                              <strong>Complexity:</strong>{" "}
+                            <div key={241917}>
+                              <strong key={829099}>Complexity:</strong>{" "}
                               {value.computational_complexity}
                             </div>
                           )}
@@ -1409,14 +1408,14 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <GraduationCap className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <GraduationCap className="w-16 h-16 mx-auto text-gray-400 mb-4" / key={732457}>
+                <h3 className="text-lg font-medium text-gray-900 mb-2" key={906428}>
                   Loading Foundations...
                 </h3>
-                <p className="text-gray-600">
-                  Retrieving mathematical foundations from backend
+                <p className="text-gray-600" key={486863}>
+                  Retrieving mathematical foundations from backend;
                 </p>
               </CardContent>
             </Card>
@@ -1424,27 +1423,27 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         </TabsContent>
 
         {/* Validation & Proofs */}
-        <TabsContent value="validation">
+        <TabsContent value="validation" key={712333}>
           {predictionResult ? (
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Eye className="w-5 h-5 mr-2 text-green-600" />
-                    Numerical Stability Validation
+            <div className="space-y-6" key={501869}>
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Eye className="w-5 h-5 mr-2 text-green-600" / key={52827}>
+                    Numerical Stability Validation;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <CardContent key={452065}>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4" key={815557}>
                     {Object.entries(predictionResult.numerical_stability).map(
                       ([key, value]) => (
-                        <div key={key} className="text-center">
-                          <div
+                        <div key={key} className="text-center" key={165705}>
+                          <div;
                             className={`text-2xl mb-1 ${value ? "text-green-600" : "text-red-600"}`}
-                          >
+                           key={249957}>
                             {value ? "✓" : "✗"}
                           </div>
-                          <div className="text-xs text-gray-600 capitalize">
+                          <div className="text-xs text-gray-600 capitalize" key={357755}>
                             {key.replace(/_/g, " ")}
                           </div>
                         </div>
@@ -1454,28 +1453,28 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Radar className="w-5 h-5 mr-2 text-blue-600" />
-                    Convergence Diagnostics
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Radar className="w-5 h-5 mr-2 text-blue-600" / key={400556}>
+                    Convergence Diagnostics;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
+                <CardContent key={452065}>
+                  <div className="space-y-3" key={186520}>
                     {Object.entries(
                       predictionResult.convergence_diagnostics,
                     ).map(([key, value]: [string, any]) => (
-                      <div
+                      <div;
                         key={key}
                         className="flex justify-between items-center"
-                      >
-                        <span className="text-sm text-gray-600 capitalize">
+                       key={305494}>
+                        <span className="text-sm text-gray-600 capitalize" key={435668}>
                           {key.replace(/_/g, " ")}
                         </span>
-                        <span className="font-mono text-sm">
+                        <span className="font-mono text-sm" key={133106}>
                           {typeof value === "boolean"
-                            ? value
+                            ? value;
                               ? "True"
                               : "False"
                             : typeof value === "number"
@@ -1489,14 +1488,14 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Eye className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  No Validation Data
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <Eye className="w-16 h-16 mx-auto text-gray-400 mb-4" / key={200012}>
+                <h3 className="text-lg font-medium text-gray-900 mb-2" key={906428}>
+                  No Validation Data;
                 </h3>
-                <p className="text-gray-600">
-                  Execute an enhanced prediction to see validation results
+                <p className="text-gray-600" key={486863}>
+                  Execute an enhanced prediction to see validation results;
                 </p>
               </CardContent>
             </Card>
@@ -1504,30 +1503,30 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
         </TabsContent>
 
         {/* Complexity Analysis */}
-        <TabsContent value="complexity">
+        <TabsContent value="complexity" key={96433}>
           {predictionResult ? (
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Workflow className="w-5 h-5 mr-2 text-purple-600" />
-                    Computational Complexity
+            <div className="space-y-6" key={501869}>
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Workflow className="w-5 h-5 mr-2 text-purple-600" / key={99706}>
+                    Computational Complexity;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <h4 className="font-medium text-gray-900 mb-3">
-                        Time Complexity
+                <CardContent key={452065}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6" key={151516}>
+                    <div key={241917}>
+                      <h4 className="font-medium text-gray-900 mb-3" key={544044}>
+                        Time Complexity;
                       </h4>
-                      <div className="space-y-2">
+                      <div className="space-y-2" key={725977}>
                         {Object.entries(predictionResult.actual_complexity).map(
                           ([key, value]) => (
-                            <div key={key} className="flex justify-between">
-                              <span className="text-sm text-gray-600 capitalize">
+                            <div key={key} className="flex justify-between" key={280525}>
+                              <span className="text-sm text-gray-600 capitalize" key={435668}>
                                 {key}:
                               </span>
-                              <span className="font-mono text-sm">
+                              <span className="font-mono text-sm" key={133106}>
                                 {String(value)}
                               </span>
                             </div>
@@ -1536,18 +1535,18 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                       </div>
                     </div>
 
-                    <div>
-                      <h4 className="font-medium text-gray-900 mb-3">
+                    <div key={241917}>
+                      <h4 className="font-medium text-gray-900 mb-3" key={544044}>
                         Memory Usage (MB)
                       </h4>
-                      <div className="space-y-2">
+                      <div className="space-y-2" key={725977}>
                         {Object.entries(predictionResult.memory_usage).map(
                           ([key, value]) => (
-                            <div key={key} className="flex justify-between">
-                              <span className="text-sm text-gray-600 capitalize">
+                            <div key={key} className="flex justify-between" key={280525}>
+                              <span className="text-sm text-gray-600 capitalize" key={435668}>
                                 {key}:
                               </span>
-                              <span className="font-mono text-sm">
+                              <span className="font-mono text-sm" key={133106}>
                                 {value.toFixed(2)}
                               </span>
                             </div>
@@ -1559,35 +1558,35 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Cpu className="w-5 h-5 mr-2 text-blue-600" />
-                    Runtime Analysis
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Cpu className="w-5 h-5 mr-2 text-blue-600" / key={771663}>
+                    Runtime Analysis;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
+                <CardContent key={452065}>
+                  <div className="space-y-2" key={725977}>
                     {Object.entries(
                       predictionResult.component_processing_times,
                     ).map(([key, value]) => (
-                      <div
+                      <div;
                         key={key}
                         className="flex justify-between items-center"
-                      >
-                        <span className="text-sm text-gray-600 capitalize">
+                       key={305494}>
+                        <span className="text-sm text-gray-600 capitalize" key={435668}>
                           {key.replace(/_/g, " ")}:
                         </span>
-                        <div className="flex items-center gap-2">
-                          <Progress
+                        <div className="flex items-center gap-2" key={100294}>
+                          <Progress;
                             value={
                               (value / predictionResult.total_processing_time) *
-                              100
+                              100;
                             }
                             className="w-20 h-2"
-                          />
-                          <span className="font-mono text-sm w-16 text-right">
-                            {value.toFixed(2)}s
+                          / key={208934}>
+                          <span className="font-mono text-sm w-16 text-right" key={874529}>
+                            {value.toFixed(2)}s;
                           </span>
                         </div>
                       </div>
@@ -1597,14 +1596,14 @@ const EnhancedRevolutionaryInterface: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Cpu className="w-16 h-16 mx-auto text-gray-400 mb-4" />
-                <h3 className="text-lg font-medium text-gray-900 mb-2">
-                  No Complexity Data
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <Cpu className="w-16 h-16 mx-auto text-gray-400 mb-4" / key={639358}>
+                <h3 className="text-lg font-medium text-gray-900 mb-2" key={906428}>
+                  No Complexity Data;
                 </h3>
-                <p className="text-gray-600">
-                  Execute an enhanced prediction to see complexity analysis
+                <p className="text-gray-600" key={486863}>
+                  Execute an enhanced prediction to see complexity analysis;
                 </p>
               </CardContent>
             </Card>

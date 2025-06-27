@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react.ts';
 
 // Custom Betting Card Component (Builder.io removed)
 interface BettingCardProps {
@@ -11,7 +11,7 @@ interface BettingCardProps {
   onClick?: () => void;
 }
 
-const BettingCard: React.FC<BettingCardProps> = ({
+const BettingCard: React.FC<BettingCardProps key={312754}> = ({
   title = "Match Title",
   odds = "2.5",
   team1 = "Team A",
@@ -21,24 +21,24 @@ const BettingCard: React.FC<BettingCardProps> = ({
   onClick,
 }) => {
   return (
-    <div
+    <div;
       className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 cursor-pointer hover:shadow-lg transition-shadow"
       onClick={onClick}
-    >
-      <div className="flex justify-between items-center mb-2">
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+     key={821723}>
+      <div className="flex justify-between items-center mb-2" key={88839}>
+        <span className="text-sm text-gray-500 dark:text-gray-400" key={896462}>
           {sport}
         </span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">{time}</span>
+        <span className="text-sm text-gray-500 dark:text-gray-400" key={896462}>{time}</span>
       </div>
-      <h3 className="text-lg font-semibold mb-2 dark:text-white">{title}</h3>
-      <div className="flex justify-between items-center">
-        <div className="flex flex-col">
-          <span className="text-sm font-medium dark:text-white">{team1}</span>
-          <span className="text-xs text-gray-500 dark:text-gray-400">vs</span>
-          <span className="text-sm font-medium dark:text-white">{team2}</span>
+      <h3 className="text-lg font-semibold mb-2 dark:text-white" key={753321}>{title}</h3>
+      <div className="flex justify-between items-center" key={795957}>
+        <div className="flex flex-col" key={282595}>
+          <span className="text-sm font-medium dark:text-white" key={443322}>{team1}</span>
+          <span className="text-xs text-gray-500 dark:text-gray-400" key={920878}>vs</span>
+          <span className="text-sm font-medium dark:text-white" key={443322}>{team2}</span>
         </div>
-        <div className="bg-blue-500 text-white px-3 py-1 rounded font-bold">
+        <div className="bg-blue-500 text-white px-3 py-1 rounded font-bold" key={51264}>
           {odds}
         </div>
       </div>
@@ -46,6 +46,6 @@ const BettingCard: React.FC<BettingCardProps> = ({
   );
 };
 
-// Builder.io registration completely removed
+// Builder.io registration completely removed;
 
 export default BettingCard;

@@ -4,9 +4,9 @@ export function useEnhancedBettingEngine() {
     const [isGenerating, setIsGenerating] = useState(false);
     const [realTimeData, setRealTimeData] = useState({});
     useEffect(() => {
-        // Initialize real-time data feeds
+        // Initialize real-time data feeds;
         realTimeDataAggregator.initializeRealTimeFeeds();
-        // Subscribe to real-time updates
+        // Subscribe to real-time updates;
         const updateInterval = setInterval(() => {
             setRealTimeData({
                 timestamp: new Date(),
@@ -20,7 +20,7 @@ export function useEnhancedBettingEngine() {
     const generateEnhancedPortfolio = useCallback(async (config, context) => {
         setIsGenerating(true);
         try {
-            // Enhanced context with real-time data
+            // Enhanced context with real-time data;
             const enhancedContext = {
                 ...context,
                 liveOdds: realTimeDataAggregator.getLiveOdds("current"),
@@ -28,14 +28,14 @@ export function useEnhancedBettingEngine() {
                 weather: realTimeDataAggregator.getWeatherImpact("current"),
                 marketIndicators: realTimeDataAggregator.getMarketIndicators(),
             };
-            // Generate opportunities using advanced analytics
-            const opportunities = await generateAdvancedOpportunities(config, enhancedContext);
-            // Apply multiple filtering and ranking algorithms
-            const rankedOpportunities = await rankOpportunities(opportunities, config);
-            // Select optimal portfolio using modern portfolio theory
-            const optimalPortfolio = selectOptimalPortfolio(rankedOpportunities, config);
-            // Calculate portfolio-level metrics
-            const portfolioMetrics = calculatePortfolioMetrics(optimalPortfolio, config);
+            // Generate opportunities using advanced analytics;
+
+            // Apply multiple filtering and ranking algorithms;
+
+            // Select optimal portfolio using modern portfolio theory;
+
+            // Calculate portfolio-level metrics;
+
             setCurrentOpportunities(optimalPortfolio);
             return {
                 opportunities: optimalPortfolio,
@@ -70,17 +70,17 @@ export function useEnhancedBettingEngine() {
     };
 }
 async function generateAdvancedOpportunities(config, context) {
-    const opportunities = [];
-    // Analyze player props with advanced analytics
+
+    // Analyze player props with advanced analytics;
     for (const player of context.players.slice(0, 20)) {
-        const statTypes = getStatTypesForSport(player.sport);
+
         for (const statType of statTypes) {
-            const line = calculateDynamicLine(player, statType, context);
-            // Run comprehensive analysis
-            const analysis = await advancedAnalytics.analyzePlayerProp(player, statType, line, context.dataSources);
-            // Calculate enhanced metrics
-            const enhancedMetrics = await calculateEnhancedMetrics(analysis, player, statType, line, context);
-            // Only include high-value opportunities
+
+            // Run comprehensive analysis;
+
+            // Calculate enhanced metrics;
+
+            // Only include high-value opportunities;
             if (enhancedMetrics.valueRating !== "D" &&
                 enhancedMetrics.valueRating !== "C") {
                 opportunities.push({
@@ -96,7 +96,7 @@ async function generateAdvancedOpportunities(config, context) {
                     lastUpdate: new Date().toLocaleTimeString(),
                     realData: true,
                     bettable: true,
-                    // Enhanced fields
+                    // Enhanced fields;
                     advancedMetrics: analysis.metrics,
                     riskScore: enhancedMetrics.riskScore,
                     valueRating: enhancedMetrics.valueRating,
@@ -114,30 +114,30 @@ async function generateAdvancedOpportunities(config, context) {
             }
         }
     }
-    // Analyze game totals and spreads
+    // Analyze game totals and spreads;
     for (const game of context.games.slice(0, 10)) {
-        const gameOpportunities = await analyzeGameOpportunities(game, context);
+
         opportunities.push(...gameOpportunities);
     }
     return opportunities;
 }
 async function calculateEnhancedMetrics(analysis, player, statType, line, context) {
-    // Risk assessment
-    const riskScore = calculateRiskScore(analysis, context);
-    // Value rating
-    const valueRating = calculateValueRating(analysis.metrics.expectedValue, analysis.confidence);
-    // Model consensus
-    const modelConsensus = calculateModelConsensus(analysis.models);
-    // Market edge analysis
-    const marketEdge = calculateMarketEdge(analysis.prediction, line, context.liveOdds);
-    // Impact factors
-    const injuryImpact = analysis.injuries.reduce((sum, injury) => sum + injury.impactScore, 0);
-    const weatherImpact = analysis.weather?.gameImpactScore || 0;
-    const sentimentScore = analysis.sentiment.socialMediaScore;
-    // Probability distribution
-    const probabilityDistribution = generateProbabilityDistribution(analysis.prediction, line);
-    // Backtest simulation
-    const backtestResults = simulateBacktest(player, statType, analysis);
+    // Risk assessment;
+
+    // Value rating;
+
+    // Model consensus;
+
+    // Market edge analysis;
+
+    // Impact factors;
+
+
+
+    // Probability distribution;
+
+    // Backtest simulation;
+
     return {
         riskScore,
         valueRating,
@@ -151,29 +151,29 @@ async function calculateEnhancedMetrics(analysis, player, statType, line, contex
     };
 }
 function calculateRiskScore(analysis, context) {
-    let riskScore = 0;
-    // Model disagreement risk
-    const modelVariance = calculateModelVariance(analysis.models);
+    const riskScore = 0;
+    // Model disagreement risk;
+
     riskScore += modelVariance * 0.3;
-    // Data quality risk
-    const dataQualityRisk = 1 - context.dataQuality;
+    // Data quality risk;
+
     riskScore += dataQualityRisk * 0.2;
-    // Market volatility risk
-    const marketVolatility = context.marketIndicators?.cryptoVolatility || 0;
+    // Market volatility risk;
+
     riskScore += marketVolatility * 0.1;
-    // Injury risk
-    const injuryRisk = analysis.injuries.reduce((sum, injury) => sum + injury.impactScore, 0);
+    // Injury risk;
+
     riskScore += injuryRisk * 0.2;
-    // Weather risk
-    const weatherRisk = analysis.weather?.gameImpactScore || 0;
+    // Weather risk;
+
     riskScore += weatherRisk * 0.1;
-    // Sentiment volatility risk
-    const sentimentRisk = Math.abs(analysis.sentiment.socialMediaScore) * 0.1;
+    // Sentiment volatility risk;
+
     riskScore += sentimentRisk;
     return Math.min(riskScore, 1.0);
 }
 function calculateValueRating(expectedValue, confidence) {
-    const valueScore = expectedValue * confidence;
+
     if (valueScore >= 15)
         return "A+";
     if (valueScore >= 12)
@@ -189,33 +189,33 @@ function calculateValueRating(expectedValue, confidence) {
     return "D";
 }
 function calculateModelConsensus(models) {
-    const predictions = models.map((m) => m.prediction);
-    const mean = predictions.reduce((sum, pred) => sum + pred, 0) / predictions.length;
+
+
     const variance = predictions.reduce((sum, pred) => sum + Math.pow(pred - mean, 2), 0) /
         predictions.length;
-    const standardDeviation = Math.sqrt(variance);
-    // Higher consensus = lower standard deviation relative to mean
+
+    // Higher consensus = lower standard deviation relative to mean;
     return Math.max(0, 1 - standardDeviation / mean);
 }
 function calculateMarketEdge(prediction, line, liveOdds) {
-    const difference = Math.abs(prediction - line);
-    const percentageDifference = difference / line;
-    // Factor in live odds movement
-    const oddsMovement = liveOdds.length > 0 ? calculateOddsMovement(liveOdds) : 0;
+
+
+    // Factor in live odds movement;
+
     return percentageDifference + oddsMovement * 0.1;
 }
 function calculateModelVariance(models) {
-    const predictions = models.map((m) => m.prediction);
-    const mean = predictions.reduce((sum, pred) => sum + pred, 0) / predictions.length;
+
+
     return (predictions.reduce((sum, pred) => sum + Math.pow(pred - mean, 2), 0) /
         predictions.length);
 }
 function calculateOddsMovement(liveOdds) {
     if (liveOdds.length < 2)
         return 0;
-    // Calculate average movement across sportsbooks
-    let totalMovement = 0;
-    let count = 0;
+    // Calculate average movement across sportsbooks;
+    const totalMovement = 0;
+    const count = 0;
     liveOdds.forEach((odds) => {
         if (odds.spread && odds.spread.line) {
             totalMovement += Math.abs(odds.spread.line);
@@ -225,36 +225,36 @@ function calculateOddsMovement(liveOdds) {
     return count > 0 ? totalMovement / count : 0;
 }
 function generateProbabilityDistribution(prediction, line) {
-    const distribution = [];
-    const range = Math.max(prediction, line) * 0.5;
-    const step = range / 20;
-    for (let i = 0; i <= 20; i++) {
-        const value = prediction - range + i * step;
-        const probability = normalPDF(value, prediction, range / 6);
+
+
+
+    for (const i = 0; i <= 20; i++) {
+
+
         distribution.push(probability);
     }
     return distribution;
 }
 function normalPDF(x, mean, stdDev) {
-    const coefficient = 1 / (stdDev * Math.sqrt(2 * Math.PI));
-    const exponent = -0.5 * Math.pow((x - mean) / stdDev, 2);
+
+
     return coefficient * Math.exp(exponent);
 }
 function simulateBacktest(player, statType, analysis) {
-    // Simulate historical performance
-    const simulations = 1000;
-    let wins = 0;
-    let totalReturn = 0;
-    let maxDrawdown = 0;
-    let currentDrawdown = 0;
-    for (let i = 0; i < simulations; i++) {
-        const actualValue = analysis.prediction + (Math.random() - 0.5) * analysis.prediction * 0.3;
-        const line = analysis.prediction * (0.9 + Math.random() * 0.2);
+    // Simulate historical performance;
+
+    const wins = 0;
+    const totalReturn = 0;
+    const maxDrawdown = 0;
+    const currentDrawdown = 0;
+    for (const i = 0; i < simulations; i++) {
+
+
         const won = (analysis.prediction > line && actualValue > line) ||
             (analysis.prediction < line && actualValue < line);
         if (won) {
             wins++;
-            const returnAmount = 0.91; // -110 odds
+            const returnAmount = 0.91; // -110 odds;
             totalReturn += returnAmount;
             currentDrawdown = Math.max(0, currentDrawdown - returnAmount);
         }
@@ -264,9 +264,9 @@ function simulateBacktest(player, statType, analysis) {
             maxDrawdown = Math.max(maxDrawdown, currentDrawdown);
         }
     }
-    const winRate = wins / simulations;
-    const avgReturn = totalReturn / simulations;
-    const profitFactor = wins > 0 ? Math.abs(totalReturn / (simulations - wins)) : 0;
+
+
+
     return {
         winRate,
         avgReturn,
@@ -275,23 +275,23 @@ function simulateBacktest(player, statType, analysis) {
     };
 }
 async function analyzeGameOpportunities(game, context) {
-    const opportunities = [];
-    // Analyze totals
-    const totalAnalysis = await analyzeGameTotal(game, context);
+
+    // Analyze totals;
+
     if (totalAnalysis.valueRating !== "D") {
         opportunities.push(totalAnalysis);
     }
-    // Analyze spreads
-    const spreadAnalysis = await analyzeGameSpread(game, context);
+    // Analyze spreads;
+
     if (spreadAnalysis.valueRating !== "D") {
         opportunities.push(spreadAnalysis);
     }
     return opportunities;
 }
 async function analyzeGameTotal(game, context) {
-    const baseLine = 220 + Math.random() * 20; // Simulate total line
-    const prediction = baseLine + (Math.random() - 0.5) * 10;
-    const confidence = 0.85 + Math.random() * 0.1;
+    const baseLine = 220 + Math.random() * 20; // Simulate total line;
+
+
     return {
         id: `${game.id}_total`,
         game: `${game.awayTeam} @ ${game.homeTeam}`,
@@ -305,7 +305,7 @@ async function analyzeGameTotal(game, context) {
         lastUpdate: new Date().toLocaleTimeString(),
         realData: true,
         bettable: true,
-        // Enhanced fields with simulated values
+        // Enhanced fields with simulated values;
         advancedMetrics: {
             kellyOptimal: 0.05,
             sharpeRatio: 1.2,
@@ -336,9 +336,9 @@ async function analyzeGameTotal(game, context) {
     };
 }
 async function analyzeGameSpread(game, context) {
-    const baseSpread = (Math.random() - 0.5) * 14; // -7 to +7
-    const prediction = baseSpread + (Math.random() - 0.5) * 2;
-    const confidence = 0.82 + Math.random() * 0.12;
+    const baseSpread = (Math.random() - 0.5) * 14; // -7 to +7;
+
+
     return {
         id: `${game.id}_spread`,
         game: `${game.awayTeam} @ ${game.homeTeam}`,
@@ -352,7 +352,7 @@ async function analyzeGameSpread(game, context) {
         lastUpdate: new Date().toLocaleTimeString(),
         realData: true,
         bettable: true,
-        // Enhanced fields with simulated values
+        // Enhanced fields with simulated values;
         advancedMetrics: {
             kellyOptimal: 0.04,
             sharpeRatio: 1.1,
@@ -384,23 +384,23 @@ async function analyzeGameSpread(game, context) {
 }
 async function rankOpportunities(opportunities, config) {
     return opportunities.sort((a, b) => {
-        // Multi-factor ranking algorithm
-        const scoreA = calculateOpportunityScore(a, config);
-        const scoreB = calculateOpportunityScore(b, config);
+        // Multi-factor ranking algorithm;
+
+
         return scoreB - scoreA;
     });
 }
 function calculateOpportunityScore(opportunity, config) {
-    let score = 0;
-    // Expected value weight
+    const score = 0;
+    // Expected value weight;
     score += opportunity.expectedValue * 0.3;
-    // Confidence weight
+    // Confidence weight;
     score += opportunity.confidence * 0.2;
-    // Risk-adjusted return
+    // Risk-adjusted return;
     score += opportunity.advancedMetrics.riskAdjustedReturn * 0.2;
-    // Model consensus
+    // Model consensus;
     score += opportunity.modelConsensus * 0.1;
-    // Value rating
+    // Value rating;
     const valueRatingScores = {
         "A+": 10,
         A: 8,
@@ -411,27 +411,27 @@ function calculateOpportunityScore(opportunity, config) {
         D: 0,
     };
     score += valueRatingScores[opportunity.valueRating] * 0.1;
-    // Strategy-specific adjustments
+    // Strategy-specific adjustments;
     if (config.strategy === "conservative") {
         score -= opportunity.riskScore * 0.3;
     }
     else if (config.strategy === "aggressive") {
         score += opportunity.expectedValue * 0.2;
     }
-    // Backtest performance
+    // Backtest performance;
     score += opportunity.backtestResults.winRate * 0.1;
     return score;
 }
 function selectOptimalPortfolio(opportunities, config) {
-    const portfolioSize = parseInt(config.portfolio === "dynamic" ? "4" : config.portfolio);
-    // Modern Portfolio Theory approach
-    const selectedOpportunities = [];
-    const maxCorrelation = 0.7; // Avoid highly correlated bets
+
+    // Modern Portfolio Theory approach;
+
+    const maxCorrelation = 0.7; // Avoid highly correlated bets;
     for (const opportunity of opportunities) {
         if (selectedOpportunities.length >= portfolioSize)
             break;
-        // Check correlation with existing selections
-        const correlationOk = selectedOpportunities.every((selected) => calculateCorrelation(opportunity, selected) < maxCorrelation);
+        // Check correlation with existing selections;
+
         if (correlationOk) {
             selectedOpportunities.push(opportunity);
         }
@@ -439,12 +439,12 @@ function selectOptimalPortfolio(opportunities, config) {
     return selectedOpportunities;
 }
 function calculateCorrelation(opp1, opp2) {
-    // Simplified correlation calculation
+    // Simplified correlation calculation;
     if (opp1.game === opp2.game)
-        return 0.9; // Same game = high correlation
+        return 0.9; // Same game = high correlation;
     if (opp1.pick.includes(opp2.pick.split(" ")[0]))
-        return 0.6; // Same player = medium correlation
-    return Math.random() * 0.3; // Random low correlation for different games/players
+        return 0.6; // Same player = medium correlation;
+    return Math.random() * 0.3; // Random low correlation for different games/players;
 }
 function calculatePortfolioMetrics(opportunities, config) {
     const expectedReturn = opportunities.reduce((sum, opp) => sum + opp.expectedValue, 0) /
@@ -453,7 +453,7 @@ function calculatePortfolioMetrics(opportunities, config) {
         opportunities.length;
     const avgRisk = opportunities.reduce((sum, opp) => sum + opp.riskScore, 0) /
         opportunities.length;
-    const sharpeRatio = expectedReturn / Math.max(avgRisk, 0.01);
+
     return {
         expectedReturn,
         sharpeRatio,
@@ -471,8 +471,8 @@ function calculatePortfolioMetrics(opportunities, config) {
     };
 }
 function calculateDiversificationScore(opportunities) {
-    const sports = new Set(opportunities.map((opp) => opp.game.split(" - ")[0]));
-    const platforms = new Set(opportunities.map((opp) => opp.platform));
+
+
     const betTypes = new Set(opportunities.map((opp) => opp.pick.includes("Over") || opp.pick.includes("Under")
         ? "total"
         : "other"));
@@ -506,13 +506,13 @@ function getStatTypesForSport(sport) {
     }
 }
 function calculateDynamicLine(player, statType, context) {
-    const baseStat = player.stats[statType.toLowerCase()] || 10;
-    const recentForm = player.recentForm.slice(-5).reduce((sum, val) => sum + val, 0) / 5;
-    const dataQualityAdjustment = context.dataQuality * 0.1;
+
+
+
     return baseStat * (0.9 + recentForm * 0.2 + dataQualityAdjustment);
 }
 function generateDynamicOdds(prediction, line, liveOdds) {
-    const difference = Math.abs(prediction - line) / line;
+
     if (difference < 0.05)
         return "-110";
     if (difference < 0.1)
@@ -531,7 +531,7 @@ function selectOptimalSportsbook(liveOdds) {
     ];
     return sportsbooks[Math.floor(Math.random() * sportsbooks.length)];
 }
-// Mock implementations for missing services
+// Mock implementations for missing services;
 const advancedAnalytics = {
     analyzePlayerProp: async (player, statType, line, dataSources) => {
         return {

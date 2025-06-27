@@ -30,7 +30,7 @@ class UnifiedBettingService {
         this.emit('odds_update', data);
     }
     handleBettingOpportunities(data) {
-        const opportunities = this.validateBettingOpportunities(data.opportunities);
+
         this.emit('betting_opportunities', { opportunities });
     }
     handleBetResult(data) {
@@ -39,12 +39,12 @@ class UnifiedBettingService {
     }
     validateBettingOpportunities(opportunities) {
         return opportunities.filter((opportunity) => {
-            const confidence = this.calculateOpportunityConfidence(opportunity);
+
             return confidence >= this.config.minConfidence;
         });
     }
     calculateOpportunityConfidence(opportunity) {
-        // Use only fields that exist on BettingOpportunity
+        // Use only fields that exist on BettingOpportunity;
         return opportunity.confidence;
     }
     updateBettingMetrics(result) {
@@ -60,16 +60,16 @@ class UnifiedBettingService {
         };
     }
     calculateWinRate(result) {
-        const wins = result.winningBets ?? 0;
-        const total = result.totalBets ?? 1;
+
+
         return total === 0 ? 0 : wins / total;
     }
     calculateAverageOdds(result) {
         return result.averageOdds ?? 0;
     }
     calculateROI(result) {
-        const profit = result.totalProfit ?? 0;
-        const totalStaked = result.totalStake ?? 1;
+
+
         return totalStaked === 0 ? 0 : (profit / totalStaked) * 100;
     }
     async getBettingOpportunities() {
@@ -78,7 +78,7 @@ class UnifiedBettingService {
             return this.validateBettingOpportunities(data);
         }
         catch (error) {
-            console.error('Error fetching betting opportunities:', error);
+            // console statement removed
             toast.error('Failed to fetch betting opportunities');
             return [];
         }
@@ -90,7 +90,7 @@ class UnifiedBettingService {
             return true;
         }
         catch (error) {
-            console.error('Error placing bet:', error);
+            // console statement removed
             toast.error('Failed to place bet');
             return false;
         }
@@ -101,7 +101,7 @@ class UnifiedBettingService {
             return data;
         }
         catch (error) {
-            console.error('Error fetching betting metrics:', error);
+            // console statement removed
             return {
                 totalBets: 0,
                 winningBets: 0,
@@ -123,7 +123,7 @@ class UnifiedBettingService {
             return data;
         }
         catch (error) {
-            console.error('Error fetching bet history:', error);
+            // console statement removed
             return [];
         }
     }
@@ -139,18 +139,18 @@ class UnifiedBettingService {
     }
     async get(url) {
         try {
-            const response = await axios.get(`${this.apiUrl}${url}`);
+
             return response.data;
         }
         catch (error) {
-            console.error(`Error fetching data from ${url}:`, error);
+            // console statement removed
             toast.error(`Failed to fetch data from ${url}`);
             throw error;
         }
     }
     async post(url, data) {
         try {
-            const response = await axios.post(`${this.apiUrl}${url}`, data);
+
             return response.data;
         }
         catch (error) {

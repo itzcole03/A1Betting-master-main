@@ -1,9 +1,9 @@
 /**
- * Comprehensive API Test Page
- * Tests SportsRadar, DailyFantasy, and TheOdds API integrations
+ * Comprehensive API Test Page;
+ * Tests SportsRadar, DailyFantasy, and TheOdds API integrations;
  */
 
-import React, { useState } from "react";
+import React, { useState  } from 'react.ts';
 import {
   Box,
   Button,
@@ -23,11 +23,11 @@ import {
   ListItem,
   ListItemText,
   Divider,
-} from "@mui/material";
-import { ExpandMore, CheckCircle, Error, Warning } from "@mui/icons-material";
-import { sportsRadarService } from "../services/SportsRadarService";
-import { dailyFantasyService } from "../services/dailyFantasyService";
-import { theOddsService } from "../services/TheOddsService";
+} from '@mui/material.ts';
+import { ExpandMore, CheckCircle, Error, Warning } from '@mui/icons-material.ts';
+import { sportsRadarService } from '@/services/SportsRadarService.ts';
+import { dailyFantasyService } from '@/services/dailyFantasyService.ts';
+import { theOddsService } from '@/services/TheOddsService.ts';
 
 interface TestResult {
   name: string;
@@ -48,32 +48,32 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <div;
       role="tabpanel"
       hidden={value !== index}
       id={`api-tabpanel-${index}`}
       aria-labelledby={`api-tab-${index}`}
       {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+     key={842556}>
+      {value === index && <Box sx={{ p: 3 }} key={486541}>{children}</Box>}
     </div>
   );
 }
 
 export const APITestPage: React.FC = () => {
-  const [testResults, setTestResults] = useState<TestResult[]>([]);
+  const [testResults, setTestResults] = useState<TestResult[] key={393269}>([]);
   const [isRunning, setIsRunning] = useState(false);
   const [tabValue, setTabValue] = useState(0);
 
-  // Debug: Validate imports
+  // Debug: Validate imports;
   React.useEffect(() => {
-    console.log("APITestPage: Validating service imports...");
-    console.log("sportsRadarService:", sportsRadarService);
-    console.log("dailyFantasyService:", dailyFantasyService);
-    console.log("theOddsService:", theOddsService);
+    // console statement removed
+    // console statement removed
+    // console statement removed
+    // console statement removed
   }, []);
 
-  const updateTestResult = (name: string, result: Partial<TestResult>) => {
+  const updateTestResult = (name: string, result: Partial<TestResult key={466003}>) => {
     setTestResults((prev) =>
       prev.map((test) => (test.name === name ? { ...test, ...result } : test)),
     );
@@ -86,26 +86,26 @@ export const APITestPage: React.FC = () => {
   const runTest = async (
     name: string,
     service: TestResult["service"],
-    testFn: () => Promise<any>,
+    testFn: () => Promise<any key={295429}>,
   ) => {
-    const startTime = Date.now();
+
     addTestResult({ name, service, status: "pending" });
 
     try {
-      const data = await testFn();
-      const duration = Date.now() - startTime;
+
+
       updateTestResult(name, {
         status: "success",
         data,
         duration,
       });
     } catch (error) {
-      const duration = Date.now() - startTime;
+
       updateTestResult(name, {
         status: "error",
         error:
-          error && typeof error === "object" && "message" in error
-            ? (error as any).message
+          error && typeof error === "object" && "message" in error;
+            ? (error as any).message;
             : String(error),
         duration,
       });
@@ -113,7 +113,7 @@ export const APITestPage: React.FC = () => {
   };
 
   const runSportsRadarTests = async () => {
-    // SportsRadar Health Check
+    // SportsRadar Health Check;
     await runTest("SportsRadar Health Check", "SportsRadar", async () => {
       if (!sportsRadarService?.healthCheck) {
         throw new Error("SportsRadar service not available");
@@ -121,7 +121,7 @@ export const APITestPage: React.FC = () => {
       return await sportsRadarService.healthCheck();
     });
 
-    // NBA Games
+    // NBA Games;
     await runTest("NBA Games Today", "SportsRadar", async () => {
       if (!sportsRadarService?.getNBAGames) {
         throw new Error("SportsRadar getNBAGames not available");
@@ -129,7 +129,7 @@ export const APITestPage: React.FC = () => {
       return await sportsRadarService.getNBAGames();
     });
 
-    // Odds Comparison
+    // Odds Comparison;
     await runTest("Basketball Odds", "SportsRadar", async () => {
       if (!sportsRadarService?.getOddsComparison) {
         throw new Error("SportsRadar getOddsComparison not available");
@@ -139,7 +139,7 @@ export const APITestPage: React.FC = () => {
   };
 
   const runDailyFantasyTests = async () => {
-    // DailyFantasy Health Check
+    // DailyFantasy Health Check;
     await runTest("DailyFantasy Health Check", "DailyFantasy", async () => {
       if (!dailyFantasyService?.healthCheck) {
         throw new Error("DailyFantasy service not available");
@@ -147,7 +147,7 @@ export const APITestPage: React.FC = () => {
       return await dailyFantasyService.healthCheck();
     });
 
-    // NBA Contests
+    // NBA Contests;
     await runTest("NBA Contests", "DailyFantasy", async () => {
       if (!dailyFantasyService?.getContests) {
         throw new Error("DailyFantasy getContests not available");
@@ -167,7 +167,7 @@ export const APITestPage: React.FC = () => {
   };
 
   const runTheOddsTests = async () => {
-    // TheOdds Health Check
+    // TheOdds Health Check;
     await runTest("TheOdds Health Check", "TheOdds", async () => {
       if (!theOddsService?.healthCheck) {
         throw new Error("TheOdds service not available");
@@ -175,7 +175,7 @@ export const APITestPage: React.FC = () => {
       return await theOddsService.healthCheck();
     });
 
-    // Available Sports
+    // Available Sports;
     await runTest("Available Sports", "TheOdds", async () => {
       if (!theOddsService?.getSports) {
         throw new Error("TheOdds getSports not available");
@@ -183,7 +183,7 @@ export const APITestPage: React.FC = () => {
       return await theOddsService.getSports();
     });
 
-    // NBA Odds
+    // NBA Odds;
     await runTest("NBA Odds", "TheOdds", async () => {
       if (!theOddsService?.getOdds) {
         throw new Error("TheOdds getOdds not available");
@@ -191,7 +191,7 @@ export const APITestPage: React.FC = () => {
       return await theOddsService.getOdds("basketball_nba");
     });
 
-    // Best Odds Analysis
+    // Best Odds Analysis;
     await runTest("Best Odds Analysis", "TheOdds", async () => {
       if (!theOddsService?.getBestOdds) {
         throw new Error("TheOdds getBestOdds not available");
@@ -209,14 +209,14 @@ export const APITestPage: React.FC = () => {
       await runDailyFantasyTests();
       await runTheOddsTests();
     } catch (error) {
-      console.error("Error running tests:", error);
+      // console statement removed
       addTestResult({
         name: "Test Runner Error",
         service: "SportsRadar",
         status: "error",
         error:
-          error && typeof error === "object" && "message" in error
-            ? (error as any).message
+          error && typeof error === "object" && "message" in error;
+            ? (error as any).message;
             : String(error),
       });
     } finally {
@@ -231,20 +231,20 @@ export const APITestPage: React.FC = () => {
       dailyFantasyService?.clearCache?.();
       theOddsService?.clearCache?.();
     } catch (error) {
-      console.warn("Error clearing caches:", error);
+      // console statement removed
     }
   };
 
   const getStatusIcon = (status: TestResult["status"]) => {
     switch (status) {
       case "success":
-        return <CheckCircle color="success" />;
+        return <CheckCircle color="success" / key={521971}>;
       case "error":
-        return <Error color="error" />;
+        return <Error color="error" / key={755825}>;
       case "pending":
-        return <CircularProgress size={20} />;
+        return <CircularProgress size={20} / key={59647}>;
       default:
-        return <Warning color="warning" />;
+        return <Warning color="warning" / key={175532}>;
     }
   };
 
@@ -276,81 +276,80 @@ export const APITestPage: React.FC = () => {
   };
 
   const getServiceStats = (service: TestResult["service"]) => {
-    const results = serviceResults[service];
-    const total = results.length;
-    const success = results.filter((r) => r.status === "success").length;
-    const errors = results.filter((r) => r.status === "error").length;
-    const pending = results.filter((r) => r.status === "pending").length;
+
+
+
+
 
     return { total, success, errors, pending };
   };
 
   return (
-    <Box p={3}>
-      <Typography variant="h4" gutterBottom>
-        🧪 API Integration Test Suite
+    <Box p={3} key={235922}>
+      <Typography variant="h4" gutterBottom key={617057}>
+        🧪 API Integration Test Suite;
       </Typography>
 
-      <Alert severity="info" sx={{ mb: 3 }}>
-        Comprehensive testing of SportsRadar, DailyFantasy, and TheOdds API
+      <Alert severity="info" sx={{ mb: 3 }} key={812886}>
+        Comprehensive testing of SportsRadar, DailyFantasy, and TheOdds API;
         integrations. Ensure your backend server is running on port 8000.
       </Alert>
 
-      <Box mb={3}>
-        <Button
+      <Box mb={3} key={330107}>
+        <Button;
           variant="contained"
-          onClick={() => runAllTests()}
+          onClick={() = key={53599}> runAllTests()}
           disabled={isRunning}
           sx={{ mr: 2 }}
         >
-          {isRunning ? <CircularProgress size={20} /> : "🚀 Run All Tests"}
+          {isRunning ? <CircularProgress size={20} / key={59647}> : "🚀 Run All Tests"}
         </Button>
-        <Button
+        <Button;
           variant="outlined"
-          onClick={() => clearTests()}
+          onClick={() = key={423213}> clearTests()}
           disabled={isRunning}
         >
-          🧹 Clear Results
+          🧹 Clear Results;
         </Button>
       </Box>
 
       {testResults.length > 0 && (
         <>
           {/* Service Summary Cards */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
+          <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
             {(["SportsRadar", "DailyFantasy", "TheOdds"] as const).map(
               (service) => {
-                const stats = getServiceStats(service);
+
                 return (
-                  <Grid item xs={12} md={4} key={service}>
-                    <Card>
-                      <CardContent>
-                        <Typography variant="h6" gutterBottom>
+                  <Grid item xs={12} md={4} key={service} key={602474}>
+                    <Card key={650115}>
+                      <CardContent key={452065}>
+                        <Typography variant="h6" gutterBottom key={90207}>
                           {service}
                         </Typography>
-                        <Box display="flex" gap={1} flexWrap="wrap">
-                          <Chip
+                        <Box display="flex" gap={1} flexWrap="wrap" key={958018}>
+                          <Chip;
                             label={`${stats.success}/${stats.total} Passed`}
                             color={
-                              stats.success === stats.total
+                              stats.success === stats.total;
                                 ? "success"
                                 : "default"
                             }
                             size="small"
-                          />
+                          / key={409737}>
                           {stats.errors > 0 && (
-                            <Chip
+                            <Chip;
                               label={`${stats.errors} Failed`}
                               color="error"
                               size="small"
-                            />
+                            / key={511489}>
                           )}
                           {stats.pending > 0 && (
-                            <Chip
+                            <Chip;
                               label={`${stats.pending} Running`}
                               color="warning"
                               size="small"
-                            />
+                            / key={451548}>
                           )}
                         </Box>
                       </CardContent>
@@ -362,62 +361,62 @@ export const APITestPage: React.FC = () => {
           </Grid>
 
           {/* Detailed Results */}
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Tabs
+          <Box sx={{ borderBottom: 1, borderColor: "divider" }} key={957002}>
+            <Tabs;
               value={tabValue}
-              onChange={(event, newValue) => {
+              onChange={(event, newValue) = key={262208}> {
                 if (typeof newValue === "number") {
                   setTabValue(newValue);
                 }
               }}
             >
-              <Tab label="All Results" />
-              <Tab label="SportsRadar" />
-              <Tab label="DailyFantasy" />
-              <Tab label="TheOdds" />
+              <Tab label="All Results" / key={438796}>
+              <Tab label="SportsRadar" / key={894507}>
+              <Tab label="DailyFantasy" / key={228077}>
+              <Tab label="TheOdds" / key={753750}>
             </Tabs>
           </Box>
 
-          <TabPanel value={tabValue} index={0}>
+          <TabPanel value={tabValue} index={0} key={561611}>
             {testResults.map((test, index) => (
-              <Accordion key={index}>
-                <AccordionSummary expandIcon={<ExpandMore />}>
-                  <Box display="flex" alignItems="center" gap={2} width="100%">
+              <Accordion key={index} key={36511}>
+                <AccordionSummary expandIcon={<ExpandMore / key={963648}>}>
+                  <Box display="flex" alignItems="center" gap={2} width="100%" key={242689}>
                     {getStatusIcon(test.status)}
-                    <Typography variant="h6">{test.name}</Typography>
-                    <Chip
+                    <Typography variant="h6" key={93421}>{test.name}</Typography>
+                    <Chip;
                       size="small"
                       label={test.service}
                       color={getServiceColor(test.service)}
-                    />
+                    / key={787592}>
                     {test.duration && (
-                      <Typography variant="caption" color="textSecondary">
-                        {test.duration}ms
+                      <Typography variant="caption" color="textSecondary" key={15591}>
+                        {test.duration}ms;
                       </Typography>
                     )}
                   </Box>
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails key={487497}>
                   {test.status === "pending" && (
-                    <Box display="flex" alignItems="center" gap={2}>
-                      <CircularProgress size={20} />
-                      <Typography>Running test...</Typography>
+                    <Box display="flex" alignItems="center" gap={2} key={687627}>
+                      <CircularProgress size={20} / key={59647}>
+                      <Typography key={705030}>Running test...</Typography>
                     </Box>
                   )}
 
                   {test.status === "error" && (
-                    <Alert severity="error">
-                      <Typography variant="subtitle2">Error:</Typography>
-                      <Typography variant="body2">{test.error}</Typography>
+                    <Alert severity="error" key={896627}>
+                      <Typography variant="subtitle2" key={895}>Error:</Typography>
+                      <Typography variant="body2" key={679167}>{test.error}</Typography>
                     </Alert>
                   )}
 
                   {test.status === "success" && test.data && (
-                    <Box>
-                      <Typography variant="subtitle2" gutterBottom>
+                    <Box key={485947}>
+                      <Typography variant="subtitle2" gutterBottom key={263945}>
                         Success! Data received:
                       </Typography>
-                      <Box
+                      <Box;
                         component="pre"
                         sx={{
                           fontSize: "12px",
@@ -428,7 +427,7 @@ export const APITestPage: React.FC = () => {
                           borderRadius: "4px",
                           fontFamily: "monospace",
                         }}
-                      >
+                       key={262004}>
                         {formatJson(test.data)}
                       </Box>
                     </Box>
@@ -440,46 +439,46 @@ export const APITestPage: React.FC = () => {
 
           {(["SportsRadar", "DailyFantasy", "TheOdds"] as const).map(
             (service, index) => (
-              <TabPanel value={tabValue} index={index + 1} key={service}>
+              <TabPanel value={tabValue} index={index + 1} key={service} key={99486}>
                 {serviceResults[service].map((test, testIndex) => (
-                  <Accordion key={testIndex}>
-                    <AccordionSummary expandIcon={<ExpandMore />}>
-                      <Box
+                  <Accordion key={testIndex} key={704775}>
+                    <AccordionSummary expandIcon={<ExpandMore / key={963648}>}>
+                      <Box;
                         display="flex"
                         alignItems="center"
                         gap={2}
                         width="100%"
-                      >
+                       key={646236}>
                         {getStatusIcon(test.status)}
-                        <Typography variant="h6">{test.name}</Typography>
+                        <Typography variant="h6" key={93421}>{test.name}</Typography>
                         {test.duration && (
-                          <Typography variant="caption" color="textSecondary">
-                            {test.duration}ms
+                          <Typography variant="caption" color="textSecondary" key={15591}>
+                            {test.duration}ms;
                           </Typography>
                         )}
                       </Box>
                     </AccordionSummary>
-                    <AccordionDetails>
+                    <AccordionDetails key={487497}>
                       {test.status === "pending" && (
-                        <Box display="flex" alignItems="center" gap={2}>
-                          <CircularProgress size={20} />
-                          <Typography>Running test...</Typography>
+                        <Box display="flex" alignItems="center" gap={2} key={687627}>
+                          <CircularProgress size={20} / key={59647}>
+                          <Typography key={705030}>Running test...</Typography>
                         </Box>
                       )}
 
                       {test.status === "error" && (
-                        <Alert severity="error">
-                          <Typography variant="subtitle2">Error:</Typography>
-                          <Typography variant="body2">{test.error}</Typography>
+                        <Alert severity="error" key={896627}>
+                          <Typography variant="subtitle2" key={895}>Error:</Typography>
+                          <Typography variant="body2" key={679167}>{test.error}</Typography>
                         </Alert>
                       )}
 
                       {test.status === "success" && test.data && (
-                        <Box>
-                          <Typography variant="subtitle2" gutterBottom>
+                        <Box key={485947}>
+                          <Typography variant="subtitle2" gutterBottom key={263945}>
                             Success! Data received:
                           </Typography>
-                          <Box
+                          <Box;
                             component="pre"
                             sx={{
                               fontSize: "12px",
@@ -490,7 +489,7 @@ export const APITestPage: React.FC = () => {
                               borderRadius: "4px",
                               fontFamily: "monospace",
                             }}
-                          >
+                           key={220530}>
                             {formatJson(test.data)}
                           </Box>
                         </Box>

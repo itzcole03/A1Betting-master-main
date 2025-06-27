@@ -1,9 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useTheme } from "../../providers/UniversalThemeProvider";
 // Icons (using SVG for better control and consistency)
-const SunIcon = () => (_jsxs("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [_jsx("circle", { cx: "12", cy: "12", r: "5" }), _jsx("path", { d: "M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" })] }));
-const MoonIcon = () => (_jsx("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: _jsx("path", { d: "M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" }) }));
-const CyberIcon = () => (_jsx("svg", { width: "20", height: "20", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: _jsx("polygon", { points: "13 2 3 14 12 14 11 22 21 10 12 10 13 2" }) }));
+
+
+
 const ThemeToggle = ({ variant = "button", showLabel = true, className = "", size = "md", }) => {
     const { isDark, toggleDarkMode, variant: themeVariant, theme } = useTheme();
     const sizeClasses = {
@@ -39,13 +39,13 @@ const ThemeToggle = ({ variant = "button", showLabel = true, className = "", siz
         if (themeVariant.startsWith("cyber")) {
             return {
                 ...baseStyle,
-                background: isDark
+                background: isDark;
                     ? "rgba(255, 255, 255, 0.05)"
                     : "rgba(255, 255, 255, 0.8)",
                 backdropFilter: "blur(20px) saturate(180%)",
                 border: `1px solid ${isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(15, 23, 42, 0.1)"}`,
                 color: isDark ? "#ffffff" : "#0f172a",
-                boxShadow: isDark
+                boxShadow: isDark;
                     ? "0 8px 32px rgba(0, 0, 0, 0.1)"
                     : "0 8px 32px rgba(15, 23, 42, 0.1)",
             };
@@ -67,7 +67,7 @@ const ThemeToggle = ({ variant = "button", showLabel = true, className = "", siz
                         width: "60px",
                         height: "30px",
                         borderRadius: "15px",
-                        background: isDark
+                        background: isDark;
                             ? "linear-gradient(135deg, #1e293b, #334155)"
                             : "linear-gradient(135deg, #e2e8f0, #cbd5e1)",
                         border: `2px solid ${isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(15, 23, 42, 0.1)"}`,
@@ -107,7 +107,7 @@ const ThemeToggle = ({ variant = "button", showLabel = true, className = "", siz
     }
     return (_jsxs("button", { onClick: handleToggle, className: `cyber-theme-toggle ${className} ${sizeClasses[size]}`, style: getButtonStyle(), children: [getIcon(), showLabel && _jsx("span", { children: getLabel() })] }));
 };
-// Enhanced theme toggle with mode indicator
+// Enhanced theme toggle with mode indicator;
 export const CyberThemeToggle = (props) => {
     const { variant: themeVariant, isDark } = useTheme();
     return (_jsxs("div", { className: "cyber-theme-toggle-container", style: { position: "relative" }, children: [_jsx(ThemeToggle, { ...props }), themeVariant.startsWith("cyber") && (_jsx("div", { style: {

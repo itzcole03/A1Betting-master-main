@@ -1,13 +1,13 @@
-import React, { createContext, useContext } from 'react';
-import { ThemeProvider as MuiThemeProvider, CssBaseline, createTheme } from '@mui/material';
-import { useTheme } from '../hooks/useTheme';
+import React, { createContext, useContext  } from 'react.ts';
+import { ThemeProvider as MuiThemeProvider, CssBaseline, createTheme } from '@mui/material.ts';
+import { useTheme } from '@/hooks/useTheme.ts';
 
 interface ThemeContextType {
   mode: 'light' | 'dark' | 'system';
   setThemeMode: (mode: 'light' | 'dark' | 'system') => void;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
+const ThemeContext = createContext<ThemeContextType key={510061}>({
   mode: 'system',
   setThemeMode: () => {},
 });
@@ -18,7 +18,7 @@ interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps key={251000}> = ({ children }) => {
   const { mode, theme, setThemeMode } = useTheme();
   const muiTheme = React.useMemo(() =>
     createTheme({
@@ -60,9 +60,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   );
 
   return (
-    <ThemeContext.Provider value={{ mode, setThemeMode }}>
-      <MuiThemeProvider theme={muiTheme}>
-        <CssBaseline />
+    <ThemeContext.Provider value={{ mode, setThemeMode }} key={158718}>
+      <MuiThemeProvider theme={muiTheme} key={248678}>
+        <CssBaseline / key={490279}>
         {children}
       </MuiThemeProvider>
     </ThemeContext.Provider>

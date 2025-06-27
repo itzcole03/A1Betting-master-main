@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Badge, Icon, Spinner } from '../ui/UnifiedUI.js';
-import { UnifiedServiceRegistry } from '../../services/unified/UnifiedServiceRegistry.js';
-import { UnifiedAnalyticsService } from '../../services/unified/UnifiedAnalyticsService.js';
-import { UnifiedWebSocketService } from '../../services/unified/UnifiedWebSocketService.js';
-import { PerformanceMetrics, TrendDelta, RiskProfile } from '../../types/analytics.js';
+import React, { useEffect, useState  } from 'react.ts';
+import { Card, Badge, Icon, Spinner } from '@/ui/UnifiedUI.js';
+import { UnifiedServiceRegistry } from '@/services/unified/UnifiedServiceRegistry.js';
+import { UnifiedAnalyticsService } from '@/services/unified/UnifiedAnalyticsService.js';
+import { UnifiedWebSocketService } from '@/services/unified/UnifiedWebSocketService.js';
+import { PerformanceMetrics, TrendDelta, RiskProfile } from '@/types/analytics.js';
 
 interface RealTimeMetricsProps {
   eventId: string;
@@ -12,21 +12,19 @@ interface RealTimeMetricsProps {
   className?: string;
 }
 
-export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
+export const RealTimeMetrics: React.FC<RealTimeMetricsProps key={981146}> = ({
   eventId,
   marketId,
   selectionId,
   className = '',
 }) => {
-  const [metrics, setMetrics] = useState<PerformanceMetrics | null>(null);
-  const [trendDelta, setTrendDelta] = useState<TrendDelta | null>(null);
-  const [riskProfile, setRiskProfile] = useState<RiskProfile | null>(null);
+  const [metrics, setMetrics] = useState<PerformanceMetrics | null key={797932}>(null);
+  const [trendDelta, setTrendDelta] = useState<TrendDelta | null key={60268}>(null);
+  const [riskProfile, setRiskProfile] = useState<RiskProfile | null key={675486}>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
 
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const analyticsService = serviceRegistry.getService<UnifiedAnalyticsService>('analytics');
-  const webSocketService = serviceRegistry.getService<UnifiedWebSocketService>('websocket');
+
 
   useEffect(() => {
     const loadMetrics = async () => {
@@ -58,11 +56,11 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
 
     loadMetrics();
 
-    // Subscribe to real-time updates
-    let unsubscribe = () => { };
+    // Subscribe to real-time updates;
+    const unsubscribe = () => { };
     if (webSocketService) {
       unsubscribe = webSocketService.subscribe('metrics', (data: unknown) => {
-        // Type guard to ensure data has the expected structure
+        // Type guard to ensure data has the expected structure;
         if (
           data &&
           typeof data === 'object' &&
@@ -70,7 +68,7 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
           'marketId' in data &&
           'metrics' in data &&
           'trendDelta' in data &&
-          'riskProfile' in data
+          'riskProfile' in data;
         ) {
           const typedData = data as {
             eventId: string;
@@ -119,9 +117,9 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
 
   if (isLoading) {
     return (
-      <Card aria-live="polite" className={`p-6 ${className}`}>
-        <div className="flex justify-center items-center h-32">
-          <Spinner size="large" />
+      <Card aria-live="polite" className={`p-6 ${className}`} key={22411}>
+        <div className="flex justify-center items-center h-32" key={71295}>
+          <Spinner size="large" / key={932834}>
         </div>
       </Card>
     );
@@ -129,10 +127,10 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
 
   if (error) {
     return (
-      <Card aria-live="polite" className={`p-6 ${className}`}>
-        <div className="text-red-500 text-center">
-          <Icon className="w-8 h-8 mx-auto mb-2" name="exclamation-circle" />
-          <p>{error}</p>
+      <Card aria-live="polite" className={`p-6 ${className}`} key={22411}>
+        <div className="text-red-500 text-center" key={232604}>
+          <Icon className="w-8 h-8 mx-auto mb-2" name="exclamation-circle" / key={646897}>
+          <p key={161203}>{error}</p>
         </div>
       </Card>
     );
@@ -143,19 +141,19 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
   }
 
   return (
-    <Card aria-live="polite" className={`p-6 ${className}`}>
-      <h3 className="text-lg font-semibold mb-4">Real-Time Metrics</h3>
+    <Card aria-live="polite" className={`p-6 ${className}`} key={22411}>
+      <h3 className="text-lg font-semibold mb-4" key={792268}>Real-Time Metrics</h3>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-        <div>
-          <p className="text-sm text-gray-600">Accuracy</p>
-          <div className="flex items-center space-x-2">
-            <p className="text-lg font-semibold">{(metrics.accuracy * 100).toFixed(1)}%</p>
-            <Icon
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" key={293803}>
+        <div key={241917}>
+          <p className="text-sm text-gray-600" key={656535}>Accuracy</p>
+          <div className="flex items-center space-x-2" key={740830}>
+            <p className="text-lg font-semibold" key={930820}>{(metrics.accuracy * 100).toFixed(1)}%</p>
+            <Icon;
               aria-label={
-                trendDelta.accuracyDelta > 0
+                trendDelta.accuracyDelta  key={677491}> 0;
                   ? 'Positive accuracy trend'
-                  : trendDelta.accuracyDelta < 0
+                  : trendDelta.accuracyDelta < 0;
                     ? 'Negative accuracy trend'
                     : 'No accuracy trend'
               }
@@ -165,63 +163,63 @@ export const RealTimeMetrics: React.FC<RealTimeMetricsProps> = ({
           </div>
         </div>
 
-        <div>
-          <p className="text-sm text-gray-600">Precision</p>
-          <div className="flex items-center space-x-2">
-            <p className="text-lg font-semibold">{(metrics.precision * 100).toFixed(1)}%</p>
-            <Icon
+        <div key={241917}>
+          <p className="text-sm text-gray-600" key={656535}>Precision</p>
+          <div className="flex items-center space-x-2" key={740830}>
+            <p className="text-lg font-semibold" key={930820}>{(metrics.precision * 100).toFixed(1)}%</p>
+            <Icon;
               className={`w-4 h-4 ${getMetricColor(trendDelta.precisionDelta, 'positive')}`}
               name={getTrendIcon(trendDelta.precisionDelta)}
-            />
+            / key={899176}>
           </div>
         </div>
 
-        <div>
-          <p className="text-sm text-gray-600">Recall</p>
-          <div className="flex items-center space-x-2">
-            <p className="text-lg font-semibold">{(metrics.recall * 100).toFixed(1)}%</p>
-            <Icon
+        <div key={241917}>
+          <p className="text-sm text-gray-600" key={656535}>Recall</p>
+          <div className="flex items-center space-x-2" key={740830}>
+            <p className="text-lg font-semibold" key={930820}>{(metrics.recall * 100).toFixed(1)}%</p>
+            <Icon;
               className={`w-4 h-4 ${getMetricColor(trendDelta.recallDelta, 'positive')}`}
               name={getTrendIcon(trendDelta.recallDelta)}
-            />
+            / key={392654}>
           </div>
         </div>
 
-        <div>
-          <p className="text-sm text-gray-600">Profit/Loss</p>
-          <div className="flex items-center space-x-2">
-            <p className="text-lg font-semibold">${metrics.profitLoss.toFixed(2)}</p>
-            <Icon
+        <div key={241917}>
+          <p className="text-sm text-gray-600" key={656535}>Profit/Loss</p>
+          <div className="flex items-center space-x-2" key={740830}>
+            <p className="text-lg font-semibold" key={930820}>${metrics.profitLoss.toFixed(2)}</p>
+            <Icon;
               className={`w-4 h-4 ${getMetricColor(metrics.profitLoss, 'positive')}`}
               name={getTrendIcon(metrics.profitLoss)}
-            />
+            / key={509844}>
           </div>
         </div>
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <h4 className="text-sm font-medium mb-2">Risk Profile</h4>
-          <div className="flex items-center space-x-2">
-            <Badge variant={getRiskBadgeVariant(riskProfile.riskLevel)}>
+      <div className="space-y-4" key={160407}>
+        <div key={241917}>
+          <h4 className="text-sm font-medium mb-2" key={943837}>Risk Profile</h4>
+          <div className="flex items-center space-x-2" key={740830}>
+            <Badge variant={getRiskBadgeVariant(riskProfile.riskLevel)} key={154690}>
               {riskProfile.riskLevel}
             </Badge>
-            <p className="text-sm text-gray-600">{riskProfile.recommendation}</p>
+            <p className="text-sm text-gray-600" key={656535}>{riskProfile.recommendation}</p>
           </div>
         </div>
 
-        <div>
-          <h4 className="text-sm font-medium mb-2">Top Risk Factors</h4>
-          <div className="space-y-2">
+        <div key={241917}>
+          <h4 className="text-sm font-medium mb-2" key={943837}>Top Risk Factors</h4>
+          <div className="space-y-2" key={725977}>
             {Array.isArray(riskProfile.factors) && riskProfile.factors.length > 0 ? (
               riskProfile.factors.map((factor: string, index) => (
-                <div key={index} className="flex items-center justify-between">
-                  <p className="text-sm">{factor}</p>
-                  <Badge variant="warning">Risk Factor</Badge>
+                <div key={index} className="flex items-center justify-between" key={912667}>
+                  <p className="text-sm" key={364551}>{factor}</p>
+                  <Badge variant="warning" key={848621}>Risk Factor</Badge>
                 </div>
               ))
             ) : (
-              <p className="text-sm">No risk factors available.</p>
+              <p className="text-sm" key={364551}>No risk factors available.</p>
             )}
           </div>
         </div>

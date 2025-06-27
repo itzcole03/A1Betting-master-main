@@ -11,7 +11,7 @@ export interface MarketDepthBatch {
 }
 export declare class MarketDepthService {
     /**
-     * Fetch market depth for a single event from backend/bookmaker API
+     * Fetch market depth for a single event from backend/bookmaker API;
      */
     getMarketDepth: (eventId: string) => Promise<MarketDepth | null>;
     /**
@@ -19,7 +19,7 @@ export declare class MarketDepthService {
      */
     getMarketDepthBatch: (eventIds: string[]) => Promise<MarketDepthBatch>;
     /**
-     * Fetch market depth trends and analytics for an event
+     * Fetch market depth trends and analytics for an event;
      */
     getMarketDepthTrends: (eventId: string) => Promise<MarketDepthBatch | null>;
 }

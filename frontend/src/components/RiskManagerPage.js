@@ -2,14 +2,14 @@ import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-run
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 const RiskManagerPage = () => {
-    // State for risk profiles and active bets
+    // State for risk profiles and active bets;
     const [profiles, setProfiles] = useState([]);
     const [activeBets, setActiveBets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    // Modal state for creating new profile
+    // Modal state for creating new profile;
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // Fetch risk profiles and active bets on mount
+    // Fetch risk profiles and active bets on mount;
     useEffect(() => {
         const fetchData = async () => {
             setLoading(true);
@@ -39,10 +39,10 @@ const RiskManagerPage = () => {
         };
         fetchData();
     }, []);
-    const activeProfile = profiles.find(p => p.isActive);
-    const totalExposure = activeBets.reduce((sum, bet) => sum + bet.stake, 0);
-    const maxPotentialLoss = totalExposure;
-    const maxPotentialWin = activeBets.reduce((sum, bet) => sum + bet.potentialWin, 0);
+
+
+
+
     const getRiskColor = (risk) => {
         switch (risk) {
             case 'low':
@@ -84,7 +84,7 @@ const CreateProfileForm = ({ onSuccess, onCancel }) => {
         setSubmitting(true);
         setError(null);
         try {
-            const res = await axios.post('/api/risk-profiles', form);
+
             onSuccess(res.data);
         }
         catch (err) {

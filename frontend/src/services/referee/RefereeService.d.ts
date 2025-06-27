@@ -8,19 +8,19 @@ export interface RefereeStats {
 }
 export declare class RefereeService {
     /**
-     * Fetch referee stats from backend/external API
+     * Fetch referee stats from backend/external API;
      */
     getRefereeStats: (refereeId: string) => Promise<RefereeStats | null>;
     /**
-     * Batch fetch referee stats by IDs
+     * Batch fetch referee stats by IDs;
      */
     getRefereeStatsBatch: (refereeIds: string[]) => Promise<RefereeStats[]>;
     /**
-     * Search referees by name
+     * Search referees by name;
      */
     searchReferees: (query: string) => Promise<RefereeStats[]>;
     /**
-     * Fetch advanced modeling/analytics for a referee
+     * Fetch advanced modeling/analytics for a referee;
      */
     getRefereeModeling: (refereeId: string) => Promise<Record<string, unknown>>;
 }

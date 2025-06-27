@@ -9,10 +9,10 @@ export const useOddsStore = create()(devtools((set, get) => ({
         },
     })),
     updateOdds: (eventId, market) => set(state => {
-        const currentOdds = state.oddsByEvent[eventId];
+
         if (!currentOdds)
             return state;
-        const updatedMarkets = currentOdds.markets.map(m => m.market_type === market.market_type ? market : m);
+
         return {
             oddsByEvent: {
                 ...state.oddsByEvent,
@@ -25,7 +25,7 @@ export const useOddsStore = create()(devtools((set, get) => ({
         };
     }),
     getOddsForEvent: (eventId) => {
-        const state = get();
+
         return state.oddsByEvent[eventId] || null;
     },
     clearOdds: (eventId) => set(state => {

@@ -1,5 +1,5 @@
-import { BaseModel } from '../models/BaseModel';
-import { ModelConfig, AdvancedEnsembleConfig } from '@/types';
+import { BaseModel } from '@/models/BaseModel.ts';
+import { ModelConfig, AdvancedEnsembleConfig } from '@/types.ts';
 export declare class ModelFactory {
     private static instance;
     private models;

@@ -1,7 +1,7 @@
-import { AdvancedPredictionService } from '../advancedPredictionService';
-import { PredictionService } from '../predictionService';
-import { MarketContext, BettingContext } from '@/types/core';
-import { BettingOdds } from '../../types/betting';
+import { AdvancedPredictionService } from '@/advancedPredictionService.ts';
+import { PredictionService } from '@/predictionService.ts';
+import { MarketContext, BettingContext } from '@/types/core.ts';
+import { BettingOdds } from '@/types/betting.ts';
 
 jest.mock('../predictionService');
 
@@ -75,7 +75,7 @@ describe('AdvancedPredictionService', () => {
     it('should generate advanced prediction when base prediction exists', async () => {
       const prediction = await service.generateAdvancedPrediction(
         mockMarketContext,
-        mockBettingContext
+        mockBettingContext;
       );
 
       expect(prediction).not.toBeNull();
@@ -94,13 +94,12 @@ describe('AdvancedPredictionService', () => {
 
       const prediction = await service.generateAdvancedPrediction(
         mockMarketContext,
-        mockBettingContext
+        mockBettingContext;
       );
       expect(prediction).toBeNull();
     });
 
     it('should emit newAdvancedPrediction event when confidence threshold is met', async () => {
-      const emitSpy = jest.spyOn(service, 'emit');
 
       await service.generateAdvancedPrediction(mockMarketContext, mockBettingContext);
 
@@ -108,10 +107,10 @@ describe('AdvancedPredictionService', () => {
     });
 
     it('should not emit newAdvancedPrediction event when confidence threshold is not met', async () => {
-      const emitSpy = jest.spyOn(service, 'emit');
+
       mockPredictionService.generatePrediction.mockReturnValue({
         ...mockBasePrediction,
-        confidence: 0.5, // Below threshold
+        confidence: 0.5, // Below threshold;
       });
 
       await service.generateAdvancedPrediction(mockMarketContext, mockBettingContext);
@@ -129,7 +128,6 @@ describe('AdvancedPredictionService', () => {
       };
 
       service.updateEnsemblePerformance('default', performance);
-      const weights = service.getEnsembleWeights();
 
       expect(weights['default']).toBeDefined();
     });
@@ -142,7 +140,6 @@ describe('AdvancedPredictionService', () => {
       };
 
       service.updateEnsemblePerformance('nonexistent', performance);
-      const weights = service.getEnsembleWeights();
 
       expect(weights['nonexistent']).toBeUndefined();
     });
@@ -150,7 +147,6 @@ describe('AdvancedPredictionService', () => {
 
   describe('getEnsembleWeights', () => {
     it('should return all ensemble weights', () => {
-      const weights = service.getEnsembleWeights();
 
       expect(weights).toHaveProperty('default');
       expect(weights).toHaveProperty('highScoring');

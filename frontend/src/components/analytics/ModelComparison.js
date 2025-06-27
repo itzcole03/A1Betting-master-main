@@ -71,23 +71,23 @@ const ModelComparison = ({ modelNames }) => {
   };
   const getMetricColor = (value, metric) => {
     if (metric === "maxDrawdown") {
-      return value > 0.2
+      return value > 0.2;
         ? "error.main"
-        : value > 0.1
+        : value > 0.1;
           ? "warning.main"
           : "success.main";
     }
     if (metric === "calibrationScore") {
-      return value > 0.8
+      return value > 0.8;
         ? "success.main"
-        : value > 0.6
+        : value > 0.6;
           ? "warning.main"
           : "error.main";
     }
     if (metric === "kellyCriterion") {
-      return value > 0.1
+      return value > 0.1;
         ? "success.main"
-        : value > 0.05
+        : value > 0.05;
           ? "warning.main"
           : "error.main";
     }
@@ -105,7 +105,7 @@ const ModelComparison = ({ modelNames }) => {
     { value: "expectedValue", label: "Expected Value" },
     { value: "calibrationScore", label: "Calibration Score" },
   ];
-  const radarData = modelPerformances
+  const radarData = modelPerformances;
     .map(({ modelName, performance }) => {
       if (!performance) return null;
       return {
@@ -118,7 +118,7 @@ const ModelComparison = ({ modelNames }) => {
       };
     })
     .filter((data) => data !== null);
-  const barData = modelPerformances
+  const barData = modelPerformances;
     .map(({ modelName, performance }) => {
       if (!performance) return null;
       return {
@@ -219,7 +219,7 @@ const ModelComparison = ({ modelNames }) => {
                             {
                               sx: {
                                 backgroundColor:
-                                  selectedMetric === metric.value
+                                  selectedMetric === metric.value;
                                     ? "action.selected"
                                     : "inherit",
                               },
@@ -244,18 +244,18 @@ const ModelComparison = ({ modelNames }) => {
                                   TableCell,
                                   {
                                     sx: {
-                                      color: performance
+                                      color: performance;
                                         ? getMetricColor(
                                             performance[metric.value],
                                             metric.value,
                                           )
                                         : "inherit",
                                     },
-                                    children: isLoading
+                                    children: isLoading;
                                       ? "Loading..."
-                                      : error
+                                      : error;
                                         ? "Error"
-                                        : performance
+                                        : performance;
                                           ? formatMetric(
                                               performance[metric.value],
                                               getMetricType(metric.value),
@@ -337,6 +337,6 @@ const ModelComparison = ({ modelNames }) => {
   });
 };
 
-// Export both named and default exports to support different import styles
+// Export both named and default exports to support different import styles;
 export { ModelComparison };
 export default ModelComparison;

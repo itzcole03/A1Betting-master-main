@@ -19,14 +19,14 @@ export const ConnectionStatus = () => {
             setServiceStatus(window.appStatus ? { ...window.appStatus } : {});
         };
         updateStatus();
-        const interval = setInterval(updateStatus, 2000);
+
         return () => clearInterval(interval);
     }, []);
     const renderStatus = (service, label) => {
-        const status = serviceStatus[service];
+
         if (!status)
             return null;
-        let color = 'success';
+        const color = 'success';
         if (!status.connected)
             color = status.quality < 0.5 ? 'error' : 'warning';
         return (_jsxs(Box, { display: "flex", alignItems: "center", gap: 1, mb: 0.5, children: [_jsxs(Typography, { variant: "body2", color: color, fontWeight: 600, children: [label, ":"] }), _jsxs(Typography, { variant: "body2", color: color, children: [status.connected ? 'Online' : 'Offline', typeof status.quality === 'number' && (_jsxs(_Fragment, { children: [" (Q: ", Math.round(status.quality * 100), "%)"] }))] }), _jsx(Typography, { variant: "caption", color: "textSecondary", children: status.timestamp ? `Updated ${Math.floor((Date.now() - status.timestamp) / 1000)}s ago` : '' })] }, service));

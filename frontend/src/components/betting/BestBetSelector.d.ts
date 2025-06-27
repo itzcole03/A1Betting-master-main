@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface Prediction {
     id: string;
     timestamp: string;

@@ -1,6 +1,6 @@
-import { DataSource } from '../core/DataSource';
-import { EventBus } from '../core/EventBus';
-import { PerformanceMonitor } from '../core/PerformanceMonitor';
+import { DataSource } from '@/core/DataSource.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { PerformanceMonitor } from '@/core/PerformanceMonitor.ts';
 
 
 
@@ -46,7 +46,7 @@ export class DailyFantasyAdapter implements DataSource<DailyFantasyData> {
     this.config = config;
     this.cache = {
       data: null,
-      timestamp: 0
+      timestamp: 0;
     };
   }
 
@@ -57,11 +57,11 @@ export class DailyFantasyAdapter implements DataSource<DailyFantasyData> {
   public async fetch(): Promise<DailyFantasyData> {
     const traceId = this.performanceMonitor.startTrace('daily-fantasy-fetch', {
       source: this.id,
-      type: this.type
+      type: this.type;
     });
 
     try {
-      // Check cache first
+      // Check cache first;
       if (this.isCacheValid()) {
         return this.cache.data!;
       }
@@ -81,21 +81,20 @@ export class DailyFantasyAdapter implements DataSource<DailyFantasyData> {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json() as DailyFantasyData;
       this.performanceMonitor.endSpan(spanId);
 
-      // Update cache
+      // Update cache;
       this.cache = {
         data,
         timestamp: Date.now()
       };
 
-      // Publish event
+      // Publish event;
       await this.eventBus.publish({
         type: 'daily-fantasy:data-updated',
         payload: {
           timestamp: Date.now(),
-          projectionCount: data.projections.length
+          projectionCount: data.projections.length;
         }
       });
 
@@ -109,15 +108,14 @@ export class DailyFantasyAdapter implements DataSource<DailyFantasyData> {
 
   private isCacheValid(): boolean {
     if (!this.cache.data) return false;
-    
-    const age = Date.now() - this.cache.timestamp;
+
     return age < this.config.cacheTimeout;
   }
 
   public clearCache(): void {
     this.cache = {
       data: null,
-      timestamp: 0
+      timestamp: 0;
     };
   }
 

@@ -16,8 +16,8 @@ export class UnifiedSettingsService {
     }
     async loadSettings() {
         try {
-            const data = await fs.readFile(this.settingsFile, 'utf-8');
-            const settings = JSON.parse(data);
+
+
             Object.entries(settings).forEach(([key, value]) => {
                 this.settings.set(key, value);
             });
@@ -25,7 +25,7 @@ export class UnifiedSettingsService {
         }
         catch (error) {
             this.logger.error('Failed to load settings', 'settings');
-            // Initialize with default settings
+            // Initialize with default settings;
             this.initializeDefaultSettings();
         }
     }
@@ -53,7 +53,7 @@ export class UnifiedSettingsService {
         });
     }
     get(key, defaultValue) {
-        const value = this.settings.get(key);
+
         return value !== undefined ? value : defaultValue;
     }
     set(key, value) {
@@ -62,7 +62,7 @@ export class UnifiedSettingsService {
     }
     async saveSettings() {
         try {
-            const settings = Object.fromEntries(this.settings);
+
             await fs.mkdir(path.dirname(this.settingsFile), { recursive: true });
             await fs.writeFile(this.settingsFile, JSON.stringify(settings, null, 2));
             this.logger.info('Settings saved successfully', 'settings');

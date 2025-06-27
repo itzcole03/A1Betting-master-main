@@ -1,12 +1,12 @@
-import { ModelFactory } from '../factory/ModelFactory';
-import { ModelConfig } from '../models/BaseModel';
-import { AdvancedEnsembleConfig } from '../models/AdvancedEnsembleModel';
+import { ModelFactory } from '@/factory/ModelFactory.ts';
+import { ModelConfig } from '@/models/BaseModel.ts';
+import { AdvancedEnsembleConfig } from '@/models/AdvancedEnsembleModel.ts';
 import {
   createModelConfig,
   validateModelConfig,
   validateRegularModelConfig,
-} from '../config/modelConfig';
-import { ModelRegistry, ModelType } from '../registry/ModelRegistry';
+} from '@/config/modelConfig.ts';
+import { ModelRegistry, ModelType } from '@/registry/ModelRegistry.ts';
 
 export class ModelManager {
   private static instance: ModelManager;
@@ -33,26 +33,24 @@ export class ModelManager {
     config?: Partial<ModelConfig | AdvancedEnsembleConfig>
   ): Promise<void> {
     try {
-      // Get default configuration from registry
-      const defaultConfig = this.modelRegistry.getDefaultConfig(type);
+      // Get default configuration from registry;
 
-      // Merge with provided config if any
-      const finalConfig = config ? { ...defaultConfig, ...config } : defaultConfig;
+      // Merge with provided config if any;
 
-      // Validate configuration based on model type
+      // Validate configuration based on model type;
       if (type === 'ensemble') {
         validateModelConfig(finalConfig as AdvancedEnsembleConfig);
       } else {
         validateRegularModelConfig(finalConfig as ModelConfig);
       }
 
-      // Create model using factory
+      // Create model using factory;
       await this.modelFactory.createModel(finalConfig, modelId);
       this.activeModels.add(modelId);
 
-      console.log(`Model ${modelId} initialized successfully`);
+      // console statement removed
     } catch (error) {
-      console.error(`Failed to initialize model ${modelId}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -64,9 +62,9 @@ export class ModelManager {
 
     try {
       await this.modelFactory.trainModel(modelId, data);
-      console.log(`Model ${modelId} trained successfully`);
+      // console statement removed
     } catch (error) {
-      console.error(`Failed to train model ${modelId}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -79,7 +77,7 @@ export class ModelManager {
     try {
       return await this.modelFactory.predict(modelId, input);
     } catch (error) {
-      console.error(`Failed to get prediction from model ${modelId}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -90,11 +88,11 @@ export class ModelManager {
     }
 
     try {
-      const metrics = await this.modelFactory.evaluateModel(modelId, data);
+
       this.modelMetrics.set(modelId, metrics);
       return metrics;
     } catch (error) {
-      console.error(`Failed to evaluate model ${modelId}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -106,9 +104,9 @@ export class ModelManager {
 
     try {
       await this.modelFactory.updateModel(modelId, update);
-      console.log(`Model ${modelId} updated successfully`);
+      // console statement removed
     } catch (error) {
-      console.error(`Failed to update model ${modelId}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -120,9 +118,9 @@ export class ModelManager {
 
     try {
       await this.modelFactory.saveModel(modelId, path);
-      console.log(`Model ${modelId} saved successfully to ${path}`);
+      // console statement removed
     } catch (error) {
-      console.error(`Failed to save model ${modelId}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -131,9 +129,9 @@ export class ModelManager {
     try {
       await this.modelFactory.loadModel(modelId, path);
       this.activeModels.add(modelId);
-      console.log(`Model ${modelId} loaded successfully from ${path}`);
+      // console statement removed
     } catch (error) {
-      console.error(`Failed to load model ${modelId}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -145,7 +143,7 @@ export class ModelManager {
 
     this.activeModels.delete(modelId);
     this.modelMetrics.delete(modelId);
-    console.log(`Model ${modelId} deactivated`);
+    // console statement removed
   }
 
   getActiveModels(): string[] {

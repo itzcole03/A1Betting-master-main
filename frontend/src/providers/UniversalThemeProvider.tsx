@@ -1,13 +1,12 @@
-import React, {
-  createContext,
+import React, { createContext,
   useContext,
   useEffect,
   useState,
   ReactNode,
-} from "react";
+ } from 'react.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export type ThemeVariant =
@@ -60,19 +59,19 @@ interface ThemeContextType {
   setVariant: (variant: ThemeVariant) => void;
   isDark: boolean;
   toggleDarkMode: () => void;
-  customColors?: Partial<ThemeColors>;
-  setCustomColors: (colors: Partial<ThemeColors>) => void;
+  customColors?: Partial<ThemeColors key={582538}>;
+  setCustomColors: (colors: Partial<ThemeColors key={582538}>) => void;
 }
 
 // ============================================================================
-// THEME DEFINITIONS
+// THEME DEFINITIONS;
 // ============================================================================
 
 const createThemeConfig = (
   variant: ThemeVariant,
-  customColors?: Partial<ThemeColors>,
+  customColors?: Partial<ThemeColors key={582538}>,
 ): ThemeConfig => {
-  // Validate variant first
+  // Validate variant first;
   const validVariants: ThemeVariant[] = [
     "cyber-light",
     "cyber-dark",
@@ -81,14 +80,12 @@ const createThemeConfig = (
     "minimal",
   ];
   if (!variant || !validVariants.includes(variant)) {
-    console.warn(
-      `Invalid theme variant "${variant}", falling back to "cyber-light"`,
-    );
+    // console statement removed
     variant = "cyber-light";
   }
 
-  const themes: Record<ThemeVariant, ThemeColors> = {
-    // CYBER LIGHT MODE - Original cyber style but adapted for light background
+  const themes: Record<ThemeVariant, ThemeColors key={339686}> = {
+    // CYBER LIGHT MODE - Original cyber style but adapted for light background;
     "cyber-light": {
       primary: "#06ffa5",
       secondary: "#00ff88",
@@ -106,7 +103,7 @@ const createThemeConfig = (
       warning: "#fbbf24",
       error: "#ff4757",
     },
-    // CYBER DARK MODE - Enhanced dark version with cyber aesthetics
+    // CYBER DARK MODE - Enhanced dark version with cyber aesthetics;
     "cyber-dark": {
       primary: "#06ffa5",
       secondary: "#00ff88",
@@ -174,16 +171,15 @@ const createThemeConfig = (
     },
   };
 
-  const baseColors = themes[variant];
-  const mergedColors = customColors
+  const mergedColors = customColors;
     ? { ...baseColors, ...customColors }
     : baseColors;
 
-  // Ensure mergedColors is valid and has required properties
+  // Ensure mergedColors is valid and has required properties;
   if (!mergedColors || typeof mergedColors !== "object") {
-    console.error("Invalid theme variant or colors:", variant, mergedColors);
-    // Fallback to cyber-light theme
-    const fallbackColors = themes["cyber-light"];
+    // console statement removed
+    // Fallback to cyber-light theme;
+
     const safeColors = fallbackColors || {
       primary: "#06ffa5",
       secondary: "#00ff88",
@@ -258,13 +254,11 @@ const createThemeConfig = (
 };
 
 // ============================================================================
-// CONTEXT
+// CONTEXT;
 // ============================================================================
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
 // ============================================================================
-// PROVIDER COMPONENT
+// PROVIDER COMPONENT;
 // ============================================================================
 
 interface UniversalThemeProviderProps {
@@ -273,27 +267,25 @@ interface UniversalThemeProviderProps {
   enablePersistence?: boolean;
 }
 
-export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps> = ({
+export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps key={101004}> = ({
   children,
   defaultVariant = "cyber-light",
   enablePersistence = true,
 }) => {
-  const [variant, setVariantState] = useState<ThemeVariant>(() => {
+  const [variant, setVariantState] = useState<ThemeVariant key={921417}>(() => {
     if (enablePersistence && typeof window !== "undefined") {
-      const saved = localStorage.getItem("theme-variant");
+
       return (saved as ThemeVariant) || defaultVariant;
     }
     return defaultVariant;
   });
 
-  const [customColors, setCustomColors] = useState<Partial<ThemeColors>>({});
+  const [customColors, setCustomColors] = useState<Partial<ThemeColors key={974310}>>({});
 
-  const theme = createThemeConfig(variant, customColors);
-  const isDark = ["cyber-dark", "premium"].includes(variant);
 
-  // Debug logging
+  // Debug logging;
   if (!theme || !theme.colors) {
-    console.error("Theme creation failed:", { variant, customColors, theme });
+    // console statement removed
   }
 
   const setVariant = (newVariant: ThemeVariant) => {
@@ -304,26 +296,24 @@ export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps> = ({
   };
 
   const toggleDarkMode = () => {
-    // Toggle between cyber-light and cyber-dark
+    // Toggle between cyber-light and cyber-dark;
     if (variant === "cyber-light") {
       setVariant("cyber-dark");
     } else if (variant === "cyber-dark") {
       setVariant("cyber-light");
     } else {
-      // For other themes, use sensible defaults
-      const newVariant = isDark ? "cyber-light" : "cyber-dark";
+      // For other themes, use sensible defaults;
+
       setVariant(newVariant);
     }
   };
 
-  // Apply theme to document
+  // Apply theme to document;
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const root = document.documentElement;
-    const body = document.body;
 
-    // Set CSS custom properties
+    // Set CSS custom properties;
     root.style.setProperty("--color-primary", theme.colors.primary);
     root.style.setProperty("--color-secondary", theme.colors.secondary);
     root.style.setProperty("--color-accent", theme.colors.accent);
@@ -340,25 +330,25 @@ export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps> = ({
     root.style.setProperty("--color-warning", theme.colors.warning);
     root.style.setProperty("--color-error", theme.colors.error);
 
-    // Set gradient variables
+    // Set gradient variables;
     root.style.setProperty("--gradient-primary", theme.gradients.primary);
     root.style.setProperty("--gradient-secondary", theme.gradients.secondary);
     root.style.setProperty("--gradient-background", theme.gradients.background);
 
-    // Set effect variables
+    // Set effect variables;
     root.style.setProperty("--effect-glass", theme.effects.glass);
     root.style.setProperty("--effect-shadow", theme.effects.shadow);
     root.style.setProperty("--effect-glow", theme.effects.glow);
 
-    // Clear existing theme classes
+    // Clear existing theme classes;
     body.className = body.className.replace(/theme-[\w-]+/g, "");
     root.classList.remove("dark", "light", "cyber-light", "cyber-dark");
 
-    // Add current theme classes
+    // Add current theme classes;
     body.classList.add(`theme-${variant}`);
     root.classList.add(variant);
 
-    // Set dark/light mode classes
+    // Set dark/light mode classes;
     if (isDark) {
       root.classList.add("dark");
       body.classList.add("dark");
@@ -367,14 +357,14 @@ export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps> = ({
       body.classList.add("light");
     }
 
-    // Apply background and text color
+    // Apply background and text color;
     body.style.background = theme.colors.background;
     body.style.color = theme.colors.text.primary;
     body.style.fontFamily = '"Inter", system-ui, sans-serif';
     body.style.minHeight = "100vh";
 
-    // Apply to root as well for consistency
-    const rootElement = document.getElementById("root");
+    // Apply to root as well for consistency;
+
     if (rootElement) {
       rootElement.style.background = theme.colors.background;
       rootElement.style.color = theme.colors.text.primary;
@@ -383,7 +373,7 @@ export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps> = ({
   }, [theme, variant, isDark]);
 
   return (
-    <ThemeContext.Provider
+    <ThemeContext.Provider;
       value={{
         theme,
         variant,
@@ -393,26 +383,26 @@ export const UniversalThemeProvider: React.FC<UniversalThemeProviderProps> = ({
         customColors,
         setCustomColors,
       }}
-    >
+     key={352473}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
 // ============================================================================
-// HOOKS
+// HOOKS;
 // ============================================================================
 
 export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
+
   if (context === undefined) {
     throw new Error("useTheme must be used within a UniversalThemeProvider");
   }
 
-  // Additional safety: ensure theme object is complete
+  // Additional safety: ensure theme object is complete;
   if (!context.theme || !context.theme.colors) {
-    console.warn("Theme context is incomplete, using fallback theme");
-    const fallbackTheme = createThemeConfig("cyber-light");
+    // console statement removed
+
     return {
       ...context,
       theme: fallbackTheme,
@@ -438,11 +428,11 @@ export const useDarkMode = () => {
 };
 
 // ============================================================================
-// UTILITY FUNCTIONS
+// UTILITY FUNCTIONS;
 // ============================================================================
 
 export const getThemeCSS = (variant: ThemeVariant) => {
-  const config = createThemeConfig(variant);
+
   return `
     :root {
       --color-primary: ${config.colors.primary};
@@ -468,7 +458,7 @@ export const getThemeCSS = (variant: ThemeVariant) => {
 };
 
 // ============================================================================
-// EXPORTS
+// EXPORTS;
 // ============================================================================
 
 export default UniversalThemeProvider;

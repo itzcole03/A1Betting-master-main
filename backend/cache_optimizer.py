@@ -11,7 +11,7 @@ import pickle
 import time
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from functools import wraps
 from typing import Any, Callable, Dict, List, Optional
@@ -86,7 +86,7 @@ class CacheEntry:
     @property
     def age(self) -> float:
         """Get entry age in seconds"""
-        return (datetime.utcnow() - self.created_at).total_seconds()
+        return (datetime.now(timezone.utc) - self.created_at).total_seconds()
 
     @property
     def is_expired(self) -> bool:
@@ -123,7 +123,7 @@ class InMemoryCache:
                     return None
 
                 # Update access info
-                entry.last_accessed = datetime.utcnow()
+                entry.last_accessed = datetime.now(timezone.utc)
                 entry.access_count += 1
                 self.frequency_counter[key] += 1
 
@@ -140,9 +140,9 @@ class InMemoryCache:
                 self.metrics.misses += 1
                 return None
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.metrics.errors += 1
-            logger.error(f"Cache get error for key {key}: {e!s}")
+            logger.error("Cache get error for key {key}: {e!s}")
             return None
 
     def set(
@@ -166,8 +166,8 @@ class InMemoryCache:
                         actual_value = gzip.compress(value.encode("utf-8"))
                         compression_type = CompressionType.GZIP
                         compressed = True
-                except Exception as e:
-                    logger.warning(f"Compression failed for key {key}: {e!s}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.warning("Compression failed for key {key}: {e!s}")
 
             # Calculate size
             entry_size = self._calculate_size(actual_value)
@@ -184,8 +184,8 @@ class InMemoryCache:
             entry = CacheEntry(
                 key=key,
                 value=actual_value,
-                created_at=datetime.utcnow(),
-                last_accessed=datetime.utcnow(),
+                created_at=datetime.now(timezone.utc),
+                last_accessed=datetime.now(timezone.utc),
                 access_count=1,
                 ttl=ttl,
                 size=entry_size,
@@ -206,9 +206,9 @@ class InMemoryCache:
 
             return True
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.metrics.errors += 1
-            logger.error(f"Cache set error for key {key}: {e!s}")
+            logger.error("Cache set error for key {key}: {e!s}")
             return False
 
     def delete(self, key: str) -> bool:
@@ -218,9 +218,9 @@ class InMemoryCache:
                 self._evict_key(key)
                 return True
             return False
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.metrics.errors += 1
-            logger.error(f"Cache delete error for key {key}: {e!s}")
+            logger.error("Cache delete error for key {key}: {e!s}")
             return False
 
     def clear(self):
@@ -330,8 +330,8 @@ class RedisCache:
             )
             await self.redis_client.ping()
             logger.info("Redis cache connection established")
-        except Exception as e:
-            logger.error(f"Failed to connect to Redis cache: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to connect to Redis cache: {e!s}")
             raise
 
     def _make_key(self, key: str) -> str:
@@ -356,7 +356,7 @@ class RedisCache:
                     self.metrics.hits += 1
                     self._update_access_time(time.time() - start_time)
                     return value
-                except Exception as e:
+                except Exception as e:  # pylint: disable=broad-exception-caught
                     logger.warning(
                         f"Failed to deserialize cached data for key {key}: {e!s}"
                     )
@@ -366,9 +366,9 @@ class RedisCache:
             self.metrics.misses += 1
             return None
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.metrics.errors += 1
-            logger.error(f"Redis cache get error for key {key}: {e!s}")
+            logger.error("Redis cache get error for key {key}: {e!s}")
             return None
 
     async def set(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
@@ -382,8 +382,8 @@ class RedisCache:
             # Serialize value
             try:
                 data = pickle.dumps(value)
-            except Exception as e:
-                logger.error(f"Failed to serialize value for key {key}: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Failed to serialize value for key {key}: {e!s}")
                 self.metrics.errors += 1
                 return False
 
@@ -399,9 +399,9 @@ class RedisCache:
 
             return False
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.metrics.errors += 1
-            logger.error(f"Redis cache set error for key {key}: {e!s}")
+            logger.error("Redis cache set error for key {key}: {e!s}")
             return False
 
     async def delete(self, key: str) -> bool:
@@ -414,9 +414,9 @@ class RedisCache:
             result = await self.redis_client.delete(redis_key)
             return result > 0
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.metrics.errors += 1
-            logger.error(f"Redis cache delete error for key {key}: {e!s}")
+            logger.error("Redis cache delete error for key {key}: {e!s}")
             return False
 
     async def clear(self, pattern: str = "*"):
@@ -434,9 +434,9 @@ class RedisCache:
 
             return 0
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.metrics.errors += 1
-            logger.error(f"Redis cache clear error for pattern {pattern}: {e!s}")
+            logger.error("Redis cache clear error for pattern {pattern}: {e!s}")
             return 0
 
     async def get_stats(self) -> Dict[str, Any]:
@@ -466,8 +466,8 @@ class RedisCache:
                 "redis_uptime": info.get("uptime_in_seconds", 0),
             }
 
-        except Exception as e:
-            logger.error(f"Failed to get Redis stats: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to get Redis stats: {e!s}")
             return {"error": str(e)}
 
     def _update_access_time(self, access_time: float):
@@ -510,7 +510,7 @@ class MultiTierCache:
             # Consider promoting to L1 if frequently accessed
             if self.access_patterns[key] >= self.promotion_threshold:
                 self.l1_cache.set(key, value, ttl=3600)  # 1 hour in L1
-                logger.debug(f"Promoted key {key} to L1 cache")
+                logger.debug("Promoted key {key} to L1 cache")
 
             return value
 
@@ -633,9 +633,9 @@ class CacheWarmer:
                 try:
                     warming_func = self.warming_strategies[pattern]
                     await warming_func(self.cache)
-                    logger.info(f"Cache warming completed for pattern: {pattern}")
-                except Exception as e:
-                    logger.error(f"Cache warming failed for pattern {pattern}: {e!s}")
+                    logger.info("Cache warming completed for pattern: {pattern}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.error("Cache warming failed for pattern {pattern}: {e!s}")
 
     async def schedule_warming(self, pattern: str, interval_seconds: int):
         """Schedule periodic cache warming"""
@@ -650,7 +650,7 @@ class CacheWarmer:
                         logger.debug(
                             f"Scheduled cache warming executed for pattern: {pattern}"
                         )
-                except Exception as e:
+                except Exception as e:  # pylint: disable=broad-exception-caught
                     logger.error(
                         f"Scheduled cache warming failed for pattern {pattern}: {e!s}"
                     )
@@ -727,7 +727,7 @@ class UltraCacheOptimizer:
                     "event_id": event_id,
                     "prediction": 0.65,
                     "confidence": 0.85,
-                    "timestamp": datetime.utcnow().isoformat(),
+                    "timestamp": datetime.now(timezone.utc).isoformat(),
                 }
                 await cache.set(cache_key, prediction_data, ttl=1800)
 
@@ -737,7 +737,7 @@ class UltraCacheOptimizer:
                 "total_opportunities": 25,
                 "best_arbitrage": 3.2,
                 "best_value_bet": 8.5,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
             await cache.set("opportunities:summary", opportunity_data, ttl=600)
 
@@ -746,7 +746,7 @@ class UltraCacheOptimizer:
             model_data = {
                 "ensemble_accuracy": 0.847,
                 "model_count": 8,
-                "last_training": datetime.utcnow().isoformat(),
+                "last_training": datetime.now(timezone.utc).isoformat(),
                 "performance_trend": "improving",
             }
             await cache.set("models:performance", model_data, ttl=3600)
@@ -776,7 +776,7 @@ class UltraCacheOptimizer:
             "warming_strategies": len(self.cache_warmer.warming_strategies),
             "warming_schedules": len(self.cache_warmer.warming_schedule),
             "system_healthy": cache_stats["overall"]["overall_hit_rate"] > 50,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
     async def optimize_cache_performance(self):
@@ -808,7 +808,7 @@ class CachePerformanceMonitor:
 
     async def record_performance(self, cache_stats: Dict[str, Any]):
         """Record cache performance metrics"""
-        timestamp = datetime.utcnow()
+        timestamp = datetime.now(timezone.utc)
         performance_point = {
             "timestamp": timestamp,
             "overall_hit_rate": cache_stats["overall"]["overall_hit_rate"],

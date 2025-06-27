@@ -1,16 +1,16 @@
-import { create } from 'zustand';
-import { devtools, persist } from 'zustand/middleware';
-import { Bet, BetSlip, Odds, Sport, Event } from '@/types/betting';
+import { create } from 'zustand.ts';
+import { devtools, persist } from 'zustand/middleware.ts';
+import { Bet, BetSlip, Odds, Sport, Event } from '@/types/betting.ts';
 
 interface BettingState {
-  // Active bets
+  // Active bets;
   activeBets: Bet[];
   betSlip: BetSlip;
   selectedSport: Sport | null;
   selectedEvent: Event | null;
   odds: Record<string, Odds>;
 
-  // Actions
+  // Actions;
   addBet: (bet: Bet) => void;
   removeBet: (betId: string) => void;
   updateOdds: (eventId: string, odds: Odds) => void;
@@ -47,7 +47,7 @@ export const useBettingStore = create<BettingState>()(
 
         removeBet: betId =>
           set(state => {
-            const betToRemove = state.betSlip.bets.find(b => b.id === betId);
+
             if (!betToRemove) return state;
 
             const newBetSlip = {
@@ -86,11 +86,10 @@ export const useBettingStore = create<BettingState>()(
 
         updateBetAmount: (betId, amount) =>
           set(state => {
-            const betIndex = state.betSlip.bets.findIndex(b => b.id === betId);
+
             if (betIndex === -1) return state;
 
-            const updatedBets = [...state.betSlip.bets];
-            const oldStake = updatedBets[betIndex].stake;
+
             updatedBets[betIndex] = {
               ...updatedBets[betIndex],
               stake: amount,

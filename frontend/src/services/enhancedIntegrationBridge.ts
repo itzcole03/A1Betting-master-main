@@ -1,11 +1,11 @@
 /**
- * Enhanced Integration Bridge
- * Powers the simple user interface with all advanced backend services
- * This bridge connects simple UI components to sophisticated ML, analytics, and betting services
+ * Enhanced Integration Bridge;
+ * Powers the simple user interface with all advanced backend services;
+ * This bridge connects simple UI components to sophisticated ML, analytics, and betting services;
  */
 
-import { integrationService } from "./integrationService";
-import { ultraAccuracyBackgroundService } from "./UltraAccuracyBackgroundService";
+import { integrationService } from './integrationService.ts';
+import { ultraAccuracyBackgroundService } from './UltraAccuracyBackgroundService.ts';
 
 export interface SimplifiedPrediction {
   id: string;
@@ -56,11 +56,11 @@ class EnhancedIntegrationBridge {
   }
 
   /**
-   * Get simplified predictions powered by advanced ML models and Ultra Accuracy
+   * Get simplified predictions powered by advanced ML models and Ultra Accuracy;
    */
   public async getSimplifiedPredictions(): Promise<SimplifiedPrediction[]> {
     try {
-      // Get data from multiple advanced sources
+      // Get data from multiple advanced sources;
       const [backendPredictions, ultraAccuracy, analyticsData] =
         await Promise.all([
           integrationService.getPredictions({ limit: 10 }),
@@ -68,10 +68,10 @@ class EnhancedIntegrationBridge {
           integrationService.getAdvancedAnalytics(),
         ]);
 
-      // Combine and simplify the data for user-friendly display
+      // Combine and simplify the data for user-friendly display;
       const simplified: SimplifiedPrediction[] = [];
 
-      // Process backend predictions
+      // Process backend predictions;
       if (backendPredictions.predictions) {
         for (const pred of backendPredictions.predictions) {
           simplified.push({
@@ -89,19 +89,19 @@ class EnhancedIntegrationBridge {
         }
       }
 
-      // Enhance predictions with Ultra Accuracy
+      // Enhance predictions with Ultra Accuracy;
       const enhancedPredictions =
         await ultraAccuracyBackgroundService.enhancePredictions(simplified);
 
-      return enhancedPredictions.slice(0, 5); // Return top 5 for simple UI
+      return enhancedPredictions.slice(0, 5); // Return top 5 for simple UI;
     } catch (error) {
-      console.error("Error getting simplified predictions:", error);
+      // console statement removed
       return this.getFallbackPredictions();
     }
   }
 
   /**
-   * Get simplified analytics powered by advanced backend analysis
+   * Get simplified analytics powered by advanced backend analysis;
    */
   public async getSimplifiedAnalytics(): Promise<SimplifiedAnalytics> {
     try {
@@ -124,13 +124,13 @@ class EnhancedIntegrationBridge {
         alerts: this.generateAlerts(analytics, modelPerformance),
       };
     } catch (error) {
-      console.error("Error getting simplified analytics:", error);
+      // console statement removed
       return this.getFallbackAnalytics();
     }
   }
 
   /**
-   * Get simplified opportunities powered by advanced betting algorithms
+   * Get simplified opportunities powered by advanced betting algorithms;
    */
   public async getSimplifiedOpportunities(): Promise<SimplifiedOpportunity[]> {
     try {
@@ -141,7 +141,7 @@ class EnhancedIntegrationBridge {
 
       const simplified: SimplifiedOpportunity[] = [];
 
-      // Process betting opportunities
+      // Process betting opportunities;
       bettingOpps.forEach((opp) => {
         simplified.push({
           id: opp.id,
@@ -156,13 +156,13 @@ class EnhancedIntegrationBridge {
         });
       });
 
-      // Process arbitrage opportunities
+      // Process arbitrage opportunities;
       arbitrageOpps.forEach((arb) => {
         simplified.push({
           id: arb.id,
           title: `ARBITRAGE: ${arb.sport.toUpperCase()}`,
           description: `${arb.event} - ${arb.profit_margin}% profit`,
-          confidence: 95, // Arbitrage has high confidence
+          confidence: 95, // Arbitrage has high confidence;
           expectedReturn: Math.round(arb.profit_margin * 100),
           riskLevel: "low" as const,
           timeRemaining: this.calculateTimeRemaining(),
@@ -173,7 +173,7 @@ class EnhancedIntegrationBridge {
 
       return simplified;
     } catch (error) {
-      console.error("Error getting simplified opportunities:", error);
+      // console statement removed
       return this.getFallbackOpportunities();
     }
   }
@@ -185,16 +185,15 @@ class EnhancedIntegrationBridge {
     try {
       return await integrationService.getUltraAccuracyPredictions();
     } catch (error) {
-      console.warn("Ultra accuracy predictions not available:", error);
+      // console statement removed
       return { predictions: [] };
     }
   }
 
   /**
-   * Generate simple reasoning from complex prediction data
+   * Generate simple reasoning from complex prediction data;
    */
   private generateSimpleReasoning(prediction: any): string {
-    const reasons = [];
 
     if (prediction.confidence > 0.8) {
       reasons.push("High confidence from ML models");
@@ -206,13 +205,13 @@ class EnhancedIntegrationBridge {
       reasons.push("Strong recent form");
     }
 
-    return reasons.length > 0
+    return reasons.length > 0;
       ? reasons.join(". ") + "."
       : "Advanced AI analysis indicates value in this prediction.";
   }
 
   /**
-   * Calculate risk level from confidence
+   * Calculate risk level from confidence;
    */
   private calculateRiskLevel(confidence: number): "low" | "medium" | "high" {
     if (confidence >= 0.8) return "low";
@@ -221,10 +220,9 @@ class EnhancedIntegrationBridge {
   }
 
   /**
-   * Generate recommendations from opportunities
+   * Generate recommendations from opportunities;
    */
   private generateRecommendations(opportunities: any[]): string[] {
-    const recommendations = [];
 
     if (opportunities.length > 0) {
       recommendations.push("Focus on high-confidence opportunities");
@@ -237,10 +235,9 @@ class EnhancedIntegrationBridge {
   }
 
   /**
-   * Generate alerts from analytics
+   * Generate alerts from analytics;
    */
   private generateAlerts(analytics: any, performance: any): string[] {
-    const alerts = [];
 
     if (analytics.win_rate < 0.5) {
       alerts.push("Win rate below target - review strategy");
@@ -256,12 +253,12 @@ class EnhancedIntegrationBridge {
    * Calculate time remaining (placeholder)
    */
   private calculateTimeRemaining(): string {
-    const hours = Math.floor(Math.random() * 6) + 1;
+
     return `${hours}h remaining`;
   }
 
   /**
-   * Get action required text
+   * Get action required text;
    */
   private getActionRequired(recommendation: string): string {
     switch (recommendation) {
@@ -277,7 +274,7 @@ class EnhancedIntegrationBridge {
   }
 
   /**
-   * Fallback predictions when API fails
+   * Fallback predictions when API fails;
    */
   private getFallbackPredictions(): SimplifiedPrediction[] {
     return [
@@ -297,7 +294,7 @@ class EnhancedIntegrationBridge {
   }
 
   /**
-   * Fallback analytics when API fails
+   * Fallback analytics when API fails;
    */
   private getFallbackAnalytics(): SimplifiedAnalytics {
     return {
@@ -313,7 +310,7 @@ class EnhancedIntegrationBridge {
   }
 
   /**
-   * Fallback opportunities when API fails
+   * Fallback opportunities when API fails;
    */
   private getFallbackOpportunities(): SimplifiedOpportunity[] {
     return [
@@ -333,7 +330,7 @@ class EnhancedIntegrationBridge {
 }
 
 /**
- * Get Money Maker Pro recommendations with advanced analysis and Ultra Accuracy enhancement
+ * Get Money Maker Pro recommendations with advanced analysis and Ultra Accuracy enhancement;
  */
 export async function getMoneyMakerRecommendations(
   investment: number,
@@ -349,11 +346,11 @@ export async function getMoneyMakerRecommendations(
       integrationService.getAccuracyMetrics(),
     ]);
 
-    // Generate base recommendations
+    // Generate base recommendations;
     const baseRecommendations = {
       investment,
       confidence: Math.round((modelPerformance.overall_accuracy || 0.85) * 100),
-      projectedReturn: investment * (1.12 + Math.random() * 0.08), // 12-20% return
+      projectedReturn: investment * (1.12 + Math.random() * 0.08), // 12-20% return;
       expectedProfit: investment * (0.12 + Math.random() * 0.08),
       riskLevel:
         strategy === "conservative"
@@ -373,7 +370,7 @@ export async function getMoneyMakerRecommendations(
       timestamp: new Date().toISOString(),
     };
 
-    // Enhance with Ultra Accuracy Background Service
+    // Enhance with Ultra Accuracy Background Service;
     const enhancedRecommendations =
       await ultraAccuracyBackgroundService.enhanceMoneyMakerRecommendations(
         baseRecommendations,
@@ -381,7 +378,7 @@ export async function getMoneyMakerRecommendations(
 
     return enhancedRecommendations;
   } catch (error) {
-    console.error("Error getting Money Maker recommendations:", error);
+    // console statement removed
     return {
       investment,
       confidence: 75,
@@ -395,7 +392,7 @@ export async function getMoneyMakerRecommendations(
 }
 
 /**
- * Get PrizePicks recommendations enhanced with Ultra Accuracy
+ * Get PrizePicks recommendations enhanced with Ultra Accuracy;
  */
 export async function getPrizePicksRecommendations(
   sport?: string,
@@ -406,18 +403,18 @@ export async function getPrizePicksRecommendations(
       10,
     );
 
-    // Handle both array and object responses
+    // Handle both array and object responses;
     const opportunities = Array.isArray(response)
-      ? response
+      ? response;
       : response?.opportunities || [];
 
-    // Ensure we have an array to work with
+    // Ensure we have an array to work with;
     if (!Array.isArray(opportunities)) {
-      console.warn("API returned non-array data for betting opportunities");
+      // console statement removed
       return [];
     }
 
-    // Convert betting opportunities to PrizePicks format
+    // Convert betting opportunities to PrizePicks format;
     const baseProps = opportunities.map((opp: any) => ({
       id: opp.id,
       player: opp.event?.split(" vs ")[0] || "Featured Player",
@@ -429,18 +426,18 @@ export async function getPrizePicksRecommendations(
       sport: opp.sport || "basketball",
     }));
 
-    // Enhance with Ultra Accuracy Background Service
+    // Enhance with Ultra Accuracy Background Service;
     const enhancedProps =
       await ultraAccuracyBackgroundService.enhancePrizePicksProps(baseProps);
 
     return enhancedProps;
   } catch (error) {
-    console.error("Error getting PrizePicks recommendations:", error);
+    // console statement removed
     return [];
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const enhancedIntegrationBridge =
   EnhancedIntegrationBridge.getInstance();
 export default enhancedIntegrationBridge;

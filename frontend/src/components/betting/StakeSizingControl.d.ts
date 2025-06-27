@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface StakeSizingControlProps {
     onStakeChange: (stake: number) => void;
     maxStake?: number;

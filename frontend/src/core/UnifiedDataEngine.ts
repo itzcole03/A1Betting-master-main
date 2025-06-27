@@ -1,19 +1,19 @@
-import { dataScrapingService } from '../services/dataScrapingService';
-import { newsService } from '../services/newsService';
-import { PoeToApiAdapter } from '../adapters/poe/PoeToApiAdapter';
-import { prizePicksService } from '../services/prizePicksService';
-import { sentimentService } from '../services/sentimentService';
-import { unifiedMonitor } from './UnifiedMonitor';
-import type { PrizePicksProps } from '../types/prizePicks';
-import type { OddsData } from '@/types/betting';
-// import type { DailyFantasyProjection, SocialSentimentData, ESPNHeadline } from '@/types'; // Not found or not used
-// import { unifiedConfig, getUnifiedConfig } from './UnifiedConfig'; // If engine needs config
+import { dataScrapingService } from '@/services/dataScrapingService.ts';
+import { newsService } from '@/services/newsService.ts';
+import { PoeToApiAdapter } from '@/adapters/poe/PoeToApiAdapter.ts';
+import { prizePicksService } from '@/services/prizePicksService.ts';
+import { sentimentService } from '@/services/sentimentService.ts';
+import { unifiedMonitor } from './UnifiedMonitor.ts';
+import type { PrizePicksProps } from '@/types/prizePicks.ts';
+import type { OddsData } from '@/types/betting.ts';
+// import type { DailyFantasyProjection, SocialSentimentData, ESPNHeadline } from '@/types.ts'; // Not found or not used;
+// import { unifiedConfig, getUnifiedConfig } from './UnifiedConfig.ts'; // If engine needs config;
 
 /**
  * UnifiedDataEngine (Client-Side Orchestrator)
  *
- * This client-side engine is responsible for orchestrating data retrieval from various
- * specialized services and potentially transforming or combining this data into formats
+ * This client-side engine is responsible for orchestrating data retrieval from various;
+ * specialized services and potentially transforming or combining this data into formats;
  * suitable for UI components or other core engines.
  *
  * The actual heavy lifting of fetching from diverse external raw sources (Sportradar, Twitter, etc.)
@@ -29,7 +29,7 @@ import type { OddsData } from '@/types/betting';
  * 5. Manage data freshness and trigger updates (possibly via WebSocket events or polling strategies coordinated with services).
  */
 
-// Example of a combined data type this engine might produce
+// Example of a combined data type this engine might produce;
 export interface ComprehensivePlayerProfile {
   playerId: string;
   name: string;
@@ -41,14 +41,14 @@ export interface ComprehensivePlayerProfile {
   // sentiments?: SocialSentimentData[];
   // news?: ESPNHeadline[];
   marketOdds?: OddsData[];
-  // ... other relevant aggregated data
+  // ... other relevant aggregated data;
 }
 
 export class UnifiedDataEngineSingleton {
 
   constructor() {
     
-    // const config = await getUnifiedConfig(); // Load config if needed
+    // const config = await getUnifiedConfig(); // Load config if needed;
   }
 
   /**
@@ -60,17 +60,17 @@ export class UnifiedDataEngineSingleton {
     if (leagueFilter) {
       traceAttributes.leagueFilter = leagueFilter;
     }
-    const trace = unifiedMonitor.startTrace('getComprehensivePlayerProfile', 'data.aggregation', traceAttributes as any); // Cast to any to satisfy monitor if it's from different project
+    const trace = unifiedMonitor.startTrace('getComprehensivePlayerProfile', 'data.aggregation', traceAttributes as any); // Cast to any to satisfy monitor if it's from different project;
     try {
       
 
-      // Fetch general data that might contain the player
-      const allPropsPromise = prizePicksService.fetchPrizePicksProps(leagueFilter); // Fetch props, potentially for a league
-      // For projections, we'd ideally have a way to filter by player or fetch for relevant games/dates
+      // Fetch general data that might contain the player;
+      const allPropsPromise = prizePicksService.fetchPrizePicksProps(leagueFilter); // Fetch props, potentially for a league;
+      // For projections, we'd ideally have a way to filter by player or fetch for relevant games/dates;
       // This might require a known date or a broader fetch. For now, let's assume a common scenario.
-      const projectionsPromise = dataScrapingService.fetchDailyFantasyProjections(new Date().toISOString().split('T')[0], leagueFilter);
-      const sentimentPromise = sentimentService.fetchSocialSentiment(playerNameOrId);
-      const newsPromise = newsService.fetchHeadlines('espn'); // General headlines, then filter or use a player-specific endpoint if available
+
+
+      const newsPromise = newsService.fetchHeadlines('espn'); // General headlines, then filter or use a player-specific endpoint if available;
       
       // For player-specific details like team, position, image.
       // This is tricky without a canonical player ID. PrizePicks props contain player_name.
@@ -91,30 +91,30 @@ export class UnifiedDataEngineSingleton {
         // Assuming playerNameOrId could be a name. If it can also be an ID, logic needs to handle that.
         playerProps = allPropsResult.value.filter(p => p.player_name.toLowerCase() === playerNameOrId.toLowerCase());
       } else if (allPropsResult.status === 'rejected') {
-        console.warn(`Failed to fetch props for player ${playerNameOrId}`, allPropsResult.reason);
+        // console statement removed
       }
 
       // let playerProjections: DailyFantasyProjection[] = [];
       if (projectionsResult.status === 'fulfilled' && projectionsResult.value) {
         playerProjections = projectionsResult.value.filter(p => p.playerName.toLowerCase() === playerNameOrId.toLowerCase());
       } else if (projectionsResult.status === 'rejected') {
-        console.warn(`Failed to fetch projections for player ${playerNameOrId}`, projectionsResult.reason);
+        // console statement removed
       }
       
       // let playerNews: ESPNHeadline[] = [];
       if (newsResult.status === 'fulfilled' && newsResult.value) {
-        // Basic filter, a more robust solution might involve NLP or specific tags
+        // Basic filter, a more robust solution might involve NLP or specific tags;
         playerNews = newsResult.value.filter(headline => 
             headline.title.toLowerCase().includes(playerNameOrId.toLowerCase()) || 
             headline.summary.toLowerCase().includes(playerNameOrId.toLowerCase())
         );
       } else if (newsResult.status === 'rejected') {
-          console.warn(`Failed to fetch news for player ${playerNameOrId}`, newsResult.reason);
+          // console statement removed
       }
 
 
       const profile: ComprehensivePlayerProfile = {
-        playerId: playerProps.length > 0 ? playerProps[0].playerId : playerNameOrId, // Use playerId from prop if available
+        playerId: playerProps.length > 0 ? playerProps[0].playerId : playerNameOrId, // Use playerId from prop if available;
         name: playerProps.length > 0 ? playerProps[0].player_name : playerNameOrId,
         team: playerProps.length > 0 ? playerProps[0].player?.team : undefined,
         position: playerProps.length > 0 ? playerProps[0].player?.position : undefined,
@@ -123,7 +123,7 @@ export class UnifiedDataEngineSingleton {
         projections: playerProjections,
         sentiments: sentimentResult.status === 'fulfilled' && sentimentResult.value ? [sentimentResult.value] : [],
         news: playerNews,
-        // marketOdds: oddsResult.status === 'fulfilled' ? oddsResult.value : [], // Odds would be another call
+        // marketOdds: oddsResult.status === 'fulfilled' ? oddsResult.value : [], // Odds would be another call;
       };
       
       // If we had a reliable fetchPrizePicksPlayer by name or ID, we could populate name, team, position, imageUrl more reliably.
@@ -151,14 +151,14 @@ export class UnifiedDataEngineSingleton {
    * This would involve fetching odds, lines, relevant stats, predictions etc.
    */
   public async getMarketDetails(propId: string): Promise<any | null> {
-    const trace = unifiedMonitor.startTrace('getMarketDetails', 'data.market_aggregation');
+
     try {
         
         // Calls to services like prizePicksService.fetchPrizePicksLines(propId)
         // dataScrapingService.fetchOddsForProp(propId)
-        // predictionService.getPredictionDetails(propId) // if predictions are part of this
+        // predictionService.getPredictionDetails(propId) // if predictions are part of this;
         // ...and then aggregate them.
-        await new Promise(resolve => setTimeout(resolve, 300)); // Simulate work
+        await new Promise(resolve => setTimeout(resolve, 300)); // Simulate work;
         unifiedMonitor.endTrace(trace);
         return { propId, message: "Market details would be aggregated here from multiple sources via backend services." };
     } catch (error: any) {
@@ -172,17 +172,16 @@ export class UnifiedDataEngineSingleton {
    * Fetches props from the Poe-like data source using the PoeToApiAdapter.
    */
   public async fetchPropsFromPoeSource(): Promise<PrizePicksProps[]> {
-    const trace = unifiedMonitor.startTrace('fetchPropsFromPoeSource', 'data.fetch.poe');
+
     try {
-      
-      const poeAdapter = new PoeToApiAdapter();
-      const props = await poeAdapter.fetchAndTransformPoeData?.() ?? [];
+
+
       unifiedMonitor.endTrace(trace);
       return props;
     } catch (error: any) {
       unifiedMonitor.reportError(error, { operation: 'fetchPropsFromPoeSource' });
       unifiedMonitor.endTrace(trace);
-      return []; // Return empty array on error or rethrow
+      return []; // Return empty array on error or rethrow;
     }
   }
 
@@ -191,12 +190,12 @@ export class UnifiedDataEngineSingleton {
   // e.g., getLeagueStandingsAndStats(leagueId)
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const unifiedDataEngine = new UnifiedDataEngineSingleton();
 
 // Example Usage (conceptual):
 // unifiedDataEngine.getComprehensivePlayerProfile('LeBron James').then(profile => {
 //   if (profile) {
-//     // Use the aggregated profile data
+//     // Use the aggregated profile data;
 //   }
 // }); 

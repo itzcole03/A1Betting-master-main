@@ -22,7 +22,7 @@ class ShapExplainer:
             X = np.array([list(features.values())])
             shap_values = self.explainer(X)
             return {k: float(v) for k, v in zip(features.keys(), shap_values.values[0])}
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             logging.error(
                 {"event": "shap_explain_error", "error": str(e), "features": features}
             )

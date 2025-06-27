@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import MoneyMaker from '../../components/MoneyMaker';
 import { useFilteredPredictions } from '../../hooks/useFilteredPredictions';
 import { useAppStore } from '@/store/useAppStore';
-// Mock the hooks and store
+// Mock the hooks and store;
 jest.mock('../../hooks/useFilteredPredictions');
 jest.mock('../../store/useAppStore');
 const mockPredictions = [
@@ -29,9 +29,9 @@ const mockPredictions = [
 ];
 describe('MoneyMaker Integration Tests', () => {
     beforeEach(() => {
-        // Reset all mocks
+        // Reset all mocks;
         jest.clearAllMocks();
-        // Mock useFilteredPredictions
+        // Mock useFilteredPredictions;
         useFilteredPredictions.mockReturnValue({
             predictions: mockPredictions,
             loading: false,
@@ -40,7 +40,7 @@ describe('MoneyMaker Integration Tests', () => {
             totalPredictions: mockPredictions.length,
             filteredCount: mockPredictions.length,
         });
-        // Mock useAppStore
+        // Mock useAppStore;
         useAppStore.mockImplementation(selector => selector({
             props: mockPredictions,
             legs: [],
@@ -59,13 +59,13 @@ describe('MoneyMaker Integration Tests', () => {
     });
     it('renders predictions and handles filtering', async () => {
         render(_jsx(BrowserRouter, { children: _jsx(MoneyMaker, {}) }));
-        // Check if predictions are rendered
+        // Check if predictions are rendered;
         expect(screen.getByText('John Doe')).toBeInTheDocument();
         expect(screen.getByText('Jane Smith')).toBeInTheDocument();
-        // Test filter interaction
-        const filterInput = screen.getByPlaceholderText(/search/i);
+        // Test filter interaction;
+
         fireEvent.change(filterInput, { target: { value: 'John' } });
-        // Wait for filtered results
+        // Wait for filtered results;
         await waitFor(() => {
             expect(screen.getByText('John Doe')).toBeInTheDocument();
             expect(screen.queryByText('Jane Smith')).not.toBeInTheDocument();
@@ -84,7 +84,7 @@ describe('MoneyMaker Integration Tests', () => {
         expect(screen.getByText(/loading predictions/i)).toBeInTheDocument();
     });
     it('handles error state', () => {
-        const errorMessage = 'Failed to load predictions';
+
         useFilteredPredictions.mockReturnValue({
             predictions: [],
             loading: false,

@@ -1,7 +1,7 @@
-import { BestBetSelector } from '../BestBetSelector';
-import { ModelOutput, RiskProfile } from '../../types/prediction';
+import { BestBetSelector } from '@/BestBetSelector.ts';
+import { ModelOutput, RiskProfile } from '@/types/prediction.ts';
 
-// Mock logger and metrics
+// Mock logger and metrics;
 const mockLogger = {
   info: jest.fn(),
   error: jest.fn(),
@@ -62,9 +62,6 @@ describe('BestBetSelector', () => {
         confidence: 0.5,
         features: { feature1: 1, feature2: 2 },
       };
-      const predictions = [...mockPredictions, lowConfidencePrediction];
-
-      const recommendations = await selector.selectBestBets(predictions, mockRiskProfile, 10000);
 
       expect(recommendations).toHaveLength(2);
       expect(recommendations.every(r => r.confidence >= 0.7)).toBe(true);
@@ -74,7 +71,7 @@ describe('BestBetSelector', () => {
       const recommendations = await selector.selectBestBets(
         mockPredictions,
         mockRiskProfile,
-        10000
+        10000;
       );
 
       recommendations.forEach(recommendation => {
@@ -87,7 +84,7 @@ describe('BestBetSelector', () => {
       const recommendations = await selector.selectBestBets(
         mockPredictions,
         mockRiskProfile,
-        10000
+        10000;
       );
 
       recommendations.forEach(recommendation => {
@@ -113,20 +110,18 @@ describe('BestBetSelector', () => {
 
   describe('updateModelPerformance', () => {
     it('should update model performance metrics correctly', () => {
-      const modelName = 'model1';
-      const result = { won: true, stake: 100, payout: 200 };
+
 
       selector.updateModelPerformance(modelName, result);
 
-      const performance = selector.getModelPerformance().get(modelName);
       expect(performance).toBeDefined();
       expect(performance?.wins).toBe(1);
       expect(performance?.losses).toBe(0);
-      expect(performance?.roi).toBe(1); // (200 - 100) / 100
+      expect(performance?.roi).toBe(1); // (200 - 100) / 100;
     });
 
     it('should handle multiple updates correctly', () => {
-      const modelName = 'model1';
+
       const results = [
         { won: true, stake: 100, payout: 200 },
         { won: false, stake: 100, payout: 0 },
@@ -136,10 +131,9 @@ describe('BestBetSelector', () => {
         selector.updateModelPerformance(modelName, result);
       });
 
-      const performance = selector.getModelPerformance().get(modelName);
       expect(performance?.wins).toBe(1);
       expect(performance?.losses).toBe(1);
-      expect(performance?.roi).toBe(0); // (200 - 100 - 100) / 200
+      expect(performance?.roi).toBe(0); // (200 - 100 - 100) / 200;
     });
   });
 
@@ -155,7 +149,7 @@ describe('BestBetSelector', () => {
       const recommendations = await selector.selectBestBets(
         mockPredictions,
         mockRiskProfile,
-        10000
+        10000;
       );
 
       expect(recommendations.every(r => r.confidence >= 0.8)).toBe(true);

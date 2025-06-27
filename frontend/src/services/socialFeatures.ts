@@ -62,7 +62,7 @@ class SocialFeaturesService {
   private posts: Map<string, Post> = new Map();
   private comments: Map<string, Comment> = new Map();
   private followers: Map<string, Set<string>> = new Map();
-  private readonly CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
+  private readonly CACHE_DURATION = 1000 * 60 * 5; // 5 minutes;
   private cache: Map<string, { data: unknown; timestamp: number }> = new Map();
 
   private constructor() {}
@@ -74,7 +74,7 @@ class SocialFeaturesService {
     return SocialFeaturesService.instance;
   }
 
-  // User Management
+  // User Management;
   async createUser(username: string, avatar?: string, bio?: string): Promise<User> {
     const user: User = {
       id: `user_${Date.now()}`,
@@ -108,31 +108,28 @@ class SocialFeaturesService {
   }
 
   async updateUser(userId: string, updates: Partial<User>): Promise<User | null> {
-    const user = this.users.get(userId);
+
     if (!user) return null;
 
-    const updatedUser = { ...user, ...updates };
     this.users.set(userId, updatedUser);
     return updatedUser;
   }
 
-  // Following System
+  // Following System;
   async followUser(followerId: string, followingId: string): Promise<boolean> {
     if (!this.users.has(followerId) || !this.users.has(followingId)) {
       return false;
     }
 
-    const followers = this.followers.get(followingId);
     if (!followers) return false;
 
     followers.add(followerId);
-    const user = this.users.get(followingId);
+
     if (user) {
       user.stats.followers++;
       this.users.set(followingId, user);
     }
 
-    const follower = this.users.get(followerId);
     if (follower) {
       follower.stats.following++;
       this.users.set(followerId, follower);
@@ -142,18 +139,16 @@ class SocialFeaturesService {
   }
 
   async unfollowUser(followerId: string, followingId: string): Promise<boolean> {
-    const followers = this.followers.get(followingId);
+
     if (!followers) return false;
 
-    const success = followers.delete(followerId);
     if (success) {
-      const user = this.users.get(followingId);
+
       if (user) {
         user.stats.followers--;
         this.users.set(followingId, user);
       }
 
-      const follower = this.users.get(followerId);
       if (follower) {
         follower.stats.following--;
         this.users.set(followerId, follower);
@@ -163,7 +158,7 @@ class SocialFeaturesService {
     return success;
   }
 
-  // Posts and Comments
+  // Posts and Comments;
   async createPost(
     userId: string,
     content: string,
@@ -204,7 +199,7 @@ class SocialFeaturesService {
     };
 
     this.comments.set(comment.id, comment);
-    const post = this.posts.get(postId);
+
     if (post) {
       post.comments++;
       this.posts.set(postId, post);
@@ -213,9 +208,9 @@ class SocialFeaturesService {
     return comment;
   }
 
-  // Engagement
+  // Engagement;
   async likePost(postId: string, _userId: string): Promise<boolean> {
-    const post = this.posts.get(postId);
+
     if (!post) return false;
 
     post.likes++;
@@ -224,7 +219,7 @@ class SocialFeaturesService {
   }
 
   async sharePost(postId: string, _userId: string): Promise<boolean> {
-    const post = this.posts.get(postId);
+
     if (!post) return false;
 
     post.shares++;
@@ -232,10 +227,10 @@ class SocialFeaturesService {
     return true;
   }
 
-  // Leaderboards
+  // Leaderboards;
   async getLeaderboard(timeframe: 'day' | 'week' | 'month' | 'all'): Promise<LeaderboardEntry[]> {
-    const cacheKey = `leaderboard_${timeframe}`;
-    const cached = this.getFromCache(cacheKey);
+
+
     if (cached) return cached as LeaderboardEntry[];
 
     const entries: LeaderboardEntry[] = Array.from(this.users.values())
@@ -259,12 +254,11 @@ class SocialFeaturesService {
     return entries;
   }
 
-  // Feed
+  // Feed;
   async getFeed(userId: string, page: number = 1, pageSize: number = 10): Promise<Post[]> {
-    const user = this.users.get(userId);
+
     if (!user) return [];
 
-    const followers = this.followers.get(userId);
     if (!followers) return [];
 
     const allPosts = Array.from(this.posts.values())
@@ -275,12 +269,11 @@ class SocialFeaturesService {
       })
       .sort((a, b) => b.timestamp - a.timestamp);
 
-    const start = (page - 1) * pageSize;
-    const end = start + pageSize;
+
     return allPosts.slice(start, end);
   }
 
-  // Cache Management
+  // Cache Management;
   /**
    * Get a value from the cache, typed.
    */
@@ -288,7 +281,7 @@ class SocialFeaturesService {
    * Get a value from the cache, type-safe.
    */
   private getFromCache<T>(key: string): T | null {
-    const cached = this.cache.get(key) as { data: T; timestamp: number } | undefined;
+
     if (!cached) return null;
     if (Date.now() - cached.timestamp > this.CACHE_DURATION) {
       this.cache.delete(key);

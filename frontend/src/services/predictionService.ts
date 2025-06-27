@@ -1,19 +1,19 @@
-import axios from 'axios';
-import { API_BASE_URL } from '../config/constants';
-import { APIError, AppError } from '../core/UnifiedError';
-import { unifiedMonitor } from '../core/UnifiedMonitor';
-import type { PredictionUpdate } from '../types/core'; // Assuming PredictionUpdate can serve as response type
+import axios from 'axios.ts';
+import { API_BASE_URL } from '@/config/constants.ts';
+import { APIError, AppError } from '@/core/UnifiedError.ts';
+import { unifiedMonitor } from '@/core/UnifiedMonitor.ts';
+import type { PredictionUpdate } from '@/types/core.ts'; // Assuming PredictionUpdate can serve as response type;
 
 
-// Define more specific request/response types for predictions if needed
+// Define more specific request/response types for predictions if needed;
 export interface PredictionRequestData {
-    features: Record<string, number>; // Input features for the model
-    modelId?: string; // Optional: specify a model to use
-    context?: Record<string, unknown>; // Optional: additional context for prediction
+    features: Record<string, number>; // Input features for the model;
+    modelId?: string; // Optional: specify a model to use;
+    context?: Record<string, unknown>; // Optional: additional context for prediction;
 }
 
-// Assuming PredictionUpdate from ../types can be used as a base for TResponse
-// Or define a specific PredictionServiceResponse
+// Assuming PredictionUpdate from ../types can be used as a base for TResponse;
+// Or define a specific PredictionServiceResponse;
 export interface PredictionServiceResponse extends PredictionUpdate { }
 
 export interface GeneralInsight {
@@ -59,11 +59,11 @@ class PredictionService {
     }
 
     async predict(request: PredictionRequest): Promise<PredictionResponse> {
-        const trace = unifiedMonitor.startTrace('predictionService.predict', 'http.client.ml');
+
         try {
             const response = await axios.post<PredictionResponse>(
                 `${this.baseUrl}/predict`,
-                request
+                request;
             );
             if (trace) {
                 trace.setHttpStatus(response.status);
@@ -88,7 +88,7 @@ class PredictionService {
     }
 
     async getGeneralInsights(): Promise<GeneralInsight[]> {
-        const trace = unifiedMonitor.startTrace('predictionService.getGeneralInsights', 'http.client');
+
         try {
             const response = await axios.get<GeneralInsight[]>(
                 `${this.baseUrl}/insights/general`
@@ -113,7 +113,7 @@ class PredictionService {
         }
     }
 
-    // Helper method to create a prediction request
+    // Helper method to create a prediction request;
     createPredictionRequest(
         features: { [key: string]: number },
         propId?: string,
@@ -124,16 +124,15 @@ class PredictionService {
             modelId: 'default_v1',
             context: context || {},
             prediction_input: {
-                features
+                features;
             }
         };
     }
 
     async getPrediction(requestData: PredictionRequestData): Promise<PredictionServiceResponse> {
-        const trace = unifiedMonitor.startTrace('predictionService.getPrediction', 'http.client.ml');
+
         try {
-            const endpoint = `${this.baseUrl}/predict`;
-            const response = await axios.post<PredictionServiceResponse>(endpoint, requestData);
+
 
             if (trace) {
                 trace.setHttpStatus(response.status);
@@ -145,7 +144,7 @@ class PredictionService {
                 service: 'predictionService',
                 operation: 'getPrediction',
                 modelId: requestData.modelId,
-                context: requestData.context
+                context: requestData.context;
             };
             unifiedMonitor.reportError(error, errContext);
             if (trace) {
@@ -158,10 +157,10 @@ class PredictionService {
     }
 
     async getPredictionDetails(predictionId: string): Promise<Record<string, unknown>> {
-        const trace = unifiedMonitor.startTrace('predictionService.getPredictionDetails', 'http.client');
+
         try {
-            const endpoint = `${this.baseUrl}/details/${predictionId}`;
-            const response = await axios.get<Record<string, unknown>>(endpoint);
+
+
             if (trace) trace.setHttpStatus(response.status);
             unifiedMonitor.endTrace(trace);
             return response.data;
@@ -169,7 +168,7 @@ class PredictionService {
             const errContext = {
                 service: 'predictionService',
                 operation: 'getPredictionDetails',
-                predictionId
+                predictionId;
             };
             unifiedMonitor.reportError(error, errContext);
             if (trace) {
@@ -181,9 +180,8 @@ class PredictionService {
     }
 
     async fetchGeneralInsights(): Promise<GeneralInsight[]> {
-        const trace = unifiedMonitor.startTrace('predictionService.fetchGeneralInsights', 'http.client');
+
         try {
-            const response = await axios.get<GeneralInsight[]>(`${this.baseUrl}/insights/general`);
 
             if (trace) {
                 trace.setHttpStatus(response.status);
@@ -206,23 +204,23 @@ class PredictionService {
     }
 
     async getModelPerformance(modelType: string): Promise<any> {
-        // TODO: Implement actual model performance retrieval
+        // TODO: Implement actual model performance retrieval;
         return {
             accuracy: 0.85,
             precision: 0.82,
             recall: 0.88,
             f1Score: 0.85,
-            modelType
+            modelType;
         };
     }
 
     clearCaches(): void {
-        // TODO: Implement cache clearing
-        console.log('Caches cleared');
+        // TODO: Implement cache clearing;
+        // console statement removed
     }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const predictionService = new PredictionService();
 
 /**
@@ -235,13 +233,13 @@ export const predictionService = new PredictionService();
  *   "modelId": "string" (optional),
  *   "context": {} (optional),
  *   "prediction_input": {
- *      "features": { "feature1": value1, ... } // Must match FEATURE_ORDER in backend
+ *      "features": { "feature1": value1, ... } // Must match FEATURE_ORDER in backend;
  *   }
  * }
  * Backend returns PredictionResponse (see backend/app/api/v1/endpoints/prediction.py):
  * {
  *   "propId": "string" (optional),
- *   "predictedOutcome": any, // string or number
+ *   "predictedOutcome": any, // string or number;
  *   "confidence": number (optional),
  *   "modelUsed": "string" (optional)
  * }

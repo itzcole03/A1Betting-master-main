@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface SelectOption {
     value: string | number;
     label: string;

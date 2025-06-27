@@ -10,8 +10,8 @@ export function useClipboard({ timeout = 2000, onSuccess, onError } = {}) {
                 await navigator.clipboard.writeText(text);
             }
             else {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
+                // Fallback for older browsers;
+
                 textArea.value = text;
                 textArea.style.position = 'fixed';
                 textArea.style.left = '-999999px';
@@ -23,7 +23,7 @@ export function useClipboard({ timeout = 2000, onSuccess, onError } = {}) {
                     document.execCommand('copy');
                 }
                 catch (error) {
-                    console.error('Fallback copy failed:', error);
+                    // console statement removed
                     throw error;
                 }
                 finally {
@@ -38,7 +38,7 @@ export function useClipboard({ timeout = 2000, onSuccess, onError } = {}) {
         }
         catch (error) {
             if (error instanceof Error) {
-                console.error('Copy failed:', error);
+                // console statement removed
                 onError?.(error);
             }
             throw error;
@@ -51,12 +51,12 @@ export function useClipboard({ timeout = 2000, onSuccess, onError } = {}) {
 function CopyButton({ text }: { text: string }) {
   const { copied, copy } = useClipboard({
     timeout: 2000,
-    onSuccess: () => console.log('Copied successfully!'),
-    onError: (error) => console.error('Copy failed:', error)
+    onSuccess: () => // console statement removed,
+    onError: (error) => // console statement removed
   });
 
   return (
-    <button
+    <button;
       onClick={() => copy(text)}
       className={`px-4 py-2 rounded ${
         copied ? 'bg-green-500' : 'bg-blue-500'
@@ -67,7 +67,7 @@ function CopyButton({ text }: { text: string }) {
   );
 }
 
-// With Toast notifications
+// With Toast notifications;
 function CopyWithToast({ text }: { text: string }) {
   const { copy } = useClipboard({
     onSuccess: () => {
@@ -80,7 +80,7 @@ function CopyWithToast({ text }: { text: string }) {
 
   return (
     <button onClick={() => copy(text)}>
-      Copy
+      Copy;
     </button>
   );
 }

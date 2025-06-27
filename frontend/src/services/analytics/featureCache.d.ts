@@ -1,4 +1,4 @@
-import { EngineeredFeatures, FeatureCacheConfig } from '@/types';
+import { EngineeredFeatures, FeatureCacheConfig } from '@/types.ts';
 export declare class FeatureCache {
     private readonly config;
     private readonly logger;

@@ -18,8 +18,8 @@ export class PsychologicalAnalyticsService {
   async analyzePsychologicalFactors(
     request: PsychologicalAnalysisRequest,
   ): Promise<PsychologicalData> {
-    // In a real implementation, this would analyze psychological factors
-    // For now, return mock data
+    // In a real implementation, this would analyze psychological factors;
+    // For now, return mock data;
     return {
       pressureHandling: 0.75,
       clutchPerformance: 0.8,
@@ -33,7 +33,7 @@ export class PsychologicalAnalyticsService {
     teamId: string,
     historicalData: any,
   ): number {
-    // Calculate team's ability to handle pressure
+    // Calculate team's ability to handle pressure;
     return 0.75;
   }
 
@@ -41,22 +41,22 @@ export class PsychologicalAnalyticsService {
     teamId: string,
     clutchSituations: any[],
   ): number {
-    // Calculate performance in clutch situations
+    // Calculate performance in clutch situations;
     return 0.8;
   }
 
   private calculateConsistency(_teamId: string, _performanceData: any): number {
-    // Calculate consistency in performance
+    // Calculate consistency in performance;
     return 0.85;
   }
 
   private calculateFocus(_teamId: string, _recentGames: any[]): number {
-    // Calculate team's focus and concentration
+    // Calculate team's focus and concentration;
     return 0.7;
   }
 
   private calculateCompetitiveDrive(_teamId: string, _teamData: any): number {
-    // Calculate competitive drive and motivation
+    // Calculate competitive drive and motivation;
     return 0.9;
   }
 }

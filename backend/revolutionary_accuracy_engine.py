@@ -887,7 +887,7 @@ class GraphTransformerAttention(nn.Module):
         # Create edge list
         edge_list = []
         for i in range(batch_size):
-            for j in range(1, k + 1):  # Skip self-connection
+            for _ in range(1, k + 1):  # Skip self-connection
                 edge_list.append([i, indices[i, j].item()])
 
         if edge_list:
@@ -1065,8 +1065,8 @@ class RevolutionaryAccuracyEngine:
                 f"Successfully initialized {len(self.models)} revolutionary models"
             )
 
-        except Exception as e:
-            logger.error(f"Error initializing revolutionary models: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error initializing revolutionary models: {e}")
             # Fallback to simpler models if advanced ones fail
             self._initialize_fallback_models(input_dim, hidden_dim, output_dim)
 
@@ -1127,8 +1127,8 @@ class RevolutionaryAccuracyEngine:
                         pred = model(feature_tensor)
                         predictions[model_name] = pred.cpu().numpy()
                         metrics_collection[model_name] = {}
-                except Exception as e:
-                    logger.warning(f"Model {model_name} failed: {e}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.warning("Model {model_name} failed: {e}")
                     predictions[model_name] = np.array([0.0])
                     metrics_collection[model_name] = {}
 

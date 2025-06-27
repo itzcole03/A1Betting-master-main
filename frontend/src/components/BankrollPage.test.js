@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import BankrollPage from './BankrollPage';
 jest.mock('axios');
-const mockedAxios = axios;
+
 describe('BankrollPage Integration', () => {
     it('renders loading, fetches and displays transactions', async () => {
         mockedAxios.get.mockResolvedValueOnce({

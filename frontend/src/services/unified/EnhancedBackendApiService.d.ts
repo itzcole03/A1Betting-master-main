@@ -1,6 +1,6 @@
 /**
- * Enhanced Backend API Integration Service
- * Complete integration with enhanced mathematical backend services
+ * Enhanced Backend API Integration Service;
+ * Complete integration with enhanced mathematical backend services;
  */
 export interface EnhancedPredictionRequest {
     event_id: string;

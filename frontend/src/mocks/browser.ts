@@ -1,6 +1,6 @@
-import { Player, Entry, Lineup, EntryStatus, LineupType, PropType } from '@/types';
-import { http, HttpResponse } from 'msw';
-import { setupWorker } from 'msw/browser';
+import { Player, Entry, Lineup, EntryStatus, LineupType, PropType } from '@/types.ts';
+import { http, HttpResponse } from 'msw.ts';
+import { setupWorker } from 'msw/browser.ts';
 
 const mockPlayers: Player[] = [
   {

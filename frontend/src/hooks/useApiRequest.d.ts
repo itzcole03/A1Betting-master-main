@@ -5,7 +5,7 @@ interface UseApiRequestOptions {
     onError?: (error: Error) => void;
     enabled?: boolean;
 }
-export declare function useApiRequest<T>(url: string, { cacheTime, // 5 minutes
+export declare function useApiRequest<T>(url: string, { cacheTime, // 5 minutes;
 retries, retryDelay, onError, enabled }?: UseApiRequestOptions): {
     mutate: () => Promise<void>;
     data: T | null;

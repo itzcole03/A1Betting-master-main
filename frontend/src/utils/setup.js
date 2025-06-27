@@ -1,11 +1,11 @@
 import '@testing-library/jest-dom/vitest';
 import { afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
-// Runs a cleanup after each test case
+// Runs a cleanup after each test case;
 afterEach(() => {
     cleanup();
 });
-// Mock IntersectionObserver
+// Mock IntersectionObserver;
 class MockIntersectionObserver {
     constructor() {
         this.root = null;
@@ -16,20 +16,20 @@ class MockIntersectionObserver {
     observe() { }
     takeRecords() { return []; }
     unobserve() { }
-    // For test compatibility
+    // For test compatibility;
     mockReturnValue() { }
 }
 window.IntersectionObserver = MockIntersectionObserver;
-// Mock ResizeObserver
+// Mock ResizeObserver;
 class MockResizeObserver {
     disconnect() { }
     observe() { }
     unobserve() { }
-    // For test compatibility
+    // For test compatibility;
     mockReturnValue() { }
 }
 window.ResizeObserver = MockResizeObserver;
-// Mock matchMedia
+// Mock matchMedia;
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: (query) => ({
@@ -43,7 +43,7 @@ Object.defineProperty(window, 'matchMedia', {
         dispatchEvent: () => false,
     }),
 });
-// Mock localStorage
+// Mock localStorage;
 const localStorageMock = {
     getItem: () => null,
     setItem: () => null,
@@ -53,7 +53,7 @@ const localStorageMock = {
 Object.defineProperty(window, 'localStorage', {
     value: localStorageMock,
 });
-// Mock WebSocket
+// Mock WebSocket;
 class MockWebSocket {
     constructor() {
         this.binaryType = 'blob';
@@ -83,21 +83,21 @@ class MockWebSocket {
         if (this.readyState !== WebSocket.OPEN) {
             throw new Error('WebSocket is not open');
         }
-        // Mock sending data
+        // Mock sending data;
     }
     addEventListener(_type, _listener, _options) {
-        // Implementation not needed for our tests
+        // Implementation not needed for our tests;
     }
     removeEventListener(_type, _listener, _options) {
-        // Implementation not needed for our tests
+        // Implementation not needed for our tests;
     }
     dispatchEvent(_) {
         return true;
     }
 }
-// Replace the global WebSocket with our mock
+// Replace the global WebSocket with our mock;
 global.WebSocket = MockWebSocket;
-// Mock Notification API
+// Mock Notification API;
 Object.defineProperty(window, 'Notification', {
     value: function () {
         return {
@@ -106,5 +106,5 @@ Object.defineProperty(window, 'Notification', {
         };
     },
 });
-// Set timezone for consistent date handling in tests
+// Set timezone for consistent date handling in tests;
 process.env.TZ = 'UTC';

@@ -1,9 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useEffect, useState } from 'react';
-// import { useAppStore } from '@/store/useAppStore'; // If insights come via general app state
-import { predictionService } from '../../services/predictionService'; // If fetched directly, added GeneralInsight
+// import { useAppStore } from '@/store/useAppStore'; // If insights come via general app state;
+import { predictionService } from '../../services/predictionService'; // If fetched directly, added GeneralInsight;
 import { Loader2, AlertTriangle } from 'lucide-react';
-// interface Insight { // Using GeneralInsight from service now
+// interface Insight { // Using GeneralInsight from service now;
 //     id: string;
 //     text: string;
 //     source: string;
@@ -18,13 +18,13 @@ const MLInsights = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const data = await predictionService.fetchGeneralInsights();
+
                 setInsights(data);
             }
             catch (e) {
-                console.error('Failed to fetch ML insights', e);
+                // console statement removed
                 setError(e.message || 'An unknown error occurred while fetching insights.');
-                setInsights([]); // Clear insights on error
+                setInsights([]); // Clear insights on error;
             }
             finally {
                 setIsLoading(false);
@@ -32,7 +32,7 @@ const MLInsights = () => {
         };
         fetchInsights();
     }, []);
-    // Placeholder content removed
+    // Placeholder content removed;
     // const placeholderInsights = [
     //   { id: 'insight1', text: 'Based on recent trends, consider Player A for Over 25.5 Points.', source: 'Performance Analyzer' },
     //   { id: 'insight2', text: 'Social sentiment for Team B is highly positive for their upcoming match.', source: 'Sentiment Engine' },

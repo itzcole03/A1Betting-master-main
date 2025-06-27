@@ -1,8 +1,8 @@
-import { create } from "zustand";
-import { devtools, persist } from "zustand/middleware";
-import { EventEmitter } from "eventemitter3";
+import { create } from 'zustand.ts';
+import { devtools, persist } from 'zustand/middleware.ts';
+import { EventEmitter } from 'eventemitter3.ts';
 
-// Core Types
+// Core Types;
 interface PredictionData {
   id: string;
   confidence: number;
@@ -74,25 +74,25 @@ interface FilterState {
   search: string;
 }
 
-// Main Store Interface
+// Main Store Interface;
 interface UnifiedStore {
-  // Prediction State
+  // Prediction State;
   predictions: Record<string, PredictionData>;
   latestPredictions: PredictionData[];
 
-  // Betting State
+  // Betting State;
   betting: BettingState;
 
-  // User State
+  // User State;
   user: UserState;
 
-  // Theme State
+  // Theme State;
   theme: ThemeState;
 
-  // Filter State
+  // Filter State;
   filters: FilterState;
 
-  // UI State
+  // UI State;
   ui: {
     toasts: Array<{
       id: string;
@@ -105,14 +105,14 @@ interface UnifiedStore {
     modals: Record<string, boolean>;
   };
 
-  // Actions
+  // Actions;
   actions: {
-    // Prediction Actions
+    // Prediction Actions;
     updatePrediction: (eventId: string, prediction: PredictionData) => void;
     getPrediction: (eventId: string) => PredictionData | undefined;
     clearPredictions: () => void;
 
-    // Betting Actions
+    // Betting Actions;
     addBet: (bet: Omit<Bet, "id" | "timestamp">) => void;
     updateBetStatus: (betId: string, status: Bet["status"]) => void;
     addOpportunity: (opportunity: BettingOpportunity) => void;
@@ -121,20 +121,20 @@ interface UnifiedStore {
     setBettingLoading: (loading: boolean) => void;
     setBettingError: (error: string | null) => void;
 
-    // User Actions
+    // User Actions;
     setUser: (user: any) => void;
     updatePreferences: (preferences: Partial<UserState["preferences"]>) => void;
     updateSettings: (settings: Record<string, any>) => void;
 
-    // Theme Actions
+    // Theme Actions;
     setTheme: (theme: Partial<ThemeState>) => void;
     toggleTheme: () => void;
 
-    // Filter Actions
+    // Filter Actions;
     setFilters: (filters: Partial<FilterState>) => void;
     clearFilters: () => void;
 
-    // UI Actions
+    // UI Actions;
     addToast: (toast: Omit<UnifiedStore["ui"]["toasts"][0], "id">) => void;
     removeToast: (id: string) => void;
     setLoading: (key: string, loading: boolean) => void;
@@ -142,15 +142,15 @@ interface UnifiedStore {
   };
 }
 
-// Event Bus for cross-component communication
+// Event Bus for cross-component communication;
 export const storeEventBus = new EventEmitter();
 
-// Main Store Implementation
+// Main Store Implementation;
 export const useUnifiedStore = create<UnifiedStore>()(
   devtools(
     persist(
       (set, get) => ({
-        // Initial State
+        // Initial State;
         predictions: {},
         latestPredictions: [],
 
@@ -195,9 +195,9 @@ export const useUnifiedStore = create<UnifiedStore>()(
           modals: {},
         },
 
-        // Actions Implementation
+        // Actions Implementation;
         actions: {
-          // Prediction Actions
+          // Prediction Actions;
           updatePrediction: (eventId: string, prediction: PredictionData) => {
             set((state) => {
               const updatedPredictions = {
@@ -207,7 +207,7 @@ export const useUnifiedStore = create<UnifiedStore>()(
 
               const latestPredictions = Object.values(updatedPredictions)
                 .sort((a, b) => b.timestamp - a.timestamp)
-                .slice(0, 50); // Keep last 50 predictions
+                .slice(0, 50); // Keep last 50 predictions;
 
               storeEventBus.emit("prediction:updated", { eventId, prediction });
 
@@ -230,7 +230,7 @@ export const useUnifiedStore = create<UnifiedStore>()(
             storeEventBus.emit("predictions:cleared");
           },
 
-          // Betting Actions
+          // Betting Actions;
           addBet: (betData) => {
             const bet: Bet = {
               ...betData,
@@ -324,7 +324,7 @@ export const useUnifiedStore = create<UnifiedStore>()(
             }));
           },
 
-          // User Actions
+          // User Actions;
           setUser: (user: any) => {
             set((state) => ({
               user: {
@@ -361,7 +361,7 @@ export const useUnifiedStore = create<UnifiedStore>()(
             }));
           },
 
-          // Theme Actions
+          // Theme Actions;
           setTheme: (theme: Partial<ThemeState>) => {
             set((state) => ({
               theme: {
@@ -381,7 +381,7 @@ export const useUnifiedStore = create<UnifiedStore>()(
             }));
           },
 
-          // Filter Actions
+          // Filter Actions;
           setFilters: (filters: Partial<FilterState>) => {
             set((state) => ({
               filters: {
@@ -404,7 +404,7 @@ export const useUnifiedStore = create<UnifiedStore>()(
             }));
           },
 
-          // UI Actions
+          // UI Actions;
           addToast: (toastData) => {
             const toast = {
               ...toastData,
@@ -418,7 +418,7 @@ export const useUnifiedStore = create<UnifiedStore>()(
               },
             }));
 
-            // Auto-remove toast after duration
+            // Auto-remove toast after duration;
             if (toast.duration !== 0) {
               setTimeout(() => {
                 get().actions.removeToast(toast.id);
@@ -477,11 +477,10 @@ export const useUnifiedStore = create<UnifiedStore>()(
   ),
 );
 
-// Convenience Hooks
+// Convenience Hooks;
 export const usePredictions = () => {
-  const predictions = useUnifiedStore((state) => state.predictions);
-  const latestPredictions = useUnifiedStore((state) => state.latestPredictions);
-  const actions = useUnifiedStore((state) => state.actions);
+
+
 
   return {
     predictions,
@@ -493,8 +492,7 @@ export const usePredictions = () => {
 };
 
 export const useBetting = () => {
-  const betting = useUnifiedStore((state) => state.betting);
-  const actions = useUnifiedStore((state) => state.actions);
+
 
   return {
     ...betting,
@@ -509,8 +507,7 @@ export const useBetting = () => {
 };
 
 export const useUser = () => {
-  const user = useUnifiedStore((state) => state.user);
-  const actions = useUnifiedStore((state) => state.actions);
+
 
   return {
     ...user,
@@ -521,8 +518,7 @@ export const useUser = () => {
 };
 
 export const useTheme = () => {
-  const theme = useUnifiedStore((state) => state.theme);
-  const actions = useUnifiedStore((state) => state.actions);
+
 
   return {
     ...theme,
@@ -532,8 +528,7 @@ export const useTheme = () => {
 };
 
 export const useFilters = () => {
-  const filters = useUnifiedStore((state) => state.filters);
-  const actions = useUnifiedStore((state) => state.actions);
+
 
   return {
     ...filters,
@@ -543,8 +538,7 @@ export const useFilters = () => {
 };
 
 export const useUI = () => {
-  const ui = useUnifiedStore((state) => state.ui);
-  const actions = useUnifiedStore((state) => state.actions);
+
 
   return {
     ...ui,
@@ -555,7 +549,7 @@ export const useUI = () => {
   };
 };
 
-// Export types for use in components
+// Export types for use in components;
 export type {
   PredictionData,
   BettingState,

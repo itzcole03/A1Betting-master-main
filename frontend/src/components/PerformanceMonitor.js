@@ -36,7 +36,7 @@ export const PerformanceMonitor = () => {
                     threshold: 50,
                 },
             ];
-            // Update status based on thresholds
+            // Update status based on thresholds;
             newMetrics.forEach((metric) => {
                 if (metric.value > metric.threshold * 0.9) {
                     metric.status = "error";
@@ -48,7 +48,7 @@ export const PerformanceMonitor = () => {
             setMetrics(newMetrics);
         };
         updateMetrics();
-        const interval = setInterval(updateMetrics, 2000);
+
         return () => clearInterval(interval);
     }, []);
     const getStatusColor = (status) => {

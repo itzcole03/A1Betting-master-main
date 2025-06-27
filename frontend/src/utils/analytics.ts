@@ -1,10 +1,10 @@
 /**
- * Enhanced Monitoring and Analytics System for A1Betting
+ * Enhanced Monitoring and Analytics System for A1Betting;
  */
 
-import React from 'react';
+import React from 'react.ts';
 
-// Analytics event types
+// Analytics event types;
 export interface AnalyticsEvent {
   name: string;
   category: 'user_action' | 'system_performance' | 'error' | 'business_metric';
@@ -14,7 +14,7 @@ export interface AnalyticsEvent {
   sessionId?: string;
 }
 
-// Performance metrics interface
+// Performance metrics interface;
 export interface PerformanceMetrics {
   loadTime: number;
   renderTime: number;
@@ -35,12 +35,12 @@ class EnhancedAnalytics {
     this.initializePerformanceTracking();
   }
 
-  // Add convenience track method
+  // Add convenience track method;
   track(eventName: string, data?: any): void {
     this.trackEvent({
       name: eventName,
       category: 'user_action',
-      data
+      data;
     });
   }
 
@@ -49,16 +49,16 @@ class EnhancedAnalytics {
   }
 
   private initializePerformanceTracking(): void {
-    // Track page load time
+    // Track page load time;
     if (typeof window !== 'undefined') {
       window.addEventListener('load', () => {
-        const loadTime = performance.now();
+
         this.trackPerformance('page_load', loadTime);
       });
 
-      // Track navigation performance
+      // Track navigation performance;
       if ('navigation' in performance) {
-        const navTiming = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+
         if (navTiming) {
           this.performanceMetrics.loadTime = navTiming.loadEventEnd - navTiming.fetchStart;
         }
@@ -66,7 +66,7 @@ class EnhancedAnalytics {
     }
   }
 
-  // Track user actions
+  // Track user actions;
   trackEvent(event: Omit<AnalyticsEvent, 'timestamp' | 'sessionId'>): void {
     const fullEvent: AnalyticsEvent = {
       ...event,
@@ -78,11 +78,11 @@ class EnhancedAnalytics {
     this.events.push(fullEvent);
     this.sendToAnalytics(fullEvent);
 
-    // Store in local storage for offline support
+    // Store in local storage for offline support;
     this.storeEventLocally(fullEvent);
   }
 
-  // Track betting-specific events
+  // Track betting-specific events;
   trackBettingAction(action: string, data: any): void {
     this.trackEvent({
       name: `betting_${action}`,
@@ -95,9 +95,9 @@ class EnhancedAnalytics {
     });
   }
 
-  // Track prediction accuracy
+  // Track prediction accuracy;
   trackPredictionAccuracy(predictionId: string, actual: boolean, predicted: boolean): void {
-    const isCorrect = actual === predicted;
+
     this.trackEvent({
       name: 'prediction_result',
       category: 'business_metric',
@@ -110,7 +110,7 @@ class EnhancedAnalytics {
     });
   }
 
-  // Track performance metrics
+  // Track performance metrics;
   trackPerformance(metric: string, value: number): void {
     this.trackEvent({
       name: `performance_${metric}`,
@@ -118,7 +118,7 @@ class EnhancedAnalytics {
       data: { metric, value },
     });
 
-    // Update internal metrics
+    // Update internal metrics;
     if (metric === 'page_load') {
       this.performanceMetrics.loadTime = value;
     } else if (metric === 'api_response') {
@@ -126,7 +126,7 @@ class EnhancedAnalytics {
     }
   }
 
-  // Track errors
+  // Track errors;
   trackError(error: Error, context?: string): void {
     this.trackEvent({
       name: 'error_occurred',
@@ -141,15 +141,15 @@ class EnhancedAnalytics {
     });
   }
 
-  // User engagement tracking
+  // User engagement tracking;
   trackUserEngagement(): void {
-    let startTime = Date.now();
-    let isActive = true;
+    const startTime = Date.now();
+    const isActive = true;
 
-    // Track time spent on page
+    // Track time spent on page;
     const trackTimeSpent = () => {
       if (isActive) {
-        const timeSpent = Date.now() - startTime;
+
         this.trackEvent({
           name: 'time_spent',
           category: 'user_action',
@@ -158,7 +158,7 @@ class EnhancedAnalytics {
       }
     };
 
-    // Track when user becomes inactive
+    // Track when user becomes inactive;
     const handleVisibilityChange = () => {
       if (document.hidden) {
         isActive = false;
@@ -173,7 +173,7 @@ class EnhancedAnalytics {
     window.addEventListener('beforeunload', trackTimeSpent);
   }
 
-  // A/B testing support
+  // A/B testing support;
   trackExperiment(experimentName: string, variant: string, conversion?: boolean): void {
     this.trackEvent({
       name: 'experiment_exposure',
@@ -186,9 +186,9 @@ class EnhancedAnalytics {
     });
   }
 
-  // Real-time dashboard metrics
+  // Real-time dashboard metrics;
   getDashboardMetrics(): PerformanceMetrics {
-    const recent = this.getRecentEvents(5 * 60 * 1000); // Last 5 minutes
+    const recent = this.getRecentEvents(5 * 60 * 1000); // Last 5 minutes;
     
     return {
       loadTime: this.performanceMetrics.loadTime || 0,
@@ -201,21 +201,21 @@ class EnhancedAnalytics {
   }
 
   private getRecentEvents(timeWindow: number): AnalyticsEvent[] {
-    const cutoff = new Date(Date.now() - timeWindow);
+
     return this.events.filter(event => 
-      event.timestamp && event.timestamp > cutoff
+      event.timestamp && event.timestamp > cutoff;
     );
   }
 
   private calculateCacheHitRate(events: AnalyticsEvent[]): number {
-    const apiEvents = events.filter(e => e.name.includes('api_'));
-    const cacheHits = apiEvents.filter(e => e.data?.fromCache);
+
+
     return apiEvents.length > 0 ? (cacheHits.length / apiEvents.length) * 100 : 0;
   }
 
   private calculateErrorRate(events: AnalyticsEvent[]): number {
-    const totalEvents = events.length;
-    const errorEvents = events.filter(e => e.category === 'error');
+
+
     return totalEvents > 0 ? (errorEvents.length / totalEvents) * 100 : 0;
   }
 
@@ -230,69 +230,69 @@ class EnhancedAnalytics {
     // In production, send to analytics service (Google Analytics, Mixpanel, etc.)
     if (process.env.NODE_ENV === 'production') {
       // Example: gtag('event', event.name, event.data);
-      console.log('Analytics Event:', event);
+      // console statement removed
     } else {
-      console.log('Dev Analytics Event:', event);
+      // console statement removed
     }
   }
 
   private storeEventLocally(event: AnalyticsEvent): void {
     try {
-      const stored = localStorage.getItem('a1betting_analytics') || '[]';
-      const events = JSON.parse(stored);
+
+
       events.push(event);
       
-      // Keep only last 100 events locally
+      // Keep only last 100 events locally;
       if (events.length > 100) {
         events.splice(0, events.length - 100);
       }
       
       localStorage.setItem('a1betting_analytics', JSON.stringify(events));
     } catch (error) {
-      console.warn('Failed to store analytics event locally:', error);
+      // console statement removed
     }
   }
 
   private getCurrentAccuracy(): number {
-    // Get current model accuracy from global state or API
-    return 85.0; // Placeholder
+    // Get current model accuracy from global state or API;
+    return 85.0; // Placeholder;
   }
 
   private getCurrentBalance(): number {
-    // Get current user balance from global state or API
-    return 1250.75; // Placeholder
+    // Get current user balance from global state or API;
+    return 1250.75; // Placeholder;
   }
 
-  // Set user ID for tracking
+  // Set user ID for tracking;
   setUserId(userId: string): void {
     this.userId = userId;
   }
 
-  // Get analytics summary
+  // Get analytics summary;
   getAnalyticsSummary(): any {
     return {
       totalEvents: this.events.length,
       sessionId: this.sessionId,
       userId: this.userId,
       performanceMetrics: this.performanceMetrics,
-      recentActivity: this.getRecentEvents(30 * 60 * 1000), // Last 30 minutes
+      recentActivity: this.getRecentEvents(30 * 60 * 1000), // Last 30 minutes;
     };
   }
 }
 
-// Create singleton instance
+// Create singleton instance;
 export const analytics = new EnhancedAnalytics();
 
-// Add convenience method for quick tracking
+// Add convenience method for quick tracking;
 (analytics as any).track = (eventName: string, data?: any) => {
   analytics.trackEvent({
     name: eventName,
     category: 'user_action',
-    data
+    data;
   });
 };
 
-// React hook for analytics
+// React hook for analytics;
 export const useAnalytics = () => {
   return {
     trackEvent: analytics.trackEvent.bind(analytics),
@@ -306,7 +306,7 @@ export const useAnalytics = () => {
   };
 };
 
-// HOC for automatic component tracking
+// HOC for automatic component tracking;
 export const withAnalytics = (WrappedComponent: React.ComponentType, componentName: string) => {
   return (props: any) => {
     React.useEffect(() => {

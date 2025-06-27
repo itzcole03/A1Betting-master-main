@@ -1,6 +1,6 @@
-import React from 'react';
-import { formatCurrency, formatPercentage } from '@/utils/formatters';
-import { RiskProfileType, BetRecommendation } from '@/types/betting';
+import React from 'react.ts';
+import { formatCurrency, formatPercentage } from '@/utils/formatters.ts';
+import { RiskProfileType, BetRecommendation } from '@/types/betting.ts';
 
 interface PerformanceMetricsProps {
   bankroll: number;
@@ -9,16 +9,15 @@ interface PerformanceMetricsProps {
   recommendations: BetRecommendation[];
 }
 
-export const PerformanceMetrics: React.FC<PerformanceMetricsProps> = ({
+export const PerformanceMetrics: React.FC<PerformanceMetricsProps key={355997}> = ({
   bankroll,
   profit,
   riskProfile,
   recommendations,
 }) => {
-  const totalBets = recommendations.length;
-  const winningBets = recommendations.filter(rec => rec.result === 'win').length;
-  const winRate = totalBets > 0 ? winningBets / totalBets : 0;
-  const roi = bankroll > 0 ? (profit / bankroll) * 100 : 0;
+
+
+
 
   const metrics = [
     {
@@ -49,24 +48,24 @@ export const PerformanceMetrics: React.FC<PerformanceMetricsProps> = ({
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4" key={160743}>
       {metrics.map((metric, index) => (
-        <div
+        <div;
           key={metric.label}
           className={`bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm transition-all duration-300 hover:shadow-md animate-fade-in`}
           style={{ animationDelay: `${index * 100}ms` }}
-        >
-          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1">
+         key={397610}>
+          <h4 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-1" key={280359}>
             {metric.label}
           </h4>
-          <div className="flex items-center gap-2">
-            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+          <div className="flex items-center gap-2" key={100294}>
+            <span className="text-lg font-semibold text-gray-900 dark:text-gray-100" key={724529}>
               {metric.value}
             </span>
             {metric.trend !== 'neutral' && (
-              <span
+              <span;
                 className={`text-sm ${metric.trend === 'up' ? 'text-green-500' : 'text-red-500'}`}
-              >
+               key={1700}>
                 {metric.trend === 'up' ? '↑' : '↓'}
               </span>
             )}

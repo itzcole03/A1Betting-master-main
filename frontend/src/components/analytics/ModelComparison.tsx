@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react.ts';
 import {
   Box,
   Card,
@@ -18,7 +18,7 @@ import {
   Paper,
   ToggleButton,
   ToggleButtonGroup,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   RadarChart,
   PolarGrid,
@@ -33,8 +33,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-} from 'recharts';
-import { useModelPerformance } from '../../hooks/useModelPerformance';
+} from 'recharts.ts';
+import { useModelPerformance } from '@/hooks/useModelPerformance.ts';
 
 interface ModelComparisonProps {
   modelNames: string[];
@@ -50,8 +50,8 @@ type MetricType =
   | 'expectedValue'
   | 'calibrationScore';
 
-export const ModelComparison: React.FC<ModelComparisonProps> = ({ modelNames }) => {
-  const [selectedMetric, setSelectedMetric] = useState<MetricType>('roi');
+export const ModelComparison: React.FC<ModelComparisonProps key={846325}> = ({ modelNames }) => {
+  const [selectedMetric, setSelectedMetric] = useState<MetricType key={55702}>('roi');
   const [timeframe, setTimeframe] = useState<'day' | 'week' | 'month' | 'all'>('week');
   const [viewMode, setViewMode] = useState<'table' | 'radar' | 'bar'>('table');
 
@@ -110,7 +110,7 @@ export const ModelComparison: React.FC<ModelComparisonProps> = ({ modelNames }) 
     { value: 'calibrationScore', label: 'Calibration Score' },
   ];
 
-  const radarData = modelPerformances
+  const radarData = modelPerformances;
     .map(({ modelName, performance }) => {
       if (!performance) return null;
       return {
@@ -122,9 +122,9 @@ export const ModelComparison: React.FC<ModelComparisonProps> = ({ modelNames }) 
         Calibration: performance.calibrationScore * 100,
       };
     })
-    .filter((data): data is NonNullable<typeof data> => data !== null);
+    .filter((data): data is NonNullable<typeof data key={581776}> => data !== null);
 
-  const barData = modelPerformances
+  const barData = modelPerformances;
     .map(({ modelName, performance }) => {
       if (!performance) return null;
       return {
@@ -136,88 +136,88 @@ export const ModelComparison: React.FC<ModelComparisonProps> = ({ modelNames }) 
     .filter(Boolean);
 
   return (
-    <Card>
-      <CardContent>
-        <Box alignItems="center" display="flex" justifyContent="space-between" mb={3}>
-          <Typography variant="h6">Model Comparison</Typography>
-          <Box display="flex" gap={2}>
-            <ToggleButtonGroup
-              exclusive
+    <Card key={650115}>
+      <CardContent key={452065}>
+        <Box alignItems="center" display="flex" justifyContent="space-between" mb={3} key={894540}>
+          <Typography variant="h6" key={93421}>Model Comparison</Typography>
+          <Box display="flex" gap={2} key={246360}>
+            <ToggleButtonGroup;
+              exclusive;
               size="small"
               value={viewMode}
-              onChange={(_, newMode) => newMode && setViewMode(newMode)}
+              onChange={(_, newMode) = key={690078}> newMode && setViewMode(newMode)}
             >
-              <ToggleButton value="table">Table</ToggleButton>
-              <ToggleButton value="radar">Radar</ToggleButton>
-              <ToggleButton value="bar">Bar</ToggleButton>
+              <ToggleButton value="table" key={449130}>Table</ToggleButton>
+              <ToggleButton value="radar" key={217052}>Radar</ToggleButton>
+              <ToggleButton value="bar" key={178232}>Bar</ToggleButton>
             </ToggleButtonGroup>
-            <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel>Metric</InputLabel>
-              <Select
+            <FormControl sx={{ minWidth: 120 }} key={602970}>
+              <InputLabel key={405232}>Metric</InputLabel>
+              <Select;
                 label="Metric"
                 value={selectedMetric}
-                onChange={e => setSelectedMetric(e.target.value as MetricType)}
+                onChange={e = key={530199}> setSelectedMetric(e.target.value as MetricType)}
               >
                 {metrics.map(metric => (
-                  <MenuItem key={metric.value} value={metric.value}>
+                  <MenuItem key={metric.value} value={metric.value} key={345162}>
                     {metric.label}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
-            <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel>Timeframe</InputLabel>
-              <Select
+            <FormControl sx={{ minWidth: 120 }} key={602970}>
+              <InputLabel key={405232}>Timeframe</InputLabel>
+              <Select;
                 label="Timeframe"
                 value={timeframe}
-                onChange={e => setTimeframe(e.target.value as 'day' | 'week' | 'month' | 'all')}
+                onChange={e = key={713594}> setTimeframe(e.target.value as 'day' | 'week' | 'month' | 'all')}
               >
-                <MenuItem value="day">Last 24 Hours</MenuItem>
-                <MenuItem value="week">Last Week</MenuItem>
-                <MenuItem value="month">Last Month</MenuItem>
-                <MenuItem value="all">All Time</MenuItem>
+                <MenuItem value="day" key={6685}>Last 24 Hours</MenuItem>
+                <MenuItem value="week" key={671139}>Last Week</MenuItem>
+                <MenuItem value="month" key={43097}>Last Month</MenuItem>
+                <MenuItem value="all" key={641531}>All Time</MenuItem>
               </Select>
             </FormControl>
           </Box>
         </Box>
 
         {viewMode === 'table' ? (
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Model</TableCell>
+          <TableContainer component={Paper} key={746829}>
+            <Table key={889668}>
+              <TableHead key={813147}>
+                <TableRow key={300096}>
+                  <TableCell key={942983}>Model</TableCell>
                   {metrics.map(metric => (
-                    <TableCell
+                    <TableCell;
                       key={metric.value}
                       sx={{
                         backgroundColor:
                           selectedMetric === metric.value ? 'action.selected' : 'inherit',
                       }}
-                    >
+                     key={203747}>
                       {metric.label}
                     </TableCell>
                   ))}
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody key={923191}>
                 {modelPerformances.map(({ modelName, performance, isLoading, error }) => (
-                  <TableRow key={modelName}>
-                    <TableCell>{modelName}</TableCell>
+                  <TableRow key={modelName} key={835384}>
+                    <TableCell key={942983}>{modelName}</TableCell>
                     {metrics.map(metric => (
-                      <TableCell
+                      <TableCell;
                         key={metric.value}
                         sx={{
-                          color: performance
+                          color: performance;
                             ? getMetricColor(performance[metric.value], metric.value)
                             : 'inherit',
                         }}
-                      >
-                        {isLoading
+                       key={247823}>
+                        {isLoading;
                           ? 'Loading...'
-                          : error
+                          : error;
                             ? 'Error'
-                            : performance
+                            : performance;
                               ? formatMetric(performance[metric.value], getMetricType(metric.value))
                               : 'N/A'}
                       </TableCell>
@@ -228,42 +228,42 @@ export const ModelComparison: React.FC<ModelComparisonProps> = ({ modelNames }) 
             </Table>
           </TableContainer>
         ) : viewMode === 'radar' ? (
-          <Box height={500}>
-            <ResponsiveContainer height="100%" width="100%">
-              <RadarChart data={radarData}>
-                <PolarGrid />
-                <PolarAngleAxis dataKey="model" />
-                <PolarRadiusAxis angle={30} domain={[0, 100]} />
+          <Box height={500} key={840860}>
+            <ResponsiveContainer height="100%" width="100%" key={191291}>
+              <RadarChart data={radarData} key={355884}>
+                <PolarGrid / key={555438}>
+                <PolarAngleAxis dataKey="model" / key={516242}>
+                <PolarRadiusAxis angle={30} domain={[0, 100]} / key={35799}>
                 {radarData.map((data, index) => (
-                  <Radar
+                  <Radar;
                     key={data.model}
-                    dataKey={Object.keys(data).filter(key => key !== 'model')[0]}
+                    dataKey={Object.keys(data).filter(key = key={753478}> key !== 'model')[0]}
                     fill={`hsla(${(index * 360) / radarData.length}, 70%, 50%, 0.2)`}
                     name={data.model}
                     stroke={`hsl(${(index * 360) / radarData.length}, 70%, 50%)`}
                   />
                 ))}
-                <Legend />
+                <Legend / key={913243}>
               </RadarChart>
             </ResponsiveContainer>
           </Box>
         ) : (
-          <Box height={500}>
-            <ResponsiveContainer height="100%" width="100%">
-              <BarChart data={barData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="model" />
-                <YAxis />
-                <Tooltip
-                  formatter={(value: number) => formatMetric(value, getMetricType(selectedMetric))}
+          <Box height={500} key={840860}>
+            <ResponsiveContainer height="100%" width="100%" key={191291}>
+              <BarChart data={barData} key={47596}>
+                <CartesianGrid strokeDasharray="3 3" / key={580708}>
+                <XAxis dataKey="model" / key={483844}>
+                <YAxis / key={190086}>
+                <Tooltip;
+                  formatter={(value: number) = key={321216}> formatMetric(value, getMetricType(selectedMetric))}
                   labelFormatter={label =>
                     `${label} - ${metrics.find(m => m.value === selectedMetric)?.label}`
                   }
                 />
-                <Bar
+                <Bar;
                   dataKey="value"
                   fill={`hsl(${Math.random() * 360}, 70%, 50%)`}
-                  name={metrics.find(m => m.value === selectedMetric)?.label}
+                  name={metrics.find(m = key={205106}> m.value === selectedMetric)?.label}
                 />
               </BarChart>
             </ResponsiveContainer>

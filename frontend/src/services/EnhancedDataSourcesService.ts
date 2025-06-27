@@ -1,9 +1,9 @@
 /**
- * Enhanced Data Sources Configuration
- * Optimized for your specific API keys and data sources
+ * Enhanced Data Sources Configuration;
+ * Optimized for your specific API keys and data sources;
  */
 
-import APIConfigurationService from './APIConfigurationService';
+import APIConfigurationService from './APIConfigurationService.ts';
 
 export interface DataSourceConfig {
   name: string;
@@ -39,7 +39,7 @@ export class EnhancedDataSourcesService {
   }
 
   private initializeDataSources(): void {
-    // PRIMARY: TheOdds API (Your Key) - Main odds source
+    // PRIMARY: TheOdds API (Your Key) - Main odds source;
     this.dataSources.set('theodds', {
       name: 'TheOdds API',
       type: 'primary',
@@ -54,7 +54,7 @@ export class EnhancedDataSourcesService {
       capabilities: ['live_odds', 'line_movements', 'multiple_bookmakers', 'arbitrage_detection']
     });
 
-    // PRIMARY: SportsRadar API (Your Key) - Main stats source  
+    // PRIMARY: SportsRadar API (Your Key) - Main stats source;  
     this.dataSources.set('sportradar', {
       name: 'SportsRadar',
       type: 'primary',
@@ -69,7 +69,7 @@ export class EnhancedDataSourcesService {
       capabilities: ['detailed_stats', 'player_analytics', 'team_performance', 'historical_data']
     });
 
-    // PRIMARY: PrizePicks API (Public) - Main props source
+    // PRIMARY: PrizePicks API (Public) - Main props source;
     this.dataSources.set('prizepicks', {
       name: 'PrizePicks',
       type: 'primary',
@@ -84,7 +84,7 @@ export class EnhancedDataSourcesService {
       capabilities: ['player_props', 'prop_lines', 'pick_suggestions', 'daily_fantasy']
     });
 
-    // SECONDARY: ESPN API (Public) - Scores and schedules
+    // SECONDARY: ESPN API (Public) - Scores and schedules;
     this.dataSources.set('espn', {
       name: 'ESPN',
       type: 'secondary',
@@ -99,7 +99,7 @@ export class EnhancedDataSourcesService {
       capabilities: ['live_scores', 'schedules', 'basic_stats', 'team_info']
     });
 
-    // FALLBACK: Open Weather (Public) - Weather data
+    // FALLBACK: Open Weather (Public) - Weather data;
     this.dataSources.set('weather', {
       name: 'Open-Meteo Weather',
       type: 'fallback',
@@ -113,7 +113,7 @@ export class EnhancedDataSourcesService {
       capabilities: ['weather_conditions', 'game_weather', 'outdoor_sports']
     });
 
-    // FALLBACK: Sports News RSS (Public) - News and injuries
+    // FALLBACK: Sports News RSS (Public) - News and injuries;
     this.dataSources.set('news', {
       name: 'Sports News Aggregator',
       type: 'fallback',
@@ -154,12 +154,12 @@ export class EnhancedDataSourcesService {
   }
 
   public buildAPIUrl(sourceName: string, endpoint: string, params: Record<string, string> = {}): string {
-    const source = this.dataSources.get(sourceName);
+
     if (!source) return '';
 
-    let url = source.endpoints.base;
+    const url = source.endpoints.base;
     
-    // Add specific endpoint
+    // Add specific endpoint;
     if (endpoint === 'odds' && source.endpoints.odds) {
       url += source.endpoints.odds;
     } else if (endpoint === 'stats' && source.endpoints.stats) {
@@ -170,14 +170,14 @@ export class EnhancedDataSourcesService {
       url += source.endpoints.scores;
     }
 
-    // Replace parameters in URL
+    // Replace parameters in URL;
     for (const [key, value] of Object.entries(params)) {
       url = url.replace(`{${key}}`, value);
     }
 
-    // Add API key for services that require it
+    // Add API key for services that require it;
     if (source.apiKey !== 'public_access') {
-      const separator = url.includes('?') ? '&' : '?';
+
       if (sourceName === 'theodds') {
         url += `${separator}apiKey=${source.apiKey}`;
       } else if (sourceName === 'sportradar') {
@@ -196,11 +196,11 @@ export class EnhancedDataSourcesService {
     arbitrage: string[];
   } {
     return {
-      odds: 'theodds',           // Your TheOdds API for live odds
-      stats: 'sportradar',       // Your SportsRadar API for detailed stats
-      props: 'prizepicks',       // Public PrizePicks API for props
-      scores: 'espn',            // Public ESPN API for live scores
-      arbitrage: ['theodds', 'prizepicks', 'espn'] // Multiple sources for arbitrage
+      odds: 'theodds',           // Your TheOdds API for live odds;
+      stats: 'sportradar',       // Your SportsRadar API for detailed stats;
+      props: 'prizepicks',       // Public PrizePicks API for props;
+      scores: 'espn',            // Public ESPN API for live scores;
+      arbitrage: ['theodds', 'prizepicks', 'espn'] // Multiple sources for arbitrage;
     };
   }
 
@@ -210,7 +210,7 @@ export class EnhancedDataSourcesService {
     responseTime: number;
     errorRate: number;
   }> {
-    // This would be updated by health check service
+    // This would be updated by health check service;
     return {
       theodds: { status: 'operational', lastCheck: Date.now(), responseTime: 200, errorRate: 0 },
       sportradar: { status: 'operational', lastCheck: Date.now(), responseTime: 350, errorRate: 0 },
@@ -272,10 +272,9 @@ export class EnhancedDataSourcesService {
     const issues: string[] = [];
     const recommendations: string[] = [];
 
-    // Check if we have primary sources for critical data
-    const theodds = this.dataSources.get('theodds');
-    const sportradar = this.dataSources.get('sportradar');
-    const prizepicks = this.dataSources.get('prizepicks');
+    // Check if we have primary sources for critical data;
+
+
 
     if (!theodds?.enabled) {
       issues.push('TheOdds API not enabled - primary odds source unavailable');
@@ -289,7 +288,7 @@ export class EnhancedDataSourcesService {
       issues.push('PrizePicks API not enabled - primary props source unavailable');
     }
 
-    // Recommendations
+    // Recommendations;
     if (theodds?.enabled && sportradar?.enabled) {
       recommendations.push('Excellent: Both premium APIs active - optimal data quality expected');
     }
@@ -304,7 +303,7 @@ export class EnhancedDataSourcesService {
     return {
       valid: issues.length === 0,
       issues,
-      recommendations
+      recommendations;
     };
   }
 }

@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express.ts';
 
 export interface User {
   id: string;
@@ -127,7 +127,7 @@ export interface FilterParams {
 
 export type ApiRequestParams = PaginationParams & FilterParams;
 
-// Express.js route types for frontend API routes
+// Express.js route types for frontend API routes;
 export interface ExpressApiRequest extends Request {
   params: {
     modelName?: string;

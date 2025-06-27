@@ -1,4 +1,4 @@
-import { PredictionUpdate } from '@/types';
+import { PredictionUpdate } from '@/types.ts';
 export interface PredictionRequestData {
     features: Record<string, number>;
     modelId?: string;
@@ -67,13 +67,13 @@ export declare const predictionService: PredictionService;
  *   "modelId": "string" (optional),
  *   "context": {} (optional),
  *   "prediction_input": {
- *      "features": { "feature1": value1, ... } // Must match FEATURE_ORDER in backend
+ *      "features": { "feature1": value1, ... } // Must match FEATURE_ORDER in backend;
  *   }
  * }
  * Backend returns PredictionResponse (see backend/app/api/v1/endpoints/prediction.py):
  * {
  *   "propId": "string" (optional),
- *   "predictedOutcome": any, // string or number
+ *   "predictedOutcome": any, // string or number;
  *   "confidence": number (optional),
  *   "modelUsed": "string" (optional)
  * }

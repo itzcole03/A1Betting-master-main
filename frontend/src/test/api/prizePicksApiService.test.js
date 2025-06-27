@@ -1,6 +1,6 @@
-// betaTest4/src/test/api/prizePicksApiService.test.ts
+// betaTest4/src/test/api/prizePicksApiService.test.ts;
 import { PrizePicksAPI } from '../../api/PrizePicksAPI';
-// Mock UnifiedConfig to always provide a config object
+// Mock UnifiedConfig to always provide a config object;
 jest.mock('../../core/UnifiedConfig', () => {
     const apiEndpoints = {
         users: '/api/users',
@@ -29,35 +29,35 @@ jest.mock('../../core/UnifiedConfig', () => {
         globalUnifiedConfig: config,
     };
 });
-// Mocking fetch globally for API tests
+// Mocking fetch globally for API tests;
 globalThis.fetch = jest.fn();
 describe('PrizePicksAPI Service', () => {
     let prizePicksApi;
-    const mockBaseUrl = 'https://mock-api.prizepicks.com';
+
     beforeEach(() => {
         fetch.mockClear();
         const config = {
             baseUrl: mockBaseUrl,
-            // No apiKey needed due to recent changes, but can be tested if provided
+            // No apiKey needed due to recent changes, but can be tested if provided;
         };
         prizePicksApi = new PrizePicksAPI(config);
     });
     describe('fetchProjections', () => {
         it('should fetch projections successfully', async () => {
-            const mockData = { data: [], included: [] }; // Provide a valid mock response structure
+            const mockData = { data: [], included: [] }; // Provide a valid mock response structure;
             fetch.mockResolvedValueOnce({
                 ok: true,
                 json: async () => mockData,
                 status: 200,
                 statusText: 'OK',
             });
-            const data = await prizePicksApi.fetchProjections();
+
             expect(fetch).toHaveBeenCalledTimes(1);
             expect(fetch).toHaveBeenCalledWith(`${mockBaseUrl}/projections?single_stat=true&league_id=NBA`, expect.objectContaining({ method: 'GET' }));
             expect(data).toEqual(mockData);
         });
         it('should fetch projections for a specific league', async () => {
-            const mockData = { data: [], included: [] };
+
             fetch.mockResolvedValueOnce({
                 ok: true,
                 json: async () => mockData,
@@ -72,18 +72,18 @@ describe('PrizePicksAPI Service', () => {
                 ok: false,
                 status: 500,
                 statusText: 'Internal Server Error',
-                text: async () => 'Server Error', // Changed from json to text to match PrizePicksAPI error handling
+                text: async () => 'Server Error', // Changed from json to text to match PrizePicksAPI error handling;
             });
             await expect(prizePicksApi.fetchProjections()).rejects.toThrow('PrizePicks API request failed to /projections: 500 Internal Server Error - Server Error');
         });
         it('should handle API key if provided in config', async () => {
-            const apiKey = 'test-api-key';
+
             const configWithKey = {
                 baseUrl: mockBaseUrl,
                 apiKey: apiKey,
             };
-            const apiWithKey = new PrizePicksAPI(configWithKey);
-            const mockData = { data: [], included: [] };
+
+
             fetch.mockResolvedValueOnce({
                 ok: true,
                 json: async () => mockData,

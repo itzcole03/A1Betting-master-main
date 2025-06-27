@@ -32,7 +32,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
         return RealTimeMoneyMakingService.instance;
     }
     setupEventListeners() {
-        // Real-time opportunity detection
+        // Real-time opportunity detection;
         this.wsService.subscribe('market:odds_change', this.handleOddsChange.bind(this));
         this.wsService.subscribe('arbitrage:opportunity', this.handleArbitrageOpportunity.bind(this));
         this.wsService.subscribe('prediction:update', this.handlePredictionUpdate.bind(this));
@@ -45,9 +45,9 @@ class RealTimeMoneyMakingService extends EventEmitter {
         }
         this.isActive = true;
         this.logger.info('Starting real-time money-making scanner', config);
-        // Initial scan
+        // Initial scan;
         await this.performFullScan(config);
-        // Set up periodic scanning
+        // Set up periodic scanning;
         this.scanInterval = setInterval(async () => {
             await this.performFullScan(config);
         }, config.scanIntervalMs);
@@ -65,17 +65,17 @@ class RealTimeMoneyMakingService extends EventEmitter {
         this.emit('scanning:stopped');
     }
     async performFullScan(config) {
-        const startTime = Date.now();
+
         try {
-            // Parallel scanning across different opportunity types
+            // Parallel scanning across different opportunity types;
             const scanPromises = [
                 this.scanPrizePicksOpportunities(config),
                 this.scanArbitrageOpportunities(config),
                 this.scanValueBetOpportunities(config),
             ];
-            const results = await Promise.allSettled(scanPromises);
-            // Process successful scans
-            const allOpportunities = [];
+
+            // Process successful scans;
+
             results.forEach((result, index) => {
                 if (result.status === 'fulfilled') {
                     allOpportunities.push(...result.value);
@@ -84,10 +84,10 @@ class RealTimeMoneyMakingService extends EventEmitter {
                     this.logger.error(`Scan ${index} failed`, { error: result.reason });
                 }
             });
-            // Update opportunities cache
+            // Update opportunities cache;
             this.updateOpportunities(allOpportunities);
-            // Optimize portfolio
-            const portfolio = await this.optimizePortfolio(allOpportunities, config);
+            // Optimize portfolio;
+
             this.performanceMetrics.lastScanTime = Date.now();
             this.performanceMetrics.totalOpportunitiesFound += allOpportunities.length;
             this.emit('scan:completed', {
@@ -108,8 +108,8 @@ class RealTimeMoneyMakingService extends EventEmitter {
                 sports: config.sports,
                 timeWindow: 'today',
             });
-            const opportunities = [];
-            for (const prop of props.slice(0, 50)) { // Limit for performance
+
+            for (const prop of props.slice(0, 50)) { // Limit for performance;
                 const prediction = await this.backendService.getPrediction({
                     player_id: prop.playerId,
                     metric: prop.statType,
@@ -117,7 +117,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
                     include_shap: true,
                 });
                 if (prediction.prediction.confidence >= config.minConfidence) {
-                    const kellyFraction = this.calculateKellyFraction(prediction.prediction.confidence, prop.overOdds);
+
                     opportunities.push({
                         id: `prizepicks-${prop.playerId}-${prop.statType}`,
                         type: 'prizepicks',
@@ -141,7 +141,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
                         },
                         metadata: {
                             createdAt: Date.now(),
-                            expiresAt: Date.now() + (4 * 60 * 60 * 1000), // 4 hours
+                            expiresAt: Date.now() + (4 * 60 * 60 * 1000), // 4 hours;
                             modelVersion: prediction.meta.model_version,
                             predictionId: prediction.meta.prediction_id,
                         },
@@ -159,7 +159,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
         try {
             const arbOpportunities = await this.backendService.getArbitrageOpportunities({
                 sports: config.sports,
-                min_profit: 0.02, // 2% minimum profit
+                min_profit: 0.02, // 2% minimum profit;
                 time_window: 'today',
             });
             return arbOpportunities.map(arb => ({
@@ -168,11 +168,11 @@ class RealTimeMoneyMakingService extends EventEmitter {
                 source: `${arb.bookmaker1.name} vs ${arb.bookmaker2.name}`,
                 playerName: arb.event,
                 statType: arb.market,
-                line: 0, // Arbitrage doesn't have a line
+                line: 0, // Arbitrage doesn't have a line;
                 odds: arb.bookmaker1.odds,
-                confidence: 0.99, // Arbitrage is near-certain profit
+                confidence: 0.99, // Arbitrage is near-certain profit;
                 expectedValue: arb.profit_percentage,
-                kellyFraction: 0.05, // Conservative for arbitrage
+                kellyFraction: 0.05, // Conservative for arbitrage;
                 projectedReturn: arb.profit,
                 riskLevel: 'low',
                 timeRemaining: this.calculateTimeRemainingFromString(arb.expires_at),
@@ -225,7 +225,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
                 },
                 metadata: {
                     createdAt: Date.now(),
-                    expiresAt: Date.now() + (6 * 60 * 60 * 1000), // 6 hours
+                    expiresAt: Date.now() + (6 * 60 * 60 * 1000), // 6 hours;
                     modelVersion: 'value-v1.0',
                     predictionId: bet.id,
                 },
@@ -237,30 +237,30 @@ class RealTimeMoneyMakingService extends EventEmitter {
         }
     }
     async optimizePortfolio(opportunities, config) {
-        // Sort by Kelly-adjusted expected value
+        // Sort by Kelly-adjusted expected value;
         const sorted = opportunities.sort((a, b) => {
-            const aScore = a.expectedValue * a.kellyFraction * a.confidence;
-            const bScore = b.expectedValue * b.kellyFraction * b.confidence;
+
+
             return bScore - aScore;
         });
-        // Apply portfolio constraints
-        const selected = [];
-        let totalKellyFraction = 0;
-        const allocation = {};
+        // Apply portfolio constraints;
+
+        const totalKellyFraction = 0;
+
         for (const opp of sorted) {
             if (selected.length >= 10)
-                break; // Max 10 positions
+                break; // Max 10 positions;
             if (totalKellyFraction + opp.kellyFraction > config.maxExposure)
                 break;
             if (opp.confidence < config.minConfidence)
                 continue;
             selected.push(opp);
             totalKellyFraction += opp.kellyFraction;
-            allocation[opp.id] = Math.round(1000 * opp.kellyFraction); // $1000 base bankroll
+            allocation[opp.id] = Math.round(1000 * opp.kellyFraction); // $1000 base bankroll;
         }
-        const totalExpectedValue = selected.reduce((sum, opp) => sum + opp.expectedValue, 0);
-        const riskScore = this.calculatePortfolioRisk(selected);
-        const diversificationScore = this.calculateDiversification(selected);
+
+
+
         return {
             opportunities: selected,
             totalExpectedValue,
@@ -276,15 +276,15 @@ class RealTimeMoneyMakingService extends EventEmitter {
         };
     }
     calculateKellyFraction(confidence, odds) {
-        const b = odds - 1; // net odds
-        const p = confidence; // probability of winning
-        const q = 1 - p; // probability of losing
-        const kelly = (b * p - q) / b;
+        const b = odds - 1; // net odds;
+        const p = confidence; // probability of winning;
+        const q = 1 - p; // probability of losing;
+
         return Math.max(0, Math.min(kelly * 0.25, 0.1)); // Conservative Kelly with 25% multiplier, max 10%
     }
     calculateExpectedValue(confidence, odds) {
-        const impliedProbability = 1 / odds;
-        return (confidence * odds - 1) * 100; // Return as percentage
+
+        return (confidence * odds - 1) * 100; // Return as percentage;
     }
     calculateRiskLevel(confidence, kellyFraction) {
         if (confidence > 0.8 && kellyFraction < 0.03)
@@ -294,72 +294,72 @@ class RealTimeMoneyMakingService extends EventEmitter {
         return 'high';
     }
     calculateTimeRemaining(gameTime) {
-        const gameDate = new Date(gameTime);
-        const now = new Date();
-        return Math.max(0, Math.floor((gameDate.getTime() - now.getTime()) / (1000 * 60))); // minutes
+
+
+        return Math.max(0, Math.floor((gameDate.getTime() - now.getTime()) / (1000 * 60))); // minutes;
     }
     calculateTimeRemainingFromString(timeStr) {
         if (timeStr.includes('hour')) {
-            const hours = parseInt(timeStr.match(/\d+/)?.[0] || '0');
+
             return hours * 60;
         }
         if (timeStr.includes('minute')) {
             return parseInt(timeStr.match(/\d+/)?.[0] || '0');
         }
-        return 60; // Default 1 hour
+        return 60; // Default 1 hour;
     }
     calculatePortfolioRisk(opportunities) {
-        const avgConfidence = opportunities.reduce((sum, opp) => sum + opp.confidence, 0) / opportunities.length;
-        const avgKelly = opportunities.reduce((sum, opp) => sum + opp.kellyFraction, 0) / opportunities.length;
+
+
         // Risk score: lower is better (0-100)
         return Math.max(0, 100 - (avgConfidence * 50 + (1 - avgKelly * 10) * 50));
     }
     calculateDiversification(opportunities) {
-        const sports = new Set(opportunities.map(opp => opp.statType));
-        const types = new Set(opportunities.map(opp => opp.type));
-        const sources = new Set(opportunities.map(opp => opp.source));
+
+
+
         // Diversification score: higher is better (0-100)
-        const sportDiv = Math.min(sports.size / 4, 1) * 40; // Max 40 points for sports diversity
-        const typeDiv = Math.min(types.size / 3, 1) * 30; // Max 30 points for type diversity
-        const sourceDiv = Math.min(sources.size / 3, 1) * 30; // Max 30 points for source diversity
+        const sportDiv = Math.min(sports.size / 4, 1) * 40; // Max 40 points for sports diversity;
+        const typeDiv = Math.min(types.size / 3, 1) * 30; // Max 30 points for type diversity;
+        const sourceDiv = Math.min(sources.size / 3, 1) * 30; // Max 30 points for source diversity;
         return sportDiv + typeDiv + sourceDiv;
     }
     updateOpportunities(newOpportunities) {
-        // Remove expired opportunities
-        const now = Date.now();
+        // Remove expired opportunities;
+
         for (const [id, opp] of this.opportunities) {
             if (opp.metadata.expiresAt < now) {
                 this.opportunities.delete(id);
             }
         }
-        // Add new opportunities
+        // Add new opportunities;
         newOpportunities.forEach(opp => {
             this.opportunities.set(opp.id, opp);
         });
         this.emit('opportunities:updated', Array.from(this.opportunities.values()));
     }
-    // Event handlers for real-time updates
+    // Event handlers for real-time updates;
     async handleOddsChange(data) {
-        // Handle real-time odds changes
+        // Handle real-time odds changes;
         this.logger.info('Odds change detected', data);
         this.emit('odds:changed', data);
     }
     async handleArbitrageOpportunity(data) {
-        // Handle new arbitrage opportunities
+        // Handle new arbitrage opportunities;
         this.logger.info('Arbitrage opportunity detected', data);
         this.emit('arbitrage:found', data);
     }
     async handlePredictionUpdate(data) {
-        // Handle prediction updates
+        // Handle prediction updates;
         this.logger.info('Prediction update received', data);
         this.emit('prediction:updated', data);
     }
     async handleNewProp(data) {
-        // Handle new PrizePicks props
+        // Handle new PrizePicks props;
         this.logger.info('New prop detected', data);
         this.emit('prop:new', data);
     }
-    // Public interface methods
+    // Public interface methods;
     getActiveOpportunities() {
         return Array.from(this.opportunities.values());
     }
@@ -367,7 +367,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
         return { ...this.performanceMetrics };
     }
     async placeBet(opportunityId, amount) {
-        const opportunity = this.opportunities.get(opportunityId);
+
         if (!opportunity) {
             return { success: false, error: 'Opportunity not found' };
         }
@@ -380,7 +380,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
             });
             if (result.success) {
                 this.performanceMetrics.totalBetsPlaced++;
-                this.opportunities.delete(opportunityId); // Remove placed opportunity
+                this.opportunities.delete(opportunityId); // Remove placed opportunity;
                 this.emit('bet:placed', { opportunityId, amount, betId: result.bet_id });
             }
             return result;

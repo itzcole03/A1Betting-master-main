@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode  } from 'react.ts';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface State {
   error?: Error;
 }
 
-class ErrorBoundary extends Component<Props, State> {
+class ErrorBoundary extends Component<Props, State key={458171}> {
   public state: State = {
     hasError: false,
   };
@@ -20,14 +20,14 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Theme ErrorBoundary caught an error:", error, errorInfo);
+    // console statement removed
   }
 
   public render() {
     if (this.state.hasError) {
       return (
         this.props.fallback || (
-          <div
+          <div;
             style={{
               padding: "20px",
               margin: "20px",
@@ -36,17 +36,17 @@ class ErrorBoundary extends Component<Props, State> {
               backgroundColor: "#fff5f5",
               color: "#dc2626",
             }}
-          >
-            <h2>Theme Error</h2>
-            <p>Something went wrong with the theme system.</p>
-            <details style={{ marginTop: "10px" }}>
-              <summary>Error details:</summary>
-              <pre style={{ marginTop: "10px", fontSize: "12px" }}>
+           key={306635}>
+            <h2 key={707260}>Theme Error</h2>
+            <p key={161203}>Something went wrong with the theme system.</p>
+            <details style={{ marginTop: "10px" }} key={400323}>
+              <summary key={93963}>Error details:</summary>
+              <pre style={{ marginTop: "10px", fontSize: "12px" }} key={761230}>
                 {this.state.error?.toString()}
               </pre>
             </details>
-            <button
-              onClick={() => window.location.reload()}
+            <button;
+              onClick={() = key={619354}> window.location.reload()}
               style={{
                 marginTop: "10px",
                 padding: "8px 16px",
@@ -57,7 +57,7 @@ class ErrorBoundary extends Component<Props, State> {
                 cursor: "pointer",
               }}
             >
-              Reload Page
+              Reload Page;
             </button>
           </div>
         )

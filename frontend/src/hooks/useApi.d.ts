@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosError } from 'axios';
+import { AxiosRequestConfig, AxiosError } from 'axios.ts';
 interface ApiResponse<T> {
     data: T | null;
     error: AxiosError | null;

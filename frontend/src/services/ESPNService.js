@@ -4,7 +4,7 @@ import { UnifiedConfig } from '../unified/UnifiedConfig.js';
 export class ESPNService {
     /**
      * Extracts and returns normalized features for a given context (game, player, team, etc.)
-     * to be used in ensemble prediction. This enables ESPNService to contribute structured
+     * to be used in ensemble prediction. This enables ESPNService to contribute structured;
      * data to the unified prediction engine for maximum accuracy.
      *
      * @param context - An object containing identifiers and parameters for feature extraction.
@@ -12,10 +12,10 @@ export class ESPNService {
      * @returns A Promise resolving to a normalized feature object.
      */
     async getFeatures(context) {
-        const features = {};
-        // Game-level features
+
+        // Game-level features;
         if (context.gameId) {
-            const game = await this.getGame(context.gameId);
+
             if (game) {
                 features.gameId = game.id;
                 features.sport = game.sport;
@@ -34,20 +34,20 @@ export class ESPNService {
                 features.startTime = game.startTime;
             }
         }
-        // Player-level features
+        // Player-level features;
         if (context.playerId) {
-            const player = await this.getPlayer(context.playerId);
+
             if (player) {
                 features.playerId = player.id;
                 features.playerName = player.name;
                 features.playerPosition = player.position;
                 features.playerTeam = player.team;
                 features.playerStatus = player.status;
-                // Flatten stats
+                // Flatten stats;
                 for (const [statKey, statValue] of Object.entries(player.stats)) {
                     features[`playerStat_${statKey}`] = statValue;
                 }
-                // Flatten projections
+                // Flatten projections;
                 if (player.projections) {
                     for (const [projKey, projValue] of Object.entries(player.projections)) {
                         features[`playerProjection_${projKey}`] = projValue;
@@ -55,12 +55,12 @@ export class ESPNService {
                 }
             }
         }
-        // Team-level features
+        // Team-level features;
         if (context.teamId) {
-            const roster = await this.getTeamRoster(context.teamId);
+
             features.teamRosterSize = roster.length;
-            // Optionally, aggregate team stats from roster
-            const totalStats = {};
+            // Optionally, aggregate team stats from roster;
+
             for (const player of roster) {
                 for (const [statKey, statValue] of Object.entries(player.stats)) {
                     totalStats[statKey] = (totalStats[statKey] || 0) + statValue;
@@ -70,7 +70,7 @@ export class ESPNService {
                 features[`teamStat_${statKey}`] = statValue;
             }
         }
-        // News/headlines features
+        // News/headlines features;
         if (context.teamId || context.playerId) {
             const headlines = await this.getHeadlines({
                 team: context.teamId,
@@ -99,13 +99,13 @@ export class ESPNService {
         }
         return ESPNService.instance;
     }
-    // Legacy config initializer is now unused; config is loaded directly from UnifiedConfig
+    // Legacy config initializer is now unused; config is loaded directly from UnifiedConfig;
     // private initializeConfig(): ESPNConfig { ... }
     setupEventListeners() {
-        // Listen for game status updates
+        // Listen for game status updates;
         this.eventBus.on('game:status', async (event) => {
             try {
-                const game = await this.getGame(event.game.id);
+
                 if (game) {
                     this.eventBus.emit('game:status', {
                         game,
@@ -114,13 +114,13 @@ export class ESPNService {
                 }
             }
             catch (error) {
-                console.error('Error handling game status update:', error);
+                // console statement removed
             }
         });
-        // Listen for player updates
+        // Listen for player updates;
         this.eventBus.on('player:update', async (event) => {
             try {
-                const player = await this.getPlayer(event.player.id);
+
                 if (player) {
                     this.eventBus.emit('player:update', {
                         player,
@@ -129,7 +129,7 @@ export class ESPNService {
                 }
             }
             catch (error) {
-                console.error('Error handling player update:', error);
+                // console statement removed
             }
         });
     }
@@ -137,7 +137,7 @@ export class ESPNService {
         return `${endpoint}:${params ? JSON.stringify(params) : ''}`;
     }
     getCachedData(key) {
-        const cached = this.cache.get(key);
+
         if (cached && Date.now() - cached.timestamp < this.espnConfig.cacheTimeout) {
             return cached.data;
         }
@@ -150,92 +150,92 @@ export class ESPNService {
         });
     }
     async getGames(params) {
-        const cacheKey = this.getCacheKey('games', params);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get('/games', { params });
-        const games = response.data.games;
+
+
         this.setCachedData(cacheKey, games);
         return games;
     }
     async getGame(gameId) {
-        const cacheKey = this.getCacheKey(`game:${gameId}`);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get(`/games/${gameId}`);
-        const game = response.data;
+
+
         this.setCachedData(cacheKey, game);
         return game;
     }
     async getPlayers(params) {
-        const cacheKey = this.getCacheKey('players', params);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get('/athletes', { params });
-        const players = response.data.athletes;
+
+
         this.setCachedData(cacheKey, players);
         return players;
     }
     async getPlayer(playerId) {
-        const cacheKey = this.getCacheKey(`player:${playerId}`);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get(`/athletes/${playerId}`);
-        const player = response.data;
+
+
         this.setCachedData(cacheKey, player);
         return player;
     }
     async getPlayerStats(playerId, params) {
-        const cacheKey = this.getCacheKey(`player:${playerId}:stats`, params);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get(`/athletes/${playerId}/stats`, { params });
-        const stats = response.data.stats;
+
+
         this.setCachedData(cacheKey, stats);
         return stats;
     }
     async getPlayerProjections(playerId, params) {
-        const cacheKey = this.getCacheKey(`player:${playerId}:projections`, params);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get(`/athletes/${playerId}/projections`, { params });
-        const projections = response.data.projections;
+
+
         this.setCachedData(cacheKey, projections);
         return projections;
     }
     async getHeadlines(params) {
-        const cacheKey = this.getCacheKey('headlines', params);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get('/news', { params });
-        const headlines = response.data.articles;
+
+
         this.setCachedData(cacheKey, headlines);
         return headlines;
     }
     async getTeamSchedule(teamId, params) {
-        const cacheKey = this.getCacheKey(`team:${teamId}:schedule`, params);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get(`/teams/${teamId}/schedule`, { params });
-        const games = response.data.games;
+
+
         this.setCachedData(cacheKey, games);
         return games;
     }
     async getTeamRoster(teamId) {
-        const cacheKey = this.getCacheKey(`team:${teamId}:roster`);
-        const cached = this.getCachedData(cacheKey);
+
+
         if (cached)
             return cached;
-        const response = await this.client.get(`/teams/${teamId}/roster`);
-        const players = response.data.athletes;
+
+
         this.setCachedData(cacheKey, players);
         return players;
     }

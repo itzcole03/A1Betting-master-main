@@ -1,6 +1,6 @@
-import { BaseService } from './BaseService';
-import { UnifiedServiceRegistry } from './UnifiedServiceRegistry';
-import { UnifiedErrorService } from './UnifiedErrorService';
+import { BaseService } from './BaseService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
+import { UnifiedErrorService } from './UnifiedErrorService.ts';
 
 export interface AppState {
   user: {
@@ -66,7 +66,7 @@ export class UnifiedStateService extends BaseService {
   private loadState(): void {
     try {
       if (this.persistState) {
-        const savedState = localStorage.getItem(this.storageKey);
+
         if (savedState) {
           this.state = JSON.parse(savedState);
         }
@@ -140,7 +140,7 @@ export class UnifiedStateService extends BaseService {
   markNotificationAsRead(notificationId: string): void {
     this.setState({
       notifications: this.state.notifications.map(notification =>
-        notification.id === notificationId ? { ...notification, read: true } : notification
+        notification.id === notificationId ? { ...notification, read: true } : notification;
       ),
     });
   }

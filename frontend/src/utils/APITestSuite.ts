@@ -1,11 +1,11 @@
 /**
- * API Integration Test & Setup Script
- * Tests your actual API keys and validates all integrations
+ * API Integration Test & Setup Script;
+ * Tests your actual API keys and validates all integrations;
  */
 
-import LiveAPIIntegrationService from '../services/LiveAPIIntegrationService';
-import EnhancedDataSourcesService from '../services/EnhancedDataSourcesService';
-import APIConfigurationService from '../services/APIConfigurationService';
+import LiveAPIIntegrationService from '@/services/LiveAPIIntegrationService.ts';
+import EnhancedDataSourcesService from '@/services/EnhancedDataSourcesService.ts';
+import APIConfigurationService from '@/services/APIConfigurationService.ts';
 
 export class APITestSuite {
   private liveAPI: LiveAPIIntegrationService;
@@ -19,7 +19,7 @@ export class APITestSuite {
   }
 
   /**
-   * Run comprehensive test of all API integrations
+   * Run comprehensive test of all API integrations;
    */
   public async runFullAPITest(): Promise<{
     success: boolean;
@@ -27,124 +27,122 @@ export class APITestSuite {
     details: any;
     recommendations: string[];
   }> {
-    console.log('🚀 Starting Comprehensive API Integration Test...');
-    console.log('Testing with your real API keys:');
-    console.log('- SportsRadar: R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s');
-    console.log('- TheOdds: 8684be37505fc5ce63b0337d472af0ee');
-    console.log('- PrizePicks: Public API');
-    console.log('- ESPN: Public API\n');
+    // console statement removed
+    // console statement removed
+    // console statement removed
+    // console statement removed
+    // console statement removed
+    // console statement removed
 
     const results: any = {};
     const errors: string[] = [];
     const recommendations: string[] = [];
 
-    // Test 1: Configuration Validation
-    console.log('📋 Testing API Configuration...');
+    // Test 1: Configuration Validation;
+    // console statement removed
     results.configuration = this.dataSources.validateDataSources();
     if (!results.configuration.valid) {
       errors.push('Configuration validation failed');
     }
 
-    // Test 2: Live API Connections
-    console.log('🔗 Testing Live API Connections...');
+    // Test 2: Live API Connections;
+    // console statement removed
     results.connections = await this.liveAPI.testAllConnections();
     if (!results.connections.success) {
       errors.push('Some API connections failed');
     }
 
-    // Test 3: API Health Check
-    console.log('🏥 Checking API Health...');
+    // Test 3: API Health Check;
+    // console statement removed
     results.health = await this.liveAPI.checkAPIHealth();
 
-    // Test 4: Rate Limit Status
-    console.log('⚡ Checking Rate Limits...');
+    // Test 4: Rate Limit Status;
+    // console statement removed
     results.rateLimits = this.liveAPI.getRateLimitStatus();
 
-    // Test 5: Sample Data Retrieval
-    console.log('📊 Testing Sample Data Retrieval...');
+    // Test 5: Sample Data Retrieval;
+    // console statement removed
     try {
-      const sampleData = await this.testSampleDataRetrieval();
+
       results.sampleData = sampleData;
     } catch (error) {
       results.sampleData = { success: false, error: error.message };
       errors.push('Sample data retrieval failed');
     }
 
-    // Generate recommendations
+    // Generate recommendations;
     recommendations.push(...this.generateRecommendations(results));
 
-    const success = errors.length === 0;
-    const summary = this.generateSummary(results, success);
 
-    console.log('\n' + '='.repeat(60));
-    console.log(summary);
-    console.log('='.repeat(60));
+    // console statement removed);
+    // console statement removed
+    // console statement removed);
 
     return {
       success,
       summary,
       details: results,
-      recommendations
+      recommendations;
     };
   }
 
   /**
-   * Test sample data retrieval from all sources
+   * Test sample data retrieval from all sources;
    */
   private async testSampleDataRetrieval(): Promise<any> {
     const results: any = {};
 
-    // Test TheOdds API
+    // Test TheOdds API;
     try {
-      console.log('  📈 Testing TheOdds API...');
-      const odds = await this.liveAPI.getLiveOdds('americanfootball_nfl');
+      // console statement removed
+
       results.theodds = {
         success: odds.success,
         dataPoints: odds.data ? (Array.isArray(odds.data) ? odds.data.length : 1) : 0,
         source: odds.source,
-        cached: odds.cached
+        cached: odds.cached;
       };
     } catch (error) {
       results.theodds = { success: false, error: error.message };
     }
 
-    // Test SportsRadar API
+    // Test SportsRadar API;
     try {
-      console.log('  📊 Testing SportsRadar API...');
-      const stats = await this.liveAPI.getDetailedStats('nfl', '2024');
+      // console statement removed
+
       results.sportradar = {
         success: stats.success,
         dataPoints: stats.data ? (Array.isArray(stats.data) ? stats.data.length : 1) : 0,
         source: stats.source,
-        cached: stats.cached
+        cached: stats.cached;
       };
     } catch (error) {
       results.sportradar = { success: false, error: error.message };
     }
 
-    // Test PrizePicks API
+    // Test PrizePicks API;
     try {
-      console.log('  🎯 Testing PrizePicks API...');
-      const props = await this.liveAPI.getPlayerProjections();
+      // console statement removed
+
       results.prizepicks = {
         success: props.success,
         dataPoints: props.data?.data ? props.data.data.length : 0,
         source: props.source,
-        cached: props.cached
+        cached: props.cached;
       };
     } catch (error) {
       results.prizepicks = { success: false, error: error.message };
     }
 
-    // Test ESPN API
+    // Test ESPN API;
     try {
-      console.log('  🏈 Testing ESPN API...');
-      const scores = await this.liveAPI.getLiveScores('football/nfl');
+      // console statement removed
+
       results.espn = {
         success: scores.success,
         dataPoints: scores.data?.events ? scores.data.events.length : 0,
         source: scores.source,
-        cached: scores.cached
+        cached: scores.cached;
       };
     } catch (error) {
       results.espn = { success: false, error: error.message };
@@ -154,12 +152,12 @@ export class APITestSuite {
   }
 
   /**
-   * Generate recommendations based on test results
+   * Generate recommendations based on test results;
    */
   private generateRecommendations(results: any): string[] {
     const recommendations: string[] = [];
 
-    // API-specific recommendations
+    // API-specific recommendations;
     if (results.connections?.results?.theodds) {
       recommendations.push('✅ TheOdds API is operational - excellent for live odds data');
     } else {
@@ -178,18 +176,17 @@ export class APITestSuite {
       recommendations.push('❌ PrizePicks API issues detected - check endpoint availability');
     }
 
-    // Rate limit recommendations
-    const theoddsRemaining = results.rateLimits?.theodds?.requestsRemaining || 0;
+    // Rate limit recommendations;
+
     if (theoddsRemaining < 100) {
       recommendations.push('⚠️ TheOdds API quota running low - implement aggressive caching');
     }
 
-    const sportsradarRemaining = results.rateLimits?.sportradar?.requestsRemaining || 0;
     if (sportsradarRemaining < 200) {
       recommendations.push('⚠️ SportsRadar API quota running low - optimize request frequency');
     }
 
-    // General recommendations
+    // General recommendations;
     recommendations.push('💡 Implement data caching to optimize API usage');
     recommendations.push('💡 Set up monitoring alerts for API failures');
     recommendations.push('💡 Consider implementing fallback data sources');
@@ -202,13 +199,12 @@ export class APITestSuite {
   }
 
   /**
-   * Generate test summary
+   * Generate test summary;
    */
   private generateSummary(results: any, success: boolean): string {
-    const connectionCount = Object.values(results.connections?.results || {}).filter(Boolean).length;
-    const totalTests = Object.keys(results.connections?.results || {}).length;
 
-    let summary = `\n🔍 API INTEGRATION TEST RESULTS\n\n`;
+
+    const summary = `\n🔍 API INTEGRATION TEST RESULTS\n\n`;
     
     if (success) {
       summary += `✅ SUCCESS: All ${totalTests} API integrations are operational!\n`;
@@ -238,24 +234,23 @@ export class APITestSuite {
   }
 
   /**
-   * Quick health check for dashboard
+   * Quick health check for dashboard;
    */
   public async quickHealthCheck(): Promise<{
     status: 'healthy' | 'degraded' | 'critical';
     services: { [key: string]: boolean };
     message: string;
   }> {
-    const health = await this.liveAPI.checkAPIHealth();
+
     const services: { [key: string]: boolean } = {};
-    let healthyCount = 0;
+    const healthyCount = 0;
     
     Object.entries(health).forEach(([service, info]) => {
-      const isHealthy = info.status === 'operational';
+
       services[service] = isHealthy;
       if (isHealthy) healthyCount++;
     });
 
-    const totalServices = Object.keys(health).length;
     let status: 'healthy' | 'degraded' | 'critical';
     let message: string;
 
@@ -274,5 +269,5 @@ export class APITestSuite {
   }
 }
 
-// Export for use in components
+// Export for use in components;
 export default APITestSuite;

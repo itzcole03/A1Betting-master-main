@@ -1,4 +1,4 @@
-import { ErrorCategory, ErrorSeverity, ErrorContext } from './UnifiedError';
+import { ErrorCategory, ErrorSeverity, ErrorContext } from './UnifiedError.ts';
 
 export class SystemError extends Error {
   public readonly context: ErrorContext;

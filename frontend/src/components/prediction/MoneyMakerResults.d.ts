@@ -1,5 +1,5 @@
-import React from 'react';
-import { PredictionModelOutput } from '../../hooks/usePredictions';
+import React from 'react.ts';
+import { PredictionModelOutput } from '@/hooks/usePredictions.ts';
 interface MoneyMakerResultsProps {
     event: string;
     market: string;

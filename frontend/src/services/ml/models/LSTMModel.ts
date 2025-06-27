@@ -1,7 +1,7 @@
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
-import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
+import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService.ts';
 
 export interface LSTMConfig {
   inputSize: number;
@@ -19,7 +19,7 @@ export interface LSTMConfig {
   metadata: Record<string, unknown>;
 }
 
-// Type definitions for LSTM model operations
+// Type definitions for LSTM model operations;
 export interface TrainingData {
   input: number[][];
   target: number[];
@@ -59,7 +59,7 @@ export class LSTMModel {
 
   async initialize(): Promise<void> {
     try {
-      // Initialize LSTM model
+      // Initialize LSTM model;
       this.model = await this.createModel();
       this.logger.info('LSTM model initialized successfully');
     } catch (error) {
@@ -67,34 +67,34 @@ export class LSTMModel {
       throw error;
     }
   }  private async createModel(): Promise<LSTMModelInterface> {
-    // Implementation for LSTM model creation using TensorFlow.js or similar
-    const logger = this.logger; // Capture logger for use in model methods
+    // Implementation for LSTM model creation using TensorFlow.js or similar;
+    const logger = this.logger; // Capture logger for use in model methods;
 
-    // Create model architecture
+    // Create model architecture;
     const model: LSTMModelInterface = {
       async predict(input: number[][]): Promise<number[]> {
-        // Placeholder prediction logic
-        // In a real implementation, this would use TensorFlow.js
+        // Placeholder prediction logic;
+        // In a real implementation, this would use TensorFlow.js;
         
-        // Simple weighted sum for demonstration
+        // Simple weighted sum for demonstration;
         return input.map(sequence => {
-          const sum = sequence.reduce((acc, val, idx) => acc + val * (idx + 1), 0);
-          return Math.tanh(sum / sequence.length); // Normalize and apply activation
+
+          return Math.tanh(sum / sequence.length); // Normalize and apply activation;
         });
       },
 
       async train(_data: TrainingData, _options: TrainingOptions): Promise<void> {
-        // Placeholder training logic
+        // Placeholder training logic;
         logger.info('LSTM model training completed');
       },
 
       async save(path: string): Promise<void> {
-        // Placeholder save logic
+        // Placeholder save logic;
         logger.info(`LSTM model saved to ${path}`);
       },
 
       async load(path: string): Promise<void> {
-        // Placeholder load logic
+        // Placeholder load logic;
         logger.info(`LSTM model loaded from ${path}`);
       }
     };
@@ -112,14 +112,13 @@ export class LSTMModel {
 
       const { trainData, validationData } = this.prepareTrainingData(features, options);
 
-      // Train model
+      // Train model;
       await this.model.train(trainData, {
         ...this.config,
         ...options,
       });
 
-      // Evaluate model
-      const metrics = await this.evaluate(validationData);
+      // Evaluate model;
 
       return metrics;
     } catch (error) {
@@ -142,8 +141,6 @@ export class LSTMModel {
         throw new Error('Model not initialized');
       }
 
-      const input = this.preparePredictionInput(features);
-      const output = await this.model.predict(input);
 
       const prediction: ModelPrediction = {
         timestamp: new Date().toISOString(),
@@ -170,7 +167,6 @@ export class LSTMModel {
       }
 
       const { input, target } = this.prepareEvaluationData(features);
-      const predictions = await this.model.predict(input);
 
       const metrics: ModelMetrics = {
         accuracy: this.calculateAccuracy(predictions, target),
@@ -231,7 +227,7 @@ export class LSTMModel {
     _features: FeatureSet,
     _options: Record<string, unknown>
   ): { trainData: TrainingData; validationData: FeatureSet } {
-    // Implement training data preparation
+    // Implement training data preparation;
     return {
       trainData: { input: [[]], target: [] },
       validationData: _features,
@@ -239,12 +235,12 @@ export class LSTMModel {
   }
 
   private preparePredictionInput(_features: Feature[]): number[][] {
-    // Implement prediction input preparation
+    // Implement prediction input preparation;
     return [[]];
   }
 
   private prepareEvaluationData(_features: FeatureSet): { input: number[][]; target: number[] } {
-    // Implement evaluation data preparation
+    // Implement evaluation data preparation;
     return {
       input: [[]],
       target: [],
@@ -252,57 +248,57 @@ export class LSTMModel {
   }
 
   private formatInput(_input: number[][]): Record<string, unknown> {
-    // Implement input formatting
+    // Implement input formatting;
     return {};
   }
 
   private formatOutput(_output: number[]): Record<string, unknown> {
-    // Implement output formatting
+    // Implement output formatting;
     return {};
   }
 
   private calculateConfidence(_output: number[]): number {
-    // Implement confidence calculation
+    // Implement confidence calculation;
     return 0;
   }
 
   private calculateAccuracy(_predictions: number[], _target: number[]): number {
-    // Implement accuracy calculation
+    // Implement accuracy calculation;
     return 0;
   }
 
   private calculatePrecision(_predictions: number[], _target: number[]): number {
-    // Implement precision calculation
+    // Implement precision calculation;
     return 0;
   }
 
   private calculateRecall(_predictions: number[], _target: number[]): number {
-    // Implement recall calculation
+    // Implement recall calculation;
     return 0;
   }
 
   private calculateF1Score(_predictions: number[], _target: number[]): number {
-    // Implement F1 score calculation
+    // Implement F1 score calculation;
     return 0;
   }
 
   private calculateAUC(_predictions: number[], _target: number[]): number {
-    // Implement AUC calculation
+    // Implement AUC calculation;
     return 0;
   }
 
   private calculateRMSE(_predictions: number[], _target: number[]): number {
-    // Implement RMSE calculation
+    // Implement RMSE calculation;
     return 0;
   }
 
   private calculateMAE(_predictions: number[], _target: number[]): number {
-    // Implement MAE calculation
+    // Implement MAE calculation;
     return 0;
   }
 
   private calculateR2(_predictions: number[], _target: number[]): number {
-    // Implement R2 calculation
+    // Implement R2 calculation;
     return 0;
   }
 

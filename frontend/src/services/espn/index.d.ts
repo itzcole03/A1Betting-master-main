@@ -1,4 +1,4 @@
-import { Headline, GameSummary, PlayerNews } from '@/types';
+import { Headline, GameSummary, PlayerNews } from '@/types.ts';
 declare class ESPNService {
     private adapter;
     constructor();

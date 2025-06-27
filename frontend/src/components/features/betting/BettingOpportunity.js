@@ -5,8 +5,8 @@ import { notificationService } from '@/services/notification';
 export const BettingOpportunity = ({ opportunity, onPlaceBet, }) => {
     const { event, market, selection, odds, probability, edge, confidence, volume, sentiment, stats, arbitrage, } = opportunity;
     const handlePlaceBet = () => {
-        const maxBetAmount = bankrollService.getMaxBetAmount();
-        const recommendedStake = Math.min(maxBetAmount, bankrollService.getBalance() * (edge / 100));
+
+
         onPlaceBet({
             ...opportunity,
             stake: recommendedStake,

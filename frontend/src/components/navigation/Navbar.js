@@ -5,9 +5,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SmartMenuIcon from '@mui/icons-material/SmartToy';
 import ThemeToggle from './ThemeToggle';
 import { motion } from 'framer-motion';
-const MotionIconButton = motion.create(IconButton);
+
 const Navbar = ({ onMenuClick, onSmartSidebarClick, title = 'Sports Betting App', }) => {
-    const theme = useTheme();
+
     return (_jsx(AppBar, { position: "fixed", sx: {
             zIndex: theme.zIndex.drawer + 1,
             bgcolor: alpha(theme.palette.background.paper, 0.8),

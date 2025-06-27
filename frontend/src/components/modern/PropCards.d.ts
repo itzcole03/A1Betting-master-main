@@ -1,5 +1,5 @@
-import React from 'react';
-import { ProcessedPrizePicksProp } from '../../types/prizePicks';
+import React from 'react.ts';
+import { ProcessedPrizePicksProp } from '@/types/prizePicks.ts';
 interface PropCardsProps {
     props: ProcessedPrizePicksProp[];
 }

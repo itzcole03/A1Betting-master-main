@@ -1,5 +1,5 @@
-import { Transaction, BankrollSettings, BankrollStats } from '../types/bankroll';
-import { EventEmitter } from 'events';
+import { Transaction, BankrollSettings, BankrollStats } from '@/types/bankroll.ts';
+import { EventEmitter } from 'events.ts';
 export interface BankrollTransaction {
     id: string;
     type: 'deposit' | 'withdrawal' | 'bet' | 'win' | 'loss';

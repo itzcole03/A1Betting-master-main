@@ -15,8 +15,8 @@ export class PrizePicksAdapterImpl {
     }
     async fetchProps(params) {
         try {
-            const cacheKey = `prizepicks:props:${JSON.stringify(params)}`;
-            const cachedProps = await cache.get(cacheKey);
+
+
             if (cachedProps) {
                 return cachedProps;
             }
@@ -31,7 +31,7 @@ export class PrizePicksAdapterImpl {
             if (!response.ok) {
                 throw new Error(`Failed to fetch props: ${response.statusText}`);
             }
-            const props = await response.json();
+
             await cache.set(cacheKey, props);
             return props;
         }
@@ -42,8 +42,8 @@ export class PrizePicksAdapterImpl {
     }
     async fetchPlayers(params) {
         try {
-            const cacheKey = `prizepicks:players:${JSON.stringify(params)}`;
-            const cachedPlayers = await cache.get(cacheKey);
+
+
             if (cachedPlayers) {
                 return cachedPlayers;
             }
@@ -58,7 +58,7 @@ export class PrizePicksAdapterImpl {
             if (!response.ok) {
                 throw new Error(`Failed to fetch players: ${response.statusText}`);
             }
-            const players = await response.json();
+
             await cache.set(cacheKey, players);
             return players;
         }
@@ -69,8 +69,8 @@ export class PrizePicksAdapterImpl {
     }
     async fetchLines(params) {
         try {
-            const cacheKey = `prizepicks:lines:${JSON.stringify(params)}`;
-            const cachedLines = await cache.get(cacheKey);
+
+
             if (cachedLines) {
                 return cachedLines;
             }
@@ -85,7 +85,7 @@ export class PrizePicksAdapterImpl {
             if (!response.ok) {
                 throw new Error(`Failed to fetch lines: ${response.statusText}`);
             }
-            const lines = await response.json();
+
             await cache.set(cacheKey, lines);
             return lines;
         }

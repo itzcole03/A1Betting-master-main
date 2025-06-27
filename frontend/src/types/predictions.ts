@@ -1,4 +1,4 @@
-// Definitions for lineup builder types used throughout the app
+// Definitions for lineup builder types used throughout the app;
 
 export interface MoneyMakerLeg {
   id: string;
@@ -25,7 +25,7 @@ export interface MoneyMakerOpportunity {
 export interface LineupBuilderStrategy {
   name: string;
   description: string;
-  // Add more fields as needed based on future usage
+  // Add more fields as needed based on future usage;
 }
 
 export interface LineupBuilderOutput {

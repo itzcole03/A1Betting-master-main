@@ -1,6 +1,6 @@
-import { StateCreator } from 'zustand';
-import { PrizePicksEntry, PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from '../../../../shared/prizePicks';
-import { AppStore } from '../../stores/useAppStore';
+import { StateCreator } from 'zustand.ts';
+import { PrizePicksEntry, PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from '@/../../shared/prizePicks.ts';
+import { AppStore } from '@/stores/useAppStore.ts';
 export interface PrizePicksSlice {
     props: PrizePicksProps[];
     currentPrizePicksPlayer: PrizePicksPlayer | null;

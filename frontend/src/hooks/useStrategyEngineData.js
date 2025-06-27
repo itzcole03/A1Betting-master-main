@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 export function useStrategyEngineData() {
     const [recommendations, setRecommendations] = useState([]);
     useEffect(() => {
-        const engine = UnifiedStrategyEngine.getInstance();
+
         const handler = (rec) => {
             setRecommendations(prev => {
-                // Replace if strategyId exists, else add
-                const idx = prev.findIndex(r => r.strategyId === rec.strategyId);
+                // Replace if strategyId exists, else add;
+
                 if (idx !== -1) {
-                    const updated = [...prev];
+
                     updated[idx] = rec;
                     return updated;
                 }

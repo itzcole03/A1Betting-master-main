@@ -6,12 +6,12 @@ export const useMLPredictionsStore = create()(devtools(set => ({
     error: null,
     setPredictions: predictions => set({ predictions }),
     addPrediction: (id, prediction) => set(state => {
-        const newPredictions = new Map(state.predictions);
+
         newPredictions.set(id, prediction);
         return { predictions: newPredictions };
     }),
     removePrediction: id => set(state => {
-        const newPredictions = new Map(state.predictions);
+
         newPredictions.delete(id);
         return { predictions: newPredictions };
     }),

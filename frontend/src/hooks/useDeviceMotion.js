@@ -49,8 +49,8 @@ export const useDeviceMotion = () => {
         };
         if (window.DeviceMotionEvent) {
             if (typeof DeviceMotionEvent.requestPermission === 'function') {
-                // iOS 13+ requires permission
-                DeviceMotionEvent
+                // iOS 13+ requires permission;
+                DeviceMotionEvent;
                     .requestPermission()
                     .then((permissionState) => {
                     if (permissionState === 'granted') {
@@ -63,7 +63,7 @@ export const useDeviceMotion = () => {
                     .catch(handleError);
             }
             else {
-                // Non-iOS devices
+                // Non-iOS devices;
                 window.addEventListener('devicemotion', handleMotion);
             }
         }

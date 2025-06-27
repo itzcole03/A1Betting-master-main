@@ -1,29 +1,29 @@
-import React, { useState, useEffect, useRef } from "react";
-import GlassCard from '../components/ui/GlassCard';
-import EnhancedPropCard from '../components/ui/EnhancedPropCard';
-import GlowButton from '../components/ui/GlowButton';
-import Tooltip from '../components/ui/Tooltip';
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import CircularProgress from "@mui/material/CircularProgress";
-import Alert from "@mui/material/Alert";
-import SearchIcon from "@mui/icons-material/Search";
-import FilterListIcon from "@mui/icons-material/FilterList";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import TrendingUpIcon from "@mui/icons-material/TrendingUp";
-import TrendingDownIcon from "@mui/icons-material/TrendingDown";
+import React, { useState, useEffect, useRef  } from 'react.ts';
+import GlassCard from '@/components/ui/GlassCard.ts';
+import EnhancedPropCard from '@/components/ui/EnhancedPropCard.ts';
+import GlowButton from '@/components/ui/GlowButton.ts';
+import Tooltip from '@/components/ui/Tooltip.ts';
+import Typography from '@mui/material/Typography.ts';
+import Grid from '@mui/material/Grid.ts';
+import Tabs from '@mui/material/Tabs.ts';
+import Tab from '@mui/material/Tab.ts';
+import Button from '@mui/material/Button.ts';
+import Chip from '@mui/material/Chip.ts';
+import IconButton from '@mui/material/IconButton.ts';
+import Menu from '@mui/material/Menu.ts';
+import MenuItem from '@mui/material/MenuItem.ts';
+import TextField from '@mui/material/TextField.ts';
+import InputAdornment from '@mui/material/InputAdornment.ts';
+import Select from '@mui/material/Select.ts';
+import FormControl from '@mui/material/FormControl.ts';
+import InputLabel from '@mui/material/InputLabel.ts';
+import CircularProgress from '@mui/material/CircularProgress.ts';
+import Alert from '@mui/material/Alert.ts';
+import SearchIcon from '@mui/icons-material/Search.ts';
+import FilterListIcon from '@mui/icons-material/FilterList.ts';
+import MoreVertIcon from '@mui/icons-material/MoreVert.ts';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp.ts';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown.ts';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -35,14 +35,14 @@ function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <div;
       aria-labelledby={`predictions-tab-${index}`}
       hidden={value !== index}
       id={`predictions-tabpanel-${index}`}
       role="tabpanel"
       {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+     key={161348}>
+      {value === index && <Box sx={{ p: 3 }} key={486541}>{children}</Box>}
     </div>
   );
 }
@@ -59,22 +59,21 @@ const riskProfiles = [
 
 const Predictions: React.FC = () => {
   const [value, setValue] = useState(0);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedPrediction, setSelectedPrediction] = useState<number | null>(
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement key={178068}>(null);
+  const [selectedPrediction, setSelectedPrediction] = useState<number | null key={564007}>(
     null,
   );
   const [search, setSearch] = useState("");
   const [riskProfile, setRiskProfile] = useState("medium");
-  const [predictions, setPredictions] = useState<any[]>([]);
+  const [predictions, setPredictions] = useState<any[] key={594112}>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const wsRef = useRef<WebSocket | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
 
   useEffect(() => {
     setLoading(true);
     setError(null);
 
-    // Safety checks to prevent invalid WebSocket connections
+    // Safety checks to prevent invalid WebSocket connections;
     if (
       !WS_URL ||
       WS_URL === "" ||
@@ -83,16 +82,12 @@ const Predictions: React.FC = () => {
       WS_URL.includes("localhost:8000") ||
       import.meta.env.VITE_ENABLE_WEBSOCKET === "false"
     ) {
-      console.log(
-        "WebSocket connection disabled for Predictions page:",
-        WS_URL,
-      );
+      // console statement removed
       setLoading(false);
       setError("WebSocket connections are currently disabled");
       return;
     }
 
-    const ws = new WebSocket(WS_URL);
     wsRef.current = ws;
 
     ws.onopen = () => {
@@ -106,11 +101,11 @@ const Predictions: React.FC = () => {
     };
     ws.onmessage = (event) => {
       try {
-        const msg = JSON.parse(event.data);
+
         if (msg.type === "prediction_result") {
           setPredictions(
             Array.isArray(msg.data.prediction)
-              ? msg.data.prediction
+              ? msg.data.prediction;
               : [msg.data.prediction],
           );
           setLoading(false);
@@ -118,7 +113,7 @@ const Predictions: React.FC = () => {
           setError(msg.data?.message || "Error fetching predictions");
           setLoading(false);
         } else {
-          // Handle other message types if needed
+          // Handle other message types if needed;
         }
       } catch (e) {
         setError("Malformed message from server");
@@ -130,7 +125,7 @@ const Predictions: React.FC = () => {
       setLoading(false);
     };
     ws.onclose = () => {
-      // Optionally: try to reconnect
+      // Optionally: try to reconnect;
     };
     return () => {
       ws.close();
@@ -142,7 +137,7 @@ const Predictions: React.FC = () => {
   };
 
   const handleMenuClick = (
-    event: React.MouseEvent<HTMLElement>,
+    event: React.MouseEvent<HTMLElement key={9296}>,
     predictionId: number,
   ) => {
     setAnchorEl(event.currentTarget);
@@ -155,7 +150,7 @@ const Predictions: React.FC = () => {
   };
 
   const handleAction = (action: string) => {
-    // TODO: Implement bet actions
+    // TODO: Implement bet actions;
     handleMenuClose();
   };
 
@@ -164,26 +159,26 @@ const Predictions: React.FC = () => {
       (!search ||
         p.match?.toLowerCase().includes(search.toLowerCase()) ||
         p.sport?.toLowerCase().includes(search.toLowerCase())) &&
-      (value === 0
+      (value === 0;
         ? p.status === "active"
-        : value === 1
+        : value === 1;
           ? p.status === "completed"
           : true),
   );
 
   return (
-    <div className="p-6 space-y-8 min-h-screen bg-gradient-to-br from-purple-900/80 to-purple-700/80 dark:from-gray-900 dark:to-gray-800 transition-colors">
-      <GlassCard className="mb-8">
-        <h2 className="text-2xl font-bold text-purple-900 dark:text-purple-100 mb-4">Model Predictions</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+    <div className="p-6 space-y-8 min-h-screen bg-gradient-to-br from-purple-900/80 to-purple-700/80 dark:from-gray-900 dark:to-gray-800 transition-colors" key={648214}>
+      <GlassCard className="mb-8" key={170857}>
+        <h2 className="text-2xl font-bold text-purple-900 dark:text-purple-100 mb-4" key={238762}>Model Predictions</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" key={456537}>
           {filteredPredictions.length === 0 && !loading && (
-            <Grid item xs={12}>
-              <Typography>No predictions found.</Typography>
+            <Grid item xs={12} key={689816}>
+              <Typography key={705030}>No predictions found.</Typography>
             </Grid>
           )}
           {filteredPredictions.map((prediction) => (
-            <Grid key={prediction.id} item xs={12}>
-              <EnhancedPropCard
+            <Grid key={prediction.id} item xs={12} key={29378}>
+              <EnhancedPropCard;
                 playerName={prediction.match}
                 team={prediction.sport}
                 position={prediction.prediction}
@@ -195,7 +190,7 @@ const Predictions: React.FC = () => {
                 trendValue={prediction.trend === "up" ? 1 : -1}
                 gameInfo={{ opponent: 'BOS', day: 'Fri', time: '7:30pm' }}
                 playerImageUrl="https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png"
-                onSelect={() => {}}
+                onSelect={() = key={655082}> {}}
                 onViewDetails={() => {}}
               />
             </Grid>

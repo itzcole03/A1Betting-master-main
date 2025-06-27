@@ -1,15 +1,15 @@
-import { AdvancedAnalysisEngine, AnalysisResult as AdvancedAnalysisResult } from './AdvancedAnalysisEngine';
-import { AnalysisPlugin, AnalysisRegistry } from './AnalysisFramework';
-// import { EventBus } from './EventBus'; // FIX: File not found, please verify existence or correct path.
-import { UnifiedConfigManager } from '../core/UnifiedConfigManager';
-import { PipelineStage, StreamingDataPipeline } from './DataPipeline';
-import { FeatureComponent, FeatureRegistry } from './FeatureComposition';
-import { PerformanceMonitor } from './PerformanceMonitor';
-import { StrategyComponent, StrategyRegistry, StrategyResult } from './StrategyComposition';
-import { StrategyEngine } from './StrategyEngine';
-// import { UnifiedDataEngine } from './UnifiedDataEngine'; // FIX: File not found, please verify existence or correct path.
+import { AdvancedAnalysisEngine, AnalysisResult as AdvancedAnalysisResult } from './AdvancedAnalysisEngine.ts';
+import { AnalysisPlugin, AnalysisRegistry } from './AnalysisFramework.ts';
+// import { EventBus } from './EventBus.ts'; // FIX: File not found, please verify existence or correct path.
+import { UnifiedConfigManager } from '@/core/UnifiedConfigManager.ts';
+import { PipelineStage, StreamingDataPipeline } from './DataPipeline.ts';
+import { FeatureComponent, FeatureRegistry } from './FeatureComposition.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
+import { StrategyComponent, StrategyRegistry, StrategyResult } from './StrategyComposition.ts';
+import { StrategyEngine } from './StrategyEngine.ts';
+// import { UnifiedDataEngine } from './UnifiedDataEngine.ts'; // FIX: File not found, please verify existence or correct path.
 
-// Enhanced interfaces for PredictionEngine
+// Enhanced interfaces for PredictionEngine;
 export interface PredictionData {
   value: number;
   timestamp: number;
@@ -213,7 +213,7 @@ export class PredictionEngine {
   private feedbackLoop: PredictionFeedback[];
   private modelWeights: ModelWeights;
   private readonly MAX_FEEDBACK_HISTORY = 1000;
-  private readonly WEIGHT_UPDATE_INTERVAL = 1000 * 60 * 60; // 1 hour
+  private readonly WEIGHT_UPDATE_INTERVAL = 1000 * 60 * 60; // 1 hour;
 
   private constructor() {
     this.eventBus = EventBus.getInstance();
@@ -233,7 +233,7 @@ export class PredictionEngine {
       historical: 0.4,
       market: 0.3,
       sentiment: 0.2,
-      correlation: 0.1
+      correlation: 0.1;
     };
 
     this.initialize();
@@ -249,26 +249,25 @@ export class PredictionEngine {
   }
 
   private initialize(): void {
-    // Register features
+    // Register features;
     for (const feature of this.config.features) {
       this.featureRegistry.registerFeature(feature);
     }
 
-    // Register analysis plugins
+    // Register analysis plugins;
     for (const plugin of this.config.analysisPlugins) {
       this.analysisRegistry.registerPlugin(plugin);
     }
 
-    // Register strategies
+    // Register strategies;
     for (const strategy of this.config.strategies) {
       this.strategyRegistry.registerStrategy(strategy);
     }
 
-    // Create data pipelines
-    for (let i = 0; i < this.config.dataSources.length; i++) {
-      const source = this.config.dataSources[i];
-      const sink = this.config.dataSinks[i] || this.config.dataSinks[0];
-      const stages = this.config.pipelineStages;
+    // Create data pipelines;
+    for (const i = 0; i < this.config.dataSources.length; i++) {
+
+
 
       const pipeline = new StreamingDataPipeline(
         source,
@@ -279,31 +278,31 @@ export class PredictionEngine {
           cacheTtl: this.config.options.cacheTtl,
           processingInterval: this.config.options.processingInterval,
           retryAttempts: this.config.options.retryAttempts,
-          batchSize: this.config.options.batchSize
+          batchSize: this.config.options.batchSize;
         }
       );
 
       this.pipelines.set(source.id, pipeline);
     }
 
-    // Start monitoring
+    // Start monitoring;
     this.setupMonitoring();
   }
 
   private setupMonitoring(): void {
-    // Monitor pipeline performance
+    // Monitor pipeline performance;
     this.eventBus.on('pipeline:processed', (event: any) => {
       const { sourceId } = event.payload as { sourceId: string; duration: number };
       this.performanceMonitor.startTrace(`pipeline-${sourceId}`);
     });
 
-    // Monitor analysis performance
+    // Monitor analysis performance;
     this.eventBus.on('analysis:completed', (event: any) => {
       const { pluginId } = event.payload as { pluginId: string; duration: number };
       this.performanceMonitor.startTrace(`analysis-${pluginId}`);
     });
 
-    // Monitor strategy performance
+    // Monitor strategy performance;
     this.eventBus.on('strategy:evaluated', (event: any) => {
       const { strategyId } = event.payload as { strategyId: string; duration: number };
       this.performanceMonitor.startTrace(`strategy-${strategyId}`);
@@ -311,10 +310,9 @@ export class PredictionEngine {
   }
 
   async start(): Promise<void> {
-    const traceId = this.performanceMonitor.startTrace('prediction-engine-start');
 
     try {
-      // Start all pipelines
+      // Start all pipelines;
       const startPromises = Array.from(this.pipelines.values()).map(pipeline =>
         pipeline.start()
       );
@@ -327,7 +325,7 @@ export class PredictionEngine {
           pipelineCount: this.pipelines.size,
           featureCount: this.featureRegistry.listFeatures().length,
           analysisPluginCount: this.analysisRegistry.listPlugins().length,
-          strategyCount: this.strategyRegistry.listStrategies().length
+          strategyCount: this.strategyRegistry.listStrategies().length;
         }
       });
 
@@ -339,10 +337,9 @@ export class PredictionEngine {
   }
 
   async stop(): Promise<void> {
-    const traceId = this.performanceMonitor.startTrace('prediction-engine-stop');
 
     try {
-      // Stop all pipelines
+      // Stop all pipelines;
       const stopPromises = Array.from(this.pipelines.values()).map(pipeline =>
         pipeline.stop()
       );
@@ -371,24 +368,22 @@ export class PredictionEngine {
       correlationFactors: this.identifyCorrelationFactors(prop)
     };
 
-    const data = await this.integrateData(context);
-    const predictions = await this.generatePredictions(context, data);
-    const combinedPrediction = this.combinePredictions(predictions);
+
 
     return combinedPrediction;
   }
   private determineMarketState(_prop: PlayerProp): string {
-    // Implementation
+    // Implementation;
     return 'stable';
   }
 
   private identifyCorrelationFactors(_prop: PlayerProp): string[] {
-    // Implementation
+    // Implementation;
     return [];
   }
 
   private async integrateData(_context: PredictionContext): Promise<IntegratedData> {
-    // Implementation
+    // Implementation;
     return {
       historical: [],
       market: [],
@@ -400,20 +395,20 @@ export class PredictionEngine {
 
   private async generatePredictions(
     context: PredictionContext,
-    data: IntegratedData
+    data: IntegratedData;
   ): Promise<PredictionData[]> {
     const predictions: PredictionData[] = [];
 
     for (const [_id, strategy] of this.strategies) {
       if (strategy.validate(data)) {
-        const decision = await strategy.analyze(data);
+
         predictions.push({
           id: decision.id,
           timestamp: decision.timestamp,
           context,
           value: this.calculateWeightedValue(decision),
           confidence: decision.confidence,
-          analysis: decision.analysis
+          analysis: decision.analysis;
         });
       }
     }
@@ -422,12 +417,12 @@ export class PredictionEngine {
   }
 
   private calculateWeightedValue(_decision: Decision): number {
-    // Implementation
+    // Implementation;
     return 0;
   }
 
   private combinePredictions(predictions: PredictionData[]): PredictionData {
-    // Implementation
+    // Implementation;
     return predictions[0];
   }
 
@@ -492,10 +487,9 @@ export class PredictionEngine {
       lastUpdated: Date.now()
     };
 
-    const error = 0; // TODO: Replace with correct calculation if predicted value is available
-    // See roadmap for error calculation logic
-    // See roadmap for error calculation logic
-    const newSampleSize = metrics.sampleSize + 1;
+    const error = 0; // TODO: Replace with correct calculation if predicted value is available;
+    // See roadmap for error calculation logic;
+    // See roadmap for error calculation logic;
 
     metrics.accuracy = (metrics.accuracy * metrics.sampleSize + (1 - error / feedback.actualValue)) / newSampleSize;
     metrics.variance = this.calculateVariance(feedback, metrics);
@@ -506,10 +500,9 @@ export class PredictionEngine {
   }
 
   private calculateVariance(_feedback: PredictionFeedback, metrics: PredictionMetrics): number {
-    const error = 0; // TODO: Replace with correct calculation if predicted value is available
-    const oldVariance = metrics.variance;
-    const oldMean = metrics.accuracy;
-    const newMean = (oldMean * metrics.sampleSize + error) / (metrics.sampleSize + 1);
+    const error = 0; // TODO: Replace with correct calculation if predicted value is available;
+
+
 
     return (
       (metrics.sampleSize * oldVariance + error * error +
@@ -519,19 +512,16 @@ export class PredictionEngine {
   }
 
   private optimizeWeights(): void {
-    if (this.feedbackLoop.length < 50) return; // Need sufficient data
+    if (this.feedbackLoop.length < 50) return; // Need sufficient data;
 
-    const recentFeedback = this.feedbackLoop.slice(-50);
-    const performanceByComponent = this.analyzeComponentPerformance(recentFeedback);
 
-    // Update weights based on component performance
-    const totalPerformance = Object.values(performanceByComponent).reduce((a, b) => a + b, 0);
+    // Update weights based on component performance;
 
     this.modelWeights = {
       historical: performanceByComponent.historical / totalPerformance,
       sentiment: performanceByComponent.sentiment / totalPerformance,
       market: performanceByComponent.market / totalPerformance,
-      correlation: performanceByComponent.correlation / totalPerformance
+      correlation: performanceByComponent.correlation / totalPerformance;
     };
 
     this.eventBus.publish({
@@ -541,7 +531,7 @@ export class PredictionEngine {
   }
 
   private analyzeComponentPerformance(feedback: PredictionFeedback[]): Record<keyof ModelWeights, number> {
-    // Calculate performance scores for each component
+    // Calculate performance scores for each component;
     return {
       historical: this.calculateComponentScore(feedback, 'historical'),
       sentiment: this.calculateComponentScore(feedback, 'sentiment'),
@@ -551,8 +541,8 @@ export class PredictionEngine {
   }
 
   private calculateComponentScore(_feedback: PredictionFeedback[], _component: keyof ModelWeights): number {
-    // Implementation for calculating component-specific performance scores
-    return 1.0; // Placeholder
+    // Implementation for calculating component-specific performance scores;
+    return 1.0; // Placeholder;
   }
 
   private getInitialWeights(): ModelWeights {
@@ -560,25 +550,24 @@ export class PredictionEngine {
       historical: 0.4,
       sentiment: 0.2,
       market: 0.2,
-      correlation: 0.2
+      correlation: 0.2;
     };
   }
 
   private storePrediction(_prediction: PredictionData): string {
-    // Implementation for storing prediction in a database
-    return 'predicted-id'; // Placeholder
+    // Implementation for storing prediction in a database;
+    return 'predicted-id'; // Placeholder;
   }
   private calculateConfidence(
     _prediction: PredictionData,
-    analysis: AdvancedAnalysisResult
+    analysis: AdvancedAnalysisResult;
   ): number {
-    // Calculate confidence based on prediction stability and meta analysis
-    const stabilityFactor = analysis.meta_analysis.prediction_stability;
-    const dataQualityFactor = analysis.meta_analysis.data_quality;
-    const marketEfficiencyFactor = analysis.meta_analysis.market_efficiency;
-    const sentimentAlignmentFactor = analysis.meta_analysis.sentiment_alignment;
+    // Calculate confidence based on prediction stability and meta analysis;
 
-    // Weight the factors
+
+
+
+    // Weight the factors;
     const weightedConfidence =
       stabilityFactor * 0.4 +
       dataQualityFactor * 0.3 +
@@ -588,43 +577,43 @@ export class PredictionEngine {
     return Math.min(1, Math.max(0, weightedConfidence));
   }
   private calculateHistoricalPrediction(_playerId: string, _metric: string, _data: IntegratedData): number {
-    // Implementation for calculating historical prediction
-    return 0.7; // Placeholder
+    // Implementation for calculating historical prediction;
+    return 0.7; // Placeholder;
   }
 
   private calculateSentimentPrediction(_playerId: string, _data: IntegratedData): number {
-    // Implementation for calculating sentiment prediction
-    return 0.6; // Placeholder
+    // Implementation for calculating sentiment prediction;
+    return 0.6; // Placeholder;
   }
 
   private calculateMarketPrediction(_playerId: string, _metric: string, _data: IntegratedData): number {
-    // Implementation for calculating market prediction
-    return 0.5; // Placeholder
+    // Implementation for calculating market prediction;
+    return 0.5; // Placeholder;
   }
 
   private calculateCorrelationPrediction(_playerId: string, _metric: string, _data: IntegratedData): number {
-    // Implementation for calculating correlation prediction
-    return 0.4; // Placeholder
+    // Implementation for calculating correlation prediction;
+    return 0.4; // Placeholder;
   }
 
   private combineWeightedPredictions(_predictions: Record<keyof ModelWeights, number>): number {
-    // Implementation for combining weighted predictions
-    return 0.7; // Placeholder
+    // Implementation for combining weighted predictions;
+    return 0.7; // Placeholder;
   }
 
   private updatePredictions(): void {
-    // Implementation for updating predictions
+    // Implementation for updating predictions;
   }
 
   private handleDataUpdate(_data: Record<string, unknown>): void {
-    // Implementation
+    // Implementation;
   }
 
   private handleStrategyFeedback(_feedback: Record<string, unknown>): void {
-    // Implementation
+    // Implementation;
   }
 
   private handleModelFeedback(_feedback: Record<string, unknown>): void {
-    // Implementation
+    // Implementation;
   }
 }

@@ -1,4 +1,4 @@
-import { apiService } from "./api";
+import { apiService } from './api.ts';
 
 interface DailyFantasyConfig {
   baseUrl: string;
@@ -71,7 +71,7 @@ class DailyFantasyService {
       });
       return response.data;
     } catch (error) {
-      console.error("Failed to get contests:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -91,7 +91,7 @@ class DailyFantasyService {
       });
       return response.data;
     } catch (error) {
-      console.error("Failed to get players:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -115,7 +115,7 @@ class DailyFantasyService {
       );
       return response.data;
     } catch (error) {
-      console.error("Failed to get player stats:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -134,7 +134,7 @@ class DailyFantasyService {
       });
       return response.data;
     } catch (error) {
-      console.error("Failed to get lineups:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -155,7 +155,7 @@ class DailyFantasyService {
       );
       return response.data;
     } catch (error) {
-      console.error("Failed to create lineup:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -178,7 +178,7 @@ class DailyFantasyService {
       );
       return response.data;
     } catch (error) {
-      console.error("Failed to get contest results:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -207,7 +207,7 @@ class DailyFantasyService {
       );
       return response.data;
     } catch (error) {
-      console.error("Failed to get optimal lineup:", error);
+      // console statement removed
       throw error;
     }
   }

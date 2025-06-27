@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
-import { useBettingStore } from '../stores/bettingStore';
-import type { BettingSettings } from '../services/bettingService';
+import { useCallback } from 'react.ts';
+import { useBettingStore } from '@/stores/bettingStore.ts';
+import type { BettingSettings } from '@/services/bettingService.ts';
 
 export const useBettingSettings = () => {
   const { settings, isLoading, error, fetchSettings, updateSettings, setError } = useBettingStore();

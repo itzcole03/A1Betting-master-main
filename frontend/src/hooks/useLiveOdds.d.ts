@@ -1,4 +1,4 @@
-import { PlayerProp, Sport, PropType } from '@/types';
+import { PlayerProp, Sport, PropType } from '@/types.ts';
 interface UseLiveOddsOptions {
     sport?: Sport;
     propType?: PropType;

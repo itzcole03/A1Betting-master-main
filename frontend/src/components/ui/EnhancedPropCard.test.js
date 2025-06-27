@@ -21,7 +21,7 @@ describe('EnhancedPropCard', () => {
         expect(screen.getByText(/Points/)).toBeInTheDocument();
     });
     it('calls onSelect when over/under is clicked', () => {
-        const onSelect = jest.fn();
+
         render(_jsx(EnhancedPropCard, { ...baseProps, onSelect: onSelect }));
         fireEvent.click(screen.getByText(/Over/i));
         expect(onSelect).toHaveBeenCalled();

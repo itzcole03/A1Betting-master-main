@@ -53,7 +53,7 @@ export class ModelEvaluationService {
 
   async evaluateModel(request: EvaluationRequest): Promise<EvaluationResponse> {
     try {
-      // Implement model evaluation logic here
+      // Implement model evaluation logic here;
       const evaluation: ModelEvaluation = {
         accuracy: 0.85,
         precision: 0.82,
@@ -75,8 +75,8 @@ export class ModelEvaluationService {
         metadata: request.metadata,
       };
 
-      // Store evaluation result
-      const modelEvaluations = this.evaluations.get(request.modelId) || [];
+      // Store evaluation result;
+
       modelEvaluations.push(result);
       this.evaluations.set(request.modelId, modelEvaluations);
 
@@ -105,12 +105,12 @@ export class ModelEvaluationService {
   }
 
   async getLatestEvaluation(modelId: string): Promise<EvaluationResult | null> {
-    const evaluations = await this.getModelEvaluations(modelId);
+
     return evaluations.length > 0 ? evaluations[evaluations.length - 1] : null;
   }
 
   async getEvaluationTrends(modelId: string, metric: keyof ModelEvaluation): Promise<number[]> {
-    const evaluations = await this.getModelEvaluations(modelId);
+
     return evaluations.map(evaluation => evaluation.evaluation[metric] as number);
   }
 }

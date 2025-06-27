@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface SHAPVisualizationProps {
     shapValues: Record<string, number>;
     baseValue?: number;

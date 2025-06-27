@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface ChartData {
     labels: string[];
     datasets: {
@@ -19,8 +19,8 @@ interface AdvancedChartsProps {
 }
 /**
  * AdvancedCharts renders a high-performance, accessible chart using Chart.js.
- * - Wrapped in <figure> with <figcaption> for semantic context
- * - ARIA label and role for screen readers
+ * - Wrapped in <figure> with <figcaption> for semantic context;
+ * - ARIA label and role for screen readers;
  * - Keyboard accessible (tabIndex)
  */
 export declare const AdvancedCharts: React.FC<AdvancedChartsProps>;

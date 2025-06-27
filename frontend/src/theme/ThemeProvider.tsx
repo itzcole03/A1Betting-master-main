@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect  } from 'react.ts';
 
 // ============================================================================
-// THEME TYPES
+// THEME TYPES;
 // ============================================================================
 
 interface ThemeColors {
@@ -60,7 +60,7 @@ interface ThemeContextType {
 }
 
 // ============================================================================
-// THEME DEFINITIONS
+// THEME DEFINITIONS;
 // ============================================================================
 
 const lightTheme: Theme = {
@@ -128,13 +128,11 @@ const darkTheme: Theme = {
 };
 
 // ============================================================================
-// THEME CONTEXT
+// THEME CONTEXT;
 // ============================================================================
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
 export const useTheme = () => {
-  const context = useContext(ThemeContext);
+
   if (context === undefined) {
     throw new Error("useTheme must be used within a ThemeProvider");
   }
@@ -142,7 +140,7 @@ export const useTheme = () => {
 };
 
 // ============================================================================
-// THEME PROVIDER COMPONENT
+// THEME PROVIDER COMPONENT;
 // ============================================================================
 
 interface ThemeProviderProps {
@@ -150,19 +148,19 @@ interface ThemeProviderProps {
   defaultTheme?: "light" | "dark";
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+export const ThemeProvider: React.FC<ThemeProviderProps key={251000}> = ({
   children,
   defaultTheme = "light",
 }) => {
   const [isDark, setIsDark] = useState(defaultTheme === "dark");
 
-  // Load theme from localStorage on mount
+  // Load theme from localStorage on mount;
   useEffect(() => {
-    const savedTheme = localStorage.getItem("a1betting-theme");
+
     if (savedTheme) {
       setIsDark(savedTheme === "dark");
     } else {
-      // Check system preference
+      // Check system preference;
       const prefersDark = window.matchMedia(
         "(prefers-color-scheme: dark)",
       ).matches;
@@ -170,9 +168,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     }
   }, []);
 
-  // Apply theme to document and save to localStorage
+  // Apply theme to document and save to localStorage;
   useEffect(() => {
-    const root = document.documentElement;
 
     if (isDark) {
       root.classList.add("dark");
@@ -182,8 +179,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       localStorage.setItem("a1betting-theme", "light");
     }
 
-    // Apply CSS custom properties for theme colors
-    const theme = isDark ? darkTheme : lightTheme;
+    // Apply CSS custom properties for theme colors;
 
     Object.entries(theme.colors).forEach(([key, value]) => {
       root.style.setProperty(`--color-${key}`, value);
@@ -214,8 +210,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     setIsDark(theme === "dark");
   };
 
-  const theme = isDark ? darkTheme : lightTheme;
-
   const value: ThemeContextType = {
     theme,
     isDark,
@@ -224,12 +218,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   };
 
   return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={value} key={60497}>{children}</ThemeContext.Provider>
   );
 };
 
 // ============================================================================
-// THEME UTILITIES
+// THEME UTILITIES;
 // ============================================================================
 
 export const getThemeColors = (isDark: boolean): ThemeColors => {
@@ -240,8 +234,8 @@ export const getThemeValue = (
   path: string,
   isDark: boolean = false,
 ): string => {
-  const theme = isDark ? darkTheme : lightTheme;
-  const keys = path.split(".");
+
+
   let value: any = theme;
 
   for (const key of keys) {
@@ -251,47 +245,47 @@ export const getThemeValue = (
   return value || "";
 };
 
-// CSS class utilities for common theme patterns
+// CSS class utilities for common theme patterns;
 export const themeClasses = {
-  // Glass effect cards
+  // Glass effect cards;
   glassCard:
     "bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm border border-white/20 dark:border-gray-700/30",
 
-  // Gradient backgrounds
+  // Gradient backgrounds;
   gradientPrimary: "bg-gradient-to-br from-blue-500 to-purple-600",
   gradientSecondary: "bg-gradient-to-br from-purple-500 to-pink-600",
   gradientAccent: "bg-gradient-to-br from-cyan-500 to-blue-600",
 
-  // Text variants
+  // Text variants;
   textPrimary: "text-gray-900 dark:text-white",
   textSecondary: "text-gray-600 dark:text-gray-300",
   textMuted: "text-gray-500 dark:text-gray-400",
 
-  // Interactive elements
+  // Interactive elements;
   buttonPrimary:
     "bg-blue-600 hover:bg-blue-700 text-white transition-colors duration-200",
   buttonSecondary:
     "bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white transition-colors duration-200",
 
-  // Surfaces
+  // Surfaces;
   surfacePrimary: "bg-white dark:bg-gray-800",
   surfaceSecondary: "bg-gray-50 dark:bg-gray-900",
 
-  // Borders
+  // Borders;
   borderPrimary: "border-gray-200 dark:border-gray-700",
   borderSecondary: "border-gray-300 dark:border-gray-600",
 
-  // Shadows
+  // Shadows;
   shadowSm: "shadow-sm",
   shadowMd: "shadow-md",
   shadowLg: "shadow-lg",
   shadowXl: "shadow-xl",
 
-  // Animations
+  // Animations;
   transitionAll: "transition-all duration-300 ease-in-out",
   transitionColors: "transition-colors duration-200 ease-in-out",
 
-  // Focus states
+  // Focus states;
   focusRing:
     "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800",
 };

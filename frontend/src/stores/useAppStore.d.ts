@@ -1,8 +1,8 @@
-import type { AuthSlice } from '../store/slices/authSlice';
-import type { BetSlipSlice } from '../store/slices/betSlipSlice';
-import type { DynamicDataSlice } from '../store/slices/dynamicDataSlice';
-import type { NotificationSlice } from '../store/slices/notificationSlice';
-import type { PrizePicksSlice } from '../store/slices/prizePicksSlice';
+import type { AuthSlice } from '@/store/slices/authSlice.ts';
+import type { BetSlipSlice } from '@/store/slices/betSlipSlice.ts';
+import type { DynamicDataSlice } from '@/store/slices/dynamicDataSlice.ts';
+import type { NotificationSlice } from '@/store/slices/notificationSlice.ts';
+import type { PrizePicksSlice } from '@/store/slices/prizePicksSlice.ts';
 export type AppState = AuthSlice & PrizePicksSlice & BetSlipSlice & NotificationSlice & DynamicDataSlice;
 export type AppStore = AppState;
 export declare const useAppStore: import("zustand").UseBoundStore<Omit<import("zustand").StoreApi<AppState>, "persist"> & {

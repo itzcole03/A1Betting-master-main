@@ -39,27 +39,27 @@ const NAVIGATION_ITEMS = [
     },
 ];
 export const UnifiedNavigation = () => {
-    // Initialize services
-    const serviceRegistry = UnifiedServiceRegistry.getInstance();
-    const settingsService = serviceRegistry.getService('settings');
-    const stateService = serviceRegistry.getService('state');
-    const notificationService = serviceRegistry.getService('notification');
-    const errorService = serviceRegistry.getService('error');
-    // State
+    // Initialize services;
+
+
+
+
+
+    // State;
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [showLogoutModal, setShowLogoutModal] = useState(false);
     const [toast, setToast] = useState(null);
     const [notifications, setNotifications] = useState(0);
     const [user, setUser] = useState(null);
-    const location = useLocation();
-    // Load user data and notifications
+
+    // Load user data and notifications;
     useEffect(() => {
         loadUserData();
         setupNotificationListener();
     }, []);
     const loadUserData = async () => {
         try {
-            const currentUser = await stateService.getState('user');
+
             setUser(currentUser);
         }
         catch (error) {

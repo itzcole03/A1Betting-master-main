@@ -1,8 +1,8 @@
 /**
  * Service for comparing model predictions and performance.
  */
-import type { ModelEvaluation } from './ModelEvaluationService';
-import type { ModelComparisonResult } from '@/types';
+import type { ModelEvaluation } from './ModelEvaluationService.ts';
+import type { ModelComparisonResult } from '@/types.ts';
 export interface ModelPredictionInput {
     name: string;
     prediction: number;

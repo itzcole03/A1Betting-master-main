@@ -4,9 +4,9 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Box, Button, TextField, Typography, Alert } from '@mui/material';
 import { apiService } from '@/services/api';
 export default function ResetPasswordPage() {
-    const navigate = useNavigate();
+
     const [searchParams] = useSearchParams();
-    const token = searchParams.get('token');
+
     const [formData, setFormData] = useState({
         password: '',
         confirmPassword: '',

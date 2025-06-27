@@ -3,7 +3,7 @@ import { useState, useCallback, useEffect } from 'react';
 export function useQueryBuilder(config, options = {}) {
     const { url, params, transform, dependencies = [], enabled = true, refetchInterval, onSuccess, onError } = config;
     const queryUrl = useCallback(() => {
-        const searchParams = new URLSearchParams();
+
         if (params) {
             Object.entries(params).forEach(([key, value]) => {
                 if (value != null) {
@@ -11,7 +11,7 @@ export function useQueryBuilder(config, options = {}) {
                 }
             });
         }
-        const queryString = searchParams.toString();
+
         return queryString ? `${url}?${queryString}` : url;
     }, [url, params]);
     const { data: rawData, error, isLoading, isValidating, mutate } = useApiRequest(queryUrl(), {
@@ -19,14 +19,14 @@ export function useQueryBuilder(config, options = {}) {
         retries: options.retries,
         retryDelay: options.retryDelay,
         enabled: enabled,
-        onError
+        onError;
     });
     const [state, setState] = useState({
         data: null,
         error: null,
         isLoading: true,
         isValidating: false,
-        timestamp: null
+        timestamp: null;
     });
     const transformData = useCallback((data) => {
         if (transform) {
@@ -34,17 +34,17 @@ export function useQueryBuilder(config, options = {}) {
                 return transform(data);
             }
             catch (error) {
-                console.error('Error transforming data:', error);
+                // console statement removed
                 throw error;
             }
         }
         return data;
     }, [transform]);
-    // Update state when raw data changes
+    // Update state when raw data changes;
     useEffect(() => {
         if (rawData) {
             try {
-                const transformedData = transformData(rawData);
+
                 setState(prev => ({
                     ...prev,
                     data: transformedData,
@@ -61,25 +61,25 @@ export function useQueryBuilder(config, options = {}) {
                         ...prev,
                         error,
                         isLoading: false,
-                        isValidating: false
+                        isValidating: false;
                     }));
                     onError?.(error);
                 }
             }
         }
     }, [rawData, transformData, onSuccess, onError]);
-    // Handle error state
+    // Handle error state;
     useEffect(() => {
         if (error) {
             setState(prev => ({
                 ...prev,
                 error,
                 isLoading: false,
-                isValidating: false
+                isValidating: false;
             }));
         }
     }, [error]);
-    // Setup refetch interval
+    // Setup refetch interval;
     useEffect(() => {
         if (!refetchInterval || !enabled)
             return;
@@ -88,7 +88,7 @@ export function useQueryBuilder(config, options = {}) {
         }, refetchInterval);
         return () => clearInterval(intervalId);
     }, [refetchInterval, enabled, mutate]);
-    // Refetch when dependencies change
+    // Refetch when dependencies change;
     useEffect(() => {
         if (enabled) {
             mutate();
@@ -115,7 +115,7 @@ export function useQueryBuilder(config, options = {}) {
             error: null,
             isLoading: true,
             isValidating: false,
-            timestamp: null
+            timestamp: null;
         });
     }, []);
     return {
@@ -123,7 +123,7 @@ export function useQueryBuilder(config, options = {}) {
         refetch: mutate,
         setData,
         updateData,
-        reset
+        reset;
     };
 }
 // Example usage:
@@ -141,7 +141,7 @@ function BetsList() {
     isLoading,
     error,
     refetch,
-    updateData
+    updateData;
   } = useQueryBuilder<BetData[]>({
     url: '/api/bets',
     params: {
@@ -152,24 +152,24 @@ function BetsList() {
       ...bet,
       timestamp: new Date(bet.timestamp).toISOString()
     })),
-    dependencies: [], // Empty array means only fetch once
-    refetchInterval: 30000, // Refetch every 30 seconds
+    dependencies: [], // Empty array means only fetch once;
+    refetchInterval: 30000, // Refetch every 30 seconds;
     onSuccess: (data) => {
       
     },
     onError: (error) => {
-      console.error('Failed to load bets:', error);
+      // console statement removed
     }
   }, {
-    cacheTime: 5 * 60 * 1000, // Cache for 5 minutes
-    retries: 3
+    cacheTime: 5 * 60 * 1000, // Cache for 5 minutes;
+    retries: 3;
   });
 
   const updateBet = (id: string, updates: Partial<BetData>) => {
     updateData((prev) => {
       if (!prev) return prev;
       return prev.map(bet =>
-        bet.id === id ? { ...bet, ...updates } : bet
+        bet.id === id ? { ...bet, ...updates } : bet;
       );
     });
   };
@@ -182,7 +182,7 @@ function BetsList() {
     <div>
       <button onClick={() => refetch()}>Refresh</button>
       {bets.map(bet => (
-        <BetCard
+        <BetCard;
           key={bet.id}
           bet={bet}
           onUpdate={(updates) => updateBet(bet.id, updates)}

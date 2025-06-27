@@ -1,4 +1,4 @@
-import { Bet, BetSlip, Odds, Sport, Event } from '@/types/betting';
+import { Bet, BetSlip, Odds, Sport, Event } from '@/types/betting.ts';
 interface BettingState {
     activeBets: Bet[];
     betSlip: BetSlip;

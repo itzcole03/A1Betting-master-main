@@ -1,6 +1,6 @@
 /**
- * API Configuration Service for A1Betting
- * Manages API keys and endpoints for live data sources
+ * API Configuration Service for A1Betting;
+ * Manages API keys and endpoints for live data sources;
  */
 
 export interface APIConfig {
@@ -38,10 +38,10 @@ export class APIConfigurationService {
       apiKey: 'R10yQbjTO5fZF6BPkfxjOaftsyN9X4ImAJv95H7s',
       enabled: true,
       rateLimit: {
-        requestsPerMinute: 30, // SportsRadar typically allows 1000/month
-        burstLimit: 5
+        requestsPerMinute: 30, // SportsRadar typically allows 1000/month;
+        burstLimit: 5;
       },
-      timeout: 15000
+      timeout: 15000;
     });
 
     // TheOdds API Configuration (YOUR KEY)
@@ -51,10 +51,10 @@ export class APIConfigurationService {
       apiKey: '8684be37505fc5ce63b0337d472af0ee',
       enabled: true,
       rateLimit: {
-        requestsPerMinute: 60, // TheOdds typically allows 500/month
-        burstLimit: 10
+        requestsPerMinute: 60, // TheOdds typically allows 500/month;
+        burstLimit: 10;
       },
-      timeout: 10000
+      timeout: 10000;
     });
 
     // PrizePicks API Configuration (PUBLIC ACCESS)
@@ -64,10 +64,10 @@ export class APIConfigurationService {
       apiKey: 'public_access',
       enabled: true,
       rateLimit: {
-        requestsPerMinute: 120, // More generous for public API
-        burstLimit: 20
+        requestsPerMinute: 120, // More generous for public API;
+        burstLimit: 20;
       },
-      timeout: 8000
+      timeout: 8000;
     });
 
     // ESPN API Configuration (PUBLIC ACCESS)
@@ -78,9 +78,9 @@ export class APIConfigurationService {
       enabled: true,
       rateLimit: {
         requestsPerMinute: 60,
-        burstLimit: 15
+        burstLimit: 15;
       },
-      timeout: 10000
+      timeout: 10000;
     });
 
     // Open Weather API (FREE PUBLIC ACCESS)
@@ -91,9 +91,9 @@ export class APIConfigurationService {
       enabled: true,
       rateLimit: {
         requestsPerMinute: 120,
-        burstLimit: 30
+        burstLimit: 30;
       },
-      timeout: 5000
+      timeout: 5000;
     });
 
     // News API (RSS FEEDS - PUBLIC ACCESS)
@@ -104,9 +104,9 @@ export class APIConfigurationService {
       enabled: true,
       rateLimit: {
         requestsPerMinute: 30,
-        burstLimit: 10
+        burstLimit: 10;
       },
-      timeout: 8000
+      timeout: 8000;
     });
   }
 
@@ -119,53 +119,52 @@ export class APIConfigurationService {
   }
 
   public isServiceEnabled(service: string): boolean {
-    const config = this.configs.get(service);
+
     return config ? config.enabled : false;
   }
 
   public updateConfig(service: string, updates: Partial<APIConfig>): void {
-    const existing = this.configs.get(service);
+
     if (existing) {
       this.configs.set(service, { ...existing, ...updates });
     }
   }
 
   public getServiceEndpoint(service: string): string {
-    const config = this.configs.get(service);
+
     return config ? config.endpoint : '';
   }
 
   public getServiceKey(service: string): string {
-    const config = this.configs.get(service);
+
     return config ? config.apiKey : '';
   }
 
   public getRateLimit(service: string): { requestsPerMinute: number; burstLimit: number } {
-    const config = this.configs.get(service);
+
     return config ? config.rateLimit : { requestsPerMinute: 60, burstLimit: 10 };
   }
 
   public getTimeout(service: string): number {
-    const config = this.configs.get(service);
+
     return config ? config.timeout : 10000;
   }
 
   public validateConfiguration(): { valid: boolean; issues: string[] } {
     const issues: string[] = [];
-    let valid = true;
+    const valid = true;
 
-    // Check critical services
-    const criticalServices = ['sportradar', 'theodds', 'prizepicks'];
-    
+    // Check critical services;
+
     for (const service of criticalServices) {
-      const config = this.configs.get(service);
+
       if (!config) {
         issues.push(`Missing configuration for critical service: ${service}`);
         valid = false;
       } else if (!config.enabled) {
         issues.push(`Critical service disabled: ${service}`);
       } else if (!config.apiKey || config.apiKey === 'your_key_here') {
-        if (service !== 'prizepicks') { // PrizePicks is public
+        if (service !== 'prizepicks') { // PrizePicks is public;
           issues.push(`Invalid API key for service: ${service}`);
           valid = false;
         }
@@ -193,10 +192,10 @@ export class APIConfigurationService {
 
   public getPrimaryDataSources(): { odds: string; stats: string; props: string; weather: string } {
     return {
-      odds: 'theodds',      // Your TheOdds API key
-      stats: 'sportradar',  // Your SportsRadar API key  
-      props: 'prizepicks',  // Public API access
-      weather: 'weather'    // Free weather API
+      odds: 'theodds',      // Your TheOdds API key;
+      stats: 'sportradar',  // Your SportsRadar API key;  
+      props: 'prizepicks',  // Public API access;
+      weather: 'weather'    // Free weather API;
     };
   }
 

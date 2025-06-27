@@ -1,14 +1,14 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
 import { EventEmitter } from "eventemitter3";
-// Event Bus for cross-component communication
+// Event Bus for cross-component communication;
 export const storeEventBus = new EventEmitter();
-// Main Store Implementation
+// Main Store Implementation;
 export const useUnifiedStore = create()(
   devtools(
     persist(
       (set, get) => ({
-        // Initial State
+        // Initial State;
         predictions: {},
         latestPredictions: [],
         betting: {
@@ -47,9 +47,9 @@ export const useUnifiedStore = create()(
           loading: {},
           modals: {},
         },
-        // Actions Implementation
+        // Actions Implementation;
         actions: {
-          // Prediction Actions
+          // Prediction Actions;
           updatePrediction: (eventId, prediction) => {
             set((state) => {
               const updatedPredictions = {
@@ -58,7 +58,7 @@ export const useUnifiedStore = create()(
               };
               const latestPredictions = Object.values(updatedPredictions)
                 .sort((a, b) => b.timestamp - a.timestamp)
-                .slice(0, 50); // Keep last 50 predictions
+                .slice(0, 50); // Keep last 50 predictions;
               storeEventBus.emit("prediction:updated", { eventId, prediction });
               return {
                 predictions: updatedPredictions,
@@ -76,7 +76,7 @@ export const useUnifiedStore = create()(
             }));
             storeEventBus.emit("predictions:cleared");
           },
-          // Betting Actions
+          // Betting Actions;
           addBet: (betData) => {
             const bet = {
               ...betData,
@@ -157,7 +157,7 @@ export const useUnifiedStore = create()(
               },
             }));
           },
-          // User Actions
+          // User Actions;
           setUser: (user) => {
             set((state) => ({
               user: {
@@ -189,7 +189,7 @@ export const useUnifiedStore = create()(
               },
             }));
           },
-          // Theme Actions
+          // Theme Actions;
           setTheme: (theme) => {
             set((state) => ({
               theme: {
@@ -207,7 +207,7 @@ export const useUnifiedStore = create()(
               },
             }));
           },
-          // Filter Actions
+          // Filter Actions;
           setFilters: (filters) => {
             set((state) => ({
               filters: {
@@ -228,7 +228,7 @@ export const useUnifiedStore = create()(
               },
             }));
           },
-          // UI Actions
+          // UI Actions;
           addToast: (toastData) => {
             const toast = {
               ...toastData,
@@ -240,7 +240,7 @@ export const useUnifiedStore = create()(
                 toasts: [...state.ui.toasts, toast],
               },
             }));
-            // Auto-remove toast after duration
+            // Auto-remove toast after duration;
             if (toast.duration !== 0) {
               setTimeout(() => {
                 get().actions.removeToast(toast.id);
@@ -295,11 +295,11 @@ export const useUnifiedStore = create()(
     { name: "A1Betting Store" },
   ),
 );
-// Convenience Hooks
+// Convenience Hooks;
 export const usePredictions = () => {
-  const predictions = useUnifiedStore((state) => state.predictions);
-  const latestPredictions = useUnifiedStore((state) => state.latestPredictions);
-  const actions = useUnifiedStore((state) => state.actions);
+
+
+
   return {
     predictions,
     latestPredictions,
@@ -309,8 +309,8 @@ export const usePredictions = () => {
   };
 };
 export const useBetting = () => {
-  const betting = useUnifiedStore((state) => state.betting);
-  const actions = useUnifiedStore((state) => state.actions);
+
+
   return {
     ...betting,
     addBet: actions.addBet,
@@ -323,8 +323,8 @@ export const useBetting = () => {
   };
 };
 export const useUser = () => {
-  const user = useUnifiedStore((state) => state.user);
-  const actions = useUnifiedStore((state) => state.actions);
+
+
   return {
     ...user,
     setUser: actions.setUser,
@@ -333,8 +333,8 @@ export const useUser = () => {
   };
 };
 export const useTheme = () => {
-  const theme = useUnifiedStore((state) => state.theme);
-  const actions = useUnifiedStore((state) => state.actions);
+
+
   return {
     ...theme,
     setTheme: actions.setTheme,
@@ -342,8 +342,8 @@ export const useTheme = () => {
   };
 };
 export const useFilters = () => {
-  const filters = useUnifiedStore((state) => state.filters);
-  const actions = useUnifiedStore((state) => state.actions);
+
+
   return {
     ...filters,
     setFilters: actions.setFilters,
@@ -351,8 +351,8 @@ export const useFilters = () => {
   };
 };
 export const useUI = () => {
-  const ui = useUnifiedStore((state) => state.ui);
-  const actions = useUnifiedStore((state) => state.actions);
+
+
   return {
     ...ui,
     addToast: actions.addToast,

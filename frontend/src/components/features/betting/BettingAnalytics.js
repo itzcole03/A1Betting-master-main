@@ -25,24 +25,24 @@ export const BettingAnalytics = ({ onOpportunitySelect, }) => {
         minSeverity: "medium",
     });
     const filteredOpportunities = useMemo(() => {
-        return opportunities
+        return opportunities;
             .filter((opp) => selectedSport === "all" || opp.sport === selectedSport)
             .sort((a, b) => {
-            const aValue = a[sortField];
-            const bValue = b[sortField];
+
+
             return sortDirection === "asc"
-                ? aValue > bValue
-                    ? 1
-                    : -1
-                : bValue > aValue
-                    ? 1
+                ? aValue > bValue;
+                    ? 1;
+                    : -1;
+                : bValue > aValue;
+                    ? 1;
                     : -1;
         });
     }, [opportunities, selectedSport, sortField, sortDirection]);
     const handleOpportunityClick = useCallback((opportunity) => {
         onOpportunitySelect?.(opportunity);
     }, [onOpportunitySelect]);
-    const renderPerformanceMetrics = () => (_jsxs("div", { className: "grid grid-cols-1 md:grid-cols-3 gap-4 mb-6", children: [_jsx(Card, { children: _jsxs("div", { className: "p-4", children: [_jsx("h3", { className: "text-sm font-medium text-gray-500", children: "Win Rate" }), _jsxs("div", { className: "mt-2 flex items-center", children: [_jsxs("span", { className: "text-2xl font-semibold", children: [(performance.winRate * 100).toFixed(1), "%"] }), _jsx(Badge, { variant: performance.winRate >= 0.55 ? "success" : "warning", className: "ml-2", children: performance.winRate >= 0.55 ? "Profitable" : "Monitor" })] }), _jsx(Progress, { value: performance.winRate * 100, max: 100, variant: performance.winRate >= 0.55 ? "success" : "warning", className: "mt-2" })] }) }), _jsx(Card, { children: _jsxs("div", { className: "p-4", children: [_jsx("h3", { className: "text-sm font-medium text-gray-500", children: "ROI" }), _jsxs("div", { className: "mt-2 flex items-center", children: [_jsxs("span", { className: "text-2xl font-semibold", children: [(performance.roi * 100).toFixed(1), "%"] }), _jsx(Badge, { variant: performance.roi > 0 ? "success" : "danger", className: "ml-2", children: performance.roi > 0 ? "Positive" : "Negative" })] }), _jsx(Progress, { value: Math.min(Math.max(performance.roi * 100, 0), 100), max: 100, variant: performance.roi > 0 ? "success" : "danger", className: "mt-2" })] }) }), _jsx(Card, { children: _jsxs("div", { className: "p-4", children: [_jsx("h3", { className: "text-sm font-medium text-gray-500", children: "Edge Retention" }), _jsxs("div", { className: "mt-2 flex items-center", children: [_jsxs("span", { className: "text-2xl font-semibold", children: [(performance.edgeRetention * 100).toFixed(1), "%"] }), _jsx(Badge, { variant: performance.edgeRetention >= 0.7 ? "success" : "warning", className: "ml-2", children: performance.edgeRetention >= 0.7 ? "Strong" : "Weak" })] }), _jsx(Progress, { value: performance.edgeRetention * 100, max: 100, variant: performance.edgeRetention >= 0.7 ? "success" : "warning", className: "mt-2" })] }) })] }));
+
     if (error) {
         return (_jsx(Alert, { type: "error", title: "Error Loading Analytics", message: error.message }));
     }

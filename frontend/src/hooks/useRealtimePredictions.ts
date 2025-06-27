@@ -1,7 +1,7 @@
-import { useEffect, useRef, useCallback, useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { PREDICTIONS_QUERY_KEY } from "./usePredictions";
-import { useToast } from "../components/ToastContext";
+import { useEffect, useRef, useCallback, useState } from 'react.ts';
+import { useQueryClient } from '@tanstack/react-query.ts';
+import { PREDICTIONS_QUERY_KEY } from './usePredictions.ts';
+import { useToast } from '@/components/ToastContext.ts';
 
 interface RealtimeMessage {
   type: "welcome" | "ping" | "update" | "data";
@@ -39,10 +39,8 @@ export function useRealtimePredictions({
     reconnectAttempts: 0,
   });
 
-  const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
-  const queryClient = useQueryClient();
-  const toast = useToast();
+
+
 
   const updateState = useCallback((updates: Partial<ConnectionState>) => {
     setState((prev) => ({ ...prev, ...updates }));
@@ -51,9 +49,7 @@ export function useRealtimePredictions({
   const connect = useCallback(() => {
     if (wsRef.current?.readyState === WebSocket.OPEN) return;
 
-    const wsUrl = import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8000";
-
-    // Safety checks to prevent invalid WebSocket connections
+    // Safety checks to prevent invalid WebSocket connections;
     if (
       !wsUrl ||
       wsUrl === "" ||
@@ -62,10 +58,7 @@ export function useRealtimePredictions({
       wsUrl.includes("localhost:8000") ||
       import.meta.env.VITE_ENABLE_WEBSOCKET === "false"
     ) {
-      console.log(
-        "WebSocket connection disabled for realtime predictions:",
-        wsUrl,
-      );
+      // console statement removed
       updateState({
         isConnecting: false,
         isConnected: false,
@@ -75,7 +68,6 @@ export function useRealtimePredictions({
     }
 
     updateState({ isConnecting: true });
-    const ws = new WebSocket(wsUrl);
 
     ws.onopen = () => {
       updateState({
@@ -84,7 +76,7 @@ export function useRealtimePredictions({
         reconnectAttempts: 0,
       });
 
-      // Subscribe to channels
+      // Subscribe to channels;
       ws.send(
         JSON.stringify({
           type: "subscribe",
@@ -99,7 +91,7 @@ export function useRealtimePredictions({
         isConnecting: false,
       });
 
-      // Attempt to reconnect if we haven't exceeded max attempts
+      // Attempt to reconnect if we haven't exceeded max attempts;
       if (state.reconnectAttempts < maxReconnectAttempts) {
         updateState((prev) => ({
           reconnectAttempts: prev.reconnectAttempts + 1,
@@ -135,7 +127,7 @@ export function useRealtimePredictions({
           case "update":
           case "data":
             if (message.channel === "predictions") {
-              // Update predictions cache with timestamp
+              // Update predictions cache with timestamp;
               queryClient.setQueryData(
                 PREDICTIONS_QUERY_KEY,
                 (oldData: any) => {
@@ -154,7 +146,7 @@ export function useRealtimePredictions({
             break;
         }
       } catch (error) {
-        console.error("Failed to parse WebSocket message:", error);
+        // console statement removed
         toast("Failed to process update", "error");
       }
     };
@@ -201,7 +193,7 @@ export function useRealtimePredictions({
 
   const isStale = useCallback(() => {
     if (!state.lastMessageTimestamp) return true;
-    const staleThreshold = 30000; // 30 seconds
+    const staleThreshold = 30000; // 30 seconds;
     return Date.now() - state.lastMessageTimestamp > staleThreshold;
   }, [state.lastMessageTimestamp]);
 

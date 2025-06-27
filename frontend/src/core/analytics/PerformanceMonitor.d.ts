@@ -1,6 +1,6 @@
-import { ModelPerformanceMetrics } from './ModelPerformanceTracker';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedMetrics } from '../metrics/types';
+import { ModelPerformanceMetrics } from './ModelPerformanceTracker.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
 interface AlertThreshold {
     metric: keyof ModelPerformanceMetrics;
     threshold: number;

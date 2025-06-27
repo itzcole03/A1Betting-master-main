@@ -7,10 +7,10 @@ declare class EventEmitter {
     off(event: string, fn: Function): void;
     emit(event: string, ...args: any[]): void;
 }
-import { ModelConfig, ModelMetrics, ModelPrediction, ModelType } from '@/types';
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-import { ResourceManager } from '../resources/ResourceManager';
+import { ModelConfig, ModelMetrics, ModelPrediction, ModelType } from '@/types.ts';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
+import { ResourceManager } from '@/resources/ResourceManager.ts';
 export interface TrainingConfig {
     data: any;
     validationSplit?: number;

@@ -1,25 +1,25 @@
-import { useState, useEffect, useRef, useCallback, useMemo } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react.ts';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query.ts';
 import {
   UniversalServiceFactory,
   createQueryKeys,
   defaultQueryConfig,
-} from "../services/UniversalServiceLayer";
-import { useTheme } from "../providers/SafeThemeProvider";
+} from '@/services/UniversalServiceLayer.ts';
+import { useTheme } from '@/providers/SafeThemeProvider.ts';
 
 // ============================================================================
-// DATA HOOKS
+// DATA HOOKS;
 // ============================================================================
 
 /**
- * Universal hook for fetching predictions with caching and real-time updates
+ * Universal hook for fetching predictions with caching and real-time updates;
  */
 export const usePredictions = (
   options: { limit?: number; realtime?: boolean } = {},
 ) => {
   const { limit = 10, realtime = false } = options;
 
-  // Mock data to prevent fetch errors
+  // Mock data to prevent fetch errors;
   const mockPredictions = Array.from({ length: limit }, (_, i) => ({
     id: `pred-${i + 1}`,
     game: `Game ${i + 1}`,
@@ -33,24 +33,24 @@ export const usePredictions = (
 
   const query = useQuery({
     queryKey: createQueryKeys.predictions.recent(limit),
-    queryFn: async () => ({ data: mockPredictions }), // Return mock data
+    queryFn: async () => ({ data: mockPredictions }), // Return mock data;
     ...defaultQueryConfig,
-    refetchInterval: false, // Disable auto-refetch to prevent errors
+    refetchInterval: false, // Disable auto-refetch to prevent errors;
   });
 
   return {
     predictions: query.data?.data || mockPredictions,
-    isLoading: false, // Set to false since we have mock data
+    isLoading: false, // Set to false since we have mock data;
     error: null,
     refetch: query.refetch,
   };
 };
 
 /**
- * Universal hook for fetching engine metrics
+ * Universal hook for fetching engine metrics;
  */
 export const useEngineMetrics = () => {
-  // Mock engine metrics to prevent fetch errors
+  // Mock engine metrics to prevent fetch errors;
   const mockMetrics = {
     accuracy: 89.3,
     totalPredictions: 156,
@@ -64,7 +64,7 @@ export const useEngineMetrics = () => {
     queryKey: createQueryKeys.predictions.metrics(),
     queryFn: async () => ({ data: mockMetrics }),
     ...defaultQueryConfig,
-    refetchInterval: false, // Disable auto-refetch to prevent errors
+    refetchInterval: false, // Disable auto-refetch to prevent errors;
   });
 
   return {
@@ -76,14 +76,14 @@ export const useEngineMetrics = () => {
 };
 
 /**
- * Universal hook for betting opportunities
+ * Universal hook for betting opportunities;
  */
 export const useBettingOpportunities = (
   options: { limit?: number; sport?: string } = {},
 ) => {
   const { limit = 5, sport } = options;
 
-  // Mock betting opportunities to prevent fetch errors
+  // Mock betting opportunities to prevent fetch errors;
   const mockOpportunities = Array.from({ length: limit }, (_, i) => ({
     id: `opp-${i + 1}`,
     game: `${sport || "NBA"} Game ${i + 1}`,
@@ -99,7 +99,7 @@ export const useBettingOpportunities = (
     queryKey: createQueryKeys.betting.opportunities(sport, limit),
     queryFn: async () => ({ data: mockOpportunities }),
     ...defaultQueryConfig,
-    refetchInterval: false, // Disable auto-refetch to prevent errors
+    refetchInterval: false, // Disable auto-refetch to prevent errors;
   });
 
   return {
@@ -111,11 +111,10 @@ export const useBettingOpportunities = (
 };
 
 /**
- * Universal hook for user profile management
+ * Universal hook for user profile management;
  */
 export const useUserProfile = () => {
-  const userService = UniversalServiceFactory.getUserService();
-  const queryClient = useQueryClient();
+
 
   const query = useQuery({
     queryKey: createQueryKeys.user.profile(),
@@ -143,18 +142,17 @@ export const useUserProfile = () => {
 };
 
 // ============================================================================
-// UI HOOKS
+// UI HOOKS;
 // ============================================================================
 
 /**
- * Universal theme hook with all theme functionality
+ * Universal theme hook with all theme functionality;
  */
 export const useUniversalTheme = () => {
-  const themeContext = useTheme();
 
   return {
     ...themeContext,
-    // Additional utility functions
+    // Additional utility functions;
     getCSSVariable: (name: string) => {
       if (typeof window === "undefined") return "";
       return getComputedStyle(document.documentElement).getPropertyValue(
@@ -168,7 +166,7 @@ export const useUniversalTheme = () => {
 };
 
 /**
- * Universal form hook with validation and submission
+ * Universal form hook with validation and submission;
  */
 export const useUniversalForm = <T extends Record<string, any>>(
   initialValues: T,
@@ -186,7 +184,7 @@ export const useUniversalForm = <T extends Record<string, any>>(
     (name: keyof T, value: any) => {
       setValues((prev) => ({ ...prev, [name]: value }));
 
-      // Clear error when user starts typing
+      // Clear error when user starts typing;
       if (errors[name as string]) {
         setErrors((prev) => ({ ...prev, [name]: "" }));
       }
@@ -198,9 +196,9 @@ export const useUniversalForm = <T extends Record<string, any>>(
     (name: keyof T) => {
       setTouched((prev) => ({ ...prev, [name]: true }));
 
-      // Validate on blur if validation function is provided
+      // Validate on blur if validation function is provided;
       if (options.validate) {
-        const validationErrors = options.validate(values);
+
         if (validationErrors[name as string]) {
           setErrors((prev) => ({
             ...prev,
@@ -218,7 +216,7 @@ export const useUniversalForm = <T extends Record<string, any>>(
 
       setIsSubmitting(true);
 
-      // Mark all fields as touched
+      // Mark all fields as touched;
       const allTouched = Object.keys(values).reduce(
         (acc, key) => {
           acc[key] = true;
@@ -228,9 +226,9 @@ export const useUniversalForm = <T extends Record<string, any>>(
       );
       setTouched(allTouched);
 
-      // Validate all fields
+      // Validate all fields;
       if (options.validate) {
-        const validationErrors = options.validate(values);
+
         setErrors(validationErrors);
 
         if (Object.keys(validationErrors).length > 0) {
@@ -242,7 +240,7 @@ export const useUniversalForm = <T extends Record<string, any>>(
       try {
         await options.onSubmit?.(values);
       } catch (error) {
-        console.error("Form submission error:", error);
+        // console statement removed
       } finally {
         setIsSubmitting(false);
       }
@@ -271,14 +269,12 @@ export const useUniversalForm = <T extends Record<string, any>>(
 };
 
 /**
- * Universal modal hook
+ * Universal modal hook;
  */
 export const useModal = (defaultOpen = false) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
 
-  const open = useCallback(() => setIsOpen(true), []);
-  const close = useCallback(() => setIsOpen(false), []);
-  const toggle = useCallback(() => setIsOpen((prev) => !prev), []);
+
 
   return {
     isOpen,
@@ -289,7 +285,7 @@ export const useModal = (defaultOpen = false) => {
 };
 
 /**
- * Universal toast/notification hook
+ * Universal toast/notification hook;
  */
 export const useToast = () => {
   const [toasts, setToasts] = useState<
@@ -307,8 +303,7 @@ export const useToast = () => {
       type: "success" | "error" | "warning" | "info" = "info",
       duration = 5000,
     ) => {
-      const id = Math.random().toString(36).substr(2, 9);
-      const toast = { id, message, type, duration };
+
 
       setToasts((prev) => [...prev, toast]);
 
@@ -348,11 +343,11 @@ export const useToast = () => {
 };
 
 // ============================================================================
-// UTILITY HOOKS
+// UTILITY HOOKS;
 // ============================================================================
 
 /**
- * Universal debounce hook
+ * Universal debounce hook;
  */
 export const useDebounce = <T>(value: T, delay: number): T => {
   const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -371,17 +366,17 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 };
 
 /**
- * Universal local storage hook
+ * Universal local storage hook;
  */
 export const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     if (typeof window === "undefined") return initialValue;
 
     try {
-      const item = window.localStorage.getItem(key);
+
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+      // console statement removed
       return initialValue;
     }
   });
@@ -397,7 +392,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
           window.localStorage.setItem(key, JSON.stringify(valueToStore));
         }
       } catch (error) {
-        console.warn(`Error setting localStorage key "${key}":`, error);
+        // console statement removed
       }
     },
     [key, storedValue],
@@ -410,7 +405,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
         window.localStorage.removeItem(key);
       }
     } catch (error) {
-      console.warn(`Error removing localStorage key "${key}":`, error);
+      // console statement removed
     }
   }, [key, initialValue]);
 
@@ -418,7 +413,7 @@ export const useLocalStorage = <T>(key: string, initialValue: T) => {
 };
 
 /**
- * Universal window size hook
+ * Universal window size hook;
  */
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState(() => {
@@ -445,7 +440,7 @@ export const useWindowSize = () => {
 };
 
 /**
- * Universal media query hook
+ * Universal media query hook;
  */
 export const useMediaQuery = (query: string): boolean => {
   const [matches, setMatches] = useState(() => {
@@ -456,8 +451,6 @@ export const useMediaQuery = (query: string): boolean => {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const mediaQuery = window.matchMedia(query);
-    const handleChange = () => setMatches(mediaQuery.matches);
 
     mediaQuery.addListener(handleChange);
     return () => mediaQuery.removeListener(handleChange);
@@ -467,10 +460,9 @@ export const useMediaQuery = (query: string): boolean => {
 };
 
 /**
- * Universal click outside hook
+ * Universal click outside hook;
  */
 export const useClickOutside = <T extends HTMLElement>(handler: () => void) => {
-  const ref = useRef<T>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -487,7 +479,7 @@ export const useClickOutside = <T extends HTMLElement>(handler: () => void) => {
 };
 
 /**
- * Universal WebSocket hook
+ * Universal WebSocket hook;
  */
 export const useWebSocket = (
   url: string,
@@ -504,7 +496,6 @@ export const useWebSocket = (
     "connecting" | "connected" | "disconnected"
   >("disconnected");
   const [lastMessage, setLastMessage] = useState<any>(null);
-  const wsRef = useRef<WebSocket | null>(null);
 
   const sendMessage = useCallback((data: any) => {
     if (wsRef.current?.readyState === WebSocket.OPEN) {
@@ -516,7 +507,7 @@ export const useWebSocket = (
     if (!enabled) return;
 
     setConnectionStatus("connecting");
-    const ws = new WebSocket(url);
+
     wsRef.current = ws;
 
     ws.onopen = () => {
@@ -526,11 +517,11 @@ export const useWebSocket = (
 
     ws.onmessage = (event) => {
       try {
-        const data = JSON.parse(event.data);
+
         setLastMessage(data);
         onMessage?.(data);
       } catch (error) {
-        console.warn("Failed to parse WebSocket message:", error);
+        // console statement removed
       }
     };
 
@@ -557,11 +548,11 @@ export const useWebSocket = (
 };
 
 // ============================================================================
-// PERFORMANCE HOOKS
+// PERFORMANCE HOOKS;
 // ============================================================================
 
 /**
- * Universal animation hook
+ * Universal animation hook;
  */
 export const useAnimation = (
   initialValue: number,
@@ -576,14 +567,12 @@ export const useAnimation = (
     if (initialValue === targetValue) return;
 
     setIsAnimating(true);
-    const startTime = Date.now();
-    const startValue = value;
-    const difference = targetValue - startValue;
+
+
 
     const animate = () => {
-      const elapsed = Date.now() - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = easing(progress);
+
+
 
       setValue(startValue + difference * easedProgress);
 
@@ -601,7 +590,7 @@ export const useAnimation = (
 };
 
 /**
- * Universal performance monitor hook
+ * Universal performance monitor hook;
  */
 export const usePerformanceMonitor = () => {
   const [metrics, setMetrics] = useState({
@@ -611,20 +600,19 @@ export const usePerformanceMonitor = () => {
   });
 
   useEffect(() => {
-    let frameCount = 0;
-    let lastTime = performance.now();
+    const frameCount = 0;
+    const lastTime = performance.now();
 
     const measurePerformance = () => {
-      const currentTime = performance.now();
+
       frameCount++;
 
       if (currentTime - lastTime >= 1000) {
-        const fps = Math.round((frameCount * 1000) / (currentTime - lastTime));
-        const memoryUsage = (performance as any).memory?.usedJSHeapSize || 0;
+
 
         setMetrics({
           renderTime: currentTime - lastTime,
-          memoryUsage: Math.round(memoryUsage / 1024 / 1024), // MB
+          memoryUsage: Math.round(memoryUsage / 1024 / 1024), // MB;
           fps,
         });
 
@@ -642,23 +630,23 @@ export const usePerformanceMonitor = () => {
 };
 
 // ============================================================================
-// EXPORTS
+// EXPORTS;
 // ============================================================================
 
 export default {
-  // Data hooks
+  // Data hooks;
   usePredictions,
   useEngineMetrics,
   useBettingOpportunities,
   useUserProfile,
 
-  // UI hooks
+  // UI hooks;
   useUniversalTheme,
   useUniversalForm,
   useModal,
   useToast,
 
-  // Utility hooks
+  // Utility hooks;
   useDebounce,
   useLocalStorage,
   useWindowSize,
@@ -666,12 +654,12 @@ export default {
   useClickOutside,
   useWebSocket,
 
-  // Performance hooks
+  // Performance hooks;
   useAnimation,
   usePerformanceMonitor,
 };
 
-// Individual exports for tree shaking
+// Individual exports for tree shaking;
 export {
   usePredictions,
   useEngineMetrics,

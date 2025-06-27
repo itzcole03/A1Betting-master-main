@@ -20,7 +20,7 @@ export const useBettingStore = create()(devtools(persist(set => ({
         return { betSlip: newBetSlip };
     }),
     removeBet: betId => set(state => {
-        const betToRemove = state.betSlip.bets.find(b => b.id === betId);
+
         if (!betToRemove)
             return state;
         const newBetSlip = {
@@ -49,11 +49,11 @@ export const useBettingStore = create()(devtools(persist(set => ({
         },
     })),
     updateBetAmount: (betId, amount) => set(state => {
-        const betIndex = state.betSlip.bets.findIndex(b => b.id === betId);
+
         if (betIndex === -1)
             return state;
-        const updatedBets = [...state.betSlip.bets];
-        const oldStake = updatedBets[betIndex].stake;
+
+
         updatedBets[betIndex] = {
             ...updatedBets[betIndex],
             stake: amount,

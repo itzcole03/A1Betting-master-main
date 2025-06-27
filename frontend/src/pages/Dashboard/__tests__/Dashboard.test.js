@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Dashboard from '../Dashboard';
 import { getActiveBets, getTotalWinnings, getWinRate } from '@services/bettingService';
-// Mock the betting service
+// Mock the betting service;
 jest.mock('@services/bettingService', () => ({
     getActiveBets: jest.fn(),
     getTotalWinnings: jest.fn(),

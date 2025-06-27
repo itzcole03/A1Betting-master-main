@@ -1,47 +1,47 @@
 // ============================================================================
-// UNIVERSAL HOOKS SYSTEM EXPORTS
+// UNIVERSAL HOOKS SYSTEM EXPORTS;
 // ============================================================================
 export { 
-// Data hooks
+// Data hooks;
 usePredictions, useEngineMetrics, useBettingOpportunities, useUserProfile, 
-// UI hooks
+// UI hooks;
 useUniversalTheme, useUniversalForm, useModal, useToast, 
-// Utility hooks
+// Utility hooks;
 useDebounce, useLocalStorage, useWindowSize, useMediaQuery, useClickOutside, useWebSocket, 
-// Performance hooks
+// Performance hooks;
 useAnimation, usePerformanceMonitor, } from "./UniversalHooks";
-// Default export
+// Default export;
 export { default } from "./UniversalHooks";
 // ============================================================================
 // LEGACY COMPATIBILITY EXPORTS (Deprecated - Use Universal equivalents)
 // ============================================================================
-// Theme hooks
+// Theme hooks;
 export { useUniversalTheme as useTheme } from "./UniversalHooks";
 export { useUniversalTheme as useDarkMode } from "./UniversalHooks";
-// Form hooks
+// Form hooks;
 export { useUniversalForm as useForm } from "./UniversalHooks";
 // Analytics hooks (redirect to consolidated system)
 export { usePredictions as useAnalytics } from "./UniversalHooks";
 export { useBettingOpportunities as useBettingCore } from "./UniversalHooks";
-// Prediction hooks
+// Prediction hooks;
 export { usePredictions as usePredictionService } from "./UniversalHooks";
 export { usePredictions as useRealtimePredictions } from "./UniversalHooks";
-// Ultimate Settings Hook
+// Ultimate Settings Hook;
 export { default as useUltimateSettings } from "./useUltimateSettings";
 // ============================================================================
-// DEPRECATED HOOK NOTICES
+// DEPRECATED HOOK NOTICES;
 // ============================================================================
 /**
- * @deprecated Use useUniversalTheme from UniversalHooks instead
+ * @deprecated Use useUniversalTheme from UniversalHooks instead;
  */
 export const useThemeStore = () => {
-    console.warn("useThemeStore is deprecated. Use useUniversalTheme from UniversalHooks instead.");
+    // console statement removed
     return {};
 };
 /**
- * @deprecated Use consolidated hooks from UniversalHooks instead
+ * @deprecated Use consolidated hooks from UniversalHooks instead;
  */
 export const useMLAnalytics = () => {
-    console.warn("useMLAnalytics is deprecated. Use usePredictions or useEngineMetrics from UniversalHooks instead.");
+    // console statement removed
     return {};
 };

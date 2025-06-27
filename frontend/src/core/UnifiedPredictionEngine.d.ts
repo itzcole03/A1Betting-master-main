@@ -1,4 +1,4 @@
-import { TimestampedData, BettingOpportunity } from '../types/core';
+import { TimestampedData, BettingOpportunity } from '@/types/core.ts';
 export interface PredictionContext {
     playerId: string;
     metric: string;

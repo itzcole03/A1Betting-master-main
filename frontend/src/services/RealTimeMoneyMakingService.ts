@@ -1,14 +1,14 @@
-import { EventEmitter } from "events";
-import BackendIntegrationService from "./BackendIntegrationService";
-import { UnifiedWebSocketService } from "./unified/UnifiedWebSocketService";
-import { UnifiedLogger } from "./unified/UnifiedLogger";
-import { ArbitrageService } from "./ArbitrageService";
-import { PrizePicksAPI } from "./PrizePicksAPI";
+import { EventEmitter } from 'events.ts';
+import BackendIntegrationService from './BackendIntegrationService.ts';
+import { UnifiedWebSocketService } from './unified/UnifiedWebSocketService.ts';
+import { UnifiedLogger } from './unified/UnifiedLogger.ts';
+import { ArbitrageService } from './ArbitrageService.ts';
+import { PrizePicksAPI } from './PrizePicksAPI.ts';
 
-// NEW: Import our enhanced API integration services
-import LiveAPIIntegrationService from "./LiveAPIIntegrationService";
-import EnhancedDataSourcesService from "./EnhancedDataSourcesService";
-import APIConfigurationService from "./APIConfigurationService";
+// NEW: Import our enhanced API integration services;
+import LiveAPIIntegrationService from './LiveAPIIntegrationService.ts';
+import EnhancedDataSourcesService from './EnhancedDataSourcesService.ts';
+import APIConfigurationService from './APIConfigurationService.ts';
 
 export interface MoneyMakingOpportunity {
   id: string;
@@ -23,7 +23,7 @@ export interface MoneyMakingOpportunity {
   kellyFraction: number;
   projectedReturn: number;
   riskLevel: "low" | "medium" | "high";
-  timeRemaining: number; // minutes
+  timeRemaining: number; // minutes;
   analysis: {
     historicalTrends: string[];
     marketSignals: string[];
@@ -45,7 +45,7 @@ export interface PortfolioOptimization {
   totalKellyFraction: number;
   riskScore: number;
   diversificationScore: number;
-  allocation: Record<string, number>; // opportunity_id -> amount
+  allocation: Record<string, number>; // opportunity_id -> amount;
   constraints: {
     maxSingleBet: number;
     maxTotalExposure: number;
@@ -61,7 +61,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
   private arbitrageService: ArbitrageService;
   private prizePicksService: PrizePicksAPI;
 
-  // NEW: Enhanced API integration services
+  // NEW: Enhanced API integration services;
   private liveAPI: LiveAPIIntegrationService;
   private dataSourcesService: EnhancedDataSourcesService;
   private apiConfigService: APIConfigurationService;
@@ -92,7 +92,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
     this.arbitrageService = ArbitrageService.getInstance();
     this.prizePicksService = PrizePicksAPI.getInstance();
 
-    // NEW: Initialize enhanced API services
+    // NEW: Initialize enhanced API services;
     this.liveAPI = LiveAPIIntegrationService.getInstance();
     this.dataSourcesService = EnhancedDataSourcesService.getInstance();
     this.apiConfigService = APIConfigurationService.getInstance();
@@ -109,7 +109,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   private setupEventListeners(): void {
-    // Real-time opportunity detection
+    // Real-time opportunity detection;
     this.wsService.subscribe(
       "market:odds_change",
       this.handleOddsChange.bind(this),
@@ -143,10 +143,10 @@ class RealTimeMoneyMakingService extends EventEmitter {
     this.isActive = true;
     this.logger.info("Starting real-time money-making scanner", config);
 
-    // Initial scan
+    // Initial scan;
     await this.performFullScan(config);
 
-    // Set up periodic scanning
+    // Set up periodic scanning;
     this.scanInterval = setInterval(async () => {
       await this.performFullScan(config);
     }, config.scanIntervalMs);
@@ -169,19 +169,16 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   private async performFullScan(config: any): Promise<void> {
-    const startTime = Date.now();
 
     try {
-      // Parallel scanning across different opportunity types
+      // Parallel scanning across different opportunity types;
       const scanPromises = [
         this.scanPrizePicksOpportunities(config),
         this.scanArbitrageOpportunities(config),
         this.scanValueBetOpportunities(config),
       ];
 
-      const results = await Promise.allSettled(scanPromises);
-
-      // Process successful scans
+      // Process successful scans;
       const allOpportunities: MoneyMakingOpportunity[] = [];
       results.forEach((result, index) => {
         if (result.status === "fulfilled") {
@@ -191,11 +188,10 @@ class RealTimeMoneyMakingService extends EventEmitter {
         }
       });
 
-      // Update opportunities cache
+      // Update opportunities cache;
       this.updateOpportunities(allOpportunities);
 
-      // Optimize portfolio
-      const portfolio = await this.optimizePortfolio(allOpportunities, config);
+      // Optimize portfolio;
 
       this.performanceMetrics.lastScanTime = Date.now();
       this.performanceMetrics.totalOpportunitiesFound +=
@@ -225,7 +221,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
       const opportunities: MoneyMakingOpportunity[] = [];
 
       for (const prop of props.slice(0, 50)) {
-        // Limit for performance
+        // Limit for performance;
         const prediction = await this.backendService.getPrediction({
           player_id: prop.playerId,
           metric: prop.statType,
@@ -268,7 +264,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
             },
             metadata: {
               createdAt: Date.now(),
-              expiresAt: Date.now() + 4 * 60 * 60 * 1000, // 4 hours
+              expiresAt: Date.now() + 4 * 60 * 60 * 1000, // 4 hours;
               modelVersion: prediction.meta.model_version,
               predictionId: prediction.meta.prediction_id,
             },
@@ -290,7 +286,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
       const arbOpportunities =
         await this.backendService.getArbitrageOpportunities({
           sports: config.sports,
-          min_profit: 0.02, // 2% minimum profit
+          min_profit: 0.02, // 2% minimum profit;
           time_window: "today",
         });
 
@@ -300,11 +296,11 @@ class RealTimeMoneyMakingService extends EventEmitter {
         source: `${arb.bookmaker1.name} vs ${arb.bookmaker2.name}`,
         playerName: arb.event,
         statType: arb.market,
-        line: 0, // Arbitrage doesn't have a line
+        line: 0, // Arbitrage doesn't have a line;
         odds: arb.bookmaker1.odds,
-        confidence: 0.99, // Arbitrage is near-certain profit
+        confidence: 0.99, // Arbitrage is near-certain profit;
         expectedValue: arb.profit_percentage,
-        kellyFraction: 0.05, // Conservative for arbitrage
+        kellyFraction: 0.05, // Conservative for arbitrage;
         projectedReturn: arb.profit,
         riskLevel: "low",
         timeRemaining: this.calculateTimeRemainingFromString(arb.expires_at),
@@ -362,7 +358,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
         },
         metadata: {
           createdAt: Date.now(),
-          expiresAt: Date.now() + 6 * 60 * 60 * 1000, // 6 hours
+          expiresAt: Date.now() + 6 * 60 * 60 * 1000, // 6 hours;
           modelVersion: "value-v1.0",
           predictionId: bet.id,
         },
@@ -377,34 +373,33 @@ class RealTimeMoneyMakingService extends EventEmitter {
     opportunities: MoneyMakingOpportunity[],
     config: any,
   ): Promise<PortfolioOptimization> {
-    // Sort by Kelly-adjusted expected value
+    // Sort by Kelly-adjusted expected value;
     const sorted = opportunities.sort((a, b) => {
-      const aScore = a.expectedValue * a.kellyFraction * a.confidence;
-      const bScore = b.expectedValue * b.kellyFraction * b.confidence;
+
+
       return bScore - aScore;
     });
 
-    // Apply portfolio constraints
+    // Apply portfolio constraints;
     const selected: MoneyMakingOpportunity[] = [];
-    let totalKellyFraction = 0;
+    const totalKellyFraction = 0;
     const allocation: Record<string, number> = {};
 
     for (const opp of sorted) {
-      if (selected.length >= 10) break; // Max 10 positions
+      if (selected.length >= 10) break; // Max 10 positions;
       if (totalKellyFraction + opp.kellyFraction > config.maxExposure) break;
       if (opp.confidence < config.minConfidence) continue;
 
       selected.push(opp);
       totalKellyFraction += opp.kellyFraction;
-      allocation[opp.id] = Math.round(1000 * opp.kellyFraction); // $1000 base bankroll
+      allocation[opp.id] = Math.round(1000 * opp.kellyFraction); // $1000 base bankroll;
     }
 
     const totalExpectedValue = selected.reduce(
       (sum, opp) => sum + opp.expectedValue,
       0,
     );
-    const riskScore = this.calculatePortfolioRisk(selected);
-    const diversificationScore = this.calculateDiversification(selected);
+
 
     return {
       opportunities: selected,
@@ -422,17 +417,16 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   private calculateKellyFraction(confidence: number, odds: number): number {
-    const b = odds - 1; // net odds
-    const p = confidence; // probability of winning
-    const q = 1 - p; // probability of losing
+    const b = odds - 1; // net odds;
+    const p = confidence; // probability of winning;
+    const q = 1 - p; // probability of losing;
 
-    const kelly = (b * p - q) / b;
     return Math.max(0, Math.min(kelly * 0.25, 0.1)); // Conservative Kelly with 25% multiplier, max 10%
   }
 
   private calculateExpectedValue(confidence: number, odds: number): number {
-    const impliedProbability = 1 / odds;
-    return (confidence * odds - 1) * 100; // Return as percentage
+
+    return (confidence * odds - 1) * 100; // Return as percentage;
   }
 
   private calculateRiskLevel(
@@ -445,23 +439,23 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   private calculateTimeRemaining(gameTime: string): number {
-    const gameDate = new Date(gameTime);
-    const now = new Date();
+
+
     return Math.max(
       0,
       Math.floor((gameDate.getTime() - now.getTime()) / (1000 * 60)),
-    ); // minutes
+    ); // minutes;
   }
 
   private calculateTimeRemainingFromString(timeStr: string): number {
     if (timeStr.includes("hour")) {
-      const hours = parseInt(timeStr.match(/\d+/)?.[0] || "0");
+
       return hours * 60;
     }
     if (timeStr.includes("minute")) {
       return parseInt(timeStr.match(/\d+/)?.[0] || "0");
     }
-    return 60; // Default 1 hour
+    return 60; // Default 1 hour;
   }
 
   private calculatePortfolioRisk(
@@ -481,14 +475,13 @@ class RealTimeMoneyMakingService extends EventEmitter {
   private calculateDiversification(
     opportunities: MoneyMakingOpportunity[],
   ): number {
-    const sports = new Set(opportunities.map((opp) => opp.statType));
-    const types = new Set(opportunities.map((opp) => opp.type));
-    const sources = new Set(opportunities.map((opp) => opp.source));
+
+
 
     // Diversification score: higher is better (0-100)
-    const sportDiv = Math.min(sports.size / 4, 1) * 40; // Max 40 points for sports diversity
-    const typeDiv = Math.min(types.size / 3, 1) * 30; // Max 30 points for type diversity
-    const sourceDiv = Math.min(sources.size / 3, 1) * 30; // Max 30 points for source diversity
+    const sportDiv = Math.min(sports.size / 4, 1) * 40; // Max 40 points for sports diversity;
+    const typeDiv = Math.min(types.size / 3, 1) * 30; // Max 30 points for type diversity;
+    const sourceDiv = Math.min(sources.size / 3, 1) * 30; // Max 30 points for source diversity;
 
     return sportDiv + typeDiv + sourceDiv;
   }
@@ -496,15 +489,15 @@ class RealTimeMoneyMakingService extends EventEmitter {
   private updateOpportunities(
     newOpportunities: MoneyMakingOpportunity[],
   ): void {
-    // Remove expired opportunities
-    const now = Date.now();
+    // Remove expired opportunities;
+
     for (const [id, opp] of this.opportunities) {
       if (opp.metadata.expiresAt < now) {
         this.opportunities.delete(id);
       }
     }
 
-    // Add new opportunities
+    // Add new opportunities;
     newOpportunities.forEach((opp) => {
       this.opportunities.set(opp.id, opp);
     });
@@ -513,12 +506,12 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   /**
-   * NEW: Initialize enhanced money-making features with real API data
+   * NEW: Initialize enhanced money-making features with real API data;
    */
   private async initializeEnhancedFeatures(): Promise<void> {
     try {
-      // Test all API connections
-      const connectionTest = await this.liveAPI.testAllConnections();
+      // Test all API connections;
+
       this.logger.info("API Connection Test Results:", connectionTest);
 
       if (connectionTest.success) {
@@ -541,7 +534,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   /**
-   * NEW: Enhanced opportunity scanning with real API data
+   * NEW: Enhanced opportunity scanning with real API data;
    */
   async scanForOpportunitiesEnhanced(config: {
     sports: string[];
@@ -549,12 +542,12 @@ class RealTimeMoneyMakingService extends EventEmitter {
     maxExposure: number;
     useRealTimeAPIs: boolean;
   }): Promise<MoneyMakingOpportunity[]> {
-    const startTime = Date.now();
+
     const newOpportunities: MoneyMakingOpportunity[] = [];
 
     try {
       if (config.useRealTimeAPIs) {
-        // Get real-time data from all sources
+        // Get real-time data from all sources;
         const [oddsData, statsData, propsData, scoresData] =
           await Promise.allSettled([
             this.liveAPI.getLiveOdds("americanfootball_nfl"),
@@ -563,7 +556,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
             this.liveAPI.getLiveScores("football/nfl"),
           ]);
 
-        // Analyze arbitrage opportunities
+        // Analyze arbitrage opportunities;
         if (
           oddsData.status === "fulfilled" &&
           propsData.status === "fulfilled"
@@ -575,7 +568,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
           newOpportunities.push(...arbitrageOpps);
         }
 
-        // Analyze value betting opportunities
+        // Analyze value betting opportunities;
         if (
           statsData.status === "fulfilled" &&
           propsData.status === "fulfilled"
@@ -588,14 +581,14 @@ class RealTimeMoneyMakingService extends EventEmitter {
           newOpportunities.push(...valueBets);
         }
 
-        // Update quota usage tracking
+        // Update quota usage tracking;
         this.updateQuotaUsage();
       } else {
-        // Fallback to existing methods
+        // Fallback to existing methods;
         return this.scanForOpportunities(config);
       }
 
-      // Filter and optimize opportunities
+      // Filter and optimize opportunities;
       const filteredOpportunities = this.filterOpportunities(
         newOpportunities,
         config,
@@ -625,7 +618,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   /**
-   * NEW: Analyze arbitrage opportunities using real API data
+   * NEW: Analyze arbitrage opportunities using real API data;
    */
   private async analyzeArbitrageOpportunities(
     oddsData: any,
@@ -634,7 +627,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
     const opportunities: MoneyMakingOpportunity[] = [];
 
     try {
-      // Cross-reference odds between TheOdds API and PrizePicks
+      // Cross-reference odds between TheOdds API and PrizePicks;
       const arbitrageData = await this.liveAPI.getArbitrageData(
         "americanfootball_nfl",
       );
@@ -680,7 +673,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   /**
-   * NEW: Analyze value betting opportunities
+   * NEW: Analyze value betting opportunities;
    */
   private async analyzeValueBets(
     statsData: any,
@@ -690,11 +683,10 @@ class RealTimeMoneyMakingService extends EventEmitter {
     const opportunities: MoneyMakingOpportunity[] = [];
 
     try {
-      // Advanced analysis using SportsRadar stats and PrizePicks props
+      // Advanced analysis using SportsRadar stats and PrizePicks props;
       if (propsData?.data?.data) {
         for (const prop of propsData.data.data.slice(0, 20)) {
-          // Limit to avoid quota exhaustion
-          const playerAnalysis = await this.analyzePlayerProp(prop, statsData);
+          // Limit to avoid quota exhaustion;
 
           if (playerAnalysis.confidence >= minConfidence) {
             opportunities.push({
@@ -720,7 +712,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
               },
               metadata: {
                 createdAt: Date.now(),
-                expiresAt: Date.now() + 6 * 60 * 60 * 1000, // 6 hours
+                expiresAt: Date.now() + 6 * 60 * 60 * 1000, // 6 hours;
                 modelVersion: "2.0_enhanced",
                 predictionId: `value_${prop.id || Date.now()}`,
               },
@@ -736,7 +728,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   /**
-   * NEW: Enhanced player prop analysis
+   * NEW: Enhanced player prop analysis;
    */
   private async analyzePlayerProp(
     prop: any,
@@ -754,12 +746,11 @@ class RealTimeMoneyMakingService extends EventEmitter {
     breakdown: Record<string, number>;
     shapValues: Array<{ feature: string; value: number; impact: number }>;
   }> {
-    // Enhanced analysis using real stats data
-    const playerName = prop.attributes?.player_name;
-    const statType = prop.attributes?.stat_type;
-    const lineScore = prop.attributes?.line_score || 0;
+    // Enhanced analysis using real stats data;
 
-    // Default analysis result
+
+
+    // Default analysis result;
     const defaultResult = {
       confidence: 65,
       expectedValue: 0.05,
@@ -785,16 +776,15 @@ class RealTimeMoneyMakingService extends EventEmitter {
     };
 
     try {
-      // Enhanced analysis with real data would go here
-      // For now, return enhanced default with some randomization
-      const confidence = Math.min(95, 60 + Math.random() * 30);
-      const expectedValue = Math.random() * 0.15;
+      // Enhanced analysis with real data would go here;
+      // For now, return enhanced default with some randomization;
+
 
       return {
         ...defaultResult,
         confidence,
         expectedValue,
-        kellyFraction: expectedValue * 0.25, // Conservative Kelly
+        kellyFraction: expectedValue * 0.25, // Conservative Kelly;
         projectedReturn: lineScore * expectedValue,
         trends: [
           "Strong recent performance trend",
@@ -814,34 +804,33 @@ class RealTimeMoneyMakingService extends EventEmitter {
   }
 
   /**
-   * NEW: Update API quota usage tracking
+   * NEW: Update API quota usage tracking;
    */
   private updateQuotaUsage(): void {
-    const rateLimits = this.liveAPI.getRateLimitStatus();
+
     this.performanceMetrics.quotaUsage = {
       sportradar: 1000 - (rateLimits.sportradar?.requestsRemaining || 1000),
       theodds: 500 - (rateLimits.theodds?.requestsRemaining || 500),
-      prizepicks: 0, // Public API
+      prizepicks: 0, // Public API;
     };
     this.performanceMetrics.apiCallsToday += 1;
   }
 
   /**
-   * NEW: Get API usage status
+   * NEW: Get API usage status;
    */
   getAPIUsageStatus(): {
     quotaUsage: Record<string, number>;
     quotaRemaining: Record<string, number>;
     healthStatus: Record<string, string>;
   } {
-    const rateLimits = this.liveAPI.getRateLimitStatus();
 
     return {
       quotaUsage: this.performanceMetrics.quotaUsage,
       quotaRemaining: {
         sportradar: rateLimits.sportradar?.requestsRemaining || 0,
         theodds: rateLimits.theodds?.requestsRemaining || 0,
-        prizepicks: 999999, // Public API
+        prizepicks: 999999, // Public API;
       },
       healthStatus: {
         sportradar:
@@ -853,7 +842,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
     };
   }
 
-  // NEW: Compatibility methods for existing components
+  // NEW: Compatibility methods for existing components;
   async scanForOpportunities(config: any): Promise<MoneyMakingOpportunity[]> {
     return this.scanForOpportunitiesEnhanced({
       ...config,
@@ -876,7 +865,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
     opportunityId: string,
     amount: number,
   ): Promise<{ success: boolean; betId?: string; error?: string }> {
-    const opportunity = this.opportunities.get(opportunityId);
+
     if (!opportunity) {
       return { success: false, error: "Opportunity not found" };
     }
@@ -892,7 +881,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
 
       if (result.success) {
         this.performanceMetrics.totalBetsPlaced++;
-        this.opportunities.delete(opportunityId); // Remove placed opportunity
+        this.opportunities.delete(opportunityId); // Remove placed opportunity;
         this.emit("bet:placed", {
           opportunityId,
           amount,
@@ -910,7 +899,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
     }
   }
 
-  // Convenience method for compatibility
+  // Convenience method for compatibility;
   startScanning(): void {
     this.startRealTimeScanning({
       sports: [
@@ -927,7 +916,7 @@ class RealTimeMoneyMakingService extends EventEmitter {
       ],
       minConfidence: 0.65,
       maxExposure: 1000,
-      scanIntervalMs: 30000, // 30 seconds
+      scanIntervalMs: 30000, // 30 seconds;
       strategies: ["prizepicks", "arbitrage", "value_bet"],
     });
   }

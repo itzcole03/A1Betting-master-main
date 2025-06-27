@@ -1,5 +1,5 @@
-// Temporary fix for API endpoint
-import { apiClient } from "./api";
+// Temporary fix for API endpoint;
+import { apiClient } from './api.ts';
 
 export const fixedApiEndpoints = {
   getAccuracyMetrics: async () => {

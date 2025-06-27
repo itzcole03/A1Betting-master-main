@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react.ts';
 import {
   Paper,
   Typography,
@@ -15,23 +15,23 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
-} from '@mui/material';
-import { Delete as DeleteIcon, Refresh as RefreshIcon } from '@mui/icons-material';
-import { errorLogger, ErrorLog } from '../../utils/errorLogger';
+} from '@mui/material.ts';
+import { Delete as DeleteIcon, Refresh as RefreshIcon } from '@mui/icons-material.ts';
+import { errorLogger, ErrorLog } from '@/utils/errorLogger.ts';
 
 export const ErrorLogs: React.FC = () => {
-  const [logs, setLogs] = useState<ErrorLog[]>([]);
-  const [severityFilter, setSeverityFilter] = useState<ErrorLog['severity'] | 'all'>('all');
+  const [logs, setLogs] = useState<ErrorLog[] key={380670}>([]);
+  const [severityFilter, setSeverityFilter] = useState<ErrorLog['severity'] | 'all' key={177356}>('all');
 
   const fetchLogs = () => {
-    const allLogs = errorLogger.getLogs();
+
     setLogs(allLogs);
   };
 
   useEffect(() => {
     fetchLogs();
-    // Refresh logs every 30 seconds
-    const interval = setInterval(fetchLogs, 30000);
+    // Refresh logs every 30 seconds;
+
     return () => clearInterval(interval);
   }, []);
 
@@ -41,7 +41,7 @@ export const ErrorLogs: React.FC = () => {
   };
 
   const handleSeverityChange = (event: any) => {
-    const severity = event.target.value;
+
     setSeverityFilter(severity);
   };
 
@@ -62,54 +62,54 @@ export const ErrorLogs: React.FC = () => {
   };
 
   return (
-    <Paper sx={{ p: 3, mb: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-        <Typography variant="h6">Error Logs</Typography>
-        <Box sx={{ display: 'flex', gap: 2 }}>
-          <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel>Severity</InputLabel>
-            <Select
+    <Paper sx={{ p: 3, mb: 3 }} key={610966}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }} key={317418}>
+        <Typography variant="h6" key={93421}>Error Logs</Typography>
+        <Box sx={{ display: 'flex', gap: 2 }} key={205992}>
+          <FormControl sx={{ minWidth: 120 }} key={602970}>
+            <InputLabel key={405232}>Severity</InputLabel>
+            <Select;
               label="Severity"
               size="small"
               value={severityFilter}
               onChange={handleSeverityChange}
-            >
-              <MenuItem value="all">All</MenuItem>
-              <MenuItem value="error">Error</MenuItem>
-              <MenuItem value="warning">Warning</MenuItem>
-              <MenuItem value="info">Info</MenuItem>
+             key={219486}>
+              <MenuItem value="all" key={641531}>All</MenuItem>
+              <MenuItem value="error" key={173409}>Error</MenuItem>
+              <MenuItem value="warning" key={22971}>Warning</MenuItem>
+              <MenuItem value="info" key={783621}>Info</MenuItem>
             </Select>
           </FormControl>
-          <IconButton color="primary" onClick={fetchLogs}>
-            <RefreshIcon />
+          <IconButton color="primary" onClick={fetchLogs} key={595331}>
+            <RefreshIcon / key={544473}>
           </IconButton>
-          <IconButton color="error" onClick={handleClearLogs}>
-            <DeleteIcon />
+          <IconButton color="error" onClick={handleClearLogs} key={736051}>
+            <DeleteIcon / key={636687}>
           </IconButton>
         </Box>
       </Box>
 
-      <TableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Timestamp</TableCell>
-              <TableCell>Severity</TableCell>
-              <TableCell>Message</TableCell>
-              <TableCell>Context</TableCell>
+      <TableContainer key={611233}>
+        <Table size="small" key={822594}>
+          <TableHead key={813147}>
+            <TableRow key={300096}>
+              <TableCell key={942983}>Timestamp</TableCell>
+              <TableCell key={942983}>Severity</TableCell>
+              <TableCell key={942983}>Message</TableCell>
+              <TableCell key={942983}>Context</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody key={923191}>
             {filteredLogs.map((log, index) => (
-              <TableRow key={index}>
-                <TableCell>{new Date(log.timestamp).toLocaleString()}</TableCell>
-                <TableCell>
-                  <Chip color={getSeverityColor(log.severity)} label={log.severity} size="small" />
+              <TableRow key={index} key={177740}>
+                <TableCell key={942983}>{new Date(log.timestamp).toLocaleString()}</TableCell>
+                <TableCell key={942983}>
+                  <Chip color={getSeverityColor(log.severity)} label={log.severity} size="small" / key={355259}>
                 </TableCell>
-                <TableCell>{log.message}</TableCell>
-                <TableCell>
+                <TableCell key={942983}>{log.message}</TableCell>
+                <TableCell key={942983}>
                   {log.context ? (
-                    <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>
+                    <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }} key={535454}>
                       {JSON.stringify(log.context, null, 2)}
                     </pre>
                   ) : (
@@ -119,9 +119,9 @@ export const ErrorLogs: React.FC = () => {
               </TableRow>
             ))}
             {filteredLogs.length === 0 && (
-              <TableRow>
-                <TableCell align="center" colSpan={4}>
-                  No logs found
+              <TableRow key={300096}>
+                <TableCell align="center" colSpan={4} key={394114}>
+                  No logs found;
                 </TableCell>
               </TableRow>
             )}

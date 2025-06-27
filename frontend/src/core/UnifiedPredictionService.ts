@@ -1,5 +1,5 @@
-import EventEmitter from 'eventemitter3';
-import { PrizePicksProp } from './PrizePicksApiService';
+import EventEmitter from 'eventemitter3.ts';
+import { PrizePicksProp } from './PrizePicksApiService.ts';
 
 
 
@@ -29,26 +29,22 @@ export class UnifiedPredictionService extends EventEmitter {
   public async analyzeProp(
     prop: PrizePicksProp,
     playerStats: any,
-    gameDetails: any
+    gameDetails: any;
   ): Promise<PredictionResult> {
-    // Combine historical data analysis
-    const historicalPerformance = this.analyzeHistoricalData(prop.player.name);
-    
-    // Analyze current form and matchup
-    const matchupAnalysis = this.analyzeMatchup(prop, gameDetails);
-    
-    // Calculate confidence based on multiple factors
+    // Combine historical data analysis;
+
+    // Analyze current form and matchup;
+
+    // Calculate confidence based on multiple factors;
     const confidence = this.calculateConfidence(
       historicalPerformance,
       matchupAnalysis,
-      playerStats
+      playerStats;
     );
 
-    // Generate prediction
-    const prediction = this.generatePrediction(prop, confidence);
+    // Generate prediction;
 
-    // Apply strategy rules
-    const recommendation = this.applyStrategyRules(prediction);
+    // Apply strategy rules;
 
     return {
       propId: prop.id,
@@ -60,8 +56,8 @@ export class UnifiedPredictionService extends EventEmitter {
   }
 
   private analyzeHistoricalData(playerName: string): any {
-    const playerHistory = this.historicalData.get(playerName) || [];
-    // Implement historical data analysis
+
+    // Implement historical data analysis;
     return {
       averagePerformance: 0,
       trend: 'neutral',
@@ -70,7 +66,7 @@ export class UnifiedPredictionService extends EventEmitter {
   }
 
   private analyzeMatchup(prop: PrizePicksProp, gameDetails: any): any {
-    // Implement matchup analysis
+    // Implement matchup analysis;
     return {
       strengthOfOpponent: 0,
       pace: 0,
@@ -81,21 +77,21 @@ export class UnifiedPredictionService extends EventEmitter {
   private calculateConfidence(
     historical: any,
     matchup: any,
-    currentStats: any
+    currentStats: any;
   ): number {
-    // Implement confidence calculation
-    return 0.75; // Example confidence score
+    // Implement confidence calculation;
+    return 0.75; // Example confidence score;
   }
 
   private generatePrediction(
     prop: PrizePicksProp,
-    confidence: number
+    confidence: number;
   ): {
     confidence: number;
     value: number;
     factors: string[];
   } {
-    // Implement prediction generation
+    // Implement prediction generation;
     return {
       confidence,
       value: prop.value,
@@ -112,7 +108,7 @@ export class UnifiedPredictionService extends EventEmitter {
       return 'PASS';
     }
 
-    // Implement strategy rules
+    // Implement strategy rules;
     return prediction.value > 0 ? 'OVER' : 'UNDER';
   }
 

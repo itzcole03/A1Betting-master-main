@@ -22,19 +22,19 @@ const COLORS = {
     info: "#0288d1",
 };
 export const ArbitrageOpportunities = () => {
-    // State Management
+    // State Management;
     const [opportunities, setOpportunities] = useState([]);
     const [filteredOpportunities, setFilteredOpportunities] = useState([]);
     const [selectedOpportunity, setSelectedOpportunity] = useState(null);
     const [executionPlan, setExecutionPlan] = useState(null);
     const [customStake, setCustomStake] = useState(1000);
-    // UI State
+    // UI State;
     const [isLoading, setIsLoading] = useState(true);
     const [autoRefresh, setAutoRefresh] = useState(true);
     const [onlyBookmarked, setOnlyBookmarked] = useState(false);
     const [showExecutionDialog, setShowExecutionDialog] = useState(false);
     const [showCalculatorDialog, setShowCalculatorDialog] = useState(false);
-    // Filters
+    // Filters;
     const [filters, setFilters] = useState({
         sport: "all",
         minProfit: 0,
@@ -43,10 +43,10 @@ export const ArbitrageOpportunities = () => {
         bookmakerPair: "all",
         timeToExpiry: "all",
     });
-    // Real-time Data Loading
+    // Real-time Data Loading;
     const loadArbitrageData = useCallback(async () => {
         try {
-            // Simulate loading real-time arbitrage opportunities
+            // Simulate loading real-time arbitrage opportunities;
             const mockOpportunities = [
                 {
                     id: "arb-001",
@@ -221,23 +221,23 @@ export const ArbitrageOpportunities = () => {
             setOpportunities(mockOpportunities);
         }
         catch (error) {
-            console.error("Failed to load arbitrage data:", error);
+            // console statement removed
         }
         finally {
             setIsLoading(false);
         }
     }, []);
-    // Load data on mount and auto-refresh
+    // Load data on mount and auto-refresh;
     useEffect(() => {
         loadArbitrageData();
         if (autoRefresh) {
-            const interval = setInterval(loadArbitrageData, 10000); // Refresh every 10 seconds
+            const interval = setInterval(loadArbitrageData, 10000); // Refresh every 10 seconds;
             return () => clearInterval(interval);
         }
     }, [loadArbitrageData, autoRefresh]);
-    // Filter opportunities
+    // Filter opportunities;
     useEffect(() => {
-        let filtered = opportunities;
+        const filtered = opportunities;
         if (filters.sport !== "all") {
             filtered = filtered.filter((opp) => opp.sport === filters.sport);
         }
@@ -248,8 +248,8 @@ export const ArbitrageOpportunities = () => {
             filtered = filtered.filter((opp) => opp.profitMargin >= filters.minMargin);
         }
         if (filters.maxRisk !== "high") {
-            const riskOrder = { low: 0, medium: 1, high: 2 };
-            const maxRiskLevel = riskOrder[filters.maxRisk];
+
+
             filtered = filtered.filter((opp) => riskOrder[opp.riskLevel] <= maxRiskLevel);
         }
         if (filters.bookmakerPair !== "all") {
@@ -258,22 +258,22 @@ export const ArbitrageOpportunities = () => {
         if (onlyBookmarked) {
             filtered = filtered.filter((opp) => opp.isBookmarked);
         }
-        // Sort by profit margin descending
+        // Sort by profit margin descending;
         filtered.sort((a, b) => b.profitMargin - a.profitMargin);
         setFilteredOpportunities(filtered);
     }, [opportunities, filters, onlyBookmarked]);
-    // Calculate arbitrage for custom stake
+    // Calculate arbitrage for custom stake;
     const calculateArbitrage = useCallback((opportunity, stake) => {
         const { sideA, sideB } = opportunity;
-        // Calculate optimal allocation
-        const totalImpliedProb = 1 / sideA.odds + 1 / sideB.odds;
-        const stakeA = stake / (sideA.odds * totalImpliedProb);
-        const stakeB = stake / (sideB.odds * totalImpliedProb);
-        const payoutA = stakeA * sideA.odds;
-        const payoutB = stakeB * sideB.odds;
-        const profit = Math.min(payoutA, payoutB) - stake;
-        const margin = profit / stake;
-        const roi = margin;
+        // Calculate optimal allocation;
+
+
+
+
+
+
+
+
         return {
             stake,
             allocation: {
@@ -285,14 +285,14 @@ export const ArbitrageOpportunities = () => {
             roi,
         };
     }, []);
-    // Event Handlers
+    // Event Handlers;
     const handleBookmark = useCallback((opportunityId) => {
-        setOpportunities((prev) => prev.map((opp) => opp.id === opportunityId
+        setOpportunities((prev) => prev.map((opp) => opp.id === opportunityId;
             ? { ...opp, isBookmarked: !opp.isBookmarked }
             : opp));
     }, []);
     const handleExecute = useCallback((opportunity) => {
-        // Create execution plan
+        // Create execution plan;
         const plan = {
             opportunity,
             steps: [
@@ -313,7 +313,7 @@ export const ArbitrageOpportunities = () => {
                     status: "pending",
                 },
             ],
-            totalTime: 45, // seconds
+            totalTime: 45, // seconds;
             riskLevel: opportunity.riskLevel,
         };
         setExecutionPlan(plan);
@@ -323,28 +323,28 @@ export const ArbitrageOpportunities = () => {
         if (!executionPlan)
             return;
         try {
-            // Simulate execution
-            for (let i = 0; i < executionPlan.steps.length; i++) {
-                const step = executionPlan.steps[i];
-                // Update step status to executing
-                setExecutionPlan((prev) => prev
+            // Simulate execution;
+            for (const i = 0; i < executionPlan.steps.length; i++) {
+
+                // Update step status to executing;
+                setExecutionPlan((prev) => prev;
                     ? {
                         ...prev,
                         steps: prev.steps.map((s, idx) => idx === i ? { ...s, status: "executing" } : s),
                     }
                     : null);
-                // Simulate API call delay
+                // Simulate API call delay;
                 await new Promise((resolve) => setTimeout(resolve, 2000));
-                // Update step status to completed
-                setExecutionPlan((prev) => prev
+                // Update step status to completed;
+                setExecutionPlan((prev) => prev;
                     ? {
                         ...prev,
                         steps: prev.steps.map((s, idx) => idx === i ? { ...s, status: "completed" } : s),
                     }
                     : null);
             }
-            // Update opportunity status
-            setOpportunities((prev) => prev.map((opp) => opp.id === executionPlan.opportunity.id
+            // Update opportunity status;
+            setOpportunities((prev) => prev.map((opp) => opp.id === executionPlan.opportunity.id;
                 ? {
                     ...opp,
                     status: "completed",
@@ -358,7 +358,7 @@ export const ArbitrageOpportunities = () => {
             }, 2000);
         }
         catch (error) {
-            console.error("Execution failed:", error);
+            // console statement removed
         }
     }, [executionPlan]);
     const exportData = useCallback(() => {
@@ -378,19 +378,19 @@ export const ArbitrageOpportunities = () => {
         const blob = new Blob([JSON.stringify(exportData, null, 2)], {
             type: "application/json",
         });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
+
+
         a.href = url;
         a.download = `arbitrage-opportunities-${Date.now()}.json`;
         a.click();
         URL.revokeObjectURL(url);
     }, [filteredOpportunities, opportunities]);
-    // Summary metrics
+    // Summary metrics;
     const summaryMetrics = useMemo(() => {
-        const active = opportunities.filter((opp) => opp.status === "active");
+
         const avgMargin = active.reduce((sum, opp) => sum + opp.profitMargin, 0) /
             Math.max(active.length, 1);
-        const totalProfit = active.reduce((sum, opp) => sum + opp.guaranteedProfit, 0);
+
         const avgConfidence = active.reduce((sum, opp) => sum + opp.confidence, 0) /
             Math.max(active.length, 1);
         return {
@@ -416,21 +416,21 @@ export const ArbitrageOpportunities = () => {
                                             setShowCalculatorDialog(true);
                                         }, startIcon: _jsx(Calculate, {}), disabled: filteredOpportunities.length === 0, children: "Calculator" }) }), _jsx(Grid, { item: true, xs: 2, children: _jsxs(Typography, { variant: "caption", color: "textSecondary", children: ["Showing ", filteredOpportunities.length, " of ", opportunities.length] }) })] }), _jsx(TableContainer, { component: Paper, children: _jsxs(Table, { size: "small", children: [_jsx(TableHead, { children: _jsxs(TableRow, { children: [_jsx(TableCell, { children: "Event & Market" }), _jsx(TableCell, { children: "Side A" }), _jsx(TableCell, { children: "Side B" }), _jsx(TableCell, { children: "Profit" }), _jsx(TableCell, { children: "Margin" }), _jsx(TableCell, { children: "Risk" }), _jsx(TableCell, { children: "Confidence" }), _jsx(TableCell, { children: "Expiry" }), _jsx(TableCell, { children: "Status" }), _jsx(TableCell, { children: "Actions" })] }) }), _jsx(TableBody, { children: filteredOpportunities.map((opportunity) => (_jsxs(TableRow, { sx: {
                                                 "&:hover": { backgroundColor: "action.hover" },
-                                                backgroundColor: opportunity.profitMargin > 0.03
+                                                backgroundColor: opportunity.profitMargin > 0.03;
                                                     ? "success.light"
                                                     : "inherit",
                                                 opacity: opportunity.status === "expired" ? 0.6 : 1,
-                                            }, children: [_jsx(TableCell, { children: _jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", children: opportunity.event }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: [opportunity.sport, " \u2022 ", opportunity.market] }), _jsx(Box, { display: "flex", gap: 0.5, mt: 0.5, children: opportunity.tags.slice(0, 2).map((tag) => (_jsx(Chip, { label: tag, size: "small", variant: "outlined" }, tag))) })] }) }), _jsx(TableCell, { children: _jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", children: opportunity.sideA.selection }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: [opportunity.sideA.bookmaker, " @", " ", formatOdds(opportunity.sideA.odds)] }), _jsxs(Typography, { variant: "caption", display: "block", children: ["Stake: ", formatCurrency(opportunity.sideA.stake)] })] }) }), _jsx(TableCell, { children: _jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", children: opportunity.sideB.selection }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: [opportunity.sideB.bookmaker, " @", " ", formatOdds(opportunity.sideB.odds)] }), _jsxs(Typography, { variant: "caption", display: "block", children: ["Stake: ", formatCurrency(opportunity.sideB.stake)] })] }) }), _jsxs(TableCell, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", color: "success.main", children: formatCurrency(opportunity.guaranteedProfit) }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: ["Total: ", formatCurrency(opportunity.totalStake)] })] }), _jsxs(TableCell, { children: [_jsx(Chip, { label: formatPercentage(opportunity.profitMargin), color: opportunity.profitMargin > 0.03
+                                            }, children: [_jsx(TableCell, { children: _jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", children: opportunity.event }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: [opportunity.sport, " \u2022 ", opportunity.market] }), _jsx(Box, { display: "flex", gap: 0.5, mt: 0.5, children: opportunity.tags.slice(0, 2).map((tag) => (_jsx(Chip, { label: tag, size: "small", variant: "outlined" }, tag))) })] }) }), _jsx(TableCell, { children: _jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", children: opportunity.sideA.selection }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: [opportunity.sideA.bookmaker, " @", " ", formatOdds(opportunity.sideA.odds)] }), _jsxs(Typography, { variant: "caption", display: "block", children: ["Stake: ", formatCurrency(opportunity.sideA.stake)] })] }) }), _jsx(TableCell, { children: _jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", children: opportunity.sideB.selection }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: [opportunity.sideB.bookmaker, " @", " ", formatOdds(opportunity.sideB.odds)] }), _jsxs(Typography, { variant: "caption", display: "block", children: ["Stake: ", formatCurrency(opportunity.sideB.stake)] })] }) }), _jsxs(TableCell, { children: [_jsx(Typography, { variant: "body2", fontWeight: "bold", color: "success.main", children: formatCurrency(opportunity.guaranteedProfit) }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: ["Total: ", formatCurrency(opportunity.totalStake)] })] }), _jsxs(TableCell, { children: [_jsx(Chip, { label: formatPercentage(opportunity.profitMargin), color: opportunity.profitMargin > 0.03;
                                                                 ? "success"
-                                                                : opportunity.profitMargin > 0.015
+                                                                : opportunity.profitMargin > 0.015;
                                                                     ? "warning"
                                                                     : "default", size: "small" }), _jsxs(Typography, { variant: "caption", display: "block", children: ["ROI: ", formatPercentage(opportunity.roi)] })] }), _jsx(TableCell, { children: _jsx(Chip, { label: opportunity.riskLevel, color: opportunity.riskLevel === "low"
                                                             ? "success"
                                                             : opportunity.riskLevel === "medium"
                                                                 ? "warning"
-                                                                : "error", size: "small" }) }), _jsx(TableCell, { children: _jsxs(Box, { display: "flex", alignItems: "center", gap: 1, children: [_jsx(LinearProgress, { variant: "determinate", value: opportunity.confidence * 100, sx: { width: 40, height: 6 }, color: opportunity.confidence > 0.9
+                                                                : "error", size: "small" }) }), _jsx(TableCell, { children: _jsxs(Box, { display: "flex", alignItems: "center", gap: 1, children: [_jsx(LinearProgress, { variant: "determinate", value: opportunity.confidence * 100, sx: { width: 40, height: 6 }, color: opportunity.confidence > 0.9;
                                                                     ? "success"
-                                                                    : opportunity.confidence > 0.8
+                                                                    : opportunity.confidence > 0.8;
                                                                         ? "warning"
                                                                         : "error" }), _jsx(Typography, { variant: "caption", children: formatPercentage(opportunity.confidence) })] }) }), _jsxs(TableCell, { children: [_jsxs(Typography, { variant: "caption", children: [Math.floor(opportunity.timeToExpiry / 60000), "m"] }), opportunity.timeToExpiry < 900000 && (_jsx(FlashOn, { color: "warning", fontSize: "small" }))] }), _jsx(TableCell, { children: _jsx(Chip, { label: opportunity.status, color: opportunity.status === "active"
                                                             ? "success"
@@ -455,7 +455,7 @@ export const ArbitrageOpportunities = () => {
                                                                     ? "error"
                                                                     : "default" })] })] }, step.step))) })] })) }), _jsxs(DialogActions, { children: [_jsx(Button, { onClick: () => setShowExecutionDialog(false), children: "Cancel" }), executionPlan &&
                                 executionPlan.steps.every((step) => step.status === "pending") && (_jsx(Button, { variant: "contained", color: "success", onClick: handleExecutePlan, startIcon: _jsx(PlayArrow, {}), children: "Execute Plan" }))] })] }), _jsxs(Dialog, { open: showCalculatorDialog, onClose: () => setShowCalculatorDialog(false), maxWidth: "sm", fullWidth: true, children: [_jsx(DialogTitle, { children: "Arbitrage Calculator" }), _jsx(DialogContent, { children: selectedOpportunity && (_jsxs(Box, { children: [_jsx(Typography, { variant: "h6", gutterBottom: true, children: selectedOpportunity.event }), _jsx(TextField, { fullWidth: true, label: "Total Stake", type: "number", value: customStake, onChange: (e) => setCustomStake(Number(e.target.value)), sx: { mb: 2 } }), (() => {
-                                    const calc = calculateArbitrage(selectedOpportunity, customStake);
+
                                     return (_jsxs(Stack, { spacing: 2, children: [_jsxs(Box, { children: [_jsx(Typography, { variant: "subtitle2", children: "Stake Allocation" }), _jsxs(Typography, { variant: "body2", children: [selectedOpportunity.sideA.bookmaker, ":", " ", formatCurrency(calc.allocation.sideA)] }), _jsxs(Typography, { variant: "body2", children: [selectedOpportunity.sideB.bookmaker, ":", " ", formatCurrency(calc.allocation.sideB)] })] }), _jsxs(Box, { children: [_jsx(Typography, { variant: "subtitle2", children: "Results" }), _jsxs(Typography, { variant: "body2", children: ["Guaranteed Profit:", " ", _jsx("strong", { children: formatCurrency(calc.profit) })] }), _jsxs(Typography, { variant: "body2", children: ["Profit Margin:", " ", _jsx("strong", { children: formatPercentage(calc.margin) })] }), _jsxs(Typography, { variant: "body2", children: ["ROI: ", _jsx("strong", { children: formatPercentage(calc.roi) })] })] })] }));
                                 })()] })) }), _jsx(DialogActions, { children: _jsx(Button, { onClick: () => setShowCalculatorDialog(false), children: "Close" }) })] })] }));
 };

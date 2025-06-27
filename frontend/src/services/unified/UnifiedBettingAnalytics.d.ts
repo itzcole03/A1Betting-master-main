@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 export interface BetRecommendation {
     id: string;
     market: string;

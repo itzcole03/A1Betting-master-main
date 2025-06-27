@@ -1,4 +1,4 @@
-import type { Sport, PropType } from '@/types/core';
+import type { Sport, PropType } from '@/types/core.ts';
 interface UsePropsOptions {
     autoRefresh?: boolean;
     refreshInterval?: number;

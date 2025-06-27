@@ -1,5 +1,5 @@
-import React from 'react';
-import { Event } from '../../types/betting';
+import React from 'react.ts';
+import { Event } from '@/types/betting.ts';
 interface OddsDisplayProps {
     event: Event;
 }

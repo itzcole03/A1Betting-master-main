@@ -1,12 +1,11 @@
 import { Sport } from "./sportsAnalytics.js";
 import { notificationService } from "./notification.js";
-// import { useWebSocket } from "@/hooks/useWebSocket.js"; // No longer used in service layer
+// import { useWebSocket } from "@/hooks/useWebSocket.js"; // No longer used in service layer;
 
 /**
  * Real-time updates feature flag and env config.
  */
-const VITE_DISABLE_REALTIME = import.meta.env.VITE_DISABLE_REALTIME === "true";
-const VITE_WS_URL = import.meta.env.VITE_WS_URL || "ws://localhost:3000";
+
 
 /**
  * Status reporting for UI/monitoring.
@@ -35,7 +34,7 @@ function reportRealtimeStatus(
       timestamp: Date.now(),
     };
   }
-  // Optionally: emit event or log
+  // Optionally: emit event or log;
   console.info(`[RealTimeUpdatesService] ${source} status:`, {
     connected,
     quality,
@@ -104,9 +103,9 @@ class RealTimeUpdatesService {
     keyof RealTimeUpdateEventMap,
     Set<(data: RealTimeUpdateEventMap[keyof RealTimeUpdateEventMap]) => void>
   > = new Map();
-  private readonly CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
+  private readonly CACHE_DURATION = 1000 * 60 * 5; // 5 minutes;
   private cache: Map<string, unknown> = new Map();
-  // WebSocket logic is now handled outside the class for React compliance
+  // WebSocket logic is now handled outside the class for React compliance;
   private ws: WebSocket | null = null;
   private connected = false;
 
@@ -137,7 +136,7 @@ class RealTimeUpdatesService {
    * Reports connection status for UI.
    */
   private initializeWebSocket(): void {
-    // Safety checks to prevent invalid WebSocket connections
+    // Safety checks to prevent invalid WebSocket connections;
     if (
       !VITE_WS_URL ||
       VITE_WS_URL === "" ||
@@ -147,17 +146,14 @@ class RealTimeUpdatesService {
       VITE_WS_URL.includes("localhost:8000") ||
       VITE_WS_URL.includes("localhost:3001") ||
       import.meta.env.VITE_ENABLE_WEBSOCKET === "false" ||
-      VITE_DISABLE_REALTIME
+      VITE_DISABLE_REALTIME;
     ) {
-      console.log(
-        "WebSocket connection disabled for realtime updates service:",
-        VITE_WS_URL,
-      );
+      // console statement removed
       reportRealtimeStatus("websocket", false, 0);
       return;
     }
 
-    // Use a standard WebSocket for non-React environments
+    // Use a standard WebSocket for non-React environments;
     this.ws = new WebSocket(VITE_WS_URL);
     this.ws.onopen = () => reportRealtimeStatus("websocket", true, 1);
     this.ws.onerror = () => reportRealtimeStatus("websocket", false, 0.5);
@@ -189,18 +185,18 @@ class RealTimeUpdatesService {
             break;
         }
       } catch (err) {
-        console.warn("Failed to parse WebSocket message:", err);
+        // console statement removed
       }
     };
   }
 
-  // Live Odds
+  // Live Odds;
   /**
    * Returns the latest live odds for a given propId, using cache if available.
    */
   async getLiveOdds(propId: string): Promise<LiveOdds | null> {
-    const cacheKey = `odds_${propId}`;
-    const cached = this.getFromCache(cacheKey);
+
+
     if (
       cached &&
       typeof cached === "object" &&
@@ -208,12 +204,11 @@ class RealTimeUpdatesService {
       "propId" in cached &&
       "value" in cached &&
       "overMultiplier" in cached &&
-      "underMultiplier" in cached
+      "underMultiplier" in cached;
     ) {
       return cached as LiveOdds;
     }
 
-    const odds = this.liveOdds.get(propId);
     if (odds) {
       this.setCache(cacheKey, odds);
     }
@@ -229,7 +224,7 @@ class RealTimeUpdatesService {
     this.setCache(`odds_${odds.propId}`, odds);
   }
 
-  // Injury Updates
+  // Injury Updates;
   async getInjuryUpdate(playerId: string): Promise<InjuryUpdate | null> {
     return this.injuries.get(playerId) || null;
   }
@@ -246,13 +241,13 @@ class RealTimeUpdatesService {
     }
   }
 
-  // Line Movements
+  // Line Movements;
   async getLineMovements(propId: string): Promise<LineMovement[]> {
     return this.lineMovements.get(propId) || [];
   }
 
   async recordLineMovement(movement: LineMovement): Promise<void> {
-    const movements = this.lineMovements.get(movement.propId) || [];
+
     movements.push(movement);
     this.lineMovements.set(movement.propId, movements);
     this.notifySubscribers("lineMovement", movement);
@@ -265,7 +260,7 @@ class RealTimeUpdatesService {
     }
   }
 
-  // Breaking News
+  // Breaking News;
   async getBreakingNews(): Promise<BreakingNews[]> {
     return Array.from(this.breakingNews.values()).sort(
       (a, b) => b.timestamp - a.timestamp,
@@ -281,7 +276,7 @@ class RealTimeUpdatesService {
     }
   }
 
-  // Predictions
+  // Predictions;
   async getPrediction(id: string): Promise<Prediction | null> {
     return this.predictions.get(id) || null;
   }
@@ -291,7 +286,7 @@ class RealTimeUpdatesService {
     this.notifySubscribers("prediction", prediction);
   }
 
-  // Subscription System
+  // Subscription System;
   /**
    * Subscribe to a real-time update event.
    * Returns an unsubscribe function.
@@ -305,13 +300,13 @@ class RealTimeUpdatesService {
     }
     (
       this.subscribers.get(type) as Set<
-        (data: RealTimeUpdateEventMap[K]) => void
+        (data: RealTimeUpdateEventMap[K]) => void;
       >
     ).add(callback);
 
     return () => {
       const subscribers = this.subscribers.get(type) as Set<
-        (data: RealTimeUpdateEventMap[K]) => void
+        (data: RealTimeUpdateEventMap[K]) => void;
       >;
       if (subscribers) {
         subscribers.delete(callback);
@@ -327,14 +322,14 @@ class RealTimeUpdatesService {
     data: RealTimeUpdateEventMap[K],
   ): void {
     const subscribers = this.subscribers.get(type) as Set<
-      (data: RealTimeUpdateEventMap[K]) => void
+      (data: RealTimeUpdateEventMap[K]) => void;
     >;
     if (subscribers) {
       subscribers.forEach((callback) => callback(data));
     }
   }
 
-  // Sport-specific Updates
+  // Sport-specific Updates;
   async getSportUpdates(sport: Sport): Promise<{
     odds: LiveOdds[];
     injuries: InjuryUpdate[];
@@ -342,8 +337,8 @@ class RealTimeUpdatesService {
     news: BreakingNews[];
     predictions: Prediction[];
   }> {
-    const cacheKey = `sport_updates_${sport}`;
-    const cached = this.getFromCache(cacheKey);
+
+
     if (
       cached &&
       typeof cached === "object" &&
@@ -392,9 +387,9 @@ class RealTimeUpdatesService {
     return updates;
   }
 
-  // Cache Management
+  // Cache Management;
   private getFromCache<T>(key: string): T | null {
-    const cached = this.cache.get(key) as
+    const cached = this.cache.get(key) as;
       | { data: T; timestamp: number }
       | undefined;
     if (!cached) return null;
@@ -425,7 +420,7 @@ class RealTimeUpdatesService {
    */
   public simulateRealtime(): void {
     if (!VITE_DISABLE_REALTIME) return;
-    // Simulate a random odds update every 10s
+    // Simulate a random odds update every 10s;
     setInterval(() => {
       const odds: LiveOdds = {
         propId: `sim-odds-${Math.floor(Math.random() * 10)}`,
@@ -437,7 +432,7 @@ class RealTimeUpdatesService {
       };
       this.updateLiveOdds(odds);
     }, 10000);
-    // Simulate a random injury update every 30s
+    // Simulate a random injury update every 30s;
     setInterval(() => {
       const injury: InjuryUpdate = {
         playerId: `sim-player-${Math.floor(Math.random() * 5)}`,
@@ -449,7 +444,7 @@ class RealTimeUpdatesService {
       };
       this.updateInjuryStatus(injury);
     }, 30000);
-    // Simulate a breaking news every 60s
+    // Simulate a breaking news every 60s;
     setInterval(() => {
       const news: BreakingNews = {
         id: `sim-news-${Date.now()}`,
@@ -464,13 +459,13 @@ class RealTimeUpdatesService {
     reportRealtimeStatus("simulated", false, 0.2);
   }
 
-  // Type guards for event payloads
+  // Type guards for event payloads;
   private isLiveOdds(data: unknown): data is LiveOdds {
     return (
       typeof data === "object" &&
       data !== null &&
       "propId" in data &&
-      "value" in data
+      "value" in data;
     );
   }
   private isInjuryUpdate(data: unknown): data is InjuryUpdate {
@@ -478,7 +473,7 @@ class RealTimeUpdatesService {
       typeof data === "object" &&
       data !== null &&
       "playerId" in data &&
-      "status" in data
+      "status" in data;
     );
   }
   private isLineMovement(data: unknown): data is LineMovement {
@@ -487,7 +482,7 @@ class RealTimeUpdatesService {
       data !== null &&
       "propId" in data &&
       "oldValue" in data &&
-      "newValue" in data
+      "newValue" in data;
     );
   }
   private isBreakingNews(data: unknown): data is BreakingNews {
@@ -495,7 +490,7 @@ class RealTimeUpdatesService {
       typeof data === "object" &&
       data !== null &&
       "id" in data &&
-      "title" in data
+      "title" in data;
     );
   }
   private isPrediction(data: unknown): data is Prediction {
@@ -503,7 +498,7 @@ class RealTimeUpdatesService {
       typeof data === "object" &&
       data !== null &&
       "id" in data &&
-      "prediction" in data
+      "prediction" in data;
     );
   }
 }

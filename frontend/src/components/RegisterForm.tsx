@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAuth } from '../../providers/AuthProvider';
+import React, { useState  } from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
+import { useAuth } from '@/providers/AuthProvider.ts';
 
 interface RegisterFormProps {
   onSuccess?: () => void;
   onToggleForm?: () => void;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onToggleForm }) => {
+const RegisterForm: React.FC<RegisterFormProps key={159018}> = ({ onSuccess, onToggleForm }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -18,7 +18,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onToggleForm }) 
   const [isLoading, setIsLoading] = useState(false);
   const { register } = useAuth();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement key={553350}>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -57,22 +57,22 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onToggleForm }) 
   };
 
   return (
-    <motion.div
+    <motion.div;
       animate={{ opacity: 1, y: 0 }}
       className="w-full max-w-md mx-auto"
       exit={{ opacity: 0, y: -20 }}
       initial={{ opacity: 0, y: 20 }}
-    >
-      <form className="space-y-6" onSubmit={handleSubmit}>
-        <div>
-          <label
+     key={315589}>
+      <form className="space-y-6" onSubmit={handleSubmit} key={229713}>
+        <div key={241917}>
+          <label;
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             htmlFor="username"
-          >
-            Username
+           key={488242}>
+            Username;
           </label>
-          <input
-            required
+          <input;
+            required;
             className="input-primary mt-1"
             id="username"
             name="username"
@@ -80,18 +80,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onToggleForm }) 
             type="text"
             value={formData.username}
             onChange={handleChange}
-          />
+          / key={883617}>
         </div>
 
-        <div>
-          <label
+        <div key={241917}>
+          <label;
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             htmlFor="email"
-          >
-            Email
+           key={570577}>
+            Email;
           </label>
-          <input
-            required
+          <input;
+            required;
             className="input-primary mt-1"
             id="email"
             name="email"
@@ -99,18 +99,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onToggleForm }) 
             type="email"
             value={formData.email}
             onChange={handleChange}
-          />
+          / key={515943}>
         </div>
 
-        <div>
-          <label
+        <div key={241917}>
+          <label;
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             htmlFor="password"
-          >
-            Password
+           key={397104}>
+            Password;
           </label>
-          <input
-            required
+          <input;
+            required;
             className="input-primary mt-1"
             id="password"
             name="password"
@@ -118,18 +118,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onToggleForm }) 
             type="password"
             value={formData.password}
             onChange={handleChange}
-          />
+          / key={262139}>
         </div>
 
-        <div>
-          <label
+        <div key={241917}>
+          <label;
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
             htmlFor="confirmPassword"
-          >
-            Confirm Password
+           key={651602}>
+            Confirm Password;
           </label>
-          <input
-            required
+          <input;
+            required;
             className="input-primary mt-1"
             id="confirmPassword"
             name="confirmPassword"
@@ -137,58 +137,58 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onToggleForm }) 
             type="password"
             value={formData.confirmPassword}
             onChange={handleChange}
-          />
+          / key={439046}>
         </div>
 
         {error && (
-          <motion.p
+          <motion.p;
             animate={{ opacity: 1 }}
             className="text-sm text-red-600 dark:text-red-400"
             initial={{ opacity: 0 }}
-          >
+           key={802426}>
             {error}
           </motion.p>
         )}
 
-        <button
+        <button;
           className="btn-primary w-full flex justify-center"
           disabled={isLoading}
           type="submit"
-        >
+         key={518718}>
           {isLoading ? (
-            <svg
+            <svg;
               className="animate-spin h-5 w-5 text-white"
               fill="none"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
+             key={792034}>
+              <circle;
                 className="opacity-25"
                 cx="12"
                 cy="12"
                 r="10"
                 stroke="currentColor"
                 strokeWidth="4"
-              />
-              <path
+              / key={310581}>
+              <path;
                 className="opacity-75"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 fill="currentColor"
-              />
+              / key={766321}>
             </svg>
           ) : (
             'Sign Up'
           )}
         </button>
 
-        <p className="text-center text-sm text-gray-600 dark:text-gray-400">
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400" key={995988}>
           Already have an account?{' '}
-          <button
+          <button;
             className="text-primary-600 dark:text-primary-400 hover:underline focus:outline-none"
             type="button"
             onClick={onToggleForm}
-          >
-            Sign in
+           key={555229}>
+            Sign in;
           </button>
         </p>
       </form>

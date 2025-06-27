@@ -1,7 +1,7 @@
-import { User } from '../../models/User';
-import { Bet } from '../../models/Bet';
-import { Prediction } from '../../models/Prediction';
-import { EventEmitter } from 'events';
+import { User } from '@/models/User.ts';
+import { Bet } from '@/models/Bet.ts';
+import { Prediction } from '@/models/Prediction.ts';
+import { EventEmitter } from 'events.ts';
 export declare class UserPersonalizationService extends EventEmitter {
     private static instance;
     private constructor();

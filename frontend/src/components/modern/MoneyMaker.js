@@ -37,9 +37,9 @@ const MoneyMaker = () => {
     const [parlays, setParlays] = useState([]);
     const [selectedParlay, setSelectedParlay] = useState(null);
     const [error, setError] = useState(null);
-    const bettingSystem = UnifiedBettingSystem.getInstance();
-    const prizePicksAPI = PrizePicksAPI.getInstance();
-    const addBet = useStore(state => state.addBet);
+
+
+
     const { riskProfile, validateBet } = useRiskProfile();
     useEffect(() => {
         generateParlays();
@@ -48,29 +48,29 @@ const MoneyMaker = () => {
         setLoading(true);
         setError(null);
         try {
-            // Fetch available projections
+            // Fetch available projections;
             const projections = await prizePicksAPI.getProjections({
                 limit: 100,
             });
-            // Group projections by sport and analyze each group
-            const sportGroups = groupProjectionsBySport(projections);
-            const parlayCards = [];
+            // Group projections by sport and analyze each group;
+
+
             for (const [sport, sportProjections] of Object.entries(sportGroups)) {
-                // Analyze each projection in the sport group
-                const decisions = await Promise.all(sportProjections.map(() => bettingSystem.analyzeBettingOpportunity(defaultBettingContext)));
-                // Find high confidence projections
-                const highConfidenceDecisions = decisions.filter(d => d.confidence > 0.7);
-                // Generate parlays from high confidence projections
-                const sportParlays = generateParlaysFromDecisions(highConfidenceDecisions, sportProjections);
+                // Analyze each projection in the sport group;
+
+                // Find high confidence projections;
+
+                // Generate parlays from high confidence projections;
+
                 parlayCards.push(...sportParlays);
             }
-            // Sort parlays by expected value
-            const sortedParlays = parlayCards.sort((a, b) => b.expectedValue - a.expectedValue);
-            setParlays(sortedParlays.slice(0, 10)); // Show top 10 parlays
+            // Sort parlays by expected value;
+
+            setParlays(sortedParlays.slice(0, 10)); // Show top 10 parlays;
         }
         catch (err) {
             setError('Failed to generate parlays. Please try again later.');
-            console.error('Error generating parlays:', err);
+            // console statement removed
         }
         finally {
             setLoading(false);
@@ -86,27 +86,27 @@ const MoneyMaker = () => {
         }, {});
     };
     const generateParlaysFromDecisions = (decisions, projections) => {
-        const parlays = [];
-        const maxParlaySize = 3;
-        // Generate combinations of 2-3 legs
-        for (let size = 2; size <= maxParlaySize; size++) {
-            const combinations = generateCombinations(decisions, size);
+
+
+        // Generate combinations of 2-3 legs;
+        for (const size = 2; size <= maxParlaySize; size++) {
+
             for (const combo of combinations) {
-                const projectionSet = combo
+                const projectionSet = combo;
                     .map(decision => projections.find(p => p.playerId === decision.metadata.playerId))
                     .filter((p) => Boolean(p));
                 if (projectionSet.length !== combo.length)
                     continue;
-                // Calculate combined metrics
-                const combinedConfidence = combo.reduce((acc, d) => acc * d.confidence, 1);
-                const combinedEV = combo.reduce((acc, d) => acc + (d.metadata && d.metadata.riskScore ? d.metadata.riskScore : 0), 0) / combo.length;
-                // Calculate potential payout
-                const odds = combo.length === 2 ? 3 : 6; // Simplified odds calculation
-                const potentialPayout = 100 * odds; // Assuming $100 stake
-                // Combine analysis factors
-                const historicalTrends = Array.from(new Set(combo.flatMap(d => d.analysis.historicalTrends)));
-                const marketSignals = Array.from(new Set(combo.flatMap(d => d.analysis.marketSignals)));
-                const riskFactors = Array.from(new Set(combo.flatMap(d => d.analysis.riskFactors)));
+                // Calculate combined metrics;
+
+
+                // Calculate potential payout;
+                const odds = combo.length === 2 ? 3 : 6; // Simplified odds calculation;
+                const potentialPayout = 100 * odds; // Assuming $100 stake;
+                // Combine analysis factors;
+
+
+
                 parlays.push({
                     id: `parlay_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                     projections: projectionSet,
@@ -124,13 +124,13 @@ const MoneyMaker = () => {
         return parlays;
     };
     const generateCombinations = (arr, size) => {
-        const result = [];
+
         function combine(current, start) {
             if (current.length === size) {
                 result.push([...current]);
                 return;
             }
-            for (let i = start; i < arr.length; i++) {
+            for (const i = start; i < arr.length; i++) {
                 current.push(arr[i]);
                 combine(current, i + 1);
                 current.pop();
@@ -140,21 +140,21 @@ const MoneyMaker = () => {
         return result;
     };
     const placeBet = (parlay) => {
-        // Validate bet against risk profile
+        // Validate bet against risk profile;
         const betData = {
             stake: 100,
             confidence: parlay.confidence,
-            kellyFraction: 0.1, // Example, replace with actual calculation if available
+            kellyFraction: 0.1, // Example, replace with actual calculation if available;
             sport: parlay.projections[0]?.sport || '',
             market: parlay.projections[0]?.propType || '',
             eventId: parlay.projections[0]?.eventId || '',
         };
-        const validation = validateBet(betData);
+
         if (!validation.isValid) {
             setError('Bet does not meet risk profile: ' + validation.errors.join(', '));
             return;
         }
-        // Create bet record
+        // Create bet record;
         const bet = {
             id: `bet_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
             userId: 'current_user',
@@ -175,9 +175,9 @@ const MoneyMaker = () => {
                 ],
             },
         };
-        // Add bet to store
+        // Add bet to store;
         addBet(bet);
-        // Clear selection
+        // Clear selection;
         setSelectedParlay(null);
     };
     if (error) {

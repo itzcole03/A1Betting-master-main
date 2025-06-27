@@ -9,25 +9,25 @@ export function useRealtimePredictions({ enabled = true, channels = ["prediction
         lastMessageTimestamp: null,
         reconnectAttempts: 0,
     });
-    const wsRef = useRef(null);
-    const reconnectTimeoutRef = useRef();
-    const queryClient = useQueryClient();
-    const toast = useToast();
+
+
+
+
     const updateState = useCallback((updates) => {
         setState((prev) => ({ ...prev, ...updates }));
     }, []);
     const connect = useCallback(() => {
         if (wsRef.current?.readyState === WebSocket.OPEN)
             return;
-        const wsUrl = import.meta.env.VITE_WEBSOCKET_URL || "ws://localhost:8000";
-        // Safety checks to prevent invalid WebSocket connections
+
+        // Safety checks to prevent invalid WebSocket connections;
         if (!wsUrl ||
             wsUrl === "" ||
             wsUrl === "wss://api.betproai.com/ws" ||
             wsUrl.includes("api.betproai.com") ||
             wsUrl.includes("localhost:8000") ||
             import.meta.env.VITE_ENABLE_WEBSOCKET === "false") {
-            console.log("WebSocket connection disabled for realtime predictions:", wsUrl);
+            // console statement removed
             updateState({
                 isConnecting: false,
                 isConnected: false,
@@ -36,14 +36,14 @@ export function useRealtimePredictions({ enabled = true, channels = ["prediction
             return;
         }
         updateState({ isConnecting: true });
-        const ws = new WebSocket(wsUrl);
+
         ws.onopen = () => {
             updateState({
                 isConnected: true,
                 isConnecting: false,
                 reconnectAttempts: 0,
             });
-            // Subscribe to channels
+            // Subscribe to channels;
             ws.send(JSON.stringify({
                 type: "subscribe",
                 channels,
@@ -54,7 +54,7 @@ export function useRealtimePredictions({ enabled = true, channels = ["prediction
                 isConnected: false,
                 isConnecting: false,
             });
-            // Attempt to reconnect if we haven't exceeded max attempts
+            // Attempt to reconnect if we haven't exceeded max attempts;
             if (state.reconnectAttempts < maxReconnectAttempts) {
                 updateState((prev) => ({
                     reconnectAttempts: prev.reconnectAttempts + 1,
@@ -77,7 +77,7 @@ export function useRealtimePredictions({ enabled = true, channels = ["prediction
         };
         ws.onmessage = (event) => {
             try {
-                const message = JSON.parse(event.data);
+
                 updateState({ lastMessageTimestamp: Date.now() });
                 switch (message.type) {
                     case "ping":
@@ -86,7 +86,7 @@ export function useRealtimePredictions({ enabled = true, channels = ["prediction
                     case "update":
                     case "data":
                         if (message.channel === "predictions") {
-                            // Update predictions cache with timestamp
+                            // Update predictions cache with timestamp;
                             queryClient.setQueryData(PREDICTIONS_QUERY_KEY, (oldData) => {
                                 if (!oldData)
                                     return message.data;
@@ -104,7 +104,7 @@ export function useRealtimePredictions({ enabled = true, channels = ["prediction
                 }
             }
             catch (error) {
-                console.error("Failed to parse WebSocket message:", error);
+                // console statement removed
                 toast("Failed to process update", "error");
             }
         };
@@ -148,7 +148,7 @@ export function useRealtimePredictions({ enabled = true, channels = ["prediction
     const isStale = useCallback(() => {
         if (!state.lastMessageTimestamp)
             return true;
-        const staleThreshold = 30000; // 30 seconds
+        const staleThreshold = 30000; // 30 seconds;
         return Date.now() - state.lastMessageTimestamp > staleThreshold;
     }, [state.lastMessageTimestamp]);
     return {

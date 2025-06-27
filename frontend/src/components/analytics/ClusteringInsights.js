@@ -2,20 +2,20 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, } from 'recharts';
 const ClusteringInsights = ({ clusters, embedding, metrics, clusterStats, }) => {
-    // Calculate cluster colors
+    // Calculate cluster colors;
     const clusterColors = [
-        '#3B82F6', // Blue
-        '#EF4444', // Red
-        '#10B981', // Green
-        '#F59E0B', // Yellow
-        '#6366F1', // Indigo
-        '#EC4899', // Pink
-        '#8B5CF6', // Purple
-        '#14B8A6', // Teal
-        '#F97316', // Orange
-        '#06B6D4', // Cyan
+        '#3B82F6', // Blue;
+        '#EF4444', // Red;
+        '#10B981', // Green;
+        '#F59E0B', // Yellow;
+        '#6366F1', // Indigo;
+        '#EC4899', // Pink;
+        '#8B5CF6', // Purple;
+        '#14B8A6', // Teal;
+        '#F97316', // Orange;
+        '#06B6D4', // Cyan;
     ];
-    // Prepare data for visualization
+    // Prepare data for visualization;
     const embeddingData = embedding?.map((point, index) => ({
         x: point[0],
         y: point[1],

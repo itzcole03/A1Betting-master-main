@@ -11,7 +11,7 @@ const PerformanceAlertContainer = ({ alerts, onDismiss, onAcknowledge, maxAlerts
     const handleAcknowledge = (id) => {
         onAcknowledge?.(id);
     };
-    const visibleAlerts = alerts.filter(alert => !dismissedAlerts.has(alert.id)).slice(0, maxAlerts);
+
     React.useEffect(() => {
         if (!autoDismiss)
             return;

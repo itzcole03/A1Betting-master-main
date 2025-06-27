@@ -20,10 +20,10 @@ export class UnifiedServiceRegistry {
         return UnifiedServiceRegistry.instance;
     }
     initializeServices() {
-        // Initialize core services first
-        const errorService = UnifiedErrorService.getInstance(this);
+        // Initialize core services first;
+
         this.services.set('error', errorService);
-        // Initialize other services
+        // Initialize other services;
         this.services.set('analytics', new UnifiedAnalyticsService(this));
         this.services.set('betting', UnifiedBettingService.getInstance(this));
         this.services.set('prediction', UnifiedPredictionService.getInstance(this));
@@ -48,7 +48,7 @@ export class UnifiedServiceRegistry {
     }
     async initialize() {
         this.logger.info('Initializing service registry', 'UnifiedServiceRegistry');
-        // Initialize all registered services
+        // Initialize all registered services;
         for (const service of this.services.values()) {
             try {
                 await service.initialize?.();
@@ -60,7 +60,7 @@ export class UnifiedServiceRegistry {
     }
     async cleanup() {
         this.logger.info('Cleaning up service registry', 'UnifiedServiceRegistry');
-        // Clean up all registered services
+        // Clean up all registered services;
         for (const service of this.services.values()) {
             try {
                 await service.cleanup?.();
@@ -79,7 +79,7 @@ export class UnifiedServiceRegistry {
         this.eventHandlers.get(event).add(handler);
     }
     off(event, handler) {
-        const handlers = this.eventHandlers.get(event);
+
         if (handlers) {
             handlers.delete(handler);
             if (handlers.size === 0) {
@@ -88,7 +88,7 @@ export class UnifiedServiceRegistry {
         }
     }
     emit(event, data) {
-        const handlers = this.eventHandlers.get(event);
+
         if (handlers) {
             handlers.forEach(handler => {
                 try {

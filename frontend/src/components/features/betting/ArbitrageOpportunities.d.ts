@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ArbitrageOpportunity } from '@/types/betting';
+import React from 'react.ts';
+import type { ArbitrageOpportunity } from '@/types/betting.ts';
 interface ArbitrageOpportunitiesProps {
     opportunities: ArbitrageOpportunity[];
     onPlaceBet: (opportunity: ArbitrageOpportunity) => void;

@@ -1,1 +1,1 @@
-export * from './prizepicks';
+export * from './prizepicks.ts';

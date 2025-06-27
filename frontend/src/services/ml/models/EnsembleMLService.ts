@@ -1,8 +1,8 @@
-import { EventEmitter } from 'events';
-import { TraditionalModels } from './TraditionalModels';
-import { DeepLearningModels } from './DeepLearningModels';
-import { TimeSeriesModels } from './TimeSeriesModels';
-import { OptimizationModels } from './OptimizationModels';
+import { EventEmitter } from 'events.ts';
+import { TraditionalModels } from './TraditionalModels.ts';
+import { DeepLearningModels } from './DeepLearningModels.ts';
+import { TimeSeriesModels } from './TimeSeriesModels.ts';
+import { OptimizationModels } from './OptimizationModels.ts';
 
 export interface PredictionConfig {
   investment: number;
@@ -105,7 +105,7 @@ export class EnsembleMLService extends EventEmitter {
 
   async generateEnsemblePrediction(config: PredictionConfig): Promise<EnsemblePrediction> {
     try {
-      // Get predictions from all model collections
+      // Get predictions from all model collections;
       const [
         traditionalPredictions,
         deepLearningPredictions,
@@ -118,7 +118,7 @@ export class EnsembleMLService extends EventEmitter {
         this.models.optimization.predict(config),
       ]);
 
-      // Combine all predictions
+      // Combine all predictions;
       const allPredictions = [
         ...traditionalPredictions,
         ...deepLearningPredictions,
@@ -126,23 +126,17 @@ export class EnsembleMLService extends EventEmitter {
         ...optimizationPredictions,
       ];
 
-      // Calculate model weights based on accuracy
-      const weights = this.calculateModelWeights(allPredictions);
+      // Calculate model weights based on accuracy;
 
-      // Generate ensemble prediction
-      const ensemblePrediction = this.combinePredictions(allPredictions, weights);
+      // Generate ensemble prediction;
 
-      // Identify betting opportunities
-      const opportunities = this.identifyBettingOpportunities(ensemblePrediction, config);
+      // Identify betting opportunities;
 
-      // Assess risk
-      const riskAssessment = this.assessRisk(ensemblePrediction, opportunities);
+      // Assess risk;
 
-      // Calculate projected payout
-      const projectedPayout = this.calculateProjectedPayout(opportunities, config.investment);
+      // Calculate projected payout;
 
-      // Create model breakdown
-      const modelBreakdown = this.createModelBreakdown(allPredictions);
+      // Create model breakdown;
 
       const result: EnsemblePrediction = {
         overallConfidence: ensemblePrediction.confidence,
@@ -163,7 +157,6 @@ export class EnsembleMLService extends EventEmitter {
 
   private calculateModelWeights(predictions: ModelPrediction[]): Record<string, number> {
     const weights: Record<string, number> = {};
-    const totalAccuracy = predictions.reduce((sum, pred) => sum + pred.performance.accuracy, 0);
 
     predictions.forEach(prediction => {
       weights[prediction.modelName] = prediction.performance.accuracy / totalAccuracy;
@@ -232,14 +225,13 @@ export class EnsembleMLService extends EventEmitter {
 
   private identifyBettingOpportunities(
     ensemblePrediction: ModelPrediction,
-    config: PredictionConfig
+    config: PredictionConfig;
   ): BettingOpportunity[] {
     const opportunities: BettingOpportunity[] = [];
 
     if (ensemblePrediction.confidence >= config.confidence) {
-      const odds = this.calculateOdds(ensemblePrediction);
-      const kellyFraction = this.calculateKellyFraction(ensemblePrediction);
-      const riskLevel = this.determineRiskLevel(ensemblePrediction);
+
+
 
       opportunities.push({
         sport: 'all',
@@ -259,28 +251,28 @@ export class EnsembleMLService extends EventEmitter {
     if ('probability' in prediction && prediction.probability !== undefined) {
       return 1 / prediction.probability;
     }
-    const baseOdds = 2.0;
+
     const confidenceMultiplier =
       'overallConfidence' in prediction ? prediction.overallConfidence : prediction.confidence;
     return baseOdds * confidenceMultiplier;
   }
 
   private calculateKellyFraction(
-    prediction: ModelPrediction | PropAnalysis | EnsemblePrediction
+    prediction: ModelPrediction | PropAnalysis | EnsemblePrediction;
   ): number {
-    const odds = this.calculateOdds(prediction);
+
     const winProb =
-      'probability' in prediction && prediction.probability !== undefined
-        ? prediction.probability
-        : 'overallConfidence' in prediction
-          ? prediction.overallConfidence
+      'probability' in prediction && prediction.probability !== undefined;
+        ? prediction.probability;
+        : 'overallConfidence' in prediction;
+          ? prediction.overallConfidence;
           : prediction.confidence;
-    const lossProb = 1 - winProb;
+
     return (winProb * odds - 1) / (odds - 1);
   }
 
   private determineRiskLevel(
-    prediction: ModelPrediction | PropAnalysis | EnsemblePrediction
+    prediction: ModelPrediction | PropAnalysis | EnsemblePrediction;
   ): 'low' | 'medium' | 'high' {
     const confidence =
       'overallConfidence' in prediction ? prediction.overallConfidence : prediction.confidence;
@@ -293,8 +285,7 @@ export class EnsembleMLService extends EventEmitter {
     ensemblePrediction: ModelPrediction,
     opportunities: BettingOpportunity[]
   ): RiskAssessment {
-    const modelAgreement = this.calculateModelAgreement(ensemblePrediction);
-    const variance = this.calculatePredictionVariance(ensemblePrediction);
+
 
     return {
       overallRisk: this.determineOverallRisk(ensemblePrediction, modelAgreement, variance),
@@ -305,19 +296,19 @@ export class EnsembleMLService extends EventEmitter {
   }
 
   private calculateModelAgreement(prediction: ModelPrediction): number {
-    // Implementation would compare predictions across all models
-    return 0.85; // Placeholder
+    // Implementation would compare predictions across all models;
+    return 0.85; // Placeholder;
   }
 
   private calculatePredictionVariance(prediction: ModelPrediction): number {
-    // Implementation would calculate variance of predictions
-    return 0.1; // Placeholder
+    // Implementation would calculate variance of predictions;
+    return 0.1; // Placeholder;
   }
 
   private determineOverallRisk(
     prediction: ModelPrediction,
     modelAgreement: number,
-    variance: number
+    variance: number;
   ): 'low' | 'medium' | 'high' {
     if (prediction.confidence >= 0.9 && modelAgreement >= 0.8 && variance <= 0.1) return 'low';
     if (prediction.confidence >= 0.8 && modelAgreement >= 0.7 && variance <= 0.2) return 'medium';
@@ -326,10 +317,10 @@ export class EnsembleMLService extends EventEmitter {
 
   private calculateProjectedPayout(
     opportunities: BettingOpportunity[],
-    investment: number
+    investment: number;
   ): number {
     return opportunities.reduce((total, opp) => {
-      const betAmount = investment * opp.kellyFraction;
+
       return total + betAmount * (opp.odds - 1);
     }, 0);
   }

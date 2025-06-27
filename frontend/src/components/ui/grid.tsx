@@ -1,9 +1,7 @@
-import React from 'react';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+import React from 'react.ts';
+import { Responsive, WidthProvider } from 'react-grid-layout.ts';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-
-const ResponsiveGridLayout = WidthProvider(Responsive);
 
 interface GridProps {
   children: React.ReactNode;
@@ -12,7 +10,7 @@ interface GridProps {
   onLayoutChange?: (layout: any) => void;
 }
 
-export const Grid: React.FC<GridProps> = ({
+export const Grid: React.FC<GridProps key={943757}> = ({
   children,
   className = '',
   layout = {},
@@ -36,13 +34,11 @@ export const Grid: React.FC<GridProps> = ({
     ],
   };
 
-  const breakpoints = { lg: 1200, md: 996, sm: 768 };
-  const cols = { lg: 3, md: 2, sm: 1 };
 
   return (
-    <ResponsiveGridLayout
-      isDraggable
-      isResizable
+    <ResponsiveGridLayout;
+      isDraggable;
+      isResizable;
       breakpoints={breakpoints}
       className={className}
       cols={cols}
@@ -50,9 +46,9 @@ export const Grid: React.FC<GridProps> = ({
       margin={[16, 16]}
       rowHeight={100}
       onLayoutChange={onLayoutChange}
-    >
+     key={479508}>
       {React.Children.map(children, (child, index) => (
-        <div key={String.fromCharCode(97 + index)}>{child}</div>
+        <div key={String.fromCharCode(97 + index)} key={930061}>{child}</div>
       ))}
     </ResponsiveGridLayout>
   );

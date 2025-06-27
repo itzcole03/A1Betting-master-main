@@ -1,11 +1,11 @@
 /**
- * Unified Backend API Service
- * Handles all communication with the A1Betting backend
+ * Unified Backend API Service;
+ * Handles all communication with the A1Betting backend;
  */
 
-import axios from "axios";
+import axios from 'axios.ts';
 
-// Types
+// Types;
 export interface BettingOpportunity {
   id: string;
   sport: string;
@@ -65,7 +65,7 @@ class BackendApi {
   private baseURL: string;
 
   constructor() {
-    // Determine backend URL
+    // Determine backend URL;
     this.baseURL = this.determineBackendURL();
 
     this.api = axios.create({
@@ -76,18 +76,18 @@ class BackendApi {
       },
     });
 
-    // Response interceptor for production error handling
+    // Response interceptor for production error handling;
     this.api.interceptors.response.use(
       (response: any) => response,
       async (error: any) => {
-        console.error("Backend API Error:", error.message);
+        // console statement removed
         throw error;
       },
     );
   }
 
   private determineBackendURL(): string {
-    // Environment variables for backend URL
+    // Environment variables for backend URL;
     if (import.meta.env.VITE_BACKEND_URL) {
       return import.meta.env.VITE_BACKEND_URL;
     }
@@ -95,7 +95,7 @@ class BackendApi {
       return import.meta.env.VITE_API_URL;
     }
 
-    // Local development
+    // Local development;
     if (
       window.location.hostname === "localhost" ||
       window.location.hostname === "127.0.0.1"
@@ -103,106 +103,106 @@ class BackendApi {
       return "http://localhost:8000";
     }
 
-    // Production - use current origin with /api prefix
+    // Production - use current origin with /api prefix;
     return window.location.origin + "/api";
   }
 
-  // Health check
+  // Health check;
   public async getHealth() {
     try {
-      const response = await this.api.get("/health");
+
       return response.data;
     } catch (error: any) {
-      console.error("Health check failed:", error.message);
+      // console statement removed
       throw new Error("Backend service is unavailable. Please try again later.");
     }
   }
 
-  // Value bets
+  // Value bets;
   public async getValueBets() {
     try {
-      const response = await this.api.get("/api/v4/betting/value-bets");
+
       return Array.isArray(response.data)
-        ? response.data
+        ? response.data;
         : response.data?.value_bets || [];
     } catch (error: any) {
-      console.error("Failed to fetch value bets:", error.message);
+      // console statement removed
       return [];
     }
   }
 
-  // Betting opportunities
+  // Betting opportunities;
   public async getBettingOpportunities(): Promise<BettingOpportunity[]> {
     try {
-      const response = await this.api.get("/api/betting-opportunities");
+
       return Array.isArray(response.data)
-        ? response.data
+        ? response.data;
         : response.data?.opportunities || [];
     } catch (error: any) {
-      console.error("Failed to fetch betting opportunities:", error.message);
+      // console statement removed
       return [];
     }
   }
 
-  // Arbitrage opportunities
+  // Arbitrage opportunities;
   public async getArbitrageOpportunities(): Promise<ArbitrageOpportunity[]> {
     try {
-      const response = await this.api.get("/api/arbitrage-opportunities");
+
       return Array.isArray(response.data)
-        ? response.data
+        ? response.data;
         : response.data?.opportunities || [];
     } catch (error: any) {
-      console.error("Failed to fetch arbitrage opportunities:", error.message);
+      // console statement removed
       return [];
     }
   }
 
-  // Predictions
+  // Predictions;
   public async getPredictions(params?: any) {
     try {
-      const response = await this.api.get("/api/predictions", { params });
+
       return Array.isArray(response.data)
-        ? response.data
+        ? response.data;
         : response.data?.predictions || [];
     } catch (error: any) {
-      console.error("Failed to fetch predictions:", error.message);
+      // console statement removed
       return [];
     }
   }
 
-  // Transactions
+  // Transactions;
   public async getTransactions(): Promise<Transaction[]> {
     try {
-      const response = await this.api.get("/api/transactions");
+
       return Array.isArray(response.data)
-        ? response.data
+        ? response.data;
         : response.data?.transactions || [];
     } catch (error: any) {
-      console.error("Failed to fetch transactions:", error.message);
+      // console statement removed
       return [];
     }
   }
 
-  // Active bets
+  // Active bets;
   public async getActiveBets(): Promise<ActiveBet[]> {
     try {
-      const response = await this.api.get("/api/active-bets");
+
       return Array.isArray(response.data)
-        ? response.data
+        ? response.data;
         : response.data?.active_bets || [];
     } catch (error: any) {
-      console.error("Failed to fetch active bets:", error.message);
+      // console statement removed
       return [];
     }
   }
 
-  // Advanced analytics
+  // Advanced analytics;
   public async getAdvancedAnalytics() {
     try {
-      const response = await this.api.get("/api/analytics/advanced");
+
       return response.data;
     } catch (error: any) {
-      console.error("Failed to fetch analytics:", error.message);
+      // console statement removed
       return {
         summary: {
           accuracy: 0,
@@ -216,61 +216,61 @@ class BackendApi {
     }
   }
 
-  // Generic HTTP methods for extensibility
+  // Generic HTTP methods for extensibility;
   public async get(endpoint: string, params?: any) {
     try {
-      const response = await this.api.get(endpoint, { params });
+
       return response.data;
     } catch (error: any) {
-      console.error(`GET ${endpoint} failed:`, error.message);
+      // console statement removed
       throw error;
     }
   }
 
   public async post(endpoint: string, data?: any) {
     try {
-      const response = await this.api.post(endpoint, data);
+
       return response.data;
     } catch (error: any) {
-      console.error(`POST ${endpoint} failed:`, error.message);
+      // console statement removed
       throw error;
     }
   }
 
   public async put(endpoint: string, data?: any) {
     try {
-      const response = await this.api.put(endpoint, data);
+
       return response.data;
     } catch (error: any) {
-      console.error(`PUT ${endpoint} failed:`, error.message);
+      // console statement removed
       throw error;
     }
   }
 
   public async delete(endpoint: string) {
     try {
-      const response = await this.api.delete(endpoint);
+
       return response.data;
     } catch (error: any) {
-      console.error(`DELETE ${endpoint} failed:`, error.message);
+      // console statement removed
       throw error;
     }
   }
 
-  // Risk profiles
+  // Risk profiles;
   public async getRiskProfiles(): Promise<RiskProfile[]> {
     try {
-      const response = await this.api.get("/api/risk-profiles");
+
       return Array.isArray(response.data)
-        ? response.data
+        ? response.data;
         : response.data?.profiles || [];
     } catch (error: any) {
-      console.error("Failed to fetch risk profiles:", error.message);
+      // console statement removed
       return [];
     }
   }
 }
 
-// Create singleton instance
+// Create singleton instance;
 export const backendApi = new BackendApi();
 export default backendApi;

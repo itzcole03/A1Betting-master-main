@@ -1,4 +1,4 @@
-// Minimal browser-compatible EventEmitter
+// Minimal browser-compatible EventEmitter;
 class EventEmitter {
     constructor() {
         this.listeners = {};
@@ -24,8 +24,8 @@ export class WebSocketManager extends EventEmitter {
         this.defaultConfig = {
             url: typeof import.meta !== "undefined" &&
                 import.meta.env &&
-                import.meta.env.VITE_WS_URL
-                ? import.meta.env.VITE_WS_URL
+                import.meta.env.VITE_WS_URL;
+                ? import.meta.env.VITE_WS_URL;
                 : "",
             reconnectInterval: 1000,
             maxRetries: 5,
@@ -38,21 +38,21 @@ export class WebSocketManager extends EventEmitter {
         return WebSocketManager.instance;
     }
     connect(config = {}) {
-        console.log("WebSocketManager.connect() called with config:", config);
-        const fullConfig = { ...this.defaultConfig, ...config };
-        console.log("Full WebSocket config:", fullConfig);
-        // Skip connection if WebSocket is disabled or no valid URL is configured
+        // console statement removed called with config:", config);
+
+        // console statement removed
+        // Skip connection if WebSocket is disabled or no valid URL is configured;
         if (!fullConfig.url ||
             fullConfig.url === "" ||
             fullConfig.url === "wss://api.betproai.com/ws" ||
             fullConfig.url.includes("api.betproai.com") ||
             import.meta.env.VITE_ENABLE_WEBSOCKET === "false") {
-            console.log("WebSocket connection disabled. To enable: set VITE_WS_URL and VITE_ENABLE_WEBSOCKET=true in environment variables.");
+            // console statement removed
             return;
         }
-        const userId = useAppStore.getState().user?.id;
-        const clientId = userId || `anon_client_${Math.random().toString(36).substring(2, 10)}`;
-        const wsUrl = `${fullConfig.url}?client_id=${encodeURIComponent(clientId)}`;
+
+
+
         if (this.connections.has(wsUrl)) {
             return;
         }
@@ -81,12 +81,12 @@ export class WebSocketManager extends EventEmitter {
             this.handleReconnect(connection, config);
         };
         socket.onerror = (error) => {
-            console.warn(`WebSocket error for ${config.url}:`, error);
+            // console statement removed
             this.emit("error", { url: config.url, error });
         };
         socket.onmessage = (event) => {
             try {
-                const message = JSON.parse(event.data);
+
                 this.emit("message", { url: config.url, message });
             }
             catch (error) {
@@ -117,27 +117,27 @@ export class WebSocketManager extends EventEmitter {
     handleReconnect(connection, config) {
         if (connection.reconnectAttempts < config.maxRetries) {
             connection.reconnectAttempts++;
-            console.log(`WebSocket reconnection attempt ${connection.reconnectAttempts}/${config.maxRetries} for ${config.url}`);
+            // console statement removed
             setTimeout(() => {
                 this.connect(config);
             }, config.reconnectInterval *
                 Math.pow(2, connection.reconnectAttempts - 1));
         }
         else {
-            console.warn(`Max WebSocket reconnection attempts reached for ${config.url}`);
+            // console statement removed
             this.emit("reconnect_failed", config.url);
         }
     }
     processMessageQueue(connection) {
         while (connection.messageQueue.length > 0) {
-            const message = connection.messageQueue.shift();
+
             if (message) {
                 connection.socket.send(JSON.stringify(message));
             }
         }
     }
     send(url, message) {
-        const connection = this.connections.get(url);
+
         if (!connection) {
             throw new Error(`No WebSocket connection found for URL: ${url}`);
         }
@@ -149,7 +149,7 @@ export class WebSocketManager extends EventEmitter {
         }
     }
     disconnect(url) {
-        const connection = this.connections.get(url);
+
         if (connection) {
             this.clearHeartbeat(connection);
             connection.socket.close();
@@ -160,7 +160,7 @@ export class WebSocketManager extends EventEmitter {
         return this.connections.get(url)?.isConnected ?? false;
     }
     getConnectionStatus() {
-        const status = {};
+
         Array.from(this.connections.entries()).forEach(([url, connection]) => {
             status[url] = connection.isConnected;
         });

@@ -17,7 +17,7 @@ const defaultNotifications = [
         },
         action: {
             label: "View Bet",
-            onClick: () => console.log("View bet"),
+            onClick: () => // console statement removed,
         },
     },
     {
@@ -33,7 +33,7 @@ const defaultNotifications = [
         },
         action: {
             label: "View Details",
-            onClick: () => console.log("View details"),
+            onClick: () => // console statement removed,
         },
     },
     {
@@ -94,11 +94,11 @@ const getPriorityIndicator = (priority) => {
     }
 };
 const formatTimestamp = (timestamp) => {
-    const now = new Date();
-    const diff = now.getTime() - timestamp.getTime();
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
+
+
+
+
+
     if (minutes < 1)
         return "Just now";
     if (minutes < 60)
@@ -109,12 +109,12 @@ const formatTimestamp = (timestamp) => {
 };
 export const ModernNotificationCenter = ({ isOpen, onClose, notifications = defaultNotifications, onMarkAsRead, onDelete, onClearAll, }) => {
     const [selectedNotification, setSelectedNotification] = useState(null);
-    const unreadCount = notifications.filter((n) => !n.read).length;
-    const sortedNotifications = [...notifications].sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+
+
     if (!isOpen)
         return null;
     return (_jsx(AnimatePresence, { children: _jsx(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, className: "fixed inset-0 z-50", onClick: onClose, children: _jsxs(motion.div, { initial: { opacity: 0, x: 400 }, animate: { opacity: 1, x: 0 }, exit: { opacity: 0, x: 400 }, className: "absolute right-0 top-0 h-full w-full max-w-md bg-gray-900/95 backdrop-blur-xl border-l border-gray-700/50 shadow-2xl", onClick: (e) => e.stopPropagation(), children: [_jsxs("div", { className: "flex items-center justify-between p-6 border-b border-gray-700/50", children: [_jsxs("div", { className: "flex items-center space-x-3", children: [_jsx(Bell, { size: 20, className: "text-gray-400" }), _jsx("h2", { className: "text-lg font-semibold text-white", children: "Notifications" }), unreadCount > 0 && (_jsx("span", { className: "px-2 py-1 bg-blue-600 text-white text-xs rounded-full", children: unreadCount }))] }), _jsxs("div", { className: "flex items-center space-x-2", children: [notifications.length > 0 && (_jsx("button", { onClick: onClearAll, className: "p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors", title: "Clear all", children: _jsx(Trash2, { size: 16 }) })), _jsx("button", { onClick: onClose, className: "p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors", children: _jsx(X, { size: 16 }) })] })] }), _jsx("div", { className: "flex-1 overflow-y-auto", children: notifications.length === 0 ? (_jsxs("div", { className: "flex flex-col items-center justify-center h-64 text-gray-500", children: [_jsx(Bell, { size: 32, className: "mb-4 opacity-50" }), _jsx("p", { className: "text-lg font-medium", children: "No notifications" }), _jsx("p", { className: "text-sm", children: "You're all caught up!" })] })) : (_jsx("div", { className: "space-y-1 p-4", children: sortedNotifications.map((notification, index) => (_jsx(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: index * 0.05 }, className: `
-                      group relative p-4 rounded-xl border-l-4 cursor-pointer transition-all
+                      group relative p-4 rounded-xl border-l-4 cursor-pointer transition-all;
                       ${getNotificationColor(notification.type)}
                       ${notification.read ? "opacity-70" : ""}
                       ${selectedNotification === notification.id ? "bg-gray-800/50" : "hover:bg-gray-800/30"}

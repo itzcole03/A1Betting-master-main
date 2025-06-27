@@ -1,9 +1,9 @@
-import { EventEmitter } from "events";
-import { UnifiedConfig } from "../unified/UnifiedConfig";
-import { UnifiedLogger } from "../unified/UnifiedLogger";
-import { UnifiedCache } from "../unified/UnifiedCache";
-import { BaseService } from "./BaseService";
-import { UnifiedServiceRegistry } from "./UnifiedServiceRegistry";
+import { EventEmitter } from 'events.ts';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.ts';
+import { UnifiedLogger } from '@/unified/UnifiedLogger.ts';
+import { UnifiedCache } from '@/unified/UnifiedCache.ts';
+import { BaseService } from './BaseService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
 
 export interface ErrorContext {
   code: string;
@@ -54,19 +54,19 @@ export class UnifiedErrorService extends BaseService {
       timestamp: Date.now(),
     };
 
-    // Log error to console in development
+    // Log error to console in development;
     if (process.env.NODE_ENV === "development") {
-      console.error("Error:", error);
-      console.error("Details:", errorDetails);
+      // console statement removed
+      // console statement removed
     }
 
-    // Store error
+    // Store error;
     this.errors.unshift(errorDetails);
     if (this.errors.length > this.maxErrors) {
       this.errors.pop();
     }
 
-    // Emit error event
+    // Emit error event;
     this.emit("error", { error, details: errorDetails });
   }
 
@@ -93,14 +93,13 @@ export class UnifiedErrorService extends BaseService {
   public getRecentErrors(
     timeRange: "day" | "week" | "month" = "day",
   ): ErrorDetails[] {
-    const now = Date.now();
-    const rangeInMs = this.getTimeRangeInMs(timeRange);
-    const cutoff = now - rangeInMs;
+
+
 
     return this.errors.filter((error) => (error.timestamp || 0) >= cutoff);
   }
 
-  // Renamed to avoid duplicate member error
+  // Renamed to avoid duplicate member error;
   public getRecentErrorHistory(): ErrorContext[] {
     return this.errorHistory.slice(0, 10);
   }
@@ -131,26 +130,26 @@ export class UnifiedErrorService extends BaseService {
   }
 
   private handleCriticalError(error: ErrorContext): void {
-    // Implement critical error handling logic
+    // Implement critical error handling logic;
     // For example, notify administrators, trigger fallback mechanisms, etc.
     this.emit("error:critical", error);
   }
 
   private handleWarning(error: ErrorContext): void {
-    // Implement warning handling logic
+    // Implement warning handling logic;
     // For example, log to monitoring system, notify developers, etc.
     this.emit("error:warning", error);
   }
 
   private handleInfo(error: ErrorContext): void {
-    // Implement info handling logic
+    // Implement info handling logic;
     // For example, log to analytics, track patterns, etc.
     this.emit("error:info", error);
   }
 
   public isErrorRecoverable(error: ErrorContext): boolean {
-    // Implement logic to determine if an error is recoverable
-    const recoverableCodes = this.config.get("recoverableErrorCodes") || [];
+    // Implement logic to determine if an error is recoverable;
+
     return recoverableCodes.includes(error.code);
   }
 

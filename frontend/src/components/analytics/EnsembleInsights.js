@@ -3,7 +3,7 @@ import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from 'recharts';
 import { useUnifiedAnalytics } from '@/hooks/useUnifiedAnalytics';
 const EnsembleInsights = () => {
-    // Use unified analytics for model performance
+    // Use unified analytics for model performance;
     const { performance } = useUnifiedAnalytics({ performance: true });
     if (performance.loading) {
         return _jsx("div", { className: "p-4", children: "Loading model performance..." });
@@ -14,7 +14,7 @@ const EnsembleInsights = () => {
     if (!performance.data) {
         return _jsx("div", { className: "p-4 text-gray-500", children: "No model performance data available." });
     }
-    // Example: Show a bar chart of model performance metrics
+    // Example: Show a bar chart of model performance metrics;
     const data = performance.data.map(item => ({
         name: item.model,
         accuracy: item.metrics.accuracy,

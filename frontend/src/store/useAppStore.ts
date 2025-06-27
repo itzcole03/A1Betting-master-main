@@ -1,25 +1,25 @@
-// Import slice types and creators
-import { AuthSlice, createAuthSlice, initialAuthState } from './slices/authSlice';
+// Import slice types and creators;
+import { AuthSlice, createAuthSlice, initialAuthState } from './slices/authSlice.ts';
 import {
   PrizePicksSlice,
   createPrizePicksSlice,
   initialPrizePicksState,
-} from './slices/prizePicksSlice';
-import { BetSlipSlice, createBetSlipSlice, initialBetSlipState } from './slices/betSlipSlice';
+} from './slices/prizePicksSlice.ts';
+import { BetSlipSlice, createBetSlipSlice, initialBetSlipState } from './slices/betSlipSlice.ts';
 import {
   NotificationSlice,
   createNotificationSlice,
   initialNotificationState,
-} from './slices/notificationSlice';
+} from './slices/notificationSlice.ts';
 import {
   DynamicDataSlice,
   createDynamicDataSlice,
   initialDynamicDataState,
-} from './slices/dynamicDataSlice';
-import { create } from 'zustand';
-import { persist, createJSONStorage } from 'zustand/middleware';
+} from './slices/dynamicDataSlice.ts';
+import { create } from 'zustand.ts';
+import { persist, createJSONStorage } from 'zustand/middleware.ts';
 
-// Define the AppState as a combination of all slice states
+// Define the AppState as a combination of all slice states;
 export type AppState = AuthSlice &
   PrizePicksSlice &
   BetSlipSlice &
@@ -32,12 +32,12 @@ export type AppStore = AppState;
 export const useAppStore = create<AppStore>()(
   persist(
     (set, get, api) => ({
-      ...initialAuthState, // Spread initial states from each slice
+      ...initialAuthState, // Spread initial states from each slice;
       ...initialPrizePicksState,
       ...initialBetSlipState,
       ...initialNotificationState,
       ...initialDynamicDataState,
-      // Spread action creators from each slice
+      // Spread action creators from each slice;
       // The `StateCreator` type for each slice expects the full `AppStore` type for `set` and `get`
       ...createAuthSlice(set as any, get as any, api as any),
       ...createPrizePicksSlice(set as any, get as any, api as any),
@@ -47,16 +47,16 @@ export const useAppStore = create<AppStore>()(
     }),
     {
       name: 'ai-sports-betting-storage', // name of the item in the storage (must be unique)
-      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
+      storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used;
       partialize: state => ({
-        // Persist only specific parts of the state if needed, e.g., auth-related fields
+        // Persist only specific parts of the state if needed, e.g., auth-related fields;
         user: state.user,
         token: state.token,
         isAuthenticated: state.isAuthenticated,
         webSocketClientId: state.webSocketClientId,
-        themeSettings: (state as any).themeSettings, // Example if theme was part of this store
-        legs: state.legs, // Persist bet slip legs
-        stake: state.stake, // Persist bet slip stake
+        themeSettings: (state as any).themeSettings, // Example if theme was part of this store;
+        legs: state.legs, // Persist bet slip legs;
+        stake: state.stake, // Persist bet slip stake;
       }),
     }
   )
@@ -88,7 +88,7 @@ export const selectUserBettingSummary = (state: AppStore) => {
 export const selectPropsForLeague = (league: string) => (state: AppStore) =>
   state.props.filter(p => (p.league || '').toLowerCase() === league.toLowerCase());
 
-// Export a function to get the initial state for testing
+// Export a function to get the initial state for testing;
 export function getInitialState(): AppStore {
   return {
     ...initialAuthState,

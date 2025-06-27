@@ -1,5 +1,5 @@
-import { test, expect, Page, Route } from '@playwright/test';
-import { ModelOutput, RiskProfile } from '../../core/types/prediction';
+import { test, expect, Page, Route } from '@playwright/test.ts';
+import { ModelOutput, RiskProfile } from '@/core/types/prediction.ts';
 
 test.describe('Prediction Flow', () => {
   const mockRiskProfile: RiskProfile = {
@@ -28,7 +28,7 @@ test.describe('Prediction Flow', () => {
   ];
 
   test.beforeEach(async ({ page }: { page: Page }) => {
-    // Mock API responses
+    // Mock API responses;
     await page.route('**/api/predictions', async (route: Route) => {
       await route.fulfill({
         status: 200,
@@ -43,74 +43,74 @@ test.describe('Prediction Flow', () => {
       });
     });
 
-    // Navigate to predictions page
+    // Navigate to predictions page;
     await page.goto('/predictions');
   });
 
   test('displays prediction recommendations', async ({ page }: { page: Page }) => {
-    // Wait for recommendations to load
+    // Wait for recommendations to load;
     await page.waitForSelector('[data-testid="bet-recommendation-card"]');
 
-    // Verify recommendation cards are displayed
-    const cards = await page.$$('[data-testid="bet-recommendation-card"]');
+    // Verify recommendation cards are displayed;
+
     expect(cards.length).toBeGreaterThan(0);
 
-    // Verify recommendation details
-    const firstCard = cards[0];
+    // Verify recommendation details;
+
     await expect(firstCard).toContainText('model1');
     await expect(firstCard).toContainText('90%');
     await expect(firstCard).toContainText('LOW');
   });
 
   test('filters recommendations by risk level', async ({ page }: { page: Page }) => {
-    // Wait for recommendations to load
+    // Wait for recommendations to load;
     await page.waitForSelector('[data-testid="bet-recommendation-card"]');
 
-    // Select low risk filter
+    // Select low risk filter;
     await page.selectOption('[data-testid="risk-filter"]', 'low');
 
-    // Verify filtered recommendations
-    const cards = await page.$$('[data-testid="bet-recommendation-card"]');
+    // Verify filtered recommendations;
+
     for (const card of cards) {
       const riskLevel = await card.$eval(
         '[data-testid="risk-level"]',
-        (el: Element) => el.textContent
+        (el: Element) => el.textContent;
       );
       expect(riskLevel).toBe('LOW');
     }
   });
 
   test('sorts recommendations by confidence', async ({ page }: { page: Page }) => {
-    // Wait for recommendations to load
+    // Wait for recommendations to load;
     await page.waitForSelector('[data-testid="bet-recommendation-card"]');
 
-    // Select confidence sort
+    // Select confidence sort;
     await page.selectOption('[data-testid="sort-select"]', 'confidence');
 
-    // Verify sorted recommendations
+    // Verify sorted recommendations;
     const confidences = await page.$$eval(
       '[data-testid="confidence-value"]',
       (elements: Element[]) => elements.map(el => parseFloat(el.textContent || '0'))
     );
 
-    // Check if confidences are in descending order
-    for (let i = 0; i < confidences.length - 1; i++) {
+    // Check if confidences are in descending order;
+    for (const i = 0; i < confidences.length - 1; i++) {
       expect(confidences[i]).toBeGreaterThanOrEqual(confidences[i + 1]);
     }
   });
 
   test('displays prediction explanation modal', async ({ page }: { page: Page }) => {
-    // Wait for recommendations to load
+    // Wait for recommendations to load;
     await page.waitForSelector('[data-testid="bet-recommendation-card"]');
 
-    // Click view details button on first recommendation
+    // Click view details button on first recommendation;
     await page.click('[data-testid="view-details-button"]');
 
-    // Verify modal is displayed
+    // Verify modal is displayed;
     await page.waitForSelector('[data-testid="prediction-explanation-modal"]');
     await expect(page.locator('[data-testid="prediction-explanation-modal"]')).toBeVisible();
 
-    // Verify modal content
+    // Verify modal content;
     await expect(page.locator('[data-testid="modal-title"]')).toContainText(
       'Prediction Explanation'
     );
@@ -119,21 +119,21 @@ test.describe('Prediction Flow', () => {
   });
 
   test('switches between model explanations in modal', async ({ page }: { page: Page }) => {
-    // Open modal
+    // Open modal;
     await page.waitForSelector('[data-testid="bet-recommendation-card"]');
     await page.click('[data-testid="view-details-button"]');
     await page.waitForSelector('[data-testid="prediction-explanation-modal"]');
 
-    // Switch to second model tab
+    // Switch to second model tab;
     await page.click('text=model2');
 
-    // Verify second model's explanation is displayed
+    // Verify second model's explanation is displayed;
     await expect(page.locator('[data-testid="model-name"]')).toContainText('model2');
     await expect(page.locator('[data-testid="model-confidence"]')).toContainText('80.0%');
   });
 
   test('handles API errors gracefully', async ({ page }: { page: Page }) => {
-    // Mock API error
+    // Mock API error;
     await page.route('**/api/predictions', async (route: Route) => {
       await route.fulfill({
         status: 500,
@@ -141,10 +141,10 @@ test.describe('Prediction Flow', () => {
       });
     });
 
-    // Reload page
+    // Reload page;
     await page.reload();
 
-    // Verify error message is displayed
+    // Verify error message is displayed;
     await expect(page.locator('[data-testid="error-message"]')).toBeVisible();
     await expect(page.locator('[data-testid="error-message"]')).toContainText(
       'Failed to load recommendations'
@@ -152,10 +152,10 @@ test.describe('Prediction Flow', () => {
   });
 
   test('updates recommendations when risk profile changes', async ({ page }: { page: Page }) => {
-    // Wait for initial recommendations
+    // Wait for initial recommendations;
     await page.waitForSelector('[data-testid="bet-recommendation-card"]');
 
-    // Mock new risk profile
+    // Mock new risk profile;
     const newRiskProfile = {
       ...mockRiskProfile,
       maxStake: 500,
@@ -169,15 +169,15 @@ test.describe('Prediction Flow', () => {
       });
     });
 
-    // Trigger risk profile update
+    // Trigger risk profile update;
     await page.click('[data-testid="update-risk-profile"]');
 
-    // Verify recommendations are updated
+    // Verify recommendations are updated;
     await page.waitForSelector('[data-testid="bet-recommendation-card"]');
-    const cards = await page.$$('[data-testid="bet-recommendation-card"]');
+
     expect(cards.length).toBeGreaterThan(0);
 
-    // Verify stake amounts are within new limits
+    // Verify stake amounts are within new limits;
     const stakes = await page.$$eval('[data-testid="stake-amount"]', (elements: Element[]) =>
       elements.map(el => parseFloat(el.textContent?.replace(/[^0-9.-]+/g, '') || '0'))
     );

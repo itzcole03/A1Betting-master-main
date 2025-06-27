@@ -25,7 +25,7 @@ const ToastItem = ({ toast }) => {
     return (_jsxs(motion.div, { layout: true, animate: "animate", className: `flex items-start p-4 mb-4 rounded-lg border ${toastColors[toast.type]} shadow-lg`, exit: "exit", initial: "initial", variants: toastVariants, children: [_jsx("div", { className: "flex-shrink-0", children: toastIcons[toast.type] }), _jsx("div", { className: "ml-3 w-0 flex-1", children: _jsx("p", { className: "text-sm font-medium text-gray-900 dark:text-white", children: toast.message }) }), _jsx("div", { className: "ml-4 flex-shrink-0 flex", children: _jsx("button", { className: "inline-flex text-gray-400 hover:text-gray-500 focus:outline-none", onClick: () => removeToast(toast.id), children: _jsx(XMarkIcon, { className: "h-5 w-5" }) }) })] }));
 };
 const ToastContainer = () => {
-    const toasts = useStore(state => state.toasts);
+
     return (_jsx("div", { className: "fixed top-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]", children: _jsx(AnimatePresence, { mode: "popLayout", children: toasts.map(toast => (_jsx(ToastItem, { toast: toast }, toast.id))) }) }));
 };
 export default React.memo(ToastContainer);

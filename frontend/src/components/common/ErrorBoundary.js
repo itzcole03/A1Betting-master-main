@@ -14,7 +14,7 @@ class GlobalErrorBoundary extends Component {
     componentDidCatch(error, errorInfo) {
         this.setState({ error, errorInfo });
         Sentry.captureException(error);
-        console.error("Uncaught error:", error, errorInfo);
+        // console statement removed
     }
     render() {
         if (this.state.hasError) {

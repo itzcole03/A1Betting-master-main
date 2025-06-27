@@ -1,5 +1,5 @@
-import React from 'react';
-import { Lineup } from '@/types';
+import React from 'react.ts';
+import { Lineup } from '@/types.ts';
 interface LineupComparisonTableProps {
     lineups: Lineup[];
     onSelect?: (lineup: Lineup) => void;

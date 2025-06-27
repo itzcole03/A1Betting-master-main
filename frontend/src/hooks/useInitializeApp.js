@@ -8,15 +8,15 @@ export function useInitializeApp() {
     useEffect(() => {
         const initializeApp = async () => {
             try {
-                // Initialize core systems
-                const eventBus = EventBus.getInstance();
-                const performanceMonitor = PerformanceMonitor.getInstance();
-                const bettingSystem = UnifiedBettingSystem.getInstance();
-                // Start performance monitoring
-                const traceId = performanceMonitor.startTrace('app-initialization');
-                // Initialize betting system
+                // Initialize core systems;
+
+
+
+                // Start performance monitoring;
+
+                // Initialize betting system;
                 await bettingSystem.initialize();
-                // Set up global error handling
+                // Set up global error handling;
                 window.onerror = (message, source, lineno, colno, error) => {
                     eventBus.publish({
                         type: 'error',
@@ -28,7 +28,7 @@ export function useInitializeApp() {
                     });
                     return false;
                 };
-                // End performance trace
+                // End performance trace;
                 performanceMonitor.endTrace(traceId);
                 setIsInitialized(true);
             }

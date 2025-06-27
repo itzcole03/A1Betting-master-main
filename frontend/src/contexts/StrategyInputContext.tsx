@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { Sport, PropType } from '@/types';
+import React, { createContext, useContext, useState, useCallback  } from 'react.ts';
+import { Sport, PropType } from '@/types.ts';
 
 interface StrategyInput {
   stake: number;
@@ -13,7 +13,7 @@ interface StrategyInput {
 
 interface StrategyInputContextType {
   strategyInput: StrategyInput;
-  updateStrategyInput: (input: Partial<StrategyInput>) => void;
+  updateStrategyInput: (input: Partial<StrategyInput key={738531}>) => void;
   resetStrategyInput: () => void;
 }
 
@@ -27,12 +27,10 @@ const defaultStrategyInput: StrategyInput = {
   selectedPropTypes: [],
 };
 
-const StrategyInputContext = createContext<StrategyInputContextType | undefined>(undefined);
-
 export const StrategyInputProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [strategyInput, setStrategyInput] = useState<StrategyInput>(defaultStrategyInput);
+  const [strategyInput, setStrategyInput] = useState<StrategyInput key={738531}>(defaultStrategyInput);
 
-  const updateStrategyInput = useCallback((input: Partial<StrategyInput>) => {
+  const updateStrategyInput = useCallback((input: Partial<StrategyInput key={738531}>) => {
     setStrategyInput(prev => ({ ...prev, ...input }));
   }, []);
 
@@ -41,16 +39,16 @@ export const StrategyInputProvider: React.FC<{ children: React.ReactNode }> = ({
   }, []);
 
   return (
-    <StrategyInputContext.Provider
+    <StrategyInputContext.Provider;
       value={{ strategyInput, updateStrategyInput, resetStrategyInput }}
-    >
+     key={699332}>
       {children}
     </StrategyInputContext.Provider>
   );
 };
 
 export const useStrategyInput = () => {
-  const context = useContext(StrategyInputContext);
+
   if (!context) {
     throw new Error('useStrategyInput must be used within a StrategyInputProvider');
   }

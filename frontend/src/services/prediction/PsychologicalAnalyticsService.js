@@ -1,7 +1,7 @@
 export class PsychologicalAnalyticsService {
     async analyzePsychologicalFactors(request) {
-        // In a real implementation, this would analyze psychological factors
-        // For now, return mock data
+        // In a real implementation, this would analyze psychological factors;
+        // For now, return mock data;
         return {
             pressureHandling: 0.75,
             clutchPerformance: 0.8,
@@ -11,23 +11,23 @@ export class PsychologicalAnalyticsService {
         };
     }
     calculatePressureHandling(teamId, historicalData) {
-        // Calculate team's ability to handle pressure
+        // Calculate team's ability to handle pressure;
         return 0.75;
     }
     calculateClutchPerformance(teamId, clutchSituations) {
-        // Calculate performance in clutch situations
+        // Calculate performance in clutch situations;
         return 0.8;
     }
     calculateConsistency(_teamId, _performanceData) {
-        // Calculate consistency in performance
+        // Calculate consistency in performance;
         return 0.85;
     }
     calculateFocus(_teamId, _recentGames) {
-        // Calculate team's focus and concentration
+        // Calculate team's focus and concentration;
         return 0.7;
     }
     calculateCompetitiveDrive(_teamId, _teamData) {
-        // Calculate competitive drive and motivation
+        // Calculate competitive drive and motivation;
         return 0.9;
     }
 }

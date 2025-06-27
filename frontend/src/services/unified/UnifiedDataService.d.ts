@@ -1,5 +1,5 @@
-import EventEmitter from "eventemitter3";
-import { z } from "zod";
+import EventEmitter from 'eventemitter3.ts';
+import { z } from 'zod.ts';
 export declare enum DataSource {
     PRIZEPICKS = "prizepicks",
     ESPN = "espn",

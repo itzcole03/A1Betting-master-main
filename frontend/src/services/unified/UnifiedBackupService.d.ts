@@ -1,4 +1,4 @@
-import { UnifiedServiceRegistry } from '../unified/UnifiedServiceRegistry';
+import { UnifiedServiceRegistry } from '@/unified/UnifiedServiceRegistry.ts';
 export interface BackupConfig {
     enabled: boolean;
     schedule: string;

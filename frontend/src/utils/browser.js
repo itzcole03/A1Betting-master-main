@@ -15,7 +15,7 @@ const mockPlayers = [
             stat: 'POINTS',
             line: 28,
             type: 'POINTS',
-            percentage: 85
+            percentage: 85;
         },
         whyThisBet: 'Averaging 32 PPG in last 5 games vs GSW'
     },
@@ -32,7 +32,7 @@ const mockPlayers = [
             stat: 'THREES',
             line: 5,
             type: 'THREES',
-            percentage: 75
+            percentage: 75;
         },
         whyThisBet: 'Hit 5+ threes in 8 of last 10 games'
     }

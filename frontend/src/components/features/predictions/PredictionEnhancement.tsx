@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo  } from 'react.ts';
 import {
   Box,
   Card,
@@ -12,7 +12,7 @@ import {
   Collapse,
   Alert,
   CircularProgress,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
@@ -21,22 +21,22 @@ import {
   CheckCircle as CheckCircleIcon,
   Error as ErrorIcon,
   Refresh as RefreshIcon,
-} from '@mui/icons-material';
-import { formatPercentage, formatCurrency } from '@/utils/formatters';
-import { debounce } from 'lodash';
-import type { ModelPrediction } from '../types/prediction';
+} from '@mui/icons-material.ts';
+import { formatPercentage, formatCurrency } from '@/utils/formatters.ts';
+import { debounce } from 'lodash.ts';
+import type { ModelPrediction } from '@/types/prediction.ts';
 
 interface PredictionEnhancementProps {
   predictions: ModelPrediction[];
   onStakeOptimize: (prediction: ModelPrediction) => void;
   riskProfile: 'conservative' | 'moderate' | 'aggressive';
   bankroll: number;
-  onRefresh?: () => Promise<void>;
+  onRefresh?: () => Promise<void key={132647}>;
   autoRefresh?: boolean;
   refreshInterval?: number;
 }
 
-const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
+const PredictionEnhancement: React.FC<PredictionEnhancementProps key={691820}> = ({
   predictions,
   onStakeOptimize,
   riskProfile,
@@ -45,25 +45,24 @@ const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
   autoRefresh = false,
   refreshInterval = 30000,
 }) => {
-  const [selectedPrediction, setSelectedPrediction] = useState<ModelPrediction | null>(null);
+  const [selectedPrediction, setSelectedPrediction] = useState<ModelPrediction | null key={82017}>(null);
   const [showDetails, setShowDetails] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
 
-  // Memoize confidence level calculation
+  // Memoize confidence level calculation;
   const getConfidenceLevel = useCallback((confidence: number) => {
     if (confidence >= 0.9) return { label: 'Safe', color: 'success' as const };
     if (confidence >= 0.7) return { label: 'Medium', color: 'warning' as const };
     return { label: 'Risky', color: 'error' as const };
   }, []);
 
-  // Memoize Kelly stake calculation
+  // Memoize Kelly stake calculation;
   const calculateKellyStake = useCallback(
     (prediction: ModelPrediction) => {
       const { confidence, prediction: odds } = prediction;
-      const q = 1 - confidence;
-      const b = odds - 1;
-      const kelly = (b * confidence - q) / b;
+
+
 
       const riskMultiplier = {
         conservative: 0.25,
@@ -76,7 +75,7 @@ const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
     [riskProfile, bankroll]
   );
 
-  // Debounced refresh handler
+  // Debounced refresh handler;
   const debouncedRefresh = useMemo(
     () =>
       debounce(async () => {
@@ -94,48 +93,47 @@ const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
     [onRefresh]
   );
 
-  // Auto-refresh effect
+  // Auto-refresh effect;
   useEffect(() => {
     if (!autoRefresh || !onRefresh) return;
 
-    const interval = setInterval(debouncedRefresh, refreshInterval);
     return () => clearInterval(interval);
   }, [autoRefresh, onRefresh, refreshInterval, debouncedRefresh]);
 
-  // Memoize sorted predictions
+  // Memoize sorted predictions;
   const sortedPredictions = useMemo(() => {
     return [...predictions].sort((a, b) => b.confidence - a.confidence);
   }, [predictions]);
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h5">
-          Enhanced Predictions
-          <Tooltip title="AI-powered predictions with multi-model consensus">
-            <IconButton>
-              <InfoIcon />
+    <Box sx={{ p: 3 }} key={486541}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }} key={244704}>
+        <Typography variant="h5" key={944884}>
+          Enhanced Predictions;
+          <Tooltip title="AI-powered predictions with multi-model consensus" key={509604}>
+            <IconButton key={49502}>
+              <InfoIcon / key={352040}>
             </IconButton>
           </Tooltip>
         </Typography>
         {onRefresh && (
-          <Button
+          <Button;
             disabled={isRefreshing}
-            startIcon={isRefreshing ? <CircularProgress size={20} /> : <RefreshIcon />}
+            startIcon={isRefreshing ? <CircularProgress size={20} / key={683265}> : <RefreshIcon / key={544473}>}
             onClick={debouncedRefresh}
           >
-            Refresh
+            Refresh;
           </Button>
         )}
       </Box>
 
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" sx={{ mb: 2 }} key={957932}>
           {error}
         </Alert>
       )}
 
-      <Box
+      <Box;
         sx={{
           display: 'grid',
           gridTemplateColumns: {
@@ -144,13 +142,12 @@ const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
           },
           gap: 3,
         }}
-      >
+       key={854733}>
         {sortedPredictions.map((prediction, index) => {
-          const confidenceLevel = getConfidenceLevel(prediction.confidence);
-          const suggestedStake = calculateKellyStake(prediction);
+
 
           return (
-            <Card
+            <Card;
               key={prediction.eventId + index}
               sx={{
                 transition: 'transform 0.2s, box-shadow 0.2s',
@@ -159,31 +156,31 @@ const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
                   boxShadow: 4,
                 },
               }}
-            >
-              <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                  <Typography variant="h6">{prediction.modelName}</Typography>
-                  <Chip
+             key={294418}>
+              <CardContent key={452065}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }} key={733531}>
+                  <Typography variant="h6" key={93421}>{prediction.modelName}</Typography>
+                  <Chip;
                     color={confidenceLevel.color}
                     icon={
                       confidenceLevel.color === 'success' ? (
-                        <CheckCircleIcon />
+                        <CheckCircleIcon / key={225494}>
                       ) : confidenceLevel.color === 'warning' ? (
-                        <WarningIcon />
+                        <WarningIcon / key={78709}>
                       ) : (
-                        <ErrorIcon />
+                        <ErrorIcon / key={610137}>
                       )
                     }
                     label={confidenceLevel.label}
                   />
                 </Box>
 
-                <Box sx={{ mb: 2 }}>
-                  <Typography gutterBottom color="text.secondary" variant="body2">
-                    Confidence Score
+                <Box sx={{ mb: 2 }} key={144601}>
+                  <Typography gutterBottom color="text.secondary" variant="body2" key={760822}>
+                    Confidence Score;
                   </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <LinearProgress
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} key={109447}>
+                    <LinearProgress;
                       color={confidenceLevel.color}
                       sx={{
                         flexGrow: 1,
@@ -196,87 +193,87 @@ const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
                       }}
                       value={prediction.confidence * 100}
                       variant="determinate"
-                    />
-                    <Typography variant="body2">
+                    / key={325503}>
+                    <Typography variant="body2" key={679167}>
                       {formatPercentage(prediction.confidence)}
                     </Typography>
                   </Box>
                 </Box>
 
-                <Box sx={{ mb: 2 }}>
-                  <Typography gutterBottom color="text.secondary" variant="body2">
-                    Model Performance
+                <Box sx={{ mb: 2 }} key={144601}>
+                  <Typography gutterBottom color="text.secondary" variant="body2" key={760822}>
+                    Model Performance;
                   </Typography>
-                  <Box
+                  <Box;
                     sx={{
                       display: 'grid',
                       gridTemplateColumns: 'repeat(3, 1fr)',
                       gap: 1,
                     }}
-                  >
-                    <Box>
-                      <Typography color="text.secondary" variant="caption">
-                        Accuracy
+                   key={341373}>
+                    <Box key={485947}>
+                      <Typography color="text.secondary" variant="caption" key={290635}>
+                        Accuracy;
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" key={679167}>
                         {formatPercentage(prediction.performance.accuracy)}
                       </Typography>
                     </Box>
-                    <Box>
-                      <Typography color="text.secondary" variant="caption">
-                        ROI
+                    <Box key={485947}>
+                      <Typography color="text.secondary" variant="caption" key={290635}>
+                        ROI;
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" key={679167}>
                         {formatPercentage(prediction.performance.roi)}
                       </Typography>
                     </Box>
-                    <Box>
-                      <Typography color="text.secondary" variant="caption">
-                        Win Rate
+                    <Box key={485947}>
+                      <Typography color="text.secondary" variant="caption" key={290635}>
+                        Win Rate;
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" key={679167}>
                         {formatPercentage(prediction.performance.winRate)}
                       </Typography>
                     </Box>
                   </Box>
                 </Box>
 
-                <Box sx={{ mb: 2 }}>
-                  <Typography gutterBottom color="text.secondary" variant="body2">
+                <Box sx={{ mb: 2 }} key={144601}>
+                  <Typography gutterBottom color="text.secondary" variant="body2" key={760822}>
                     Suggested Stake (Kelly Criterion)
                   </Typography>
-                  <Typography color="primary" variant="h6">
+                  <Typography color="primary" variant="h6" key={397198}>
                     {formatCurrency(suggestedStake)}
                   </Typography>
                 </Box>
 
-                <Box sx={{ display: 'flex', gap: 1 }}>
-                  <Button
-                    fullWidth
+                <Box sx={{ display: 'flex', gap: 1 }} key={973949}>
+                  <Button;
+                    fullWidth;
                     color="primary"
                     variant="contained"
-                    onClick={() => onStakeOptimize(prediction)}
+                    onClick={() = key={19660}> onStakeOptimize(prediction)}
                   >
-                    Optimize Stake
+                    Optimize Stake;
                   </Button>
-                  <Button
+                  <Button;
                     variant="outlined"
-                    onClick={() => {
+                    onClick={() = key={806659}> {
                       setSelectedPrediction(prediction);
                       setShowDetails(!showDetails);
                     }}
                   >
-                    Details
+                    Details;
                   </Button>
                 </Box>
 
-                <Collapse in={showDetails && selectedPrediction === prediction}>
-                  <Box sx={{ mt: 2 }}>
-                    <Typography gutterBottom variant="subtitle2">
-                      Top Contributing Features
+                <Collapse in={showDetails && selectedPrediction === prediction} key={959966}>
+                  <Box sx={{ mt: 2 }} key={337181}>
+                    <Typography gutterBottom variant="subtitle2" key={750236}>
+                      Top Contributing Features;
                     </Typography>
                     {prediction.features.slice(0, 3).map((feature, idx) => (
-                      <Box
+                      <Box;
                         key={idx}
                         sx={{
                           display: 'flex',
@@ -290,9 +287,9 @@ const PredictionEnhancement: React.FC<PredictionEnhancementProps> = ({
                             bgcolor: 'action.selected',
                           },
                         }}
-                      >
-                        <Typography variant="body2">{feature.name}</Typography>
-                        <Typography color="text.secondary" variant="body2">
+                       key={327449}>
+                        <Typography variant="body2" key={679167}>{feature.name}</Typography>
+                        <Typography color="text.secondary" variant="body2" key={497604}>
                           {formatPercentage(feature.importance)}
                         </Typography>
                       </Box>

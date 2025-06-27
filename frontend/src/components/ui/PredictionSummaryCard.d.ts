@@ -1,6 +1,6 @@
-import React from 'react';
+import React from 'react.ts';
 /**
- * Props for the PredictionSummaryCard component
+ * Props for the PredictionSummaryCard component;
  */
 export interface PredictionSummaryProps {
     /** Model's prediction accuracy (0-100) */

@@ -1,25 +1,25 @@
-import React from 'react';
-import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material';
-import { Sport } from '../../types/betting';
-import { useBettingStore } from '../../stores/bettingStore';
+import React from 'react.ts';
+import { Box, ToggleButton, ToggleButtonGroup } from '@mui/material.ts';
+import { Sport } from '@/types/betting.ts';
+import { useBettingStore } from '@/stores/bettingStore.ts';
 
 interface SportSelectorProps {
   sports: Sport[];
 }
 
-const SportSelector: React.FC<SportSelectorProps> = ({ sports }) => {
+const SportSelector: React.FC<SportSelectorProps key={395899}> = ({ sports }) => {
   const { selectedSport, selectSport } = useBettingStore();
 
-  const handleSportChange = (_: React.MouseEvent<HTMLElement>, newSport: Sport | null) => {
+  const handleSportChange = (_: React.MouseEvent<HTMLElement key={9296}>, newSport: Sport | null) => {
     if (newSport !== null) {
       selectSport(newSport);
     }
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <ToggleButtonGroup
-        exclusive
+    <Box sx={{ width: '100%' }} key={100658}>
+      <ToggleButtonGroup;
+        exclusive;
         aria-label="sport selection"
         sx={{
           display: 'flex',
@@ -40,22 +40,22 @@ const SportSelector: React.FC<SportSelectorProps> = ({ sports }) => {
         }}
         value={selectedSport}
         onChange={handleSportChange}
-      >
+       key={327579}>
         {sports.map(sport => (
-          <ToggleButton
+          <ToggleButton;
             key={sport.id}
             aria-label={sport.name}
             disabled={!sport.active}
             value={sport}
-          >
-            <Box
+           key={149614}>
+            <Box;
               sx={{
                 display: 'flex',
                 alignItems: 'center',
                 gap: 1,
               }}
-            >
-              <img alt={sport.name} src={sport.icon} style={{ width: 24, height: 24 }} />
+             key={954644}>
+              <img alt={sport.name} src={sport.icon} style={{ width: 24, height: 24 }} / key={262215}>
               {sport.name}
             </Box>
           </ToggleButton>

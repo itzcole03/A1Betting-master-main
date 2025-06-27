@@ -7,7 +7,7 @@ class ESPNService {
     async fetchHeadlines() {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchHeadlines();
+
                 return transformData(data, this.transformHeadlines, 'espn.fetchHeadlines');
             }
             catch (error) {
@@ -18,7 +18,7 @@ class ESPNService {
     async fetchGameSummary(gameId) {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchGameSummary(gameId);
+
                 return transformData(data, this.transformGameSummary, 'espn.fetchGameSummary');
             }
             catch (error) {
@@ -29,7 +29,7 @@ class ESPNService {
     async fetchPlayerNews(playerId) {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchPlayerNews(playerId);
+
                 return transformData(data, this.transformPlayerNews, 'espn.fetchPlayerNews');
             }
             catch (error) {
@@ -95,5 +95,5 @@ class ESPNService {
         }));
     }
 }
-// Export a singleton instance
+// Export a singleton instance;
 export const espnService = new ESPNService();

@@ -7,7 +7,7 @@ export class ModelEvaluationService {
     }
     async evaluateModel(request) {
         try {
-            // Implement model evaluation logic here
+            // Implement model evaluation logic here;
             const evaluation = {
                 accuracy: 0.85,
                 precision: 0.82,
@@ -27,8 +27,8 @@ export class ModelEvaluationService {
                 timestamp: new Date().toISOString(),
                 metadata: request.metadata,
             };
-            // Store evaluation result
-            const modelEvaluations = this.evaluations.get(request.modelId) || [];
+            // Store evaluation result;
+
             modelEvaluations.push(result);
             this.evaluations.set(request.modelId, modelEvaluations);
             return {
@@ -54,11 +54,11 @@ export class ModelEvaluationService {
         return this.evaluations.get(modelId) || [];
     }
     async getLatestEvaluation(modelId) {
-        const evaluations = await this.getModelEvaluations(modelId);
+
         return evaluations.length > 0 ? evaluations[evaluations.length - 1] : null;
     }
     async getEvaluationTrends(modelId, metric) {
-        const evaluations = await this.getModelEvaluations(modelId);
+
         return evaluations.map(evaluation => evaluation.evaluation[metric]);
     }
 }

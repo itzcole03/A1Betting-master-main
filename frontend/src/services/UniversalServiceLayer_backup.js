@@ -10,7 +10,7 @@
             return this.getMockMetrics();
         }
         return this.retryRequest(() => this.request("/api/engine/metrics"));
-    }S
+    }S;
 // ============================================================================
 export class BaseService {
     constructor(config = {}) {
@@ -25,10 +25,10 @@ export class BaseService {
         };
     }
     async request(endpoint, options = {}) {
-        const url = `${this.config.baseURL}${endpoint}`;
-        const controller = new AbortController();
-        // Set timeout
-        const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+
+
+        // Set timeout;
+
         try {
             const response = await fetch(url, {
                 ...options,
@@ -44,7 +44,7 @@ export class BaseService {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
+
             return {
                 data,
                 success: true,
@@ -61,7 +61,7 @@ export class BaseService {
     }
     async retryRequest(requestFn, maxRetries = this.config.retries || 3) {
         let lastError;
-        for (let i = 0; i <= maxRetries; i++) {
+        for (const i = 0; i <= maxRetries; i++) {
             try {
                 return await requestFn();
             }
@@ -80,7 +80,7 @@ export class BaseService {
     getAuthHeader() {
         if (typeof window === "undefined")
             return "";
-        const token = localStorage.getItem("auth_token");
+
         return token ? `Bearer ${token}` : "";
     }
     getCacheKey(key, params) {
@@ -94,7 +94,7 @@ export class BaseService {
     }
 }
 // ============================================================================
-// PREDICTION SERVICE
+// PREDICTION SERVICE;
 // ============================================================================
 export class UniversalPredictionService extends BaseService {
     async getRecentPredictions(limit = 10) {
@@ -122,7 +122,7 @@ export class UniversalPredictionService extends BaseService {
         }));
     }
     async getMockPredictions(limit) {
-        await this.delay(500); // Simulate network delay
+        await this.delay(500); // Simulate network delay;
         const mockPredictions = Array.from({ length: limit }, (_, i) => ({
             id: `pred_${i + 1}`,
             game: `Game ${i + 1}`,
@@ -130,8 +130,8 @@ export class UniversalPredictionService extends BaseService {
             confidence: 75 + Math.random() * 25,
             timestamp: new Date(Date.now() - i * 3600000).toISOString(),
             potentialWin: 100 + Math.random() * 500,
-            odds: Math.random() > 0.5
-                ? Math.floor(Math.random() * 200) + 100
+            odds: Math.random() > 0.5;
+                ? Math.floor(Math.random() * 200) + 100;
                 : -(Math.floor(Math.random() * 200) + 100),
             status: ["pending", "won", "lost"][Math.floor(Math.random() * 3)],
         }));
@@ -157,7 +157,7 @@ export class UniversalPredictionService extends BaseService {
     }
 }
 // ============================================================================
-// BETTING SERVICE
+// BETTING SERVICE;
 // ============================================================================
 export class UniversalBettingService extends BaseService {
     async getOpportunities() {
@@ -182,8 +182,8 @@ export class UniversalBettingService extends BaseService {
             sport: ["NFL", "NBA", "MLB", "NHL"][Math.floor(Math.random() * 4)],
             game: `Team A vs Team B ${i + 1}`,
             type: ["spread", "total", "moneyline"][Math.floor(Math.random() * 3)],
-            odds: Math.random() > 0.5
-                ? Math.floor(Math.random() * 200) + 100
+            odds: Math.random() > 0.5;
+                ? Math.floor(Math.random() * 200) + 100;
                 : -(Math.floor(Math.random() * 200) + 100),
             confidence: 70 + Math.random() * 30,
             expectedValue: Math.random() * 0.2,
@@ -199,7 +199,7 @@ export class UniversalBettingService extends BaseService {
     }
 }
 // ============================================================================
-// USER SERVICE
+// USER SERVICE;
 // ============================================================================
 export class UniversalUserService extends BaseService {
     async getProfile() {
@@ -244,7 +244,7 @@ export class UniversalUserService extends BaseService {
     }
 }
 // ============================================================================
-// ANALYTICS SERVICE
+// ANALYTICS SERVICE;
 // ============================================================================
 export class UniversalAnalyticsService extends BaseService {
     async getPerformanceMetrics(timeRange = "7d") {
@@ -258,7 +258,7 @@ export class UniversalAnalyticsService extends BaseService {
     }
 }
 // ============================================================================
-// SERVICE FACTORY
+// SERVICE FACTORY;
 // ============================================================================
 export class UniversalServiceFactory {
     static configure(config) {
@@ -295,7 +295,7 @@ export class UniversalServiceFactory {
 UniversalServiceFactory.instances = new Map();
 UniversalServiceFactory.config = {};
 // ============================================================================
-// REACT QUERY INTEGRATION
+// REACT QUERY INTEGRATION;
 // ============================================================================
 export const createQueryKeys = {
     predictions: {
@@ -319,14 +319,14 @@ export const createQueryKeys = {
         market: () => ["analytics", "market"],
     },
 };
-// Default query configurations
+// Default query configurations;
 export const defaultQueryConfig = {
-    staleTime: 30000, // 30 seconds
-    cacheTime: 300000, // 5 minutes
+    staleTime: 30000, // 30 seconds;
+    cacheTime: 300000, // 5 minutes;
     refetchOnWindowFocus: false,
     retry: 2,
 };
 // ============================================================================
-// EXPORTS
+// EXPORTS;
 // ============================================================================
 export default UniversalServiceFactory;

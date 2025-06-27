@@ -1,5 +1,5 @@
-import React from 'react';
-import { ProcessedPrizePicksProp, PropOption } from '../types/prizePicks';
+import React from 'react.ts';
+import { ProcessedPrizePicksProp, PropOption } from '@/types/prizePicks.ts';
 interface PropListProps {
     onPropSelect?: (prop: ProcessedPrizePicksProp, option: PropOption) => void;
 }

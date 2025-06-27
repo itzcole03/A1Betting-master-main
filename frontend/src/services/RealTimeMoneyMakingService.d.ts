@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 export interface MoneyMakingOpportunity {
     id: string;
     type: 'prizepicks' | 'arbitrage' | 'value_bet' | 'kelly_optimal';

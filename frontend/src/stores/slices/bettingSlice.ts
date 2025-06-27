@@ -1,5 +1,5 @@
-import { StateCreator } from 'zustand';
-import { BettingState, RootState } from '@/types';
+import { StateCreator } from 'zustand.ts';
+import { BettingState, RootState } from '@/types.ts';
 
 export const createBettingSlice: StateCreator<RootState, [], [], BettingState> = (set, get) => ({
   bets: [],

@@ -1,4 +1,4 @@
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode  } from 'react.ts';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface State {
   errorInfo: ErrorInfo | null;
 }
 
-class ViteErrorBoundary extends Component<Props, State> {
+class ViteErrorBoundary extends Component<Props, State key={458171}> {
   public state: State = {
     hasError: false,
     error: null,
@@ -18,21 +18,21 @@ class ViteErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI
+    // Update state so the next render will show the fallback UI;
     return { hasError: true, error, errorInfo: null };
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("ViteErrorBoundary caught an error:", error, errorInfo);
+    // console statement removed
 
-    // Check if this is a Vite error overlay issue
+    // Check if this is a Vite error overlay issue;
     if (
       error.message?.includes(
         "Cannot read properties of undefined (reading 'frame')",
       )
     ) {
-      console.warn("Vite error overlay issue detected, suppressing error");
-      // Don't show error UI for Vite overlay issues
+      // console statement removed
+      // Don't show error UI for Vite overlay issues;
       this.setState({ hasError: false, error: null, errorInfo: null });
       return;
     }
@@ -45,9 +45,9 @@ class ViteErrorBoundary extends Component<Props, State> {
 
   public render() {
     if (this.state.hasError) {
-      // You can render any custom fallback UI
+      // You can render any custom fallback UI;
       return (
-        <div
+        <div;
           style={{
             padding: "20px",
             margin: "20px",
@@ -57,31 +57,31 @@ class ViteErrorBoundary extends Component<Props, State> {
             color: "#ef4444",
             fontFamily: "'Inter', system-ui, sans-serif",
           }}
-        >
-          <h2
+         key={540033}>
+          <h2;
             style={{
               margin: "0 0 16px 0",
               fontSize: "1.5rem",
               fontWeight: "bold",
             }}
-          >
-            Something went wrong
+           key={168733}>
+            Something went wrong;
           </h2>
-          <p style={{ margin: "0 0 16px 0" }}>
-            An error occurred in the application. Please refresh the page to
+          <p style={{ margin: "0 0 16px 0" }} key={561855}>
+            An error occurred in the application. Please refresh the page to;
             continue.
           </p>
-          <details style={{ marginTop: "16px" }}>
-            <summary
+          <details style={{ marginTop: "16px" }} key={225254}>
+            <summary;
               style={{
                 cursor: "pointer",
                 marginBottom: "8px",
                 fontWeight: "600",
               }}
-            >
+             key={58656}>
               Error details (click to expand)
             </summary>
-            <pre
+            <pre;
               style={{
                 backgroundColor: "rgba(0, 0, 0, 0.2)",
                 padding: "12px",
@@ -91,13 +91,13 @@ class ViteErrorBoundary extends Component<Props, State> {
                 whiteSpace: "pre-wrap",
                 wordBreak: "break-word",
               }}
-            >
+             key={608148}>
               {this.state.error && this.state.error.toString()}
               {this.state.errorInfo && this.state.errorInfo.componentStack}
             </pre>
           </details>
-          <button
-            onClick={() => window.location.reload()}
+          <button;
+            onClick={() = key={919301}> window.location.reload()}
             style={{
               marginTop: "16px",
               padding: "12px 24px",
@@ -117,7 +117,7 @@ class ViteErrorBoundary extends Component<Props, State> {
               e.currentTarget.style.backgroundColor = "#ef4444";
             }}
           >
-            Refresh Page
+            Refresh Page;
           </button>
         </div>
       );

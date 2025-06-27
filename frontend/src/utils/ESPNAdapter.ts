@@ -1,6 +1,6 @@
-import { DataSource } from '../core/DataSource';
-import { EventBus } from '../core/EventBus';
-import { PerformanceMonitor } from '../core/PerformanceMonitor';
+import { DataSource } from '@/core/DataSource.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { PerformanceMonitor } from '@/core/PerformanceMonitor.ts';
 
 
 
@@ -39,7 +39,7 @@ export class ESPNAdapter implements DataSource<ESPNData> {
     this.performanceMonitor = PerformanceMonitor.getInstance();
     this.cache = {
       data: null,
-      timestamp: 0
+      timestamp: 0;
     };
   }
 
@@ -48,7 +48,7 @@ export class ESPNAdapter implements DataSource<ESPNData> {
   }
 
   public async fetch(): Promise<ESPNData> {
-    const traceId = this.performanceMonitor.startTrace('espn-fetch');
+
     try {
       if (this.isCacheValid()) {
         return this.cache.data!;
@@ -70,16 +70,16 @@ export class ESPNAdapter implements DataSource<ESPNData> {
 
   private async fetchGames(): Promise<ESPNGame[]> {
     // Use ESPN's public scoreboard API (NBA example)
-    const url = 'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard';
+
     try {
-      const res = await fetch(url);
-      const json = await res.json();
+
+
       return (json.events || []).map((event: any) => ({
         id: event.id,
         homeTeam: event.competitions[0].competitors.find((c: any) => c.homeAway === 'home')?.team.displayName || '',
         awayTeam: event.competitions[0].competitors.find((c: any) => c.homeAway === 'away')?.team.displayName || '',
         startTime: event.date,
-        status: event.status.type.name
+        status: event.status.type.name;
       }));
     } catch {
       return [];
@@ -87,16 +87,16 @@ export class ESPNAdapter implements DataSource<ESPNData> {
   }
 
   private async fetchHeadlines(): Promise<ESPNHeadline[]> {
-    // Use ESPN's NBA news RSS feed
-    const url = 'https://www.espn.com/espn/rss/nba/news';
+    // Use ESPN's NBA news RSS feed;
+
     try {
-      const res = await fetch(url);
-      const text = await res.text();
-      const matches = text.match(/<item>([\s\S]*?)<\/item>/g) || [];
+
+
+
       return matches.map(item => {
-        const title = (item.match(/<title>(.*?)<\/title>/) || [])[1] || '';
-        const link = (item.match(/<link>(.*?)<\/link>/) || [])[1] || '';
-        const pubDate = (item.match(/<pubDate>(.*?)<\/pubDate>/) || [])[1] || '';
+
+
+
         return { title, link, pubDate };
       });
     } catch {
@@ -105,10 +105,10 @@ export class ESPNAdapter implements DataSource<ESPNData> {
   }
 
   private isCacheValid(): boolean {
-    const cacheTimeout = 5 * 60 * 1000;
+
     return (
       this.cache.data !== null &&
-      Date.now() - this.cache.timestamp < cacheTimeout
+      Date.now() - this.cache.timestamp < cacheTimeout;
     );
   }
 

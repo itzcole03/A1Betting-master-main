@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { PredictionExplanationModal } from '../PredictionExplanationModal';
-import { PredictionWithExplanation } from '../../../core/types/prediction';
+import React from 'react.ts';
+import { render, screen, fireEvent } from '@testing-library/react.ts';
+import { PredictionExplanationModal } from '@/PredictionExplanationModal.ts';
+import { PredictionWithExplanation } from '@/../core/types/prediction.ts';
 
 // TODO: Skipped all tests in this file due to unstable PredictionExplanationModal logic or outdated mocks. Fix and re-enable.
 describe.skip('PredictionExplanationModal', () => {
@@ -36,7 +36,7 @@ describe.skip('PredictionExplanationModal', () => {
 
   it('renders modal with correct title and prediction information', () => {
     render(
-      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() => {}} />
+      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() = key={429667}> {}} />
     );
 
     expect(screen.getByText('Prediction Explanation')).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe.skip('PredictionExplanationModal', () => {
 
   it('renders model tabs for each explanation', () => {
     render(
-      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() => {}} />
+      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() = key={429667}> {}} />
     );
 
     expect(screen.getByText('model1')).toBeInTheDocument();
@@ -55,23 +55,22 @@ describe.skip('PredictionExplanationModal', () => {
 
   it('switches between model tabs', () => {
     render(
-      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() => {}} />
+      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() = key={429667}> {}} />
     );
 
-    // Initially shows first model
+    // Initially shows first model;
     expect(screen.getByText('model1')).toHaveAttribute('aria-selected', 'true');
 
-    // Switch to second model
+    // Switch to second model;
     fireEvent.click(screen.getByText('model2'));
     expect(screen.getByText('model2')).toHaveAttribute('aria-selected', 'true');
   });
 
   it('displays tooltip on info icon hover', () => {
     render(
-      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() => {}} />
+      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() = key={429667}> {}} />
     );
 
-    const infoIcon = screen.getAllByRole('button')[0];
     fireEvent.mouseEnter(infoIcon);
 
     expect(
@@ -80,24 +79,22 @@ describe.skip('PredictionExplanationModal', () => {
   });
 
   it('calls onClose when close button is clicked', () => {
-    const onClose = jest.fn();
+
     render(
-      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={onClose} />
+      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={onClose} / key={861524}>
     );
 
-    const closeButton = screen.getAllByRole('button')[1];
     fireEvent.click(closeButton);
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it('calls onClose when close button in actions is clicked', () => {
-    const onClose = jest.fn();
+
     render(
-      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={onClose} />
+      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={onClose} / key={861524}>
     );
 
-    const closeButton = screen.getByText('Close');
     fireEvent.click(closeButton);
 
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -105,7 +102,7 @@ describe.skip('PredictionExplanationModal', () => {
 
   it('does not render when open is false', () => {
     render(
-      <PredictionExplanationModal open={false} prediction={mockPrediction} onClose={() => {}} />
+      <PredictionExplanationModal open={false} prediction={mockPrediction} onClose={() = key={551402}> {}} />
     );
 
     expect(screen.queryByText('Prediction Explanation')).not.toBeInTheDocument();
@@ -113,10 +110,10 @@ describe.skip('PredictionExplanationModal', () => {
 
   it('renders SHAP explanation component for each model', () => {
     render(
-      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() => {}} />
+      <PredictionExplanationModal open={true} prediction={mockPrediction} onClose={() = key={429667}> {}} />
     );
 
-    // Check for SHAP explanation elements
+    // Check for SHAP explanation elements;
     expect(screen.getAllByText(/Confidence:/)).toHaveLength(2);
     expect(screen.getAllByText(/Feature Impact/)).toHaveLength(2);
   });
@@ -128,7 +125,7 @@ describe.skip('PredictionExplanationModal', () => {
     };
 
     render(
-      <PredictionExplanationModal open={true} prediction={emptyPrediction} onClose={() => {}} />
+      <PredictionExplanationModal open={true} prediction={emptyPrediction} onClose={() = key={257203}> {}} />
     );
 
     expect(screen.getByText('Prediction Explanation')).toBeInTheDocument();

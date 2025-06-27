@@ -1,5 +1,5 @@
-import type { PredictionWithConfidence } from '../../types/confidence';
-import type { ContextualInput } from '../../types/filters';
+import type { PredictionWithConfidence } from '@/types/confidence.ts';
+import type { ContextualInput } from '@/types/filters.ts';
 export declare class PredictionService {
     private static instance;
     private constructor();

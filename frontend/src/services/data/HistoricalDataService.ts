@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { DataSource } from '../UnifiedDataService';
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../core/UnifiedErrorHandler';
+import { z } from 'zod.ts';
+import { DataSource } from '@/UnifiedDataService.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/core/UnifiedErrorHandler.ts';
 
-// Core data schemas
+// Core data schemas;
 export const HistoricalGameDataSchema = z.object({
   gameId: z.string(),
   date: z.string(),
@@ -88,7 +88,7 @@ export const OfficialStatsSchema = z.object({
   metadata: z.record(z.unknown()).optional(),
 });
 
-// Type definitions
+// Type definitions;
 export type HistoricalGameData = z.infer<typeof HistoricalGameDataSchema>;
 export type PlayerStats = z.infer<typeof PlayerStatsSchema>;
 export type TeamStats = z.infer<typeof TeamStatsSchema>;
@@ -123,7 +123,7 @@ export class HistoricalDataService {
 
   async initialize(): Promise<void> {
     try {
-      // Initialize data sources
+      // Initialize data sources;
       await Promise.all(this.config.dataSources.map(source => this.initializeDataSource(source)));
       this.logger.info('HistoricalDataService initialized successfully');
     } catch (error) {
@@ -133,7 +133,7 @@ export class HistoricalDataService {
   }
 
   private async initializeDataSource(source: DataSource): Promise<void> {
-    // Implement data source initialization
+    // Implement data source initialization;
     this.logger.info(`Initializing data source: ${source}`);
   }
 
@@ -154,13 +154,12 @@ export class HistoricalDataService {
     officialStats?: OfficialStats[];
   }> {
     try {
-      const cacheKey = this.generateCacheKey(startDate, endDate, options);
-      const cachedData = this.getCachedData(cacheKey);
+
+
       if (cachedData) {
         return cachedData;
       }
 
-      const data = await this.fetchHistoricalData(startDate, endDate, options);
       this.cacheData(cacheKey, data);
       return data;
     } catch (error) {
@@ -184,10 +183,8 @@ export class HistoricalDataService {
   private getCachedData(key: string): any {
     if (!this.config.cacheConfig.enabled) return null;
 
-    const cached = this.cache.get(key);
     if (!cached) return null;
 
-    const now = Date.now();
     if (now - cached.timestamp > this.config.cacheConfig.ttl) {
       this.cache.delete(key);
       return null;
@@ -200,8 +197,8 @@ export class HistoricalDataService {
     if (!this.config.cacheConfig.enabled) return;
 
     if (this.cache.size >= this.config.cacheConfig.maxSize) {
-      // Remove oldest entry
-      const oldestKey = Array.from(this.cache.keys())[0];
+      // Remove oldest entry;
+
       this.cache.delete(oldestKey);
     }
 
@@ -216,7 +213,7 @@ export class HistoricalDataService {
     endDate: string,
     options: Record<string, boolean>
   ): Promise<any> {
-    // Implement data fetching logic
+    // Implement data fetching logic;
     return {
       games: [],
       playerStats: options.includePlayerStats ? [] : undefined,
@@ -236,7 +233,7 @@ export class HistoricalDataService {
     } = {}
   ): Promise<HistoricalGameData[]> {
     try {
-      // Implement game history retrieval
+      // Implement game history retrieval;
       return [];
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'HistoricalDataService.getGameHistory', {
@@ -257,7 +254,7 @@ export class HistoricalDataService {
     } = {}
   ): Promise<TeamStats | null> {
     try {
-      // Implement team stats retrieval
+      // Implement team stats retrieval;
       return null;
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'HistoricalDataService.getTeamStats', {
@@ -278,7 +275,7 @@ export class HistoricalDataService {
     } = {}
   ): Promise<PlayerStats | null> {
     try {
-      // Implement player stats retrieval
+      // Implement player stats retrieval;
       return null;
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'HistoricalDataService.getPlayerStats', {
@@ -298,7 +295,7 @@ export class HistoricalDataService {
     } = {}
   ): Promise<VenueStats | null> {
     try {
-      // Implement venue stats retrieval
+      // Implement venue stats retrieval;
       return null;
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'HistoricalDataService.getVenueStats', {
@@ -318,7 +315,7 @@ export class HistoricalDataService {
     } = {}
   ): Promise<OfficialStats | null> {
     try {
-      // Implement official stats retrieval
+      // Implement official stats retrieval;
       return null;
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'HistoricalDataService.getOfficialStats', {
@@ -331,7 +328,7 @@ export class HistoricalDataService {
 
   async updateHistoricalData(data: Partial<HistoricalGameData>): Promise<void> {
     try {
-      // Implement data update logic
+      // Implement data update logic;
       this.logger.info('Historical data updated successfully');
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'HistoricalDataService.updateHistoricalData', {

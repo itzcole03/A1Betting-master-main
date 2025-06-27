@@ -1,4 +1,4 @@
-import { WebSocketMessage } from '../../types/webSocket.js';
+import { WebSocketMessage } from '@/types/webSocket.js';
 type EventHandler = (data: WebSocketMessage['data']) => void;
 export declare class UnifiedServiceRegistry {
     private static instance;

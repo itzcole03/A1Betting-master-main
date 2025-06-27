@@ -46,7 +46,7 @@ export class AnalyticsService {
     }
     initializeConfig() {
         return {
-            retentionPeriod: 7776000000, // 90 days in milliseconds
+            retentionPeriod: 7776000000, // 90 days in milliseconds;
             aggregationIntervals: ['1h', '1d', '7d', '30d'],
             metrics: [
                 'bets',
@@ -66,7 +66,7 @@ export class AnalyticsService {
             filters: {
                 minBets: 10,
                 minStake: 100,
-                minConfidence: 0.6
+                minConfidence: 0.6;
             }
         };
     }
@@ -89,45 +89,45 @@ export class AnalyticsService {
             kellyMultiplier: 1,
             clvAverage: 0,
             edgeRetention: 0,
-            timeInMarket: 0
+            timeInMarket: 0;
         };
     }
     setupEventListeners() {
-        // Listen for new betting opportunities
+        // Listen for new betting opportunities;
         this.eventBus.on('prediction:update', (data) => {
-            const event = data;
-            const opportunity = event.data;
+
+
             this.opportunities.set(opportunity.id, opportunity);
         });
-        // Listen for risk assessments
+        // Listen for risk assessments;
         this.eventBus.on('data:updated', (data) => {
-            const event = data;
+
             if (event.sourceId === 'risk-manager') {
-                const assessment = event.data[0];
+
                 this.riskAssessments.set(assessment.id, assessment);
             }
         });
-        // Listen for placed bets
+        // Listen for placed bets;
         this.eventBus.on('bet:placed', (data) => {
-            const event = data;
+
             const { bet } = event.data;
             this.bets.set(bet.id, bet);
             this.updateMetrics();
         });
-        // Listen for settled bets
+        // Listen for settled bets;
         this.eventBus.on('bet:settled', (data) => {
-            const event = data;
+
             const { bet, result } = event.data;
             this.handleBetSettlement(bet.id, result);
             this.updateMetrics();
         });
     }
     startPeriodicUpdates() {
-        // Update time series data every hour
+        // Update time series data every hour;
         setInterval(() => {
             this.updateTimeSeriesData();
             this.cleanupOldData();
-        }, 3600000); // 1 hour
+        }, 3600000); // 1 hour;
     }
     updateTimeSeriesData() {
         const currentMetrics = {
@@ -136,13 +136,13 @@ export class AnalyticsService {
             profitLoss: this.metrics.profitLoss,
             roi: this.metrics.roi,
             winRate: this.metrics.winRate,
-            clv: this.metrics.clvAverage
+            clv: this.metrics.clvAverage;
         };
         this.timeSeriesData.push({
             timestamp: Date.now(),
-            metrics: currentMetrics
+            metrics: currentMetrics;
         });
-        // Emit metrics update
+        // Emit metrics update;
         this.eventBus.emit('metric:recorded', {
             name: 'performance_metrics',
             value: this.metrics.profitLoss,
@@ -155,25 +155,25 @@ export class AnalyticsService {
         });
     }
     cleanupOldData() {
-        const cutoffTime = Date.now() - this.config.retentionPeriod;
-        // Clean up time series data
+
+        // Clean up time series data;
         while (this.timeSeriesData.length > 0 &&
             this.timeSeriesData[0].timestamp < cutoffTime) {
             this.timeSeriesData.shift();
         }
-        // Clean up bets
+        // Clean up bets;
         for (const [id, bet] of this.bets) {
             if (bet.placedAt < cutoffTime) {
                 this.bets.delete(id);
             }
         }
-        // Clean up opportunities
+        // Clean up opportunities;
         for (const [id, opportunity] of this.opportunities) {
             if (opportunity.timestamp < cutoffTime) {
                 this.opportunities.delete(id);
             }
         }
-        // Clean up risk assessments
+        // Clean up risk assessments;
         for (const [id, assessment] of this.riskAssessments) {
             if (assessment.timestamp < cutoffTime) {
                 this.riskAssessments.delete(id);
@@ -181,63 +181,63 @@ export class AnalyticsService {
         }
     }
     handleBetSettlement(betId, result) {
-        const bet = this.bets.get(betId);
+
         if (!bet)
             return;
-        // Update bet result
+        // Update bet result;
         bet.result = result.won ? 'WIN' : 'LOSS';
         bet.profitLoss = result.profitLoss;
-        // Calculate CLV if closing odds available
+        // Calculate CLV if closing odds available;
         if (bet.metadata?.closingOdds) {
-            const placedOdds = bet.odds;
-            const closingOdds = bet.metadata.closingOdds;
-            const clv = (closingOdds - placedOdds) / placedOdds;
+
+
+
             bet.metadata.clv = clv;
         }
     }
     updateMetrics() {
-        const metrics = this.initializeMetrics();
-        const bets = Array.from(this.bets.values());
-        // Calculate basic metrics
+
+
+        // Calculate basic metrics;
         metrics.totalBets = bets.length;
         metrics.winningBets = bets.filter(bet => bet.result === 'WIN').length;
         metrics.losingBets = bets.filter(bet => bet.result === 'LOSS').length;
         metrics.pushBets = bets.filter(bet => bet.result === 'PUSH').length;
         metrics.pendingBets = bets.filter(bet => bet.result === 'PENDING').length;
-        // Calculate stake and returns
+        // Calculate stake and returns;
         metrics.totalStake = bets.reduce((sum, bet) => sum + bet.stake, 0);
         metrics.totalReturn = bets.reduce((sum, bet) => sum + (bet.profitLoss || 0), 0);
         metrics.profitLoss = metrics.totalReturn - metrics.totalStake;
-        // Calculate ratios
-        const settledBets = bets.filter(bet => bet.result !== 'PENDING');
-        metrics.winRate = settledBets.length > 0
-            ? metrics.winningBets / settledBets.length
+        // Calculate ratios;
+
+        metrics.winRate = settledBets.length > 0;
+            ? metrics.winningBets / settledBets.length;
             : 0;
-        metrics.roi = metrics.totalStake > 0
-            ? metrics.profitLoss / metrics.totalStake
+        metrics.roi = metrics.totalStake > 0;
+            ? metrics.profitLoss / metrics.totalStake;
             : 0;
-        // Calculate averages
-        metrics.averageStake = metrics.totalBets > 0
-            ? metrics.totalStake / metrics.totalBets
+        // Calculate averages;
+        metrics.averageStake = metrics.totalBets > 0;
+            ? metrics.totalStake / metrics.totalBets;
             : 0;
-        metrics.averageOdds = bets.length > 0
-            ? bets.reduce((sum, bet) => sum + bet.odds, 0) / bets.length
+        metrics.averageOdds = bets.length > 0;
+            ? bets.reduce((sum, bet) => sum + bet.odds, 0) / bets.length;
             : 0;
-        // Calculate CLV metrics
-        const betsWithClv = bets.filter(bet => bet.metadata?.clv !== undefined);
-        metrics.clvAverage = betsWithClv.length > 0
-            ? betsWithClv.reduce((sum, bet) => sum + (bet.metadata?.clv || 0), 0) / betsWithClv.length
+        // Calculate CLV metrics;
+
+        metrics.clvAverage = betsWithClv.length > 0;
+            ? betsWithClv.reduce((sum, bet) => sum + (bet.metadata?.clv || 0), 0) / betsWithClv.length;
             : 0;
-        // Calculate edge retention
+        // Calculate edge retention;
         const predictedEdge = bets.reduce((sum, bet) => {
-            const opportunity = this.opportunities.get(bet.opportunityId || '');
+
             return sum + (opportunity?.edge || 0);
         }, 0);
-        const realizedEdge = metrics.profitLoss;
-        metrics.edgeRetention = predictedEdge > 0
-            ? realizedEdge / predictedEdge
+
+        metrics.edgeRetention = predictedEdge > 0;
+            ? realizedEdge / predictedEdge;
             : 0;
-        // Calculate advanced metrics
+        // Calculate advanced metrics;
         metrics.maxDrawdown = this.calculateMaxDrawdown(bets);
         metrics.sharpeRatio = this.calculateSharpeRatio(bets);
         metrics.kellyMultiplier = this.calculateKellyMultiplier(metrics);
@@ -245,9 +245,9 @@ export class AnalyticsService {
         this.metrics = metrics;
     }
     calculateMaxDrawdown(bets) {
-        let peak = 0;
-        let maxDrawdown = 0;
-        let currentBalance = 0;
+        const peak = 0;
+        const maxDrawdown = 0;
+        const currentBalance = 0;
         for (const bet of bets) {
             if (bet.result === 'PENDING')
                 continue;
@@ -258,30 +258,30 @@ export class AnalyticsService {
         return maxDrawdown;
     }
     calculateSharpeRatio(bets) {
-        const returns = bets
+        const returns = bets;
             .filter(bet => bet.result !== 'PENDING')
             .map(bet => bet.profitLoss || 0);
         if (returns.length < 2)
             return 0;
-        const averageReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
-        const variance = returns.reduce((sum, r) => sum + Math.pow(r - averageReturn, 2), 0) / returns.length;
-        const stdDev = Math.sqrt(variance);
+
+
+
         return stdDev > 0 ? averageReturn / stdDev : 0;
     }
     calculateKellyMultiplier(metrics) {
         const { winRate, averageOdds } = metrics;
         if (winRate <= 0 || averageOdds <= 1)
             return 0;
-        const q = 1 - winRate;
-        const b = averageOdds - 1;
-        const kelly = (b * winRate - q) / b;
-        // Return a conservative fraction of Kelly
+
+
+
+        // Return a conservative fraction of Kelly;
         return Math.max(0, Math.min(kelly * 0.5, 1));
     }
     calculateTimeInMarket(bets) {
         return bets.reduce((total, bet) => {
-            const startTime = bet.placedAt;
-            const endTime = bet.metadata?.settlementTime || Date.now();
+
+
             return total + (endTime - startTime);
         }, 0);
     }
@@ -292,9 +292,9 @@ export class AnalyticsService {
         if (!UnifiedConfig.getInstance().get('enableAnalytics')) {
             return [];
         }
-        const breakdown = new Map();
+
         for (const bet of this.bets.values()) {
-            const metric = bet.metric || '';
+
             if (!breakdown.has(metric || '')) {
                 breakdown.set(metric, {
                     metric,
@@ -304,10 +304,10 @@ export class AnalyticsService {
                     roi: 0,
                     winRate: 0,
                     averageOdds: 0,
-                    clv: 0
+                    clv: 0;
                 });
             }
-            const stats = breakdown.get(metric);
+
             stats.bets++;
             stats.stake += bet.stake;
             stats.profitLoss += bet.profitLoss || 0;
@@ -317,13 +317,13 @@ export class AnalyticsService {
             if (bet.metadata?.clv)
                 stats.clv += bet.metadata.clv;
         }
-        // Calculate final metrics
+        // Calculate final metrics;
         return Array.from(breakdown.values()).map(stats => ({
             ...stats,
             roi: stats.stake > 0 ? stats.profitLoss / stats.stake : 0,
             winRate: stats.bets > 0 ? stats.winRate / stats.bets : 0,
             averageOdds: stats.bets > 0 ? stats.averageOdds / stats.bets : 0,
-            clv: stats.bets > 0 ? stats.clv / stats.bets : 0
+            clv: stats.bets > 0 ? stats.clv / stats.bets : 0;
         }));
     }
     /**
@@ -333,9 +333,9 @@ export class AnalyticsService {
         if (!UnifiedConfig.getInstance().get('enableAnalytics')) {
             return [];
         }
-        const breakdown = new Map();
+
         for (const bet of this.bets.values()) {
-            const playerId = bet.playerId ?? 'UNKNOWN';
+
             if (!breakdown.has(playerId)) {
                 breakdown.set(playerId, {
                     playerId,
@@ -348,7 +348,7 @@ export class AnalyticsService {
                     metrics: []
                 });
             }
-            const stats = breakdown.get(playerId);
+
             stats.bets += 1;
             stats.stake += bet.stake;
             stats.profitLoss += bet.profitLoss ?? 0;
@@ -363,11 +363,11 @@ export class AnalyticsService {
             ...stats,
             roi: stats.stake > 0 ? stats.profitLoss / stats.stake : 0,
             winRate: stats.bets > 0 ? stats.winRate / stats.bets : 0,
-            averageOdds: stats.bets > 0 ? stats.averageOdds / stats.bets : 0
+            averageOdds: stats.bets > 0 ? stats.averageOdds / stats.bets : 0;
         }));
     }
     getTimeSeriesData(interval) {
-        const now = Date.now();
+
         let intervalMs;
         switch (interval) {
             case '7d':

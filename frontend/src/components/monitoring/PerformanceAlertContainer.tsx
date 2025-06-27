@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import PerformanceAlert, { PerformanceAlert as AlertType } from './PerformanceAlert';
+import React, { useState  } from 'react.ts';
+import { AnimatePresence } from 'framer-motion.ts';
+import PerformanceAlert, { PerformanceAlert as AlertType } from './PerformanceAlert.ts';
 
 interface PerformanceAlertContainerProps {
   alerts: AlertType[];
@@ -11,7 +11,7 @@ interface PerformanceAlertContainerProps {
   autoDismissDelay?: number;
 }
 
-const PerformanceAlertContainer: React.FC<PerformanceAlertContainerProps> = ({
+const PerformanceAlertContainer: React.FC<PerformanceAlertContainerProps key={4413}> = ({
   alerts,
   onDismiss,
   onAcknowledge,
@@ -19,7 +19,7 @@ const PerformanceAlertContainer: React.FC<PerformanceAlertContainerProps> = ({
   autoDismiss = true,
   autoDismissDelay = 5000,
 }) => {
-  const [dismissedAlerts, setDismissedAlerts] = useState<Set<string>>(new Set());
+  const [dismissedAlerts, setDismissedAlerts] = useState<Set<string key={798680}>>(new Set());
 
   const handleDismiss = (id: string) => {
     setDismissedAlerts(prev => new Set([...prev, id]));
@@ -29,8 +29,6 @@ const PerformanceAlertContainer: React.FC<PerformanceAlertContainerProps> = ({
   const handleAcknowledge = (id: string) => {
     onAcknowledge?.(id);
   };
-
-  const visibleAlerts = alerts.filter(alert => !dismissedAlerts.has(alert.id)).slice(0, maxAlerts);
 
   React.useEffect(() => {
     if (!autoDismiss) return;
@@ -47,15 +45,15 @@ const PerformanceAlertContainer: React.FC<PerformanceAlertContainerProps> = ({
   }, [visibleAlerts, autoDismiss, autoDismissDelay]);
 
   return (
-    <div className="fixed top-4 right-4 z-50 space-y-4 w-96">
-      <AnimatePresence>
+    <div className="fixed top-4 right-4 z-50 space-y-4 w-96" key={662438}>
+      <AnimatePresence key={359944}>
         {visibleAlerts.map(alert => (
-          <PerformanceAlert
+          <PerformanceAlert;
             key={alert.id}
             alert={alert}
             onAcknowledge={handleAcknowledge}
             onDismiss={handleDismiss}
-          />
+          / key={428268}>
         ))}
       </AnimatePresence>
     </div>

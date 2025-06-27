@@ -1,5 +1,5 @@
-import { Opportunity } from '../types/core';
-import { BettingDecision, PerformanceMetrics } from '@/types';
+import { Opportunity } from '@/types/core.ts';
+import { BettingDecision, PerformanceMetrics } from '@/types.ts';
 interface UseBettingCoreOptions {
     playerId?: string;
     metric?: string;

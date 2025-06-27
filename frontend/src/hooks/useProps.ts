@@ -1,10 +1,10 @@
-import { useStore } from '@/stores/useStore';
-import type { Opportunity } from '@/types/core';
-import type { PlayerProp, Sport, PropType } from '@/types/core';
-import { dailyFantasyService } from '../services/dailyFantasy';
-import { oddsjamService } from '../services/oddsjam';
-import { useState, useEffect, useCallback } from 'react';
-import { webSocketManager } from '../services/unified/WebSocketManager';
+import { useStore } from '@/stores/useStore.ts';
+import type { Opportunity } from '@/types/core.ts';
+import type { PlayerProp, Sport, PropType } from '@/types/core.ts';
+import { dailyFantasyService } from '@/services/dailyFantasy.ts';
+import { oddsjamService } from '@/services/oddsjam.ts';
+import { useState, useEffect, useCallback } from 'react.ts';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
 
 
 
@@ -19,7 +19,7 @@ export const useProps = ({
   autoRefresh = true,
   refreshInterval = 30000,
   sport,
-  propType
+  propType;
 }: UsePropsOptions = {}) => {
   const [props, setProps] = useState<PlayerProp[]>([]);
   const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
@@ -64,7 +64,7 @@ export const useProps = ({
     fetchProps();
 
     if (autoRefresh) {
-      const interval = setInterval(fetchProps, refreshInterval);
+
       return () => clearInterval(interval);
     }
   }, [fetchProps, autoRefresh, refreshInterval]);
@@ -72,9 +72,9 @@ export const useProps = ({
   useEffect(() => {
     function handlePropUpdate(data: PlayerProp) {
       setProps(prev => {
-        const index = prev.findIndex(p => p.id === data.id);
+
         if (index === -1) return [...prev, data];
-        const updated = [...prev];
+
         updated[index] = data;
         return updated;
       });
@@ -109,6 +109,6 @@ export const useProps = ({
     opportunities,
     isLoading,
     error,
-    refreshProps
+    refreshProps;
   };
 }; 

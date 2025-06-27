@@ -12,7 +12,7 @@ class UnifiedLoggingService {
             persistToStorage: true,
             consoleOutput: true,
             serverOutput: true,
-            autoClearInterval: 24 * 60 * 60 * 1000, // 24 hours
+            autoClearInterval: 24 * 60 * 60 * 1000, // 24 hours;
             tags: ['app', 'user', 'betting', 'prediction', 'analytics'],
         };
         this.settingsService = UnifiedSettingsService.getInstance();
@@ -30,7 +30,7 @@ class UnifiedLoggingService {
         if (!this.config.persistToStorage)
             return;
         try {
-            const stored = localStorage.getItem(this.STORAGE_KEY);
+
             if (stored) {
                 this.logs = JSON.parse(stored);
             }
@@ -72,16 +72,16 @@ class UnifiedLoggingService {
     shouldLog(level) {
         if (!this.config.enabled)
             return false;
-        const levels = ['debug', 'info', 'warn', 'error'];
-        const minLevelIndex = levels.indexOf(this.config.minLevel);
-        const currentLevelIndex = levels.indexOf(level);
+
+
+
         return currentLevelIndex >= minLevelIndex;
     }
     logToConsole(entry) {
         if (!this.config.consoleOutput)
             return;
-        const isDebug = this.settingsService.isDebugMode();
-        const logMethod = entry.level === 'error' ? 'error' : entry.level;
+
+
         if (isDebug) {
             console[logMethod]('Log Entry:', {
                 id: entry.id,
@@ -101,7 +101,7 @@ class UnifiedLoggingService {
         if (!this.config.serverOutput)
             return;
         try {
-            const settings = this.settingsService.getSettings();
+
             const response = await fetch(`${settings.apiUrl}/api/logs`, {
                 method: 'POST',
                 headers: {
@@ -120,17 +120,17 @@ class UnifiedLoggingService {
     log(level, message, source, data, tags) {
         if (!this.shouldLog(level))
             return;
-        const entry = this.createLogEntry(level, message, source, data, tags);
-        // Store log
+
+        // Store log;
         this.logs.unshift(entry);
         if (this.logs.length > this.config.maxEntries) {
             this.logs = this.logs.slice(0, this.config.maxEntries);
         }
         this.saveLogs();
-        // Output log
+        // Output log;
         this.logToConsole(entry);
         this.logToServer(entry);
-        // Dispatch log event
+        // Dispatch log event;
         this.dispatchLogEvent(entry);
     }
     dispatchLogEvent(entry) {
@@ -168,7 +168,7 @@ class UnifiedLoggingService {
         this.saveLogs();
     }
     clearOldLogs(maxAge) {
-        const cutoff = Date.now() - maxAge;
+
         this.logs = this.logs.filter(log => log.timestamp > cutoff);
         this.saveLogs();
     }

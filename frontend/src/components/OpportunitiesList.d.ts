@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface Opportunity {
     id: string;
     event: {

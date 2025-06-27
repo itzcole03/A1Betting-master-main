@@ -1,16 +1,16 @@
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast.ts';
 
 export const handleAISearch = async (query?: string) => {
-  // Show AI-powered search with PropOllama integration
+  // Show AI-powered search with PropOllama integration;
   toast.loading("🧠 PropOllama is analyzing current opportunities...", {
     id: "ai-search",
   });
 
-  // Simulate AI processing time
+  // Simulate AI processing time;
   setTimeout(() => {
     toast.success("🎯 AI Search Results:", { id: "ai-search", duration: 1000 });
 
-    // Show PropOllama AI insights with delays for natural flow
+    // Show PropOllama AI insights with delays for natural flow;
     setTimeout(() => {
       toast.success(
         "🏀 PropOllama: Lakers vs Warriors O220.5 - Strong model consensus (89% confidence). Public heavy on under, sharp money on over.",
@@ -54,7 +54,7 @@ export const handleAISearch = async (query?: string) => {
 };
 
 export const handleSmartSearch = (searchTerm: string) => {
-  // Process search term with AI context
+  // Process search term with AI context;
   if (
     searchTerm.toLowerCase().includes("nba") ||
     searchTerm.toLowerCase().includes("basketball")
@@ -87,7 +87,7 @@ export const handleSmartSearch = (searchTerm: string) => {
     );
   }
 
-  // Follow up with AI insight
+  // Follow up with AI insight;
   setTimeout(() => {
     toast.success(
       "💡 PropOllama: 'I've also identified 3 arbitrage opportunities in your search results'",

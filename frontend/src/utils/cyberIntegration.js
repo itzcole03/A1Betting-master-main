@@ -1,9 +1,9 @@
-// Utility functions for integrating existing services with cyber UI
+// Utility functions for integrating existing services with cyber UI;
 export class CyberServiceIntegrator {
     constructor() {
         this.services = new Map();
     }
-    // Register existing services with the cyber interface
+    // Register existing services with the cyber interface;
     registerService(name, service, config) {
         this.services.set(name, {
             service,
@@ -14,23 +14,23 @@ export class CyberServiceIntegrator {
                 ...config,
             },
         });
-        console.log(`🚀 Cyber Integration: ${name} service registered`);
+        // console statement removed
     }
-    // Get service instance
+    // Get service instance;
     getService(name) {
         return this.services.get(name)?.service;
     }
-    // Wrap service calls with cyber styling and error handling
+    // Wrap service calls with cyber styling and error handling;
     async callService(serviceName, method, ...args) {
-        const serviceEntry = this.services.get(serviceName);
+
         if (!serviceEntry) {
             throw new Error(`Service ${serviceName} not found`);
         }
         const { service, config } = serviceEntry;
-        console.log(`⚡ Cyber Call: ${serviceName}.${method}()`);
+        // console statement removed`);
         try {
-            const result = await service[method](...args);
-            console.log(`✅ Cyber Success: ${serviceName}.${method}() completed`);
+
+            // console statement removed completed`);
             return {
                 success: true,
                 data: result,
@@ -40,7 +40,7 @@ export class CyberServiceIntegrator {
             };
         }
         catch (error) {
-            console.error(`❌ Cyber Error: ${serviceName}.${method}() failed:`, error);
+            // console statement removed failed:`, error);
             return {
                 success: false,
                 error,
@@ -50,17 +50,17 @@ export class CyberServiceIntegrator {
             };
         }
     }
-    // Get all registered services
+    // Get all registered services;
     getRegisteredServices() {
         return Array.from(this.services.keys());
     }
-    // Health check for all services
+    // Health check for all services;
     async healthCheck() {
-        const results = {};
+
         for (const [name, serviceEntry] of this.services) {
             try {
-                // Try to call a health check method if it exists
-                const service = serviceEntry.service;
+                // Try to call a health check method if it exists;
+
                 if (typeof service.healthCheck === "function") {
                     results[name] = await service.healthCheck();
                 }
@@ -78,9 +78,9 @@ export class CyberServiceIntegrator {
         return results;
     }
 }
-// Global cyber service integrator instance
+// Global cyber service integrator instance;
 export const cyberIntegrator = new CyberServiceIntegrator();
-// Helper function to format cyber notifications
+// Helper function to format cyber notifications;
 export const formatCyberNotification = (type, title, message) => {
     const icons = {
         success: "✅",
@@ -102,7 +102,7 @@ export const formatCyberNotification = (type, title, message) => {
         timestamp: new Date().toLocaleTimeString(),
     };
 };
-// Helper to generate cyber-styled loading states
+// Helper to generate cyber-styled loading states;
 export const createCyberLoadingState = (message = "Processing...") => {
     return {
         isLoading: true,
@@ -112,7 +112,7 @@ export const createCyberLoadingState = (message = "Processing...") => {
         colorClass: "text-electric-400",
     };
 };
-// Helper to convert existing data to cyber metrics format
+// Helper to convert existing data to cyber metrics format;
 export const convertToCyberMetrics = (data) => {
     if (!data || typeof data !== "object")
         return null;
@@ -127,7 +127,7 @@ export const convertToCyberMetrics = (data) => {
         timestamp: data.timestamp || new Date().toISOString(),
     };
 };
-// Convert existing component props to cyber styling
+// Convert existing component props to cyber styling;
 export const applyCyberStyling = (props) => {
     return {
         ...props,

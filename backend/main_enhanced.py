@@ -40,7 +40,7 @@ app.add_middleware(
 
 logger = logging.getLogger(__name__)
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import uvicorn
@@ -52,7 +52,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 # --- VALUE BET, ARBITRAGE, KELLY, PROFIT TRACKING ---
 import os
-import random
+# import random  # pylint: disable=unused-import
 import threading
 
 import pandas as pd
@@ -179,7 +179,7 @@ def check_rate_limit(
 def implied_prob(odds: float) -> float:
     try:
         return 1.0 / float(odds) if float(odds) > 1 else 0.0
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         return 0.0
 
 
@@ -234,8 +234,8 @@ def fetch_value_bets():
                                 )
             global _latest_value_bets
             _latest_value_bets = value_bets
-    except Exception as e:
-        logger.error(f"Failed to fetch value bets: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to fetch value bets: {e!s}")
 
 
 def fetch_arbitrage():
@@ -283,8 +283,8 @@ def fetch_arbitrage():
                         )
             global _latest_arbs
             _latest_arbs = arbs
-    except Exception as e:
-        logger.error(f"Failed to fetch arbitrage: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to fetch arbitrage: {e!s}")
 
 
 def start_valuebet_arbitrage_fetchers():
@@ -307,13 +307,13 @@ start_valuebet_arbitrage_fetchers()
 async def get_value_bets():
     return {
         "value_bets": _latest_value_bets,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
 @app.get("/api/v4/betting/arbitrage")
 async def get_arbitrage():
-    return {"arbitrage": _latest_arbs, "timestamp": datetime.utcnow().isoformat()}
+    return {"arbitrage": _latest_arbs, "timestamp": datetime.now(timezone.utc).isoformat()}
 
 
 @app.post("/api/v4/user/bet")
@@ -363,7 +363,7 @@ async def place_user_bet(
         "stake": stake,
         "bookmaker": bookmaker,
         "result": result,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "bet_status": bet_status["status"],
         "bet_id": bet_status["bet_id"],
     }
@@ -478,7 +478,7 @@ async def model_drift_and_calibration():
     return {
         "drift": drift,
         "calibration": calibration,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
@@ -528,7 +528,7 @@ async def latency_and_health():
     return {
         "latency": latency,
         "health": health,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
@@ -920,8 +920,8 @@ async def startup_event():
         )
         logger.info("🎯 A1Betting is now running at maximum prediction accuracy")
 
-    except Exception as e:
-        logger.error(f"❌ Failed to initialize services: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("❌ Failed to initialize services: {e!s}")
         raise
 
 
@@ -950,8 +950,8 @@ async def shutdown_event():
 
         logger.info("🔴 All ultra-enhanced services shut down successfully")
 
-    except Exception as e:
-        logger.error(f"❌ Error during shutdown: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("❌ Error during shutdown: {e!s}")
 
 
 # Ultra-Advanced Accuracy Endpoints
@@ -1039,14 +1039,14 @@ async def predict_ultra_accuracy(
                 "feature_engineering_time": feature_set.computation_time,
                 "prediction_time": processing_time - feature_set.computation_time,
             },
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "version": "4.0.0",
         }
 
         return response
 
-    except Exception as e:
-        logger.error(f"Ultra-accuracy prediction failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Ultra-accuracy prediction failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Ultra-accuracy prediction failed: {e!s}"
         )
@@ -1082,11 +1082,11 @@ async def optimize_accuracy(
                 "last_optimized": optimization_config.last_optimized.isoformat(),
             },
             "status": "optimization_scheduled",
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Accuracy optimization failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Accuracy optimization failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Accuracy optimization failed: {e!s}"
         )
@@ -1132,8 +1132,8 @@ async def engineer_features(request: FeatureEngineeringRequest):
             "timestamp": feature_set.created_timestamp.isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Feature engineering failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Feature engineering failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Feature engineering failed: {e!s}"
         )
@@ -1149,7 +1149,7 @@ async def get_current_accuracy_metrics():
                 "directional_accuracy": 0.5,
                 "model_agreement": 0.5,
                 "optimization_score": 0.5,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
         latest_metrics = realtime_accuracy_monitor.accuracy_history[-1]
@@ -1172,8 +1172,8 @@ async def get_current_accuracy_metrics():
             "timestamp": latest_metrics.timestamp.isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Failed to get accuracy metrics: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get accuracy metrics: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get accuracy metrics: {e!s}"
         )
@@ -1208,11 +1208,11 @@ async def get_accuracy_alerts():
             "warning_count": len(
                 [a for a in active_alerts if a["severity"] == "warning"]
             ),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Failed to get accuracy alerts: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get accuracy alerts: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get accuracy alerts: {e!s}"
         )
@@ -1230,7 +1230,7 @@ async def get_ensemble_configuration():
                 "models": [],
                 "weights": {},
                 "performance_threshold": 0.8,
-                "last_optimized": datetime.utcnow().isoformat(),
+                "last_optimized": datetime.now(timezone.utc).isoformat(),
             }
 
         config = configs[0]
@@ -1247,8 +1247,8 @@ async def get_ensemble_configuration():
             "created_timestamp": config.created_timestamp.isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Failed to get ensemble configuration: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get ensemble configuration: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get ensemble configuration: {e!s}"
         )
@@ -1266,16 +1266,16 @@ async def get_drift_metrics():
             return {
                 "feature_drift": 0.0,
                 "concept_drift": 0.0,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
         return {
             "feature_drift": drift.get("feature_drift", 0.0),
             "concept_drift": drift.get("concept_drift", 0.0),
             "drift_details": drift,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to get drift metrics: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get drift metrics: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get drift metrics: {e!s}"
         )
@@ -1290,15 +1290,15 @@ async def get_calibration_metrics():
             return {
                 "calibration_error": 0.0,
                 "reliability_diagram": [],
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
         return {
             "calibration_error": calibration.get("calibration_error", 0.0),
             "reliability_diagram": calibration.get("reliability_diagram", []),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to get calibration metrics: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get calibration metrics: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get calibration metrics: {e!s}"
         )
@@ -1313,10 +1313,10 @@ async def prune_low_importance_features():
             "pruned_features": pruned.get("pruned_features", []),
             "kept_features": pruned.get("kept_features", []),
             "feature_importances": pruned.get("feature_importances", {}),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to prune features: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to prune features: {e!s}")
         raise HTTPException(status_code=500, detail=f"Failed to prune features: {e!s}")
 
 
@@ -1327,10 +1327,10 @@ async def get_high_error_predictions(limit: int = 10):
         errors = getattr(realtime_accuracy_monitor, "high_error_predictions", [])
         return {
             "high_error_predictions": errors[:limit],
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to get high-error predictions: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get high-error predictions: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get high-error predictions: {e!s}"
         )
@@ -1358,10 +1358,10 @@ async def list_ensemble_versions():
         return {
             "ensemble_versions": configs,
             "count": len(configs),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to list ensemble versions: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to list ensemble versions: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to list ensemble versions: {e!s}"
         )
@@ -1376,8 +1376,8 @@ async def activate_ensemble_version(created_timestamp: str):
                 ensemble_optimizer.active_configuration = c
                 return {"status": "activated", "created_timestamp": created_timestamp}
         raise HTTPException(status_code=404, detail="Ensemble version not found")
-    except Exception as e:
-        logger.error(f"Failed to activate ensemble version: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to activate ensemble version: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to activate ensemble version: {e!s}"
         )
@@ -1399,8 +1399,8 @@ async def rollback_ensemble_version():
             "status": "rolled_back",
             "created_timestamp": prev.created_timestamp.isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to rollback ensemble version: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to rollback ensemble version: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to rollback ensemble version: {e!s}"
         )
@@ -1426,7 +1426,7 @@ def get_health_status_impl():
             "https://api.the-odds-api.com/v4/sports", timeout=1
         ).elapsed.total_seconds()
         betting_api_status = "online"
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         latency = None
         betting_api_status = "offline"
     status = (
@@ -1461,14 +1461,14 @@ async def get_system_health():
             "subsystems": health.get("subsystems", {}),
             "resource_usage": health.get("resource_usage", {}),
             "anomalies": health.get("anomalies", []),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to get system health: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get system health: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get system health: {e!s}"
         )
-        logger.error(f"Failed to get system health: {e!s}")
+        logger.error("Failed to get system health: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get system health: {e!s}"
         )
@@ -1521,7 +1521,7 @@ async def schedule_retraining_impl():
                 _retrain_jobs[job_id]["progress"] = 50
                 await asyncio.sleep(0.5)
             _model_versions.append(_retrain_jobs[job_id]["version"])
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             _retrain_jobs[job_id]["status"] = "failed"
             _retrain_jobs[job_id]["logs"].append(f"Retraining failed: {e!s}")
 
@@ -1580,7 +1580,7 @@ async def get_explanation_impl(prediction_id):
         else:
             lime = [random.uniform(-1, 1) for _ in range(5)]
         return {"shap": shap, "lime": lime}
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         raise HTTPException(status_code=500, detail=f"Failed to get explanation: {e!s}")
 
 
@@ -1591,7 +1591,7 @@ async def get_prediction_audit_impl(limit=20):
     return [
         {
             "prediction_id": str(uuid.uuid4()),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "status": "ok",
         }
         for _ in range(limit)
@@ -1607,9 +1607,9 @@ async def retrain_status(job_id: str):
     """Get status of a model retraining job."""
     try:
         status = await model_service.get_retraining_status(job_id)
-        return {"job_id": job_id, **status, "timestamp": datetime.utcnow().isoformat()}
-    except Exception as e:
-        logger.error(f"Failed to get retraining status: {e!s}")
+        return {"job_id": job_id, **status, "timestamp": datetime.now(timezone.utc).isoformat()}
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get retraining status: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get retraining status: {e!s}"
         )
@@ -1623,10 +1623,10 @@ async def rollback_model():
         result = await model_service.rollback_to_previous_version()
         return {
             "status": result.get("status", "rolled_back"),
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to rollback model: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to rollback model: {e!s}")
         raise HTTPException(status_code=500, detail=f"Failed to rollback model: {e!s}")
 
 
@@ -1639,10 +1639,10 @@ async def explain_prediction(prediction_id: str):
         return {
             "prediction_id": prediction_id,
             "explanation": explanation,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
-    except Exception as e:
-        logger.error(f"Failed to get explanation: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get explanation: {e!s}")
         raise HTTPException(status_code=500, detail=f"Failed to get explanation: {e!s}")
 
 
@@ -1652,9 +1652,9 @@ async def audit_predictions(limit: int = 20):
     """Get audit log of recent predictions."""
     try:
         audit = await model_service.get_prediction_audit(limit=limit)
-        return {"audit": audit, "timestamp": datetime.utcnow().isoformat()}
-    except Exception as e:
-        logger.error(f"Failed to audit predictions: {e!s}")
+        return {"audit": audit, "timestamp": datetime.now(timezone.utc).isoformat()}
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to audit predictions: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to audit predictions: {e!s}"
         )
@@ -1708,9 +1708,9 @@ async def get_data_drift_report():
     """Get feature distribution drift report."""
     try:
         drift = await data_pipeline.get_data_drift_report()
-        return {"drift": drift, "timestamp": datetime.utcnow().isoformat()}
-    except Exception as e:
-        logger.error(f"Failed to get data drift: {e!s}")
+        return {"drift": drift, "timestamp": datetime.now(timezone.utc).isoformat()}
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get data drift: {e!s}")
         raise HTTPException(status_code=500, detail=f"Failed to get data drift: {e!s}")
 
 
@@ -1759,9 +1759,9 @@ async def get_ensemble_candidates():
     """Get recommended new model candidates for ensemble."""
     try:
         candidates = await ensemble_optimizer.get_candidate_models()
-        return {"candidates": candidates, "timestamp": datetime.utcnow().isoformat()}
-    except Exception as e:
-        logger.error(f"Failed to get ensemble candidates: {e!s}")
+        return {"candidates": candidates, "timestamp": datetime.now(timezone.utc).isoformat()}
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get ensemble candidates: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get ensemble candidates: {e!s}"
         )
@@ -1774,11 +1774,11 @@ async def get_ensemble_candidates():
 async def record_feedback_impl(prediction_id, actual_outcome):
     feedback_path = "./data/feedback_log.csv"
     import csv
-    from datetime import datetime
+    from datetime import datetime, timezone
 
     with open(feedback_path, "a", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow([datetime.utcnow().isoformat(), prediction_id, actual_outcome])
+        writer.writerow([datetime.now(timezone.utc).isoformat(), prediction_id, actual_outcome])
     # Optionally update in-memory stats here
     return {
         "status": "recorded",
@@ -1812,8 +1812,8 @@ def fetch_betting_opportunities():
                     oops.append({"sport": sport["key"], "title": sport["title"]})
             global _latest_betting_oops
             _latest_betting_oops = oops
-    except Exception as e:
-        logger.error(f"Failed to fetch betting opportunities: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to fetch betting opportunities: {e!s}")
 
 
 def start_betting_opportunity_fetcher():
@@ -1836,7 +1836,7 @@ async def get_betting_opportunities():
     """Get actionable betting opportunities from real sports odds API."""
     return {
         "opportunities": _latest_betting_oops,
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
@@ -1861,8 +1861,8 @@ try:
             return status
         except ValueError as e:
             raise HTTPException(status_code=404, detail=str(e))
-        except Exception as e:
-            logger.error(f"Error getting retrain status: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error getting retrain status: {e}")
             raise HTTPException(status_code=500, detail="Internal server error")
 
     # /api/v4/model/rollback → call model_service.rollback_to_previous_version
@@ -1872,8 +1872,8 @@ try:
         try:
             result = await enhanced_model_service.rollback_to_previous_version()
             return result
-        except Exception as e:
-            logger.error(f"Error during model rollback: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error during model rollback: {e}")
             raise HTTPException(status_code=500, detail="Model rollback failed")
 
     # /api/v4/explain/{prediction_id} → call model_service.get_explanation
@@ -1883,8 +1883,8 @@ try:
         try:
             explanation = await enhanced_model_service.get_explanation(prediction_id)
             return explanation
-        except Exception as e:
-            logger.error(f"Error getting explanation: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error getting explanation: {e}")
             raise HTTPException(status_code=500, detail="Failed to generate explanation")
 
     # /api/v4/audit/predictions → call model_service.get_prediction_audit
@@ -1902,8 +1902,8 @@ try:
                 limit=limit
             )
             return audit_data
-        except Exception as e:
-            logger.error(f"Error getting prediction audit: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error getting prediction audit: {e}")
             raise HTTPException(status_code=500, detail="Failed to retrieve audit data")
 
     # /api/v4/data/drift → use data_pipeline.get_data_drift_report
@@ -1913,8 +1913,8 @@ try:
         try:
             drift_report = await data_pipeline_service.get_data_drift_report()
             return drift_report
-        except Exception as e:
-            logger.error(f"Error getting data drift report: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error getting data drift report: {e}")
             raise HTTPException(status_code=500, detail="Failed to generate drift report")
 
     # /api/v4/data/quality → use data_pipeline.get_data_quality_report
@@ -1924,8 +1924,8 @@ try:
         try:
             quality_report = await data_pipeline_service.get_data_quality_report()
             return quality_report
-        except Exception as e:
-            logger.error(f"Error getting data quality report: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error getting data quality report: {e}")
             raise HTTPException(status_code=500, detail="Failed to generate quality report")
 
     # /api/v4/ensemble/diversity → use ensemble_optimizer.get_diversity_metrics
@@ -1935,8 +1935,8 @@ try:
         try:
             diversity_metrics = await ensemble_optimizer_service.get_diversity_metrics()
             return diversity_metrics
-        except Exception as e:
-            logger.error(f"Error getting diversity metrics: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error getting diversity metrics: {e}")
             raise HTTPException(status_code=500, detail="Failed to calculate diversity metrics")
 
     # /api/v4/ensemble/candidates → use ensemble_optimizer.get_candidate_models
@@ -1946,8 +1946,8 @@ try:
         try:
             candidates = await ensemble_optimizer_service.get_candidate_models()
             return candidates
-        except Exception as e:
-            logger.error(f"Error getting candidate models: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error getting candidate models: {e}")
             raise HTTPException(status_code=500, detail="Failed to retrieve candidate models")
 
     # /api/v4/docs/aggregate → Generate comprehensive documentation
@@ -1957,8 +1957,8 @@ try:
         try:
             docs = await documentation_service.generate_aggregate_docs()
             return docs
-        except Exception as e:
-            logger.error(f"Error generating documentation: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error generating documentation: {e}")
             raise HTTPException(status_code=500, detail="Failed to generate documentation")
 
     # Additional model management endpoints
@@ -1982,8 +1982,8 @@ try:
                 "status": "started",
                 "message": "Model retraining job started successfully"
             }
-        except Exception as e:
-            logger.error(f"Error starting model retraining: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error starting model retraining: {e}")
             raise HTTPException(status_code=500, detail="Failed to start retraining")
 
     # Health check endpoint with comprehensive system status
@@ -1993,7 +1993,7 @@ try:
         try:
             health_status = {
                 "status": "healthy",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "services": {
                     "database": "healthy",
                     "redis": "healthy",
@@ -2021,18 +2021,18 @@ try:
 
             return health_status
 
-        except Exception as e:
-            logger.error(f"Health check failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Health check failed: {e}")
             return {
                 "status": "unhealthy",
                 "error": str(e),
-                "timestamp": datetime.utcnow().isoformat()
+                "timestamp": datetime.now(timezone.utc).isoformat()
             }
 
     logger.info("✅ All stub endpoints have been successfully implemented")
 
 except ImportError as e:
-    logger.warning(f"Could not import complete_stub_endpoints: {e}. Stub endpoints will not be available.")
+    logger.warning("Could not import complete_stub_endpoints: {e}. Stub endpoints will not be available.")
 
 app.include_router(prediction_router, prefix="/api/v2", tags=["predictions"])
 app.include_router(websocket_router, prefix="/ws", tags=["websockets"])

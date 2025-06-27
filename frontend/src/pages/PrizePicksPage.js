@@ -39,8 +39,8 @@ const PrizePicksPage = () => {
     const getSentimentForProp = (propPlayerName) => {
         return sentiments[propPlayerName.toLowerCase()];
     };
-    const allLeagues = useMemo(() => Array.from(new Set((Array.isArray(props) ? props : []).map((p) => p.league))), [props]);
-    const allStatTypes = useMemo(() => Array.from(new Set((Array.isArray(props) ? props : []).map((p) => p.stat_type))), [props]);
+
+
     const filteredProps = (Array.isArray(props) ? props : []).filter((p) => (leagueFilter === 'all' || p.league?.toLowerCase() === leagueFilter.toLowerCase()) &&
         (statTypeFilter === 'all' || p.stat_type?.toLowerCase() === statTypeFilter.toLowerCase()) &&
         (p.player_name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -49,7 +49,7 @@ const PrizePicksPage = () => {
     const handleAddLeg = (pickType) => {
         if (!selectedProp)
             return;
-        const lines = currentPrizePicksLines; // From useAppStore selector
+        const lines = currentPrizePicksLines; // From useAppStore selector;
         let pickOdds;
         if (pickType === 'over') {
             pickOdds = lines?.over_odds ?? selectedProp.overOdds;
@@ -67,7 +67,7 @@ const PrizePicksPage = () => {
             line: selectedProp.line_score,
             statType: selectedProp.stat_type,
             playerName: selectedProp.player_name,
-            odds: pickOdds, // Added odds
+            odds: pickOdds, // Added odds;
         };
         addLeg(leg);
         addToast({ message: `${selectedProp.player_name} ${pickType.toUpperCase()} ${selectedProp.line_score} added to slip!`, type: 'success' });

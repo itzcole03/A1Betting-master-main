@@ -56,9 +56,9 @@ export class UnifiedPredictionService {
     }
     async recalculatePredictions(profile) {
         try {
-            const predictions = Array.from(this.activePredictions.values());
+
             for (const prediction of predictions) {
-                const updatedPrediction = await this.recalculatePrediction(prediction, profile);
+
                 this.handlePredictionUpdate(updatedPrediction);
             }
         }
@@ -70,9 +70,9 @@ export class UnifiedPredictionService {
         }
     }
     async recalculatePrediction(prediction, profile) {
-        const startTime = performance.now();
+
         try {
-            // Implement prediction recalculation logic based on risk profile
+            // Implement prediction recalculation logic based on risk profile;
             const updatedPrediction = {
                 ...prediction,
                 riskScore: this.calculateRiskScore(prediction, profile),
@@ -93,22 +93,22 @@ export class UnifiedPredictionService {
         }
     }
     calculateRiskScore(prediction, profile) {
-        // Implement risk score calculation based on prediction and profile
-        const confidence = typeof prediction.confidence === "number" ? prediction.confidence : 0;
+        // Implement risk score calculation based on prediction and profile;
+
         const riskToleranceLevel = typeof profile.riskToleranceLevel === "number"
-            ? profile.riskToleranceLevel
+            ? profile.riskToleranceLevel;
             : 0;
-        const maxRiskScore = typeof profile.maxRiskScore === "number" ? profile.maxRiskScore : 1;
+
         return Math.min(confidence * riskToleranceLevel, maxRiskScore);
     }
     adjustConfidence(prediction, profile) {
-        // Implement confidence adjustment based on risk profile
-        const confidence = typeof prediction.confidence === "number" ? prediction.confidence : 0;
+        // Implement confidence adjustment based on risk profile;
+
         const riskToleranceLevel = typeof profile.riskToleranceLevel === "number"
-            ? profile.riskToleranceLevel
+            ? profile.riskToleranceLevel;
             : 0;
         const minConfidenceThreshold = typeof profile.minConfidenceThreshold === "number"
-            ? profile.minConfidenceThreshold
+            ? profile.minConfidenceThreshold;
             : 0;
         return Math.max(confidence * (1 - riskToleranceLevel * 0.2), minConfidenceThreshold);
     }

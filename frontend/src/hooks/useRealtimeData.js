@@ -4,11 +4,11 @@ export function useRealtimeData({ url, initialData = null, onMessage, onError, o
     const [isConnected, setIsConnected] = useState(false);
     const [error, setError] = useState(null);
     const [activeSubscriptions, setActiveSubscriptions] = useState(new Set(subscriptions));
-    const wsRef = useRef(null);
-    const reconnectCountRef = useRef(0);
-    const heartbeatTimeoutRef = useRef();
+
+
+
     const connect = useCallback(() => {
-        // Safety checks to prevent invalid WebSocket connections
+        // Safety checks to prevent invalid WebSocket connections;
         if (!url ||
             url === "" ||
             url === "wss://api.betproai.com/ws" ||
@@ -16,23 +16,23 @@ export function useRealtimeData({ url, initialData = null, onMessage, onError, o
             url.includes("localhost:8000") ||
             url.includes("localhost:3001") ||
             import.meta.env.VITE_ENABLE_WEBSOCKET === "false") {
-            console.log("WebSocket connection disabled for realtime data:", url);
+            // console statement removed
             setError("WebSocket connections are currently disabled");
             return;
         }
         try {
-            const ws = new WebSocket(url);
+
             wsRef.current = ws;
             ws.onopen = () => {
                 setIsConnected(true);
                 setError(null);
                 reconnectCountRef.current = 0;
                 onConnected?.();
-                // Subscribe to all active channels
+                // Subscribe to all active channels;
                 activeSubscriptions.forEach((channel) => {
                     ws.send(JSON.stringify({ type: "subscribe", channel }));
                 });
-                // Start heartbeat
+                // Start heartbeat;
                 if (heartbeatInterval > 0) {
                     heartbeatTimeoutRef.current = window.setInterval(() => {
                         ws.send(JSON.stringify({ type: "ping" }));
@@ -41,30 +41,30 @@ export function useRealtimeData({ url, initialData = null, onMessage, onError, o
             };
             ws.onmessage = (event) => {
                 try {
-                    const message = JSON.parse(event.data);
+
                     if (message.type === "pong") {
-                        return; // Ignore heartbeat responses
+                        return; // Ignore heartbeat responses;
                     }
                     setData(message.data);
                     onMessage?.(message);
                 }
                 catch (error) {
-                    console.error("Failed to parse WebSocket message:", error);
+                    // console statement removed
                 }
             };
             ws.onerror = (event) => {
-                const wsError = new Error("WebSocket error");
+
                 setError(wsError);
                 onError?.(wsError);
             };
             ws.onclose = () => {
                 setIsConnected(false);
                 onDisconnected?.();
-                // Clear heartbeat interval
+                // Clear heartbeat interval;
                 if (heartbeatTimeoutRef.current) {
                     clearInterval(heartbeatTimeoutRef.current);
                 }
-                // Attempt to reconnect
+                // Attempt to reconnect;
                 if (reconnectCountRef.current < reconnectAttempts) {
                     reconnectCountRef.current++;
                     setTimeout(connect, reconnectDelay * reconnectCountRef.current);
@@ -96,7 +96,7 @@ export function useRealtimeData({ url, initialData = null, onMessage, onError, o
     }, []);
     const subscribe = useCallback((channel) => {
         setActiveSubscriptions((prev) => {
-            const next = new Set(prev);
+
             next.add(channel);
             return next;
         });
@@ -106,7 +106,7 @@ export function useRealtimeData({ url, initialData = null, onMessage, onError, o
     }, [send]);
     const unsubscribe = useCallback((channel) => {
         setActiveSubscriptions((prev) => {
-            const next = new Set(prev);
+
             next.delete(channel);
             return next;
         });
@@ -156,24 +156,24 @@ function LiveOddsTracker() {
     isConnected,
     error,
     subscribe,
-    unsubscribe
+    unsubscribe;
   } = useRealtimeData<OddsUpdate>({
     url: 'wss://api.betproai.com/odds',
     onMessage: (message) => {
 
     },
     onError: (error) => {
-      console.error('WebSocket error:', error);
+      // console statement removed
     },
     subscriptions: ['NFL', 'NBA']
   });
 
   useEffect(() => {
-    // Subscribe to additional channels
+    // Subscribe to additional channels;
     subscribe('MLB');
 
     return () => {
-      // Cleanup subscriptions
+      // Cleanup subscriptions;
       unsubscribe('MLB');
     };
   }, [subscribe, unsubscribe]);

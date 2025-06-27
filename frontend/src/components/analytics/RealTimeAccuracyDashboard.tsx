@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState, useEffect, useCallback, useMemo  } from 'react.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.ts';
+import { Button } from '@/components/ui/button.ts';
+import { Badge } from '@/components/ui/badge.ts';
+import { Progress } from '@/components/ui/progress.ts';
+import { Alert, AlertDescription } from '@/components/ui/alert.ts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.ts';
 import {
   Activity,
   AlertTriangle,
@@ -23,8 +23,8 @@ import {
   Shield,
   Cpu,
   Server,
-} from "lucide-react";
-import SafeChart from "../ui/SafeChart";
+} from 'lucide-react.ts';
+import SafeChart from '@/ui/SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -40,7 +40,7 @@ import {
   Filler,
 } from "chart.js";
 
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -101,52 +101,52 @@ interface AlertsResponse {
 
 export const RealTimeAccuracyDashboard: React.FC = () => {
   const [currentMetrics, setCurrentMetrics] =
-    useState<RealTimeAccuracyMetrics | null>(null);
+    useState<RealTimeAccuracyMetrics | null key={872292}>(null);
   const [metricsHistory, setMetricsHistory] = useState<
     RealTimeAccuracyMetrics[]
   >([]);
-  const [alerts, setAlerts] = useState<AlertsResponse | null>(null);
+  const [alerts, setAlerts] = useState<AlertsResponse | null key={45605}>(null);
   const [isLive, setIsLive] = useState(true);
   const [isOptimizing, setIsOptimizing] = useState(false);
-  const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  const [lastUpdate, setLastUpdate] = useState<Date | null key={636200}>(null);
   const [connectionStatus, setConnectionStatus] = useState<
     "connected" | "disconnected" | "connecting"
   >("connecting");
 
-  // Fetch current accuracy metrics
+  // Fetch current accuracy metrics;
   const fetchCurrentMetrics = useCallback(async () => {
     try {
       setConnectionStatus("connecting");
-      const response = await fetch("/api/v4/accuracy/current-metrics");
+
       if (response.ok) {
-        const data = await response.json();
+
         setCurrentMetrics(data);
-        setMetricsHistory((prev) => [...prev.slice(-100), data]); // Keep last 100 points
+        setMetricsHistory((prev) => [...prev.slice(-100), data]); // Keep last 100 points;
         setLastUpdate(new Date());
         setConnectionStatus("connected");
       } else {
         setConnectionStatus("disconnected");
       }
     } catch (error) {
-      console.error("Error fetching accuracy metrics:", error);
+      // console statement removed
       setConnectionStatus("disconnected");
     }
   }, []);
 
-  // Fetch active alerts
+  // Fetch active alerts;
   const fetchAlerts = useCallback(async () => {
     try {
-      const response = await fetch("/api/v4/accuracy/alerts");
+
       if (response.ok) {
-        const data = await response.json();
+
         setAlerts(data);
       }
     } catch (error) {
-      console.error("Error fetching alerts:", error);
+      // console statement removed
     }
   }, []);
 
-  // Trigger accuracy optimization
+  // Trigger accuracy optimization;
   const triggerOptimization = useCallback(
     async (strategy: string = "quantum_ensemble") => {
       setIsOptimizing(true);
@@ -163,16 +163,16 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
         });
 
         if (response.ok) {
-          const result = await response.json();
-          console.log("Optimization triggered:", result);
-          // Refresh metrics after optimization
+
+          // console statement removed
+          // Refresh metrics after optimization;
           setTimeout(() => {
             fetchCurrentMetrics();
             fetchAlerts();
           }, 2000);
         }
       } catch (error) {
-        console.error("Error triggering optimization:", error);
+        // console statement removed
       } finally {
         setIsOptimizing(false);
       }
@@ -180,7 +180,7 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
     [fetchCurrentMetrics, fetchAlerts],
   );
 
-  // Real-time updates
+  // Real-time updates;
   useEffect(() => {
     if (!isLive) return;
 
@@ -188,16 +188,16 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
       await Promise.all([fetchCurrentMetrics(), fetchAlerts()]);
     };
 
-    // Initial fetch
+    // Initial fetch;
     fetchData();
 
-    // Set up real-time polling
-    const interval = setInterval(fetchData, 5000); // Update every 5 seconds
+    // Set up real-time polling;
+    const interval = setInterval(fetchData, 5000); // Update every 5 seconds;
 
     return () => clearInterval(interval);
   }, [isLive, fetchCurrentMetrics, fetchAlerts]);
 
-  // Get accuracy level styling
+  // Get accuracy level styling;
   const getAccuracyLevel = (accuracy: number) => {
     if (accuracy >= 0.97)
       return {
@@ -242,7 +242,7 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
     };
   };
 
-  // Chart data for accuracy trends
+  // Chart data for accuracy trends;
   const accuracyTrendData = useMemo(() => {
     if (metricsHistory.length < 2) return null;
 
@@ -281,7 +281,7 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
     };
   }, [metricsHistory]);
 
-  // Performance radar chart data
+  // Performance radar chart data;
   const performanceRadarData = useMemo(() => {
     if (!currentMetrics) return null;
 
@@ -318,10 +318,10 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
 
   if (!currentMetrics) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <Activity className="w-8 h-8 animate-pulse mx-auto mb-4 text-gray-400" />
-          <p className="text-gray-500">
+      <div className="flex items-center justify-center h-96" key={797634}>
+        <div className="text-center" key={120206}>
+          <Activity className="w-8 h-8 animate-pulse mx-auto mb-4 text-gray-400" / key={473876}>
+          <p className="text-gray-500" key={992645}>
             Loading real-time accuracy dashboard...
           </p>
         </div>
@@ -329,19 +329,17 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
     );
   }
 
-  const accuracyLevel = getAccuracyLevel(currentMetrics.overall_accuracy);
-
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6" key={80798}>
       {/* Header with Live Status */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Real-Time Accuracy Monitor
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <h1 className="text-3xl font-bold text-gray-900" key={314869}>
+            Real-Time Accuracy Monitor;
           </h1>
-          <div className="flex items-center gap-4 mt-2">
-            <div className="flex items-center gap-2">
-              <div
+          <div className="flex items-center gap-4 mt-2" key={948569}>
+            <div className="flex items-center gap-2" key={100294}>
+              <div;
                 className={`w-3 h-3 rounded-full ${
                   connectionStatus === "connected"
                     ? "bg-green-500"
@@ -349,36 +347,36 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
                       ? "bg-yellow-500"
                       : "bg-red-500"
                 }`}
-              />
-              <span className="text-sm text-gray-600 capitalize">
+              / key={459297}>
+              <span className="text-sm text-gray-600 capitalize" key={435668}>
                 {connectionStatus}
               </span>
             </div>
             {lastUpdate && (
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-500" key={346858}>
                 Last update: {lastUpdate.toLocaleTimeString()}
               </span>
             )}
           </div>
         </div>
-        <div className="flex gap-3">
-          <Button
-            onClick={() => setIsLive(!isLive)}
+        <div className="flex gap-3" key={13535}>
+          <Button;
+            onClick={() = key={773178}> setIsLive(!isLive)}
             variant={isLive ? "default" : "outline"}
             className="flex items-center gap-2"
           >
-            <Activity className={`w-4 h-4 ${isLive ? "animate-pulse" : ""}`} />
+            <Activity className={`w-4 h-4 ${isLive ? "animate-pulse" : ""}`} / key={797472}>
             {isLive ? "Live" : "Paused"}
           </Button>
-          <Button
-            onClick={() => triggerOptimization("quantum_ensemble")}
+          <Button;
+            onClick={() = key={773178}> triggerOptimization("quantum_ensemble")}
             disabled={isOptimizing}
             className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
           >
             {isOptimizing ? (
-              <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+              <RefreshCw className="w-4 h-4 animate-spin mr-2" / key={28598}>
             ) : (
-              <Zap className="w-4 h-4 mr-2" />
+              <Zap className="w-4 h-4 mr-2" / key={559151}>
             )}
             {isOptimizing ? "Optimizing..." : "Optimize"}
           </Button>
@@ -387,149 +385,149 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
 
       {/* Critical Alerts */}
       {alerts && alerts.active_alerts.length > 0 && (
-        <Alert className="border-l-4 border-l-red-500 bg-red-50">
-          <AlertTriangle className="h-4 w-4" />
-          <AlertDescription>
-            <div className="flex items-center justify-between">
-              <span className="font-medium">
+        <Alert className="border-l-4 border-l-red-500 bg-red-50" key={767104}>
+          <AlertTriangle className="h-4 w-4" / key={387012}>
+          <AlertDescription key={623109}>
+            <div className="flex items-center justify-between" key={96335}>
+              <span className="font-medium" key={514486}>
                 {alerts.critical_count} critical alerts, {alerts.warning_count}{" "}
-                warnings
+                warnings;
               </span>
-              <Badge variant="destructive">{alerts.total_count} total</Badge>
+              <Badge variant="destructive" key={621124}>{alerts.total_count} total</Badge>
             </div>
           </AlertDescription>
         </Alert>
       )}
 
       {/* Key Metrics Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" key={765662}>
         {/* Overall Accuracy */}
-        <Card
+        <Card;
           className={`border-l-4 ${accuracyLevel.border} ${accuracyLevel.bg}`}
-        >
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
-              Overall Accuracy
+         key={631102}>
+          <CardHeader className="pb-2" key={21346}>
+            <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+              Overall Accuracy;
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold text-gray-900">
+          <CardContent key={452065}>
+            <div className="flex items-center justify-between" key={96335}>
+              <div key={241917}>
+                <div className="text-2xl font-bold text-gray-900" key={584455}>
                   {(currentMetrics.overall_accuracy * 100).toFixed(1)}%
                 </div>
-                <Badge
+                <Badge;
                   className={`${accuracyLevel.color} ${accuracyLevel.bg} mt-1`}
-                >
+                 key={908021}>
                   {accuracyLevel.level}
                 </Badge>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center" key={520222}>
                 {currentMetrics.accuracy_trend > 0 ? (
-                  <TrendingUp className="w-6 h-6 text-green-500" />
+                  <TrendingUp className="w-6 h-6 text-green-500" / key={710802}>
                 ) : (
-                  <TrendingDown className="w-6 h-6 text-red-500" />
+                  <TrendingDown className="w-6 h-6 text-red-500" / key={984456}>
                 )}
               </div>
             </div>
-            <Progress
+            <Progress;
               value={currentMetrics.overall_accuracy * 100}
               className="mt-3"
-            />
+            / key={708237}>
           </CardContent>
         </Card>
 
         {/* Model Agreement */}
-        <Card className="border-l-4 border-l-green-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
-              Model Agreement
+        <Card className="border-l-4 border-l-green-500" key={766926}>
+          <CardHeader className="pb-2" key={21346}>
+            <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+              Model Agreement;
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+          <CardContent key={452065}>
+            <div className="text-2xl font-bold text-gray-900" key={584455}>
               {(currentMetrics.model_agreement * 100).toFixed(1)}%
             </div>
-            <Progress
+            <Progress;
               value={currentMetrics.model_agreement * 100}
               className="mt-2"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              {currentMetrics.models_active} models active
+            / key={211349}>
+            <p className="text-xs text-gray-500 mt-1" key={68770}>
+              {currentMetrics.models_active} models active;
             </p>
           </CardContent>
         </Card>
 
         {/* Prediction Confidence */}
-        <Card className="border-l-4 border-l-blue-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
-              Prediction Confidence
+        <Card className="border-l-4 border-l-blue-500" key={510169}>
+          <CardHeader className="pb-2" key={21346}>
+            <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+              Prediction Confidence;
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-gray-900">
+          <CardContent key={452065}>
+            <div className="text-2xl font-bold text-gray-900" key={584455}>
               {(currentMetrics.prediction_confidence * 100).toFixed(1)}%
             </div>
-            <Progress
+            <Progress;
               value={currentMetrics.prediction_confidence * 100}
               className="mt-2"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              {currentMetrics.predictions_count} predictions
+            / key={190380}>
+            <p className="text-xs text-gray-500 mt-1" key={68770}>
+              {currentMetrics.predictions_count} predictions;
             </p>
           </CardContent>
         </Card>
 
         {/* Optimization Score */}
-        <Card className="border-l-4 border-l-purple-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-gray-600">
-              Optimization Score
+        <Card className="border-l-4 border-l-purple-500" key={284497}>
+          <CardHeader className="pb-2" key={21346}>
+            <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+              Optimization Score;
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-2xl font-bold text-gray-900">
+          <CardContent key={452065}>
+            <div className="flex items-center justify-between" key={96335}>
+              <div key={241917}>
+                <div className="text-2xl font-bold text-gray-900" key={584455}>
                   {(currentMetrics.optimization_score * 100).toFixed(1)}%
                 </div>
-                <p className="text-xs text-gray-500 mt-1">
-                  {currentMetrics.prediction_latency.toFixed(0)}ms latency
+                <p className="text-xs text-gray-500 mt-1" key={68770}>
+                  {currentMetrics.prediction_latency.toFixed(0)}ms latency;
                 </p>
               </div>
-              <Brain className="w-8 h-8 text-purple-500" />
+              <Brain className="w-8 h-8 text-purple-500" / key={272371}>
             </div>
-            <Progress
+            <Progress;
               value={currentMetrics.optimization_score * 100}
               className="mt-3"
-            />
+            / key={500959}>
           </CardContent>
         </Card>
       </div>
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="trends" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="trends">Accuracy Trends</TabsTrigger>
-          <TabsTrigger value="performance">Performance Radar</TabsTrigger>
-          <TabsTrigger value="metrics">Detailed Metrics</TabsTrigger>
-          <TabsTrigger value="alerts">Active Alerts</TabsTrigger>
+      <Tabs defaultValue="trends" className="w-full" key={221555}>
+        <TabsList className="grid w-full grid-cols-4" key={277827}>
+          <TabsTrigger value="trends" key={139054}>Accuracy Trends</TabsTrigger>
+          <TabsTrigger value="performance" key={229302}>Performance Radar</TabsTrigger>
+          <TabsTrigger value="metrics" key={608143}>Detailed Metrics</TabsTrigger>
+          <TabsTrigger value="alerts" key={98051}>Active Alerts</TabsTrigger>
         </TabsList>
 
         {/* Accuracy Trends */}
-        <TabsContent value="trends">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
-                Real-Time Accuracy Trends
+        <TabsContent value="trends" key={594427}>
+          <Card key={650115}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center" key={762707}>
+                <TrendingUp className="w-5 h-5 mr-2 text-blue-600" / key={329707}>
+                Real-Time Accuracy Trends;
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent key={452065}>
               {accuracyTrendData && (
-                <div className="h-80">
-                  <Line
+                <div className="h-80" key={286132}>
+                  <Line;
                     data={accuracyTrendData}
                     options={{
                       responsive: true,
@@ -560,7 +558,7 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
                         intersect: false,
                       },
                     }}
-                  />
+                  / key={29887}>
                 </div>
               )}
             </CardContent>
@@ -568,18 +566,18 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
         </TabsContent>
 
         {/* Performance Radar */}
-        <TabsContent value="performance">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Gauge className="w-5 h-5 mr-2 text-purple-600" />
-                Performance Overview
+        <TabsContent value="performance" key={512906}>
+          <Card key={650115}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center" key={762707}>
+                <Gauge className="w-5 h-5 mr-2 text-purple-600" / key={570770}>
+                Performance Overview;
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent key={452065}>
               {performanceRadarData && (
-                <div className="h-80">
-                  <Radar
+                <div className="h-80" key={286132}>
+                  <Radar;
                     data={performanceRadarData}
                     options={{
                       responsive: true,
@@ -601,7 +599,7 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
                         },
                       },
                     }}
-                  />
+                  / key={352541}>
                 </div>
               )}
             </CardContent>
@@ -609,106 +607,106 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
         </TabsContent>
 
         {/* Detailed Metrics */}
-        <TabsContent value="metrics">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Directional Accuracy</CardTitle>
+        <TabsContent value="metrics" key={764180}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={881323}>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="text-sm" key={962067}>Directional Accuracy</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-xl font-bold text-gray-900">
+              <CardContent key={452065}>
+                <div className="text-xl font-bold text-gray-900" key={266466}>
                   {(currentMetrics.directional_accuracy * 100).toFixed(1)}%
                 </div>
-                <Progress
+                <Progress;
                   value={currentMetrics.directional_accuracy * 100}
                   className="mt-2"
-                />
+                / key={651261}>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Uncertainty Quality</CardTitle>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="text-sm" key={962067}>Uncertainty Quality</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-xl font-bold text-gray-900">
+              <CardContent key={452065}>
+                <div className="text-xl font-bold text-gray-900" key={266466}>
                   {(currentMetrics.uncertainty_quality * 100).toFixed(1)}%
                 </div>
-                <Progress
+                <Progress;
                   value={currentMetrics.uncertainty_quality * 100}
                   className="mt-2"
-                />
+                / key={288122}>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Performance Stability</CardTitle>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="text-sm" key={962067}>Performance Stability</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-xl font-bold text-gray-900">
+              <CardContent key={452065}>
+                <div className="text-xl font-bold text-gray-900" key={266466}>
                   {(currentMetrics.performance_stability * 100).toFixed(1)}%
                 </div>
-                <Progress
+                <Progress;
                   value={currentMetrics.performance_stability * 100}
                   className="mt-2"
-                />
+                / key={746913}>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Calibration Error</CardTitle>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="text-sm" key={962067}>Calibration Error</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-xl font-bold text-gray-900">
+              <CardContent key={452065}>
+                <div className="text-xl font-bold text-gray-900" key={266466}>
                   {(currentMetrics.calibration_error * 100).toFixed(1)}%
                 </div>
-                <Progress
+                <Progress;
                   value={100 - currentMetrics.calibration_error * 100}
                   className="mt-2"
-                />
+                / key={681672}>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Feature Drift</CardTitle>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="text-sm" key={962067}>Feature Drift</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-xl font-bold text-gray-900">
+              <CardContent key={452065}>
+                <div className="text-xl font-bold text-gray-900" key={266466}>
                   {(currentMetrics.feature_drift_score * 100).toFixed(1)}%
                 </div>
-                <Progress
+                <Progress;
                   value={100 - currentMetrics.feature_drift_score * 100}
                   className="mt-2"
-                />
+                / key={701207}>
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-sm">Profit Correlation</CardTitle>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle className="text-sm" key={962067}>Profit Correlation</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="text-xl font-bold text-gray-900">
+              <CardContent key={452065}>
+                <div className="text-xl font-bold text-gray-900" key={266466}>
                   {(currentMetrics.profit_correlation * 100).toFixed(1)}%
                 </div>
-                <Progress
+                <Progress;
                   value={Math.abs(currentMetrics.profit_correlation) * 100}
                   className="mt-2"
-                />
+                / key={533500}>
               </CardContent>
             </Card>
           </div>
         </TabsContent>
 
         {/* Active Alerts */}
-        <TabsContent value="alerts">
-          <div className="space-y-4">
+        <TabsContent value="alerts" key={401892}>
+          <div className="space-y-4" key={160407}>
             {alerts && alerts.active_alerts.length > 0 ? (
               alerts.active_alerts.map((alert) => (
-                <Card
+                <Card;
                   key={alert.alert_id}
                   className={`border-l-4 ${
                     alert.severity === "critical"
@@ -717,45 +715,45 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
                         ? "border-l-yellow-500 bg-yellow-50"
                         : "border-l-blue-500 bg-blue-50"
                   }`}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <Badge
+                 key={657290}>
+                  <CardContent className="p-4" key={706827}>
+                    <div className="flex items-center justify-between mb-2" key={120997}>
+                      <div className="flex items-center gap-3" key={443099}>
+                        <Badge;
                           variant={
                             alert.severity === "critical"
                               ? "destructive"
                               : "secondary"
                           }
-                        >
+                         key={989242}>
                           {alert.severity.toUpperCase()}
                         </Badge>
-                        <span className="font-medium">
+                        <span className="font-medium" key={514486}>
                           {alert.metric_name.replace("_", " ").toUpperCase()}
                         </span>
                       </div>
-                      <span className="text-sm text-gray-500">
+                      <span className="text-sm text-gray-500" key={346858}>
                         {new Date(alert.timestamp).toLocaleTimeString()}
                       </span>
                     </div>
 
-                    <p className="text-sm font-medium text-gray-800 mb-2">
+                    <p className="text-sm font-medium text-gray-800 mb-2" key={226981}>
                       {alert.message}
                     </p>
 
-                    <div className="text-xs text-gray-600 mb-3">
+                    <div className="text-xs text-gray-600 mb-3" key={593332}>
                       Current: {alert.current_value.toFixed(3)} | Threshold:{" "}
                       {alert.threshold_value.toFixed(3)}
                     </div>
 
-                    <div className="bg-white p-3 rounded border">
-                      <p className="text-sm font-medium text-gray-700 mb-2">
+                    <div className="bg-white p-3 rounded border" key={505882}>
+                      <p className="text-sm font-medium text-gray-700 mb-2" key={817461}>
                         Recommendations:
                       </p>
-                      <ul className="text-sm text-gray-600 space-y-1">
+                      <ul className="text-sm text-gray-600 space-y-1" key={690688}>
                         {alert.recommendations.map((rec, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="text-blue-500 mt-1">•</span>
+                          <li key={idx} className="flex items-start gap-2" key={990698}>
+                            <span className="text-blue-500 mt-1" key={101936}>•</span>
                             {rec}
                           </li>
                         ))}
@@ -765,14 +763,14 @@ export const RealTimeAccuracyDashboard: React.FC = () => {
                 </Card>
               ))
             ) : (
-              <Card>
-                <CardContent className="p-8 text-center">
-                  <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-500" />
-                  <p className="text-lg font-semibold text-gray-700">
-                    All Systems Optimal
+              <Card key={650115}>
+                <CardContent className="p-8 text-center" key={791975}>
+                  <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-500" / key={231874}>
+                  <p className="text-lg font-semibold text-gray-700" key={132744}>
+                    All Systems Optimal;
                   </p>
-                  <p className="text-gray-500">
-                    No accuracy alerts at this time
+                  <p className="text-gray-500" key={992645}>
+                    No accuracy alerts at this time;
                   </p>
                 </CardContent>
               </Card>

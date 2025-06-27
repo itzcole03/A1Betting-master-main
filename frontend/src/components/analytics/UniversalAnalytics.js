@@ -2,17 +2,17 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, Brain, Activity, Maximize2, Minimize2, Clock, } from "lucide-react";
-// Import consolidated systems
+// Import consolidated systems;
 import { MegaCard, MegaButton } from "../mega/MegaUI";
 import { CyberText } from "../mega/CyberTheme";
 import { usePredictions, useEngineMetrics, useBettingOpportunities, useToast, } from "../../hooks/UniversalHooks";
 import { UniversalServiceFactory } from "../../services/UniversalServiceLayer";
 import { formatters, } from "../../utils/UniversalUtils";
 // ============================================================================
-// MAIN COMPONENT
+// MAIN COMPONENT;
 // ============================================================================
 export const UniversalAnalytics = () => {
-    // State
+    // State;
     const [state, setState] = useState({
         timeRange: "24h",
         refreshInterval: 30000,
@@ -33,7 +33,7 @@ export const UniversalAnalytics = () => {
     const [systemAnalytics, setSystemAnalytics] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [lastUpdated, setLastUpdated] = useState(new Date());
-    // Hooks
+    // Hooks;
     const { predictions, isLoading: predictionsLoading } = usePredictions({
         limit: 100,
         realtime: true,
@@ -41,14 +41,14 @@ export const UniversalAnalytics = () => {
     const { metrics: engineMetrics } = useEngineMetrics();
     const { opportunities } = useBettingOpportunities();
     const { addToast } = useToast();
-    // Services
-    const analyticsService = UniversalServiceFactory.getAnalyticsService();
+    // Services;
+
     // ============================================================================
-    // DATA GENERATION & FETCHING
+    // DATA GENERATION & FETCHING;
     // ============================================================================
     const generateMetrics = useCallback(() => {
         const baseMetrics = [
-            // Performance Metrics
+            // Performance Metrics;
             {
                 id: "total_profit",
                 name: "Total Profit",
@@ -97,7 +97,7 @@ export const UniversalAnalytics = () => {
                 format: "percentage",
                 priority: "critical",
             },
-            // ML Metrics
+            // ML Metrics;
             {
                 id: "model_performance",
                 name: "Model Performance",
@@ -129,16 +129,16 @@ export const UniversalAnalytics = () => {
                 previousValue: 23,
                 change: opportunities.length - 23,
                 changePercentage: ((opportunities.length - 23) / 23) * 100,
-                trend: opportunities.length > 23
+                trend: opportunities.length > 23;
                     ? "up"
-                    : opportunities.length < 23
+                    : opportunities.length < 23;
                         ? "down"
                         : "stable",
                 category: "betting",
                 format: "number",
                 priority: "medium",
             },
-            // System Metrics
+            // System Metrics;
             {
                 id: "data_quality",
                 name: "Data Quality",
@@ -170,7 +170,7 @@ export const UniversalAnalytics = () => {
                 previousValue: 167,
                 change: -22,
                 changePercentage: -13.2,
-                trend: "up", // Lower is better for response time
+                trend: "up", // Lower is better for response time;
                 category: "system",
                 format: "number",
                 priority: "medium",
@@ -318,17 +318,17 @@ export const UniversalAnalytics = () => {
         };
     }, []);
     // ============================================================================
-    // DATA LOADING
+    // DATA LOADING;
     // ============================================================================
     const loadAnalyticsData = useCallback(async () => {
         setIsLoading(true);
         try {
-            // Generate all analytics data
-            const newMetrics = generateMetrics();
-            const newModelAnalysis = generateModelAnalysis();
-            const newBettingAnalysis = generateBettingAnalysis();
-            const newSystemAnalytics = generateSystemAnalytics();
-            // Simulate API delay
+            // Generate all analytics data;
+
+
+
+
+            // Simulate API delay;
             await new Promise((resolve) => setTimeout(resolve, 500));
             setMetrics(newMetrics);
             setModelAnalysis(newModelAnalysis);
@@ -338,7 +338,7 @@ export const UniversalAnalytics = () => {
             addToast("Analytics data updated successfully", "success");
         }
         catch (error) {
-            console.error("Failed to load analytics:", error);
+            // console statement removed
             addToast("Failed to load analytics data", "error");
         }
         finally {
@@ -351,38 +351,38 @@ export const UniversalAnalytics = () => {
         generateSystemAnalytics,
         addToast,
     ]);
-    // Auto-refresh
+    // Auto-refresh;
     useEffect(() => {
         loadAnalyticsData();
     }, [loadAnalyticsData]);
     useEffect(() => {
         if (state.isAutoRefresh) {
-            const interval = setInterval(loadAnalyticsData, state.refreshInterval);
+
             return () => clearInterval(interval);
         }
     }, [state.isAutoRefresh, state.refreshInterval, loadAnalyticsData]);
     // ============================================================================
-    // FILTERING & PROCESSING
+    // FILTERING & PROCESSING;
     // ============================================================================
     const filteredMetrics = useMemo(() => {
-        let filtered = metrics;
+        const filtered = metrics;
         if (state.selectedCategory !== "all") {
             filtered = filtered.filter((metric) => metric.category === state.selectedCategory);
         }
         return filtered.sort((a, b) => {
-            const priorityOrder = { critical: 0, high: 1, medium: 2, low: 3 };
+
             return priorityOrder[a.priority] - priorityOrder[b.priority];
         });
     }, [metrics, state.selectedCategory]);
     const filteredModels = useMemo(() => {
-        let filtered = modelAnalysis;
+        const filtered = modelAnalysis;
         if (state.filters.model !== "all") {
             filtered = filtered.filter((model) => model.name.toLowerCase().includes(state.filters.model.toLowerCase()));
         }
         return filtered.sort((a, b) => b.accuracy - a.accuracy);
     }, [modelAnalysis, state.filters.model]);
     // ============================================================================
-    // RENDER COMPONENTS
+    // RENDER COMPONENTS;
     // ============================================================================
     const renderMetricCard = (metric) => {
         const formatValue = (value) => {
@@ -399,7 +399,7 @@ export const UniversalAnalytics = () => {
         };
         const getTrendColor = () => {
             if (metric.id === "response_time") {
-                // For response time, lower is better
+                // For response time, lower is better;
                 return metric.trend === "up"
                     ? "#06ffa5"
                     : metric.trend === "down"
@@ -474,7 +474,7 @@ export const UniversalAnalytics = () => {
                                     refreshInterval: Number(e.target.value),
                                 })), className: "w-full p-2 bg-gray-800 border border-gray-600 rounded text-white", children: [_jsx("option", { value: 15000, children: "15 seconds" }), _jsx("option", { value: 30000, children: "30 seconds" }), _jsx("option", { value: 60000, children: "1 minute" }), _jsx("option", { value: 300000, children: "5 minutes" })] })] })] })] }, model.id));
     // ============================================================================
-    // MAIN RENDER
+    // MAIN RENDER;
     // ============================================================================
     return (_jsxs("div", { className: `space-y-6 ${state.isFullscreen ? "fixed inset-0 z-50 bg-gray-900 p-6 overflow-auto" : ""}`, children: [_jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { children: [_jsx(CyberText, { variant: "title", style: { fontSize: "32px" }, children: "Universal Analytics" }), _jsx(CyberText, { variant: "body", color: "secondary", children: "Comprehensive Performance, ML & System Analytics" })] }), _jsxs("div", { className: "flex items-center gap-2", children: [_jsx(Brain, { size: 20, style: { color: "#06ffa5" } }), _jsx(CyberText, { variant: "body", style: { color: "#06ffa5" }, children: "Real-Time Intelligence" })] })] }), renderControlPanel(), isLoading && (_jsx(MegaCard, { variant: "glass", padding: "lg", children: _jsxs("div", { className: "flex items-center justify-center py-8", children: [_jsx("div", { className: "animate-spin rounded-full h-8 w-8 border-b-2 border-green-500" }), _jsx(CyberText, { variant: "body", color: "secondary", className: "ml-4", children: "Loading analytics data..." })] }) })), _jsx(MegaCard, { title: "Key Performance Metrics", variant: "glass", padding: "lg", children: _jsx("div", { className: "grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4", children: filteredMetrics.map(renderMetricCard) }) }), state.selectedCategory === "all" || state.selectedCategory === "ml" ? (_jsx(MegaCard, { title: "Machine Learning Models", variant: "glass", padding: "lg", children: _jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4", children: filteredModels.map(renderModelCard) }) })) : null, (state.selectedCategory === "all" ||
                 state.selectedCategory === "betting") &&

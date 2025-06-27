@@ -1,9 +1,9 @@
-import React from "react";
-import { useTheme } from "../../providers/UniversalThemeProvider";
+import React from 'react.ts';
+import { useTheme } from '@/providers/UniversalThemeProvider.ts';
 
 // Icons (using SVG for better control and consistency)
 const SunIcon = () => (
-  <svg
+  <svg;
     width="20"
     height="20"
     viewBox="0 0 24 24"
@@ -12,14 +12,14 @@ const SunIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="5" />
-    <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+   key={242253}>
+    <circle cx="12" cy="12" r="5" / key={706557}>
+    <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" / key={461948}>
   </svg>
 );
 
 const MoonIcon = () => (
-  <svg
+  <svg;
     width="20"
     height="20"
     viewBox="0 0 24 24"
@@ -28,13 +28,13 @@ const MoonIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-  >
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+   key={242253}>
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" / key={346067}>
   </svg>
 );
 
 const CyberIcon = () => (
-  <svg
+  <svg;
     width="20"
     height="20"
     viewBox="0 0 24 24"
@@ -43,8 +43,8 @@ const CyberIcon = () => (
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-  >
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+   key={242253}>
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" / key={191052}>
   </svg>
 );
 
@@ -55,7 +55,7 @@ interface ThemeToggleProps {
   size?: "sm" | "md" | "lg";
 }
 
-const ThemeToggle: React.FC<ThemeToggleProps> = ({
+const ThemeToggle: React.FC<ThemeToggleProps key={20874}> = ({
   variant = "button",
   showLabel = true,
   className = "",
@@ -71,9 +71,9 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
   const getIcon = () => {
     if (themeVariant.startsWith("cyber")) {
-      return isDark ? <SunIcon /> : <MoonIcon />;
+      return isDark ? <SunIcon / key={30138}> : <MoonIcon / key={161791}>;
     }
-    return isDark ? <SunIcon /> : <MoonIcon />;
+    return isDark ? <SunIcon / key={30138}> : <MoonIcon / key={161791}>;
   };
 
   const getLabel = () => {
@@ -100,13 +100,13 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
     if (themeVariant.startsWith("cyber")) {
       return {
         ...baseStyle,
-        background: isDark
+        background: isDark;
           ? "rgba(255, 255, 255, 0.05)"
           : "rgba(255, 255, 255, 0.8)",
         backdropFilter: "blur(20px) saturate(180%)",
         border: `1px solid ${isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(15, 23, 42, 0.1)"}`,
         color: isDark ? "#ffffff" : "#0f172a",
-        boxShadow: isDark
+        boxShadow: isDark;
           ? "0 8px 32px rgba(0, 0, 0, 0.1)"
           : "0 8px 32px rgba(15, 23, 42, 0.1)",
       };
@@ -127,28 +127,28 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
   if (variant === "switch") {
     return (
-      <label className={`cyber-theme-switch ${className}`}>
-        <input
+      <label className={`cyber-theme-switch ${className}`} key={320116}>
+        <input;
           type="checkbox"
           checked={!isDark}
           onChange={handleToggle}
           style={{ display: "none" }}
-        />
-        <div
+        / key={274863}>
+        <div;
           style={{
             position: "relative",
             width: "60px",
             height: "30px",
             borderRadius: "15px",
-            background: isDark
+            background: isDark;
               ? "linear-gradient(135deg, #1e293b, #334155)"
               : "linear-gradient(135deg, #e2e8f0, #cbd5e1)",
             border: `2px solid ${isDark ? "rgba(255, 255, 255, 0.1)" : "rgba(15, 23, 42, 0.1)"}`,
             cursor: "pointer",
             transition: "all 0.3s ease",
           }}
-        >
-          <div
+         key={432971}>
+          <div;
             style={{
               position: "absolute",
               top: "3px",
@@ -164,19 +164,19 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
               transition: "all 0.3s ease",
               color: "#000",
             }}
-          >
-            {isDark ? <MoonIcon /> : <SunIcon />}
+           key={360385}>
+            {isDark ? <MoonIcon / key={161791}> : <SunIcon / key={30138}>}
           </div>
         </div>
         {showLabel && (
-          <span
+          <span;
             style={{
               marginLeft: "12px",
               color: theme.colors.text.secondary,
               fontSize: "14px",
               fontWeight: "500",
             }}
-          >
+           key={308065}>
             {getLabel()}
           </span>
         )}
@@ -186,7 +186,7 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
 
   if (variant === "icon") {
     return (
-      <button
+      <button;
         onClick={handleToggle}
         className={`cyber-theme-toggle-icon ${className}`}
         style={{
@@ -199,36 +199,36 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
           justifyContent: "center",
         }}
         title={`Switch to ${isDark ? "Light" : "Dark"} Mode`}
-      >
+       key={762361}>
         {getIcon()}
       </button>
     );
   }
 
   return (
-    <button
+    <button;
       onClick={handleToggle}
       className={`cyber-theme-toggle ${className} ${sizeClasses[size]}`}
       style={getButtonStyle()}
-    >
+     key={118284}>
       {getIcon()}
-      {showLabel && <span>{getLabel()}</span>}
+      {showLabel && <span key={595076}>{getLabel()}</span>}
     </button>
   );
 };
 
-// Enhanced theme toggle with mode indicator
-export const CyberThemeToggle: React.FC<ThemeToggleProps> = (props) => {
+// Enhanced theme toggle with mode indicator;
+export const CyberThemeToggle: React.FC<ThemeToggleProps key={20874}> = (props) => {
   const { variant: themeVariant, isDark } = useTheme();
 
   return (
-    <div
+    <div;
       className="cyber-theme-toggle-container"
       style={{ position: "relative" }}
-    >
-      <ThemeToggle {...props} />
+     key={990507}>
+      <ThemeToggle {...props} / key={303016}>
       {themeVariant.startsWith("cyber") && (
-        <div
+        <div;
           style={{
             position: "absolute",
             top: "-8px",
@@ -244,8 +244,8 @@ export const CyberThemeToggle: React.FC<ThemeToggleProps> = (props) => {
             fontSize: "8px",
             animation: "cyber-pulse 2s ease-in-out infinite",
           }}
-        >
-          <CyberIcon />
+         key={279111}>
+          <CyberIcon / key={68273}>
         </div>
       )}
     </div>

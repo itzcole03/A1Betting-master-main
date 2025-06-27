@@ -1,16 +1,16 @@
-import React from 'react';
-import { usePredictionStore } from '../../stores/predictionStore';
+import React from 'react.ts';
+import { usePredictionStore } from '@/stores/predictionStore.ts';
 
 const TrendAnalysisChart: React.FC = () => {
-  const predictions = usePredictionStore(state => state.getLatestPredictions());
-  // Collect pattern anomalies
-  const anomalies = predictions.flatMap(p => p.analytics?.patterns?.inefficiencies || []);
+
+  // Collect pattern anomalies;
+
   return (
-    <div>
-      <h3>Trend Analysis</h3>
-      <ul>
+    <div key={241917}>
+      <h3 key={661229}>Trend Analysis</h3>
+      <ul key={249713}>
         {anomalies.map((a, i) => (
-          <li key={i}>{a.type} {a.detected ? 'Detected' : 'Not Detected'}</li>
+          <li key={i} key={742895}>{a.type} {a.detected ? 'Detected' : 'Not Detected'}</li>
         ))}
       </ul>
     </div>

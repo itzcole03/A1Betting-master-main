@@ -1,5 +1,5 @@
-import { ApiBase } from './apiBase';
-import { API_CONFIG } from '../../config/apiConfig';
+import { ApiBase } from './apiBase.ts';
+import { API_CONFIG } from '@/config/apiConfig.ts';
 
 export class SportsDataApi extends ApiBase {
   constructor() {
@@ -22,5 +22,5 @@ export class SportsDataApi extends ApiBase {
     });
   }
 
-  // Add more endpoints as needed
+  // Add more endpoints as needed;
 }

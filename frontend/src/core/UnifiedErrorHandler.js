@@ -13,7 +13,7 @@ export class UnifiedErrorHandler {
     }
     handleError(error, context, metadata = {}) {
         try {
-            const timestamp = new Date().toISOString();
+
             this.errorLog.push({
                 timestamp,
                 error,
@@ -40,8 +40,8 @@ export class UnifiedErrorHandler {
             }
         }
         catch (handlingError) {
-            console.error('Error in error handler:', handlingError);
-            console.error('Original error:', error);
+            // console statement removed
+            // console statement removed
         }
     }
     getErrorLog() {

@@ -213,8 +213,8 @@ class AdvancedFeatureEngineer:
         except LookupError:
             nltk.download("vader_lexicon")
             self.sentiment_analyzer = SentimentIntensityAnalyzer()
-        except Exception as e:
-            logger.error(f"Failed to initialize SentimentIntensityAnalyzer: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to initialize SentimentIntensityAnalyzer: {e}")
             self.sentiment_analyzer = None
 
         logger.info("Advanced Feature Engineering Engine initialized")
@@ -258,8 +258,8 @@ class AdvancedFeatureEngineer:
                 logger.info(
                     f"Applied {strategy.value}: {len(strategy_features)} features created"
                 )
-            except Exception as e:
-                logger.error(f"Error applying strategy {strategy.value}: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Error applying strategy {strategy.value}: {e}")
 
         # 3. Feature interaction discovery
         interaction_features = await self._discover_feature_interactions(
@@ -515,8 +515,8 @@ class AdvancedFeatureEngineer:
                 window_fast=min(12, len(prices)),
             )
 
-        except Exception as e:
-            logger.warning(f"Error creating technical indicators: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Error creating technical indicators: {e}")
 
         # Remove NaN values
         features = {
@@ -614,8 +614,8 @@ class AdvancedFeatureEngineer:
                 )
                 features["gmm_assignment"] = gmm.predict(X)[0]
 
-        except Exception as e:
-            logger.warning(f"Error creating clustering features: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Error creating clustering features: {e}")
 
         return features
 
@@ -657,8 +657,8 @@ class AdvancedFeatureEngineer:
                         np.sum((diff**2) / (cov_matrix + 1e-8))
                     )
 
-        except Exception as e:
-            logger.warning(f"Error creating anomaly features: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Error creating anomaly features: {e}")
 
         return features
 

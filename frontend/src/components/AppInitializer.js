@@ -8,18 +8,18 @@ export const AppInitializer = ({ children }) => {
     const [error, setError] = useState(null);
     const { actions } = useUnifiedStore();
     useEffect(() => {
-        let isMounted = true;
+        const isMounted = true;
         const initializeApp = async () => {
             try {
                 actions.setLoading("app_init", true);
-                // Initialize data connections
-                console.log("🚀 Initializing A1Betting systems...");
-                // Check data pipeline status
-                const connectionStatus = dataPipeline.getConnectionStatus();
-                console.log("📡 Data connections:", connectionStatus);
-                // Initialize ML engine
-                const activeModels = mlEngine.getActiveModels();
-                console.log("🧠 Active ML models:", activeModels.length);
+                // Initialize data connections;
+                // console statement removed
+                // Check data pipeline status;
+
+                // console statement removed
+                // Initialize ML engine;
+
+                // console statement removed
                 if (isMounted) {
                     setIsInitialized(true);
                     actions.setLoading("app_init", false);
@@ -32,8 +32,8 @@ export const AppInitializer = ({ children }) => {
                 }
             }
             catch (err) {
-                const errorMessage = err instanceof Error ? err.message : "Unknown initialization error";
-                console.error("❌ App initialization failed:", errorMessage);
+
+                // console statement removed
                 if (isMounted) {
                     setError(errorMessage);
                     actions.setLoading("app_init", false);

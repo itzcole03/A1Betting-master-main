@@ -1,7 +1,7 @@
-import { ModelPerformanceTracker } from '../ModelPerformanceTracker';
-import { ModelOutput, BetRecommendation } from '../../types/prediction';
-import { UnifiedLogger } from '../../logging/types';
-import { UnifiedMetrics } from '../../metrics/types';
+import { ModelPerformanceTracker } from '@/ModelPerformanceTracker.ts';
+import { ModelOutput, BetRecommendation } from '@/types/prediction.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
 
 describe('ModelPerformanceTracker', () => {
   let tracker: ModelPerformanceTracker;
@@ -54,7 +54,6 @@ describe('ModelPerformanceTracker', () => {
     it('should track a new prediction', () => {
       tracker.trackPrediction('test-model', mockPrediction, mockRecommendation);
 
-      const performance = tracker.getModelPerformance('test-model');
       expect(performance).toBeDefined();
       expect(performance?.totalPredictions).toBe(1);
       expect(performance?.totalStake).toBe(100);
@@ -65,7 +64,6 @@ describe('ModelPerformanceTracker', () => {
       tracker.trackPrediction('test-model', mockPrediction, mockRecommendation);
       tracker.trackPrediction('test-model', mockPrediction, mockRecommendation);
 
-      const performance = tracker.getModelPerformance('test-model');
       expect(performance?.totalPredictions).toBe(2);
       expect(performance?.totalStake).toBe(200);
     });
@@ -76,7 +74,6 @@ describe('ModelPerformanceTracker', () => {
       tracker.trackPrediction('test-model', mockPrediction, mockRecommendation);
       tracker.recordOutcome('test-model', 100, 200, 2.0);
 
-      const performance = tracker.getModelPerformance('test-model');
       expect(performance?.correctPredictions).toBe(1);
       expect(performance?.totalPayout).toBe(200);
       expect(performance?.roi).toBe(1.0);
@@ -87,7 +84,6 @@ describe('ModelPerformanceTracker', () => {
       tracker.trackPrediction('test-model', mockPrediction, mockRecommendation);
       tracker.recordOutcome('test-model', 100, 0, 2.0);
 
-      const performance = tracker.getModelPerformance('test-model');
       expect(performance?.correctPredictions).toBe(0);
       expect(performance?.totalPayout).toBe(0);
       expect(performance?.roi).toBe(-1.0);
@@ -100,19 +96,17 @@ describe('ModelPerformanceTracker', () => {
       tracker.trackPrediction('test-model', mockPrediction, mockRecommendation);
       tracker.recordOutcome('test-model', 100, 200, 2.0);
 
-      const history = tracker.getPerformanceHistory('test-model', 'day');
       expect(history.length).toBeGreaterThan(0);
       expect(history[0].metrics.roi).toBe(1.0);
     });
 
     it('should filter history by timeframe', () => {
-      const oldDate = new Date();
+
       oldDate.setDate(oldDate.getDate() - 2);
 
       tracker.trackPrediction('test-model', mockPrediction, mockRecommendation);
       tracker.recordOutcome('test-model', 100, 200, 2.0);
 
-      const history = tracker.getPerformanceHistory('test-model', 'day');
       expect(history).toHaveLength(1);
     });
   });
@@ -124,7 +118,6 @@ describe('ModelPerformanceTracker', () => {
       tracker.recordOutcome('model1', 100, 200, 2.0);
       tracker.recordOutcome('model2', 100, 150, 2.0);
 
-      const topModels = tracker.getTopPerformingModels('roi', 2);
       expect(topModels).toHaveLength(2);
       expect(topModels[0].modelName).toBe('model1');
       expect(topModels[0].metrics.roi).toBe(1.0);
@@ -137,7 +130,6 @@ describe('ModelPerformanceTracker', () => {
       tracker.recordOutcome('test-model', 100, 200, 2.0);
       tracker.recordOutcome('test-model', 100, 0, 2.0);
 
-      const performance = tracker.getModelPerformance('test-model');
       expect(performance?.profitFactor).toBe(1.0);
     });
 
@@ -146,7 +138,6 @@ describe('ModelPerformanceTracker', () => {
       tracker.recordOutcome('test-model', 100, 200, 2.0);
       tracker.recordOutcome('test-model', 100, 150, 2.0);
 
-      const performance = tracker.getModelPerformance('test-model');
       expect(performance?.sharpeRatio).toBeGreaterThan(0);
     });
 
@@ -155,7 +146,6 @@ describe('ModelPerformanceTracker', () => {
       tracker.recordOutcome('test-model', 100, 200, 2.0);
       tracker.recordOutcome('test-model', 100, 50, 2.0);
 
-      const performance = tracker.getModelPerformance('test-model');
       expect(performance?.maxDrawdown).toBeGreaterThan(0);
     });
   });

@@ -6,21 +6,21 @@ export interface PrizePicksBase {
   stat_type: string;
   line_score: number;
   description: string;
-  // Add common fields from PrizePicks API
+  // Add common fields from PrizePicks API;
   start_time?: string;
   status?: string; 
-  // ... other potential base fields
+  // ... other potential base fields;
 }
 
 export interface PrizePicksProps extends PrizePicksBase {
   playerId: string;
   player?: PrizePicksPlayer;
-  // Props specific fields
+  // Props specific fields;
   image_url?: string;
   projection_type?: 'over_under' | 'total' | 'spread'; 
   overOdds?: number;
   underOdds?: number;
-  // ... other prop-specific fields
+  // ... other prop-specific fields;
 }
 
 export interface PrizePicksPlayer {
@@ -34,18 +34,18 @@ export interface PrizePicksPlayer {
 
 export interface PrizePicksLines {
   prop_id: string;
-  // Odds can be more complex, e.g., different for over/under or specific lines
+  // Odds can be more complex, e.g., different for over/under or specific lines;
   over_odds?: number; 
   under_odds?: number;
   push_odds?: number;
-  line_score?: number; // Sometimes line might be part of lines response
-  // ... other line details from PrizePicks API
+  line_score?: number; // Sometimes line might be part of lines response;
+  // ... other line details from PrizePicks API;
 }
 
 export interface PrizePicksEntry {
   id: string;
   user_id: string;
-  legs: PrizePicksProps[]; // or a more specific EntryLeg type
+  legs: PrizePicksProps[]; // or a more specific EntryLeg type;
   stake: number;
   payout: number;
   status: 'pending' | 'active' | 'won' | 'lost' | 'canceled';
@@ -76,7 +76,7 @@ export interface PrizePicksData {
   lastUpdated: string;
 } 
 
-// User type for authentication and user context
+// User type for authentication and user context;
 export interface User {
   id: string;
   username: string;
@@ -84,7 +84,7 @@ export interface User {
   // Add other fields as needed (e.g., roles, avatar, etc.)
 }
 
-// Social Sentiment & News
+// Social Sentiment & News;
 export interface SocialSentimentData {
   topic: string;
   sentimentScore: number;

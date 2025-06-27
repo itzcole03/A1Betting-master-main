@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   TrendingUp,
   TrendingDown,
@@ -13,10 +13,10 @@ import {
   Shield,
   Clock,
   Star,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// Import our modern components
-import ModernActivityFeed from "../ui/ModernActivityFeed";
+// Import our modern components;
+import ModernActivityFeed from '@/ui/ModernActivityFeed.ts';
 
 interface MetricCardProps {
   title: string;
@@ -38,7 +38,7 @@ interface OpportunityCardProps {
   status: "hot" | "warm" | "cool";
 }
 
-const MetricCard: React.FC<MetricCardProps> = ({
+const MetricCard: React.FC<MetricCardProps key={656645}> = ({
   title,
   value,
   change,
@@ -49,11 +49,11 @@ const MetricCard: React.FC<MetricCardProps> = ({
 }) => {
   if (loading) {
     return (
-      <div className="p-6 rounded-2xl border border-gray-800/50 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-xl">
-        <div className="animate-pulse space-y-4">
-          <div className="h-4 bg-gray-700/50 rounded w-3/4" />
-          <div className="h-8 bg-gray-700/50 rounded w-1/2" />
-          <div className="h-3 bg-gray-700/50 rounded w-2/3" />
+      <div className="p-6 rounded-2xl border border-gray-800/50 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-xl" key={650287}>
+        <div className="animate-pulse space-y-4" key={119861}>
+          <div className="h-4 bg-gray-700/50 rounded w-3/4" / key={671088}>
+          <div className="h-8 bg-gray-700/50 rounded w-1/2" / key={887514}>
+          <div className="h-3 bg-gray-700/50 rounded w-2/3" / key={887033}>
         </div>
       </div>
     );
@@ -73,33 +73,33 @@ const MetricCard: React.FC<MetricCardProps> = ({
   const getChangeIcon = () => {
     switch (changeType) {
       case "positive":
-        return <TrendingUp size={12} />;
+        return <TrendingUp size={12} / key={264614}>;
       case "negative":
-        return <TrendingDown size={12} />;
+        return <TrendingDown size={12} / key={951114}>;
       default:
         return null;
     }
   };
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ scale: 1.02 }}
       className="p-6 rounded-2xl border border-gray-800/50 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-xl hover:border-gray-700/50 transition-all group cursor-pointer"
-    >
-      <div className="flex items-start justify-between mb-4">
-        <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all">
-          <div className="text-blue-400 group-hover:text-blue-300 transition-colors">
+     key={594793}>
+      <div className="flex items-start justify-between mb-4" key={886571}>
+        <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 group-hover:from-blue-500/20 group-hover:to-purple-500/20 transition-all" key={537966}>
+          <div className="text-blue-400 group-hover:text-blue-300 transition-colors" key={834539}>
             {icon}
           </div>
         </div>
         {change !== undefined && (
-          <div
+          <div;
             className={`flex items-center space-x-1 text-sm ${getChangeColor()}`}
-          >
+           key={701921}>
             {getChangeIcon()}
-            <span>
+            <span key={595076}>
               {change > 0 ? "+" : ""}
               {change}%
             </span>
@@ -107,19 +107,19 @@ const MetricCard: React.FC<MetricCardProps> = ({
         )}
       </div>
 
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-400">{title}</h3>
-        <p className="text-2xl font-bold text-white">{value}</p>
+      <div className="space-y-2" key={725977}>
+        <h3 className="text-sm font-medium text-gray-400" key={180531}>{title}</h3>
+        <p className="text-2xl font-bold text-white" key={36139}>{value}</p>
 
         {trend && (
-          <div className="flex items-center space-x-2">
-            <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden">
-              <div
+          <div className="flex items-center space-x-2" key={740830}>
+            <div className="flex-1 h-1 bg-gray-800 rounded-full overflow-hidden" key={911085}>
+              <div;
                 className="h-full bg-gradient-to-r from-blue-500 to-green-500 rounded-full transition-all duration-1000"
                 style={{ width: `${Math.max(...trend)}%` }}
-              />
+              / key={252286}>
             </div>
-            <span className="text-xs text-gray-500">Trend</span>
+            <span className="text-xs text-gray-500" key={239425}>Trend</span>
           </div>
         )}
       </div>
@@ -127,7 +127,7 @@ const MetricCard: React.FC<MetricCardProps> = ({
   );
 };
 
-const OpportunityCard: React.FC<OpportunityCardProps> = ({
+const OpportunityCard: React.FC<OpportunityCardProps key={839417}> = ({
   game,
   prediction,
   confidence,
@@ -159,44 +159,44 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({
   };
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       whileHover={{ scale: 1.02 }}
       className={`p-6 rounded-2xl border bg-gradient-to-br backdrop-blur-xl hover:shadow-lg transition-all cursor-pointer ${getStatusColor()}`}
-    >
-      <div className="flex items-start justify-between mb-4">
-        <div>
-          <div className="flex items-center space-x-2 mb-1">
-            <span className="text-lg">{getStatusIcon()}</span>
-            <h3 className="font-semibold text-white">{game}</h3>
+     key={184991}>
+      <div className="flex items-start justify-between mb-4" key={886571}>
+        <div key={241917}>
+          <div className="flex items-center space-x-2 mb-1" key={455610}>
+            <span className="text-lg" key={107211}>{getStatusIcon()}</span>
+            <h3 className="font-semibold text-white" key={766242}>{game}</h3>
           </div>
-          <p className="text-sm text-gray-300">{prediction}</p>
+          <p className="text-sm text-gray-300" key={741226}>{prediction}</p>
         </div>
-        <div className="text-right">
-          <div className="text-sm text-gray-400">Value</div>
-          <div className="text-lg font-bold text-green-400">+{value}%</div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4 text-center">
-        <div>
-          <div className="text-xs text-gray-400">Confidence</div>
-          <div className="text-sm font-medium text-white">{confidence}%</div>
-        </div>
-        <div>
-          <div className="text-xs text-gray-400">Odds</div>
-          <div className="text-sm font-medium text-white">{odds}</div>
-        </div>
-        <div>
-          <div className="text-xs text-gray-400">Time Left</div>
-          <div className="text-sm font-medium text-white">{timeLeft}</div>
+        <div className="text-right" key={144468}>
+          <div className="text-sm text-gray-400" key={372957}>Value</div>
+          <div className="text-lg font-bold text-green-400" key={499793}>+{value}%</div>
         </div>
       </div>
 
-      <div className="mt-4 pt-4 border-t border-gray-700/50">
-        <button className="w-full py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all">
-          View Details
+      <div className="grid grid-cols-3 gap-4 text-center" key={762234}>
+        <div key={241917}>
+          <div className="text-xs text-gray-400" key={588004}>Confidence</div>
+          <div className="text-sm font-medium text-white" key={334331}>{confidence}%</div>
+        </div>
+        <div key={241917}>
+          <div className="text-xs text-gray-400" key={588004}>Odds</div>
+          <div className="text-sm font-medium text-white" key={334331}>{odds}</div>
+        </div>
+        <div key={241917}>
+          <div className="text-xs text-gray-400" key={588004}>Time Left</div>
+          <div className="text-sm font-medium text-white" key={334331}>{timeLeft}</div>
+        </div>
+      </div>
+
+      <div className="mt-4 pt-4 border-t border-gray-700/50" key={494181}>
+        <button className="w-full py-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all" key={14356}>
+          View Details;
         </button>
       </div>
     </motion.div>
@@ -210,7 +210,7 @@ export const ModernDashboardEnhancement: React.FC = () => {
       value: "$12,847",
       change: 15.3,
       changeType: "positive" as const,
-      icon: <DollarSign size={20} />,
+      icon: <DollarSign size={20} / key={594218}>,
       trend: [65, 78, 85, 92, 89],
     },
     {
@@ -218,7 +218,7 @@ export const ModernDashboardEnhancement: React.FC = () => {
       value: "89.2%",
       change: 2.1,
       changeType: "positive" as const,
-      icon: <Target size={20} />,
+      icon: <Target size={20} / key={69317}>,
       trend: [82, 85, 87, 89, 89],
     },
     {
@@ -226,7 +226,7 @@ export const ModernDashboardEnhancement: React.FC = () => {
       value: "94.7%",
       change: 1.8,
       changeType: "positive" as const,
-      icon: <Brain size={20} />,
+      icon: <Brain size={20} / key={20798}>,
       trend: [88, 91, 93, 95, 95],
     },
     {
@@ -234,7 +234,7 @@ export const ModernDashboardEnhancement: React.FC = () => {
       value: "47",
       change: 0,
       changeType: "neutral" as const,
-      icon: <Activity size={20} />,
+      icon: <Activity size={20} / key={927794}>,
       trend: [45, 46, 47, 47, 47],
     },
   ]);
@@ -270,61 +270,61 @@ export const ModernDashboardEnhancement: React.FC = () => {
   ]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" key={778766}>
       {/* Hero Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" key={765662}>
         {metrics.map((metric, index) => (
-          <MetricCard key={index} {...metric} />
+          <MetricCard key={index} {...metric} / key={953265}>
         ))}
       </div>
 
       {/* Main content grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8" key={728164}>
         {/* Opportunities column */}
-        <div className="lg:col-span-2 space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-white flex items-center space-x-2">
-              <Zap size={20} className="text-yellow-400" />
-              <span>Live Opportunities</span>
+        <div className="lg:col-span-2 space-y-6" key={381409}>
+          <div className="flex items-center justify-between" key={96335}>
+            <h2 className="text-xl font-bold text-white flex items-center space-x-2" key={505748}>
+              <Zap size={20} className="text-yellow-400" / key={21037}>
+              <span key={595076}>Live Opportunities</span>
             </h2>
-            <button className="text-sm text-blue-400 hover:text-blue-300 transition-colors">
-              View All
+            <button className="text-sm text-blue-400 hover:text-blue-300 transition-colors" key={64895}>
+              View All;
             </button>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-4" key={160407}>
             {opportunities.map((opportunity, index) => (
-              <OpportunityCard key={index} {...opportunity} />
+              <OpportunityCard key={index} {...opportunity} / key={505167}>
             ))}
           </div>
 
           {/* Quick Stats Grid */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-green-500/20">
-                  <TrendingUp size={16} className="text-green-400" />
+          <div className="grid grid-cols-2 gap-4" key={354810}>
+            <div className="p-4 rounded-xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20" key={215957}>
+              <div className="flex items-center space-x-3" key={602729}>
+                <div className="p-2 rounded-lg bg-green-500/20" key={230602}>
+                  <TrendingUp size={16} className="text-green-400" / key={5435}>
                 </div>
-                <div>
-                  <div className="text-sm text-gray-400">
-                    Today's Performance
+                <div key={241917}>
+                  <div className="text-sm text-gray-400" key={372957}>
+                    Today's Performance;
                   </div>
-                  <div className="text-lg font-bold text-green-400">
-                    +$2,347
+                  <div className="text-lg font-bold text-green-400" key={499793}>
+                    +$2,347;
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20">
-              <div className="flex items-center space-x-3">
-                <div className="p-2 rounded-lg bg-blue-500/20">
-                  <Eye size={16} className="text-blue-400" />
+            <div className="p-4 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 border border-blue-500/20" key={106016}>
+              <div className="flex items-center space-x-3" key={602729}>
+                <div className="p-2 rounded-lg bg-blue-500/20" key={690190}>
+                  <Eye size={16} className="text-blue-400" / key={496839}>
                 </div>
-                <div>
-                  <div className="text-sm text-gray-400">Watching</div>
-                  <div className="text-lg font-bold text-blue-400">
-                    12 Games
+                <div key={241917}>
+                  <div className="text-sm text-gray-400" key={372957}>Watching</div>
+                  <div className="text-lg font-bold text-blue-400" key={930283}>
+                    12 Games;
                   </div>
                 </div>
               </div>
@@ -333,40 +333,40 @@ export const ModernDashboardEnhancement: React.FC = () => {
         </div>
 
         {/* Activity feed column */}
-        <div className="space-y-6">
-          <ModernActivityFeed maxItems={6} showTimeline={true} />
+        <div className="space-y-6" key={501869}>
+          <ModernActivityFeed maxItems={6} showTimeline={true} / key={238917}>
 
           {/* System Status */}
-          <div className="p-6 rounded-2xl border border-gray-800/50 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-xl">
-            <h3 className="text-lg font-semibold text-white mb-4 flex items-center space-x-2">
-              <Shield size={18} className="text-green-400" />
-              <span>System Status</span>
+          <div className="p-6 rounded-2xl border border-gray-800/50 bg-gradient-to-br from-gray-900/50 to-gray-800/30 backdrop-blur-xl" key={650287}>
+            <h3 className="text-lg font-semibold text-white mb-4 flex items-center space-x-2" key={677181}>
+              <Shield size={18} className="text-green-400" / key={428118}>
+              <span key={595076}>System Status</span>
             </h3>
 
-            <div className="space-y-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">API Status</span>
-                <div className="flex items-center space-x-2">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                  <span className="text-sm text-green-400">Online</span>
+            <div className="space-y-3" key={186520}>
+              <div className="flex items-center justify-between" key={96335}>
+                <span className="text-sm text-gray-400" key={257018}>API Status</span>
+                <div className="flex items-center space-x-2" key={740830}>
+                  <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" / key={724634}>
+                  <span className="text-sm text-green-400" key={232194}>Online</span>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Model Performance</span>
-                <span className="text-sm text-white">94.7%</span>
+              <div className="flex items-center justify-between" key={96335}>
+                <span className="text-sm text-gray-400" key={257018}>Model Performance</span>
+                <span className="text-sm text-white" key={614306}>94.7%</span>
               </div>
 
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Data Latency</span>
-                <span className="text-sm text-white">12ms</span>
+              <div className="flex items-center justify-between" key={96335}>
+                <span className="text-sm text-gray-400" key={257018}>Data Latency</span>
+                <span className="text-sm text-white" key={614306}>12ms</span>
               </div>
 
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-400">Last Update</span>
-                <div className="flex items-center space-x-1 text-sm text-gray-400">
-                  <Clock size={12} />
-                  <span>Just now</span>
+              <div className="flex items-center justify-between" key={96335}>
+                <span className="text-sm text-gray-400" key={257018}>Last Update</span>
+                <div className="flex items-center space-x-1 text-sm text-gray-400" key={167331}>
+                  <Clock size={12} / key={533564}>
+                  <span key={595076}>Just now</span>
                 </div>
               </div>
             </div>

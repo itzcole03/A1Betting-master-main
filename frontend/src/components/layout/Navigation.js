@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 const Navigation = () => {
-    const location = useLocation();
+
     const isActive = (path) => {
         return location.pathname === path;
     };

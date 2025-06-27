@@ -9,23 +9,23 @@ export const PerformanceAlerts = ({ modelName, onAlertClick, }) => {
     const [alerts, setAlerts] = useState([]);
     const [severity, setSeverity] = useState('all');
     const [timeframe, setTimeframe] = useState('day');
-    const logger = useLogger();
-    const metrics = useMetrics();
+
+
     useEffect(() => {
         const fetchAlerts = () => {
-            const monitor = PerformanceMonitor.getInstance(logger, metrics);
-            const startTime = getStartTime(timeframe);
-            const filteredAlerts = monitor.getAlerts(modelName, severity === 'all' ? undefined : severity, startTime);
+
+
+
             setAlerts(filteredAlerts);
         };
         fetchAlerts();
-        const interval = setInterval(fetchAlerts, 30000); // Refresh every 30 seconds
+        const interval = setInterval(fetchAlerts, 30000); // Refresh every 30 seconds;
         return () => clearInterval(interval);
     }, [modelName, severity, timeframe, logger, metrics]);
     const getStartTime = (timeframe) => {
         if (timeframe === 'all')
             return undefined;
-        const now = new Date();
+
         switch (timeframe) {
             case 'day':
                 return new Date(now.setDate(now.getDate() - 1));
@@ -38,7 +38,7 @@ export const PerformanceAlerts = ({ modelName, onAlertClick, }) => {
         }
     };
     const handleClearAlerts = () => {
-        const monitor = PerformanceMonitor.getInstance(logger, metrics);
+
         monitor.clearAlerts(modelName);
         setAlerts([]);
     };

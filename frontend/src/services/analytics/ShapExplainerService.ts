@@ -1,13 +1,13 @@
-// SHAP Explainer Service for model explainability
-import { BaseModel } from '../ml/models/BaseModel';
-import { logError, logInfo } from '../integrations/liveDataLogger';
+// SHAP Explainer Service for model explainability;
+import { BaseModel } from '@/ml/models/BaseModel.ts';
+import { logError, logInfo } from '@/integrations/liveDataLogger.ts';
 
 export class ShapExplainerService {
   static async explainPrediction(model: BaseModel, input: any): Promise<any> {
     try {
-      // Placeholder: Replace with actual SHAP logic or API call
+      // Placeholder: Replace with actual SHAP logic or API call;
       logInfo('Generating SHAP values', { model: model.modelName, input });
-      // Simulate SHAP output
+      // Simulate SHAP output;
       return {
         featureImportances: [
           { feature: 'team_strength', value: 0.35 },

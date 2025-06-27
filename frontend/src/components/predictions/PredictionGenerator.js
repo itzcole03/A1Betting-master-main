@@ -9,8 +9,8 @@ export const PredictionGenerator = ({ modelName, availableModels, onPredictionsG
     const [selectedModel, setSelectedModel] = useState(modelName);
     const [predictions, setPredictions] = useState([]);
     const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
-    const logger = useLogger();
-    const metrics = useMetrics();
+
+
     useEffect(() => {
         setSelectedModel(modelName);
     }, [modelName]);
@@ -37,8 +37,8 @@ export const PredictionGenerator = ({ modelName, availableModels, onPredictionsG
             if (!response.ok) {
                 throw new Error(`Failed to generate predictions: ${response.statusText}`);
             }
-            const data = await response.json();
-            const timestamp = new Date().toISOString();
+
+
             const processedPredictions = data.map((prediction) => ({
                 ...prediction,
                 timestamp,
@@ -55,7 +55,7 @@ export const PredictionGenerator = ({ modelName, availableModels, onPredictionsG
             });
         }
         catch (err) {
-            const errorMessage = err instanceof Error ? err.message : 'Failed to generate predictions';
+
             setError(errorMessage);
             logger.error('Error generating predictions', { error: errorMessage });
             metrics.increment('prediction_generation_error');

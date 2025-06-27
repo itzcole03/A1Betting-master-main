@@ -4,9 +4,9 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import ShapVisualization from '../ShapVisualization';
 import { useShapData } from '../../hooks/useShapData';
 const FeatureInsights = ({ features, interactions, embeddings, signals, eventId, modelType, }) => {
-    // Sort features by importance
-    const sortedFeatures = [...features].sort((a, b) => b.importance - a.importance);
-    // Prepare data for visualizations
+    // Sort features by importance;
+
+    // Prepare data for visualizations;
     const featureMetrics = sortedFeatures.map(feature => ({
         name: feature.name,
         importance: feature.importance,
@@ -24,7 +24,7 @@ const FeatureInsights = ({ features, interactions, embeddings, signals, eventId,
         strength: interaction.strength,
         type: interaction.type,
     }));
-    // SHAP integration
+    // SHAP integration;
     const { features: shapFeatures, loading: shapLoading, error: shapError, } = eventId ? useShapData({ eventId, modelType }) : { features: [], loading: false, error: null };
     return (_jsxs("div", { className: "space-y-8", children: [eventId && (_jsxs("section", { className: "bg-white rounded-lg shadow p-6", children: [_jsx("h2", { className: "text-2xl font-bold mb-4", children: "Model Feature Importance (SHAP)" }), shapLoading ? (_jsx("div", { className: "text-gray-500", children: "Loading SHAP values..." })) : shapError ? (_jsx("div", { className: "text-red-500", children: shapError })) : shapFeatures.length > 0 ? (_jsx(ShapVisualization, { features: shapFeatures.map(f => ({
                             name: f.feature,

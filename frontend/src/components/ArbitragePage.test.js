@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import ArbitragePage from './ArbitragePage';
 jest.mock('axios');
-const mockedAxios = axios;
+
 describe('ArbitragePage Integration', () => {
     it('renders loading, fetches and displays arbitrage opportunities', async () => {
         mockedAxios.get.mockResolvedValueOnce({

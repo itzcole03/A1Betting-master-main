@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 export interface SportsNewsArticle {
     id: string;
     title: string;
@@ -11,7 +11,7 @@ interface ApiConfig {
     timeout?: number;
 }
 /**
- * Modern ExternalApiService with proper async/await and error handling
+ * Modern ExternalApiService with proper async/await and error handling;
  */
 export declare class ExternalApiService extends EventEmitter {
     private config;

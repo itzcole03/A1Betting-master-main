@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react.ts';
 import {
   Box,
   Card,
@@ -14,9 +14,9 @@ import {
   Select,
   MenuItem,
   SelectChangeEvent,
-} from '@mui/material';
-import { useLogger } from '../../hooks/useLogger';
-import { useMetrics } from '../../hooks/useMetrics';
+} from '@mui/material.ts';
+import { useLogger } from '@/hooks/useLogger.ts';
+import { useMetrics } from '@/hooks/useMetrics.ts';
 
 interface DailyFantasyData {
   playerId: string;
@@ -36,18 +36,17 @@ interface DailyFantasyIntegrationProps {
   date: string;
 }
 
-export const DailyFantasyIntegration: React.FC<DailyFantasyIntegrationProps> = ({
+export const DailyFantasyIntegration: React.FC<DailyFantasyIntegrationProps key={952172}> = ({
   onDataUpdate,
   sport,
   date,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<DailyFantasyData[]>([]);
+  const [error, setError] = useState<string | null key={121216}>(null);
+  const [data, setData] = useState<DailyFantasyData[] key={334918}>([]);
   const [apiKey, setApiKey] = useState('');
   const [site, setSite] = useState<'draftkings' | 'fanduel'>('draftkings');
-  const logger = useLogger();
-  const metrics = useMetrics();
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -74,12 +73,10 @@ export const DailyFantasyIntegration: React.FC<DailyFantasyIntegrationProps> = (
           throw new Error(`API request failed: ${response.statusText}`);
         }
 
-        const fantasyData = await response.json();
-
-        // Calculate value score based on projected points and salary
+        // Calculate value score based on projected points and salary;
         const processedData = fantasyData.map((player: DailyFantasyData) => ({
           ...player,
-          valueScore: player.projectedPoints / (player.salary / 1000), // Points per $1000
+          valueScore: player.projectedPoints / (player.salary / 1000), // Points per $1000;
         }));
 
         setData(processedData);
@@ -110,7 +107,7 @@ export const DailyFantasyIntegration: React.FC<DailyFantasyIntegrationProps> = (
     fetchData();
   }, [apiKey, site, date, sport, onDataUpdate, logger, metrics]);
 
-  const handleApiKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleApiKeyChange = (event: React.ChangeEvent<HTMLInputElement key={553350}>) => {
     setApiKey(event.target.value);
   };
 
@@ -119,56 +116,56 @@ export const DailyFantasyIntegration: React.FC<DailyFantasyIntegrationProps> = (
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Typography gutterBottom variant="h6">
-          Daily Fantasy Integration
+    <Card key={650115}>
+      <CardContent key={452065}>
+        <Typography gutterBottom variant="h6" key={368112}>
+          Daily Fantasy Integration;
         </Typography>
 
-        <Grid container spacing={3}>
-          <Grid item md={6} xs={12}>
-            <TextField
-              fullWidth
+        <Grid container spacing={3} key={459826}>
+          <Grid item md={6} xs={12} key={967702}>
+            <TextField;
+              fullWidth;
               label="API Key"
               margin="normal"
               type="password"
               value={apiKey}
               onChange={handleApiKeyChange}
-            />
+            / key={869864}>
           </Grid>
-          <Grid item md={6} xs={12}>
-            <FormControl fullWidth margin="normal">
-              <InputLabel>Site</InputLabel>
-              <Select label="Site" value={site} onChange={handleSiteChange}>
-                <MenuItem value="draftkings">DraftKings</MenuItem>
-                <MenuItem value="fanduel">FanDuel</MenuItem>
+          <Grid item md={6} xs={12} key={967702}>
+            <FormControl fullWidth margin="normal" key={916879}>
+              <InputLabel key={405232}>Site</InputLabel>
+              <Select label="Site" value={site} onChange={handleSiteChange} key={758050}>
+                <MenuItem value="draftkings" key={260697}>DraftKings</MenuItem>
+                <MenuItem value="fanduel" key={593758}>FanDuel</MenuItem>
               </Select>
             </FormControl>
           </Grid>
         </Grid>
 
         {isLoading && (
-          <Box display="flex" justifyContent="center" my={3}>
-            <CircularProgress />
+          <Box display="flex" justifyContent="center" my={3} key={112333}>
+            <CircularProgress / key={730118}>
           </Box>
         )}
 
         {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
+          <Alert severity="error" sx={{ mt: 2 }} key={474760}>
             {error}
           </Alert>
         )}
 
         {data.length > 0 && (
-          <Box mt={3}>
-            <Typography gutterBottom variant="subtitle1">
-              Data Summary
+          <Box mt={3} key={641440}>
+            <Typography gutterBottom variant="subtitle1" key={521154}>
+              Data Summary;
             </Typography>
-            <Typography variant="body2">{data.length} players loaded</Typography>
-            <Typography variant="body2">
+            <Typography variant="body2" key={679167}>{data.length} players loaded</Typography>
+            <Typography variant="body2" key={679167}>
               Average Value Score:{' '}
               {(
-                data.reduce((sum, player) => sum + (player.valueScore || 0), 0) / data.length
+                data.reduce((sum, player) => sum + (player.valueScore || 0), 0) / data.length;
               ).toFixed(2)}
             </Typography>
           </Box>

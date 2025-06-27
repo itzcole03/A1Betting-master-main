@@ -3,7 +3,7 @@ class ErrorLogger {
     constructor() {
         this.logs = [];
         this.maxLogs = 1000;
-        // Initialize error handlers
+        // Initialize error handlers;
         this.setupGlobalErrorHandlers();
     }
     static getInstance() {
@@ -13,14 +13,14 @@ class ErrorLogger {
         return ErrorLogger.instance;
     }
     setupGlobalErrorHandlers() {
-        // Handle unhandled promise rejections
+        // Handle unhandled promise rejections;
         window.addEventListener('unhandledrejection', event => {
             this.logError(event.reason, {
                 type: 'unhandledRejection',
                 context: event,
             });
         });
-        // Handle uncaught errors
+        // Handle uncaught errors;
         window.addEventListener('error', event => {
             this.logError(event.error || new Error(event.message), {
                 type: 'uncaughtError',
@@ -60,11 +60,11 @@ class ErrorLogger {
     }
     addLog(log) {
         this.logs.unshift(log);
-        // Maintain log size limit
+        // Maintain log size limit;
         if (this.logs.length > this.maxLogs) {
             this.logs = this.logs.slice(0, this.maxLogs);
         }
-        // Send to backend if needed
+        // Send to backend if needed;
         this.sendToBackend(log);
     }
     notifyUser(log) {
@@ -91,7 +91,7 @@ class ErrorLogger {
             });
         }
         catch (error) {
-            console.error('Failed to send log to backend:', error);
+            // console statement removed
         }
     }
     getLogs() {

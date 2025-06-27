@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 import type {
   Team,
   Player,
@@ -8,9 +8,9 @@ import type {
   PlayerStats,
   PlayerForm,
   InjuryStatus,
-} from '@/types/betting';
-import type { BetSimulationInput, BetSimulationResult } from '../types/simulation';
-import type { PredictionWithConfidence, ConfidenceBand, WinProbability, HistoricalPerformance, PerformanceHistory } from '../types/confidence';
+} from '@/types/betting.ts';
+import type { BetSimulationInput, BetSimulationResult } from '@/types/simulation.ts';
+import type { PredictionWithConfidence, ConfidenceBand, WinProbability, HistoricalPerformance, PerformanceHistory } from '@/types/confidence.ts';
 
 export class MLSimulationService extends EventEmitter {
   private teams: Map<string, Team>;
@@ -33,7 +33,7 @@ export class MLSimulationService extends EventEmitter {
   }
 
   private initializeTeams(): void {
-    // Initialize NBA teams with realistic stats
+    // Initialize NBA teams with realistic stats;
     const teams = [
       {
         id: 'LAL',
@@ -59,7 +59,7 @@ export class MLSimulationService extends EventEmitter {
   }
 
   private initializePlayers(): void {
-    // Initialize players with realistic stats
+    // Initialize players with realistic stats;
     const players = [
       {
         id: 'LBJ',
@@ -90,7 +90,7 @@ export class MLSimulationService extends EventEmitter {
   }
 
   private initializeGames(): void {
-    // Initialize upcoming games
+    // Initialize upcoming games;
     const games = [
       {
         id: 'LAL-BOS-2024-03-15',
@@ -114,25 +114,24 @@ export class MLSimulationService extends EventEmitter {
   public generatePrediction(
     gameId: string,
     playerId: string,
-    metric: keyof PlayerStats
+    metric: keyof PlayerStats;
   ): Prediction {
-    const game = this.games.get(gameId);
-    const player = this.players.get(playerId);
+
 
     if (!game || !player) {
       throw new Error('Game or player not found');
     }
 
-    // Generate realistic prediction based on player stats and game context
-    const baseValue = player.stats[metric];
-    const variance = baseValue * 0.2; // 20% variance
-    const prediction = baseValue + (Math.random() * variance * 2 - variance);
-    const confidence = 0.7 + Math.random() * 0.2; // 70-90% confidence
+    // Generate realistic prediction based on player stats and game context;
 
-    // Get the most recent form data for the metric
+    const variance = baseValue * 0.2; // 20% variance;
+
+    const confidence = 0.7 + Math.random() * 0.2; // 70-90% confidence;
+
+    // Get the most recent form data for the metric;
     const recentFormValue =
-      player.recentForm.length > 0
-        ? (player.recentForm[player.recentForm.length - 1] as any)[metric] || baseValue
+      player.recentForm.length > 0;
+        ? (player.recentForm[player.recentForm.length - 1] as any)[metric] || baseValue;
         : baseValue;
 
     const predictionObj: Prediction = {
@@ -148,8 +147,8 @@ export class MLSimulationService extends EventEmitter {
       timestamp: new Date().toISOString(),
     };
 
-    // Store prediction
-    const gamePredictions = this.predictions.get(gameId) || [];
+    // Store prediction;
+
     gamePredictions.push(predictionObj);
     this.predictions.set(gameId, gamePredictions);
 
@@ -169,10 +168,10 @@ export class MLSimulationService extends EventEmitter {
   }
 
   public updatePlayerForm(playerId: string, form: PlayerForm): void {
-    const player = this.players.get(playerId);
+
     if (player) {
       player.recentForm.push(form);
-      // Keep only last 10 games
+      // Keep only last 10 games;
       if (player.recentForm.length > 10) {
         player.recentForm.shift();
       }
@@ -180,21 +179,21 @@ export class MLSimulationService extends EventEmitter {
   }
 
   public updateInjuryStatus(playerId: string, status: InjuryStatus): void {
-    const player = this.players.get(playerId);
+
     if (player) {
       player.injuryStatus = status;
     }
   }
 
   /**
-   * Simulate a bet outcome, expected return, and risk profile
+   * Simulate a bet outcome, expected return, and risk profile;
    */
   public simulateBet(input: BetSimulationInput): BetSimulationResult {
-    const winProb = input.winProbability.probability;
-    const payout = input.stake * input.odds;
-    const expectedReturn = winProb * payout - (1 - winProb) * input.stake;
-    const variance = winProb * Math.pow(payout - expectedReturn, 2) + (1 - winProb) * Math.pow(-input.stake - expectedReturn, 2);
-    const breakEvenStake = input.stake * (1 / winProb);
+
+
+
+
+
     return {
       expectedReturn,
       variance,
@@ -206,12 +205,12 @@ export class MLSimulationService extends EventEmitter {
   }
 
   /**
-   * Generate a prediction with confidence band and win probability
+   * Generate a prediction with confidence band and win probability;
    */
   public getPredictionWithConfidence(gameId: string, playerId: string, metric: keyof PlayerStats): PredictionWithConfidence {
-    const prediction = this.generatePrediction(gameId, playerId, metric);
-    const confidenceLevel = 0.95;
-    const stdDev = prediction.prediction * 0.15; // 15% std dev for band
+
+
+    const stdDev = prediction.prediction * 0.15; // 15% std dev for band;
     const confidenceBand: ConfidenceBand = {
       lower: prediction.prediction - 1.96 * stdDev,
       upper: prediction.prediction + 1.96 * stdDev,
@@ -239,10 +238,10 @@ export class MLSimulationService extends EventEmitter {
   }
 
   /**
-   * Aggregate historical prediction and actual performance for a given event
+   * Aggregate historical prediction and actual performance for a given event;
    */
   public getHistoricalPerformance(eventId: string): PerformanceHistory {
-    const predictions = this.getGamePredictions(eventId);
+
     const history: HistoricalPerformance[] = predictions.map((p) => {
       const confidenceBand: ConfidenceBand = {
         lower: p.prediction - 1.96 * (p.prediction * 0.15),
@@ -259,9 +258,9 @@ export class MLSimulationService extends EventEmitter {
       return {
         date: p.timestamp,
         prediction: p.prediction,
-        actual: p.prediction, // Placeholder: replace with actual outcome if available
-        won: true, // Placeholder
-        payout: 0, // Placeholder
+        actual: p.prediction, // Placeholder: replace with actual outcome if available;
+        won: true, // Placeholder;
+        payout: 0, // Placeholder;
         confidenceBand,
         winProbability,
       };

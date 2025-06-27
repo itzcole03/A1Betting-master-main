@@ -17,7 +17,7 @@ export const useTimeSeries = () => {
             if (!response.ok) {
                 throw new Error('Failed to fetch time series data');
             }
-            const timeSeries = await response.json();
+
             setState(prev => ({
                 ...prev,
                 timeSeries,
@@ -38,12 +38,12 @@ export const useTimeSeries = () => {
         return state.timeSeries[state.timeSeries.length - 1];
     };
     const getTimeSeriesHistory = (feature) => {
-        return state.timeSeries
+        return state.timeSeries;
             .filter(ts => !feature || ts.feature === feature)
             .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
     };
     const getTimeSeriesTrend = (feature) => {
-        const history = getTimeSeriesHistory(feature);
+
         return history.map(h => ({
             timestamp: h.timestamp,
             value: h.value,
@@ -53,7 +53,7 @@ export const useTimeSeries = () => {
         }));
     };
     const getTimeSeriesFeatures = () => {
-        const features = new Set();
+
         state.timeSeries.forEach(ts => {
             if (ts.feature)
                 features.add(ts.feature);
@@ -61,7 +61,7 @@ export const useTimeSeries = () => {
         return Array.from(features);
     };
     const getTimeSeriesSummary = () => {
-        const features = getTimeSeriesFeatures();
+
         const summary = {
             total_points: state.timeSeries.length,
             features: features.length,
@@ -70,8 +70,8 @@ export const useTimeSeries = () => {
                 end: state.timeSeries[state.timeSeries.length - 1]?.timestamp,
             },
             feature_stats: features.map(feature => {
-                const points = state.timeSeries.filter(ts => ts.feature === feature);
-                const values = points.map(p => p.value);
+
+
                 return {
                     feature,
                     count: points.length,
@@ -84,15 +84,15 @@ export const useTimeSeries = () => {
         return summary;
     };
     const getForecastAccuracy = (feature) => {
-        const history = getTimeSeriesHistory(feature);
-        const forecastPoints = history.filter(h => h.forecast !== undefined);
+
+
         if (forecastPoints.length === 0)
             return null;
-        let totalError = 0;
-        let totalPoints = 0;
+        const totalError = 0;
+        const totalPoints = 0;
         for (const point of forecastPoints) {
             if (point.forecast !== undefined) {
-                const error = Math.abs(point.value - point.forecast);
+
                 totalError += error;
                 totalPoints++;
             }
@@ -100,7 +100,7 @@ export const useTimeSeries = () => {
         return totalPoints > 0 ? totalError / totalPoints : null;
     };
     const getConfidenceIntervals = (feature) => {
-        const history = getTimeSeriesHistory(feature);
+
         return history.filter(h => h.lower_bound !== undefined && h.upper_bound !== undefined);
     };
     useEffect(() => {

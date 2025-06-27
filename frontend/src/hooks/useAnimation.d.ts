@@ -1,4 +1,4 @@
-import { AnimationControls } from 'framer-motion';
+import { AnimationControls } from 'framer-motion.ts';
 interface UseAnimationOptions {
     duration?: number;
     delay?: number;

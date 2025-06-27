@@ -1,14 +1,14 @@
-import type { StateCreator } from 'zustand';
-import type { DailyFantasyProjection } from '../../types/fantasy';
-import type { ESPNHeadline } from '../../types/news';
-import type { SocialSentimentData } from '../../types/sentiment';
-import type { OddsData } from '../../types/betting';
+import type { StateCreator } from 'zustand.ts';
+import type { DailyFantasyProjection } from '@/types/fantasy.ts';
+import type { ESPNHeadline } from '@/types/news.ts';
+import type { SocialSentimentData } from '@/types/sentiment.ts';
+import type { OddsData } from '@/types/betting.ts';
 export type ActiveSubscription = {
     feedName: string;
     subscribedAt: string;
     [key: string]: unknown;
 };
-import type { AppStore } from '../useAppStore';
+import type { AppStore } from '@/useAppStore.ts';
 export interface DynamicDataSlice {
     sentiments: Record<string, SocialSentimentData>;
     headlines: ESPNHeadline[];

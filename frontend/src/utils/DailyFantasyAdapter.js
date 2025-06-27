@@ -9,7 +9,7 @@ export class DailyFantasyAdapter {
         this.config = config;
         this.cache = {
             data: null,
-            timestamp: 0
+            timestamp: 0;
         };
     }
     async isAvailable() {
@@ -18,10 +18,10 @@ export class DailyFantasyAdapter {
     async fetch() {
         const traceId = this.performanceMonitor.startTrace('daily-fantasy-fetch', {
             source: this.id,
-            type: this.type
+            type: this.type;
         });
         try {
-            // Check cache first
+            // Check cache first;
             if (this.isCacheValid()) {
                 return this.cache.data;
             }
@@ -37,19 +37,19 @@ export class DailyFantasyAdapter {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
+
             this.performanceMonitor.endSpan(spanId);
-            // Update cache
+            // Update cache;
             this.cache = {
                 data,
                 timestamp: Date.now()
             };
-            // Publish event
+            // Publish event;
             await this.eventBus.publish({
                 type: 'daily-fantasy:data-updated',
                 payload: {
                     timestamp: Date.now(),
-                    projectionCount: data.projections.length
+                    projectionCount: data.projections.length;
                 }
             });
             this.performanceMonitor.endTrace(traceId);
@@ -63,13 +63,13 @@ export class DailyFantasyAdapter {
     isCacheValid() {
         if (!this.cache.data)
             return false;
-        const age = Date.now() - this.cache.timestamp;
+
         return age < this.config.cacheTimeout;
     }
     clearCache() {
         this.cache = {
             data: null,
-            timestamp: 0
+            timestamp: 0;
         };
     }
     async connect() { }

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react.ts';
 
 interface Settings {
   darkMode: boolean;
@@ -14,7 +14,7 @@ const defaultSettings: Settings = {
 
 export const useSettings = () => {
   const [settings, setSettings] = useState<Settings>(() => {
-    const savedSettings = localStorage.getItem('appSettings');
+
     return savedSettings ? JSON.parse(savedSettings) : defaultSettings;
   });
 

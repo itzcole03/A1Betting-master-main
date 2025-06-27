@@ -1,8 +1,8 @@
 import { BaseService } from "./BaseService.js";
 import { UnifiedServiceRegistry } from "./UnifiedServiceRegistry.js";
 
-import { WebSocketMessage } from "../../types/webSocket.js";
-import { toast } from "react-toastify";
+import { WebSocketMessage } from '@/types/webSocket.js';
+import { toast } from 'react-toastify.ts';
 
 export interface WebSocketConfig {
   reconnectAttempts: number;
@@ -47,7 +47,7 @@ export class UnifiedWebSocketService extends BaseService {
 
   async connect(): Promise<void> {
     try {
-      // Skip connection if no valid WebSocket URL is configured
+      // Skip connection if no valid WebSocket URL is configured;
       if (
         !this.url ||
         this.url.includes("api.betproai.com") ||
@@ -93,7 +93,7 @@ export class UnifiedWebSocketService extends BaseService {
     }
     this.subscriptions.get(channel)!.add(callback);
 
-    // Send subscription message to server
+    // Send subscription message to server;
     this.send({
       event: "subscribe",
       data: { channel },
@@ -101,12 +101,12 @@ export class UnifiedWebSocketService extends BaseService {
     });
 
     return () => {
-      const callbacks = this.subscriptions.get(channel);
+
       if (callbacks) {
         callbacks.delete(callback);
         if (callbacks.size === 0) {
           this.subscriptions.delete(channel);
-          // Send unsubscribe message to server
+          // Send unsubscribe message to server;
           this.send({
             event: "unsubscribe",
             data: { channel },
@@ -158,7 +158,7 @@ export class UnifiedWebSocketService extends BaseService {
 
     this.socket.onmessage = (event) => {
       try {
-        const message = JSON.parse(event.data);
+
         this.handleMessage(message);
       } catch (error) {
         this.handleError(error, {
@@ -171,7 +171,7 @@ export class UnifiedWebSocketService extends BaseService {
   }
 
   private handleMessage(message: WebSocketMessage): void {
-    // Handle ping/pong
+    // Handle ping/pong;
     if (message.event === "ping") {
       this.send({ event: "pong", data: null, timestamp: Date.now() });
       return;
@@ -183,9 +183,9 @@ export class UnifiedWebSocketService extends BaseService {
       return;
     }
 
-    // Handle channel messages
+    // Handle channel messages;
     if (message.event && this.subscriptions.has(message.event)) {
-      const callbacks = this.subscriptions.get(message.event)!;
+
       callbacks.forEach((callback) => {
         try {
           callback(message.data);
@@ -199,7 +199,7 @@ export class UnifiedWebSocketService extends BaseService {
       });
     }
 
-    // Handle system messages
+    // Handle system messages;
     if (message.event === "error") {
       this.handleError(message.data, {
         code: "WEBSOCKET_SYSTEM_ERROR",
@@ -216,7 +216,7 @@ export class UnifiedWebSocketService extends BaseService {
 
     if (
       this.wsConfig.autoReconnect &&
-      this.reconnectAttempts < this.wsConfig.reconnectAttempts
+      this.reconnectAttempts < this.wsConfig.reconnectAttempts;
     ) {
       this.reconnectAttempts++;
       const delay = Math.min(
@@ -237,7 +237,7 @@ export class UnifiedWebSocketService extends BaseService {
 
   private queueMessage(message: WebSocketMessage): void {
     if (this.messageQueue.length >= this.wsConfig.messageQueueSize) {
-      this.messageQueue.shift(); // Remove oldest message if queue is full
+      this.messageQueue.shift(); // Remove oldest message if queue is full;
     }
     this.messageQueue.push(message);
   }
@@ -246,14 +246,14 @@ export class UnifiedWebSocketService extends BaseService {
     if (
       this.isProcessingQueue ||
       !this.socket ||
-      this.socket.readyState !== WebSocket.OPEN
+      this.socket.readyState !== WebSocket.OPEN;
     ) {
       return;
     }
 
     this.isProcessingQueue = true;
     while (this.messageQueue.length > 0) {
-      const message = this.messageQueue.shift()!;
+
       try {
         this.socket.send(JSON.stringify(message));
       } catch (error) {
@@ -262,7 +262,7 @@ export class UnifiedWebSocketService extends BaseService {
           source: this.name,
           details: { message },
         });
-        this.messageQueue.unshift(message); // Put message back at start of queue
+        this.messageQueue.unshift(message); // Put message back at start of queue;
         break;
       }
     }

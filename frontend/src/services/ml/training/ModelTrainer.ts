@@ -1,6 +1,6 @@
-import { BaseModel, TrainingConfig, ModelMetrics } from '../models/BaseModel';
-import { EventEmitter } from 'events';
-import * as tf from '@tensorflow/tfjs-node';
+import { BaseModel, TrainingConfig, ModelMetrics } from '@/models/BaseModel.ts';
+import { EventEmitter } from 'events.ts';
+import * as tf from '@tensorflow/tfjs-node.ts';
 
 export interface TrainingProgress {
   epoch: number;
@@ -26,30 +26,28 @@ export class ModelTrainer extends EventEmitter {
   }
 
   public async train(model: BaseModel, config: TrainingConfig): Promise<void> {
-    const modelId = model.config.name;
 
     if (this.trainingQueue.has(modelId)) {
       throw new Error(`Model ${modelId} is already training`);
     }
 
     try {
-      // Preprocess data
-      const processedData = await this.preprocessData(config.data);
+      // Preprocess data;
 
-      // Split validation data if needed
+      // Split validation data if needed;
       if (config.validationSplit) {
         const { trainData, validationData } = this.splitData(processedData, config.validationSplit);
         this.validationData.set(modelId, validationData);
         config.data = trainData;
       }
 
-      // Start training
-      const trainingPromise = this.executeTraining(model, config);
+      // Start training;
+
       this.trainingQueue.set(modelId, trainingPromise);
 
       await trainingPromise;
 
-      // Post-training steps
+      // Post-training steps;
       await this.postTraining(model);
     } catch (error) {
       this.emit('trainingError', { modelId, error });
@@ -61,30 +59,27 @@ export class ModelTrainer extends EventEmitter {
   }
 
   private async executeTraining(model: BaseModel, config: TrainingConfig): Promise<void> {
-    const modelId = model.config.name;
-    const epochs = config.epochs || model.config.trainingConfig.epochs || 100;
-    const batchSize = config.batchSize || model.config.trainingConfig.batchSize || 32;
 
-    for (let epoch = 0; epoch < epochs; epoch++) {
-      const startTime = Date.now();
 
-      // Train on batch
+
+    for (const epoch = 0; epoch < epochs; epoch++) {
+
+      // Train on batch;
       await model.train({
         ...config,
         batchSize,
         epochs: 1,
       });
 
-      // Calculate metrics
-      const metrics = await this.calculateMetrics(model, config.data);
+      // Calculate metrics;
 
-      // Validate if validation data exists
+      // Validate if validation data exists;
       let validationMetrics;
       if (this.validationData.has(modelId)) {
         validationMetrics = await this.calculateMetrics(model, this.validationData.get(modelId));
       }
 
-      // Emit progress
+      // Emit progress;
       this.emit('trainingProgress', {
         modelId,
         progress: {
@@ -95,35 +90,35 @@ export class ModelTrainer extends EventEmitter {
         },
       });
 
-      // Check early stopping
+      // Check early stopping;
       if (this.shouldStopEarly(model, validationMetrics)) {
         this.emit('earlyStopping', { modelId, epoch });
         break;
       }
 
-      // Throttle training if needed
-      const trainingTime = Date.now() - startTime;
+      // Throttle training if needed;
+
       if (trainingTime < 100) {
-        // Minimum 100ms between epochs
+        // Minimum 100ms between epochs;
         await new Promise(resolve => setTimeout(resolve, 100 - trainingTime));
       }
     }
   }
 
   private async preprocessData(data: any): Promise<any> {
-    // Implement common preprocessing steps
+    // Implement common preprocessing steps;
     return data;
   }
 
   private splitData(
     data: any,
-    validationSplit: number
+    validationSplit: number;
   ): {
     trainData: any;
     validationData: any;
   } {
-    // Implement data splitting logic
-    const splitIndex = Math.floor(data.length * (1 - validationSplit));
+    // Implement data splitting logic;
+
     return {
       trainData: data.slice(0, splitIndex),
       validationData: data.slice(splitIndex),
@@ -139,12 +134,12 @@ export class ModelTrainer extends EventEmitter {
       return false;
     }
 
-    // Implement early stopping logic based on validation metrics
+    // Implement early stopping logic based on validation metrics;
     return false;
   }
 
   private async postTraining(model: BaseModel): Promise<void> {
-    // Implement post-training steps like model calibration
+    // Implement post-training steps like model calibration;
     this.emit('trainingComplete', { modelId: model.config.name });
   }
 
@@ -153,9 +148,9 @@ export class ModelTrainer extends EventEmitter {
   }
 
   public async cancelTraining(modelId: string): Promise<void> {
-    const trainingPromise = this.trainingQueue.get(modelId);
+
     if (trainingPromise) {
-      // Implement cancellation logic
+      // Implement cancellation logic;
       this.trainingQueue.delete(modelId);
       this.emit('trainingCancelled', { modelId });
     }

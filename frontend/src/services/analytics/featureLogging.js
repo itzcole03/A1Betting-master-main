@@ -5,7 +5,7 @@ export class FeatureLogger {
             logFormat: config?.logFormat || 'json',
             logOutput: config?.logOutput || 'console',
             logFile: config?.logFile || 'feature-engineering.log',
-            maxLogSize: config?.maxLogSize || 10 * 1024 * 1024, // 10MB
+            maxLogSize: config?.maxLogSize || 10 * 1024 * 1024, // 10MB;
             maxLogFiles: config?.maxLogFiles || 5,
         };
     }
@@ -25,18 +25,18 @@ export class FeatureLogger {
         if (!this.shouldLog(level)) {
             return;
         }
-        const logEntry = this.createLogEntry(level, message, data);
-        const formattedLog = this.formatLog(logEntry);
+
+
         this.writeLog(formattedLog);
     }
     shouldLog(level) {
-        const levels = ['error', 'warn', 'info', 'debug'];
-        const currentLevelIndex = levels.indexOf(this.config.logLevel);
-        const targetLevelIndex = levels.indexOf(level);
+
+
+
         return targetLevelIndex <= currentLevelIndex;
     }
     createLogEntry(level, message, data) {
-        const timestamp = new Date().toISOString();
+
         const entry = {
             timestamp,
             level,
@@ -60,11 +60,11 @@ export class FeatureLogger {
         if (this.config.logFormat === 'json') {
             return JSON.stringify(entry);
         }
-        // Simple text format
-        const timestamp = entry.timestamp;
-        const level = entry.level.toUpperCase();
-        const message = entry.message;
-        let formatted = `[${timestamp}] ${level}: ${message}`;
+        // Simple text format;
+
+
+
+        const formatted = `[${timestamp}] ${level}: ${message}`;
         if (entry.error) {
             formatted += `\nError: ${entry.error.name}: ${entry.error.message}`;
             if (entry.error.stack) {
@@ -94,22 +94,22 @@ export class FeatureLogger {
                     : 'info';
         switch (level) {
             case 'error':
-                console.error(formattedLog);
+                // console statement removed
                 break;
             case 'warn':
-                console.warn(formattedLog);
+                // console statement removed
                 break;
             case 'debug':
                 console.debug(formattedLog);
                 break;
             default:
-                console.log(formattedLog);
+                // console statement removed
         }
     }
     writeToFile(formattedLog) {
-        // This is a placeholder implementation
-        // In a real application, implement file writing with rotation
-        console.log(`[FILE] ${formattedLog}`);
+        // This is a placeholder implementation;
+        // In a real application, implement file writing with rotation;
+        // console statement removed
     }
     getLogLevel() {
         return this.config.logLevel;

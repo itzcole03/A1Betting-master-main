@@ -1,4 +1,4 @@
-import { ApiBase } from './apiBase';
+import { ApiBase } from './apiBase.ts';
 export declare class SportsDataApi extends ApiBase {
     constructor();
     getGames(params?: Record<string, any>): Promise<unknown>;

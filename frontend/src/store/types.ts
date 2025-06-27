@@ -12,7 +12,7 @@ export interface AppState {
   removeToast: (id: string) => void;
   clearToasts: () => void;
 
-  // Other app state properties can be added here
+  // Other app state properties can be added here;
   isLoading: boolean;
   error: Error | null;
   setError: (error: Error | null) => void;

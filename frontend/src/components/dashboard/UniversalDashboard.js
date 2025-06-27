@@ -3,27 +3,27 @@ import React, { useState, Suspense, useMemo } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import { TrendingUp, DollarSign, Target, Activity, BarChart3, Brain, Settings, User, } from "lucide-react";
-// Import unified components
+// Import unified components;
 import { MegaCard, MegaButton } from "../mega/MegaUI";
 import { CyberText, CyberContainer } from "../mega/CyberTheme";
 import useStore from "../../store/useStore";
-// Lazy load heavy components
-const PerformanceAnalyticsDashboard = React.lazy(() => import("../analytics/PerformanceAnalyticsDashboard"));
-const UnifiedMoneyMaker = React.lazy(() => import("../money-maker/UnifiedMoneyMaker"));
-const UnifiedStrategyEngineDisplay = React.lazy(() => import("../strategy/UnifiedStrategyEngineDisplay"));
+// Lazy load heavy components;
+
+
+
 // ============================================================================
-// COMPONENTS
+// COMPONENTS;
 // ============================================================================
 const MetricCard = ({ label, value, icon, change, trend, loading, }) => {
-    const trendColor = trend === "up" ? "#06ffa5" : trend === "down" ? "#ff4757" : "#00d4ff";
+
     if (loading) {
         return (_jsx(MegaCard, { variant: "glass", padding: "md", children: _jsxs("div", { className: "animate-pulse", children: [_jsx("div", { className: "h-4 bg-gray-600 rounded mb-2" }), _jsx("div", { className: "h-8 bg-gray-600 rounded mb-2" }), _jsx("div", { className: "h-3 bg-gray-600 rounded w-1/2" })] }) }));
     }
     return (_jsxs(MegaCard, { variant: "glowing", padding: "md", onClick: () => { }, className: "transition-all duration-300 hover:scale-105 cursor-pointer", children: [_jsxs("div", { className: "flex items-center justify-between mb-4", children: [_jsx("div", { style: { color: "#06ffa5" }, children: icon }), change && (_jsx("span", { style: { color: trendColor, fontSize: "12px", fontWeight: "600" }, children: change }))] }), _jsx(CyberText, { variant: "caption", color: "secondary", className: "mb-1", children: label }), _jsx(CyberText, { variant: "title", style: { fontSize: "24px", fontWeight: "700" }, children: value })] }));
 };
-const DashboardSkeleton = () => (_jsxs("div", { className: "space-y-6", children: [_jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6", children: [...Array(4)].map((_, i) => (_jsx(MetricCard, { label: "", value: "", icon: _jsx("div", {}), loading: true }, i))) }), _jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: [_jsx(MegaCard, { variant: "glass", padding: "lg", children: _jsxs("div", { className: "animate-pulse space-y-4", children: [_jsx("div", { className: "h-6 bg-gray-600 rounded w-1/3" }), _jsx("div", { className: "h-32 bg-gray-600 rounded" })] }) }), _jsx(MegaCard, { variant: "glass", padding: "lg", children: _jsxs("div", { className: "animate-pulse space-y-4", children: [_jsx("div", { className: "h-6 bg-gray-600 rounded w-1/2" }), _jsx("div", { className: "space-y-2", children: [...Array(5)].map((_, i) => (_jsx("div", { className: "h-4 bg-gray-600 rounded" }, i))) })] }) })] })] }));
+
 // ============================================================================
-// MAIN DASHBOARD COMPONENT
+// MAIN DASHBOARD COMPONENT;
 // ============================================================================
 export const UniversalDashboard = ({ variant = "standard", user = {
     name: "User",
@@ -36,7 +36,7 @@ export const UniversalDashboard = ({ variant = "standard", user = {
     const [activeTab, setActiveTab] = useState(defaultTab);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const { darkMode } = useStore();
-    // Mock data to prevent fetch errors
+    // Mock data to prevent fetch errors;
     const mockPredictions = Array.from({ length: 5 }, (_, i) => ({
         id: `pred-${i + 1}`,
         game: `Game ${i + 1}`,
@@ -55,16 +55,16 @@ export const UniversalDashboard = ({ variant = "standard", user = {
     const { data: predictions, isLoading: predictionsLoading } = useQuery({
         queryKey: ["dashboard-predictions"],
         queryFn: async () => mockPredictions,
-        staleTime: 300000, // 5 minutes
-        refetchInterval: false, // Disable auto-refetch
+        staleTime: 300000, // 5 minutes;
+        refetchInterval: false, // Disable auto-refetch;
     });
     const { data: metrics, isLoading: metricsLoading } = useQuery({
         queryKey: ["dashboard-metrics"],
         queryFn: async () => mockMetrics,
-        staleTime: 300000, // 5 minutes
-        refetchInterval: false, // Disable auto-refetch
+        staleTime: 300000, // 5 minutes;
+        refetchInterval: false, // Disable auto-refetch;
     });
-    // Dashboard tabs configuration
+    // Dashboard tabs configuration;
     const dashboardTabs = useMemo(() => [
         {
             key: "overview",
@@ -99,8 +99,8 @@ export const UniversalDashboard = ({ variant = "standard", user = {
             component: () => _jsx("div", { children: "Profile Component" }),
         },
     ], [user, predictions, metrics]);
-    const currentTab = dashboardTabs.find((tab) => tab.key === activeTab);
-    // Loading state
+
+    // Loading state;
     if (predictionsLoading && metricsLoading) {
         return (_jsx("div", { className: "min-h-screen p-6", children: _jsx(DashboardSkeleton, {}) }));
     }

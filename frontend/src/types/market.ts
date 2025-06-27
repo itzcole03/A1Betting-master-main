@@ -1,4 +1,4 @@
-import type { BettingOdds, LineMovement } from './betting';
+import type { BettingOdds, LineMovement } from './betting.ts';
 
 export interface MarketData {
   line: number;

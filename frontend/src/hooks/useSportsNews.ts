@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { newsService } from '../services/newsService.js';
-import type { ESPNHeadline } from '../types.js';
+import { useEffect, useState } from 'react.ts';
+import { newsService } from '@/services/newsService.js';
+import type { ESPNHeadline } from '@/types.js';
 
-// Define SportsNewsArticle type if not available
+// Define SportsNewsArticle type if not available;
 export type SportsNewsArticle = {
   id: string;
   title: string;
@@ -20,12 +20,12 @@ export function useSportsNews() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    let mounted = true;
+    const mounted = true;
     setLoading(true);
     setError(null);
     newsService.fetchHeadlines('espn', 10)
       .then((headlines: ESPNHeadline[]) => {
-        // Map ESPNHeadline to SportsNewsArticle if needed
+        // Map ESPNHeadline to SportsNewsArticle if needed;
         const mapped = headlines.map(h => ({
           id: h.id,
           title: h.title || h.summary || '',

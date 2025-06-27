@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create } from 'zustand.ts';
+import { devtools } from 'zustand/middleware.ts';
 
 interface PredictionData {
   confidence?: number;
@@ -8,7 +8,7 @@ interface PredictionData {
   shap_values?: any;
   timestamp?: string;
   analytics?: any;
-  [key: string]: any; // Allow passthrough for prediction and analytics
+  [key: string]: any; // Allow passthrough for prediction and analytics;
 }
 
 interface PredictionState {
@@ -37,11 +37,11 @@ export const usePredictionStore = create<PredictionState>()(
       },
 
       getLatestPredictions: () => {
-        const predictions = get().predictionsByEvent;
+
         return Object.values(predictions).sort(
           (a, b) => {
-            const ta = a.timestamp ? new Date(a.timestamp).getTime() : 0;
-            const tb = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+
+
             return tb - ta;
           }
         );

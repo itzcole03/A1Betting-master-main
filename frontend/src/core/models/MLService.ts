@@ -1,51 +1,51 @@
-import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types';
+import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types.ts';
 
 export interface MLService {
-  // Model Management
+  // Model Management;
   createModel(metadata: ModelMetadata): Promise<string>;
   getModel(modelId: string): Promise<ModelMetadata>;
   updateModel(modelId: string, metadata: Partial<ModelMetadata>): Promise<void>;
   deleteModel(modelId: string): Promise<void>;
 
-  // Version Management
+  // Version Management;
   getVersions(modelId: string): Promise<ModelVersion[]>;
   getVersion(modelId: string, version: string): Promise<ModelVersion>;
   deleteVersion(modelId: string, version: string): Promise<void>;
 
-  // Training
+  // Training;
   train(modelId: string, data: any, config: ModelTrainingConfig): Promise<ModelVersion>;
   retrain(modelId: string, data: any, config: ModelTrainingConfig): Promise<ModelVersion>;
 
-  // Prediction
+  // Prediction;
   predict(modelId: string, data: any): Promise<any>;
   predictBatch(modelId: string, data: any[]): Promise<any[]>;
 
-  // Evaluation
+  // Evaluation;
   evaluate(modelId: string, data: any): Promise<ModelEvaluation>;
   evaluateVersion(modelId: string, version: string, data: any): Promise<ModelEvaluation>;
 
-  // Performance
+  // Performance;
   getPerformanceMetrics(modelId: string): Promise<{
     trainingTime: number;
     inferenceTime: number;
     memoryUsage: number;
   }>;
 
-  // Feature Management
+  // Feature Management;
   getFeatureImportance(modelId: string): Promise<Record<string, number>>;
   updateFeatures(modelId: string, features: string[]): Promise<void>;
 
-  // Model Registry
+  // Model Registry;
   registerModel(modelId: string): Promise<void>;
   unregisterModel(modelId: string): Promise<void>;
 
-  // Model State
+  // Model State;
   saveModel(modelId: string): Promise<void>;
   loadModel(modelId: string): Promise<void>;
   exportModel(modelId: string, format: string): Promise<any>;
   importModel(data: any, format: string): Promise<string>;
 
-  // Model Monitoring
+  // Model Monitoring;
   getModelStatus(modelId: string): Promise<{
     status: 'active' | 'archived' | 'deprecated';
     lastUpdated: Date;
@@ -56,18 +56,18 @@ export interface MLService {
     };
   }>;
 
-  // Model Optimization
+  // Model Optimization;
   optimize(modelId: string, config: any): Promise<void>;
   tuneHyperparameters(modelId: string, config: any): Promise<ModelVersion>;
 
-  // Model Validation
+  // Model Validation;
   validateModel(modelId: string): Promise<{
     isValid: boolean;
     issues: string[];
     recommendations: string[];
   }>;
 
-  // Model Documentation
+  // Model Documentation;
   getModelDocumentation(modelId: string): Promise<{
     description: string;
     architecture: string;
@@ -75,7 +75,7 @@ export interface MLService {
     examples: any[];
   }>;
 
-  // Model Lifecycle
+  // Model Lifecycle;
   archiveModel(modelId: string): Promise<void>;
   restoreModel(modelId: string): Promise<void>;
   deprecateModel(modelId: string): Promise<void>;

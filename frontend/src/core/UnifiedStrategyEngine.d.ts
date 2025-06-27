@@ -1,5 +1,5 @@
-import { PredictionFactor } from './UnifiedPredictionEngine';
-import { StrategyRecommendation, AnalysisResult, BettingOpportunity, BetRecord } from '../types/core';
+import { PredictionFactor } from './UnifiedPredictionEngine.ts';
+import { StrategyRecommendation, AnalysisResult, BettingOpportunity, BetRecord } from '@/types/core.ts';
 export interface StrategyConfig {
     riskTolerance: number;
     maxExposure: number;

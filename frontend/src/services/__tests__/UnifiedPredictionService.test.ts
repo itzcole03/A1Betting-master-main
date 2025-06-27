@@ -1,6 +1,6 @@
-import { UnifiedPredictionService } from '../UnifiedPredictionService';
-import { MarketContext, BettingContext } from '@/types/core';
-import { BettingOdds } from '../../types/betting';
+import { UnifiedPredictionService } from '@/UnifiedPredictionService.ts';
+import { MarketContext, BettingContext } from '@/types/core.ts';
+import { BettingOdds } from '@/types/betting.ts';
 
 describe('UnifiedPredictionService', () => {
   let service: UnifiedPredictionService;
@@ -10,11 +10,9 @@ describe('UnifiedPredictionService', () => {
   beforeEach(() => {
     service = UnifiedPredictionService.getInstance();
 
-    // Reset singleton instance for testing
+    // Reset singleton instance for testing;
     (UnifiedPredictionService as any).instance = null;
     service = UnifiedPredictionService.getInstance();
-
-    const timestamp = Date.now();
 
     mockMarketContext = {
       eventId: 'test-event',
@@ -72,7 +70,6 @@ describe('UnifiedPredictionService', () => {
 
   describe('generatePrediction', () => {
     it('should generate a prediction with all components', async () => {
-      const prediction = await service.generatePrediction(mockMarketContext, mockBettingContext);
 
       expect(prediction).not.toBeNull();
       expect(prediction?.id).toBeDefined();
@@ -91,7 +88,7 @@ describe('UnifiedPredictionService', () => {
     it('should handle missing market data gracefully', async () => {
       const prediction = await service.generatePrediction(
         { ...mockMarketContext, odds: [] },
-        mockBettingContext
+        mockBettingContext;
       );
 
       expect(prediction).not.toBeNull();
@@ -111,7 +108,7 @@ describe('UnifiedPredictionService', () => {
     it('should handle missing line movements gracefully', async () => {
       const prediction = await service.generatePrediction(
         { ...mockMarketContext, lineMovements: [] },
-        mockBettingContext
+        mockBettingContext;
       );
 
       expect(prediction).not.toBeNull();
@@ -121,31 +118,28 @@ describe('UnifiedPredictionService', () => {
 
   describe('getPrediction', () => {
     it('should retrieve a cached prediction', async () => {
-      const prediction = await service.generatePrediction(mockMarketContext, mockBettingContext);
+
       expect(prediction).not.toBeNull();
 
-      const retrieved = service.getPrediction(prediction!.id);
       expect(retrieved).toEqual(prediction);
     });
 
     it('should return undefined for non-existent prediction', () => {
-      const retrieved = service.getPrediction('non-existent-id');
+
       expect(retrieved).toBeUndefined();
     });
   });
 
   describe('getPredictions', () => {
     it('should return all cached predictions', async () => {
-      const prediction1 = await service.generatePrediction(mockMarketContext, mockBettingContext);
-      const prediction2 = await service.generatePrediction(mockMarketContext, mockBettingContext);
 
-      const predictions = service.getPredictions();
+
       expect(predictions).toContainEqual(prediction1);
       expect(predictions).toContainEqual(prediction2);
     });
 
     it('should return empty array when no predictions exist', () => {
-      const predictions = service.getPredictions();
+
       expect(predictions).toEqual([]);
     });
   });

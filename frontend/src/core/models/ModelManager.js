@@ -10,7 +10,7 @@ export class ModelManager {
     }
     async createModel(metadata) {
         try {
-            const modelId = await this.registry.registerModel(metadata);
+
             this.logger.info(`Created new model with ID: ${modelId}`);
             return modelId;
         }
@@ -21,12 +21,12 @@ export class ModelManager {
     }
     async trainModel(modelId, data, config) {
         try {
-            const model = await this.registry.getModel(modelId);
-            const version = await model.train(data, config);
-            // Evaluate the new version
-            const evaluation = await this.evaluator.evaluate(version, data);
+
+
+            // Evaluate the new version;
+
             version.metrics = evaluation;
-            // Update registry
+            // Update registry;
             await this.registry.updateModel(modelId, version);
             this.logger.info(`Trained model ${modelId} to version ${version.version}`);
             return version;
@@ -38,14 +38,14 @@ export class ModelManager {
     }
     async predict(modelId, data) {
         try {
-            // Check cache first
-            const cacheKey = `${modelId}_${JSON.stringify(data)}`;
+            // Check cache first;
+
             if (this.modelCache.has(cacheKey)) {
                 return this.modelCache.get(cacheKey);
             }
-            const model = await this.registry.getModel(modelId);
-            const prediction = await model.predict(data);
-            // Cache the result
+
+
+            // Cache the result;
             this.modelCache.set(cacheKey, prediction);
             return prediction;
         }
@@ -56,9 +56,9 @@ export class ModelManager {
     }
     async evaluateModel(modelId, data) {
         try {
-            const model = await this.registry.getModel(modelId);
-            const evaluation = await this.evaluator.evaluate(model, data);
-            // Update model metrics
+
+
+            // Update model metrics;
             await this.registry.updateMetrics(modelId, evaluation);
             this.logger.info(`Evaluated model ${modelId}`);
             return evaluation;

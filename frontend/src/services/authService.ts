@@ -1,17 +1,15 @@
-import { AppError, APIError } from '../core/UnifiedError';
-import { User } from '@/types';
-import { unifiedMonitor } from '../core/UnifiedMonitor';
+import { AppError, APIError } from '@/core/UnifiedError.ts';
+import { User } from '@/types.ts';
+import { unifiedMonitor } from '@/core/UnifiedMonitor.ts';
 
-// src/services/authService.ts
+// src/services/authService.ts;
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-const AUTH_API_PREFIX = `${API_BASE_URL}/api/auth`;
 
-// Matches the Token model from backend/routes/auth_route.py
+// Matches the Token model from backend/routes/auth_route.py;
 interface BackendTokenResponse {
   access_token: string;
   token_type: string;
-  user: User; // Assuming backend User model matches frontend User type
+  user: User; // Assuming backend User model matches frontend User type;
 }
 
 // Response structure expected by the original frontend code (e.g., AuthSlice)
@@ -30,23 +28,22 @@ interface AuthServiceLoginResponse {
  * }
  */
 export const login = async (credentials: { email: string; password: string }): Promise<AuthServiceLoginResponse> => {
-  const trace = unifiedMonitor.startTrace('authService.login', 'http.client');
+
   try {
     const { post } = await import('./api');
-    const response = await post<BackendTokenResponse>(`${AUTH_API_PREFIX}/login`, credentials);
-    
+
     if (trace) {
       trace.setHttpStatus(response.status);
       unifiedMonitor.endTrace(trace);
     }
 
-    // Adapt backend response to the structure AuthSlice expects
+    // Adapt backend response to the structure AuthSlice expects;
     return {
       user: response.data.user,
       token: response.data.access_token,
     };
   } catch (error: any) {
-    const errContext = { service: 'authService', operation: 'login', email: credentials.email };
+
     unifiedMonitor.reportError(error, errContext);
     if (trace) {
       trace.setHttpStatus(error.response?.status || 500);
@@ -62,12 +59,12 @@ export const login = async (credentials: { email: string; password: string }): P
 // Logout is typically a client-side token removal. 
 // The backend /auth/logout is a placeholder but can be called for completeness.
 export const logout = async (): Promise<void> => {
-  const trace = unifiedMonitor.startTrace('authService.logout', 'http.client');
+
   try {
     const { post } = await import('./api');
     await post(`${AUTH_API_PREFIX}/logout`); 
     if (trace) {
-        trace.setHttpStatus(200); // Assuming logout call is fire and forget or returns 200
+        trace.setHttpStatus(200); // Assuming logout call is fire and forget or returns 200;
         unifiedMonitor.endTrace(trace);
     }
   } catch (error: any) {
@@ -89,21 +86,21 @@ export const logout = async (): Promise<void> => {
  *   "id": "string",
  *   "username": "string",
  *   "email": "string",
- *   // ... other user fields as defined in the User type
+ *   // ... other user fields as defined in the User type;
  * }
  */
 export const fetchCurrentUser = async (): Promise<User> => {
-    const trace = unifiedMonitor.startTrace('authService.fetchCurrentUser', 'http.client');
+
     try {
         const { get } = await import('./api');
-        const response = await get<User>(`${API_BASE_URL}/api/users/me`);
+
         if (trace) {
             trace.setHttpStatus(response.status);
             unifiedMonitor.endTrace(trace);
         }
         return response.data;
     } catch (error: any) {
-        const errContext = { service: 'authService', operation: 'fetchCurrentUser' };
+
         unifiedMonitor.reportError(error, errContext);
         if (trace) {
             trace.setHttpStatus(error.response?.status || 500);
@@ -116,7 +113,7 @@ export const fetchCurrentUser = async (): Promise<User> => {
     }
 };
 
-// Combining into a service object as per original structure
+// Combining into a service object as per original structure;
 export const authService = {
   login,
   logout,

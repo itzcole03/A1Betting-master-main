@@ -1,22 +1,18 @@
-import express from 'express';
-import { ModelPerformanceMetrics, ModelPerformanceTracker } from '../../core/analytics/ModelPerformanceTracker';
-import { UnifiedLogger } from '../../core/UnifiedLogger';
-import { UnifiedMetrics } from '../../core/UnifiedMetrics';
+import express from 'express.ts';
+import { ModelPerformanceMetrics, ModelPerformanceTracker } from '@/core/analytics/ModelPerformanceTracker.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedMetrics } from '@/core/UnifiedMetrics.ts';
 
-const router = express.Router();
+// Initialize the performance tracker;
 
-// Initialize the performance tracker
-const logger = new UnifiedLogger('ModelPerformance');
-const metrics = UnifiedMetrics.getInstance();
-const performanceTracker = new ModelPerformanceTracker(logger, metrics);
 
-// Get performance for a specific model
+
+// Get performance for a specific model;
 router.get('/:modelName', async (req: any, res: any) => {
   try {
     const { modelName } = req.params;
     const { timeframe = 'all' } = req.query;
 
-    const performance = performanceTracker.getModelPerformance(modelName);
     const history = performanceTracker.getPerformanceHistory(
       modelName,
       timeframe as 'day' | 'week' | 'month' | 'all'
@@ -36,7 +32,7 @@ router.get('/:modelName', async (req: any, res: any) => {
   }
 });
 
-// Get top performing models
+// Get top performing models;
 router.get('/top/:metric', async (req, res) => {
   try {
     const { metric } = req.params;
@@ -54,7 +50,7 @@ router.get('/top/:metric', async (req, res) => {
   }
 });
 
-// Record a prediction outcome
+// Record a prediction outcome;
 router.post('/:modelName/outcome', async (req: any, res: any) => {
   try {
     const { modelName } = req.params;

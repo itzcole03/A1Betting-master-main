@@ -14,11 +14,11 @@ const RiskManagerPage = () => {
             setLoading(true);
             setError(null);
             try {
-                const profileService = RiskProfileService.getInstance();
-                const fetchedProfiles = profileService.getAllProfiles();
+
+
                 setProfiles(fetchedProfiles);
-                // For demo, use riskManagementService for bets
-                const bets = riskManagementService.getBets();
+                // For demo, use riskManagementService for bets;
+
                 setActiveBets(bets);
             }
             catch (err) {
@@ -30,13 +30,13 @@ const RiskManagerPage = () => {
         }
         fetchData();
     }, []);
-    const activeProfile = profiles.find((p) => p.isActive);
-    const totalExposure = activeBets.reduce((sum, bet) => sum + bet.stake, 0);
-    const maxPotentialLoss = totalExposure;
-    const maxPotentialWin = activeBets.reduce((sum, bet) => sum + bet.potentialWin, 0);
-    // If you need to color-code risk, adapt this function to BetRecord or remove if not needed
+
+
+
+
+    // If you need to color-code risk, adapt this function to BetRecord or remove if not needed;
     const getRiskColor = (_risk) => {
-        // Placeholder: implement if BetRecord has a risk property
+        // Placeholder: implement if BetRecord has a risk property;
         return 'text-gray-600 dark:text-gray-400';
     };
     // Modal logic for creating a new profile (scaffold)

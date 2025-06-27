@@ -40,9 +40,9 @@ export const EntryCard = ({ entry, onClick }) => {
         }
     };
     return (_jsxs(motion.div, { animate: "animate", className: `
-        glass-morphism
-        relative overflow-hidden rounded-xl p-6 cursor-pointer
-        hover:ring-1 hover:ring-primary-400
-        transition-all duration-300 ease-in-out
+        glass-morphism;
+        relative overflow-hidden rounded-xl p-6 cursor-pointer;
+        hover:ring-1 hover:ring-primary-400;
+        transition-all duration-300 ease-in-out;
       `, exit: "exit", initial: "initial", variants: cardVariants, onClick: handleClick, children: [_jsx("div", { className: "absolute top-0 left-0 w-full h-1", children: _jsx(motion.div, { animate: "animate", className: `h-full ${getStatusColor(entry.status)}`, custom: 0, initial: "initial", variants: progressVariants }) }), _jsxs("div", { className: "flex justify-between items-start mb-4", children: [_jsxs("div", { children: [_jsxs("h3", { className: "text-lg font-semibold text-gray-900 dark:text-white", children: [entry.type, " Entry"] }), _jsx("p", { className: "text-sm text-gray-600 dark:text-gray-400", children: new Date(entry.createdAt).toLocaleDateString() })] }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx("span", { className: `${getStatusColor(entry.status)}`, children: getStatusIcon(entry.status) }), _jsx("span", { className: "text-lg font-bold text-primary-600 dark:text-primary-400", children: formatCurrency(entry.stake) })] })] }), _jsxs("div", { className: "mt-6 flex justify-between items-center", children: [_jsxs("div", { className: "flex items-center space-x-2", children: [_jsx(FaChartLine, { className: "w-4 h-4 text-primary-500" }), _jsx("span", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Potential Winnings" })] }), _jsx("div", { className: "text-right", children: _jsx("p", { className: "text-sm font-medium text-gray-900 dark:text-white", children: formatCurrency(entry.potentialWinnings) }) })] })] }));
 };

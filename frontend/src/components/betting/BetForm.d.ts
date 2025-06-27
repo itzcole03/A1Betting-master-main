@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface BetFormProps {
     eventId: string;
     marketType: string;

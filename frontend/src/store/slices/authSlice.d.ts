@@ -1,5 +1,5 @@
-import type { StateCreator } from 'zustand';
-import { AppStore } from '../../stores/useAppStore';
+import type { StateCreator } from 'zustand.ts';
+import { AppStore } from '@/stores/useAppStore.ts';
 export interface AuthSlice {
     user: any | null;
     token: string | null;

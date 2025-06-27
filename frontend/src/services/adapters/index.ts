@@ -1,10 +1,10 @@
-import { apiClient } from '../api/client';
-import { unifiedMonitor } from '../../core/UnifiedMonitor';
-import { APIError, AppError } from '../../core/UnifiedError';
-import { PrizePicksAdapter } from '@/types';
-import { prizePicksAdapter } from './prizepicks';
+import { apiClient } from '@/api/client.ts';
+import { unifiedMonitor } from '@/core/UnifiedMonitor.ts';
+import { APIError, AppError } from '@/core/UnifiedError.ts';
+import { PrizePicksAdapter } from '@/types.ts';
+import { prizePicksAdapter } from './prizepicks.ts';
 
-// Base adapter interface
+// Base adapter interface;
 interface BaseAdapter {
   name: string;
   isEnabled: boolean;
@@ -12,21 +12,21 @@ interface BaseAdapter {
   validate(): Promise<boolean>;
 }
 
-// SportsRadar adapter
+// SportsRadar adapter;
 interface SportsRadarAdapter extends BaseAdapter {
   fetchLiveScores(): Promise<any[]>;
   fetchGameDetails(gameId: string): Promise<any>;
   fetchPlayerStats(playerId: string): Promise<any>;
 }
 
-// ESPN adapter
+// ESPN adapter;
 interface ESPNAdapter extends BaseAdapter {
   fetchHeadlines(): Promise<any[]>;
   fetchGameSummary(gameId: string): Promise<any>;
   fetchPlayerNews(playerId: string): Promise<any[]>;
 }
 
-// Unified adapter manager
+// Unified adapter manager;
 class AdapterManager {
   private static instance: AdapterManager;
   private adapters: Map<string, any>;

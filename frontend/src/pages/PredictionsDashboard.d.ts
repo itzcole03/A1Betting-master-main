@@ -1,3 +1,3 @@
-import React from 'react';
+import React from 'react.ts';
 declare const PredictionsDashboard: React.FC;
 export default PredictionsDashboard;

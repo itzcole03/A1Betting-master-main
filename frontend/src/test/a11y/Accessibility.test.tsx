@@ -1,22 +1,22 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { axe } from 'jest-axe';
+import React from 'react.ts';
+import { render } from '@testing-library/react.ts';
+import { axe } from 'jest-axe.ts';
 import 'jest-axe/extend-expect';
-import { BrowserRouter } from 'react-router-dom';
-import App from '../../App';
-import Dashboard from '../../pages/Dashboard';
-import PropCards from '../../components/modern/PropCards';
-import MoneyMaker from '../../components/modern/MoneyMaker';
-import EntryTracking from '../../components/modern/EntryTracking';
-import Settings from '../../components/modern/Settings';
-import useStore from '@/store/useStore';
-import { Entry, PlayerProp } from '@/types/core';
-import { ProcessedPrizePicksProp } from '../../types/prizePicks';
+import { BrowserRouter } from 'react-router-dom.ts';
+import App from '@/App.ts';
+import Dashboard from '@/pages/Dashboard.ts';
+import PropCards from '@/components/modern/PropCards.ts';
+import MoneyMaker from '@/components/modern/MoneyMaker.ts';
+import EntryTracking from '@/components/modern/EntryTracking.ts';
+import Settings from '@/components/modern/Settings.ts';
+import useStore from '@/store/useStore.ts';
+import { Entry, PlayerProp } from '@/types/core.ts';
+import { ProcessedPrizePicksProp } from '@/types/prizePicks.ts';
 
 describe('Accessibility Tests', () => {
   beforeEach(() => {
-    // Reset store state
-    const store = useStore.getState();
+    // Reset store state;
+
     store.setProps([]);
     store.opportunities = [];
     store.alerts = [];
@@ -25,26 +25,26 @@ describe('Accessibility Tests', () => {
 
   it('should have no accessibility violations in App', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <App />
+      <BrowserRouter key={966846}>
+        <App / key={103343}>
       </BrowserRouter>
     );
-    const results = await axe(container);
+
     expect(results).toHaveNoViolations();
   });
 
   it('should have no accessibility violations in Dashboard', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <Dashboard />
+      <BrowserRouter key={966846}>
+        <Dashboard / key={547136}>
       </BrowserRouter>
     );
-    const results = await axe(container);
+
     expect(results).toHaveNoViolations();
   });
 
   it('should have no accessibility violations in PropCards', async () => {
-    const props: Partial<ProcessedPrizePicksProp>[] = [
+    const props: Partial<ProcessedPrizePicksProp key={646190}>[] = [
       {
         player_name: 'John Doe',
         team_abbreviation: 'LAL',
@@ -63,21 +63,21 @@ describe('Accessibility Tests', () => {
     ];
 
     const { container } = render(
-      <BrowserRouter>
-        <PropCards />
+      <BrowserRouter key={966846}>
+        <PropCards / key={736922}>
       </BrowserRouter>
     );
-    const results = await axe(container);
+
     expect(results).toHaveNoViolations();
   });
 
   it('should have no accessibility violations in MoneyMaker', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <MoneyMaker />
+      <BrowserRouter key={966846}>
+        <MoneyMaker / key={321154}>
       </BrowserRouter>
     );
-    const results = await axe(container);
+
     expect(results).toHaveNoViolations();
   });
 
@@ -119,49 +119,49 @@ describe('Accessibility Tests', () => {
     ];
 
     const { container } = render(
-      <BrowserRouter>
-        <EntryTracking entries={entries} />
+      <BrowserRouter key={966846}>
+        <EntryTracking entries={entries} / key={327103}>
       </BrowserRouter>
     );
-    const results = await axe(container);
+
     expect(results).toHaveNoViolations();
   });
 
   it('should have no accessibility violations in Settings', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <Settings />
+      <BrowserRouter key={966846}>
+        <Settings / key={834927}>
       </BrowserRouter>
     );
-    const results = await axe(container);
+
     expect(results).toHaveNoViolations();
   });
 
   it('should have proper ARIA labels and roles', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <App />
+      <BrowserRouter key={966846}>
+        <App / key={103343}>
       </BrowserRouter>
     );
 
-    // Check navigation
+    // Check navigation;
     expect(container.querySelector('nav')).toHaveAttribute('aria-label', 'Main navigation');
     expect(container.querySelector('main')).toHaveAttribute('role', 'main');
 
-    // Check buttons
-    const buttons = container.querySelectorAll('button');
+    // Check buttons;
+
     buttons.forEach(button => {
       expect(button).toHaveAttribute('aria-label');
     });
 
-    // Check form inputs
-    const inputs = container.querySelectorAll('input');
+    // Check form inputs;
+
     inputs.forEach(input => {
       expect(input).toHaveAttribute('aria-label');
     });
 
-    // Check modal dialogs
-    const dialogs = container.querySelectorAll('[role="dialog"]');
+    // Check modal dialogs;
+
     dialogs.forEach(dialog => {
       expect(dialog).toHaveAttribute('aria-labelledby');
       expect(dialog).toHaveAttribute('aria-describedby');
@@ -170,8 +170,8 @@ describe('Accessibility Tests', () => {
 
   it('should have proper color contrast', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <App />
+      <BrowserRouter key={966846}>
+        <App / key={103343}>
       </BrowserRouter>
     );
     const results = await axe(container, {
@@ -184,12 +184,12 @@ describe('Accessibility Tests', () => {
 
   it('should have proper keyboard navigation', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <App />
+      <BrowserRouter key={966846}>
+        <App / key={103343}>
       </BrowserRouter>
     );
 
-    // Check tab indices
+    // Check tab indices;
     const focusableElements = container.querySelectorAll(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
     );
@@ -197,23 +197,21 @@ describe('Accessibility Tests', () => {
       expect(element).toHaveAttribute('tabindex');
     });
 
-    // Check skip links
-    const skipLink = container.querySelector('[href="#main-content"]');
+    // Check skip links;
+
     expect(skipLink).toBeInTheDocument();
     expect(skipLink).toHaveAttribute('tabindex', '0');
   });
 
   it('should have proper heading hierarchy', async () => {
     const { container } = render(
-      <BrowserRouter>
-        <App />
+      <BrowserRouter key={966846}>
+        <App / key={103343}>
       </BrowserRouter>
     );
 
-    const headings = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
-    const headingLevels = Array.from(headings).map(heading => parseInt(heading.tagName[1]));
 
-    // Check if heading levels are sequential
+    // Check if heading levels are sequential;
     headingLevels.reduce((prevLevel, currentLevel) => {
       expect(currentLevel).toBeLessThanOrEqual(prevLevel + 1);
       return currentLevel;

@@ -7,7 +7,7 @@ import json
 import logging
 import time
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional
 from urllib.parse import urljoin
@@ -122,7 +122,7 @@ class DataSourceConnector:
             connector=connector, timeout=timeout, headers=self._get_default_headers()
         )
 
-        logger.info(f"Initialized connector for {self.source_type}")
+        logger.info("Initialized connector for {self.source_type}")
 
     async def close(self):
         """Close HTTP session"""
@@ -172,7 +172,7 @@ class DataSourceConnector:
                                 source=self.source_type,
                                 data=data,
                                 status=DataStatus.SUCCESS,
-                                timestamp=datetime.utcnow(),
+                                timestamp=datetime.now(timezone.utc),
                                 latency=latency,
                                 metadata={
                                     "status_code": response.status,
@@ -217,17 +217,17 @@ class DataSourceConnector:
                 source=self.source_type,
                 data=None,
                 status=DataStatus.TIMEOUT,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 latency=time.time() - start_time,
                 error="Request timeout",
             )
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             return DataResponse(
                 source=self.source_type,
                 data=None,
                 status=DataStatus.ERROR,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 latency=time.time() - start_time,
                 error=str(e),
             )
@@ -299,7 +299,7 @@ class DataPipeline:
             api_config.get("prizepicks")
         )
 
-        logger.info(f"Initialized {len(self.connectors)} data connectors")
+        logger.info("Initialized {len(self.connectors)} data connectors")
 
     async def initialize(self):
         """Initialize all connectors"""
@@ -331,7 +331,7 @@ class DataPipeline:
                 source=request.source,
                 data=cached_data,
                 status=DataStatus.CACHED,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 latency=0.0,
                 cache_hit=True,
             )
@@ -343,7 +343,7 @@ class DataPipeline:
                 source=request.source,
                 data=None,
                 status=DataStatus.ERROR,
-                timestamp=datetime.utcnow(),
+                timestamp=datetime.now(timezone.utc),
                 latency=0.0,
                 error=f"No connector for source {request.source}",
             )
@@ -372,8 +372,8 @@ class DataPipeline:
         for callback in callbacks:
             try:
                 callback(response)
-            except Exception as e:
-                logger.error(f"Error in data callback: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Error in data callback: {e!s}")
 
         return response
 
@@ -391,7 +391,7 @@ class DataPipeline:
                         source=requests[i].source,
                         data=None,
                         status=DataStatus.ERROR,
-                        timestamp=datetime.utcnow(),
+                        timestamp=datetime.now(timezone.utc),
                         latency=0.0,
                         error=str(response),
                     )
@@ -495,7 +495,7 @@ class DataPipeline:
                         "error": "Session not initialized",
                     }
 
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 health_status["connectors"][source.value] = {
                     "status": "unhealthy",
                     "error": str(e),

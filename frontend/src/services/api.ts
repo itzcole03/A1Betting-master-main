@@ -1,15 +1,14 @@
 /**
- * Comprehensive API Service Layer for A1Betting Frontend
- * Provides typed interfaces to all backend endpoints with proper error handling
+ * Comprehensive API Service Layer for A1Betting Frontend;
+ * Provides typed interfaces to all backend endpoints with proper error handling;
  */
 
-import axios, { AxiosResponse, AxiosError } from "axios";
-import ApiErrorHandler from "./ApiErrorHandler";
+import axios, { AxiosResponse, AxiosError } from 'axios.ts';
+import ApiErrorHandler from './ApiErrorHandler.ts';
 
-// Define base URL based on environment
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+// Define base URL based on environment;
 
-// Create axios instance with default configuration
+// Create axios instance with default configuration;
 const apiClient = axios.create({
   baseURL: BASE_URL,
   timeout: 30000,
@@ -18,66 +17,66 @@ const apiClient = axios.create({
   },
 });
 
-// Request interceptor for authentication and logging
+// Request interceptor for authentication and logging;
 apiClient.interceptors.request.use(
   (config) => {
-    // Add auth token if available
-    const token = localStorage.getItem("auth_token");
+    // Add auth token if available;
+
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
 
-    // Only log requests in development and not for frequent polling
+    // Only log requests in development and not for frequent polling;
     if (
       import.meta.env.DEV &&
       !config.url?.includes("health") &&
       !config.url?.includes("accuracy")
     ) {
-      console.log(`API Request: ${config.method?.toUpperCase()} ${config.url}`);
+      // console statement removed} ${config.url}`);
     }
     return config;
   },
   (error) => {
-    console.error("API Request Error:", error);
+    // console statement removed
     return Promise.reject(error);
   },
 );
 
-// Response interceptor for error handling
+// Response interceptor for error handling;
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
-    // Only log successful responses in development and not for frequent polling
+    // Only log successful responses in development and not for frequent polling;
     if (
       import.meta.env.DEV &&
       !response.config.url?.includes("health") &&
       !response.config.url?.includes("accuracy")
     ) {
-      console.log(`API Response: ${response.status} ${response.config.url}`);
+      // console statement removed
     }
     return response;
   },
   (error: AxiosError) => {
-    // Only log non-network errors to reduce console noise
+    // Only log non-network errors to reduce console noise;
     const isNetworkError =
       error.code === "NETWORK_ERROR" || error.message === "Network Error";
 
     if (!isNetworkError) {
-      console.error("API Response Error:", error);
+      // console statement removed
     }
 
-    // Handle common error scenarios
+    // Handle common error scenarios;
     if (error.response?.status === 401) {
-      // Unauthorized - clear token and redirect to login
+      // Unauthorized - clear token and redirect to login;
       localStorage.removeItem("auth_token");
       window.location.href = "/login";
     }
 
-    // Always reject errors - no fallback data
+    // Always reject errors - no fallback data;
     return Promise.reject(error);
   },
 );
 
-// Type definitions for API responses
+// Type definitions for API responses;
 export interface PredictionRequest {
   event_id: string;
   sport: string;
@@ -178,9 +177,9 @@ export interface AccuracyMetrics {
   timestamp: string;
 }
 
-// API Service Class
+// API Service Class;
 export class ApiService {
-  // Authentication endpoints
+  // Authentication endpoints;
   static async login(
     username: string,
     password: string,
@@ -197,11 +196,11 @@ export class ApiService {
     email: string;
     password: string;
   }): Promise<{ message: string }> {
-    const response = await apiClient.post("/auth/register", userData);
+
     return response.data;
   }
 
-  // Prediction endpoints
+  // Prediction endpoints;
   static async getUltraAccuracyPrediction(
     request: PredictionRequest,
   ): Promise<PredictionResponse> {
@@ -213,14 +212,14 @@ export class ApiService {
   }
 
   static async getPredictionExplanation(predictionId: string): Promise<any> {
-    const response = await apiClient.get(`/api/v4/explain/${predictionId}`);
+
     return response.data;
   }
 
-  // Betting endpoints
+  // Betting endpoints;
   static async getValueBets(): Promise<ValueBet[]> {
     try {
-      const response = await apiClient.get("/api/v4/betting/value-bets");
+
       return response.data.value_bets || [];
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getValueBets", []);
@@ -229,7 +228,7 @@ export class ApiService {
 
   static async getArbitrageOpportunities(): Promise<ArbitrageOpportunity[]> {
     try {
-      const response = await apiClient.get("/api/v4/betting/arbitrage");
+
       return response.data.arbitrage_opportunities || [];
     } catch (error) {
       return ApiErrorHandler.handleError(
@@ -247,14 +246,14 @@ export class ApiService {
     odds: number;
     stake: number;
   }): Promise<any> {
-    const response = await apiClient.post("/api/v4/betting/place-bet", betData);
+
     return response.data;
   }
 
-  // User management endpoints
+  // User management endpoints;
   static async getUserProfile(userId: string): Promise<any> {
     try {
-      const response = await apiClient.get(`/api/v4/user/profile/${userId}`);
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getUserProfile", {
@@ -298,9 +297,9 @@ export class ApiService {
     }
   }
 
-  // Model management endpoints
+  // Model management endpoints;
   static async startModelRetraining(config?: any): Promise<{ job_id: string }> {
-    const response = await apiClient.post("/api/v4/model/retrain", config);
+
     return response.data;
   }
 
@@ -312,14 +311,14 @@ export class ApiService {
   }
 
   static async rollbackModel(): Promise<any> {
-    const response = await apiClient.post("/api/v4/model/rollback");
+
     return response.data;
   }
 
-  // Data quality endpoints
+  // Data quality endpoints;
   static async getDataDriftReport(): Promise<any> {
     try {
-      const response = await apiClient.get("/api/v4/data/drift");
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getDataDriftReport", {
@@ -331,7 +330,7 @@ export class ApiService {
 
   static async getDataQualityReport(): Promise<any> {
     try {
-      const response = await apiClient.get("/api/v4/data/quality");
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getDataQualityReport", {
@@ -341,10 +340,10 @@ export class ApiService {
     }
   }
 
-  // Ensemble endpoints
+  // Ensemble endpoints;
   static async getEnsembleDiversityMetrics(): Promise<any> {
     try {
-      const response = await apiClient.get("/api/v4/ensemble/diversity");
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getEnsembleDiversityMetrics", {
@@ -356,7 +355,7 @@ export class ApiService {
 
   static async getEnsembleCandidates(): Promise<any> {
     try {
-      const response = await apiClient.get("/api/v4/ensemble/candidates");
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getEnsembleCandidates", {
@@ -365,10 +364,10 @@ export class ApiService {
     }
   }
 
-  // Monitoring endpoints
+  // Monitoring endpoints;
   static async getHealthStatus(): Promise<HealthStatus> {
     try {
-      const response = await apiClient.get("/health");
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getHealthStatus", {
@@ -419,7 +418,7 @@ export class ApiService {
 
   static async getAccuracyAlerts(): Promise<any> {
     try {
-      const response = await apiClient.get("/api/v4/accuracy/alerts");
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getAccuracyAlerts", []);
@@ -428,7 +427,7 @@ export class ApiService {
 
   static async getSystemResources(): Promise<any> {
     try {
-      const response = await apiClient.get("/api/v4/monitoring/resources");
+
       return response.data;
     } catch (error) {
       return ApiErrorHandler.handleError(error, "getSystemResources", {
@@ -440,19 +439,19 @@ export class ApiService {
     }
   }
 
-  // Documentation endpoint
+  // Documentation endpoint;
   static async getAggregateDocumentation(): Promise<any> {
-    const response = await apiClient.get("/api/v4/docs/aggregate");
+
     return response.data;
   }
 
-  // Audit endpoints
+  // Audit endpoints;
   static async getPredictionAudit(params?: {
     start_date?: string;
     end_date?: string;
     limit?: number;
   }): Promise<any> {
-    const queryParams = new URLSearchParams();
+
     if (params?.start_date) queryParams.append("start_date", params.start_date);
     if (params?.end_date) queryParams.append("end_date", params.end_date);
     if (params?.limit) queryParams.append("limit", params.limit.toString());
@@ -463,7 +462,7 @@ export class ApiService {
     return response.data;
   }
 
-  // Export betting data
+  // Export betting data;
   static async exportBettingData(
     format: "csv" | "json" = "json",
   ): Promise<any> {
@@ -474,6 +473,6 @@ export class ApiService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const api = ApiService;
 export default ApiService;

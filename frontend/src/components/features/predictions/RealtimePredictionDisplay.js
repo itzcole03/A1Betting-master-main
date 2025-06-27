@@ -43,11 +43,11 @@ export const RealtimePredictionDisplay = ({ predictionId, }) => {
     const [error, setError] = useState(null);
     const { getPredictions } = usePredictionService();
     const { currentProfile } = useRiskProfile();
-    const eventBus = EventBus.getInstance();
-    const errorHandler = ErrorHandler.getInstance();
-    const performanceMonitor = PerformanceMonitor.getInstance();
-    const modelVersioning = ModelVersioning.getInstance();
-    const filterStore = useFilterStore();
+
+
+
+
+
     useEffect(() => {
         const fetchPrediction = async () => {
             try {
@@ -60,14 +60,14 @@ export const RealtimePredictionDisplay = ({ predictionId, }) => {
                     minConfidence: filterStore.minConfidence,
                     maxConfidence: filterStore.maxConfidence,
                     projectedReturn: filterStore.projectedReturn,
-                    // add any other filters as needed
+                    // add any other filters as needed;
                 });
-                const result = results.find(p => p.id === predictionId);
+
                 setPrediction(result || null);
                 setError(null);
-                // Track performance
+                // Track performance;
                 performanceMonitor.recordOperation('fetchPrediction', performance.now());
-                // Emit event for analytics
+                // Emit event for analytics;
                 if (result) {
                     eventBus.emit('prediction:fetched', {
                         predictionId,
@@ -77,7 +77,7 @@ export const RealtimePredictionDisplay = ({ predictionId, }) => {
                 }
             }
             catch (err) {
-                const error = err instanceof Error ? err : new Error('Failed to fetch prediction');
+
                 errorHandler.handleError(error, 'RealtimePredictionDisplay', 'fetchPrediction', {
                     category: ErrorCategory.NETWORK,
                     severity: ErrorSeverity.MEDIUM,
@@ -89,7 +89,7 @@ export const RealtimePredictionDisplay = ({ predictionId, }) => {
             }
         };
         fetchPrediction();
-        // Subscribe to real-time updates
+        // Subscribe to real-time updates;
         const unsubscribe = eventBus.subscribe(`prediction:${predictionId}`, (data) => {
             setPrediction(prev => ({
                 ...prev,
@@ -109,7 +109,7 @@ export const RealtimePredictionDisplay = ({ predictionId, }) => {
     if (!prediction) {
         return (_jsx(Alert, { severity: "info", sx: { mb: 2 }, children: "No prediction data available" }));
     }
-    const validationStatus = validatePrediction(prediction, currentProfile);
+
     return (_jsxs(Paper, { elevation: 3, sx: { p: 3 }, children: [_jsxs(Box, { alignItems: "center", display: "flex", justifyContent: "space-between", mb: 2, children: [_jsx(Typography, { variant: "h6", children: "Prediction Details" }), _jsxs(Box, { alignItems: "center", display: "flex", gap: 1, children: [_jsx(ConfidenceIndicator, { value: prediction.confidence }), _jsx(RiskLevelIndicator, { level: prediction.riskLevel }), _jsx(ValidationStatus, { message: validationStatus.reason || 'Validated', status: validationStatus.isValid ? 'valid' : 'invalid' })] })] }), _jsxs(Box, { mb: 3, children: [_jsx(Typography, { gutterBottom: true, color: "textSecondary", variant: "subtitle2", children: "Model Information" }), _jsxs(Stack, { direction: "row", spacing: 1, children: [_jsx(Chip, { label: `Version: ${modelVersioning.getCurrentVersion()}`, size: "small" }), _jsx(Chip, { label: `Last Updated: ${new Date(prediction.timestamp).toLocaleString()}`, size: "small" })] })] }), _jsxs(Box, { mb: 3, children: [_jsx(Typography, { gutterBottom: true, color: "textSecondary", variant: "subtitle2", children: "SHAP Values" }), _jsx(ShapExplanation, { explanation: prediction.explanation })] }), _jsxs(Box, { children: [_jsx(Typography, { gutterBottom: true, color: "textSecondary", variant: "subtitle2", children: "Risk Profile Validation" }), _jsxs(Stack, { direction: "row", spacing: 1, children: [_jsx(Chip, { color: prediction.stake <= currentProfile.max_stake_percentage ? 'success' : 'error', label: `Max Stake: ${(currentProfile.max_stake_percentage * 100).toFixed(1)}%`, size: "small" }), _jsx(Chip, { color: prediction.confidence >= currentProfile.min_confidence_threshold ? 'success' : 'error', label: `Min Confidence: ${(currentProfile.min_confidence_threshold * 100).toFixed(1)}%`, size: "small" }), _jsx(Chip, { color: prediction.volatility <= currentProfile.volatility_tolerance ? 'success' : 'error', label: `Volatility: ${(prediction.volatility * 100).toFixed(1)}%`, size: "small" })] })] })] }));
 };
 const validatePrediction = (prediction, riskProfile) => {

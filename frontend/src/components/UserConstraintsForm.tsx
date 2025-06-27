@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react.ts';
 import {
   Box,
   Typography,
@@ -10,8 +10,8 @@ import {
   MenuItem,
   Chip,
   OutlinedInput,
-} from "@mui/material";
-import { UserConstraints } from "@/types";
+} from '@mui/material.ts';
+import { UserConstraints } from '@/types.ts';
 
 interface UserConstraintsFormProps {
   constraints: UserConstraints;
@@ -38,7 +38,7 @@ const MARKET_OPTIONS = [
   "Parlays",
 ];
 
-export const UserConstraintsForm: React.FC<UserConstraintsFormProps> = ({
+export const UserConstraintsForm: React.FC<UserConstraintsFormProps key={221312}> = ({
   constraints,
   onConstraintsChange,
 }) => {
@@ -50,14 +50,14 @@ export const UserConstraintsForm: React.FC<UserConstraintsFormProps> = ({
   };
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto" }}>
-      <Typography gutterBottom variant="h6">
-        Betting Constraints
+    <Box sx={{ maxWidth: 600, mx: "auto" }} key={432434}>
+      <Typography gutterBottom variant="h6" key={368112}>
+        Betting Constraints;
       </Typography>
 
-      <Box sx={{ mt: 3 }}>
-        <Typography gutterBottom>Maximum Stake (% of Bankroll)</Typography>
-        <Slider
+      <Box sx={{ mt: 3 }} key={323613}>
+        <Typography gutterBottom key={993228}>Maximum Stake (% of Bankroll)</Typography>
+        <Slider;
           marks={[
             { value: 1, label: "1%" },
             { value: 25, label: "25%" },
@@ -67,36 +67,36 @@ export const UserConstraintsForm: React.FC<UserConstraintsFormProps> = ({
           min={1}
           value={constraints.max_bankroll_stake * 100}
           valueLabelDisplay="auto"
-          valueLabelFormat={(value) => `${value}%`}
+          valueLabelFormat={(value) = key={101001}> `${value}%`}
           onChange={(_, value) =>
             onConstraintsChange("max_bankroll_stake", (value as number) / 100)
           }
         />
       </Box>
 
-      <Box sx={{ mt: 3 }}>
-        <Typography gutterBottom>Time Window (Hours)</Typography>
-        <TextField
-          fullWidth
+      <Box sx={{ mt: 3 }} key={323613}>
+        <Typography gutterBottom key={993228}>Time Window (Hours)</Typography>
+        <TextField;
+          fullWidth;
           inputProps={{ min: 1, max: 168 }}
           type="number"
           value={constraints.time_window_hours}
-          onChange={(e) =>
+          onChange={(e) = key={618544}>
             onConstraintsChange("time_window_hours", parseInt(e.target.value))
           }
         />
       </Box>
 
-      <Box sx={{ mt: 3 }}>
-        <FormControl fullWidth>
-          <InputLabel>Preferred Sports</InputLabel>
-          <Select
-            multiple
-            input={<OutlinedInput label="Preferred Sports" />}
+      <Box sx={{ mt: 3 }} key={323613}>
+        <FormControl fullWidth key={113575}>
+          <InputLabel key={405232}>Preferred Sports</InputLabel>
+          <Select;
+            multiple;
+            input={<OutlinedInput label="Preferred Sports" / key={809444}>}
             renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }} key={25446}>
                 {selected.map((value) => (
-                  <Chip key={value} label={value} />
+                  <Chip key={value} label={value} / key={277949}>
                 ))}
               </Box>
             )}
@@ -109,7 +109,7 @@ export const UserConstraintsForm: React.FC<UserConstraintsFormProps> = ({
             }
           >
             {SPORTS_OPTIONS.map((sport) => (
-              <MenuItem key={sport} value={sport}>
+              <MenuItem key={sport} value={sport} key={306206}>
                 {sport}
               </MenuItem>
             ))}
@@ -117,16 +117,16 @@ export const UserConstraintsForm: React.FC<UserConstraintsFormProps> = ({
         </FormControl>
       </Box>
 
-      <Box sx={{ mt: 3 }}>
-        <FormControl fullWidth>
-          <InputLabel>Preferred Markets</InputLabel>
-          <Select
-            multiple
-            input={<OutlinedInput label="Preferred Markets" />}
+      <Box sx={{ mt: 3 }} key={323613}>
+        <FormControl fullWidth key={113575}>
+          <InputLabel key={405232}>Preferred Markets</InputLabel>
+          <Select;
+            multiple;
+            input={<OutlinedInput label="Preferred Markets" / key={928133}>}
             renderValue={(selected) => (
-              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }} key={25446}>
                 {selected.map((value) => (
-                  <Chip key={value} label={value} />
+                  <Chip key={value} label={value} / key={277949}>
                 ))}
               </Box>
             )}
@@ -139,7 +139,7 @@ export const UserConstraintsForm: React.FC<UserConstraintsFormProps> = ({
             }
           >
             {MARKET_OPTIONS.map((market) => (
-              <MenuItem key={market} value={market}>
+              <MenuItem key={market} value={market} key={119240}>
                 {market}
               </MenuItem>
             ))}

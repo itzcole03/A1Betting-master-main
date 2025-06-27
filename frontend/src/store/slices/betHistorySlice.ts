@@ -1,8 +1,8 @@
-// betHistorySlice.ts
-// Zustand slice for user/model bet history state
+// betHistorySlice.ts;
+// Zustand slice for user/model bet history state;
 
-import { create } from 'zustand';
-import type { UserBetHistoryEntry, UserPerformanceHistory, ModelPerformanceHistory } from '../../types/history';
+import { create } from 'zustand.ts';
+import type { UserBetHistoryEntry, UserPerformanceHistory, ModelPerformanceHistory } from '@/types/history.ts';
 
 interface BetHistoryState {
   userHistory: UserPerformanceHistory | null;

@@ -1,4 +1,4 @@
-import { DataSource } from '../core/DataSource.js';
+import { DataSource } from '@/core/DataSource.js';
 export interface ESPNGame {
     id: string;
     homeTeam: string;

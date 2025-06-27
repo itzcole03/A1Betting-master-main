@@ -16,15 +16,15 @@ export class ComposableFeature {
             version: this.metadata.version,
         });
         try {
-            // Validate input if validator exists
+            // Validate input if validator exists;
             if (this.validator && !(await this.validate(input))) {
                 throw new Error(`Input validation failed for feature ${this.metadata.id}`);
             }
-            // Process the input
-            const startTime = Date.now();
-            const result = await this.processor(input, context);
-            const duration = Date.now() - startTime;
-            // Emit success event
+            // Process the input;
+
+
+
+            // Emit success event;
             this.eventBus.publish({
                 type: 'feature:executed',
                 payload: {
@@ -39,12 +39,12 @@ export class ComposableFeature {
             return result;
         }
         catch (error) {
-            // Handle error and attempt rollback
+            // Handle error and attempt rollback;
             this.performanceMonitor.endTrace(traceId, error);
             if (this.rollbackHandler) {
                 await this.rollbackHandler(input, error);
             }
-            // Emit error event
+            // Emit error event;
             this.eventBus.publish({
                 type: 'feature:error',
                 payload: {
@@ -67,7 +67,7 @@ export class ComposableFeature {
             category: this.metadata.category,
             tags: [...new Set([...this.metadata.tags, ...next.metadata.tags])],
         }, async (input, context) => {
-            const intermediate = await this.process(input, context);
+
             return next.process(intermediate, context);
         });
     }
@@ -115,15 +115,15 @@ export class FeatureRegistry {
         return Array.from(this.features.values()).map(f => f.metadata);
     }
     composeFeatures(firstFeatureId, secondFeatureId) {
-        const first = this.getFeature(firstFeatureId);
-        const second = this.getFeature(secondFeatureId);
+
+
         if (!first || !second) {
             return undefined;
         }
         return first.combine(second);
     }
     async executeFeature(featureId, input, context) {
-        const feature = this.getFeature(featureId);
+
         if (!feature) {
             throw new Error(`Feature ${featureId} not found`);
         }

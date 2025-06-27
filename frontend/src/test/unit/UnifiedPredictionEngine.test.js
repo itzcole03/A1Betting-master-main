@@ -35,7 +35,7 @@ describe('UnifiedPredictionEngine', () => {
                     },
                 ],
             };
-            const opportunity = await predictionEngine.generatePrediction(context);
+
             expect(opportunity).toBeDefined();
             expect(opportunity.id).toBeDefined();
             expect(opportunity.propId).toBe(`${context.playerId}:${context.metric}`);
@@ -50,7 +50,7 @@ describe('UnifiedPredictionEngine', () => {
             expect(opportunity.analysis.riskFactors).toBeInstanceOf(Array);
         });
         it('should emit prediction:update event', async () => {
-            const eventHandler = jest.fn();
+
             eventBus.on('prediction:update', eventHandler);
             const context = {
                 playerId: 'player-1',
@@ -64,7 +64,7 @@ describe('UnifiedPredictionEngine', () => {
             };
             await predictionEngine.generatePrediction(context);
             expect(eventHandler).toHaveBeenCalled();
-            const opportunity = eventHandler.mock.calls[0][0];
+
             expect(opportunity.propId).toBe(`${context.playerId}:${context.metric}`);
         });
         it('should handle market updates', async () => {
@@ -84,14 +84,14 @@ describe('UnifiedPredictionEngine', () => {
                     },
                 },
             };
-            const eventHandler = jest.fn();
+
             eventBus.on('prediction:update', eventHandler);
-            // Simulate market update
+            // Simulate market update;
             eventBus.emit('market:update', update);
-            // Wait for async processing
+            // Wait for async processing;
             await new Promise(resolve => setTimeout(resolve, 100));
             expect(eventHandler).toHaveBeenCalled();
-            const opportunity = eventHandler.mock.calls[0][0];
+
             expect(opportunity.propId).toBe('player-1:points');
         });
     });
@@ -115,9 +115,9 @@ describe('UnifiedPredictionEngine', () => {
                     movement: 'up',
                 },
             };
-            const opportunity = await predictionEngine.generatePrediction(context);
+
             expect(opportunity).toBeDefined();
-            expect(opportunity.confidence).toBeLessThan(0.8); // Lower confidence due to missing data
+            expect(opportunity.confidence).toBeLessThan(0.8); // Lower confidence due to missing data;
         });
     });
     describe('performance monitoring', () => {
@@ -132,7 +132,7 @@ describe('UnifiedPredictionEngine', () => {
                     movement: 'up',
                 },
             };
-            const traceHandler = jest.fn();
+
             eventBus.on('error', (error) => {
                 if (error.message.includes('prediction_generation')) {
                     traceHandler(error);
@@ -140,7 +140,7 @@ describe('UnifiedPredictionEngine', () => {
             });
             await predictionEngine.generatePrediction(context);
             expect(traceHandler).toHaveBeenCalled();
-            const error = traceHandler.mock.calls[0][0];
+
             expect(error.message).toContain('prediction_generation');
             expect(error.stack).toBeDefined();
         });

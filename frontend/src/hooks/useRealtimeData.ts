@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react.ts';
 
 // ============================================================================
-// TYPES
+// TYPES;
 // ============================================================================
 
 interface Prediction {
@@ -24,8 +24,8 @@ interface DataSource {
   type: "odds" | "stats" | "news" | "weather" | "social";
   status: "connected" | "disconnected" | "error";
   lastUpdate: number | null;
-  quality: number; // 0-1
-  reliability: number; // 0-1
+  quality: number; // 0-1;
+  reliability: number; // 0-1;
 }
 
 interface RealTimeDataState {
@@ -41,7 +41,7 @@ interface RealTimeDataState {
 }
 
 // ============================================================================
-// MOCK DATA FOR DEMONSTRATION
+// MOCK DATA FOR DEMONSTRATION;
 // ============================================================================
 
 const mockDataSources: DataSource[] = [
@@ -134,7 +134,7 @@ const mockPredictions: Prediction[] = [
 ];
 
 // ============================================================================
-// REAL-TIME DATA HOOK
+// REAL-TIME DATA HOOK;
 // ============================================================================
 
 export const useRealTimeData = () => {
@@ -150,7 +150,7 @@ export const useRealTimeData = () => {
     reliability: 0,
   });
 
-  // Initialize data and start real-time updates
+  // Initialize data and start real-time updates;
   useEffect(() => {
     const initializeData = async () => {
       setState((prev) => ({
@@ -159,7 +159,7 @@ export const useRealTimeData = () => {
         connectionStatus: "connecting",
       }));
 
-      // Simulate API connection delay
+      // Simulate API connection delay;
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       const connectedSources = mockDataSources.filter(
@@ -187,11 +187,11 @@ export const useRealTimeData = () => {
     initializeData();
   }, []);
 
-  // Simulate real-time updates
+  // Simulate real-time updates;
   useEffect(() => {
     const interval = setInterval(() => {
       setState((prev) => {
-        // Randomly update some prediction confidences
+        // Randomly update some prediction confidences;
         const updatedPredictions = prev.predictions.map((pred) => ({
           ...pred,
           confidence: Math.max(
@@ -200,10 +200,10 @@ export const useRealTimeData = () => {
           ),
         }));
 
-        // Update data source statuses occasionally
+        // Update data source statuses occasionally;
         const updatedSources = prev.dataSources.map((source) => {
           if (Math.random() < 0.1) {
-            // 10% chance to update
+            // 10% chance to update;
             return {
               ...source,
               lastUpdate:
@@ -227,11 +227,11 @@ export const useRealTimeData = () => {
           (source) => source.status === "connected",
         );
         const avgQuality =
-          connectedSources.length > 0
+          connectedSources.length > 0;
             ? connectedSources.reduce(
                 (sum, source) => sum + source.quality,
                 0,
-              ) / connectedSources.length
+              ) / connectedSources.length;
             : 0;
 
         return {
@@ -242,16 +242,16 @@ export const useRealTimeData = () => {
           lastUpdate: new Date(),
         };
       });
-    }, 3000); // Update every 3 seconds
+    }, 3000); // Update every 3 seconds;
 
     return () => clearInterval(interval);
   }, []);
 
-  // Refresh data manually
+  // Refresh data manually;
   const refreshData = useCallback(async () => {
     setState((prev) => ({ ...prev, loading: true }));
 
-    // Simulate API refresh
+    // Simulate API refresh;
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     setState((prev) => ({
@@ -266,22 +266,22 @@ export const useRealTimeData = () => {
     }));
   }, []);
 
-  // Get all predictions
+  // Get all predictions;
   const getAllPredictions = useCallback(() => {
     return state.predictions;
   }, [state.predictions]);
 
-  // Get top predictions by confidence
+  // Get top predictions by confidence;
   const getTopPredictions = useCallback(
     (limit: number = 10) => {
-      return state.predictions
+      return state.predictions;
         .sort((a, b) => b.confidence - a.confidence)
         .slice(0, limit);
     },
     [state.predictions],
   );
 
-  // Get predictions by sport
+  // Get predictions by sport;
   const getPredictionsBySport = useCallback(
     (sport: string) => {
       return state.predictions.filter(
@@ -291,7 +291,7 @@ export const useRealTimeData = () => {
     [state.predictions],
   );
 
-  // Get data source by type
+  // Get data source by type;
   const getDataSourcesByType = useCallback(
     (type: DataSource["type"]) => {
       return state.dataSources.filter((source) => source.type === type);
@@ -300,7 +300,7 @@ export const useRealTimeData = () => {
   );
 
   return {
-    // State
+    // State;
     predictions: state.predictions,
     dataSources: state.dataSources,
     loading: state.loading,
@@ -311,20 +311,20 @@ export const useRealTimeData = () => {
     totalSourcesCount: state.totalSourcesCount,
     reliability: state.reliability,
 
-    // Actions
+    // Actions;
     refreshData,
 
-    // Computed data
+    // Computed data;
     getAllPredictions,
     getTopPredictions,
     getPredictionsBySport,
     getDataSourcesByType,
 
-    // Derived state
+    // Derived state;
     isConnected: state.connectionStatus === "connected",
-    hasRecentData: state.lastUpdate
-      ? Date.now() - state.lastUpdate.getTime() < 300000
-      : false, // 5 minutes
+    hasRecentData: state.lastUpdate;
+      ? Date.now() - state.lastUpdate.getTime() < 300000;
+      : false, // 5 minutes;
     healthScore: (state.dataQuality + state.reliability) / 2,
     activePredictionsCount: state.predictions.filter(
       (p) => p.status === "active",

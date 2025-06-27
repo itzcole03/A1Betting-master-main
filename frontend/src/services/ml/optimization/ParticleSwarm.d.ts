@@ -1,4 +1,4 @@
-import { OptimizationStrategy, OptimizationConfig, OptimizationResult } from './OptimizationStrategy';
+import { OptimizationStrategy, OptimizationConfig, OptimizationResult } from './OptimizationStrategy.ts';
 export declare class ParticleSwarm extends OptimizationStrategy {
     private particles;
     private velocities;

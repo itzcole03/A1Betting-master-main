@@ -1,7 +1,7 @@
-import React from 'react';
-import { cn } from '@/utils/classNames';
+import React from 'react.ts';
+import { cn } from '@/utils/classNames.ts';
 
-export interface Column<T> {
+export interface Column<T key={964330}> {
   key: keyof T | string;
   title: string;
   render?: (value: any, item: T) => React.ReactNode;
@@ -9,9 +9,9 @@ export interface Column<T> {
   width?: string;
 }
 
-export interface TableProps<T> {
+export interface TableProps<T key={964330}> {
   data: T[];
-  columns: Column<T>[];
+  columns: Column<T key={964330}>[];
   loading?: boolean;
   onSort?: (key: keyof T | string, direction: 'asc' | 'desc') => void;
   sortKey?: keyof T | string;
@@ -22,7 +22,7 @@ export interface TableProps<T> {
   emptyMessage?: string;
 }
 
-export function Table<T>({
+export function Table<T key={964330}>({
   data,
   columns,
   loading = false,
@@ -33,11 +33,10 @@ export function Table<T>({
   rowClassName,
   onRowClick,
   emptyMessage = 'No data available',
-}: TableProps<T>) {
+}: TableProps<T key={964330}>) {
   const handleSort = (key: keyof T | string) => {
     if (!onSort || !columns.find(col => col.key === key)?.sortable) return;
 
-    const newDirection = sortKey === key && sortDirection === 'asc' ? 'desc' : 'asc';
     onSort(key, newDirection);
   };
 
@@ -45,26 +44,26 @@ export function Table<T>({
     if (!columns.find(col => col.key === key)?.sortable) return null;
 
     return (
-      <span className="ml-2 inline-flex flex-col">
-        <svg
+      <span className="ml-2 inline-flex flex-col" key={245326}>
+        <svg;
           className={cn(
             'w-2 h-2 -mb-0.5',
             sortKey === key && sortDirection === 'asc' ? 'text-primary-500' : 'text-gray-400'
           )}
           fill="currentColor"
           viewBox="0 0 24 24"
-        >
-          <path d="M12 5l8 8H4z" />
+         key={800206}>
+          <path d="M12 5l8 8H4z" / key={561363}>
         </svg>
-        <svg
+        <svg;
           className={cn(
             'w-2 h-2',
             sortKey === key && sortDirection === 'desc' ? 'text-primary-500' : 'text-gray-400'
           )}
           fill="currentColor"
           viewBox="0 0 24 24"
-        >
-          <path d="M12 19l-8-8h16z" />
+         key={146986}>
+          <path d="M12 19l-8-8h16z" / key={926800}>
         </svg>
       </span>
     );
@@ -72,22 +71,22 @@ export function Table<T>({
 
   if (loading) {
     return (
-      <div className="animate-pulse space-y-4">
-        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
+      <div className="animate-pulse space-y-4" key={119861}>
+        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" / key={692083}>
         {[...Array(5)].map((_, i) => (
-          <div key={i} className="h-16 bg-gray-200 dark:bg-gray-700 rounded" />
+          <div key={i} className="h-16 bg-gray-200 dark:bg-gray-700 rounded" / key={582968}>
         ))}
       </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto">
-      <table className={cn('min-w-full divide-y divide-gray-200 dark:divide-gray-700', className)}>
-        <thead className="bg-gray-50 dark:bg-gray-800">
-          <tr>
+    <div className="overflow-x-auto" key={522094}>
+      <table className={cn('min-w-full divide-y divide-gray-200 dark:divide-gray-700', className)} key={578616}>
+        <thead className="bg-gray-50 dark:bg-gray-800" key={456258}>
+          <tr key={70014}>
             {columns.map(column => (
-              <th
+              <th;
                 key={column.key.toString()}
                 className={cn(
                   'px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap',
@@ -95,9 +94,9 @@ export function Table<T>({
                 )}
                 scope="col"
                 style={column.width ? { width: column.width } : undefined}
-                onClick={() => handleSort(column.key)}
+                onClick={() = key={245179}> handleSort(column.key)}
               >
-                <span className="flex items-center">
+                <span className="flex items-center" key={97475}>
                   {column.title}
                   {renderSortIcon(column.key)}
                 </span>
@@ -105,38 +104,38 @@ export function Table<T>({
             ))}
           </tr>
         </thead>
-        <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800">
+        <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-800" key={169162}>
           {data.length === 0 ? (
-            <tr>
-              <td
+            <tr key={70014}>
+              <td;
                 className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 text-center"
                 colSpan={columns.length}
-              >
+               key={802672}>
                 {emptyMessage}
               </td>
             </tr>
           ) : (
             data.map((item, index) => (
-              <tr
+              <tr;
                 key={index}
                 className={cn(
                   'transition-colors hover:bg-gray-50 dark:hover:bg-gray-800',
                   typeof rowClassName === 'function' ? rowClassName(item) : rowClassName,
                   onRowClick && 'cursor-pointer'
                 )}
-                onClick={() => onRowClick?.(item)}
+                onClick={() = key={624123}> onRowClick?.(item)}
               >
                 {columns.map(column => (
-                  <td
+                  <td;
                     key={column.key.toString()}
                     className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-gray-100"
-                  >
-                    {column.render
+                   key={924909}>
+                    {column.render;
                       ? column.render(
                           typeof column.key === 'string'
                             ? (item as any)[column.key]
                             : item[column.key],
-                          item
+                          item;
                         )
                       : typeof column.key === 'string'
                         ? (item as any)[column.key]

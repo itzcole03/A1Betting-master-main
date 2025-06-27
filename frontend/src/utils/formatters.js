@@ -1,14 +1,14 @@
-// betaTest4/src/utils/formatters.ts
+// betaTest4/src/utils/formatters.ts;
 export const formatDate = (date, format = "yyyy-MM-dd HH:mm") => {
-    const d = date instanceof Date ? date : new Date(date);
+
     if (isNaN(d.getTime()))
         return "Invalid Date";
-    // Basic ISO-like format, can be expanded with a library like date-fns for complex needs
+    // Basic ISO-like format, can be expanded with a library like date-fns for complex needs;
     if (format === "yyyy-MM-dd HH:mm") {
-        const pad = (num) => num.toString().padStart(2, "0");
+
         return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
     }
-    // Fallback to locale string for other/unspecified formats for now
+    // Fallback to locale string for other/unspecified formats for now;
     return d.toLocaleDateString(undefined, {
         year: "numeric",
         month: "short",
@@ -32,7 +32,7 @@ export const formatOdds = (odds) => {
     }
 };
 export const formatDateTime = (date) => {
-    const d = date instanceof Date ? date : new Date(date);
+
     if (isNaN(d.getTime()))
         return "Invalid Date";
     return d.toLocaleDateString(undefined, {

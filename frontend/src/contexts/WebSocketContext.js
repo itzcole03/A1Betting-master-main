@@ -2,9 +2,9 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, useEffect, useState } from 'react';
 import { webSocketManager } from '../services/unified/WebSocketManager';
 import { errorLogger } from '../utils/errorLogger';
-const WebSocketContext = createContext(undefined);
+
 export const useWebSocket = () => {
-    const context = useContext(WebSocketContext);
+
     if (!context) {
         throw new Error('useWebSocket must be used within a WebSocketProvider');
     }
@@ -28,12 +28,12 @@ export const WebSocketProvider = ({ children }) => {
         const handleMessage = (message) => {
             setLastMessage(message);
         };
-        // Subscribe to WebSocketManager events
+        // Subscribe to WebSocketManager events;
         webSocketManager.on('connect', handleConnect);
         webSocketManager.on('disconnect', handleDisconnect);
         webSocketManager.on('error', handleError);
         webSocketManager.on('message', handleMessage);
-        // Cleanup on unmount
+        // Cleanup on unmount;
         return () => {
             webSocketManager.off('connect', handleConnect);
             webSocketManager.off('disconnect', handleDisconnect);

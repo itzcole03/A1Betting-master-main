@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   DollarSign,
   TrendingUp,
@@ -7,7 +7,7 @@ import {
   Brain,
   Activity,
   Zap,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
 interface MoneyMakerOpportunity {
   id: string;
@@ -22,10 +22,10 @@ interface UltimateMoneyMakerProps {
   className?: string;
 }
 
-export const UltimateMoneyMaker: React.FC<UltimateMoneyMakerProps> = ({
+export const UltimateMoneyMaker: React.FC<UltimateMoneyMakerProps key={815092}> = ({
   className = "",
 }) => {
-  const [opportunities, setOpportunities] = useState<MoneyMakerOpportunity[]>([
+  const [opportunities, setOpportunities] = useState<MoneyMakerOpportunity[] key={311745}>([
     {
       id: "1",
       description: "NFL Over/Under Arbitrage",
@@ -59,118 +59,118 @@ export const UltimateMoneyMaker: React.FC<UltimateMoneyMakerProps> = ({
     setIsScanning(true);
     setTimeout(() => {
       setIsScanning(false);
-      // Simulate finding new opportunities
+      // Simulate finding new opportunities;
     }, 3000);
   };
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`space-y-6 ${className}`} key={468045}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
-            Ultimate Money Maker
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent" key={446655}>
+            Ultimate Money Maker;
           </h1>
-          <p className="text-gray-400 mt-1">
-            AI-powered profit generation system
+          <p className="text-gray-400 mt-1" key={561557}>
+            AI-powered profit generation system;
           </p>
         </div>
-        <motion.button
+        <motion.button;
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={handleScan}
           disabled={isScanning}
           className="px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl hover:from-green-400 hover:to-emerald-500 disabled:opacity-50 transition-all"
-        >
+         key={210148}>
           {isScanning ? (
             <>
-              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2 inline-block" />
+              <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2 inline-block" / key={474934}>
               Scanning...
             </>
           ) : (
             <>
-              <Zap className="w-5 h-5 mr-2 inline" />
-              Scan Markets
+              <Zap className="w-5 h-5 mr-2 inline" / key={234416}>
+              Scan Markets;
             </>
           )}
         </motion.button>
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <motion.div
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6" key={852085}>
+        <motion.div;
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="p-6 bg-gradient-to-br from-green-500/20 to-emerald-600/20 border border-green-500/30 rounded-xl"
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-2xl font-bold text-green-400">
+         key={538800}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <p className="text-2xl font-bold text-green-400" key={176412}>
                 ${totalEarnings.toLocaleString()}
               </p>
-              <p className="text-sm text-green-300">Total Earnings</p>
+              <p className="text-sm text-green-300" key={840313}>Total Earnings</p>
             </div>
-            <DollarSign className="w-8 h-8 text-green-400" />
+            <DollarSign className="w-8 h-8 text-green-400" / key={235452}>
           </div>
         </motion.div>
 
-        <motion.div
+        <motion.div;
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="p-6 bg-gradient-to-br from-blue-500/20 to-cyan-600/20 border border-blue-500/30 rounded-xl"
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-2xl font-bold text-blue-400">
+         key={278304}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <p className="text-2xl font-bold text-blue-400" key={641115}>
                 {opportunities.length}
               </p>
-              <p className="text-sm text-blue-300">Active Opportunities</p>
+              <p className="text-sm text-blue-300" key={440128}>Active Opportunities</p>
             </div>
-            <Target className="w-8 h-8 text-blue-400" />
+            <Target className="w-8 h-8 text-blue-400" / key={454838}>
           </div>
         </motion.div>
 
-        <motion.div
+        <motion.div;
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
           className="p-6 bg-gradient-to-br from-purple-500/20 to-violet-600/20 border border-purple-500/30 rounded-xl"
-        >
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-2xl font-bold text-purple-400">91.2%</p>
-              <p className="text-sm text-purple-300">Success Rate</p>
+         key={93305}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <p className="text-2xl font-bold text-purple-400" key={603662}>91.2%</p>
+              <p className="text-sm text-purple-300" key={4522}>Success Rate</p>
             </div>
-            <TrendingUp className="w-8 h-8 text-purple-400" />
+            <TrendingUp className="w-8 h-8 text-purple-400" / key={591016}>
           </div>
         </motion.div>
       </div>
 
       {/* Opportunities List */}
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold text-white">Current Opportunities</h2>
+      <div className="space-y-4" key={160407}>
+        <h2 className="text-xl font-bold text-white" key={79740}>Current Opportunities</h2>
         {opportunities.map((opportunity, index) => (
-          <motion.div
+          <motion.div;
             key={opportunity.id}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
             className="p-6 bg-gradient-to-r from-gray-800/50 to-gray-900/50 border border-gray-700/50 rounded-xl hover:border-green-500/50 transition-all cursor-pointer group"
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-white group-hover:text-green-400 transition-colors">
+           key={281861}>
+            <div className="flex items-center justify-between" key={96335}>
+              <div className="flex-1" key={745195}>
+                <h3 className="text-lg font-semibold text-white group-hover:text-green-400 transition-colors" key={569710}>
                   {opportunity.description}
                 </h3>
-                <div className="flex items-center gap-4 mt-2">
-                  <span className="text-green-400 font-bold">
+                <div className="flex items-center gap-4 mt-2" key={948569}>
+                  <span className="text-green-400 font-bold" key={568238}>
                     +${opportunity.expectedProfit.toLocaleString()}
                   </span>
-                  <span className="text-cyan-400">
-                    {opportunity.confidence}% confidence
+                  <span className="text-cyan-400" key={797516}>
+                    {opportunity.confidence}% confidence;
                   </span>
-                  <span
+                  <span;
                     className={`px-2 py-1 rounded-full text-xs font-bold ${
                       opportunity.riskLevel === "low"
                         ? "bg-green-500/20 text-green-400"
@@ -178,14 +178,14 @@ export const UltimateMoneyMaker: React.FC<UltimateMoneyMakerProps> = ({
                           ? "bg-yellow-500/20 text-yellow-400"
                           : "bg-red-500/20 text-red-400"
                     }`}
-                  >
-                    {opportunity.riskLevel.toUpperCase()} RISK
+                   key={388828}>
+                    {opportunity.riskLevel.toUpperCase()} RISK;
                   </span>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="text-gray-400 text-sm">Expires in</p>
-                <p className="text-white font-bold">{opportunity.timeframe}</p>
+              <div className="text-right" key={144468}>
+                <p className="text-gray-400 text-sm" key={516838}>Expires in</p>
+                <p className="text-white font-bold" key={908420}>{opportunity.timeframe}</p>
               </div>
             </div>
           </motion.div>

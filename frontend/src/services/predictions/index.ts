@@ -1,10 +1,8 @@
-import { getLogger } from '../../core/logging/logger.js';
-import { getMetrics } from '../../core/metrics/metrics.js';
+import { getLogger } from '@/core/logging/logger.js';
+import { getMetrics } from '@/core/metrics/metrics.js';
 import { PredictionAlgorithms } from './algorithms.js';
-import { wrapWithRateLimit } from '../rateLimit/wrapWithRateLimit.js';
+import { wrapWithRateLimit } from '@/rateLimit/wrapWithRateLimit.js';
 
-const logger = getLogger('PredictionService');
-const metrics = getMetrics();
 
 interface PredictionModel {
   name: string;
@@ -50,7 +48,7 @@ export class PredictionService {
   private models: Map<string, PredictionModel> = new Map();
 
   constructor() {
-    // Initialize with default models
+    // Initialize with default models;
     this.models.set('default', {
       name: 'Default Model',
       version: '1.0.0',
@@ -69,26 +67,24 @@ export class PredictionService {
    * Rate-limited for backend API calls.
    */
   async generatePredictions(modelName: string, date: string): Promise<PredictionResult[]> {
-    const model = this.models.get(modelName);
+
     if (!model) {
       throw new Error(`Model ${modelName} not found`);
     }
 
-    // Fetch player data from backend API
-    // The endpoint and response type should be aligned with backend documentation
-    // Example endpoint: /api/v1/players?date=YYYY-MM-DD
+    // Fetch player data from backend API;
+    // The endpoint and response type should be aligned with backend documentation;
+    // Example endpoint: /api/v1/players?date=YYYY-MM-DD;
     const fetchPlayerData = async (): Promise<PlayerData[]> => {
-      const response = await fetch(`/api/v1/players?date=${encodeURIComponent(date)}`);
+
       if (!response.ok) {
         throw new Error(`Failed to fetch player data: ${response.statusText}`);
       }
       return (await response.json()) as PlayerData[];
     };
 
-    const rateLimitedFetchPlayerData = wrapWithRateLimit(fetchPlayerData, 5, 1000);
-
     try {
-      const playerData = await rateLimitedFetchPlayerData();
+
       const predictions = playerData.map((player: PlayerData) => {
         let result: PredictionResult;
         switch (model.type) {
@@ -130,7 +126,7 @@ export class PredictionService {
 
       return predictions;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
       logger.error('Error generating predictions', {
         error: errorMessage,
         modelName,
@@ -169,5 +165,5 @@ export class PredictionService {
   }
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const predictionService = new PredictionService();

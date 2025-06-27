@@ -7,7 +7,7 @@ A lightweight Python backend for testing and development
 import json
 import logging
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List
 
 try:
@@ -98,7 +98,7 @@ async def root():
         "name": "A1Betting Simple Python Backend",
         "version": "1.0.0",
         "status": "operational",
-        "timestamp": datetime.utcnow(),
+        "timestamp": datetime.now(timezone.utc),
         "message": "Simple Python backend is running successfully!"
     }
 
@@ -107,7 +107,7 @@ async def health_check():
     uptime = time.time() - app_start_time
     return HealthResponse(
         status="healthy",
-        timestamp=datetime.utcnow(),
+        timestamp=datetime.now(timezone.utc),
         version="1.0.0",
         uptime=uptime,
         services={
@@ -149,7 +149,7 @@ async def get_predictions():
                 "confidence": 0.78,
                 "odds": 1.85,
                 "expected_value": 0.08,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "model_version": "simple_v1.0"
             }
         ],
@@ -202,7 +202,7 @@ async def get_transactions():
                 "type": "bet",
                 "amount": -100.0,
                 "description": "Lakers vs Warriors - Python Backend",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
                 "status": "completed"
             }
         ],

@@ -10,8 +10,8 @@ const ApiHealthIndicator = () => {
       .catch(() => setStatus('down'));
   }, []);
 
-  let color = 'gray';
-  let text = 'Checking...';
+  const color = 'gray';
+  const text = 'Checking...';
   if (status === 'ok') { color = 'green'; text = 'API Online'; }
   if (status === 'down') { color = 'red'; text = 'API Down'; }
 

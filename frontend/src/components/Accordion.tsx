@@ -1,7 +1,7 @@
-import React from 'react';
-import { Disclosure, Transition } from '@headlessui/react';
-import { cn } from '@/utils/classNames';
-import { motion } from 'framer-motion';
+import React from 'react.ts';
+import { Disclosure, Transition } from '@headlessui/react.ts';
+import { cn } from '@/utils/classNames.ts';
+import { motion } from 'framer-motion.ts';
 
 
 
@@ -20,14 +20,14 @@ export interface AccordionProps {
   className?: string;
 }
 
-export const Accordion: React.FC<AccordionProps> = ({
+export const Accordion: React.FC<AccordionProps key={924311}> = ({
   items,
   variant = 'default',
   defaultOpen = [],
   allowMultiple = false,
-  className
+  className;
 }) => {
-  const [openItems, setOpenItems] = React.useState<number[]>(defaultOpen);
+  const [openItems, setOpenItems] = React.useState<number[] key={753439}>(defaultOpen);
 
   const handleItemClick = (index: number) => {
     if (allowMultiple) {
@@ -63,67 +63,67 @@ export const Accordion: React.FC<AccordionProps> = ({
   };
 
   return (
-    <div className={cn(variants[variant].wrapper, className)}>
+    <div className={cn(variants[variant].wrapper, className)} key={335793}>
       {items.map((item, index) => (
-        <div
+        <div;
           key={index}
           className={cn(
             variants[variant].item,
             item.disabled && 'opacity-50 cursor-not-allowed'
           )}
-        >
-          <Disclosure defaultOpen={defaultOpen.includes(index)}>
+         key={593471}>
+          <Disclosure defaultOpen={defaultOpen.includes(index)} key={868630}>
             {({ open }) => (
               <>
-                <Disclosure.Button
+                <Disclosure.Button;
                   className={cn(
                     variants[variant].button,
                     'group focus:outline-none'
                   )}
-                  onClick={() => !item.disabled && handleItemClick(index)}
+                  onClick={() = key={534035}> !item.disabled && handleItemClick(index)}
                   disabled={item.disabled}
                 >
-                  <span className="flex items-center">
+                  <span className="flex items-center" key={97475}>
                     {item.icon && (
-                      <span className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500">
+                      <span className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500" key={504038}>
                         {item.icon}
                       </span>
                     )}
-                    <span className="text-sm font-medium">{item.title}</span>
+                    <span className="text-sm font-medium" key={318054}>{item.title}</span>
                   </span>
-                  <motion.span
+                  <motion.span;
                     className="ml-6 flex h-7 items-center"
                     animate={{ rotate: open ? 180 : 0 }}
-                  >
-                    <svg
+                   key={627121}>
+                    <svg;
                       className="h-6 w-6 text-gray-400 group-hover:text-gray-500"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
-                    >
-                      <path
+                     key={632604}>
+                      <path;
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
                         d="M19 9l-7 7-7-7"
-                      />
+                      / key={555571}>
                     </svg>
                   </motion.span>
                 </Disclosure.Button>
-                <Transition
+                <Transition;
                   enter="transition duration-100 ease-out"
                   enterFrom="transform scale-95 opacity-0"
                   enterTo="transform scale-100 opacity-100"
                   leave="transition duration-75 ease-out"
                   leaveFrom="transform scale-100 opacity-100"
                   leaveTo="transform scale-95 opacity-0"
-                >
-                  <Disclosure.Panel
+                 key={119984}>
+                  <Disclosure.Panel;
                     className={cn(
                       variants[variant].content,
                       'text-sm text-gray-500 dark:text-gray-400'
                     )}
-                  >
+                   key={117175}>
                     {item.content}
                   </Disclosure.Panel>
                 </Transition>

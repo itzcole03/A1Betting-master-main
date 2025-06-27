@@ -52,10 +52,10 @@ const initialState = {
         direction: 'desc',
     },
 };
-// Retry configuration
-const MAX_RETRIES = 3;
-const INITIAL_RETRY_DELAY = 1000; // 1 second
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// Retry configuration;
+
+const INITIAL_RETRY_DELAY = 1000; // 1 second;
+
 export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
     ...initialState,
     updateConfig: (config) => set(state => ({
@@ -74,7 +74,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
         lastUpdate: new Date().toISOString(),
     })),
     updatePredictionUncertainty: (id, uncertainty) => set(state => ({
-        predictions: state.predictions.map(p => p.eventId === id
+        predictions: state.predictions.map(p => p.eventId === id;
             ? {
                 ...p,
                 uncertainty,
@@ -83,7 +83,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
             : p),
     })),
     updatePredictionExplanation: (id, explanation) => set(state => ({
-        predictions: state.predictions.map(p => p.eventId === id
+        predictions: state.predictions.map(p => p.eventId === id;
             ? {
                 ...p,
                 explanation,
@@ -92,7 +92,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
             : p),
     })),
     updatePredictionRiskProfile: (id, riskProfile) => set(state => ({
-        predictions: state.predictions.map(p => p.eventId === id
+        predictions: state.predictions.map(p => p.eventId === id;
             ? {
                 ...p,
                 riskProfile,
@@ -101,7 +101,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
             : p),
     })),
     updatePredictionModelMetrics: (id, modelMetrics) => set(state => ({
-        predictions: state.predictions.map(p => p.eventId === id
+        predictions: state.predictions.map(p => p.eventId === id;
             ? {
                 ...p,
                 modelMetrics,
@@ -133,7 +133,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
         lastUpdate: new Date().toISOString(),
     })),
     reset: () => set(initialState),
-    // New actions for filtering and sorting
+    // New actions for filtering and sorting;
     setFilter: (filter) => set(state => ({
         filters: {
             ...state.filters,
@@ -149,16 +149,16 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
         filters: initialState.filters,
         lastUpdate: new Date().toISOString(),
     })),
-    // New actions for prediction service integration
+    // New actions for prediction service integration;
     fetchPredictions: async () => {
         const { setLoading, setError } = get();
         setLoading(true);
         setError(null);
-        let retries = 0;
-        let lastError = null;
+        const retries = 0;
+        const lastError = null;
         while (retries < MAX_RETRIES) {
             try {
-                const predictions = await predictionService.getPredictions(get().filters, get().sort);
+
                 set(state => ({
                     predictions,
                     lastUpdate: new Date().toISOString(),
@@ -170,7 +170,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
                 lastError = error instanceof Error ? error : new Error('Unknown error');
                 retries++;
                 if (retries < MAX_RETRIES) {
-                    const delay = INITIAL_RETRY_DELAY * Math.pow(2, retries - 1);
+
                     await sleep(delay);
                 }
             }
@@ -182,11 +182,11 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
         const { setLoading, setError, updatePrediction } = get();
         setLoading(true);
         setError(null);
-        let retries = 0;
-        let lastError = null;
+        const retries = 0;
+        const lastError = null;
         while (retries < MAX_RETRIES) {
             try {
-                const details = await predictionService.getPredictionDetails(predictionId);
+
                 updatePrediction(predictionId, details);
                 setLoading(false);
                 return details;
@@ -195,7 +195,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
                 lastError = error instanceof Error ? error : new Error('Unknown error');
                 retries++;
                 if (retries < MAX_RETRIES) {
-                    const delay = INITIAL_RETRY_DELAY * Math.pow(2, retries - 1);
+
                     await sleep(delay);
                 }
             }
@@ -208,11 +208,11 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
         const { setLoading, setError } = get();
         setLoading(true);
         setError(null);
-        let retries = 0;
-        let lastError = null;
+        const retries = 0;
+        const lastError = null;
         while (retries < MAX_RETRIES) {
             try {
-                const metrics = await predictionService.getModelMetrics(modelId);
+
                 setLoading(false);
                 return metrics;
             }
@@ -220,7 +220,7 @@ export const useMoneyMakerStore = create()(devtools(persist((set, get) => ({
                 lastError = error instanceof Error ? error : new Error('Unknown error');
                 retries++;
                 if (retries < MAX_RETRIES) {
-                    const delay = INITIAL_RETRY_DELAY * Math.pow(2, retries - 1);
+
                     await sleep(delay);
                 }
             }

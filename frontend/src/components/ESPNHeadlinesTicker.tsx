@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
+import React, { useEffect, useState  } from 'react.ts';
+import { Box, Typography } from '@mui/material.ts';
+import { useQuery } from '@tanstack/react-query.ts';
 
 interface Headline {
   id: string;
@@ -11,13 +11,12 @@ interface Headline {
 
 export const ESPNHeadlinesTicker: React.FC = () => {
   const [position, setPosition] = useState(0);
-  const containerRef = React.useRef<HTMLDivElement>(null);
-  const contentRef = React.useRef<HTMLDivElement>(null);
 
-  const { data: headlines = [] } = useQuery<Headline[]>({
+
+  const { data: headlines = [] } = useQuery<Headline[] key={580837}>({
     queryKey: ['headlines'],
     queryFn: async () => {
-      // TODO: Implement API call to fetch headlines
+      // TODO: Implement API call to fetch headlines;
       return [
         {
           id: '1',
@@ -44,12 +43,10 @@ export const ESPNHeadlinesTicker: React.FC = () => {
   useEffect(() => {
     if (!containerRef.current || !contentRef.current) return;
 
-    const containerWidth = containerRef.current.offsetWidth;
-    const contentWidth = contentRef.current.offsetWidth;
 
     const animate = () => {
       setPosition(prev => {
-        const newPosition = prev - 1;
+
         if (newPosition <= -contentWidth) {
           return containerWidth;
         }
@@ -57,12 +54,11 @@ export const ESPNHeadlinesTicker: React.FC = () => {
       });
     };
 
-    const interval = setInterval(animate, 30);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <Box
+    <Box;
       ref={containerRef}
       sx={{
         width: '100%',
@@ -72,8 +68,8 @@ export const ESPNHeadlinesTicker: React.FC = () => {
         backgroundColor: 'rgba(0, 0, 0, 0.05)',
         borderRadius: 1,
       }}
-    >
-      <Box
+     key={731582}>
+      <Box;
         ref={contentRef}
         sx={{
           position: 'absolute',
@@ -83,32 +79,32 @@ export const ESPNHeadlinesTicker: React.FC = () => {
           alignItems: 'center',
           height: '100%',
         }}
-      >
+       key={944969}>
         {headlines.map(headline => (
-          <Box
+          <Box;
             key={headline.id}
             sx={{
               display: 'inline-flex',
               alignItems: 'center',
               mr: 4,
             }}
-          >
-            <Typography
+           key={12011}>
+            <Typography;
               sx={{
                 color: 'text.primary',
                 fontWeight: 'medium',
               }}
               variant="body2"
-            >
+             key={860070}>
               {headline.title}
             </Typography>
-            <Typography
+            <Typography;
               sx={{
                 color: 'text.secondary',
                 ml: 1,
               }}
               variant="caption"
-            >
+             key={15696}>
               • {headline.source}
             </Typography>
           </Box>

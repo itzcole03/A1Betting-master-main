@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect, useCallback } from 'react';
-// Base URL for the API - can be from .env
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+// Base URL for the API - can be from .env;
+
 /**
  * Custom hook for making API requests.
  * @param config AxiosRequestConfig for the request.
@@ -15,7 +15,7 @@ function useApi(config, initialData = null) {
     const fetchData = useCallback(async () => {
         setLoading(true);
         try {
-            const result = await axios({ ...config, baseURL: API_BASE_URL });
+
             setData(result.data);
             setError(null);
         }
@@ -26,13 +26,13 @@ function useApi(config, initialData = null) {
         finally {
             setLoading(false);
         }
-    }, [config]); // Dependencies: re-run if config changes
+    }, [config]); // Dependencies: re-run if config changes;
     useEffect(() => {
-        // Optionally, you could make this hook fetch data immediately upon mount
+        // Optionally, you could make this hook fetch data immediately upon mount;
         // by calling fetchData() here, or provide a function to trigger it manually.
         // For now, it's a placeholder that doesn't fetch on mount.
     }, [fetchData]);
-    // It might be more useful to return a function to manually trigger the fetch
+    // It might be more useful to return a function to manually trigger the fetch;
     // e.g., return { data, error, loading, request: fetchData };
     return { data, error, loading, request: fetchData };
 }

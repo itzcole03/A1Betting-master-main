@@ -1,5 +1,5 @@
-import React from 'react';
-import { Alert } from '../hooks/useSmartAlerts';
+import React from 'react.ts';
+import { Alert } from '@/hooks/useSmartAlerts.ts';
 interface SmartAlertsProps {
     wsEndpoint: string;
     onAlertClick?: (alert: Alert) => void;

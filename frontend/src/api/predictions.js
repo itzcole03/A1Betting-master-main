@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || "http://localhost:8000";
-
 const api = axios.create({
     baseURL: API_BASE_URL,
     timeout: 10000,
@@ -10,10 +8,10 @@ const api = axios.create({
     },
 });
 
-// Add request interceptor for authentication
+// Add request interceptor for authentication;
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem("auth_token");
+
         if (token) {
             config.headers.Authorization = `Bearer ${token}`;
         }
@@ -24,21 +22,21 @@ api.interceptors.request.use(
     }
 );
 
-// Add response interceptor for error handling
+// Add response interceptor for error handling;
 api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response) {
-            // Server responded with error
-            console.error("API Error:", error.response.data);
+            // Server responded with error;
+            // console statement removed
             return Promise.reject(error.response.data);
         } else if (error.request) {
-            // Request made but no response
-            console.error("Network Error:", error.request);
+            // Request made but no response;
+            // console statement removed
             return Promise.reject({ message: "Network error occurred" });
         } else {
-            // Request setup error
-            console.error("Request Error:", error.message);
+            // Request setup error;
+            // console statement removed
             return Promise.reject({ message: "Request setup failed" });
         }
     }
@@ -46,10 +44,10 @@ api.interceptors.response.use(
 
 export const predictionsApi = {
     /**
-     * Get predictions for a specific sport and date
-     * @param {string} sport - The sport to get predictions for
-     * @param {string} date - The date to get predictions for
-     * @returns {Promise<Array>} Array of predictions
+     * Get predictions for a specific sport and date;
+     * @param {string} sport - The sport to get predictions for;
+     * @param {string} date - The date to get predictions for;
+     * @returns {Promise<Array>} Array of predictions;
      */
     getPredictions: async (sport, date) => {
         try {
@@ -58,72 +56,72 @@ export const predictionsApi = {
             });
             return response.data;
         } catch (error) {
-            console.error("Error fetching predictions:", error);
+            // console statement removed
             throw error;
         }
     },
 
     /**
-     * Get optimized lineup based on predictions
-     * @param {Array} predictions - Array of predictions to optimize
+     * Get optimized lineup based on predictions;
+     * @param {Array} predictions - Array of predictions to optimize;
      * @param {number} legs - Number of legs in the lineup (2-6)
-     * @returns {Promise<Object>} Optimized lineup
+     * @returns {Promise<Object>} Optimized lineup;
      */
     getOptimizedLineup: async (predictions, legs) => {
         try {
             const response = await api.post("/lineup/optimize", {
                 predictions,
-                legs
+                legs;
             });
             return response.data;
         } catch (error) {
-            console.error("Error optimizing lineup:", error);
+            // console statement removed
             throw error;
         }
     },
 
     /**
-     * Get feature importance for a prediction
-     * @param {string} predictionId - ID of the prediction
-     * @returns {Promise<Object>} Feature importance data
+     * Get feature importance for a prediction;
+     * @param {string} predictionId - ID of the prediction;
+     * @returns {Promise<Object>} Feature importance data;
      */
     getFeatureImportance: async (predictionId) => {
         try {
-            const response = await api.get(`/predictions/${predictionId}/features`);
+
             return response.data;
         } catch (error) {
-            console.error("Error fetching feature importance:", error);
+            // console statement removed
             throw error;
         }
     },
 
     /**
-     * Get model performance metrics
-     * @returns {Promise<Object>} Model performance data
+     * Get model performance metrics;
+     * @returns {Promise<Object>} Model performance data;
      */
     getModelPerformance: async () => {
         try {
-            const response = await api.get("/analytics/model-performance");
+
             return response.data;
         } catch (error) {
-            console.error("Error fetching model performance:", error);
+            // console statement removed
             throw error;
         }
     },
 
     /**
-     * Get real-time odds updates
-     * @param {Array} predictionIds - Array of prediction IDs to track
-     * @returns {Promise<Object>} Updated odds data
+     * Get real-time odds updates;
+     * @param {Array} predictionIds - Array of prediction IDs to track;
+     * @returns {Promise<Object>} Updated odds data;
      */
     getOddsUpdates: async (predictionIds) => {
         try {
             const response = await api.post("/odds/updates", {
-                predictionIds
+                predictionIds;
             });
             return response.data;
         } catch (error) {
-            console.error("Error fetching odds updates:", error);
+            // console statement removed
             throw error;
         }
     }

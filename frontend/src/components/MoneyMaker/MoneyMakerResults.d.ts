@@ -1,5 +1,5 @@
-import React from 'react';
-import { OptimalLineup } from '@/types';
+import React from 'react.ts';
+import { OptimalLineup } from '@/types.ts';
 interface MoneyMakerResultsProps {
     lineup: OptimalLineup;
 }

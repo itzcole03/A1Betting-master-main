@@ -44,29 +44,29 @@ describe.skip('PredictionExplanationModal', () => {
     });
     it('switches between model tabs', () => {
         render(_jsx(PredictionExplanationModal, { open: true, prediction: mockPrediction, onClose: () => { } }));
-        // Initially shows first model
+        // Initially shows first model;
         expect(screen.getByText('model1')).toHaveAttribute('aria-selected', 'true');
-        // Switch to second model
+        // Switch to second model;
         fireEvent.click(screen.getByText('model2'));
         expect(screen.getByText('model2')).toHaveAttribute('aria-selected', 'true');
     });
     it('displays tooltip on info icon hover', () => {
         render(_jsx(PredictionExplanationModal, { open: true, prediction: mockPrediction, onClose: () => { } }));
-        const infoIcon = screen.getAllByRole('button')[0];
+
         fireEvent.mouseEnter(infoIcon);
         expect(screen.getByText('SHAP values show how each feature contributes to the prediction')).toBeInTheDocument();
     });
     it('calls onClose when close button is clicked', () => {
-        const onClose = jest.fn();
+
         render(_jsx(PredictionExplanationModal, { open: true, prediction: mockPrediction, onClose: onClose }));
-        const closeButton = screen.getAllByRole('button')[1];
+
         fireEvent.click(closeButton);
         expect(onClose).toHaveBeenCalledTimes(1);
     });
     it('calls onClose when close button in actions is clicked', () => {
-        const onClose = jest.fn();
+
         render(_jsx(PredictionExplanationModal, { open: true, prediction: mockPrediction, onClose: onClose }));
-        const closeButton = screen.getByText('Close');
+
         fireEvent.click(closeButton);
         expect(onClose).toHaveBeenCalledTimes(1);
     });
@@ -76,7 +76,7 @@ describe.skip('PredictionExplanationModal', () => {
     });
     it('renders SHAP explanation component for each model', () => {
         render(_jsx(PredictionExplanationModal, { open: true, prediction: mockPrediction, onClose: () => { } }));
-        // Check for SHAP explanation elements
+        // Check for SHAP explanation elements;
         expect(screen.getAllByText(/Confidence:/)).toHaveLength(2);
         expect(screen.getAllByText(/Feature Impact/)).toHaveLength(2);
     });

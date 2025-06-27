@@ -1,6 +1,6 @@
-import { ModelOutput, BetRecommendation } from '../types/prediction';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedMetrics } from '../metrics/types';
+import { ModelOutput, BetRecommendation } from '@/types/prediction.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
 export interface ModelPerformanceMetrics {
     totalPredictions: number;
     correctPredictions: number;

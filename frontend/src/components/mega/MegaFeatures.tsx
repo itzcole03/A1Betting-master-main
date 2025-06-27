@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode  } from 'react.ts';
 import {
   CYBER_COLORS,
   CYBER_GRADIENTS,
@@ -6,8 +6,8 @@ import {
   CyberContainer,
   CyberText,
   CyberButton,
-} from "./CyberTheme";
-import { MegaCard, MegaButton, MegaAlert } from "./MegaUI";
+} from './CyberTheme.ts';
+import { MegaCard, MegaButton, MegaAlert } from './MegaUI.ts';
 import {
   Shield,
   Target,
@@ -29,9 +29,9 @@ import {
   LineChart,
   Eye,
   Lightbulb,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// MEGA FEATURES SYSTEM - Consolidates 50+ feature components
+// MEGA FEATURES SYSTEM - Consolidates 50+ feature components;
 
 // ============================================================================
 // MEGA ARBITRAGE ENGINE (Consolidates ArbitrageDetector + Arbitrage + ArbitrageOpportunities)
@@ -63,7 +63,7 @@ export const MegaArbitrageEngine: React.FC<{
   useEffect(() => {
     if (isScanning) {
       const interval = setInterval(() => {
-        // Simulate new arbitrage opportunities
+        // Simulate new arbitrage opportunities;
         const newOpportunity = {
           id: Date.now().toString(),
           sport: ["NBA", "NFL", "MLB", "NHL"][Math.floor(Math.random() * 4)],
@@ -80,155 +80,155 @@ export const MegaArbitrageEngine: React.FC<{
 
         setScanResults((prev) => [newOpportunity, ...prev.slice(0, 4)]);
         setTotalProfit((prev) => prev + newOpportunity.profit);
-      }, 15000); // Every 15 seconds
+      }, 15000); // Every 15 seconds;
 
       return () => clearInterval(interval);
     }
   }, [isScanning]);
 
   return (
-    <div className={`mega-arbitrage-engine ${className}`}>
+    <div className={`mega-arbitrage-engine ${className}`} key={707849}>
       {/* Header Stats */}
-      <div
+      <div;
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "16px",
           marginBottom: "24px",
         }}
-      >
-        <MegaCard variant="glass" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <Shield
+       key={964164}>
+        <MegaCard variant="glass" padding="md" key={634886}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <Shield;
               size={24}
               color={CYBER_COLORS.primary}
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={326778}>
+            <CyberText;
               variant="title"
               style={{
                 color: CYBER_COLORS.primary,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
+             key={410123}>
               {scanResults.length}
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              Active Opportunities
+            <CyberText variant="caption" color="muted" key={505352}>
+              Active Opportunities;
             </CyberText>
           </div>
         </MegaCard>
 
-        <MegaCard variant="glass" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <DollarSign
+        <MegaCard variant="glass" padding="md" key={634886}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <DollarSign;
               size={24}
               color={CYBER_COLORS.secondary}
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={103034}>
+            <CyberText;
               variant="title"
               style={{
                 color: CYBER_COLORS.secondary,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
+             key={699666}>
               ${totalProfit.toFixed(0)}
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              Total Profit Potential
+            <CyberText variant="caption" color="muted" key={505352}>
+              Total Profit Potential;
             </CyberText>
           </div>
         </MegaCard>
 
-        <MegaCard variant="glass" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <TrendingUp
+        <MegaCard variant="glass" padding="md" key={634886}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <TrendingUp;
               size={24}
               color={CYBER_COLORS.accent}
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={809065}>
+            <CyberText;
               variant="title"
               style={{
                 color: CYBER_COLORS.accent,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
-              {scanResults.length > 0
+             key={922463}>
+              {scanResults.length > 0;
                 ? (
                     scanResults.reduce((sum, opp) => sum + opp.roi, 0) /
-                    scanResults.length
+                    scanResults.length;
                   ).toFixed(1)
                 : "0"}
               %
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              Average ROI
+            <CyberText variant="caption" color="muted" key={505352}>
+              Average ROI;
             </CyberText>
           </div>
         </MegaCard>
 
-        <MegaCard variant="glass" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <Activity
+        <MegaCard variant="glass" padding="md" key={634886}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <Activity;
               size={24}
               color={
-                isScanning ? CYBER_COLORS.primary : CYBER_COLORS.text.muted
+                isScanning ? CYBER_COLORS.primary : CYBER_COLORS.text.muted;
               }
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={926220}>
+            <CyberText;
               variant="title"
               style={{
-                color: isScanning
-                  ? CYBER_COLORS.primary
+                color: isScanning;
+                  ? CYBER_COLORS.primary;
                   : CYBER_COLORS.text.muted,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
+             key={297661}>
               {isScanning ? "Active" : "Paused"}
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              Scanner Status
+            <CyberText variant="caption" color="muted" key={505352}>
+              Scanner Status;
             </CyberText>
-            <MegaButton
+            <MegaButton;
               variant={isScanning ? "danger" : "primary"}
               size="sm"
-              onClick={() => onToggleScanning?.(!isScanning)}
+              onClick={() = key={219207}> onToggleScanning?.(!isScanning)}
               style={{ marginTop: "8px", width: "100%" }}
             >
-              {isScanning ? "Stop" : "Start"} Scanning
+              {isScanning ? "Stop" : "Start"} Scanning;
             </MegaButton>
           </div>
         </MegaCard>
       </div>
 
       {/* Opportunities List */}
-      <div style={{ display: "grid", gap: "16px" }}>
+      <div style={{ display: "grid", gap: "16px" }} key={639740}>
         {scanResults.map((opportunity) => (
-          <MegaCard key={opportunity.id} variant="glass" padding="md">
-            <div
+          <MegaCard key={opportunity.id} variant="glass" padding="md" key={497387}>
+            <div;
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
               }}
-            >
-              <div style={{ flex: 1 }}>
-                <div
+             key={988072}>
+              <div style={{ flex: 1 }} key={130883}>
+                <div;
                   style={{
                     display: "flex",
                     alignItems: "center",
                     gap: "8px",
                     marginBottom: "8px",
                   }}
-                >
-                  <span
+                 key={608828}>
+                  <span;
                     style={{
                       padding: "4px 8px",
                       borderRadius: "4px",
@@ -238,10 +238,10 @@ export const MegaArbitrageEngine: React.FC<{
                       color: CYBER_COLORS.primary,
                       border: `1px solid ${CYBER_COLORS.primary}40`,
                     }}
-                  >
+                   key={260254}>
                     {opportunity.sport}
                   </span>
-                  <span
+                  <span;
                     style={{
                       padding: "4px 8px",
                       borderRadius: "4px",
@@ -251,94 +251,94 @@ export const MegaArbitrageEngine: React.FC<{
                       color: CYBER_COLORS.secondary,
                       border: `1px solid ${CYBER_COLORS.secondary}40`,
                     }}
-                  >
-                    ARBITRAGE
+                   key={918016}>
+                    ARBITRAGE;
                   </span>
                 </div>
 
-                <CyberText variant="title" style={{ marginBottom: "4px" }}>
+                <CyberText variant="title" style={{ marginBottom: "4px" }} key={602281}>
                   {opportunity.event} - {opportunity.market}
                 </CyberText>
 
-                <div
+                <div;
                   style={{ display: "flex", gap: "24px", marginBottom: "12px" }}
-                >
-                  <div>
-                    <CyberText variant="caption" color="muted">
-                      Expected Profit
+                 key={487822}>
+                  <div key={241917}>
+                    <CyberText variant="caption" color="muted" key={505352}>
+                      Expected Profit;
                     </CyberText>
-                    <CyberText
+                    <CyberText;
                       variant="body"
                       style={{ color: CYBER_COLORS.primary, fontWeight: "600" }}
-                    >
+                     key={761645}>
                       ${opportunity.profit.toFixed(2)}
                     </CyberText>
                   </div>
-                  <div>
-                    <CyberText variant="caption" color="muted">
-                      ROI
+                  <div key={241917}>
+                    <CyberText variant="caption" color="muted" key={505352}>
+                      ROI;
                     </CyberText>
-                    <CyberText
+                    <CyberText;
                       variant="body"
                       style={{
                         color: CYBER_COLORS.secondary,
                         fontWeight: "600",
                       }}
-                    >
+                     key={25200}>
                       {opportunity.roi.toFixed(1)}%
                     </CyberText>
                   </div>
-                  <div>
-                    <CyberText variant="caption" color="muted">
-                      Time Left
+                  <div key={241917}>
+                    <CyberText variant="caption" color="muted" key={505352}>
+                      Time Left;
                     </CyberText>
-                    <CyberText
+                    <CyberText;
                       variant="body"
                       style={{ color: CYBER_COLORS.accent, fontWeight: "600" }}
-                    >
+                     key={631830}>
                       {opportunity.expiry}
                     </CyberText>
                   </div>
                 </div>
 
-                <div style={{ display: "flex", gap: "16px", fontSize: "12px" }}>
-                  <div>
-                    <CyberText variant="caption" color="muted">
+                <div style={{ display: "flex", gap: "16px", fontSize: "12px" }} key={132851}>
+                  <div key={241917}>
+                    <CyberText variant="caption" color="muted" key={505352}>
                       {opportunity.bookmaker1.name}
                     </CyberText>
-                    <CyberText variant="body">
+                    <CyberText variant="body" key={794207}>
                       {opportunity.bookmaker1.odds.toFixed(2)}
                     </CyberText>
                   </div>
-                  <CyberText variant="caption" color="muted">
-                    vs
+                  <CyberText variant="caption" color="muted" key={505352}>
+                    vs;
                   </CyberText>
-                  <div>
-                    <CyberText variant="caption" color="muted">
+                  <div key={241917}>
+                    <CyberText variant="caption" color="muted" key={505352}>
                       {opportunity.bookmaker2.name}
                     </CyberText>
-                    <CyberText variant="body">
+                    <CyberText variant="body" key={794207}>
                       {opportunity.bookmaker2.odds.toFixed(2)}
                     </CyberText>
                   </div>
                 </div>
               </div>
 
-              <div style={{ textAlign: "right" }}>
-                <MegaButton
+              <div style={{ textAlign: "right" }} key={520160}>
+                <MegaButton;
                   variant="primary"
                   size="sm"
-                  onClick={() =>
-                    console.log("Execute arbitrage:", opportunity.id)
+                  onClick={() = key={874189}>
+                    // console statement removed
                   }
                   style={{ marginBottom: "8px" }}
                 >
-                  Execute
+                  Execute;
                 </MegaButton>
-                <div
+                <div;
                   style={{ fontSize: "10px", color: CYBER_COLORS.text.muted }}
-                >
-                  Risk-free guaranteed profit
+                 key={939582}>
+                  Risk-free guaranteed profit;
                 </div>
               </div>
             </div>
@@ -347,9 +347,9 @@ export const MegaArbitrageEngine: React.FC<{
       </div>
 
       {scanResults.length === 0 && (
-        <MegaAlert type="info" title="No Arbitrage Opportunities">
-          <CyberText variant="body">
-            Scanner is {isScanning ? "actively searching" : "paused"}. Arbitrage
+        <MegaAlert type="info" title="No Arbitrage Opportunities" key={803910}>
+          <CyberText variant="body" key={794207}>
+            Scanner is {isScanning ? "actively searching" : "paused"}. Arbitrage;
             opportunities will appear here when detected.
           </CyberText>
         </MegaAlert>
@@ -387,7 +387,7 @@ export const MegaPredictionEngine: React.FC<{
   useEffect(() => {
     if (isRealTime) {
       const interval = setInterval(() => {
-        // Simulate real-time predictions
+        // Simulate real-time predictions;
         const newPrediction = {
           id: Date.now().toString(),
           sport: ["NBA", "NFL", "MLB", "NHL"][Math.floor(Math.random() * 4)],
@@ -413,121 +413,121 @@ export const MegaPredictionEngine: React.FC<{
           totalPredictions: prev.totalPredictions + 1,
           accuracy: 95 + Math.random() * 5,
         }));
-      }, 20000); // Every 20 seconds
+      }, 20000); // Every 20 seconds;
 
       return () => clearInterval(interval);
     }
   }, [isRealTime]);
 
   return (
-    <div className={`mega-prediction-engine ${className}`}>
+    <div className={`mega-prediction-engine ${className}`} key={865989}>
       {/* System Status */}
-      <div
+      <div;
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "16px",
           marginBottom: "24px",
         }}
-      >
-        <MegaCard variant="glowing" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <Brain
+       key={964164}>
+        <MegaCard variant="glowing" padding="md" key={244626}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <Brain;
               size={24}
               color={CYBER_COLORS.primary}
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={540088}>
+            <CyberText;
               variant="title"
               style={{
                 color: CYBER_COLORS.primary,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
+             key={410123}>
               {systemMetrics.accuracy.toFixed(1)}%
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              System Accuracy
+            <CyberText variant="caption" color="muted" key={505352}>
+              System Accuracy;
             </CyberText>
           </div>
         </MegaCard>
 
-        <MegaCard variant="glass" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <Target
+        <MegaCard variant="glass" padding="md" key={634886}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <Target;
               size={24}
               color={CYBER_COLORS.secondary}
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={860340}>
+            <CyberText;
               variant="title"
               style={{
                 color: CYBER_COLORS.secondary,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
+             key={699666}>
               {systemMetrics.totalPredictions.toLocaleString()}
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              Total Predictions
+            <CyberText variant="caption" color="muted" key={505352}>
+              Total Predictions;
             </CyberText>
           </div>
         </MegaCard>
 
-        <MegaCard variant="glass" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <Zap
+        <MegaCard variant="glass" padding="md" key={634886}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <Zap;
               size={24}
               color={CYBER_COLORS.accent}
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={170295}>
+            <CyberText;
               variant="title"
               style={{
                 color: CYBER_COLORS.accent,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
+             key={922463}>
               {systemMetrics.modelsActive}
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              Active Models
+            <CyberText variant="caption" color="muted" key={505352}>
+              Active Models;
             </CyberText>
           </div>
         </MegaCard>
 
-        <MegaCard variant="glass" padding="md">
-          <div style={{ textAlign: "center" }}>
-            <Activity
+        <MegaCard variant="glass" padding="md" key={634886}>
+          <div style={{ textAlign: "center" }} key={912688}>
+            <Activity;
               size={24}
               color={CYBER_COLORS.purple}
               style={{ marginBottom: "8px" }}
-            />
-            <CyberText
+            / key={556025}>
+            <CyberText;
               variant="title"
               style={{
                 color: CYBER_COLORS.purple,
                 fontSize: "20px",
                 marginBottom: "4px",
               }}
-            >
-              {(systemMetrics.predictionLatency * 1000).toFixed(0)}ms
+             key={435592}>
+              {(systemMetrics.predictionLatency * 1000).toFixed(0)}ms;
             </CyberText>
-            <CyberText variant="caption" color="muted">
-              Latency
+            <CyberText variant="caption" color="muted" key={505352}>
+              Latency;
             </CyberText>
           </div>
         </MegaCard>
       </div>
 
       {/* Live Predictions */}
-      <MegaCard variant="glass" padding="lg" title="Real-time Predictions">
-        <div style={{ display: "grid", gap: "16px" }}>
+      <MegaCard variant="glass" padding="lg" title="Real-time Predictions" key={777083}>
+        <div style={{ display: "grid", gap: "16px" }} key={639740}>
           {livePredictions.map((prediction) => (
-            <div
+            <div;
               key={prediction.id}
               style={{
                 padding: "16px",
@@ -535,25 +535,25 @@ export const MegaPredictionEngine: React.FC<{
                 backgroundColor: "rgba(255, 255, 255, 0.02)",
                 border: "1px solid rgba(255, 255, 255, 0.05)",
               }}
-            >
-              <div
+             key={90059}>
+              <div;
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "flex-start",
                   marginBottom: "12px",
                 }}
-              >
-                <div>
-                  <div
+               key={347009}>
+                <div key={241917}>
+                  <div;
                     style={{
                       display: "flex",
                       alignItems: "center",
                       gap: "8px",
                       marginBottom: "4px",
                     }}
-                  >
-                    <span
+                   key={737746}>
+                    <span;
                       style={{
                         padding: "2px 6px",
                         borderRadius: "4px",
@@ -563,44 +563,44 @@ export const MegaPredictionEngine: React.FC<{
                         color: CYBER_COLORS.accent,
                         border: `1px solid ${CYBER_COLORS.accent}40`,
                       }}
-                    >
+                     key={184612}>
                       {prediction.sport}
                     </span>
-                    <CyberText variant="caption" color="muted">
+                    <CyberText variant="caption" color="muted" key={505352}>
                       {prediction.timestamp}
                     </CyberText>
                   </div>
-                  <CyberText
+                  <CyberText;
                     variant="title"
                     style={{ fontSize: "16px", marginBottom: "4px" }}
-                  >
+                   key={581991}>
                     {prediction.event}
                   </CyberText>
-                  <CyberText
+                  <CyberText;
                     variant="body"
                     style={{ color: CYBER_COLORS.primary, fontWeight: "600" }}
-                  >
+                   key={913089}>
                     Prediction: {prediction.prediction}
                   </CyberText>
                 </div>
 
-                <div style={{ textAlign: "right" }}>
-                  <div style={{ marginBottom: "8px" }}>
-                    <CyberText variant="caption" color="muted">
-                      Confidence
+                <div style={{ textAlign: "right" }} key={520160}>
+                  <div style={{ marginBottom: "8px" }} key={867857}>
+                    <CyberText variant="caption" color="muted" key={505352}>
+                      Confidence;
                     </CyberText>
-                    <CyberText
+                    <CyberText;
                       variant="body"
                       style={{
                         color: CYBER_COLORS.primary,
                         fontWeight: "600",
                         fontSize: "18px",
                       }}
-                    >
+                     key={800591}>
                       {prediction.confidence.toFixed(1)}%
                     </CyberText>
                   </div>
-                  <div
+                  <div;
                     style={{
                       width: "60px",
                       height: "4px",
@@ -608,33 +608,33 @@ export const MegaPredictionEngine: React.FC<{
                       borderRadius: "2px",
                       overflow: "hidden",
                     }}
-                  >
-                    <div
+                   key={963118}>
+                    <div;
                       style={{
                         width: `${prediction.confidence}%`,
                         height: "100%",
                         backgroundColor: CYBER_COLORS.primary,
                         transition: "width 0.3s ease",
                       }}
-                    />
+                    / key={984931}>
                   </div>
                 </div>
               </div>
 
-              <div style={{ fontSize: "12px" }}>
-                <CyberText variant="caption" color="muted">
+              <div style={{ fontSize: "12px" }} key={925029}>
+                <CyberText variant="caption" color="muted" key={505352}>
                   Model: {prediction.modelUsed}
                 </CyberText>
-                <div
+                <div;
                   style={{
                     marginTop: "4px",
                     display: "flex",
                     gap: "8px",
                     flexWrap: "wrap",
                   }}
-                >
+                 key={83540}>
                   {prediction.factors.map((factor, index) => (
-                    <span
+                    <span;
                       key={index}
                       style={{
                         padding: "2px 6px",
@@ -643,7 +643,7 @@ export const MegaPredictionEngine: React.FC<{
                         backgroundColor: "rgba(255, 255, 255, 0.05)",
                         color: CYBER_COLORS.text.muted,
                       }}
-                    >
+                     key={477841}>
                       {factor}
                     </span>
                   ))}
@@ -655,9 +655,9 @@ export const MegaPredictionEngine: React.FC<{
       </MegaCard>
 
       {livePredictions.length === 0 && (
-        <MegaAlert type="info" title="Prediction Engine Initializing">
-          <CyberText variant="body">
-            Quantum neural networks are processing market data. Predictions will
+        <MegaAlert type="info" title="Prediction Engine Initializing" key={591019}>
+          <CyberText variant="body" key={794207}>
+            Quantum neural networks are processing market data. Predictions will;
             appear here momentarily.
           </CyberText>
         </MegaAlert>
@@ -688,13 +688,11 @@ export const MegaRevolutionaryInterface: React.FC<{
     trending: "up" as const,
   };
 
-  const data = accuracyData || defaultData;
-
   return (
-    <div className={`mega-revolutionary-interface ${className}`}>
-      <MegaCard variant="glowing" padding="lg">
-        <div style={{ textAlign: "center", marginBottom: "32px" }}>
-          <div
+    <div className={`mega-revolutionary-interface ${className}`} key={657578}>
+      <MegaCard variant="glowing" padding="lg" key={578134}>
+        <div style={{ textAlign: "center", marginBottom: "32px" }} key={707276}>
+          <div;
             style={{
               width: "80px",
               height: "80px",
@@ -706,46 +704,46 @@ export const MegaRevolutionaryInterface: React.FC<{
               margin: "0 auto 16px",
               animation: "cyber-glow 2s ease-in-out infinite alternate",
             }}
-          >
-            <Star size={40} color="#000" />
+           key={912892}>
+            <Star size={40} color="#000" / key={210957}>
           </div>
 
-          <CyberText
+          <CyberText;
             variant="title"
             style={{
               fontSize: "48px",
               color: CYBER_COLORS.primary,
               marginBottom: "8px",
             }}
-          >
+           key={425848}>
             {data.overall.toFixed(1)}%
           </CyberText>
 
-          <CyberText
+          <CyberText;
             variant="title"
             style={{ fontSize: "24px", marginBottom: "8px" }}
-          >
-            Revolutionary Accuracy
+           key={628173}>
+            Revolutionary Accuracy;
           </CyberText>
 
-          <div
+          <div;
             style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "8px",
             }}
-          >
+           key={107255}>
             {data.trending === "up" && (
-              <ArrowUp size={16} color={CYBER_COLORS.primary} />
+              <ArrowUp size={16} color={CYBER_COLORS.primary} / key={932121}>
             )}
             {data.trending === "down" && (
-              <ArrowDown size={16} color="#ff4757" />
+              <ArrowDown size={16} color="#ff4757" / key={661685}>
             )}
-            <CyberText
+            <CyberText;
               variant="body"
               color={data.trending === "up" ? "accent" : "muted"}
-            >
+             key={60977}>
               {data.trending === "up"
                 ? "Trending Up"
                 : data.trending === "down"
@@ -755,15 +753,15 @@ export const MegaRevolutionaryInterface: React.FC<{
           </div>
         </div>
 
-        <div
+        <div;
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
             gap: "16px",
           }}
-        >
+         key={528922}>
           {data.byModel.map((model, index) => (
-            <div
+            <div;
               key={index}
               style={{
                 padding: "16px",
@@ -771,38 +769,38 @@ export const MegaRevolutionaryInterface: React.FC<{
                 backgroundColor: "rgba(255, 255, 255, 0.02)",
                 border: "1px solid rgba(255, 255, 255, 0.05)",
               }}
-            >
-              <CyberText
+             key={761494}>
+              <CyberText;
                 variant="title"
                 style={{ fontSize: "16px", marginBottom: "8px" }}
-              >
+               key={98770}>
                 {model.name}
               </CyberText>
 
-              <div
+              <div;
                 style={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   marginBottom: "8px",
                 }}
-              >
-                <CyberText
+               key={390269}>
+                <CyberText;
                   variant="body"
                   style={{
                     color: CYBER_COLORS.primary,
                     fontSize: "20px",
                     fontWeight: "600",
                   }}
-                >
+                 key={992431}>
                   {model.accuracy.toFixed(1)}%
                 </CyberText>
-                <CyberText variant="caption" color="muted">
-                  {model.predictions} predictions
+                <CyberText variant="caption" color="muted" key={505352}>
+                  {model.predictions} predictions;
                 </CyberText>
               </div>
 
-              <div
+              <div;
                 style={{
                   width: "100%",
                   height: "6px",
@@ -810,15 +808,15 @@ export const MegaRevolutionaryInterface: React.FC<{
                   borderRadius: "3px",
                   overflow: "hidden",
                 }}
-              >
-                <div
+               key={140560}>
+                <div;
                   style={{
                     width: `${model.accuracy}%`,
                     height: "100%",
                     backgroundColor: CYBER_COLORS.primary,
                     transition: "width 0.3s ease",
                   }}
-                />
+                / key={434752}>
               </div>
             </div>
           ))}

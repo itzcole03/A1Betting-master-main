@@ -1,12 +1,11 @@
-import React from 'react';
-import { Box, Typography, Grid, Paper, useTheme } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { getActiveBets, getTotalWinnings, getWinRate } from '@services/bettingService';
-import LoadingState from '@components/core/LoadingState';
-import ErrorState from '@components/core/ErrorState';
+import React from 'react.ts';
+import { Box, Typography, Grid, Paper, useTheme } from '@mui/material.ts';
+import { useQuery } from '@tanstack/react-query.ts';
+import { getActiveBets, getTotalWinnings, getWinRate } from '@services/bettingService.ts';
+import LoadingState from '@components/core/LoadingState.ts';
+import ErrorState from '@components/core/ErrorState.ts';
 
 const Dashboard = () => {
-  const theme = useTheme();
 
   const {
     data: activeBets = 0,
@@ -39,14 +38,14 @@ const Dashboard = () => {
   });
 
   if (isLoadingBets || isLoadingWinnings || isLoadingWinRate) {
-    return <LoadingState message="Loading dashboard data..." />;
+    return <LoadingState message="Loading dashboard data..." / key={572352}>;
   }
 
   if (betsError || winningsError || winRateError) {
     return (
-      <ErrorState
+      <ErrorState;
         message="Failed to load dashboard data"
-        onRetry={() => {
+        onRetry={() = key={452546}> {
           refetchBets();
           refetchWinnings();
           refetchWinRate();
@@ -56,13 +55,13 @@ const Dashboard = () => {
   }
 
   return (
-    <Box>
-      <Typography gutterBottom variant="h4">
-        Dashboard
+    <Box key={485947}>
+      <Typography gutterBottom variant="h4" key={857824}>
+        Dashboard;
       </Typography>
-      <Grid container spacing={3}>
-        <Grid item lg={4} md={6} xs={12}>
-          <Paper
+      <Grid container spacing={3} key={459826}>
+        <Grid item lg={4} md={6} xs={12} key={839022}>
+          <Paper;
             sx={{
               p: 3,
               display: 'flex',
@@ -74,17 +73,17 @@ const Dashboard = () => {
                 boxShadow: theme.shadows[4],
               },
             }}
-          >
-            <Typography gutterBottom variant="h6">
-              Active Bets
+           key={917336}>
+            <Typography gutterBottom variant="h6" key={368112}>
+              Active Bets;
             </Typography>
-            <Typography color="primary" variant="h3">
+            <Typography color="primary" variant="h3" key={918348}>
               {activeBets}
             </Typography>
           </Paper>
         </Grid>
-        <Grid item lg={4} md={6} xs={12}>
-          <Paper
+        <Grid item lg={4} md={6} xs={12} key={839022}>
+          <Paper;
             sx={{
               p: 3,
               display: 'flex',
@@ -96,17 +95,17 @@ const Dashboard = () => {
                 boxShadow: theme.shadows[4],
               },
             }}
-          >
-            <Typography gutterBottom variant="h6">
-              Total Winnings
+           key={917336}>
+            <Typography gutterBottom variant="h6" key={368112}>
+              Total Winnings;
             </Typography>
-            <Typography color="success.main" variant="h3">
+            <Typography color="success.main" variant="h3" key={72635}>
               ${totalWinnings.toLocaleString()}
             </Typography>
           </Paper>
         </Grid>
-        <Grid item lg={4} md={6} xs={12}>
-          <Paper
+        <Grid item lg={4} md={6} xs={12} key={839022}>
+          <Paper;
             sx={{
               p: 3,
               display: 'flex',
@@ -118,11 +117,11 @@ const Dashboard = () => {
                 boxShadow: theme.shadows[4],
               },
             }}
-          >
-            <Typography gutterBottom variant="h6">
-              Win Rate
+           key={917336}>
+            <Typography gutterBottom variant="h6" key={368112}>
+              Win Rate;
             </Typography>
-            <Typography color="info.main" variant="h3">
+            <Typography color="info.main" variant="h3" key={925701}>
               {winRate}%
             </Typography>
           </Paper>

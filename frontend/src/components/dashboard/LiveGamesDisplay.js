@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { useState, useEffect } from "react";
 export function LiveGamesDisplay({ games: propGames, } = {}) {
     const [games, setGames] = useState([]);
-    // Mock data for when no games are provided
+    // Mock data for when no games are provided;
     useEffect(() => {
         if (!propGames) {
             setGames([
@@ -13,7 +13,7 @@ export function LiveGamesDisplay({ games: propGames, } = {}) {
                     sport: "NBA",
                     homeTeam: "Lakers",
                     awayTeam: "Warriors",
-                    gameTime: new Date(Date.now() + 2 * 60 * 60 * 1000), // 2 hours from now
+                    gameTime: new Date(Date.now() + 2 * 60 * 60 * 1000), // 2 hours from now;
                     status: "Scheduled",
                     venue: "Crypto.com Arena",
                 },
@@ -22,7 +22,7 @@ export function LiveGamesDisplay({ games: propGames, } = {}) {
                     sport: "NBA",
                     homeTeam: "Celtics",
                     awayTeam: "Heat",
-                    gameTime: new Date(Date.now() + 4 * 60 * 60 * 1000), // 4 hours from now
+                    gameTime: new Date(Date.now() + 4 * 60 * 60 * 1000), // 4 hours from now;
                     status: "Scheduled",
                     venue: "TD Garden",
                 },

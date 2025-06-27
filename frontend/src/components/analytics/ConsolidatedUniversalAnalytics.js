@@ -2,10 +2,10 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import ErrorBoundary from "../ErrorBoundary";
 import UniversalAnalytics from "./UniversalAnalytics";
 // ============================================================================
-// MAIN CONSOLIDATED ANALYTICS COMPONENT
+// MAIN CONSOLIDATED ANALYTICS COMPONENT;
 // ============================================================================
 /**
- * ConsolidatedUniversalAnalytics - The unified analytics component
+ * ConsolidatedUniversalAnalytics - The unified analytics component;
  *
  * This component consolidates ALL analytics variants into a single, comprehensive component:
  * - AdvancedAnalytics (advanced metrics)
@@ -36,11 +36,11 @@ import UniversalAnalytics from "./UniversalAnalytics";
  * - SuperAnalyticsEngine (super-powered)
  *
  * Features preserved from ALL variants:
- * ✅ Multi-tab interface: overview, models, performance, risk, betting, system
- * ✅ Real-time metrics monitoring and model performance analysis
- * ✅ Comprehensive betting analytics and system health monitoring
- * ✅ Advanced charting, alert management, data export capabilities
- * ✅ Time range filtering and model comparison tools
+ * ✅ Multi-tab interface: overview, models, performance, risk, betting, system;
+ * ✅ Real-time metrics monitoring and model performance analysis;
+ * ✅ Comprehensive betting analytics and system health monitoring;
+ * ✅ Advanced charting, alert management, data export capabilities;
+ * ✅ Time range filtering and model comparison tools;
  */
 export const ConsolidatedUniversalAnalytics = ({ variant = "advanced", features = {
     realTime: true,
@@ -54,8 +54,8 @@ export const ConsolidatedUniversalAnalytics = ({ variant = "advanced", features 
     alerts: true,
     export: true,
 }, timeRange = "1w", refreshInterval = 30000, className = "", }) => {
-    // Return the clean analytics without nested navigation
-    // All features are now integrated into the main app navigation
+    // Return the clean analytics without nested navigation;
+    // All features are now integrated into the main app navigation;
     return (_jsx(ErrorBoundary, { children: _jsx("div", { className: className, children: _jsx(UniversalAnalytics, {}) }) }));
 };
 export default ConsolidatedUniversalAnalytics;

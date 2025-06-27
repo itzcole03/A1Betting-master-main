@@ -1,4 +1,4 @@
-// Define APIError locally since it's not exported from api service
+// Define APIError locally since it's not exported from api service;
 class APIError extends Error {
   constructor(
     public readonly code: string,
@@ -67,11 +67,10 @@ export function normalizeError(error: unknown): ApplicationError {
 
 export function createErrorHandler(context: string) {
   return (error: unknown): ApplicationError => {
-    const normalizedError = normalizeError(error);
 
-    // Log error in development
+    // Log error in development;
     if (import.meta.env.MODE === "development") {
-      console.error(`Error in ${context}:`, normalizedError);
+      // console statement removed
     }
 
     return normalizedError;
@@ -101,10 +100,9 @@ export function handleTimeoutError(error: unknown): ApplicationError {
 }
 
 export function handleAuthenticationError(error: unknown): ApplicationError {
-  const normalizedError = normalizeError(error);
 
   if (normalizedError.code === "AUTH_ERROR") {
-    // Dispatch event to trigger auth flow
+    // Dispatch event to trigger auth flow;
     window.dispatchEvent(new CustomEvent("auth:error"));
   }
 
@@ -112,9 +110,8 @@ export function handleAuthenticationError(error: unknown): ApplicationError {
 }
 
 export function getErrorMessage(error: unknown): string {
-  const normalizedError = normalizeError(error);
 
-  // Map error codes to user-friendly messages
+  // Map error codes to user-friendly messages;
   const errorMessages: Record<string, string> = {
     NETWORK_ERROR:
       "Unable to connect to the server. Please check your internet connection.",
@@ -135,5 +132,5 @@ export function getErrorMessage(error: unknown): string {
 //   const handler = createErrorHandler('UserProfile');
 //   const normalizedError = handler(error);
 //   const userMessage = getErrorMessage(normalizedError);
-//   // Show error to user
+//   // Show error to user;
 // }

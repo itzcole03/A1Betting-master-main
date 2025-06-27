@@ -6,7 +6,7 @@ class ClusteringService {
         this.initializeOptimizers();
     }
     async initializeClusteringModels() {
-        // Initialize K-Means
+        // Initialize K-Means;
         this.clusteringModels.set('kmeans', {
             type: 'kmeans',
             params: {
@@ -14,7 +14,7 @@ class ClusteringService {
                 maxIterations: 100,
             },
         });
-        // Initialize DBSCAN
+        // Initialize DBSCAN;
         this.clusteringModels.set('dbscan', {
             type: 'dbscan',
             params: {
@@ -22,7 +22,7 @@ class ClusteringService {
                 minSamples: 5,
             },
         });
-        // Initialize Hierarchical Clustering
+        // Initialize Hierarchical Clustering;
         this.clusteringModels.set('hierarchical', {
             type: 'hierarchical',
             params: {
@@ -30,7 +30,7 @@ class ClusteringService {
                 linkage: 'ward',
             },
         });
-        // Initialize Gaussian Mixture Model
+        // Initialize Gaussian Mixture Model;
         this.clusteringModels.set('gmm', {
             type: 'gmm',
             params: {
@@ -38,21 +38,21 @@ class ClusteringService {
                 covarianceType: 'full',
             },
         });
-        // Initialize PCA
+        // Initialize PCA;
         this.clusteringModels.set('pca', {
             type: 'pca',
             params: {
                 nComponents: 2,
             },
         });
-        // Initialize ICA
+        // Initialize ICA;
         this.clusteringModels.set('ica', {
             type: 'ica',
             params: {
                 nComponents: 2,
             },
         });
-        // Initialize t-SNE
+        // Initialize t-SNE;
         this.clusteringModels.set('tsne', {
             type: 'tsne',
             params: {
@@ -60,7 +60,7 @@ class ClusteringService {
                 nIterations: 1000,
             },
         });
-        // Initialize UMAP
+        // Initialize UMAP;
         this.clusteringModels.set('umap', {
             type: 'umap',
             params: {
@@ -70,7 +70,7 @@ class ClusteringService {
         });
     }
     async initializeOptimizers() {
-        // Initialize Genetic Algorithm
+        // Initialize Genetic Algorithm;
         this.optimizers.set('genetic', {
             type: 'genetic',
             params: {
@@ -80,7 +80,7 @@ class ClusteringService {
                 crossoverRate: 0.7,
             },
         });
-        // Initialize Particle Swarm Optimization
+        // Initialize Particle Swarm Optimization;
         this.optimizers.set('particleSwarm', {
             type: 'particleSwarm',
             params: {
@@ -90,7 +90,7 @@ class ClusteringService {
                 social: 1.5,
             },
         });
-        // Initialize Simulated Annealing
+        // Initialize Simulated Annealing;
         this.optimizers.set('simulatedAnnealing', {
             type: 'simulatedAnnealing',
             params: {
@@ -99,7 +99,7 @@ class ClusteringService {
                 nIterations: 1000,
             },
         });
-        // Initialize Bayesian Optimization
+        // Initialize Bayesian Optimization;
         this.optimizers.set('bayesian', {
             type: 'bayesian',
             params: {
@@ -107,21 +107,21 @@ class ClusteringService {
                 explorationRate: 0.1,
             },
         });
-        // Initialize Grid Search
+        // Initialize Grid Search;
         this.optimizers.set('gridSearch', {
             type: 'gridSearch',
             params: {
                 nPoints: 10,
             },
         });
-        // Initialize Random Search
+        // Initialize Random Search;
         this.optimizers.set('randomSearch', {
             type: 'randomSearch',
             params: {
                 nIterations: 100,
             },
         });
-        // Initialize Differential Evolution
+        // Initialize Differential Evolution;
         this.optimizers.set('differential', {
             type: 'differential',
             params: {
@@ -130,7 +130,7 @@ class ClusteringService {
                 crossoverRate: 0.7,
             },
         });
-        // Initialize Ant Colony Optimization
+        // Initialize Ant Colony Optimization;
         this.optimizers.set('antColony', {
             type: 'antColony',
             params: {
@@ -141,7 +141,7 @@ class ClusteringService {
         });
     }
     async cluster(data, config) {
-        const model = this.clusteringModels.get(config.modelType);
+
         if (!model) {
             throw new Error(`Clustering model ${config.modelType} not found`);
         }
@@ -149,7 +149,7 @@ class ClusteringService {
             return await this.performClustering(model, data, config);
         }
         catch (error) {
-            console.error(`Error clustering with ${config.modelType}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -176,39 +176,39 @@ class ClusteringService {
         }
     }
     async performKMeans(_data, _config) {
-        // Implement K-Means clustering
+        // Implement K-Means clustering;
         return { clusters: [] };
     }
     async performDBSCAN(_data, _config) {
-        // Implement DBSCAN clustering
+        // Implement DBSCAN clustering;
         return { clusters: [] };
     }
     async performHierarchical(_data, _config) {
-        // Implement Hierarchical clustering
+        // Implement Hierarchical clustering;
         return { clusters: [] };
     }
     async performGMM(_data, _config) {
-        // Implement GMM clustering
+        // Implement GMM clustering;
         return { clusters: [] };
     }
     async performPCA(_data, _config) {
-        // Implement PCA dimensionality reduction
+        // Implement PCA dimensionality reduction;
         return { clusters: [], embedding: [] };
     }
     async performICA(_data, _config) {
-        // Implement ICA dimensionality reduction
+        // Implement ICA dimensionality reduction;
         return { clusters: [], embedding: [] };
     }
     async performTSNE(_data, _config) {
-        // Implement t-SNE dimensionality reduction
+        // Implement t-SNE dimensionality reduction;
         return { clusters: [], embedding: [] };
     }
     async performUMAP(_data, _config) {
-        // Implement UMAP dimensionality reduction
+        // Implement UMAP dimensionality reduction;
         return { clusters: [], embedding: [] };
     }
     async optimize(config) {
-        const optimizer = this.optimizers.get(config.algorithm);
+
         if (!optimizer) {
             throw new Error(`Optimizer ${config.algorithm} not found`);
         }
@@ -216,7 +216,7 @@ class ClusteringService {
             return await this.runOptimization(optimizer, config);
         }
         catch (error) {
-            console.error(`Error optimizing with ${config.algorithm}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -243,35 +243,35 @@ class ClusteringService {
         }
     }
     async runGeneticAlgorithm(_config) {
-        // Implement Genetic Algorithm optimization
+        // Implement Genetic Algorithm optimization;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
     async runParticleSwarm(_config) {
-        // Implement Particle Swarm Optimization
+        // Implement Particle Swarm Optimization;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
     async runSimulatedAnnealing(_config) {
-        // Implement Simulated Annealing
+        // Implement Simulated Annealing;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
     async runBayesianOptimization(_config) {
-        // Implement Bayesian Optimization
+        // Implement Bayesian Optimization;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
     async runGridSearch(_config) {
-        // Implement Grid Search
+        // Implement Grid Search;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
     async runRandomSearch(_config) {
-        // Implement Random Search
+        // Implement Random Search;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
     async runDifferentialEvolution(_config) {
-        // Implement Differential Evolution
+        // Implement Differential Evolution;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
     async runAntColony(_config) {
-        // Implement Ant Colony Optimization
+        // Implement Ant Colony Optimization;
         return { bestParams: {}, bestValue: 0, history: [] };
     }
 }

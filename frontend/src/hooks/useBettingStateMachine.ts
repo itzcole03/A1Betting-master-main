@@ -1,7 +1,7 @@
-import useStore from '../store/useStore';
-import { BettingDecision, PlayerProp } from '@/types';
-import { useCallback } from 'react';
-import { useStateMachine } from './useStateMachine';
+import useStore from '@/store/useStore.ts';
+import { BettingDecision, PlayerProp } from '@/types.ts';
+import { useCallback } from 'react.ts';
+import { useStateMachine } from './useStateMachine.ts';
 
 
 
@@ -38,7 +38,7 @@ interface UseBettingStateMachineOptions {
 
 export function useBettingStateMachine({
   onStateChange,
-  onSubmit
+  onSubmit;
 }: UseBettingStateMachineOptions = {}) {
   const { addToast } = useStore();
 
@@ -48,7 +48,7 @@ export function useBettingStateMachine({
       selectedProps: [],
       analysis: null,
       stake: 0,
-      error: null
+      error: null;
     },
     states: {
       idle: {
@@ -56,7 +56,7 @@ export function useBettingStateMachine({
           SELECT: { target: 'selecting' }
         },
         onEnter: (context) => {
-          // Reset context when entering idle state
+          // Reset context when entering idle state;
           context.selectedProps = [];
           context.analysis = null;
           context.stake = 0;
@@ -67,7 +67,7 @@ export function useBettingStateMachine({
         on: {
           ANALYZE: {
             target: 'analyzing',
-            guard: (context) => context.selectedProps.length > 0
+            guard: (context) => context.selectedProps.length > 0;
           },
           RESET: { target: 'idle' }
         }
@@ -79,8 +79,8 @@ export function useBettingStateMachine({
         },
         onEnter: async (context) => {
           try {
-            // Analysis will be handled by useAnalytics hook
-            // This is just state management
+            // Analysis will be handled by useAnalytics hook;
+            // This is just state management;
             context.error = null;
           } catch (err) {
             context.error = err instanceof Error ? err : new Error('Analysis failed');
@@ -92,7 +92,7 @@ export function useBettingStateMachine({
         on: {
           CONFIRM: {
             target: 'confirming',
-            guard: (context) => context.analysis !== null && context.stake > 0
+            guard: (context) => context.analysis !== null && context.stake > 0;
           },
           SELECT: { target: 'selecting' },
           RESET: { target: 'idle' }
@@ -169,6 +169,6 @@ export function useBettingStateMachine({
     send: machine.send,
     selectProps,
     setStake,
-    setAnalysis
+    setAnalysis;
   };
 } 

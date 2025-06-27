@@ -1,4 +1,4 @@
-import { RiskProfileType, BettingMetrics, BettingHistoryEntry, BettingOpportunity, BetRecommendation } from '../../types/betting';
+import { RiskProfileType, BettingMetrics, BettingHistoryEntry, BettingOpportunity, BetRecommendation } from '@/types/betting.ts';
 interface BettingConfig {
     minConfidence: number;
     maxStakePercentage: number;

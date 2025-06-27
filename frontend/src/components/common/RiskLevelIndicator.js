@@ -26,7 +26,7 @@ const getRiskLevelConfig = (level) => {
     }
 };
 export const RiskLevelIndicator = ({ level, showIcon = true, }) => {
-    const config = getRiskLevelConfig(level);
+
     return (_jsx(Tooltip, { title: `${config.label} - ${getRiskLevelDescription(level)}`, children: _jsx(Chip, { className: "transition-colors duration-300", color: config.color, icon: showIcon ? config.icon : undefined, label: config.label, size: "small", variant: "outlined" }) }));
 };
 const getRiskLevelDescription = (level) => {

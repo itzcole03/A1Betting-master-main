@@ -86,7 +86,7 @@ describe('FinalPredictionEngine', () => {
             maxStake: 100,
         };
         it('should generate a valid prediction', async () => {
-            const prediction = await engine.generatePrediction(mockModelOutputs, mockRiskProfile);
+
             expect(prediction).toMatchObject({
                 finalScore: expect.any(Number),
                 confidence: expect.any(Number),
@@ -148,7 +148,7 @@ describe('FinalPredictionEngine', () => {
     });
     describe('getEngineMetrics', () => {
         it('should return engine metrics', async () => {
-            const metrics = await engine.getEngineMetrics();
+
             expect(metrics).toMatchObject({
                 modelCount: expect.any(Number),
                 riskProfileCount: expect.any(Number),
@@ -190,7 +190,7 @@ describe('FinalPredictionEngine', () => {
                     decisionPath: [],
                 },
             };
-            const isValid = await engine.validatePrediction(validPrediction);
+
             expect(isValid).toBe(true);
         });
         it('should reject an invalid prediction', async () => {
@@ -198,15 +198,15 @@ describe('FinalPredictionEngine', () => {
                 id: 'test-id',
                 timestamp: Date.now(),
                 confidenceWindow: {
-                    start: Date.now() + 1000, // Invalid: start after end
+                    start: Date.now() + 1000, // Invalid: start after end;
                     end: Date.now(),
                 },
                 finalScore: 0.8,
                 confidence: 0.9,
-                riskLevel: 'high', // Changed from 'invalid' to valid RiskLevel
+                riskLevel: 'high', // Changed from 'invalid' to valid RiskLevel;
                 isSureOdds: true,
                 payoutRange: {
-                    min: 0.9, // Invalid: min > max
+                    min: 0.9, // Invalid: min > max;
                     max: 0.7,
                     expected: 0.8,
                 },
@@ -225,7 +225,7 @@ describe('FinalPredictionEngine', () => {
                     decisionPath: [],
                 },
             };
-            const isValid = await engine.validatePrediction(invalidPrediction);
+
             expect(isValid).toBe(false);
         });
     });

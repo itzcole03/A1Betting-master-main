@@ -1,5 +1,5 @@
-import { ModelMetadata } from './ModelMetadata';
-import { ModelMetrics } from '../types/ModelMetrics';
+import { ModelMetadata } from './ModelMetadata.ts';
+import { ModelMetrics } from '@/types/ModelMetrics.ts';
 export declare class ModelVersion {
     private readonly major;
     private readonly minor;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from 'react.ts';
 import {
   CYBER_COLORS,
   CYBER_GRADIENTS,
@@ -6,7 +6,7 @@ import {
   CyberContainer,
   CyberText,
   CyberButton,
-} from "./CyberTheme";
+} from './CyberTheme.ts';
 import {
   DollarSign,
   Target,
@@ -24,7 +24,7 @@ import {
   XCircle,
   Clock,
   Percent,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
 // MEGA BETTING COMPONENT - Consolidates UltimateMoneyMaker, BettingInterface, Arbitrage, etc.
 const MegaBetting: React.FC<{
@@ -96,12 +96,12 @@ const MegaBetting: React.FC<{
     weeklyROI: 8.7,
   });
 
-  // Auto-scan for opportunities every 30 seconds
+  // Auto-scan for opportunities every 30 seconds;
   useEffect(() => {
     if (!scanning) return;
 
     const interval = setInterval(() => {
-      // Simulate new opportunities
+      // Simulate new opportunities;
       const newOpportunity = {
         id: Date.now(),
         type: ["arbitrage", "value", "kelly"][Math.floor(Math.random() * 3)],
@@ -162,16 +162,16 @@ const MegaBetting: React.FC<{
   };
 
   const renderOpportunitiesTab = () => (
-    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "16px" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "16px" }} key={500002}>
       {/* Stats Overview */}
-      <div
+      <div;
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           gap: "16px",
           marginBottom: "24px",
         }}
-      >
+       key={964164}>
         {[
           {
             label: "Active Opportunities",
@@ -198,29 +198,29 @@ const MegaBetting: React.FC<{
             color: CYBER_COLORS.purple,
           },
         ].map((stat, index) => {
-          const Icon = stat.icon;
+
           return (
-            <CyberContainer
+            <CyberContainer;
               key={index}
               variant="card"
               style={{ padding: "16px", textAlign: "center" }}
-            >
-              <Icon
+             key={636730}>
+              <Icon;
                 size={24}
                 color={stat.color}
                 style={{ marginBottom: "8px", margin: "0 auto" }}
-              />
-              <CyberText
+              / key={270263}>
+              <CyberText;
                 variant="title"
                 style={{
                   color: stat.color,
                   fontSize: "20px",
                   marginBottom: "4px",
                 }}
-              >
+               key={65247}>
                 {stat.value}
               </CyberText>
-              <CyberText variant="caption" color="muted">
+              <CyberText variant="caption" color="muted" key={505352}>
                 {stat.label}
               </CyberText>
             </CyberContainer>
@@ -230,25 +230,25 @@ const MegaBetting: React.FC<{
 
       {/* Opportunities List */}
       {opportunities.map((opp) => (
-        <CyberContainer key={opp.id} variant="card" style={{ padding: "20px" }}>
-          <div
+        <CyberContainer key={opp.id} variant="card" style={{ padding: "20px" }} key={857384}>
+          <div;
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-start",
               marginBottom: "16px",
             }}
-          >
-            <div style={{ flex: 1 }}>
-              <div
+           key={973725}>
+            <div style={{ flex: 1 }} key={130883}>
+              <div;
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: "12px",
                   marginBottom: "8px",
                 }}
-              >
-                <span
+               key={633263}>
+                <span;
                   style={{
                     padding: "4px 8px",
                     borderRadius: "4px",
@@ -259,10 +259,10 @@ const MegaBetting: React.FC<{
                     color: getTypeColor(opp.type),
                     border: `1px solid ${getTypeColor(opp.type)}40`,
                   }}
-                >
+                 key={144567}>
                   {opp.type}
                 </span>
-                <span
+                <span;
                   style={{
                     padding: "4px 8px",
                     borderRadius: "4px",
@@ -272,82 +272,82 @@ const MegaBetting: React.FC<{
                     color: getRiskColor(opp.risk),
                     border: `1px solid ${getRiskColor(opp.risk)}40`,
                   }}
-                >
-                  {opp.risk.toUpperCase()} RISK
+                 key={69479}>
+                  {opp.risk.toUpperCase()} RISK;
                 </span>
               </div>
-              <CyberText variant="title" style={{ marginBottom: "4px" }}>
+              <CyberText variant="title" style={{ marginBottom: "4px" }} key={602281}>
                 {opp.game} - {opp.market}
               </CyberText>
-              <CyberText
+              <CyberText;
                 variant="body"
                 color="muted"
                 style={{ marginBottom: "8px" }}
-              >
+               key={774431}>
                 {opp.sport} • {opp.bookmakers.join(" vs ")}
               </CyberText>
-              <div style={{ display: "flex", gap: "24px" }}>
-                <div>
-                  <CyberText variant="caption" color="muted">
-                    Expected Value
+              <div style={{ display: "flex", gap: "24px" }} key={454253}>
+                <div key={241917}>
+                  <CyberText variant="caption" color="muted" key={505352}>
+                    Expected Value;
                   </CyberText>
-                  <CyberText
+                  <CyberText;
                     variant="body"
                     style={{ color: CYBER_COLORS.primary, fontWeight: "600" }}
-                  >
+                   key={913089}>
                     ${opp.value.toFixed(2)}
                   </CyberText>
                 </div>
-                <div>
-                  <CyberText variant="caption" color="muted">
-                    ROI
+                <div key={241917}>
+                  <CyberText variant="caption" color="muted" key={505352}>
+                    ROI;
                   </CyberText>
-                  <CyberText
+                  <CyberText;
                     variant="body"
                     style={{ color: CYBER_COLORS.secondary, fontWeight: "600" }}
-                  >
+                   key={519700}>
                     {opp.roi.toFixed(1)}%
                   </CyberText>
                 </div>
-                <div>
-                  <CyberText variant="caption" color="muted">
-                    Confidence
+                <div key={241917}>
+                  <CyberText variant="caption" color="muted" key={505352}>
+                    Confidence;
                   </CyberText>
-                  <CyberText
+                  <CyberText;
                     variant="body"
                     style={{ color: CYBER_COLORS.accent, fontWeight: "600" }}
-                  >
+                   key={2557}>
                     {opp.confidence.toFixed(1)}%
                   </CyberText>
                 </div>
               </div>
             </div>
-            <div style={{ textAlign: "right" }}>
-              <div
+            <div style={{ textAlign: "right" }} key={520160}>
+              <div;
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: "4px",
                   marginBottom: "12px",
                 }}
-              >
-                <Clock size={14} color={CYBER_COLORS.text.muted} />
-                <CyberText variant="caption" color="muted">
+               key={303217}>
+                <Clock size={14} color={CYBER_COLORS.text.muted} / key={530890}>
+                <CyberText variant="caption" color="muted" key={505352}>
                   {opp.timeLeft}
                 </CyberText>
               </div>
-              <CyberButton
+              <CyberButton;
                 variant="primary"
-                onClick={() => console.log("Place bet:", opp.id)}
+                onClick={() = key={889774}> // console statement removed}
                 style={{ width: "auto", padding: "8px 16px", marginBottom: 0 }}
               >
-                Place Bet
+                Place Bet;
               </CyberButton>
             </div>
           </div>
 
           {/* Progress bar for confidence */}
-          <div
+          <div;
             style={{
               width: "100%",
               height: "4px",
@@ -355,15 +355,15 @@ const MegaBetting: React.FC<{
               borderRadius: "2px",
               overflow: "hidden",
             }}
-          >
-            <div
+           key={839523}>
+            <div;
               style={{
                 width: `${opp.confidence}%`,
                 height: "100%",
                 backgroundImage: CYBER_GRADIENTS.button,
                 transition: "width 0.3s ease",
               }}
-            />
+            / key={720583}>
           </div>
         </CyberContainer>
       ))}
@@ -371,51 +371,51 @@ const MegaBetting: React.FC<{
   );
 
   const renderKellyTab = () => (
-    <CyberContainer variant="card" style={{ padding: "20px" }}>
-      <CyberText
+    <CyberContainer variant="card" style={{ padding: "20px" }} key={24342}>
+      <CyberText;
         variant="title"
         style={{ marginBottom: "16px", display: "flex", alignItems: "center" }}
-      >
-        <Calculator
+       key={346107}>
+        <Calculator;
           size={20}
           style={{ marginRight: "8px", color: CYBER_COLORS.primary }}
-        />
-        Kelly Criterion Calculator
+        / key={378262}>
+        Kelly Criterion Calculator;
       </CyberText>
-      <div
+      <div;
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
           gap: "24px",
         }}
-      >
-        <div>
-          <CyberText
+       key={337548}>
+        <div key={241917}>
+          <CyberText;
             variant="body"
             color="muted"
             style={{ marginBottom: "8px" }}
-          >
-            The Kelly Criterion calculates optimal bet sizing based on your edge
+           key={841778}>
+            The Kelly Criterion calculates optimal bet sizing based on your edge;
             and bankroll.
           </CyberText>
-          <div
+          <div;
             style={{
               padding: "16px",
               backgroundColor: "rgba(6, 255, 165, 0.1)",
               border: `1px solid ${CYBER_COLORS.primary}30`,
               borderRadius: "8px",
             }}
-          >
-            <CyberText variant="body" style={{ color: CYBER_COLORS.primary }}>
+           key={472047}>
+            <CyberText variant="body" style={{ color: CYBER_COLORS.primary }} key={380646}>
               Current Bankroll: ${userBalance.toLocaleString()}
             </CyberText>
           </div>
         </div>
-        <div>
-          <CyberText variant="body" style={{ marginBottom: "8px" }}>
+        <div key={241917}>
+          <CyberText variant="body" style={{ marginBottom: "8px" }} key={116235}>
             Kelly Formula:
           </CyberText>
-          <div
+          <div;
             style={{
               padding: "12px",
               backgroundColor: "rgba(255, 255, 255, 0.05)",
@@ -423,16 +423,16 @@ const MegaBetting: React.FC<{
               fontFamily: "monospace",
               fontSize: "14px",
             }}
-          >
-            f = (bp - q) / b
+           key={515919}>
+            f = (bp - q) / b;
           </div>
-          <CyberText
+          <CyberText;
             variant="caption"
             color="muted"
             style={{ marginTop: "8px" }}
-          >
-            Where: f = fraction to bet, b = odds, p = win probability, q = lose
-            probability
+           key={310368}>
+            Where: f = fraction to bet, b = odds, p = win probability, q = lose;
+            probability;
           </CyberText>
         </div>
       </div>
@@ -440,7 +440,7 @@ const MegaBetting: React.FC<{
   );
 
   return (
-    <div
+    <div;
       className={`mega-betting ${className}`}
       style={{
         minHeight: "100vh",
@@ -448,52 +448,52 @@ const MegaBetting: React.FC<{
         padding: "24px",
         color: CYBER_COLORS.text.primary,
       }}
-    >
+     key={714844}>
       {/* Header */}
-      <CyberContainer
+      <CyberContainer;
         variant="panel"
         style={{ marginBottom: "24px", padding: "20px" }}
-      >
-        <div
+       key={555499}>
+        <div;
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             marginBottom: "16px",
           }}
-        >
-          <div>
-            <CyberText
+         key={580818}>
+          <div key={241917}>
+            <CyberText;
               variant="title"
               style={{ fontSize: "28px", marginBottom: "4px" }}
-            >
-              Ultimate Money Maker
+             key={851908}>
+              Ultimate Money Maker;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              AI-powered betting opportunities with quantum edge detection
+            <CyberText variant="body" color="muted" key={892775}>
+              AI-powered betting opportunities with quantum edge detection;
             </CyberText>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }} key={333019}>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }} key={537788}>
               {scanning ? (
-                <Zap
+                <Zap;
                   size={16}
                   color={CYBER_COLORS.primary}
                   style={{ animation: "cyber-pulse 1s infinite" }}
-                />
+                / key={541758}>
               ) : (
-                <Timer size={16} color={CYBER_COLORS.text.muted} />
+                <Timer size={16} color={CYBER_COLORS.text.muted} / key={106900}>
               )}
-              <CyberText
+              <CyberText;
                 variant="caption"
                 color={scanning ? "accent" : "muted"}
-              >
+               key={263566}>
                 {scanning ? "Scanning..." : "Paused"}
               </CyberText>
             </div>
-            <CyberButton
+            <CyberButton;
               variant={scanning ? "primary" : "secondary"}
-              onClick={() => setScanning(!scanning)}
+              onClick={() = key={530464}> setScanning(!scanning)}
             >
               {scanning ? "Stop Scanning" : "Start Scanning"}
             </CyberButton>
@@ -501,16 +501,16 @@ const MegaBetting: React.FC<{
         </div>
 
         {/* Tab Navigation */}
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div style={{ display: "flex", gap: "8px" }} key={772482}>
           {tabs.map((tab) => {
-            const Icon = tab.icon;
+
             return (
-              <CyberButton
+              <CyberButton;
                 key={tab.key}
                 variant={activeTab === tab.key ? "primary" : "secondary"}
                 active={activeTab === tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                icon={<Icon size={16} />}
+                onClick={() = key={287146}> setActiveTab(tab.key)}
+                icon={<Icon size={16} / key={856509}>}
                 style={{ marginBottom: 0, width: "auto", padding: "8px 16px" }}
               >
                 {tab.label}
@@ -521,42 +521,42 @@ const MegaBetting: React.FC<{
       </CyberContainer>
 
       {/* Content */}
-      <div style={{ minHeight: "500px" }}>
+      <div style={{ minHeight: "500px" }} key={298126}>
         {activeTab === "opportunities" && renderOpportunitiesTab()}
         {activeTab === "kelly" && renderKellyTab()}
         {activeTab === "active" && (
-          <CyberContainer
+          <CyberContainer;
             variant="card"
             style={{ padding: "40px", textAlign: "center" }}
-          >
-            <Activity
+           key={933437}>
+            <Activity;
               size={48}
               color={CYBER_COLORS.secondary}
               style={{ marginBottom: "16px", margin: "0 auto" }}
-            />
-            <CyberText variant="title" style={{ marginBottom: "8px" }}>
-              Active Bets Dashboard
+            / key={514996}>
+            <CyberText variant="title" style={{ marginBottom: "8px" }} key={813364}>
+              Active Bets Dashboard;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Live tracking of your placed bets and their performance
+            <CyberText variant="body" color="muted" key={892775}>
+              Live tracking of your placed bets and their performance;
             </CyberText>
           </CyberContainer>
         )}
         {activeTab === "arbitrage" && (
-          <CyberContainer
+          <CyberContainer;
             variant="card"
             style={{ padding: "40px", textAlign: "center" }}
-          >
-            <Shield
+           key={933437}>
+            <Shield;
               size={48}
               color={CYBER_COLORS.accent}
               style={{ marginBottom: "16px", margin: "0 auto" }}
-            />
-            <CyberText variant="title" style={{ marginBottom: "8px" }}>
-              Arbitrage Scanner
+            / key={254475}>
+            <CyberText variant="title" style={{ marginBottom: "8px" }} key={813364}>
+              Arbitrage Scanner;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Advanced arbitrage detection across multiple sportsbooks
+            <CyberText variant="body" color="muted" key={892775}>
+              Advanced arbitrage detection across multiple sportsbooks;
             </CyberText>
           </CyberContainer>
         )}

@@ -1,27 +1,24 @@
 /**
- * Optimization Tests - Verifying our improvements work correctly
+ * Optimization Tests - Verifying our improvements work correctly;
  */
 
-// Simple test for our performance utilities
+// Simple test for our performance utilities;
 describe('Performance Optimizations', () => {
   test('Performance utilities are properly configured', () => {
-    // Test basic performance tracking
-    const startTime = Date.now();
-    
-    // Simulate some work
-    for (let i = 0; i < 1000; i++) {
+    // Test basic performance tracking;
+
+    // Simulate some work;
+    for (const i = 0; i < 1000; i++) {
       Math.random();
     }
-    
-    const endTime = Date.now();
-    const duration = endTime - startTime;
-    
+
+
     expect(duration).toBeGreaterThanOrEqual(0);
-    expect(duration).toBeLessThan(100); // Should complete quickly
+    expect(duration).toBeLessThan(100); // Should complete quickly;
   });
 
   test('Error boundary works correctly', () => {
-    // Test error handling
+    // Test error handling;
     const throwError = () => {
       throw new Error('Test error');
     };
@@ -30,7 +27,7 @@ describe('Performance Optimizations', () => {
   });
 
   test('Analytics tracking is functional', () => {
-    // Test analytics system
+    // Test analytics system;
     const event = {
       type: 'test_event',
       timestamp: Date.now(),
@@ -43,7 +40,7 @@ describe('Performance Optimizations', () => {
   });
 });
 
-// Test environment setup
+// Test environment setup;
 describe('Test Environment', () => {
   test('Testing framework is working', () => {
     expect(true).toBe(true);
@@ -67,7 +64,7 @@ describe('Test Environment', () => {
   });
 });
 
-// Performance utilities test
+// Performance utilities test;
 describe('Performance System', () => {
   test('Query client optimizations are testable', () => {
     const mockQueryClient = {
@@ -97,7 +94,6 @@ describe('Performance System', () => {
       }
     }
 
-    const boundary = new TestErrorBoundary();
     expect(boundary.hasError).toBe(false);
     
     boundary.componentDidCatch();

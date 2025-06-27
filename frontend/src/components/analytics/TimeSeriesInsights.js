@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar, } from 'recharts';
 const TimeSeriesInsights = ({ forecast, confidence, metrics, seasonality, changePoints, anomalies, }) => {
-    // Prepare data for visualization
+    // Prepare data for visualization;
     const forecastData = forecast.map((value, index) => ({
         x: index,
         value,

@@ -1,4 +1,4 @@
-import { Sport, PropType } from "../types/common";
+import { Sport, PropType } from '@/types/common.ts';
 interface Projection {
     id: string;
     playerId: string;

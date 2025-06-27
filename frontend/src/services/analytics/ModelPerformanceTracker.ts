@@ -1,5 +1,5 @@
-// Model Performance Tracker for real-time accuracy, error rates, edge
-import { logError, logInfo } from '../integrations/liveDataLogger';
+// Model Performance Tracker for real-time accuracy, error rates, edge;
+import { logError, logInfo } from '@/integrations/liveDataLogger.ts';
 
 export class ModelPerformanceTracker {
   private static performanceHistory: Record<string, any[]> = {};
@@ -20,9 +20,9 @@ export class ModelPerformanceTracker {
   }
 
   static getStats(modelId: string) {
-    const history = this.getPerformance(modelId);
+
     if (!history.length) return null;
-    // Placeholder: Replace with real stats calculation
+    // Placeholder: Replace with real stats calculation;
     return {
       accuracy: 0.78,
       errorRate: 0.22,

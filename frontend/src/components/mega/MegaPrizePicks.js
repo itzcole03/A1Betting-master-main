@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CYBER_COLORS, CYBER_GRADIENTS, CyberText, CyberButton, } from "./CyberTheme";
 import { MegaCard, MegaButton } from "./MegaUI";
 import { Target, TrendingUp, TrendingDown, Activity, Trophy, Clock, XCircle, } from "lucide-react";
-// MEGA PRIZEPICKS - Cyber-themed with original prop card styling preserved
+// MEGA PRIZEPICKS - Cyber-themed with original prop card styling preserved;
 const MegaPrizePicks = ({ className = "" }) => {
     const [selectedSport, setSelectedSport] = useState("All");
     const [lineup, setLineup] = useState([]);
@@ -96,17 +96,17 @@ const MegaPrizePicks = ({ className = "" }) => {
             confidence: 81.2,
         },
     ]);
-    const sports = ["All", "NBA", "NFL", "MLB", "NHL"];
+
     const filteredProps = selectedSport === "All"
-        ? playerProps
+        ? playerProps;
         : playerProps.filter((prop) => prop.sport === selectedSport);
     // Original PrizePicks-style prop card (preserved styling)
     const PropCard = ({ prop, onSelect }) => {
-        const isSelected = lineup.some((entry) => entry.propId === prop.id);
-        const selectedChoice = lineup.find((entry) => entry.propId === prop.id)?.choice;
+
+
         // Reliable player avatar (DiceBear service)
         const getPlayerImageUrl = (playerName, sport) => {
-            const encodedName = encodeURIComponent(playerName);
+
             const sportColors = {
                 NBA: { bg: "1f2937", color: "ffffff" },
                 NFL: { bg: "059669", color: "ffffff" },
@@ -122,13 +122,13 @@ const MegaPrizePicks = ({ className = "" }) => {
         return (_jsxs("div", { style: {
                 background: "linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)",
                 backdropFilter: "blur(20px)",
-                border: isSelected
+                border: isSelected;
                     ? `2px solid ${CYBER_COLORS.primary}`
                     : "1px solid rgba(255, 255, 255, 0.1)",
                 borderRadius: "16px",
                 padding: "20px",
                 transition: "all 0.3s ease",
-                boxShadow: isSelected
+                boxShadow: isSelected;
                     ? `0 0 20px ${CYBER_COLORS.primary}40, 0 8px 32px rgba(0, 0, 0, 0.1)`
                     : "0 8px 32px rgba(0, 0, 0, 0.1)",
                 position: "relative",
@@ -196,7 +196,7 @@ const MegaPrizePicks = ({ className = "" }) => {
                                     ? `${CYBER_COLORS.primary}20`
                                     : "rgba(0, 255, 136, 0.1)",
                                 color: selectedChoice === "over"
-                                    ? CYBER_COLORS.primary
+                                    ? CYBER_COLORS.primary;
                                     : CYBER_COLORS.secondary,
                                 fontWeight: "600",
                                 fontSize: "14px",
@@ -230,7 +230,7 @@ const MegaPrizePicks = ({ className = "" }) => {
                         left: "12px",
                         fontSize: "10px",
                         color: prop.trend === "up"
-                            ? CYBER_COLORS.primary
+                            ? CYBER_COLORS.primary;
                             : prop.trend === "down"
                                 ? "#ff4757"
                                 : CYBER_COLORS.text.muted,
@@ -240,18 +240,18 @@ const MegaPrizePicks = ({ className = "" }) => {
                     }, children: [prop.trend === "up" && _jsx(TrendingUp, { size: 10 }), prop.trend === "down" && _jsx(TrendingDown, { size: 10 }), prop.trend === "stable" && _jsx(Activity, { size: 10 }), prop.trend] }))] }));
     };
     const handlePropSelect = (propId, choice) => {
-        const prop = playerProps.find((p) => p.id === propId);
+
         if (!prop)
             return;
         setLineup((prev) => {
-            const existing = prev.find((entry) => entry.propId === propId);
+
             if (existing) {
                 if (existing.choice === choice) {
-                    // Remove if same choice selected
+                    // Remove if same choice selected;
                     return prev.filter((entry) => entry.propId !== propId);
                 }
                 else {
-                    // Update choice
+                    // Update choice;
                     return prev.map((entry) => entry.propId === propId ? { ...entry, choice } : entry);
                 }
             }
@@ -271,7 +271,7 @@ const MegaPrizePicks = ({ className = "" }) => {
             5: 20,
             6: 50,
         };
-        const pickCount = lineup.length;
+
         if (pickCount < 2)
             return 0;
         return (entryAmount * (multipliers[pickCount] || 1));
@@ -296,14 +296,14 @@ const MegaPrizePicks = ({ className = "" }) => {
                                 }, children: [_jsx(Target, { size: 20, style: { marginRight: "8px", color: CYBER_COLORS.primary } }), "Lineup Builder"] }), _jsxs("div", { style: { marginBottom: "16px" }, children: [_jsx(CyberText, { variant: "body", style: { marginBottom: "8px" }, children: "Entry Amount" }), _jsx("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [5, 10, 25, 50, 100].map((amount) => (_jsxs("button", { onClick: () => setEntryAmount(amount), style: {
                                                 padding: "8px 12px",
                                                 borderRadius: "6px",
-                                                border: entryAmount === amount
+                                                border: entryAmount === amount;
                                                     ? `2px solid ${CYBER_COLORS.primary}`
                                                     : "1px solid rgba(255, 255, 255, 0.1)",
-                                                backgroundColor: entryAmount === amount
+                                                backgroundColor: entryAmount === amount;
                                                     ? `${CYBER_COLORS.primary}20`
                                                     : "rgba(255, 255, 255, 0.05)",
-                                                color: entryAmount === amount
-                                                    ? CYBER_COLORS.primary
+                                                color: entryAmount === amount;
+                                                    ? CYBER_COLORS.primary;
                                                     : CYBER_COLORS.text.secondary,
                                                 fontSize: "12px",
                                                 fontWeight: "600",
@@ -334,7 +334,7 @@ const MegaPrizePicks = ({ className = "" }) => {
                                             display: "flex",
                                             justifyContent: "space-between",
                                             alignItems: "center",
-                                        }, children: [_jsx(CyberText, { variant: "body", children: "Potential Payout:" }), _jsxs(CyberText, { variant: "title", style: { color: CYBER_COLORS.primary, fontSize: "20px" }, children: ["$", calculatePayout().toLocaleString()] })] }), _jsxs(CyberText, { variant: "caption", color: "muted", children: [lineup.length, " picks \u2022", " ", (calculatePayout() / entryAmount).toFixed(1), "x multiplier"] })] })), _jsx(MegaButton, { variant: "primary", disabled: lineup.length < 2, fullWidth: true, onClick: () => console.log("Submit lineup:", lineup), children: lineup.length < 2
+                                        }, children: [_jsx(CyberText, { variant: "body", children: "Potential Payout:" }), _jsxs(CyberText, { variant: "title", style: { color: CYBER_COLORS.primary, fontSize: "20px" }, children: ["$", calculatePayout().toLocaleString()] })] }), _jsxs(CyberText, { variant: "caption", color: "muted", children: [lineup.length, " picks \u2022", " ", (calculatePayout() / entryAmount).toFixed(1), "x multiplier"] })] })), _jsx(MegaButton, { variant: "primary", disabled: lineup.length < 2, fullWidth: true, onClick: () => // console statement removed, children: lineup.length < 2;
                                     ? "Select 2+ Picks"
                                     : `Submit Lineup ($${entryAmount})` }), lineup.length < 2 && (_jsx(CyberText, { variant: "caption", color: "muted", style: { textAlign: "center", marginTop: "8px" }, children: "Minimum 2 picks required" }))] })] })] }));
 };

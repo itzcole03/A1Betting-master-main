@@ -14,7 +14,7 @@ export const useBookmakerAnalysis = (propData) => {
         const fetchAnalysis = async () => {
             setState((prev) => ({ ...prev, isLoading: true, error: null }));
             try {
-                const analysis = await bookmakerAnalysisService.analyzeProp(propData);
+
                 setState({
                     isLoading: false,
                     error: null,
@@ -41,7 +41,7 @@ export const useBookmakerAnalysis = (propData) => {
             return;
         setState((prev) => ({ ...prev, isLoading: true, error: null }));
         try {
-            const analysis = await bookmakerAnalysisService.analyzeProp(propData);
+
             setState({
                 isLoading: false,
                 error: null,

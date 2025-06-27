@@ -1,5 +1,5 @@
-import { BaseModel, TrainingConfig, ModelMetrics } from '../models/BaseModel';
-import { EventEmitter } from 'events';
+import { BaseModel, TrainingConfig, ModelMetrics } from '@/models/BaseModel.ts';
+import { EventEmitter } from 'events.ts';
 export interface TrainingProgress {
     epoch: number;
     totalEpochs: number;

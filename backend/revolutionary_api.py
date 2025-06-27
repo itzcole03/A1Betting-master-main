@@ -128,7 +128,7 @@ async def predict_revolutionary(
     try:
         start_time = time.time()
 
-        logger.info(f"Generating revolutionary prediction for event {request.event_id}")
+        logger.info("Generating revolutionary prediction for event {request.event_id}")
 
         # Generate revolutionary prediction
         prediction = (
@@ -305,8 +305,8 @@ async def predict_revolutionary(
 
         return response
 
-    except Exception as e:
-        logger.error(f"Revolutionary prediction failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Revolutionary prediction failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Revolutionary prediction failed: {e!s}"
         )
@@ -368,8 +368,8 @@ async def analyze_manifold_structure(request: ModelAnalysisRequest):
             "timestamp": datetime.now().isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Manifold structure analysis failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Manifold structure analysis failed: {e!s}")
         raise HTTPException(status_code=500, detail=f"Manifold analysis failed: {e!s}")
 
 
@@ -436,8 +436,8 @@ async def discover_causal_structure(request: ModelAnalysisRequest):
             "timestamp": datetime.now().isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Causal discovery failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Causal discovery failed: {e!s}")
         raise HTTPException(status_code=500, detail=f"Causal discovery failed: {e!s}")
 
 
@@ -517,8 +517,8 @@ async def analyze_topological_features(request: ModelAnalysisRequest):
             "timestamp": datetime.now().isoformat(),
         }
 
-    except Exception as e:
-        logger.error(f"Topological analysis failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Topological analysis failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Topological analysis failed: {e!s}"
         )
@@ -647,7 +647,7 @@ def estimate_intrinsic_dimensionality(X: np.ndarray) -> int:
         count = 0
         n = X.shape[0]
         for i in range(n):
-            for j in range(i + 1, n):
+            for _ in range(i + 1, n):
                 if np.linalg.norm(X[i] - X[j]) < r:
                     count += 1
         correlation_sums.append(count / (n * (n - 1) / 2))
@@ -688,7 +688,7 @@ async def analyze_prediction_patterns(
     """Background task to analyze prediction patterns"""
     try:
         # Log patterns for continuous learning
-        logger.info(f"Analyzing patterns for event {event_id}")
+        logger.info("Analyzing patterns for event {event_id}")
 
         # Store prediction for future analysis
         # This would integrate with the database in a real implementation
@@ -705,10 +705,10 @@ async def analyze_prediction_patterns(
         if prediction.topological_persistence > 0.6:
             patterns.append("persistent_topology")
 
-        logger.info(f"Identified patterns for {event_id}: {patterns}")
+        logger.info("Identified patterns for {event_id}: {patterns}")
 
-    except Exception as e:
-        logger.error(f"Error analyzing prediction patterns: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error analyzing prediction patterns: {e}")
 
 
 # Additional helper functions would be implemented here...

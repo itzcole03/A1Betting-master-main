@@ -9,7 +9,7 @@ export function useBettingStateMachine({ onStateChange, onSubmit } = {}) {
             selectedProps: [],
             analysis: null,
             stake: 0,
-            error: null
+            error: null;
         },
         states: {
             idle: {
@@ -17,7 +17,7 @@ export function useBettingStateMachine({ onStateChange, onSubmit } = {}) {
                     SELECT: { target: 'selecting' }
                 },
                 onEnter: (context) => {
-                    // Reset context when entering idle state
+                    // Reset context when entering idle state;
                     context.selectedProps = [];
                     context.analysis = null;
                     context.stake = 0;
@@ -28,7 +28,7 @@ export function useBettingStateMachine({ onStateChange, onSubmit } = {}) {
                 on: {
                     ANALYZE: {
                         target: 'analyzing',
-                        guard: (context) => context.selectedProps.length > 0
+                        guard: (context) => context.selectedProps.length > 0;
                     },
                     RESET: { target: 'idle' }
                 }
@@ -40,8 +40,8 @@ export function useBettingStateMachine({ onStateChange, onSubmit } = {}) {
                 },
                 onEnter: async (context) => {
                     try {
-                        // Analysis will be handled by useAnalytics hook
-                        // This is just state management
+                        // Analysis will be handled by useAnalytics hook;
+                        // This is just state management;
                         context.error = null;
                     }
                     catch (err) {
@@ -54,7 +54,7 @@ export function useBettingStateMachine({ onStateChange, onSubmit } = {}) {
                 on: {
                     CONFIRM: {
                         target: 'confirming',
-                        guard: (context) => context.analysis !== null && context.stake > 0
+                        guard: (context) => context.analysis !== null && context.stake > 0;
                     },
                     SELECT: { target: 'selecting' },
                     RESET: { target: 'idle' }
@@ -128,6 +128,6 @@ export function useBettingStateMachine({ onStateChange, onSubmit } = {}) {
         send: machine.send,
         selectProps,
         setStake,
-        setAnalysis
+        setAnalysis;
     };
 }

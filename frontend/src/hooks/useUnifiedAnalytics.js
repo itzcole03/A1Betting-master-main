@@ -10,21 +10,21 @@ export const useUnifiedAnalytics = (config = {}) => {
     betting: { data: null, loading: false, error: null },
     realtime: { data: null, loading: false, error: null },
   });
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const analyticsService = serviceRegistry.getService("analytics");
-  // Use 'as any' to bypass BaseService constraint for errorService
-  const errorService = serviceRegistry.getService("error");
+
+
+  // Use 'as any' to bypass BaseService constraint for errorService;
+
   // --- ML Analytics (using getModelPerformance as a proxy for ML analytics) ---
   const mlQuery = useQuery({
     queryKey: ["mlAnalytics"],
     queryFn: async () => {
       if (!analyticsService) throw { message: "Analytics service unavailable" };
       try {
-        const result = await analyticsService.getModelPerformance("", "", "");
+
         setState((prev) => ({
           ...prev,
           ml: {
-            data: result
+            data: result;
               ? {
                   predictions: [],
                   probabilities: [],
@@ -36,7 +36,7 @@ export const useUnifiedAnalytics = (config = {}) => {
             error: null,
           },
         }));
-        return result
+        return result;
           ? [
               {
                 model: "default",
@@ -47,8 +47,8 @@ export const useUnifiedAnalytics = (config = {}) => {
           : null;
       } catch (error) {
         const errorMessage =
-          error instanceof Error
-            ? error.message
+          error instanceof Error;
+            ? error.message;
             : "Failed to fetch ML analytics";
         if (errorService)
           errorService.handleError(new Error(errorMessage), {
@@ -76,11 +76,11 @@ export const useUnifiedAnalytics = (config = {}) => {
     queryFn: async () => {
       if (!analyticsService) throw { message: "Analytics service unavailable" };
       try {
-        const result = await analyticsService.getPerformanceMetrics("week");
+
         setState((prev) => ({
           ...prev,
           performance: {
-            data: result
+            data: result;
               ? [
                   {
                     model: "default",
@@ -96,8 +96,8 @@ export const useUnifiedAnalytics = (config = {}) => {
         return result;
       } catch (error) {
         const errorMessage =
-          error instanceof Error
-            ? error.message
+          error instanceof Error;
+            ? error.message;
             : "Failed to fetch performance metrics";
         if (errorService)
           errorService.handleError(new Error(errorMessage), {
@@ -136,13 +136,13 @@ export const useUnifiedAnalytics = (config = {}) => {
     queryFn: async () => {
       if (!analyticsService) throw { message: "Analytics service unavailable" };
       try {
-        const result = await analyticsService.getBettingStats("", "", "");
+
         setState((prev) => ({
           ...prev,
           betting: {
-            data: result
+            data: result;
               ? {
-                  roi: 0, // Not available in result
+                  roi: 0, // Not available in result;
                   winRate: result.winRate ?? 0,
                   profitLoss: result.profitLoss ?? 0,
                   riskMetrics: { var: 0, sharpe: 0, sortino: 0 },
@@ -153,9 +153,9 @@ export const useUnifiedAnalytics = (config = {}) => {
             error: null,
           },
         }));
-        return result
+        return result;
           ? {
-              roi: 0, // Not available in result
+              roi: 0, // Not available in result;
               winRate: result.winRate ?? 0,
               profitLoss: result.profitLoss ?? 0,
               riskMetrics: { var: 0, sharpe: 0, sortino: 0 },
@@ -164,8 +164,8 @@ export const useUnifiedAnalytics = (config = {}) => {
           : null;
       } catch (error) {
         const errorMessage =
-          error instanceof Error
-            ? error.message
+          error instanceof Error;
+            ? error.message;
             : "Failed to fetch betting analytics";
         if (errorService)
           errorService.handleError(new Error(errorMessage), {
@@ -291,9 +291,9 @@ export const useUnifiedAnalytics = (config = {}) => {
     }),
     [state.realtime, realtimeQuery.refetch],
   );
-  // TODO: Add more granular loading/error states if needed
-  // TODO: Add ARIA live region support for analytics-driven UI updates
-  // TODO: Add more comprehensive test coverage for analytics hook
+  // TODO: Add more granular loading/error states if needed;
+  // TODO: Add ARIA live region support for analytics-driven UI updates;
+  // TODO: Add more comprehensive test coverage for analytics hook;
   return {
     ml,
     performance,
@@ -315,7 +315,7 @@ export const useUnifiedAnalytics = (config = {}) => {
   };
 };
 
-// Event-specific analytics hook
+// Event-specific analytics hook;
 export const useEventAnalytics = (eventId, marketId, selectionId) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -327,8 +327,6 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
     modelMetadata: {},
   });
 
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const analyticsService = serviceRegistry.getService("analytics");
 
   useEffect(() => {
     if (!eventId || !marketId || !selectionId) return;
@@ -338,10 +336,10 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
       setError(null);
 
       try {
-        // Using available analytics service methods
+        // Using available analytics service methods;
         const [performanceMetrics, bettingStats] = await Promise.all([
           analyticsService?.getPerformanceMetrics("day").catch(() => ({})),
-          analyticsService
+          analyticsService;
             ?.getBettingStats(eventId, marketId, selectionId)
             .catch(() => ({})),
         ]);
@@ -375,8 +373,8 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
         });
       } catch (err) {
         const errorMessage =
-          err instanceof Error
-            ? err.message
+          err instanceof Error;
+            ? err.message;
             : "Failed to fetch event analytics";
         setError(errorMessage);
       } finally {
@@ -387,7 +385,7 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
     fetchEventAnalytics();
   }, [eventId, marketId, selectionId, analyticsService]);
 
-  // Helper functions for UI styling
+  // Helper functions for UI styling;
   const getMetricColor = (metric, value) => {
     if (typeof value !== "number") return "gray";
     if (value >= 0.7) return "green";
@@ -429,4 +427,4 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
   };
 };
 
-// END useUnifiedAnalytics
+// END useUnifiedAnalytics;

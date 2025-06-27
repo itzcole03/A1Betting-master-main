@@ -26,7 +26,7 @@ export function RiskReasoningDisplay({ riskReasoning, className = "" }) {
         }
     };
     return (_jsxs("div", { className: `risk-reasoning-display bg-gray-50 dark:bg-gray-800 rounded-lg p-3 mt-2 ${className}`, children: [_jsxs("div", { className: "font-semibold text-gray-700 dark:text-gray-200 mb-1 flex items-center", children: [_jsx("span", { className: "mr-2", children: "Risk Reasoning" }), _jsxs("span", { className: "text-xs text-gray-400", children: ["(", riskReasoning.length, ")"] })] }), _jsx("ul", { className: "space-y-1", children: riskReasoning.map((reason, idx) => {
-                    const severity = getSeverity(reason);
+
                     return (_jsxs("li", { className: "flex items-start text-sm", children: [iconForSeverity(severity), _jsx("span", { className: severity === "high"
                                     ? "text-red-700 dark:text-red-400"
                                     : severity === "medium"

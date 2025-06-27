@@ -1,20 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-const API_URL = import.meta.env.VITE_API_URL;
+
 const bettingApi = axios.create({
     baseURL: API_URL,
     headers: {
         "Content-Type": "application/json",
     },
 });
-// API endpoints
+// API endpoints;
 const endpoints = {
     sports: "/sports",
     events: "/events",
     odds: "/odds",
     bets: "/bets",
 };
-// Queries
+// Queries;
 export const useSports = () => {
     return useQuery({
         queryKey: ["sports"],
@@ -42,7 +42,7 @@ export const useOdds = (eventId) => {
             return data;
         },
         enabled: !!eventId,
-        refetchInterval: false, // Disable auto-refresh to prevent errors
+        refetchInterval: false, // Disable auto-refresh to prevent errors;
     });
 };
 export const useActiveBets = () => {
@@ -54,9 +54,9 @@ export const useActiveBets = () => {
         },
     });
 };
-// Mutations
+// Mutations;
 export const usePlaceBet = () => {
-    const queryClient = useQueryClient();
+
     return useMutation({
         mutationFn: async (bet) => {
             const { data } = await bettingApi.post(endpoints.bets, bet);
@@ -68,7 +68,7 @@ export const usePlaceBet = () => {
     });
 };
 export const useCancelBet = () => {
-    const queryClient = useQueryClient();
+
     return useMutation({
         mutationFn: async (betId) => {
             const { data } = await bettingApi.post(`${endpoints.bets}/${betId}/cancel`);
@@ -79,10 +79,10 @@ export const useCancelBet = () => {
         },
     });
 };
-// WebSocket connection for real-time updates
+// WebSocket connection for real-time updates;
 export const connectToOddsWebSocket = (eventId, onUpdate) => {
-    const wsUrl = `${import.meta.env.VITE_WS_URL}/odds/${eventId}`;
-    // Safety checks to prevent invalid WebSocket connections
+
+    // Safety checks to prevent invalid WebSocket connections;
     if (!wsUrl ||
         wsUrl === "" ||
         wsUrl === "wss://api.betproai.com/ws" ||
@@ -91,81 +91,81 @@ export const connectToOddsWebSocket = (eventId, onUpdate) => {
         wsUrl.includes("localhost:3001") ||
         wsUrl.includes("undefined") ||
         import.meta.env.VITE_ENABLE_WEBSOCKET === "false") {
-        console.log("WebSocket connection disabled for odds updates:", wsUrl);
-        return () => { }; // Return empty cleanup function
+        // console statement removed
+        return () => { }; // Return empty cleanup function;
     }
-    const ws = new WebSocket(wsUrl);
+
     ws.onmessage = (event) => {
-        const odds = JSON.parse(event.data);
+
         onUpdate(odds);
     };
     return () => {
         ws.close();
     };
 };
-// Main betting service object
+// Main betting service object;
 const bettingService = {
     placeBet: async (betData) => {
         try {
-            const response = await bettingApi.post(endpoints.bets, betData);
+
             return { success: true, bet: response.data };
         }
         catch (error) {
-            console.error("Failed to place bet:", error);
+            // console statement removed
             return { success: false, error: "Failed to place bet" };
         }
     },
     cancelBet: async (betId) => {
         try {
-            const response = await bettingApi.post(`${endpoints.bets}/${betId}/cancel`);
+
             return { success: true, bet: response.data };
         }
         catch (error) {
-            console.error("Failed to cancel bet:", error);
+            // console statement removed
             return { success: false, error: "Failed to cancel bet" };
         }
     },
     getActiveBets: async () => {
         try {
-            const response = await bettingApi.get(`${endpoints.bets}/active`);
+
             return response.data;
         }
         catch (error) {
-            console.error("Failed to get active bets:", error);
+            // console statement removed
             return [];
         }
     },
     getSports: async () => {
         try {
-            const response = await bettingApi.get(endpoints.sports);
+
             return response.data;
         }
         catch (error) {
-            console.error("Failed to get sports:", error);
+            // console statement removed
             return [];
         }
     },
     getEvents: async (sportId) => {
         try {
-            const response = await bettingApi.get(`${endpoints.events}?sportId=${sportId}`);
+
             return response.data;
         }
         catch (error) {
-            console.error("Failed to get events:", error);
+            // console statement removed
             return [];
         }
     },
     getOdds: async (eventId) => {
         try {
-            const response = await bettingApi.get(`${endpoints.odds}/${eventId}`);
+
             return response.data;
         }
         catch (error) {
-            console.error("Failed to get odds:", error);
+            // console statement removed
             return null;
         }
     },
 };
-// Export both ways for maximum compatibility
+// Export both ways for maximum compatibility;
 export { bettingService };
 export default bettingService;

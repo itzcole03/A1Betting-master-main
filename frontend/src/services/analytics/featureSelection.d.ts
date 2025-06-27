@@ -1,4 +1,4 @@
-import { FeatureConfig, EngineeredFeatures, FeatureSelectionResult } from '@/types';
+import { FeatureConfig, EngineeredFeatures, FeatureSelectionResult } from '@/types.ts';
 export declare class FeatureSelector {
     private readonly config;
     private readonly logger;

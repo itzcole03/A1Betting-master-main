@@ -1,4 +1,4 @@
-import { apiService } from './api';
+import { apiService } from './api.ts';
 
 interface OddsJamConfig {
   apiKey: string;
@@ -74,10 +74,9 @@ class OddsJamService {
       const params: any = { apiKey: this.config.apiKey };
       if (date) params.date = date;
 
-      const response = await apiService.get<OddsData[]>(`/oddsjam/${sport}/odds`, params);
       return response;
     } catch (error) {
-      console.error('Failed to fetch odds:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -90,7 +89,7 @@ class OddsJamService {
       );
       return response;
     } catch (error) {
-      console.error('Failed to fetch market analysis:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -102,7 +101,7 @@ class OddsJamService {
       });
       return response;
     } catch (error) {
-      console.error('Failed to fetch bookmakers:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -115,7 +114,7 @@ class OddsJamService {
       });
       return response;
     } catch (error) {
-      console.error('Failed to fetch historical odds:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -127,7 +126,7 @@ class OddsJamService {
       });
       return response;
     } catch (error) {
-      console.error('Failed to fetch arbitrage opportunities:', error);
+      // console statement removed
       throw error;
     }
   }

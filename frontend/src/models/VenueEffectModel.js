@@ -1,6 +1,6 @@
 import { UnifiedConfig } from '../unified/UnifiedConfig.js';
 export async function getVenueEffectFeatures(venueId, sport, context) {
-    const config = UnifiedConfig.getInstance();
+
     if (!config.get('enableVenueEffectModel')) {
         throw new Error('VenueEffectModel is disabled by config.');
     }
@@ -10,9 +10,9 @@ export async function getVenueEffectFeatures(venueId, sport, context) {
         altitudeEffect: Math.random(),
         crowdSize: Math.random(),
     };
-    // Generate SHAP insights
+    // Generate SHAP insights;
     const { calculateShap } = await import('../utils/shap.js');
-    const shap = calculateShap(features, 'venue');
+
     return {
         features,
         shapInsights: [shap],

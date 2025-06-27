@@ -19,16 +19,16 @@ export class FeatureFlags {
         return FeatureFlags.instance;
     }
     async initialize() {
-        const traceId = this.performanceMonitor.startTrace("feature-flags-init");
+
         try {
-            const config = await this.configManager.getConfig();
-            // Initialize features
+
+            // Initialize features;
             if (config.features) {
                 for (const feature of config.features) {
                     this.features.set(feature.id, feature);
                 }
             }
-            // Initialize experiments
+            // Initialize experiments;
             if (config.experiments) {
                 for (const experiment of config.experiments) {
                     this.experiments.set(experiment.id, experiment);
@@ -42,34 +42,34 @@ export class FeatureFlags {
         }
     }
     isFeatureEnabled(featureId, context) {
-        const feature = this.features.get(featureId);
+
         if (!feature)
             return false;
-        // Check if feature is globally enabled
+        // Check if feature is globally enabled;
         if (!feature.enabled)
             return false;
-        // Check dependencies
+        // Check dependencies;
         if (!this.areDependenciesSatisfied(feature, context))
             return false;
-        // Check rollout percentage
+        // Check rollout percentage;
         if (!this.isUserInRollout(context.userId, feature.rolloutPercentage))
             return false;
         return true;
     }
     getExperimentVariant(experimentId, context) {
-        const experiment = this.experiments.get(experimentId);
+
         if (!experiment || experiment.status !== "active")
             return null;
-        // Check if user is in experiment audience
+        // Check if user is in experiment audience;
         if (!this.isUserInAudience(context, experiment.audience))
             return null;
-        // Get or assign variant
-        const userAssignments = this.userAssignments.get(context.userId) || {};
+        // Get or assign variant;
+
         if (userAssignments[experimentId]) {
             return userAssignments[experimentId];
         }
-        // Assign new variant
-        const variant = this.assignVariant(experiment, context);
+        // Assign new variant;
+
         if (variant) {
             this.userAssignments.set(context.userId, {
                 ...userAssignments,
@@ -83,15 +83,15 @@ export class FeatureFlags {
         return feature.dependencies.every((depId) => this.isFeatureEnabled(depId, context));
     }
     isUserInRollout(userId, percentage) {
-        const hash = this.hashString(userId);
-        const normalized = hash / Math.pow(2, 32);
+
+
         return normalized <= percentage / 100;
     }
     isUserInAudience(context, audience) {
-        // Check percentage rollout
+        // Check percentage rollout;
         if (!this.isUserInRollout(context.userId, audience.percentage))
             return false;
-        // Check filters if they exist
+        // Check filters if they exist;
         if (audience.filters) {
             for (const [key, value] of Object.entries(audience.filters)) {
                 if (context.attributes[key] !== value)
@@ -101,10 +101,10 @@ export class FeatureFlags {
         return true;
     }
     assignVariant(experiment, context) {
-        const totalWeight = experiment.variants.reduce((sum, v) => sum + v.weight, 0);
-        const hash = this.hashString(`${context.userId}:${experiment.id}`);
-        const normalized = (hash / Math.pow(2, 32)) * totalWeight;
-        let cumulative = 0;
+
+
+
+        const cumulative = 0;
         for (const variant of experiment.variants) {
             cumulative += variant.weight;
             if (normalized <= cumulative) {
@@ -114,11 +114,11 @@ export class FeatureFlags {
         return null;
     }
     hashString(str) {
-        let hash = 0;
-        for (let i = 0; i < str.length; i++) {
-            const char = str.charCodeAt(i);
+        const hash = 0;
+        for (const i = 0; i < str.length; i++) {
+
             hash = (hash << 5) - hash + char;
-            hash = hash & hash; // Convert to 32-bit integer
+            hash = hash & hash; // Convert to 32-bit integer;
         }
         return Math.abs(hash);
     }
@@ -129,7 +129,7 @@ export class FeatureFlags {
         this.features.set(feature.id, feature);
     }
     updateFeature(featureId, updates) {
-        const feature = this.features.get(featureId);
+
         if (!feature) {
             throw new Error(`Feature ${featureId} not found`);
         }
@@ -150,7 +150,7 @@ export class FeatureFlags {
         this.experiments.set(experiment.id, experiment);
     }
     updateExperiment(experimentId, updates) {
-        const experiment = this.experiments.get(experimentId);
+
         if (!experiment) {
             throw new Error(`Experiment ${experimentId} not found`);
         }

@@ -1,12 +1,12 @@
-import { apiClient } from '../api/client';
+import { apiClient } from '@/api/client.ts';
 
 export class SecurityService {
     static async authenticate(credentials: { username: string; password: string }) {
         try {
-            const response = await apiClient.post('/auth/login', credentials);
+
             return response.data;
         } catch (error) {
-            console.error('Authentication failed:', error);
+            // console statement removed
             return false;
         }
     }
@@ -16,7 +16,7 @@ export class SecurityService {
             await apiClient.post('/auth/logout');
             return true;
         } catch (error) {
-            console.error('Logout failed:', error);
+            // console statement removed
             return false;
         }
     }

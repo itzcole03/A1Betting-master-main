@@ -1,4 +1,4 @@
-import { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { AxiosInstance, AxiosRequestConfig } from 'axios.ts';
 export declare abstract class ApiBase {
     protected client: AxiosInstance;
     protected baseUrl: string;

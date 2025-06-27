@@ -1,4 +1,4 @@
-// Unified Analyzer interface for the betting system
+// Unified Analyzer interface for the betting system;
 
 export interface AnalysisRequest {
     playerId: string;

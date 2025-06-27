@@ -1,11 +1,11 @@
-import { logger } from '../logger';
-import { cache } from '../cache';
-import MLService from '../ml';
-import { adapterManager } from '../adapters';
-import prizePicksAdapter from '../adapters/prizepicks';
+import { logger } from '@/logger.ts';
+import { cache } from '@/cache.ts';
+import MLService from '@/ml.ts';
+import { adapterManager } from '@/adapters.ts';
+import prizePicksAdapter from '@/adapters/prizepicks.ts';
 
-import { measurePerformance, handleApiError, transformData } from '../utils';
-import { PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from '../../types/prizePicks';
+import { measurePerformance, handleApiError, transformData } from '@/utils.ts';
+import { PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from '@/types/prizePicks.ts';
 
 interface Prop {
   id: string;
@@ -60,13 +60,12 @@ export class PrizePicksService {
     timeWindow: string;
   }): Promise<Prop[]> {
     try {
-      const cacheKey = `props:${JSON.stringify(params)}`;
-      const cachedProps = await cache.get(cacheKey);
+
+
       if (cachedProps) {
         return cachedProps;
       }
 
-      const props = await this.fetchProps(params);
       await cache.set(cacheKey, props);
       return props;
     } catch (error) {
@@ -76,7 +75,7 @@ export class PrizePicksService {
   }
 
   private async fetchProps(params: { sports: string[]; timeWindow: string }): Promise<Prop[]> {
-    // Implementation of prop fetching logic
+    // Implementation of prop fetching logic;
     return [];
   }
 
@@ -90,14 +89,13 @@ export class PrizePicksService {
     try {
       const { predictions, props, investmentAmount, strategyMode, portfolioSize } = params;
 
-      // Filter props based on predictions and strategy
-      const filteredProps = this.filterPropsByStrategy(props, predictions, strategyMode);
+      // Filter props based on predictions and strategy;
 
-      // Calculate optimal portfolio
+      // Calculate optimal portfolio;
       const portfolio = this.calculateOptimalPortfolio(
         filteredProps,
         investmentAmount,
-        portfolioSize
+        portfolioSize;
       );
 
       return portfolio;
@@ -108,16 +106,16 @@ export class PrizePicksService {
   }
 
   private filterPropsByStrategy(props: Prop[], predictions: any[], strategyMode: string): Prop[] {
-    // Implementation of strategy-based filtering
+    // Implementation of strategy-based filtering;
     return props;
   }
 
   private calculateOptimalPortfolio(
     props: Prop[],
     investmentAmount: number,
-    portfolioSize: number
+    portfolioSize: number;
   ): LineupRecommendation[] {
-    // Implementation of portfolio optimization
+    // Implementation of portfolio optimization;
     return [];
   }
 
@@ -139,11 +137,11 @@ export class PrizePicksService {
           sports: league ? [league] : [],
           timeWindow: statType || '',
         });
-        const projections = data ?? [];
+
         return transformData(projections, this.transformProjections, 'prizepicks.fetchProjections');
       } catch (error) {
         handleApiError(error, 'prizepicks.fetchProjections');
-        return []; // Return empty array on error
+        return []; // Return empty array on error;
       }
     }, 'prizepicks.fetchProjections');
   }
@@ -151,8 +149,8 @@ export class PrizePicksService {
   async fetchPlayerDetails(playerId: string): Promise<PrizePicksPlayer | undefined> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchPlayers({ sports: [] }); // No playerId-based fetch, fallback to fetching all and filtering
-        const player = Array.isArray(data) ? data.find(p => p.id === playerId) : undefined;
+        const data = await this.adapter.fetchPlayers({ sports: [] }); // No playerId-based fetch, fallback to fetching all and filtering;
+
         return transformData(player, this.transformPlayerDetails, 'prizepicks.fetchPlayerDetails');
       } catch (error) {
         handleApiError(error, 'prizepicks.fetchPlayerDetails');
@@ -163,12 +161,12 @@ export class PrizePicksService {
   async fetchLines(propId: string): Promise<PrizePicksLines | null> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchLines({ propIds: [propId] });
-        const lines = data ?? null;
+
+
         return transformData(lines, this.transformLines, 'prizepicks.fetchLines');
       } catch (error) {
         handleApiError(error, 'prizepicks.fetchLines');
-        return null; // Return null on error
+        return null; // Return null on error;
       }
     }, 'prizepicks.fetchLines');
   }
@@ -203,7 +201,7 @@ export class PrizePicksService {
   }
 
   private transformLines(data: any): PrizePicksLines {
-    // If data is an array, return the first element or an empty array as fallback
+    // If data is an array, return the first element or an empty array as fallback;
     if (Array.isArray(data)) {
       return data.length > 0 ? data[0] : [];
     }
@@ -214,10 +212,10 @@ export class PrizePicksService {
 
   private parseOdds(ptOld: string | undefined, type: 'o' | 'u'): number | undefined {
     if (!ptOld) return undefined;
-    const parts = ptOld.toLowerCase().split(' ');
-    const part = parts.find(p => p.startsWith(type));
+
+
     if (!part) return undefined;
-    const val = parseInt(part.substring(1));
+
     return isNaN(val) ? undefined : val;
   }
 }

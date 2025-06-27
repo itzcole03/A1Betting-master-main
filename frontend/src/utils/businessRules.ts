@@ -1,7 +1,7 @@
-import { PlayerProp, Entry } from '../types/core';
+import { PlayerProp, Entry } from '@/types/core.ts';
 
 
-// Centralized business rules for the app
+// Centralized business rules for the app;
 
 // Minimum win rate (e.g., 84%)
 export const MIN_WIN_RATE = 0.84;
@@ -10,7 +10,7 @@ export const MIN_WIN_RATE = 0.84;
 export function isTeamDiversified(props: PlayerProp[], maxPerTeam = 2): boolean {
   const teamCounts: Record<string, number> = {};
   for (const prop of props) {
-    const teamId = prop.player.team.id;
+
     teamCounts[teamId] = (teamCounts[teamId] || 0) + 1;
     if (teamCounts[teamId] > maxPerTeam) return false;
   }
@@ -31,17 +31,17 @@ export function getMultiplier(type: 'goblin' | 'normal' | 'demon'): number {
   }
 }
 
-// Validate entry against all business rules
+// Validate entry against all business rules;
 export function validateEntry(entry: Entry): string[] {
   const errors: string[] = [];
-  // Enforce minimum win rate
+  // Enforce minimum win rate;
   if (entry.props.some(prop => prop.confidence < MIN_WIN_RATE)) {
     errors.push(`All props must have at least ${(MIN_WIN_RATE * 100).toFixed(0)}% win rate.`);
   }
-  // Enforce team diversification
+  // Enforce team diversification;
   if (!isTeamDiversified(entry.props)) {
     errors.push('Too many props from the same team.');
   }
-  // Add more rules as needed
+  // Add more rules as needed;
   return errors;
 }

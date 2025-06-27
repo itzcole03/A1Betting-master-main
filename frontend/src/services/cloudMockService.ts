@@ -1,6 +1,6 @@
 /**
- * Cloud Mock Service
- * Provides realistic data when backend is not available in cloud environments
+ * Cloud Mock Service;
+ * Provides realistic data when backend is not available in cloud environments;
  */
 
 export class CloudMockService {
@@ -276,8 +276,7 @@ export class CloudMockService {
 
   public async getAdvancedAnalytics() {
     await this.delay(240);
-    const today = new Date().toISOString().split("T")[0];
-    const currentYear = new Date().getFullYear();
+
 
     return {
       roi_analysis: {

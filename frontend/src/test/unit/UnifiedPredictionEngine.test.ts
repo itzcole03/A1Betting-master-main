@@ -1,6 +1,6 @@
-import { UnifiedPredictionEngine, PredictionContext } from '../../core/UnifiedPredictionEngine';
-import { BettingOpportunity, MarketUpdate, EventMap } from '@/types/core';
-import { EventBus } from '../../core/EventBus';
+import { UnifiedPredictionEngine, PredictionContext } from '@/core/UnifiedPredictionEngine.ts';
+import { BettingOpportunity, MarketUpdate, EventMap } from '@/types/core.ts';
+import { EventBus } from '@/core/EventBus.ts';
 
 describe('UnifiedPredictionEngine', () => {
   let predictionEngine: UnifiedPredictionEngine;
@@ -40,8 +40,6 @@ describe('UnifiedPredictionEngine', () => {
         ],
       };
 
-      const opportunity = await predictionEngine.generatePrediction(context);
-
       expect(opportunity).toBeDefined();
       expect(opportunity.id).toBeDefined();
       expect(opportunity.propId).toBe(`${context.playerId}:${context.metric}`);
@@ -57,7 +55,7 @@ describe('UnifiedPredictionEngine', () => {
     });
 
     it('should emit prediction:update event', async () => {
-      const eventHandler = jest.fn();
+
       eventBus.on('prediction:update', eventHandler);
 
       const context: PredictionContext = {
@@ -96,13 +94,12 @@ describe('UnifiedPredictionEngine', () => {
         },
       };
 
-      const eventHandler = jest.fn();
       eventBus.on('prediction:update', eventHandler);
 
-      // Simulate market update
+      // Simulate market update;
       eventBus.emit('market:update', update);
 
-      // Wait for async processing
+      // Wait for async processing;
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(eventHandler).toHaveBeenCalled();
@@ -134,10 +131,8 @@ describe('UnifiedPredictionEngine', () => {
         },
       };
 
-      const opportunity = await predictionEngine.generatePrediction(context);
-
       expect(opportunity).toBeDefined();
-      expect(opportunity.confidence).toBeLessThan(0.8); // Lower confidence due to missing data
+      expect(opportunity.confidence).toBeLessThan(0.8); // Lower confidence due to missing data;
     });
   });
 
@@ -154,7 +149,6 @@ describe('UnifiedPredictionEngine', () => {
         },
       };
 
-      const traceHandler = jest.fn();
       eventBus.on('error', (error: Error) => {
         if (error.message.includes('prediction_generation')) {
           traceHandler(error);
@@ -164,7 +158,7 @@ describe('UnifiedPredictionEngine', () => {
       await predictionEngine.generatePrediction(context);
 
       expect(traceHandler).toHaveBeenCalled();
-      const error = traceHandler.mock.calls[0][0];
+
       expect(error.message).toContain('prediction_generation');
       expect(error.stack).toBeDefined();
     });

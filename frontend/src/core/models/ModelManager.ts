@@ -1,7 +1,7 @@
-import { ModelMetadata, ModelVersion, ModelEvaluation } from '@/types';
-import { ModelRegistry } from './ModelRegistry';
-import { ModelEvaluator } from './ModelEvaluator';
-import { FeatureLogger } from '../../services/analytics/featureLogging';
+import { ModelMetadata, ModelVersion, ModelEvaluation } from '@/types.ts';
+import { ModelRegistry } from './ModelRegistry.ts';
+import { ModelEvaluator } from './ModelEvaluator.ts';
+import { FeatureLogger } from '@/services/analytics/featureLogging.ts';
 
 export class ModelManager {
   private registry: ModelRegistry;
@@ -18,7 +18,7 @@ export class ModelManager {
 
   async createModel(metadata: ModelMetadata): Promise<string> {
     try {
-      const modelId = await this.registry.registerModel(metadata);
+
       this.logger.info(`Created new model with ID: ${modelId}`);
       return modelId;
     } catch (error) {
@@ -29,14 +29,13 @@ export class ModelManager {
 
   async trainModel(modelId: string, data: any, config: any): Promise<ModelVersion> {
     try {
-      const model = await this.registry.getModel(modelId);
-      const version = await model.train(data, config);
 
-      // Evaluate the new version
-      const evaluation = await this.evaluator.evaluate(version, data);
+
+      // Evaluate the new version;
+
       version.metrics = evaluation;
 
-      // Update registry
+      // Update registry;
       await this.registry.updateModel(modelId, version);
 
       this.logger.info(`Trained model ${modelId} to version ${version.version}`);
@@ -49,16 +48,14 @@ export class ModelManager {
 
   async predict(modelId: string, data: any): Promise<any> {
     try {
-      // Check cache first
-      const cacheKey = `${modelId}_${JSON.stringify(data)}`;
+      // Check cache first;
+
       if (this.modelCache.has(cacheKey)) {
         return this.modelCache.get(cacheKey);
       }
 
-      const model = await this.registry.getModel(modelId);
-      const prediction = await model.predict(data);
 
-      // Cache the result
+      // Cache the result;
       this.modelCache.set(cacheKey, prediction);
 
       return prediction;
@@ -70,10 +67,9 @@ export class ModelManager {
 
   async evaluateModel(modelId: string, data: any): Promise<ModelEvaluation> {
     try {
-      const model = await this.registry.getModel(modelId);
-      const evaluation = await this.evaluator.evaluate(model, data);
 
-      // Update model metrics
+
+      // Update model metrics;
       await this.registry.updateMetrics(modelId, evaluation);
 
       this.logger.info(`Evaluated model ${modelId}`);

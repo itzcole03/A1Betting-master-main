@@ -1,5 +1,5 @@
-import WebSocketManager from '@/services/unified/WebSocketManager';
-import React, { useEffect, useState } from 'react';
+import WebSocketManager from '@/services/unified/WebSocketManager.ts';
+import React, { useEffect, useState  } from 'react.ts';
 
 interface PrizePicksProp {
     id: string;
@@ -34,19 +34,19 @@ interface PrizePicksState {
 }
 
 export const PrizePicksInterface: React.FC = () => {
-    const [state, setState] = useState<PrizePicksState>({
+    const [state, setState] = useState<PrizePicksState key={23927}>({
         props: [],
         activePicks: {},
         totalStake: 0,
-        potentialProfit: 0
+        potentialProfit: 0;
     });
 
-    const [selectedStat, setSelectedStat] = useState<string>('all');
-    const [minConfidence, setMinConfidence] = useState<number>(0.7);
-    const [sortBy, setSortBy] = useState<string>('confidence');
+    const [selectedStat, setSelectedStat] = useState<string key={278855}>('all');
+    const [minConfidence, setMinConfidence] = useState<number key={430559}>(0.7);
+    const [sortBy, setSortBy] = useState<string key={278855}>('confidence');
 
     useEffect(() => {
-        // Subscribe to real-time updates
+        // Subscribe to real-time updates;
         WebSocketManager.instance.subscribe('prizepicks:prop', (prop: PrizePicksProp) => {
             setState(prev => ({
                 ...prev,
@@ -62,13 +62,13 @@ export const PrizePicksInterface: React.FC = () => {
                     [update.id]: {
                         direction: update.direction,
                         amount: update.amount,
-                        timestamp: update.timestamp
+                        timestamp: update.timestamp;
                     }
                 }
             }));
         });
 
-        // Load initial data
+        // Load initial data;
         loadInitialData();
 
         return () => {
@@ -95,6 +95,6 @@ export const PrizePicksInterface: React.FC = () => {
     // ... (rest of component logic and JSX)
 
     return (
-        <div>PrizePicksInterface UI here (full logic ported in actual file)</div>
+        <div key={241917}>PrizePicksInterface UI here (full logic ported in actual file)</div>
     );
 }

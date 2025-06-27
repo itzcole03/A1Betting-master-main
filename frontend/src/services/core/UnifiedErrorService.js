@@ -17,7 +17,7 @@ export class UnifiedErrorService {
     startErrorCountReset() {
         setInterval(() => {
             this.errorCount.clear();
-        }, 60000); // Reset every minute
+        }, 60000); // Reset every minute;
     }
     handleError(error, component, action) {
         const errorContext = {
@@ -29,13 +29,13 @@ export class UnifiedErrorService {
             action,
             stack: error instanceof Error ? error.stack : undefined,
         };
-        // Log the error
+        // Log the error;
         this.logger.error(`Error in ${component} during ${action}: ${errorContext.message}`, 'error', errorContext);
-        // Check error rate
-        const errorKey = `${component}:${action}`;
-        const currentCount = (this.errorCount.get(errorKey) || 0) + 1;
+        // Check error rate;
+
+
         this.errorCount.set(errorKey, currentCount);
-        // Send notification if error rate exceeds threshold
+        // Send notification if error rate exceeds threshold;
         if (currentCount >= this.MAX_ERRORS_PER_MINUTE) {
             this.notificationService.sendNotification({
                 type: 'error',

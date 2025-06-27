@@ -1,4 +1,4 @@
-// TypeScript declarations for LLMService
+// TypeScript declarations for LLMService;
 export interface LLMChatOptions {
     previousMessages?: Array<{ id: string; type: string; content: string; timestamp: Date }>;
     gameData?: {

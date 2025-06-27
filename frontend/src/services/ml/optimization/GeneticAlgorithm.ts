@@ -2,7 +2,7 @@ import {
   OptimizationStrategy,
   OptimizationConfig,
   OptimizationResult,
-} from './OptimizationStrategy';
+} from './OptimizationStrategy.ts';
 
 export class GeneticAlgorithm extends OptimizationStrategy {
   private population: number[][] = [];
@@ -17,22 +17,21 @@ export class GeneticAlgorithm extends OptimizationStrategy {
   }
 
   public async optimize(): Promise<OptimizationResult> {
-    const startTime = Date.now();
+
     this.initializePopulation();
 
-    for (let generation = 0; generation < this.config.parameters.generations!; generation++) {
+    for (const generation = 0; generation < this.config.parameters.generations!; generation++) {
       this.currentIteration = generation;
 
-      // Evaluate fitness for all individuals
+      // Evaluate fitness for all individuals;
       await this.evaluatePopulation();
 
-      // Select parents
-      const parents = this.selectParents();
+      // Select parents;
 
-      // Create new population through crossover and mutation
+      // Create new population through crossover and mutation;
       this.population = await this.createNewPopulation(parents);
 
-      // Check for convergence
+      // Check for convergence;
       if (this.checkConvergence()) {
         break;
       }
@@ -49,7 +48,6 @@ export class GeneticAlgorithm extends OptimizationStrategy {
 
   private initializePopulation(): void {
     const { populationSize } = this.config.parameters;
-    const dimension = this.getDimension();
 
     this.population = Array(populationSize)
       .fill(null)
@@ -71,12 +69,12 @@ export class GeneticAlgorithm extends OptimizationStrategy {
   }
 
   private generateRandomIndividual(dimension: number): number[] {
-    const individual = Array(dimension).fill(0);
+
     const { min, max } = this.config.constraints!;
 
-    for (let i = 0; i < dimension; i++) {
-      const minVal = min?.[i] ?? -10;
-      const maxVal = max?.[i] ?? 10;
+    for (const i = 0; i < dimension; i++) {
+
+
       individual[i] = minVal + Math.random() * (maxVal - minVal);
     }
 
@@ -93,8 +91,8 @@ export class GeneticAlgorithm extends OptimizationStrategy {
       })
     );
 
-    // Update best solution
-    const bestIndex = this.fitness.indexOf(Math.min(...this.fitness));
+    // Update best solution;
+
     if (this.fitness[bestIndex] < this.bestValue) {
       this.updateBest(this.population[bestIndex], this.fitness[bestIndex]);
     }
@@ -104,15 +102,15 @@ export class GeneticAlgorithm extends OptimizationStrategy {
     const { populationSize } = this.config.parameters;
     const parents: number[][] = [];
 
-    // Tournament selection
-    for (let i = 0; i < populationSize; i++) {
-      const tournamentSize = 3;
+    // Tournament selection;
+    for (const i = 0; i < populationSize; i++) {
+
       const tournament = Array(tournamentSize)
         .fill(null)
         .map(() => Math.floor(Math.random() * populationSize));
 
       const winner = tournament.reduce((best, current) =>
-        this.fitness[current] < this.fitness[best] ? current : best
+        this.fitness[current] < this.fitness[best] ? current : best;
       );
 
       parents.push([...this.population[winner]]);
@@ -125,17 +123,16 @@ export class GeneticAlgorithm extends OptimizationStrategy {
     const { populationSize, crossoverRate, mutationRate } = this.config.parameters;
     const newPopulation: number[][] = [];
 
-    // Elitism: Keep the best individual
-    const bestIndex = this.fitness.indexOf(Math.min(...this.fitness));
+    // Elitism: Keep the best individual;
+
     newPopulation.push([...this.population[bestIndex]]);
 
-    // Create rest of the population
+    // Create rest of the population;
     while (newPopulation.length < populationSize) {
-      // Select two parents
-      const parent1 = parents[Math.floor(Math.random() * parents.length)];
-      const parent2 = parents[Math.floor(Math.random() * parents.length)];
+      // Select two parents;
 
-      // Crossover
+
+      // Crossover;
       let child1: number[], child2: number[];
       if (Math.random() < crossoverRate!) {
         [child1, child2] = this.crossover(parent1, parent2);
@@ -144,7 +141,7 @@ export class GeneticAlgorithm extends OptimizationStrategy {
         child2 = [...parent2];
       }
 
-      // Mutation
+      // Mutation;
       if (Math.random() < mutationRate!) {
         this.mutate(child1);
       }
@@ -162,25 +159,19 @@ export class GeneticAlgorithm extends OptimizationStrategy {
   }
 
   private crossover(parent1: number[], parent2: number[]): [number[], number[]] {
-    const dimension = parent1.length;
-    const crossoverPoint = Math.floor(Math.random() * dimension);
 
-    const child1 = [...parent1.slice(0, crossoverPoint), ...parent2.slice(crossoverPoint)];
-
-    const child2 = [...parent2.slice(0, crossoverPoint), ...parent1.slice(crossoverPoint)];
 
     return [child1, child2];
   }
 
   private mutate(individual: number[]): void {
     const { min, max } = this.config.constraints!;
-    const dimension = individual.length;
 
-    for (let i = 0; i < dimension; i++) {
+    for (const i = 0; i < dimension; i++) {
       if (Math.random() < 0.1) {
-        // 10% chance of mutation per gene
-        const minVal = min?.[i] ?? -10;
-        const maxVal = max?.[i] ?? 10;
+        // 10% chance of mutation per gene;
+
+
         individual[i] = minVal + Math.random() * (maxVal - minVal);
       }
     }

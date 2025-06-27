@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { bookmakerAnalysisService } from '../services/analytics/BookmakerAnalysisService';
+import { useState, useEffect } from 'react.ts';
+import { bookmakerAnalysisService } from '@/services/analytics/BookmakerAnalysisService.ts';
 
 export interface BookmakerAnalysisState {
   isLoading: boolean;
@@ -38,7 +38,6 @@ export const useBookmakerAnalysis = (propData: PropData | null) => {
       setState((prev: BookmakerAnalysisState) => ({ ...prev, isLoading: true, error: null }));
 
       try {
-        const analysis = await bookmakerAnalysisService.analyzeProp(propData);
 
         setState({
           isLoading: false,
@@ -68,7 +67,6 @@ export const useBookmakerAnalysis = (propData: PropData | null) => {
     setState((prev: BookmakerAnalysisState) => ({ ...prev, isLoading: true, error: null }));
 
     try {
-      const analysis = await bookmakerAnalysisService.analyzeProp(propData);
 
       setState({
         isLoading: false,

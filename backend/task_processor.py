@@ -10,7 +10,7 @@ import time
 import traceback
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum, IntEnum
 from typing import Any, Callable, Dict, List, Optional
 
@@ -150,8 +150,8 @@ class TaskQueue:
             )
             await self.redis_client.ping()
             logger.info("Task queue Redis connection established")
-        except Exception as e:
-            logger.error(f"Failed to connect to Redis: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to connect to Redis: {e!s}")
             raise
 
     async def enqueue(self, task: TaskDefinition) -> bool:
@@ -182,15 +182,15 @@ class TaskQueue:
                 expire_key = f"{self.queue_name}:expire:{task.id}"
                 await self.redis_client.setex(
                     expire_key,
-                    int((task.expires_at - datetime.utcnow()).total_seconds()),
+                    int((task.expires_at - datetime.now(timezone.utc)).total_seconds()),
                     "expired",
                 )
 
-            logger.debug(f"Enqueued task {task.id} with priority {task.priority}")
+            logger.debug("Enqueued task {task.id} with priority {task.priority}")
             return True
 
-        except Exception as e:
-            logger.error(f"Failed to enqueue task {task.id}: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to enqueue task {task.id}: {e!s}")
             return False
 
     async def dequeue(self, worker_id: str) -> Optional[TaskDefinition]:
@@ -239,8 +239,8 @@ class TaskQueue:
 
             return None
 
-        except Exception as e:
-            logger.error(f"Failed to dequeue task: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to dequeue task: {e!s}")
             return None
 
     async def store_result(self, result: TaskResult):
@@ -264,8 +264,8 @@ class TaskQueue:
                 task_key = f"{self.queue_name}:task:{result.task_id}"
                 await self.redis_client.delete(task_key)
 
-        except Exception as e:
-            logger.error(f"Failed to store result for task {result.task_id}: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to store result for task {result.task_id}: {e!s}")
 
     async def get_result(self, task_id: str) -> Optional[TaskResult]:
         """Get task execution result"""
@@ -280,8 +280,8 @@ class TaskQueue:
                 return pickle.loads(result_data)
             return None
 
-        except Exception as e:
-            logger.error(f"Failed to get result for task {task_id}: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to get result for task {task_id}: {e!s}")
             return None
 
     async def get_queue_stats(self) -> Dict[str, Any]:
@@ -337,8 +337,8 @@ class TaskQueue:
 
             return stats
 
-        except Exception as e:
-            logger.error(f"Failed to get queue stats: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to get queue stats: {e!s}")
             return {"error": str(e)}
 
 
@@ -385,7 +385,7 @@ class TaskWorker:
     def register_task(self, name: str, function: Callable):
         """Register custom task function"""
         self.task_functions[name] = function
-        logger.info(f"Registered task function: {name}")
+        logger.info("Registered task function: {name}")
 
     async def start(self):
         """Start the worker"""
@@ -393,7 +393,7 @@ class TaskWorker:
             return
 
         self.is_running = True
-        self.start_time = datetime.utcnow()
+        self.start_time = datetime.now(timezone.utc)
         await self.task_queue.initialize()
 
         logger.info(
@@ -412,14 +412,14 @@ class TaskWorker:
 
         try:
             await asyncio.gather(*worker_tasks)
-        except Exception as e:
-            logger.error(f"Worker error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Worker error: {e!s}")
         finally:
             self.is_running = False
 
     async def stop(self):
         """Stop the worker gracefully"""
-        logger.info(f"Stopping task worker {self.worker_id}")
+        logger.info("Stopping task worker {self.worker_id}")
         self.is_running = False
 
         # Shutdown executors
@@ -450,8 +450,8 @@ class TaskWorker:
                     # No tasks available, wait before checking again
                     await asyncio.sleep(1)
 
-            except Exception as e:
-                logger.error(f"Worker loop error: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Worker loop error: {e!s}")
                 await asyncio.sleep(5)  # Wait before retrying
 
     async def _execute_task(
@@ -461,7 +461,7 @@ class TaskWorker:
         result = TaskResult(
             task_id=task.id,
             status=TaskStatus.RUNNING,
-            started_at=datetime.utcnow(),
+            started_at=datetime.now(timezone.utc),
             worker_id=worker_thread_id,
             worker_node=self.worker_id,
         )
@@ -503,18 +503,18 @@ class TaskWorker:
                 result.status = TaskStatus.TIMEOUT
                 result.error = f"Task timed out after {task.timeout_seconds} seconds"
 
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 result.status = TaskStatus.FAILED
                 result.error = str(e)
                 result.traceback = traceback.format_exc()
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             result.status = TaskStatus.FAILED
             result.error = str(e)
             result.traceback = traceback.format_exc()
 
         finally:
-            result.completed_at = datetime.utcnow()
+            result.completed_at = datetime.now(timezone.utc)
             if result.started_at:
                 result.execution_time = (
                     result.completed_at - result.started_at
@@ -530,7 +530,7 @@ class TaskWorker:
 
                 # Log performance stats
                 uptime = (
-                    (datetime.utcnow() - self.start_time).total_seconds()
+                    (datetime.now(timezone.utc) - self.start_time).total_seconds()
                     if self.start_time
                     else 0
                 )
@@ -544,13 +544,13 @@ class TaskWorker:
                     f"Uptime: {uptime:.0f}s"
                 )
 
-            except Exception as e:
-                logger.error(f"Monitor loop error: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Monitor loop error: {e!s}")
 
     # Default task implementations
     async def _data_ingestion_task(self, source: str, data_type: str, **kwargs):
         """Data ingestion task"""
-        logger.info(f"Executing data ingestion task for {source}:{data_type}")
+        logger.info("Executing data ingestion task for {source}:{data_type}")
 
         # Import here to avoid circular imports
         from data_sources import ultra_data_manager
@@ -568,18 +568,18 @@ class TaskWorker:
                 "source": source,
                 "data_type": data_type,
                 "data_quality": result.quality_metrics.confidence if result else 0.0,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Data ingestion task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Data ingestion task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     def _model_training_task(
         self, model_name: str, training_data: Dict[str, Any], **kwargs
     ):
         """Model training task"""
-        logger.info(f"Executing model training task for {model_name}")
+        logger.info("Executing model training task for {model_name}")
 
         try:
             # Simulate model training
@@ -590,16 +590,16 @@ class TaskWorker:
                 "model_name": model_name,
                 "training_samples": training_data.get("sample_count", 0),
                 "accuracy": 0.85 + (hash(model_name) % 100) / 1000,  # Mock accuracy
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Model training task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Model training task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     async def _prediction_batch_task(self, event_ids: List[str], **kwargs):
         """Batch prediction task"""
-        logger.info(f"Executing batch prediction task for {len(event_ids)} events")
+        logger.info("Executing batch prediction task for {len(event_ids)} events")
 
         try:
             # Import here to avoid circular imports
@@ -630,11 +630,11 @@ class TaskWorker:
                 "status": "success",
                 "predictions": predictions,
                 "count": len(predictions),
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Batch prediction task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Batch prediction task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     async def _risk_analysis_task(self, portfolio: Dict[str, Any], **kwargs):
@@ -657,11 +657,11 @@ class TaskWorker:
                 "var_95": risk_metrics.value_at_risk_95,
                 "max_drawdown": risk_metrics.max_drawdown,
                 "sharpe_ratio": risk_metrics.sharpe_ratio,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Risk analysis task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Risk analysis task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     async def _arbitrage_scan_task(self, market_data: List[Dict[str, Any]], **kwargs):
@@ -689,16 +689,16 @@ class TaskWorker:
                     ],
                     default=0,
                 ),
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Arbitrage scan task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Arbitrage scan task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     def _performance_analysis_task(self, analysis_type: str, **kwargs):
         """Performance analysis task"""
-        logger.info(f"Executing performance analysis task: {analysis_type}")
+        logger.info("Executing performance analysis task: {analysis_type}")
 
         try:
             # Simulate performance analysis
@@ -708,16 +708,16 @@ class TaskWorker:
                 "status": "success",
                 "analysis_type": analysis_type,
                 "metrics_computed": kwargs.get("metrics_count", 10),
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Performance analysis task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Performance analysis task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     def _cleanup_task(self, cleanup_type: str, **kwargs):
         """Data cleanup task"""
-        logger.info(f"Executing cleanup task: {cleanup_type}")
+        logger.info("Executing cleanup task: {cleanup_type}")
 
         try:
             # Simulate cleanup
@@ -728,16 +728,16 @@ class TaskWorker:
                 "status": "success",
                 "cleanup_type": cleanup_type,
                 "records_cleaned": records_cleaned,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Cleanup task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Cleanup task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     def _backup_task(self, backup_type: str, **kwargs):
         """Backup creation task"""
-        logger.info(f"Executing backup task: {backup_type}")
+        logger.info("Executing backup task: {backup_type}")
 
         try:
             # Simulate backup
@@ -749,16 +749,16 @@ class TaskWorker:
                 "backup_type": backup_type,
                 "data_size_mb": data_size,
                 "backup_location": f"/backups/{backup_type}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.sql",
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Backup task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Backup task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     def _cache_warming_task(self, cache_keys: List[str], **kwargs):
         """Cache warming task"""
-        logger.info(f"Executing cache warming task for {len(cache_keys)} keys")
+        logger.info("Executing cache warming task for {len(cache_keys)} keys")
 
         try:
             # Simulate cache warming
@@ -768,16 +768,16 @@ class TaskWorker:
                 "status": "success",
                 "keys_warmed": len(cache_keys),
                 "cache_hit_rate": 0.95,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Cache warming task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Cache warming task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
     def _analytics_computation_task(self, metrics: List[str], **kwargs):
         """Analytics computation task"""
-        logger.info(f"Executing analytics computation task for {len(metrics)} metrics")
+        logger.info("Executing analytics computation task for {len(metrics)} metrics")
 
         try:
             # Simulate analytics computation
@@ -788,11 +788,11 @@ class TaskWorker:
                 "status": "success",
                 "metrics_computed": len(metrics),
                 "computation_time": computation_time,
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(timezone.utc).isoformat(),
             }
 
-        except Exception as e:
-            logger.error(f"Analytics computation task failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Analytics computation task failed: {e!s}")
             return {"status": "failed", "error": str(e)}
 
 
@@ -817,7 +817,7 @@ class TaskScheduler:
             )
         elif task.scheduled_at:
             await self.task_queue.enqueue(task)
-            logger.info(f"Scheduled one-time task {task.id} for {task.scheduled_at}")
+            logger.info("Scheduled one-time task {task.id} for {task.scheduled_at}")
         else:
             # Immediate execution
             await self.task_queue.enqueue(task)
@@ -831,7 +831,7 @@ class TaskScheduler:
                 await asyncio.sleep(60)  # Check every minute
 
                 # Check scheduled tasks
-                current_time = datetime.utcnow()
+                current_time = datetime.now(timezone.utc)
 
                 for task_id, task in list(self.scheduled_tasks.items()):
                     if self._should_run_task(task, current_time):
@@ -849,10 +849,10 @@ class TaskScheduler:
                         )
 
                         await self.task_queue.enqueue(new_task)
-                        logger.info(f"Triggered scheduled task {new_task.id}")
+                        logger.info("Triggered scheduled task {new_task.id}")
 
-            except Exception as e:
-                logger.error(f"Scheduler error: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Scheduler error: {e!s}")
                 await asyncio.sleep(5)
 
     def _should_run_task(self, task: TaskDefinition, current_time: datetime) -> bool:
@@ -903,7 +903,7 @@ class UltraTaskProcessor:
         # Start scheduler
         asyncio.create_task(self.scheduler.start_scheduler())
 
-        logger.info(f"Started {num_workers} task workers")
+        logger.info("Started {num_workers} task workers")
 
     async def submit_task(self, task: TaskDefinition) -> str:
         """Submit a task for processing"""
@@ -939,7 +939,7 @@ class UltraTaskProcessor:
             "worker_stats": worker_stats,
             "scheduled_tasks": len(self.scheduler.scheduled_tasks),
             "system_running": self.is_running,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
     async def _schedule_default_tasks(self):
@@ -986,7 +986,7 @@ class UltraTaskProcessor:
         for task in default_tasks:
             await self.scheduler.schedule_task(task)
 
-        logger.info(f"Scheduled {len(default_tasks)} default recurring tasks")
+        logger.info("Scheduled {len(default_tasks)} default recurring tasks")
 
 
 # Global task processor instance

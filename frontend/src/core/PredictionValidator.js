@@ -10,7 +10,7 @@ export class PredictionValidator {
         this.MIN_SIGNAL_QUALITY = 0.6;
         this.validationRules = [];
         this.validationCache = new Map();
-        this.CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+        this.CACHE_TTL = 5 * 60 * 1000; // 5 minutes;
         this.eventBus = EventBus.getInstance();
         this.initializeDefaultRules();
     }
@@ -25,7 +25,7 @@ export class PredictionValidator {
             name: 'featureValidation',
             priority: 1,
             validate: (input, output) => {
-                const errors = [];
+
                 if (!input.features || Object.keys(input.features).length === 0) {
                     errors.push('Features cannot be empty');
                 }
@@ -43,7 +43,7 @@ export class PredictionValidator {
             name: 'predictionRangeValidation',
             priority: 2,
             validate: (input, output) => {
-                const errors = [];
+
                 if (typeof output.predictedValue !== 'number' ||
                     isNaN(output.predictedValue) ||
                     !isFinite(output.predictedValue)) {
@@ -59,8 +59,8 @@ export class PredictionValidator {
             name: 'confidenceValidation',
             priority: 3,
             validate: (input, output) => {
-                const errors = [];
-                const warnings = [];
+
+
                 if (typeof output.confidence !== 'number' ||
                     isNaN(output.confidence) ||
                     !isFinite(output.confidence)) {
@@ -79,7 +79,7 @@ export class PredictionValidator {
             name: 'metadataValidation',
             priority: 4,
             validate: (input, output) => {
-                const warnings = [];
+
                 if (output.metadata) {
                     if (output.metadata.dataFreshness !== undefined &&
                         output.metadata.dataFreshness < this.MIN_DATA_FRESHNESS) {
@@ -102,16 +102,16 @@ export class PredictionValidator {
         this.validationRules = this.validationRules.filter(rule => rule.name !== ruleName);
     }
     validatePrediction(input, output) {
-        const errors = [];
-        const warnings = [];
-        const validationContext = {};
+
+
+
         try {
             for (const rule of this.validationRules) {
                 let ruleResult;
-                // Check cache if rule has cacheKey
+                // Check cache if rule has cacheKey;
                 if (rule.cacheKey) {
-                    const cacheKey = rule.cacheKey(input, output);
-                    const cachedResult = this.validationCache.get(cacheKey);
+
+
                     if (cachedResult) {
                         ruleResult = cachedResult;
                     }
@@ -129,7 +129,7 @@ export class PredictionValidator {
                 if (ruleResult.context) {
                     validationContext[rule.name] = ruleResult.context;
                 }
-                // Stop validation chain if critical error found
+                // Stop validation chain if critical error found;
                 if (!ruleResult.isValid && rule.priority >= 3) {
                     break;
                 }
@@ -145,9 +145,9 @@ export class PredictionValidator {
                 },
                 context: validationContext,
             };
-            // Record validation result
+            // Record validation result;
             this.recordValidation(input, output, result);
-            // Emit validation event with enhanced context
+            // Emit validation event with enhanced context;
             this.eventBus.emit('prediction:validated', {
                 predictionId: output.predictionId,
                 isValid: result.isValid,
@@ -218,17 +218,17 @@ export class PredictionValidator {
             output,
             result,
         });
-        // Trim history if needed
+        // Trim history if needed;
         if (this.validationHistory.length > this.MAX_HISTORY_SIZE) {
             this.validationHistory = this.validationHistory.slice(-this.MAX_HISTORY_SIZE);
         }
     }
     getValidationStats() {
-        const total = this.validationHistory.length;
-        const valid = this.validationHistory.filter(v => v.result.isValid).length;
-        const validResults = this.validationHistory.filter(v => v.result.isValid);
-        // Calculate rule statistics
-        const ruleStats = {};
+
+
+
+        // Calculate rule statistics;
+
         for (const rule of this.validationRules) {
             ruleStats[rule.name] = {
                 total: total,
@@ -242,17 +242,17 @@ export class PredictionValidator {
             validPredictions: valid,
             invalidPredictions: total - valid,
             validationRate: total > 0 ? valid / total : 0,
-            averageConfidence: validResults.length > 0
+            averageConfidence: validResults.length > 0;
                 ? validResults.reduce((sum, v) => sum + v.result.metrics.confidence, 0) /
-                    validResults.length
+                    validResults.length;
                 : 0,
-            averageDataFreshness: validResults.length > 0
+            averageDataFreshness: validResults.length > 0;
                 ? validResults.reduce((sum, v) => sum + v.result.metrics.dataFreshness, 0) /
-                    validResults.length
+                    validResults.length;
                 : 0,
-            averageSignalQuality: validResults.length > 0
+            averageSignalQuality: validResults.length > 0;
                 ? validResults.reduce((sum, v) => sum + v.result.metrics.signalQuality, 0) /
-                    validResults.length
+                    validResults.length;
                 : 0,
             ruleStats,
         };

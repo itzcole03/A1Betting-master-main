@@ -1,10 +1,10 @@
 import rateLimit from 'express-rate-limit';
 import { UnifiedLogger } from '../services/core/UnifiedLogger';
-const logger = UnifiedLogger.getInstance();
-// Create different limiters for different endpoints
+
+// Create different limiters for different endpoints;
 export const apiLimiter = rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000, // 15 minutes;
+    max: 100, // Limit each IP to 100 requests per windowMs;
     message: 'Too many requests from this IP, please try again later',
     handler: (req, res) => {
         logger.warn('Rate limit exceeded', `IP: ${req.ip}, Path: ${req.path}, Method: ${req.method}`);
@@ -13,10 +13,10 @@ export const apiLimiter = rateLimit({
         });
     },
 });
-// Stricter limits for authentication endpoints
+// Stricter limits for authentication endpoints;
 export const authLimiter = rateLimit({
-    windowMs: 60 * 60 * 1000, // 1 hour
-    max: 5, // Limit each IP to 5 requests per windowMs
+    windowMs: 60 * 60 * 1000, // 1 hour;
+    max: 5, // Limit each IP to 5 requests per windowMs;
     message: 'Too many authentication attempts, please try again later',
     handler: (req, res) => {
         logger.warn('Auth rate limit exceeded', `IP: ${req.ip}, Path: ${req.path}, Method: ${req.method}`);
@@ -25,10 +25,10 @@ export const authLimiter = rateLimit({
         });
     },
 });
-// Stricter limits for betting endpoints
+// Stricter limits for betting endpoints;
 export const bettingLimiter = rateLimit({
-    windowMs: 60 * 1000, // 1 minute
-    max: 10, // Limit each IP to 10 requests per windowMs
+    windowMs: 60 * 1000, // 1 minute;
+    max: 10, // Limit each IP to 10 requests per windowMs;
     message: 'Too many betting requests, please try again later',
     handler: (req, res) => {
         logger.warn('Betting rate limit exceeded', `IP: ${req.ip}, Path: ${req.path}, Method: ${req.method}`);

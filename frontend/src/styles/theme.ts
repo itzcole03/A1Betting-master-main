@@ -69,10 +69,10 @@ export const themeTokens = {
 
 export type ThemeTokens = typeof themeTokens;
 
-// Theme utility functions
+// Theme utility functions;
 export const getThemeValue = <T extends keyof ThemeTokens, K extends keyof ThemeTokens[T]>(
   category: T,
-  key: K
+  key: K;
 ): ThemeTokens[T][K] => {
   return themeTokens[category][key];
 };

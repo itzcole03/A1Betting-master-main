@@ -1,4 +1,4 @@
-import { AnalysisResult, IntegratedData } from './PredictionEngine';
+import { AnalysisResult, IntegratedData } from './PredictionEngine.ts';
 
 
 

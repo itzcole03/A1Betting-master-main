@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import {
   Drawer,
   List,
@@ -7,15 +7,15 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   Dashboard as DashboardIcon,
   SportsSoccer as SportsIcon,
   AccountBalance as WalletIcon,
   History as HistoryIcon,
   Settings as SettingsIcon,
-} from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
+} from '@mui/icons-material.ts';
+import { useNavigate, useLocation } from 'react-router-dom.ts';
 
 interface SidebarProps {
   open: boolean;
@@ -23,17 +23,16 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
-  { text: 'Sports', icon: <SportsIcon />, path: '/sports' },
-  { text: 'Wallet', icon: <WalletIcon />, path: '/wallet' },
-  { text: 'History', icon: <HistoryIcon />, path: '/history' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+  { text: 'Dashboard', icon: <DashboardIcon / key={467532}>, path: '/' },
+  { text: 'Sports', icon: <SportsIcon / key={98948}>, path: '/sports' },
+  { text: 'Wallet', icon: <WalletIcon / key={620232}>, path: '/wallet' },
+  { text: 'History', icon: <HistoryIcon / key={45718}>, path: '/history' },
+  { text: 'Settings', icon: <SettingsIcon / key={722197}>, path: '/settings' },
 ];
 
 const Sidebar = ({ open, onClose }: SidebarProps) => {
-  const theme = useTheme();
-  const navigate = useNavigate();
-  const location = useLocation();
+
+
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -41,7 +40,7 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
   };
 
   return (
-    <Drawer
+    <Drawer;
       anchor="left"
       open={open}
       sx={{
@@ -56,16 +55,16 @@ const Sidebar = ({ open, onClose }: SidebarProps) => {
       }}
       variant="persistent"
       onClose={onClose}
-    >
-      <List>
+     key={392402}>
+      <List key={733302}>
         {menuItems.map(item => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton
+          <ListItem key={item.text} disablePadding key={104612}>
+            <ListItemButton;
               selected={location.pathname === item.path}
-              onClick={() => handleNavigation(item.path)}
+              onClick={() = key={25033}> handleNavigation(item.path)}
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
+              <ListItemIcon key={394934}>{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} / key={645184}>
             </ListItemButton>
           </ListItem>
         ))}

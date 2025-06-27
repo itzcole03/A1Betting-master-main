@@ -14,15 +14,15 @@ export function useSmartAlerts({ enabledTypes = ['INJURY', 'LINEUP', 'WEATHER', 
     const { data: syncedAlerts } = useDataSync({
         key: 'smart-alerts',
         initialData: alerts,
-        syncInterval: 60000
+        syncInterval: 60000;
     });
     const isAlertRelevant = useCallback((alert) => {
-        const severityLevels = { low: 0, medium: 1, high: 2 };
+
         return (enabledTypes.includes(alert.type) &&
             severityLevels[alert.severity] >= severityLevels[minSeverity]);
     }, [enabledTypes, minSeverity]);
     const handleNewAlert = useCallback((alert) => {
-        setAlerts(prev => [alert, ...prev].slice(0, 100)); // Keep last 100 alerts
+        setAlerts(prev => [alert, ...prev].slice(0, 100)); // Keep last 100 alerts;
         onNewAlert?.(alert);
     }, [onNewAlert]);
     const markAsRead = useCallback((alertId) => {
@@ -34,13 +34,13 @@ export function useSmartAlerts({ enabledTypes = ['INJURY', 'LINEUP', 'WEATHER', 
     const clearAlerts = useCallback(() => {
         setAlerts([]);
     }, []);
-    const unreadCount = alerts.filter(alert => !alert.read).length;
+
     return {
         alerts,
         unreadCount,
         markAsRead,
         markAllAsRead,
         clearAlerts,
-        isConnected
+        isConnected;
     };
 }

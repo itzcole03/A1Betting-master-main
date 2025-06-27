@@ -1,15 +1,15 @@
-// LiveDataOrchestrator.ts
+// LiveDataOrchestrator.ts;
 // Service for ingesting and scoring real-time external data (sentiment, line movement, weather, injuries)
-// Simulates fallback and data source confidence scoring, logs freshness and API priority
+// Simulates fallback and data source confidence scoring, logs freshness and API priority;
 
 export type DataSourceType = 'sentiment' | 'line_movement' | 'weather' | 'injury' | 'news' | 'odds';
 
 export interface LiveDataSource {
   name: string;
   type: DataSourceType;
-  priority: number; // Lower is higher priority
+  priority: number; // Lower is higher priority;
   lastUpdated: Date;
-  confidence: number; // 0-1
+  confidence: number; // 0-1;
   enrichment: string[];
 }
 
@@ -17,8 +17,8 @@ export interface LiveDataRecord {
   source: LiveDataSource;
   value: any;
   receivedAt: Date;
-  freshness: number; // seconds since last update
-  qualityScore: number; // 0-100
+  freshness: number; // seconds since last update;
+  qualityScore: number; // 0-100;
 }
 
 export class LiveDataOrchestrator {
@@ -30,11 +30,11 @@ export class LiveDataOrchestrator {
   }
 
   ingestData(sourceName: string, value: any) {
-    const source = this.sources.find(s => s.name === sourceName);
+
     if (!source) throw new Error('Source not registered');
-    const now = new Date();
-    const freshness = (now.getTime() - source.lastUpdated.getTime()) / 1000;
-    const qualityScore = Math.round(source.confidence * 100 - freshness * 0.1);
+
+
+
     const record: LiveDataRecord = {
       source,
       value,
@@ -48,17 +48,17 @@ export class LiveDataOrchestrator {
   }
 
   getBestRecord(type: DataSourceType): LiveDataRecord | null {
-    const candidates = this.records.filter(r => r.source.type === type);
+
     if (candidates.length === 0) return null;
-    // Sort by qualityScore, then by priority
+    // Sort by qualityScore, then by priority;
     return candidates.sort((a, b) => b.qualityScore - a.qualityScore || a.source.priority - b.source.priority)[0];
   }
 
   simulateFallback(type: DataSourceType): LiveDataRecord | null {
-    // Return the next-best record if the best is stale or low quality
-    const candidates = this.records.filter(r => r.source.type === type).sort((a, b) => b.qualityScore - a.qualityScore);
+    // Return the next-best record if the best is stale or low quality;
+
     if (candidates.length < 2) return null;
-    const best = candidates[0];
+
     if (best.qualityScore < 60 || best.freshness > 120) {
       return candidates[1];
     }

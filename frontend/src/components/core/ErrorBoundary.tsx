@@ -1,5 +1,5 @@
-import React, { Component, ErrorInfo, ReactNode } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import React, { Component, ErrorInfo, ReactNode  } from 'react.ts';
+import { Box, Typography, Button } from '@mui/material.ts';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +10,7 @@ interface State {
   error: Error | null;
 }
 
-class ErrorBoundary extends Component<Props, State> {
+class ErrorBoundary extends Component<Props, State key={458171}> {
   public state: State = {
     hasError: false,
     error: null,
@@ -21,13 +21,13 @@ class ErrorBoundary extends Component<Props, State> {
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Uncaught error:', error, errorInfo);
+    // console statement removed
   }
 
   public render() {
     if (this.state.hasError) {
       return (
-        <Box
+        <Box;
           sx={{
             display: 'flex',
             flexDirection: 'column',
@@ -37,15 +37,15 @@ class ErrorBoundary extends Component<Props, State> {
             p: 3,
             textAlign: 'center',
           }}
-        >
-          <Typography gutterBottom color="error" variant="h4">
-            Something went wrong
+         key={264330}>
+          <Typography gutterBottom color="error" variant="h4" key={88565}>
+            Something went wrong;
           </Typography>
-          <Typography paragraph color="text.secondary" variant="body1">
+          <Typography paragraph color="text.secondary" variant="body1" key={957527}>
             {this.state.error?.message || 'An unexpected error occurred'}
           </Typography>
-          <Button color="primary" variant="contained" onClick={() => window.location.reload()}>
-            Reload Page
+          <Button color="primary" variant="contained" onClick={() = key={974276}> window.location.reload()}>
+            Reload Page;
           </Button>
         </Box>
       );

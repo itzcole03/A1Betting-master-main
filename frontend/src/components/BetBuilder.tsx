@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import useStore from "../store/useStore";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { EntryStatus, LineupType, PlayerProp } from "../types/core";
-import { getErrorMessage } from "../utils/errorUtils";
-import { isTeamDiversified, validateEntry } from "../utils/businessRules";
+import React, { useState  } from 'react.ts';
+import useStore from '@/store/useStore.ts';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars;
+import { EntryStatus, LineupType, PlayerProp } from '@/types/core.ts';
+import { getErrorMessage } from '@/utils/errorUtils.ts';
+import { isTeamDiversified, validateEntry } from '@/utils/businessRules.ts';
 import {
   oddsToDecimal,
   calculatePotentialPayout,
   calculateWinProbability,
-} from "../utils/odds";
+} from '@/utils/odds.ts';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars;
 const getSentimentBadge = (sentiment?: {
   score: number;
   direction: "up" | "down" | "neutral";
@@ -30,10 +30,10 @@ const getSentimentBadge = (sentiment?: {
         ? "▼"
         : "−";
   return (
-    <span
+    <span;
       className={`ml-2 px-2 py-1 rounded-full text-xs ${color} cursor-help`}
       title={sentiment.tooltip || ""}
-    >
+     key={89303}>
       {icon} {sentiment.score}
     </span>
   );
@@ -47,43 +47,40 @@ function getPropEmoji(confidence: number): string {
 }
 
 export const BetBuilder: React.FC = () => {
-  // Use only selectedProps for betslip UI
-  const selectedProps = useStore((s) => s.selectedProps);
-  const props = useStore((s) => s.props);
-  const togglePropSelection = useStore((s) => s.togglePropSelection);
-  const addEntry = useStore((s) => s.addEntry);
+  // Use only selectedProps for betslip UI;
 
-  // Create helper functions for prop selection
+
+
+
+  // Create helper functions for prop selection;
   const clearSelectedProps = () => {
     selectedProps.forEach((propId) => togglePropSelection(propId));
   };
   const [entry, setEntry] = useState(10);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
+  const [success, setSuccess] = useState<string | null key={121216}>(null);
 
-  // Get actual prop objects from selectedProps IDs
-  const selectedPropObjects = selectedProps
+  // Get actual prop objects from selectedProps IDs;
+  const selectedPropObjects = selectedProps;
     .map((propId) => props.find((p) => p.id === propId))
     .filter(Boolean) as PlayerProp[];
 
-  // Odds and payout calculation
-  const oddsArr = selectedPropObjects.map((p) => p.odds?.toString() || "2.0");
-  const payout = calculatePotentialPayout(entry, oddsArr);
+  // Odds and payout calculation;
+
+
   const winProb = calculateWinProbability(
     selectedPropObjects.map((p) => p.confidence || 50),
   );
 
-  // Team diversification check
-  const diversified = isTeamDiversified(selectedPropObjects);
+  // Team diversification check;
 
   // Combined odds (decimal)
-  const combinedDecimal = oddsArr.reduce((acc, o) => acc * oddsToDecimal(o), 1);
 
   // Handle prop selection (no-op, as only selectedProps are shown)
   // In a real app, you would source PlayerProp[] from a dedicated prop list, not players[]
 
-  // Submit betslip
+  // Submit betslip;
   const handleSubmit = async () => {
     setError(null);
     setSuccess(null);
@@ -106,7 +103,7 @@ export const BetBuilder: React.FC = () => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    const validationErrors = validateEntry(entryObj);
+
     if (validationErrors.length) {
       setError(validationErrors.join(" "));
       return;
@@ -119,7 +116,7 @@ export const BetBuilder: React.FC = () => {
         body: JSON.stringify(entryObj),
       });
       if (!res.ok) {
-        const err = await res.json();
+
         setError(getErrorMessage(err));
         setLoading(false);
         return;
@@ -135,68 +132,68 @@ export const BetBuilder: React.FC = () => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow overflow-hidden">
-      <div className="px-4 py-3 border-b border-gray-200">
-        <h2 className="text-lg font-semibold text-gray-800">Bet Builder</h2>
+    <div className="bg-white rounded-lg shadow overflow-hidden" key={533976}>
+      <div className="px-4 py-3 border-b border-gray-200" key={109323}>
+        <h2 className="text-lg font-semibold text-gray-800" key={514675}>Bet Builder</h2>
       </div>
-      <div className="p-4 bg-gray-50 border-b border-gray-200 flex gap-4 items-center">
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Entry
+      <div className="p-4 bg-gray-50 border-b border-gray-200 flex gap-4 items-center" key={95152}>
+        <div key={241917}>
+          <label className="block text-sm font-medium text-gray-700" key={795081}>
+            Entry;
           </label>
-          <div className="premium-input-container w-24">
-            <span className="currency-symbol">$</span>
-            <input
+          <div className="premium-input-container w-24" key={529765}>
+            <span className="currency-symbol" key={599010}>$</span>
+            <input;
               className="premium-input text-gray-900"
               max={1000}
               min={1}
               type="number"
               value={entry}
-              onChange={(e) => setEntry(Number(e.target.value))}
+              onChange={(e) = key={847125}> setEntry(Number(e.target.value))}
             />
           </div>
         </div>
-        <div>
-          <div className="text-sm text-gray-600 font-medium">Payout</div>
-          <div className="text-xl font-bold text-green-600">
+        <div key={241917}>
+          <div className="text-sm text-gray-600 font-medium" key={5706}>Payout</div>
+          <div className="text-xl font-bold text-green-600" key={771029}>
             ${payout.toFixed(2)}
           </div>
         </div>
-        <div>
-          <div className="text-sm text-gray-600 font-medium">Win Prob</div>
-          <div className="text-xl font-bold text-blue-600">
+        <div key={241917}>
+          <div className="text-sm text-gray-600 font-medium" key={5706}>Win Prob</div>
+          <div className="text-xl font-bold text-blue-600" key={543399}>
             {winProb.toFixed(1)}%
           </div>
         </div>
-        <div>
-          <div className="text-sm text-gray-600 font-medium">Combined Odds</div>
-          <div className="text-xl font-bold text-purple-600">
+        <div key={241917}>
+          <div className="text-sm text-gray-600 font-medium" key={5706}>Combined Odds</div>
+          <div className="text-xl font-bold text-purple-600" key={380623}>
             {combinedDecimal.toFixed(2)}
           </div>
         </div>
       </div>
       {/* In a real app, you would render available PlayerProp[] here for selection */}
       {selectedPropObjects.length > 0 && (
-        <div className="p-4 border-t border-gray-200">
-          <h3 className="text-sm font-medium text-gray-700 mb-3">Your Picks</h3>
-          <div className="space-y-2">
+        <div className="p-4 border-t border-gray-200" key={981846}>
+          <h3 className="text-sm font-medium text-gray-700 mb-3" key={129043}>Your Picks</h3>
+          <div className="space-y-2" key={725977}>
             {selectedPropObjects.map((leg, idx) => (
-              <div
+              <div;
                 key={idx}
                 className="flex justify-between items-center p-3 rounded-lg glass"
-              >
-                <div>
-                  <span className="font-bold text-gray-900">
+               key={244051}>
+                <div key={241917}>
+                  <span className="font-bold text-gray-900" key={705426}>
                     {leg.player?.name || "Unknown Player"}{" "}
                     {leg.type || "Unknown Type"} {leg.line || "N/A"}
                   </span>
-                  <span className="ml-2 text-2xl">
+                  <span className="ml-2 text-2xl" key={293997}>
                     {getPropEmoji(leg.confidence || 50)}
                   </span>
                   {/* Add ESPN/news/sentiment if available on PlayerProp in the future */}
                 </div>
-                <div className="text-right">
-                  <span className="font-bold text-blue-600">
+                <div className="text-right" key={144468}>
+                  <span className="font-bold text-blue-600" key={838726}>
                     {leg.confidence || 50}%
                   </span>
                 </div>
@@ -206,19 +203,19 @@ export const BetBuilder: React.FC = () => {
         </div>
       )}
       {error && (
-        <div className="p-4 text-red-600 text-sm font-medium">{error}</div>
+        <div className="p-4 text-red-600 text-sm font-medium" key={369251}>{error}</div>
       )}
       {success && (
-        <div className="p-4 text-green-600 text-sm font-medium">{success}</div>
+        <div className="p-4 text-green-600 text-sm font-medium" key={102170}>{success}</div>
       )}
-      <div className="p-4 border-t flex justify-end">
-        <button
+      <div className="p-4 border-t flex justify-end" key={334939}>
+        <button;
           className="modern-button bg-primary-500 text-white px-8 py-3 rounded-xl font-bold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={loading || selectedPropObjects.length < 2}
           onClick={handleSubmit}
-        >
+         key={735982}>
           {loading ? (
-            <span className="loading-spinner-premium"></span>
+            <span className="loading-spinner-premium" key={649905}></span>
           ) : (
             "Submit Entry"
           )}

@@ -1,4 +1,4 @@
-import { DataSource } from '../core/DataSource.js';
+import { DataSource } from '@/core/DataSource.js';
 interface TheOddsConfig {
     apiKey: string;
     baseUrl: string;

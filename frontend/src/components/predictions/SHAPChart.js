@@ -41,7 +41,7 @@ export function SHAPChart({ shapValues, className = '' }) {
             tooltip: {
                 callbacks: {
                     label: (context) => {
-                        const value = context.raw;
+
                         return `Impact: ${value > 0 ? '+' : ''}${value.toFixed(3)}`;
                     },
                 },
@@ -63,7 +63,7 @@ export function SHAPChart({ shapValues, className = '' }) {
                 ticks: {
                     color: 'rgb(107, 114, 128)',
                     callback: (value) => {
-                        const label = chartData.labels[value];
+
                         return label.length > 20 ? label.substring(0, 17) + '...' : label;
                     },
                 },

@@ -18,7 +18,7 @@ class Scheduler {
                 await job();
             }
             catch (err) {
-                console.error(`[Scheduler] Error in job '${id}':`, err);
+                // console statement removed
             }
             finally {
                 scheduledJob.running = false;
@@ -27,7 +27,7 @@ class Scheduler {
         this.jobs.set(id, scheduledJob);
     }
     cancel(id) {
-        const job = this.jobs.get(id);
+
         if (job && job.timer) {
             clearInterval(job.timer);
             this.jobs.delete(id);

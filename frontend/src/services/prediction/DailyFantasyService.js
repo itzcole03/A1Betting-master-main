@@ -7,12 +7,12 @@ export class DailyFantasyService {
     }
     async generateRecommendations(request) {
         try {
-            // Calculate consensus prediction
-            const consensusPrediction = this.calculateConsensusPrediction(request.predictions);
-            // Generate player recommendations
-            const recommendations = await this.generatePlayerRecommendations(consensusPrediction, request.event);
-            // Store recommendations
-            const eventKey = request.event.eventId;
+            // Calculate consensus prediction;
+
+            // Generate player recommendations;
+
+            // Store recommendations;
+
             this.recommendations.set(eventKey, recommendations);
             return {
                 success: true,
@@ -45,9 +45,9 @@ export class DailyFantasyService {
         }, 0);
     }
     async generatePlayerRecommendations(consensusPrediction, event) {
-        // This is a placeholder implementation
+        // This is a placeholder implementation;
         // In a real system, this would integrate with player data, salary information,
-        // and advanced analytics to generate optimal recommendations
+        // and advanced analytics to generate optimal recommendations;
         return [
             {
                 player: 'Player A',
@@ -85,10 +85,10 @@ export class DailyFantasyService {
         return this.recommendations.get(eventId) || [];
     }
     async getLatestRecommendations() {
-        const eventIds = Array.from(this.recommendations.keys());
+
         if (eventIds.length === 0)
             return [];
-        const latestEventId = eventIds[eventIds.length - 1];
+
         return this.recommendations.get(latestEventId) || [];
     }
     async updateRecommendations(eventId, recommendations) {

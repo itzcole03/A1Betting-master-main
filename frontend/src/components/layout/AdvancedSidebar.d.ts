@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react.ts';
 interface AdvancedSidebarProps {
     currentSection?: string;
     onSectionChange?: (section: string) => void;

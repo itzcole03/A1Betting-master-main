@@ -21,7 +21,7 @@ class SimpleEventEmitter {
 }
 import { API_CONFIG } from '../config/apiConfig.js';
 import { wrapWithRateLimit } from './rateLimit/wrapWithRateLimit.js';
-// Data source types
+// Data source types;
 export var DataSource;
 (function (DataSource) {
     DataSource["PRIZEPICKS"] = "prizepicks";
@@ -35,8 +35,8 @@ export class UnifiedDataService extends SimpleEventEmitter {
          * Fetch data from a backend API, with caching and rate limiting.
          */
         this.fetchData = wrapWithRateLimit(async (source, endpoint, params) => {
-            const cacheKey = `${source}:${endpoint}:${params ? JSON.stringify(params) : ''}`;
-            const cached = this.cache.get(cacheKey);
+
+
             if (cached && Date.now() - cached.timestamp < 30000) {
                 return {
                     source,
@@ -46,8 +46,8 @@ export class UnifiedDataService extends SimpleEventEmitter {
                 };
             }
             try {
-                const baseUrl = this.getBaseUrl(source);
-                const url = new URL(endpoint, baseUrl);
+
+
                 if (params) {
                     Object.entries(params).forEach(([k, v]) => url.searchParams.append(k, String(v)));
                 }
@@ -57,7 +57,7 @@ export class UnifiedDataService extends SimpleEventEmitter {
                 });
                 if (!res.ok)
                     throw new Error(`Failed to fetch data: ${res.statusText}`);
-                const data = (await res.json());
+
                 this.cache.set(cacheKey, { data, timestamp: Date.now() });
                 return {
                     source,
@@ -102,8 +102,8 @@ export class UnifiedDataService extends SimpleEventEmitter {
             return;
         if (!io || typeof io !== 'function')
             return;
-        // @ts-expect-error: dynamic import fallback for socket.io-client
-        const socket = io(this.getBaseUrl(source), { transports: ['websocket'], autoConnect: true });
+        // @ts-expect-error: dynamic import fallback for socket.io-client;
+
         options.events.forEach(event => {
             socket.on(event, (data) => {
                 this.emit(`ws:${source}:${event}`, data);
@@ -115,7 +115,7 @@ export class UnifiedDataService extends SimpleEventEmitter {
         this.wsConnections.set(source, socket);
     }
     disconnectWebSocket(source) {
-        const socket = this.wsConnections.get(source);
+
         if (socket && typeof socket.disconnect === 'function') {
             socket.disconnect();
             this.wsConnections.delete(source);

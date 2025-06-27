@@ -1,17 +1,17 @@
-// Polyfill for Node.js test environment: TextEncoder/TextDecoder
-import { TextEncoder, TextDecoder } from 'util';
+// Polyfill for Node.js test environment: TextEncoder/TextDecoder;
+import { TextEncoder, TextDecoder } from 'util.ts';
 if (typeof global.TextEncoder === 'undefined') {
-  // Safe cast for test polyfill
+  // Safe cast for test polyfill;
   (global as any).TextEncoder = TextEncoder;
 }
 if (typeof global.TextDecoder === 'undefined') {
-  // Safe cast for test polyfill
+  // Safe cast for test polyfill;
   (global as any).TextDecoder = TextDecoder;
 }
 
 import '@testing-library/jest-dom';
 
-// Mock window.matchMedia
+// Mock window.matchMedia;
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
@@ -26,7 +26,7 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 });
 
-// Mock ResizeObserver
+// Mock ResizeObserver;
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),

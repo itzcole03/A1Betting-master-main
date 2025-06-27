@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface RealtimePredictionDisplayProps {
     sport: string;
     eventId: string;

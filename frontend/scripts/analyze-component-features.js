@@ -1,16 +1,14 @@
-#!/usr/bin/env node
+#!/usr/bin/env node;
 
 /**
- * Component Feature Analysis Script
+ * Component Feature Analysis Script;
  *
- * This script analyzes all UserFriendlyApp and MoneyMaker component variants
+ * This script analyzes all UserFriendlyApp and MoneyMaker component variants;
  * to identify unique features that might not be present in the main component.
  */
 
-const fs = require("fs");
-const path = require("path");
 
-// Component paths to analyze
+// Component paths to analyze;
 const COMPONENT_PATHS = [
   "src/components/user-friendly/UserFriendlyApp.tsx",
   "src/components/user-friendly/UserFriendlyApp_Production.tsx",
@@ -27,11 +25,10 @@ const COMPONENT_PATHS = [
 ];
 
 /**
- * Extract unique features from component code
+ * Extract unique features from component code;
  */
 function extractFeatures(filePath) {
   try {
-    const content = fs.readFileSync(filePath, "utf8");
 
     const features = {
       imports: [],
@@ -43,68 +40,68 @@ function extractFeatures(filePath) {
       css_classes: [],
     };
 
-    // Extract imports
-    const importMatches = content.match(/import\s+.*?from\s+['"`].*?['"`]/g);
+    // Extract imports;
+
     if (importMatches) {
       features.imports = importMatches.map((imp) => imp.trim());
     }
 
-    // Extract component names
+    // Extract component names;
     const componentMatches = content.match(
       /(?:const|function|class)\s+(\w+)(?:\s*[:=]|\s*\()/g,
     );
     if (componentMatches) {
       features.components = componentMatches.map((comp) =>
-        comp
+        comp;
           .replace(/(?:const|function|class)\s+/, "")
           .replace(/[:=(].*/, "")
           .trim(),
       );
     }
 
-    // Extract function names
-    const functionMatches = content.match(/(?:const|function)\s+(\w+)\s*[=:]/g);
+    // Extract function names;
+
     if (functionMatches) {
       features.functions = functionMatches.map((func) =>
-        func
+        func;
           .replace(/(?:const|function)\s+/, "")
           .replace(/\s*[=:].*/, "")
           .trim(),
       );
     }
 
-    // Extract hooks usage
-    const hookMatches = content.match(/use\w+/g);
+    // Extract hooks usage;
+
     if (hookMatches) {
       features.hooks = [...new Set(hookMatches)];
     }
 
-    // Extract interfaces
-    const interfaceMatches = content.match(/interface\s+(\w+)/g);
+    // Extract interfaces;
+
     if (interfaceMatches) {
       features.interfaces = interfaceMatches.map((int) =>
         int.replace("interface ", "").trim(),
       );
     }
 
-    // Extract constants
-    const constantMatches = content.match(/const\s+([A-Z_][A-Z0-9_]*)\s*=/g);
+    // Extract constants;
+
     if (constantMatches) {
       features.constants = constantMatches.map((const_match) =>
-        const_match
+        const_match;
           .replace(/const\s+/, "")
           .replace(/\s*=.*/, "")
           .trim(),
       );
     }
 
-    // Extract CSS classes
-    const cssMatches = content.match(/className=['"`][^'"`]*['"`]/g);
+    // Extract CSS classes;
+
     if (cssMatches) {
       features.css_classes = [
         ...new Set(
           cssMatches.map((css) =>
-            css
+            css;
               .replace(/className=['"`]/, "")
               .replace(/['"`]$/, "")
               .trim(),
@@ -115,57 +112,53 @@ function extractFeatures(filePath) {
 
     return features;
   } catch (error) {
-    console.error(`Error reading ${filePath}:`, error.message);
+    // console statement removed
     return null;
   }
 }
 
 /**
- * Compare features across components
+ * Compare features across components;
  */
 function compareFeatures() {
-  console.log("🔍 Analyzing Component Features...\n");
+  // console statement removed
 
-  const allFeatures = {};
-  const mainComponent = COMPONENT_PATHS[0]; // UserFriendlyApp.tsx
+  const mainComponent = COMPONENT_PATHS[0]; // UserFriendlyApp.tsx;
 
-  // Extract features from all components
+  // Extract features from all components;
   COMPONENT_PATHS.forEach((componentPath) => {
-    const fullPath = path.join(process.cwd(), componentPath);
-    const features = extractFeatures(fullPath);
+
 
     if (features) {
       allFeatures[componentPath] = features;
-      console.log(`✅ Analyzed: ${componentPath}`);
+      // console statement removed
     } else {
-      console.log(`❌ Failed to analyze: ${componentPath}`);
+      // console statement removed
     }
   });
 
-  console.log("\n📊 Feature Analysis Complete\n");
+  // console statement removed
 
-  // Get main component features
-  const mainFeatures = allFeatures[mainComponent];
+  // Get main component features;
+
   if (!mainFeatures) {
-    console.error("❌ Could not analyze main component");
+    // console statement removed
     return;
   }
 
-  console.log("🎯 MAIN COMPONENT FEATURES:");
-  console.log("  Components:", mainFeatures.components.length);
-  console.log("  Functions:", mainFeatures.functions.length);
-  console.log("  Hooks:", mainFeatures.hooks.length);
-  console.log("  Interfaces:", mainFeatures.interfaces.length);
-  console.log("  CSS Classes:", mainFeatures.css_classes.length);
-  console.log("");
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
 
-  // Find unique features in other components
-  const uniqueFeatures = {};
+  // Find unique features in other components;
 
   Object.keys(allFeatures).forEach((componentPath) => {
     if (componentPath === mainComponent) return;
 
-    const features = allFeatures[componentPath];
     const unique = {
       components: features.components.filter(
         (comp) => !mainFeatures.components.includes(comp) && comp !== "default",
@@ -184,7 +177,7 @@ function compareFeatures() {
       ),
     };
 
-    // Only store if there are unique features
+    // Only store if there are unique features;
     const hasUniqueFeatures = Object.values(unique).some(
       (arr) => arr.length > 0,
     );
@@ -193,72 +186,59 @@ function compareFeatures() {
     }
   });
 
-  // Report unique features
+  // Report unique features;
   if (Object.keys(uniqueFeatures).length === 0) {
-    console.log("✅ NO UNIQUE FEATURES FOUND");
-    console.log(
-      "   All features from variant components are already present in the main component.",
-    );
-    console.log(
-      "   Consolidation is COMPLETE - no missing features detected.\n",
-    );
+    // console statement removed
+    // console statement removed
+    // console statement removed
   } else {
-    console.log("🔍 UNIQUE FEATURES FOUND IN VARIANTS:\n");
+    // console statement removed
 
     Object.keys(uniqueFeatures).forEach((componentPath) => {
-      const unique = uniqueFeatures[componentPath];
-      const componentName = path.basename(componentPath);
 
-      console.log(`📋 ${componentName}:`);
+
+      // console statement removed
 
       if (unique.components.length > 0) {
-        console.log(`   Components: ${unique.components.join(", ")}`);
+        // console statement removed}`);
       }
       if (unique.functions.length > 0) {
-        console.log(`   Functions: ${unique.functions.join(", ")}`);
+        // console statement removed}`);
       }
       if (unique.hooks.length > 0) {
-        console.log(`   Hooks: ${unique.hooks.join(", ")}`);
+        // console statement removed}`);
       }
       if (unique.interfaces.length > 0) {
-        console.log(`   Interfaces: ${unique.interfaces.join(", ")}`);
+        // console statement removed}`);
       }
       if (unique.css_classes.length > 0) {
-        console.log(
-          `   CSS Classes: ${unique.css_classes.slice(0, 5).join(", ")}${unique.css_classes.length > 5 ? "..." : ""}`,
+        // console statement removed.join(", ")}${unique.css_classes.length > 5 ? "..." : ""}`,
         );
       }
-      console.log("");
+      // console statement removed
     });
   }
 
-  // Summary
-  console.log("📈 SUMMARY:");
-  console.log(
-    `   Total components analyzed: ${Object.keys(allFeatures).length}`,
+  // Summary;
+  // console statement removed
+  // console statement removed.length}`,
   );
-  console.log(
-    `   Main component features: ${Object.keys(mainFeatures).reduce((sum, key) => sum + mainFeatures[key].length, 0)}`,
+  // console statement removed.reduce((sum, key) => sum + mainFeatures[key].length, 0)}`,
   );
-  console.log(
-    `   Components with unique features: ${Object.keys(uniqueFeatures).length}`,
+  // console statement removed.length}`,
   );
-  console.log("");
+  // console statement removed
 
   if (Object.keys(uniqueFeatures).length === 0) {
-    console.log("🎉 CONSOLIDATION STATUS: COMPLETE");
-    console.log(
-      "   All features have been successfully consolidated into the main component.",
-    );
+    // console statement removed
+    // console statement removed
   } else {
-    console.log("⚠️  CONSOLIDATION STATUS: REVIEW NEEDED");
-    console.log(
-      "   Some unique features were found that may need to be integrated.",
-    );
+    // console statement removed
+    // console statement removed
   }
 }
 
-// Run the analysis
+// Run the analysis;
 if (require.main === module) {
   compareFeatures();
 }

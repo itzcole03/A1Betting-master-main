@@ -1,20 +1,20 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useEffect, useState } from "react";
 import ArbitrageOpportunities from "./ArbitrageOpportunities";
-import LiveOddsTicker from "./LiveOddsTicker"; // Changed to default import
+import LiveOddsTicker from "./LiveOddsTicker"; // Changed to default import;
 import MLFactorViz from "./MLFactorViz";
 import ModelPerformance from "./ModelPerformance";
 import Navbar from "./navigation/Navbar";
 import { PerformanceMetrics } from "./PerformanceMetrics";
-import { RiskProfileType } from "../types/betting"; // Import enum and PredictionData
+import { RiskProfileType } from "../types/betting"; // Import enum and PredictionData;
 const Dashboard = () => {
     const [_activeView, setActiveView] = useState("overview");
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    // useToast removed as the hook is not found
-    // State for PerformanceMetrics
+    // useToast removed as the hook is not found;
+    // State for PerformanceMetrics;
     const [bankroll, _setBankroll] = useState(10000);
     const [profit, _setProfit] = useState(1500);
-    const [riskProfile, _setRiskProfile] = useState(RiskProfileType.MODERATE); // Use enum
+    const [riskProfile, _setRiskProfile] = useState(RiskProfileType.MODERATE); // Use enum;
     const [recommendations, _setRecommendations] = useState([
         {
             id: "rec1",
@@ -44,7 +44,7 @@ const Dashboard = () => {
         "Game X Winner": { Bookie1: 1.85, Bookie2: 1.9 },
         "Game Y Total Points": { Bookie1: 200.5, Bookie3: 199.5 },
     });
-    // State for Arbitrage Opportunities
+    // State for Arbitrage Opportunities;
     const [arbitrageOpportunities, _setArbitrageOpportunities] = useState([
         {
             id: "arb1",
@@ -96,7 +96,7 @@ const Dashboard = () => {
             timestamp: new Date(),
         },
     ]);
-    // State for MLFactorViz props
+    // State for MLFactorViz props;
     const [currentPlayerId, _setCurrentPlayerId] = useState("player123");
     const [currentMetric, _setCurrentMetric] = useState("points");
     const [currentPredictionData, _setCurrentPredictionData] = useState({
@@ -109,24 +109,24 @@ const Dashboard = () => {
         expectedValue: 1.2,
     });
     useEffect(() => {
-        // TEMPORARILY DISABLED FOR DEBUGGING WEBSOCKET ISSUES
-        // Migrated to unified WebSocketManager
+        // TEMPORARILY DISABLED FOR DEBUGGING WEBSOCKET ISSUES;
+        // Migrated to unified WebSocketManager;
         // WebSocketManager.getInstance();
-        console.log("Dashboard: Skipping WebSocketManager initialization for debugging");
+        // console statement removed
         // Example WebSocket event listeners (currently commented out)
         // wsServiceInstance.on('arbitrageAlert', (data: any) => {
-        //   console.log('Arbitrage Alert:', data);
-        //   // Update arbitrageOpportunities state here
+        //   // console statement removed
+        //   // Update arbitrageOpportunities state here;
         // });
         // wsServiceInstance.on('oddsUpdate', (data: any) => {
-        //   console.log('Odds Update:', data);
-        //   // Update liveOddsData state here
+        //   // console statement removed
+        //   // Update liveOddsData state here;
         // });
         return () => {
-            // Clean up WebSocket listeners if they were active
+            // Clean up WebSocket listeners if they were active;
             // wsServiceInstance.off('arbitrageAlert');
             // wsServiceInstance.off('oddsUpdate');
-            // Consider if disconnect is needed here or managed by WebSocketService singleton lifecycle
+            // Consider if disconnect is needed here or managed by WebSocketService singleton lifecycle;
         };
     }, []);
     const _handleViewChange = (view) => {
@@ -136,11 +136,11 @@ const Dashboard = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
     const handleMenuClick = () => {
-        console.log("Menu clicked");
+        // console statement removed
         toggleSidebar();
     };
     const handleSmartSidebarClick = () => {
-        console.log("Smart sidebar clicked");
+        // console statement removed
     };
     return (_jsx("div", { className: "flex h-screen bg-gray-100 dark:bg-gray-900", children: _jsxs("div", { className: "flex-1 flex flex-col overflow-hidden", children: [_jsx(Navbar, { onMenuClick: handleMenuClick, onSmartSidebarClick: handleSmartSidebarClick }), _jsxs("main", { className: "flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 p-6 pt-20", children: [_jsx("h1", { className: "text-2xl font-semibold text-gray-800 dark:text-white mb-6", children: "AI Sports Betting Dashboard" }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6", children: [_jsxs("div", { className: "lg:col-span-2 bg-white dark:bg-gray-800 shadow rounded-lg p-4", children: [_jsx("h2", { className: "text-lg font-semibold text-gray-700 dark:text-white mb-3", children: "Model Performance" }), _jsx(ModelPerformance, { modelMetricsData: modelMetricsData })] }), _jsxs("div", { className: "bg-white dark:bg-gray-800 shadow rounded-lg p-4", children: [_jsx("h2", { className: "text-lg font-semibold text-gray-700 dark:text-white mb-3", children: "Performance Metrics" }), _jsx(PerformanceMetrics, { bankroll: bankroll, profit: profit, recommendations: recommendations, riskProfile: riskProfile })] }), _jsxs("div", { className: "md:col-span-2 lg:col-span-3 bg-white dark:bg-gray-800 shadow rounded-lg p-4", children: [_jsx("h2", { className: "text-lg font-semibold text-gray-700 dark:text-white mb-3", children: "Live Odds" }), _jsx(LiveOddsTicker, { data: liveOddsData })] }), _jsxs("div", { className: "lg:col-span-1 bg-white dark:bg-gray-800 shadow rounded-lg p-4", children: [_jsx("h2", { className: "text-lg font-semibold text-gray-700 dark:text-white mb-3", children: "Money Maker" }), _jsx(MoneyMaker, {})] }), _jsxs("div", { className: "lg:col-span-2 bg-white dark:bg-gray-800 shadow rounded-lg p-4", children: [_jsx("h2", { className: "text-lg font-semibold text-gray-700 dark:text-white mb-3", children: "Arbitrage Opportunities" }), _jsx(ArbitrageOpportunities, { opportunities: arbitrageOpportunities })] }), _jsxs("div", { className: "md:col-span-1 lg:col-span-3 bg-white dark:bg-gray-800 shadow rounded-lg p-4", children: [_jsx("h2", { className: "text-lg font-semibold text-gray-700 dark:text-white mb-3", children: "ML Factor Viz" }), _jsx(MLFactorViz, { metric: currentMetric, playerId: currentPlayerId, prediction: currentPredictionData, strategy: currentStrategyData })] })] })] })] }) }));
 };

@@ -1,7 +1,7 @@
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
-import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
+import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService.ts';
 
 export interface XGBoostConfig {
   maxDepth: number;
@@ -20,7 +20,7 @@ export interface XGBoostConfig {
   metadata: Record<string, unknown>;
 }
 
-// Type definitions for XGBoost model operations
+// Type definitions for XGBoost model operations;
 export interface XGBoostTrainingData {
   input: number[][];
   target: number[];
@@ -55,7 +55,7 @@ export class XGBoostModel {
 
   async initialize(): Promise<void> {
     try {
-      // Initialize XGBoost model
+      // Initialize XGBoost model;
       this.model = await this.createModel();
       this.logger.info('XGBoost model initialized successfully');
     } catch (error) {
@@ -63,43 +63,43 @@ export class XGBoostModel {
       throw error;
     }
   }  private async createModel(): Promise<XGBoostModelInterface> {
-    // Implementation for XGBoost model using a JavaScript implementation
-    const logger = this.logger; // Capture logger for use in model methods
+    // Implementation for XGBoost model using a JavaScript implementation;
+    const logger = this.logger; // Capture logger for use in model methods;
 
-    // Create XGBoost-style model
+    // Create XGBoost-style model;
     const model: XGBoostModelInterface = {
       async predict(input: number[][]): Promise<number[]> {
-        // Placeholder gradient boosting prediction
-        // In a real implementation, this would use an actual XGBoost library
+        // Placeholder gradient boosting prediction;
+        // In a real implementation, this would use an actual XGBoost library;
         return input.map(features => {
-          // Simple ensemble prediction simulation
-          let prediction = 0;
-          const numTrees = 10; // Simulated tree count
+          // Simple ensemble prediction simulation;
+          const prediction = 0;
+          const numTrees = 10; // Simulated tree count;
           
-          for (let i = 0; i < numTrees; i++) {
-            // Simulate tree prediction with weighted features
+          for (const i = 0; i < numTrees; i++) {
+            // Simulate tree prediction with weighted features;
             const treeOutput = features.reduce((sum, feature, idx) => 
-              sum + feature * Math.pow(0.9, idx), 0) * 0.1; // learningRate
+              sum + feature * Math.pow(0.9, idx), 0) * 0.1; // learningRate;
             prediction += treeOutput;
           }
           
-          // Apply sigmoid for binary classification or return raw for regression
+          // Apply sigmoid for binary classification or return raw for regression;
           return prediction > 0 ? 1 / (1 + Math.exp(-prediction)) : prediction;
         });
       },
 
       async train(_data: XGBoostTrainingData, _options: XGBoostTrainingOptions): Promise<void> {
-        // Placeholder boosting training
+        // Placeholder boosting training;
         logger.info('XGBoost model training completed');
       },
 
       async save(path: string): Promise<void> {
-        // Placeholder save logic
+        // Placeholder save logic;
         logger.info(`XGBoost model saved to ${path}`);
       },
 
       async load(path: string): Promise<void> {
-        // Placeholder load logic
+        // Placeholder load logic;
         logger.info(`XGBoost model loaded from ${path}`);
       }
     };
@@ -117,14 +117,13 @@ export class XGBoostModel {
 
       const { trainData, validationData } = this.prepareTrainingData(features, options);
 
-      // Train model
+      // Train model;
       await this.model.train(trainData, {
         ...this.config,
         ...options,
       });
 
-      // Evaluate model
-      const metrics = await this.evaluate(validationData);
+      // Evaluate model;
 
       return metrics;
     } catch (error) {
@@ -148,8 +147,6 @@ export class XGBoostModel {
         throw new Error('Model not initialized');
       }
 
-      const input = this.preparePredictionInput(features);
-      const output = await this.model.predict(input);
 
       const prediction: ModelPrediction = {
         timestamp: new Date().toISOString(),
@@ -176,7 +173,6 @@ export class XGBoostModel {
       }
 
       const { input, target } = this.prepareEvaluationData(features);
-      const predictions = await this.model.predict(input);
 
       const metrics: ModelMetrics = {
         accuracy: this.calculateAccuracy(predictions, target),
@@ -237,7 +233,7 @@ export class XGBoostModel {
     _features: FeatureSet,
     _options: Record<string, unknown>
   ): { trainData: XGBoostTrainingData; validationData: FeatureSet } {
-    // Implement training data preparation
+    // Implement training data preparation;
     return {
       trainData: { input: [[]], target: [] },
       validationData: _features,
@@ -245,12 +241,12 @@ export class XGBoostModel {
   }
 
   private preparePredictionInput(_features: Feature[]): number[][] {
-    // Implement prediction input preparation
+    // Implement prediction input preparation;
     return [[]];
   }
 
   private prepareEvaluationData(_features: FeatureSet): { input: number[][]; target: number[] } {
-    // Implement evaluation data preparation
+    // Implement evaluation data preparation;
     return {
       input: [[]],
       target: [],
@@ -258,57 +254,57 @@ export class XGBoostModel {
   }
 
   private formatInput(_input: number[][]): Record<string, unknown> {
-    // Implement input formatting
+    // Implement input formatting;
     return {};
   }
 
   private formatOutput(_output: number[]): Record<string, unknown> {
-    // Implement output formatting
+    // Implement output formatting;
     return {};
   }
 
   private calculateConfidence(_output: number[]): number {
-    // Implement confidence calculation
+    // Implement confidence calculation;
     return 0;
   }
 
   private calculateAccuracy(_predictions: number[], _target: number[]): number {
-    // Implement accuracy calculation
+    // Implement accuracy calculation;
     return 0;
   }
 
   private calculatePrecision(_predictions: number[], _target: number[]): number {
-    // Implement precision calculation
+    // Implement precision calculation;
     return 0;
   }
 
   private calculateRecall(_predictions: number[], _target: number[]): number {
-    // Implement recall calculation
+    // Implement recall calculation;
     return 0;
   }
 
   private calculateF1Score(_predictions: number[], _target: number[]): number {
-    // Implement F1 score calculation
+    // Implement F1 score calculation;
     return 0;
   }
 
   private calculateAUC(_predictions: number[], _target: number[]): number {
-    // Implement AUC calculation
+    // Implement AUC calculation;
     return 0;
   }
 
   private calculateRMSE(_predictions: number[], _target: number[]): number {
-    // Implement RMSE calculation
+    // Implement RMSE calculation;
     return 0;
   }
 
   private calculateMAE(_predictions: number[], _target: number[]): number {
-    // Implement MAE calculation
+    // Implement MAE calculation;
     return 0;
   }
 
   private calculateR2(_predictions: number[], _target: number[]): number {
-    // Implement R2 calculation
+    // Implement R2 calculation;
     return 0;
   }
 

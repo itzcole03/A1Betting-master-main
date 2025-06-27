@@ -11,23 +11,23 @@ import { useWebSocket } from '../hooks/useWebSocket';
 import { BettingSettingsContainer } from '../components/betting/BettingSettingsContainer';
 const PredictionsDashboard = () => {
     const [error, setError] = useState(null);
-    // Fetch initial predictions
+    // Fetch initial predictions;
     const { data: predictions, isLoading: predictionsLoading } = useQuery({
         queryKey: ['predictions'],
         queryFn: () => predictionService.getRecentPredictions(),
         staleTime: 30000,
     });
-    // Fetch model performance
+    // Fetch model performance;
     const { data: performance, isLoading: performanceLoading } = useQuery({
         queryKey: ['model-performance'],
         queryFn: () => predictionService.getModelPerformance('xgboost'),
         staleTime: 60000,
     });
-    // WebSocket connection for real-time updates
+    // WebSocket connection for real-time updates;
     const { lastMessage, isConnected } = useWebSocket(`${process.env.VITE_WS_URL}/ws/predictions`);
     useEffect(() => {
         if (lastMessage) {
-            // TODO: Handle real-time prediction updates if needed
+            // TODO: Handle real-time prediction updates if needed;
             // const data = JSON.parse(lastMessage.data);
             // if (data.type === 'prediction_update') { ... }
         }

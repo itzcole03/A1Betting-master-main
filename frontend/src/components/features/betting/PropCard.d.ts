@@ -1,5 +1,5 @@
-import React from 'react';
-import { PrizePicksProps, SocialSentimentData } from '@/types';
+import React from 'react.ts';
+import { PrizePicksProps, SocialSentimentData } from '@/types.ts';
 interface PropCardProps {
     prop: PrizePicksProps;
     sentiment?: SocialSentimentData;

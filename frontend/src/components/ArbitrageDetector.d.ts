@@ -1,5 +1,5 @@
-import React from 'react';
-import { RealtimeData } from '@/types/betting';
+import React from 'react.ts';
+import { RealtimeData } from '@/types/betting.ts';
 export interface ArbitrageDetectorProps {
     data: RealtimeData | null;
 }

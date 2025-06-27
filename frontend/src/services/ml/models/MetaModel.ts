@@ -1,14 +1,14 @@
-import { z } from 'zod';
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
+import { z } from 'zod.ts';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
 import {
   ModelConfig,
   ModelMetrics,
   ModelMetricsSchema,
   ModelPrediction,
-} from './AdvancedModelArchitectureService';
-import { XGBoostModel, XGBoostConfig } from './XGBoostModel';
+} from './AdvancedModelArchitectureService.ts';
+import { XGBoostModel, XGBoostConfig } from './XGBoostModel.ts';
 
 export interface MetaModelConfig {
   modelType: string;
@@ -32,7 +32,7 @@ export class MetaModel {
 
   async initialize(): Promise<void> {
     try {
-      // Initialize base model
+      // Initialize base model;
       this.model = new XGBoostModel(this.config.hyperparameters);
 
       await this.model.initialize();
@@ -53,14 +53,11 @@ export class MetaModel {
     } = {}
   ): Promise<ModelMetrics> {
     try {
-      // Perform cross-validation
-      const cvMetrics = await this.performCrossValidation(features, options);
+      // Perform cross-validation;
 
-      // Train final model on full dataset
-      const metrics = await this.model.train(features, options);
+      // Train final model on full dataset;
 
-      // Combine metrics
-      const combinedMetrics = this.combineMetrics(cvMetrics, metrics);
+      // Combine metrics;
 
       return combinedMetrics;
     } catch (error) {
@@ -80,7 +77,6 @@ export class MetaModel {
     } = {}
   ): Promise<ModelPrediction> {
     try {
-      const prediction = await this.model.predict(features, options);
 
       return {
         ...prediction,
@@ -142,31 +138,28 @@ export class MetaModel {
     }
   ): Promise<ModelMetrics[]> {
     const metrics: ModelMetrics[] = [];
-    const foldSize = Math.floor(features.features.length / this.config.crossValidation);
 
-    for (let i = 0; i < this.config.crossValidation; i++) {
-      // Split data into training and validation sets
-      const validationStart = i * foldSize;
-      const validationEnd = (i + 1) * foldSize;
+    for (const i = 0; i < this.config.crossValidation; i++) {
+      // Split data into training and validation sets;
 
-      const validationFeatures = features.features.slice(validationStart, validationEnd);
+
       const trainingFeatures = [
         ...features.features.slice(0, validationStart),
         ...features.features.slice(validationEnd),
       ];
 
-      // Train model on training set
-      const model = new XGBoostModel(this.config.hyperparameters);
+      // Train model on training set;
+
       await model.initialize();
       await model.train(
         {
           features: trainingFeatures,
           timestamp: new Date().toISOString(),
         },
-        options
+        options;
       );
 
-      // Evaluate on validation set
+      // Evaluate on validation set;
       const foldMetrics = await model.evaluate({
         features: validationFeatures,
         timestamp: new Date().toISOString(),
@@ -190,11 +183,11 @@ export class MetaModel {
       metadata: this.getMetadata(),
     } as const;
 
-    // Calculate average of cross-validation metrics
+    // Calculate average of cross-validation metrics;
     cvMetrics.forEach(metrics => {
       Object.entries(metrics).forEach(([key, value]) => {
         if (key !== 'metadata' && typeof value === 'number') {
-          const k = key as keyof typeof combined;
+
           if (typeof combined[k] === 'number') {
             (combined[k] as number) += value / cvMetrics.length;
           }
@@ -202,22 +195,22 @@ export class MetaModel {
       });
     });
 
-    // Add final metrics
+    // Add final metrics;
     Object.entries(finalMetrics).forEach(([key, value]) => {
       if (key !== 'metadata' && typeof value === 'number') {
-        const k = key as keyof typeof combined;
+
         if (typeof combined[k] === 'number') {
           (combined[k] as number) = ((combined[k] as number) + value) / 2;
         }
       }
     });
 
-    // Validate metrics against schema
+    // Validate metrics against schema;
     return ModelMetricsSchema.parse(combined);
   }
 
   private async saveConfig(path: string): Promise<void> {
-    // Save configuration to file
+    // Save configuration to file;
     const config = {
       modelType: this.config.modelType,
       features: this.config.features,
@@ -226,14 +219,14 @@ export class MetaModel {
       metadata: this.config.metadata,
     };
 
-    // Implementation depends on your storage solution
-    // This is a placeholder
+    // Implementation depends on your storage solution;
+    // This is a placeholder;
   }
 
   private async loadConfig(path: string): Promise<void> {
-    // Load configuration from file
-    // Implementation depends on your storage solution
-    // This is a placeholder
+    // Load configuration from file;
+    // Implementation depends on your storage solution;
+    // This is a placeholder;
   }
 
   private getMetadata(): Record<string, unknown> {

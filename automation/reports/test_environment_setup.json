@@ -1,15 +1,9 @@
 {
-  "timestamp": "2025-06-27 01:02:15",
-  "environment_ready": false,
-  "setup_steps_completed": 6,
+  "timestamp": "2025-06-27 10:11:36",
+  "environment_ready": true,
+  "setup_steps_completed": 7,
   "total_setup_steps": 7,
-  "success_rate": 85.71428571428571,
-  "errors": [
-    "Node.js environment setup failed: [WinError 2] The system cannot find the file specified"
-  ],
-  "recommendations": [
-    "Check that all required services (MongoDB, Redis) are running",
-    "Ensure all dependencies are properly installed",
-    "Review error logs for specific issues"
-  ]
+  "success_rate": 100.0,
+  "errors": [],
+  "recommendations": []
 }

@@ -199,8 +199,8 @@ class RealTimeAccuracyMonitor:
             )
             await self.redis_client.ping()
             logger.info("Redis connection established for accuracy monitoring")
-        except Exception as e:
-            logger.error(f"Failed to initialize Redis: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to initialize Redis: {e}")
             self.redis_client = None
 
     def _initialize_drift_detection(self):
@@ -292,8 +292,8 @@ class RealTimeAccuracyMonitor:
                 # Wait for next monitoring cycle
                 await asyncio.sleep(self.monitoring_interval)
 
-            except Exception as e:
-                logger.error(f"Error in accuracy monitoring cycle: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Error in accuracy monitoring cycle: {e}")
                 await asyncio.sleep(self.monitoring_interval)
 
     async def _calculate_current_accuracy_metrics(self) -> RealTimeAccuracyMetrics:
@@ -579,8 +579,8 @@ class RealTimeAccuracyMonitor:
                     f"accuracy_metrics:{metrics.timestamp.isoformat()}",
                     timedelta(days=7).total_seconds(),
                 )
-            except Exception as e:
-                logger.error(f"Error storing metrics in Redis: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Error storing metrics in Redis: {e}")
 
     async def _check_accuracy_thresholds(
         self, metrics: RealTimeAccuracyMetrics
@@ -691,7 +691,7 @@ class RealTimeAccuracyMonitor:
 
     async def _process_accuracy_alert(self, alert: AccuracyAlert):
         """Process accuracy alert"""
-        logger.warning(f"Accuracy Alert: {alert.message}")
+        logger.warning("Accuracy Alert: {alert.message}")
 
         # Store alert
         self.alerts_active[alert.alert_id] = alert
@@ -706,7 +706,7 @@ class RealTimeAccuracyMonitor:
     async def _send_accuracy_alert_notification(self, alert: AccuracyAlert):
         """Send accuracy alert notification"""
         # Implementation would integrate with notification system
-        logger.info(f"Sending accuracy alert notification: {alert.alert_id}")
+        logger.info("Sending accuracy alert notification: {alert.alert_id}")
 
     async def record_prediction_result(self, prediction: Any, actual_result: float):
         """Record prediction and actual result for accuracy monitoring"""

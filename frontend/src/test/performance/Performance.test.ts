@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import { measurePerformance } from '../performanceMonitor';
-import App from '../../../App';
+import React from 'react.ts';
+import { render, screen } from '@testing-library/react.ts';
+import { measurePerformance } from '@/performanceMonitor.ts';
+import App from '@/../App.ts';
 
 // test('renders App without crashing', () => {
 //   render(<App />);

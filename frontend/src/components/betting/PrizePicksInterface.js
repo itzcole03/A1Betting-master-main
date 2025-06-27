@@ -6,13 +6,13 @@ export const PrizePicksInterface = () => {
         props: [],
         activePicks: {},
         totalStake: 0,
-        potentialProfit: 0
+        potentialProfit: 0;
     });
     const [selectedStat, setSelectedStat] = useState('all');
     const [minConfidence, setMinConfidence] = useState(0.7);
     const [sortBy, setSortBy] = useState('confidence');
     useEffect(() => {
-        // Subscribe to real-time updates
+        // Subscribe to real-time updates;
         WebSocketManager.instance.subscribe('prizepicks:prop', (prop) => {
             setState(prev => ({
                 ...prev,
@@ -27,12 +27,12 @@ export const PrizePicksInterface = () => {
                     [update.id]: {
                         direction: update.direction,
                         amount: update.amount,
-                        timestamp: update.timestamp
+                        timestamp: update.timestamp;
                     }
                 }
             }));
         });
-        // Load initial data
+        // Load initial data;
         loadInitialData();
         return () => {
             WebSocketManager.instance.unsubscribe('prizepicks:prop');

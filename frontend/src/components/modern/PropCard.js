@@ -4,12 +4,12 @@ import { TrendingUp, TrendingDown, AlertCircle, ExternalLink, Info, CheckCircle,
 import { useAppStore } from '@/store/useAppStore';
 const PropCard = ({ prop, sentiment, onViewDetails, className }) => {
     const { addToast, legs, addLeg } = useAppStore();
-    const isSelected = legs.some(l => l.propId === prop.id);
+
     const handleViewDetailsClick = () => {
         onViewDetails(prop.id);
     };
     const handleExternalLink = (e, url) => {
-        e.stopPropagation(); // Prevent card click if link is clicked
+        e.stopPropagation(); // Prevent card click if link is clicked;
         window.open(url, '_blank');
         addToast({ message: `Opening news link: ${url.substring(0, 30)}...`, type: 'info' });
     };
@@ -23,7 +23,7 @@ const PropCard = ({ prop, sentiment, onViewDetails, className }) => {
         return _jsx(AlertCircle, { className: "w-4 h-4 text-yellow-500" });
     };
     const handleAddLeg = (pick) => {
-        const odds = pick === 'over' ? prop.overOdds : prop.underOdds;
+
         if (odds === undefined) {
             addToast({ message: `Odds for ${pick.toUpperCase()} not available.`, type: 'error' });
             return;

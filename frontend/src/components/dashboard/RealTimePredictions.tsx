@@ -1,5 +1,5 @@
-import React from 'react';
-import { useState, useEffect } from "react";
+import React from 'react.ts';
+import { useState, useEffect } from 'react.ts';
 
 interface EnhancedPrediction {
   id: string;
@@ -24,19 +24,17 @@ export function RealTimePredictions({
   predictions: propPredictions,
   loading: propLoading,
 }: RealTimePredictionsProps = {}) {
-  // State declarations first
-  const [predictions, setPredictions] = useState<EnhancedPrediction[]>([]);
+  // State declarations first;
+  const [predictions, setPredictions] = useState<EnhancedPrediction[] key={424258}>([]);
   const [loading, setLoading] = useState(false);
   const [selectedSport, setSelectedSport] = useState("All");
   const [selectedType, setSelectedType] = useState("All");
 
-  const types = ["All", "game", "player_prop"];
-
-  // Mock data setup
+  // Mock data setup;
   useEffect(() => {
     if (!propPredictions) {
       setLoading(true);
-      // Simulate loading and then set mock data
+      // Simulate loading and then set mock data;
       setTimeout(() => {
         setPredictions([
           {
@@ -87,12 +85,12 @@ export function RealTimePredictions({
     }
   }, [propPredictions, propLoading]);
 
-  // Safe filtering with proper checks
-  const safePredictions = Array.isArray(predictions) ? predictions : [];
+  // Safe filtering with proper checks;
+
   const filteredPredictions = safePredictions.filter((pred) => {
-    if (!pred) return false; // Additional safety check
-    const sportMatch = selectedSport === "All" || pred.sport === selectedSport;
-    const typeMatch = selectedType === "All" || pred.type === selectedType;
+    if (!pred) return false; // Additional safety check;
+
+
     return sportMatch && typeMatch;
   });
 
@@ -131,15 +129,15 @@ export function RealTimePredictions({
 
   if (loading) {
     return (
-      <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold">Real-Time Predictions</h2>
-          <div className="animate-spin h-5 w-5 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+      <div className="space-y-4" key={160407}>
+        <div className="flex items-center justify-between" key={96335}>
+          <h2 className="text-xl font-bold" key={540247}>Real-Time Predictions</h2>
+          <div className="animate-spin h-5 w-5 border-2 border-blue-500 border-t-transparent rounded-full" key={685875}></div>
         </div>
-        <div className="space-y-3">
+        <div className="space-y-3" key={186520}>
           {[1, 2, 3].map((i) => (
-            <div key={i} className="animate-pulse">
-              <div className="h-24 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
+            <div key={i} className="animate-pulse" key={317458}>
+              <div className="h-24 bg-gray-200 dark:bg-gray-700 rounded-lg" key={361400}></div>
             </div>
           ))}
         </div>
@@ -148,40 +146,40 @@ export function RealTimePredictions({
   }
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white">
-          Real-Time Predictions
+    <div className="space-y-4" key={160407}>
+      <div className="flex items-center justify-between" key={96335}>
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white" key={186467}>
+          Real-Time Predictions;
         </h2>
-        <div className="flex items-center space-x-2">
-          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-          <span className="text-sm text-green-600 dark:text-green-400">
-            Live
+        <div className="flex items-center space-x-2" key={740830}>
+          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" key={866883}></div>
+          <span className="text-sm text-green-600 dark:text-green-400" key={780175}>
+            Live;
           </span>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="flex space-x-4">
-        <select
+      <div className="flex space-x-4" key={470893}>
+        <select;
           value={selectedSport}
-          onChange={(e) => setSelectedSport(e.target.value)}
+          onChange={(e) = key={247838}> setSelectedSport(e.target.value)}
           className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
         >
-          <option value="All">All Sports</option>
-          <option value="NBA">NBA</option>
-          <option value="NFL">NFL</option>
-          <option value="MLB">MLB</option>
-          <option value="NHL">NHL</option>
+          <option value="All" key={343575}>All Sports</option>
+          <option value="NBA" key={172467}>NBA</option>
+          <option value="NFL" key={613230}>NFL</option>
+          <option value="MLB" key={328030}>MLB</option>
+          <option value="NHL" key={500575}>NHL</option>
         </select>
 
-        <select
+        <select;
           value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value)}
+          onChange={(e) = key={524962}> setSelectedType(e.target.value)}
           className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
         >
           {types.map((type) => (
-            <option key={type} value={type}>
+            <option key={type} value={type} key={168558}>
               {type === "All"
                 ? "All Types"
                 : type.replace("_", " ").toUpperCase()}
@@ -191,76 +189,76 @@ export function RealTimePredictions({
       </div>
 
       {/* Predictions List */}
-      <div className="space-y-3">
+      <div className="space-y-3" key={186520}>
         {filteredPredictions.length === 0 ? (
-          <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          <div className="text-center py-8 text-gray-500 dark:text-gray-400" key={263433}>
             No predictions available for the selected filters.
           </div>
         ) : (
           filteredPredictions.map((prediction) => (
-            <div
+            <div;
               key={prediction.id}
               className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 hover:shadow-md transition-shadow"
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
-                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs font-semibold rounded">
+             key={261524}>
+              <div className="flex items-start justify-between" key={653478}>
+                <div className="flex-1" key={745195}>
+                  <div className="flex items-center space-x-3 mb-2" key={351479}>
+                    <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs font-semibold rounded" key={418439}>
                       {prediction.sport}
                     </span>
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                    <span className="text-sm text-gray-600 dark:text-gray-400" key={10584}>
                       {prediction.game}
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2" key={6978}>
                     {prediction.prediction}
                   </h3>
 
-                  <div className="flex items-center space-x-4 text-sm">
-                    <div className="flex items-center space-x-1">
-                      <span className="text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center space-x-4 text-sm" key={828276}>
+                    <div className="flex items-center space-x-1" key={468268}>
+                      <span className="text-gray-600 dark:text-gray-400" key={517223}>
                         Confidence:
                       </span>
-                      <span
+                      <span;
                         className={`font-semibold ${getConfidenceColor(prediction.confidence)}`}
-                      >
+                       key={103840}>
                         {prediction.confidence}%
                       </span>
                     </div>
 
-                    <div className="flex items-center space-x-1">
-                      <span className="text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center space-x-1" key={468268}>
+                      <span className="text-gray-600 dark:text-gray-400" key={517223}>
                         Odds:
                       </span>
-                      <span className="font-semibold text-gray-900 dark:text-white">
+                      <span className="font-semibold text-gray-900 dark:text-white" key={733225}>
                         {prediction.odds}
                       </span>
                     </div>
 
-                    <div className="flex items-center space-x-1">
-                      <span className="text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center space-x-1" key={468268}>
+                      <span className="text-gray-600 dark:text-gray-400" key={517223}>
                         Risk:
                       </span>
-                      <span
+                      <span;
                         className={`font-semibold ${getRiskColor(prediction.risk)}`}
-                      >
+                       key={52211}>
                         {(prediction.risk * 100).toFixed(1)}%
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="text-right">
-                  <div
+                <div className="text-right" key={144468}>
+                  <div;
                     className={`inline-flex px-2 py-1 rounded-full text-xs font-semibold ${getValueGradeColor(prediction.valueGrade)}`}
-                  >
+                   key={858352}>
                     {prediction.valueGrade}
                   </div>
-                  <div className="mt-2 text-lg font-bold text-green-600 dark:text-green-400">
+                  <div className="mt-2 text-lg font-bold text-green-600 dark:text-green-400" key={298235}>
                     +{prediction.expectedValue.toFixed(1)}%
                   </div>
-                  <div className="text-xs text-gray-500 dark:text-gray-400">
+                  <div className="text-xs text-gray-500 dark:text-gray-400" key={849702}>
                     {formatTimestamp(prediction.timestamp)}
                   </div>
                 </div>

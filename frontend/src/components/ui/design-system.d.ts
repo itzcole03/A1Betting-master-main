@@ -1,5 +1,5 @@
-import React from "react";
-import { type VariantProps } from "class-variance-authority";
+import React from 'react.ts';
+import { type VariantProps } from 'class-variance-authority.ts';
 declare const buttonVariants: (props?: ({
     variant?: "error" | "outline" | "link" | "default" | "success" | "warning" | "ghost" | "premium" | "glass" | null | undefined;
     size?: "default" | "sm" | "lg" | "xl" | "icon" | null | undefined;

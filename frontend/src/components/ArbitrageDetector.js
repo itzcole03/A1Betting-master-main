@@ -8,18 +8,18 @@ const ArbitrageDetector = ({ data }) => {
     // Simple arbitrage detection logic (to be expanded)
     const opportunities = Object.entries(data.odds).filter(([, value]) => {
         if (typeof value === 'object' && value !== null) {
-            const odds = Object.values(value);
+
             if (odds.length > 1) {
-                const validOdds = odds.filter((odd) => typeof odd === 'number');
+
                 return validOdds.length > 1 && Math.max(...validOdds) - Math.min(...validOdds) > 0.15;
             }
         }
         return false;
     });
-    return (_jsxs("div", { className: "space-y-4", children: [_jsx("h3", { className: "text-lg font-semibold mb-4", children: "Arbitrage Opportunities" }), _jsxs("div", { className: "grid grid-cols-1 gap-4", children: [opportunities.map(([key, value], index) => (_jsxs(motion.div, { animate: { opacity: 1, y: 0 }, className: "bg-white rounded-lg p-4 shadow-sm", initial: { opacity: 0, y: 20 }, transition: { delay: index * 0.1 }, children: [_jsxs("div", { className: "flex justify-between items-center", children: [_jsx("span", { className: "font-medium", children: key }), _jsx("span", { className: "text-lg font-bold text-green-600", children: typeof value === 'object' && value !== null
+    return (_jsxs("div", { className: "space-y-4", children: [_jsx("h3", { className: "text-lg font-semibold mb-4", children: "Arbitrage Opportunities" }), _jsxs("div", { className: "grid grid-cols-1 gap-4", children: [opportunities.map(([key, value], index) => (_jsxs(motion.div, { animate: { opacity: 1, y: 0 }, className: "bg-white rounded-lg p-4 shadow-sm", initial: { opacity: 0, y: 20 }, transition: { delay: index * 0.1 }, children: [_jsxs("div", { className: "flex justify-between items-center", children: [_jsx("span", { className: "font-medium", children: key }), _jsx("span", { className: "text-lg font-bold text-green-600", children: typeof value === 'object' && value !== null;
                                             ? (() => {
-                                                const odds = Object.values(value).filter((odd) => typeof odd === 'number');
-                                                return odds.length > 1
+
+                                                return odds.length > 1;
                                                     ? `${((Math.max(...odds) - Math.min(...odds)) * 100).toFixed(1)}% spread`
                                                     : 'N/A';
                                             })()

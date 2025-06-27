@@ -4,7 +4,7 @@ export function useUnifiedBetting({ playerId, metric, autoRefresh = true, refres
     const [decision, setDecision] = useState(null);
     const [isAnalyzing, setIsAnalyzing] = useState(false);
     const [error, setError] = useState(null);
-    const bettingSystem = UnifiedBettingSystem.getInstance();
+
     const analyze = useCallback(async () => {
         if (!playerId || !metric)
             return;
@@ -18,7 +18,7 @@ export function useUnifiedBetting({ playerId, metric, autoRefresh = true, refres
                 marketState: 'active',
                 correlationFactors: []
             };
-            const newDecision = await bettingSystem.analyzeBettingOpportunity(context);
+
             setDecision(newDecision);
             if (onNewOpportunity && newDecision.confidence > 0.8) {
                 onNewOpportunity(newDecision);
@@ -34,7 +34,7 @@ export function useUnifiedBetting({ playerId, metric, autoRefresh = true, refres
     useEffect(() => {
         analyze();
         if (autoRefresh && playerId && metric) {
-            const interval = setInterval(analyze, refreshInterval);
+
             return () => clearInterval(interval);
         }
     }, [analyze, autoRefresh, playerId, metric, refreshInterval]);
@@ -42,6 +42,6 @@ export function useUnifiedBetting({ playerId, metric, autoRefresh = true, refres
         decision,
         isAnalyzing,
         error,
-        analyze
+        analyze;
     };
 }

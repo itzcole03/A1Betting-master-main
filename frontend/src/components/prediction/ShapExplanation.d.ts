@@ -1,5 +1,5 @@
-import React from 'react';
-import { ModelExplanation } from '../../core/types/prediction';
+import React from 'react.ts';
+import { ModelExplanation } from '@/core/types/prediction.ts';
 interface ShapExplanationProps {
     explanation: ModelExplanation;
     className?: string;

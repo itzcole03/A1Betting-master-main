@@ -34,14 +34,14 @@ export class UnifiedBettingCore extends EventEmitter {
     }
     async analyzeBettingOpportunity(context) {
         try {
-            // Check cache first
-            const cacheKey = `${context.playerId}:${context.metric}`;
-            let prediction = this.predictionCache.get(cacheKey);
+            // Check cache first;
+
+            const prediction = this.predictionCache.get(cacheKey);
             if (!prediction || Date.now() - prediction.timestamp > 300000) {
                 prediction = await this.generatePrediction(context);
                 this.predictionCache.set(cacheKey, prediction);
             }
-            const decision = this.generateDecision(prediction, context);
+
             this.emit('newDecision', decision);
             return decision;
         }
@@ -51,7 +51,7 @@ export class UnifiedBettingCore extends EventEmitter {
         }
     }
     async generatePrediction(context) {
-        // Implement sophisticated prediction logic here
+        // Implement sophisticated prediction logic here;
         return {
             confidence: 0,
             predictedValue: 0,
@@ -71,11 +71,11 @@ export class UnifiedBettingCore extends EventEmitter {
         return decision;
     }
     calculateStake(prediction) {
-        const kellyStake = this.calculateKellyStake(prediction);
+
         return Math.min(kellyStake * this.strategyConfig.bankrollPercentage, this.strategyConfig.maxRiskPerBet);
     }
     calculateKellyStake(prediction) {
-        // Implement Kelly Criterion calculation
+        // Implement Kelly Criterion calculation;
         return 0;
     }
     calculatePerformanceMetrics(bettingHistory) {
@@ -92,7 +92,7 @@ export class UnifiedBettingCore extends EventEmitter {
         return metrics;
     }
     analyzeClv(bet) {
-        // Implement Closing Line Value analysis
+        // Implement Closing Line Value analysis;
         return {
             clvValue: 0,
             edgeRetention: 0,
@@ -100,12 +100,12 @@ export class UnifiedBettingCore extends EventEmitter {
         };
     }
     calculateWinRate(bets) {
-        const wins = bets.filter(bet => bet.result === 'WIN').length;
+
         return (wins / bets.length) * 100;
     }
     calculateROI(bets) {
-        const totalStake = bets.reduce((sum, bet) => sum + bet.stake, 0);
-        const totalProfit = bets.reduce((sum, bet) => sum + bet.profitLoss, 0);
+
+
         return totalStake ? (totalProfit / totalStake) * 100 : 0;
     }
     clearCache() {

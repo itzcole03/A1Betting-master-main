@@ -1,8 +1,8 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import type { Bet, Event, Odds, Sport } from "../types/betting";
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query.ts';
+import axios from 'axios.ts';
+import type { Bet, Event, Odds, Sport } from '@/types/betting.ts';
 
-// Types for API requests
+// Types for API requests;
 interface PlaceBetRequest {
   eventId: string;
   marketType: string;
@@ -11,8 +11,6 @@ interface PlaceBetRequest {
   stake: number;
 }
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const bettingApi = axios.create({
   baseURL: API_URL,
   headers: {
@@ -20,7 +18,7 @@ const bettingApi = axios.create({
   },
 });
 
-// API endpoints
+// API endpoints;
 const endpoints = {
   sports: "/sports",
   events: "/events",
@@ -28,7 +26,7 @@ const endpoints = {
   bets: "/bets",
 };
 
-// Queries
+// Queries;
 export const useSports = () => {
   return useQuery({
     queryKey: ["sports"],
@@ -62,7 +60,7 @@ export const useOdds = (eventId: string) => {
       return data;
     },
     enabled: !!eventId,
-    refetchInterval: false, // Disable auto-refresh to prevent errors
+    refetchInterval: false, // Disable auto-refresh to prevent errors;
   });
 };
 
@@ -76,9 +74,8 @@ export const useActiveBets = () => {
   });
 };
 
-// Mutations
+// Mutations;
 export const usePlaceBet = () => {
-  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (bet: Omit<Bet, "id" | "status" | "timestamp">) => {
@@ -92,7 +89,6 @@ export const usePlaceBet = () => {
 };
 
 export const useCancelBet = () => {
-  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async (betId: string) => {
@@ -107,14 +103,13 @@ export const useCancelBet = () => {
   });
 };
 
-// WebSocket connection for real-time updates
+// WebSocket connection for real-time updates;
 export const connectToOddsWebSocket = (
   eventId: string,
   onUpdate: (odds: Odds) => void,
 ) => {
-  const wsUrl = `${import.meta.env.VITE_WS_URL}/odds/${eventId}`;
 
-  // Safety checks to prevent invalid WebSocket connections
+  // Safety checks to prevent invalid WebSocket connections;
   if (
     !wsUrl ||
     wsUrl === "" ||
@@ -125,11 +120,9 @@ export const connectToOddsWebSocket = (
     wsUrl.includes("undefined") ||
     import.meta.env.VITE_ENABLE_WEBSOCKET === "false"
   ) {
-    console.log("WebSocket connection disabled for odds updates:", wsUrl);
-    return () => { }; // Return empty cleanup function
+    // console statement removed
+    return () => { }; // Return empty cleanup function;
   }
-
-  const ws = new WebSocket(wsUrl);
 
   ws.onmessage = (event) => {
     const odds: Odds = JSON.parse(event.data);
@@ -141,13 +134,13 @@ export const connectToOddsWebSocket = (
   };
 };
 
-// Raw API functions for use with React Query
+// Raw API functions for use with React Query;
 export const getActiveBets = async (): Promise<number> => {
   try {
     const { data } = await bettingApi.get<Bet[]>(endpoints.bets + "?status=active");
     return data.length;
   } catch (error) {
-    console.error("Error fetching active bets:", error);
+    // console statement removed
     throw error;
   }
 };
@@ -157,7 +150,7 @@ export const getTotalWinnings = async (): Promise<number> => {
     const { data } = await bettingApi.get<Bet[]>(endpoints.bets + "?status=won");
     return data.reduce((total, bet) => total + (bet.potentialWinnings || 0), 0);
   } catch (error) {
-    console.error("Error fetching total winnings:", error);
+    // console statement removed
     throw error;
   }
 };
@@ -166,22 +159,22 @@ export const getWinRate = async (): Promise<number> => {
   try {
     const { data } = await bettingApi.get<Bet[]>(endpoints.bets + "?status=closed");
     if (data.length === 0) return 0;
-    const wonBets = data.filter(bet => bet.status === 'won').length;
+
     return (wonBets / data.length) * 100;
   } catch (error) {
-    console.error("Error fetching win rate:", error);
+    // console statement removed
     throw error;
   }
 };
 
-// Main betting service object
+// Main betting service object;
 const bettingService = {
   placeBet: async (betData: PlaceBetRequest) => {
     try {
-      const response = await bettingApi.post(endpoints.bets, betData);
+
       return { success: true, bet: response.data };
     } catch (error) {
-      console.error("Failed to place bet:", error);
+      // console statement removed
       return { success: false, error: "Failed to place bet" };
     }
   },
@@ -193,27 +186,27 @@ const bettingService = {
       );
       return { success: true, bet: response.data };
     } catch (error) {
-      console.error("Failed to cancel bet:", error);
+      // console statement removed
       return { success: false, error: "Failed to cancel bet" };
     }
   },
 
   getActiveBets: async () => {
     try {
-      const response = await bettingApi.get(`${endpoints.bets}/active`);
+
       return response.data;
     } catch (error) {
-      console.error("Failed to get active bets:", error);
+      // console statement removed
       return [];
     }
   },
 
   getSports: async () => {
     try {
-      const response = await bettingApi.get(endpoints.sports);
+
       return response.data;
     } catch (error) {
-      console.error("Failed to get sports:", error);
+      // console statement removed
       return [];
     }
   },
@@ -225,22 +218,22 @@ const bettingService = {
       );
       return response.data;
     } catch (error) {
-      console.error("Failed to get events:", error);
+      // console statement removed
       return [];
     }
   },
 
   getOdds: async (eventId: string) => {
     try {
-      const response = await bettingApi.get(`${endpoints.odds}/${eventId}`);
+
       return response.data;
     } catch (error) {
-      console.error("Failed to get odds:", error);
+      // console statement removed
       return null;
     }
   },
 };
 
-// Export both ways for maximum compatibility
+// Export both ways for maximum compatibility;
 export { bettingService };
 export default bettingService;

@@ -37,7 +37,7 @@ export class ModelMetadataManager {
         return JSON.stringify(this.metadata, null, 2);
     }
     static fromJSON(json) {
-        const metadata = JSON.parse(json);
+
         return new ModelMetadataManager(metadata);
     }
 }

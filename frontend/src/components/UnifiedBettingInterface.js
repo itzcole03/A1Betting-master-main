@@ -13,7 +13,7 @@ import { PerformanceMetrics } from './PerformanceMetrics';
 import { useUnifiedAnalytics } from '../hooks/useUnifiedAnalytics';
 import { Button, Card, Input, Select, Tabs, Tab, Badge, Spinner } from './ui/UnifiedUI';
 import { useFilterStore } from '../stores/filterStore';
-// Animation variants
+// Animation variants;
 const fadeInUp = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
@@ -50,9 +50,9 @@ export const UnifiedBettingInterface = ({ initialBankroll, onBetPlaced, darkMode
         strategy: 'balanced',
         sports: 'all',
     });
-    const darkMode = externalDarkMode ?? internalDarkMode;
-    const filterStore = useFilterStore();
-    // WebSocket connection for real-time updates
+
+
+    // WebSocket connection for real-time updates;
     const wsQuery = new URLSearchParams({
         riskProfile: filterStore.riskProfile,
         confidenceThreshold: String(filterStore.confidenceThreshold),
@@ -60,7 +60,7 @@ export const UnifiedBettingInterface = ({ initialBankroll, onBetPlaced, darkMode
         model: filterStore.model,
         activeFilters: Array.from(filterStore.activeFilters).join(','),
     }).toString();
-    const wsUrl = `${process.env.VITE_WS_URL}/ws/betting?${wsQuery}`;
+
     const { isConnected } = useWebSocket(wsUrl, {
         onMessage: (data) => {
             if (data.type === 'betting_opportunities') {
@@ -69,14 +69,14 @@ export const UnifiedBettingInterface = ({ initialBankroll, onBetPlaced, darkMode
             }
         },
     });
-    // Analytics and predictions
+    // Analytics and predictions;
     const { performance } = useUnifiedAnalytics({
         ...config,
-        ml: { autoUpdate: true, updateInterval: 300000 }, // 5 minutes
+        ml: { autoUpdate: true, updateInterval: 300000 }, // 5 minutes;
         performance: true,
         drift: true,
     });
-    // SHAP visualization data
+    // SHAP visualization data;
     const { features: shapData, loading: shapLoading, error: _shapError, } = useShapData({
         eventId: selectedEvent?.id || '',
         modelType: 'xgboost',
@@ -90,21 +90,21 @@ export const UnifiedBettingInterface = ({ initialBankroll, onBetPlaced, darkMode
             impact: Number(impact),
         }));
     }, [shapData]);
-    // Memoize selected model and metrics
-    const selectedModel = useMemo(() => performance?.data?.[0], [performance?.data]);
-    const modelMetrics = useMemo(() => selectedModel?.metrics, [selectedModel]);
-    // Calculate profit based on model performance
+    // Memoize selected model and metrics;
+
+
+    // Calculate profit based on model performance;
     const calculatedProfit = useMemo(() => {
         if (!modelMetrics)
             return 0;
-        // Use f1Score as a proxy for ROI until real bankroll tracking is implemented
+        // Use f1Score as a proxy for ROI until real bankroll tracking is implemented;
         return config.investment * (modelMetrics.f1 ?? 0);
     }, [modelMetrics, config.investment]);
-    // Memoize recommendations from betting opportunities
+    // Memoize recommendations from betting opportunities;
     const bettingRecommendations = useMemo(() => {
         return bettingOpportunities.map(opp => ({
             ...opp,
-            result: 'pending', // Add result field required by PerformanceMetrics
+            result: 'pending', // Add result field required by PerformanceMetrics;
         }));
     }, [bettingOpportunities]);
     return (_jsx(motion.div, { animate: "animate", "aria-label": "Unified Betting Interface", className: "w-full max-w-7xl mx-auto p-4 space-y-6", exit: "exit", initial: "initial", variants: fadeInUp, children: _jsxs(Card, { className: "p-6", children: [_jsxs("header", { className: "flex flex-col md:flex-row justify-between items-start md:items-center gap-4", children: [_jsxs("div", { children: [_jsx("h2", { className: "text-2xl font-bold text-gray-900 dark:text-gray-100", children: "Betting Interface" }), _jsxs("p", { className: "text-gray-600 dark:text-gray-400", children: ["Current Bankroll: ", formatCurrency(bankroll)] })] }), _jsxs("div", { className: "flex items-center gap-4", children: [_jsx(RiskProfileSelector, { currentProfile: riskProfile, onProfileChange: setRiskProfile }), _jsx(Button, { "aria-label": "Toggle dark mode", variant: "ghost", onClick: () => setInternalDarkMode(!internalDarkMode), children: darkMode ? 'Light Mode' : 'Dark Mode' })] })] }), _jsxs("main", { className: "mt-6", children: [_jsxs(Tabs, { value: activeTab, onChange: setActiveTab, children: [_jsx(Tab, { label: "Opportunities", value: "opportunities" }), _jsx(Tab, { label: "Analytics", value: "analytics" }), _jsx(Tab, { label: "Settings", value: "settings" })] }), _jsxs(motion.section, { animate: "animate", "aria-label": activeTab, className: "mt-4", exit: "exit", initial: "initial", variants: scaleIn, children: [activeTab === 'opportunities' && (_jsx(motion.div, { animate: "animate", className: "mt-4", exit: "exit", initial: "initial", variants: scaleIn, children: isLoading ? (_jsx("div", { className: "flex justify-center items-center h-64", children: _jsx(Spinner, { "aria-label": "Loading opportunities", size: "large" }) })) : (_jsx(BettingOpportunities, { alerts: alerts, isLoading: isLoading, opportunities: bettingOpportunities, onBetPlacement: onBetPlaced })) }, "opportunities")), activeTab === 'analytics' && (_jsx(motion.div, { animate: "animate", className: "mt-4", exit: "exit", initial: "initial", variants: scaleIn, children: _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 gap-6", children: [_jsx(Card, { children: _jsx(PerformanceMetrics, { bankroll: bankroll, profit: calculatedProfit, recommendations: bettingRecommendations, riskProfile: riskProfile }) }), _jsx(Card, { children: _jsx(ShapVisualization, { features: shapFeatures, isLoading: shapLoading, title: "Feature Importance" }) })] }) }, "analytics")), activeTab === 'settings' && (_jsx(motion.div, { animate: "animate", className: "mt-4", exit: "exit", initial: "initial", variants: scaleIn, children: _jsx(Card, { children: _jsxs("div", { className: "space-y-4", children: [_jsx(Input, { "aria-label": "Investment Amount", helperText: "Maximum amount to invest per bet", label: "Investment Amount", type: "number", value: config.investment.toString(), onChange: value => setConfig(prev => ({ ...prev, investment: Number(value) })) }), _jsx(Select, { "aria-label": "Model Set", label: "Model Set", options: [

@@ -1,8 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 export const MLStatusIndicators = ({ models }) => {
-    const activeModels = models.filter(m => m.status === 'active');
-    const trainingModels = models.filter(m => m.status === 'training');
-    const errorModels = models.filter(m => m.status === 'error');
+
+
+
     const getStatusColor = (status) => {
         switch (status) {
             case 'active':

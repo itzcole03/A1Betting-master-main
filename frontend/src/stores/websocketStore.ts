@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { webSocketManager } from '../services/unified/WebSocketManager';
+import { create } from 'zustand.ts';
+import { persist } from 'zustand/middleware.ts';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
 
 export interface WebSocketState {
   isConnected: boolean;
@@ -29,7 +29,7 @@ const initialState: Omit<WebSocketState, 'setConnected' | 'setClientId' | 'addSu
   error: null,
 };
 
-import { webSocketManager } from '../services/unified/WebSocketManager';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
 
 /**
  * Zustand store for WebSocket state, fully synchronized with WebSocketManager events.
@@ -39,7 +39,7 @@ import { webSocketManager } from '../services/unified/WebSocketManager';
 export const useWebSocketStore = create<WebSocketState>()(
   persist(
     (set: (partial: Partial<WebSocketState> | ((state: WebSocketState) => Partial<WebSocketState>), replace?: boolean) => void) => {
-      // Subscribe to WebSocketManager events once on store initialization
+      // Subscribe to WebSocketManager events once on store initialization;
       if (typeof window !== 'undefined' && !(window as any).__webSocketStoreInitialized) {
         webSocketManager.on('connect', () => set({ isConnected: true }));
         webSocketManager.on('disconnect', () => set({ isConnected: false }));

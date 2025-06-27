@@ -1,10 +1,10 @@
 import { notificationService } from "./notification.js";
-// import { useWebSocket } from "@/hooks/useWebSocket.js"; // No longer used in service layer
+// import { useWebSocket } from "@/hooks/useWebSocket.js"; // No longer used in service layer;
 /**
  * Real-time updates feature flag and env config.
  */
-const VITE_DISABLE_REALTIME = import.meta.env.VITE_DISABLE_REALTIME === "true";
-const VITE_WS_URL = import.meta.env.VITE_WS_URL || "ws://localhost:3000";
+
+
 function reportRealtimeStatus(source, connected, quality) {
     if (typeof window !== "undefined" && window.appStatus) {
         window.appStatus["realtime"] = {
@@ -13,7 +13,7 @@ function reportRealtimeStatus(source, connected, quality) {
             timestamp: Date.now(),
         };
     }
-    // Optionally: emit event or log
+    // Optionally: emit event or log;
     console.info(`[RealTimeUpdatesService] ${source} status:`, {
         connected,
         quality,
@@ -27,9 +27,9 @@ class RealTimeUpdatesService {
         this.breakingNews = new Map();
         this.predictions = new Map();
         this.subscribers = new Map();
-        this.CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
+        this.CACHE_DURATION = 1000 * 60 * 5; // 5 minutes;
         this.cache = new Map();
-        // WebSocket logic is now handled outside the class for React compliance
+        // WebSocket logic is now handled outside the class for React compliance;
         this.ws = null;
         this.connected = false;
         if (!VITE_DISABLE_REALTIME) {
@@ -57,7 +57,7 @@ class RealTimeUpdatesService {
      * Reports connection status for UI.
      */
     initializeWebSocket() {
-        // Safety checks to prevent invalid WebSocket connections
+        // Safety checks to prevent invalid WebSocket connections;
         if (!VITE_WS_URL ||
             VITE_WS_URL === "" ||
             VITE_WS_URL === "wss://api.betproai.com/ws" ||
@@ -67,18 +67,18 @@ class RealTimeUpdatesService {
             VITE_WS_URL.includes("localhost:3001") ||
             import.meta.env.VITE_ENABLE_WEBSOCKET === "false" ||
             VITE_DISABLE_REALTIME) {
-            console.log("WebSocket connection disabled for realtime updates service:", VITE_WS_URL);
+            // console statement removed
             reportRealtimeStatus("websocket", false, 0);
             return;
         }
-        // Use a standard WebSocket for non-React environments
+        // Use a standard WebSocket for non-React environments;
         this.ws = new WebSocket(VITE_WS_URL);
         this.ws.onopen = () => reportRealtimeStatus("websocket", true, 1);
         this.ws.onerror = () => reportRealtimeStatus("websocket", false, 0.5);
         this.ws.onclose = () => reportRealtimeStatus("websocket", false, 0);
         this.ws.onmessage = (event) => {
             try {
-                const data = JSON.parse(event.data);
+
                 switch (data.type) {
                     case "odds:update":
                         if (this.isLiveOdds(data.payload))
@@ -103,17 +103,17 @@ class RealTimeUpdatesService {
                 }
             }
             catch (err) {
-                console.warn("Failed to parse WebSocket message:", err);
+                // console statement removed
             }
         };
     }
-    // Live Odds
+    // Live Odds;
     /**
      * Returns the latest live odds for a given propId, using cache if available.
      */
     async getLiveOdds(propId) {
-        const cacheKey = `odds_${propId}`;
-        const cached = this.getFromCache(cacheKey);
+
+
         if (cached &&
             typeof cached === "object" &&
             cached !== null &&
@@ -123,7 +123,7 @@ class RealTimeUpdatesService {
             "underMultiplier" in cached) {
             return cached;
         }
-        const odds = this.liveOdds.get(propId);
+
         if (odds) {
             this.setCache(cacheKey, odds);
         }
@@ -137,7 +137,7 @@ class RealTimeUpdatesService {
         this.notifySubscribers("odds", odds);
         this.setCache(`odds_${odds.propId}`, odds);
     }
-    // Injury Updates
+    // Injury Updates;
     async getInjuryUpdate(playerId) {
         return this.injuries.get(playerId) || null;
     }
@@ -148,12 +148,12 @@ class RealTimeUpdatesService {
             notificationService.notify("warning", `${update.playerName} (${update.team}) is ${update.status} - ${update.injury}`);
         }
     }
-    // Line Movements
+    // Line Movements;
     async getLineMovements(propId) {
         return this.lineMovements.get(propId) || [];
     }
     async recordLineMovement(movement) {
-        const movements = this.lineMovements.get(movement.propId) || [];
+
         movements.push(movement);
         this.lineMovements.set(movement.propId, movements);
         this.notifySubscribers("lineMovement", movement);
@@ -161,7 +161,7 @@ class RealTimeUpdatesService {
             notificationService.notify("info", `Line moved ${movement.direction} from ${movement.oldValue} to ${movement.newValue}`);
         }
     }
-    // Breaking News
+    // Breaking News;
     async getBreakingNews() {
         return Array.from(this.breakingNews.values()).sort((a, b) => b.timestamp - a.timestamp);
     }
@@ -172,7 +172,7 @@ class RealTimeUpdatesService {
             notificationService.notify("error", news.title);
         }
     }
-    // Predictions
+    // Predictions;
     async getPrediction(id) {
         return this.predictions.get(id) || null;
     }
@@ -180,7 +180,7 @@ class RealTimeUpdatesService {
         this.predictions.set(prediction.id, prediction);
         this.notifySubscribers("prediction", prediction);
     }
-    // Subscription System
+    // Subscription System;
     /**
      * Subscribe to a real-time update event.
      * Returns an unsubscribe function.
@@ -191,7 +191,7 @@ class RealTimeUpdatesService {
         }
         this.subscribers.get(type).add(callback);
         return () => {
-            const subscribers = this.subscribers.get(type);
+
             if (subscribers) {
                 subscribers.delete(callback);
             }
@@ -201,15 +201,15 @@ class RealTimeUpdatesService {
      * Notify all subscribers of a given event type.
      */
     notifySubscribers(type, data) {
-        const subscribers = this.subscribers.get(type);
+
         if (subscribers) {
             subscribers.forEach((callback) => callback(data));
         }
     }
-    // Sport-specific Updates
+    // Sport-specific Updates;
     async getSportUpdates(sport) {
-        const cacheKey = `sport_updates_${sport}`;
-        const cached = this.getFromCache(cacheKey);
+
+
         if (cached &&
             typeof cached === "object" &&
             cached !== null &&
@@ -238,9 +238,9 @@ class RealTimeUpdatesService {
         this.setCache(cacheKey, updates);
         return updates;
     }
-    // Cache Management
+    // Cache Management;
     getFromCache(key) {
-        const cached = this.cache.get(key);
+
         if (!cached)
             return null;
         if (Date.now() - cached.timestamp > this.CACHE_DURATION) {
@@ -262,14 +262,14 @@ class RealTimeUpdatesService {
         return !VITE_DISABLE_REALTIME && this.connected;
     }
     /**
-     * Production real-time service only - no simulation fallback
+     * Production real-time service only - no simulation fallback;
      */
     simulateRealtime() {
-        // Production mode - no simulation
-        console.warn("Real-time simulation disabled in production");
+        // Production mode - no simulation;
+        // console statement removed
         return;
     }
-    // Type guards for event payloads
+    // Type guards for event payloads;
     isLiveOdds(data) {
         return (typeof data === "object" &&
             data !== null &&

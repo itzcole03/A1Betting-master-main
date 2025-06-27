@@ -1,6 +1,6 @@
 /**
- * Production Validation Service
- * Validates all API configurations and provider connectivity for production deployment
+ * Production Validation Service;
+ * Validates all API configurations and provider connectivity for production deployment;
  */
 
 interface ValidationResult {
@@ -28,43 +28,43 @@ export class ProductionValidationService {
   private validations: ValidationResult[] = [];
 
   /**
-   * Run complete production readiness validation
+   * Run complete production readiness validation;
    */
   async validateProductionReadiness(): Promise<ProductionReadinessReport> {
-    console.log("🔍 Running production readiness validation...");
+    // console statement removed
 
     this.validations = [];
 
-    // Environment validation
+    // Environment validation;
     await this.validateEnvironmentConfiguration();
 
-    // API key validation
+    // API key validation;
     await this.validateAPIKeys();
 
-    // Feature flags validation
+    // Feature flags validation;
     await this.validateFeatureFlags();
 
-    // Service connectivity validation
+    // Service connectivity validation;
     await this.validateServiceConnectivity();
 
-    // Security validation
+    // Security validation;
     await this.validateSecurityConfiguration();
 
-    // Performance validation
+    // Performance validation;
     await this.validatePerformanceConfiguration();
 
     return this.generateReport();
   }
 
   /**
-   * Validate environment configuration
+   * Validate environment configuration;
    */
   private async validateEnvironmentConfiguration(): Promise<void> {
-    const nodeEnv = import.meta.env.NODE_ENV || import.meta.env.VITE_ENV;
+
     const backendUrl =
       import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL;
 
-    // Check NODE_ENV
+    // Check NODE_ENV;
     if (nodeEnv === "production") {
       this.addValidation("Environment", "pass", "NODE_ENV set to production");
     } else {
@@ -75,7 +75,7 @@ export class ProductionValidationService {
       );
     }
 
-    // Check backend URL
+    // Check backend URL;
     if (backendUrl) {
       if (backendUrl.includes("localhost")) {
         this.addValidation(
@@ -94,8 +94,8 @@ export class ProductionValidationService {
       this.addValidation("Backend URL", "fail", "Backend URL not configured");
     }
 
-    // Check HTTPS configuration
-    const enableSSL = import.meta.env.VITE_ENABLE_SSL;
+    // Check HTTPS configuration;
+
     if (enableSSL === "true") {
       this.addValidation("SSL", "pass", "SSL enabled for production");
     } else {
@@ -108,7 +108,7 @@ export class ProductionValidationService {
   }
 
   /**
-   * Validate API keys configuration
+   * Validate API keys configuration;
    */
   private async validateAPIKeys(): Promise<void> {
     const apiKeys = {
@@ -146,10 +146,10 @@ export class ProductionValidationService {
       }
     });
 
-    // Special validation for critical APIs
+    // Special validation for critical APIs;
     if (apiKeys["The-Odds-API"]) {
       // Validate The-Odds-API key format (should be 32 character hex)
-      const key = apiKeys["The-Odds-API"];
+
       if (key.length === 32 && /^[a-f0-9]+$/i.test(key)) {
         this.addValidation(
           "The-Odds-API Format",
@@ -167,14 +167,14 @@ export class ProductionValidationService {
   }
 
   /**
-   * Validate feature flags
+   * Validate feature flags;
    */
   private async validateFeatureFlags(): Promise<void> {
     const featureFlags = {
       "Real-time Odds": import.meta.env.VITE_ENABLE_REAL_TIME_ODDS,
       "Live Predictions": import.meta.env.VITE_ENABLE_LIVE_PREDICTIONS,
       "Advanced Analytics": import.meta.env.VITE_ENABLE_ADVANCED_ANALYTICS,
-      "Enhanced Revolutionary": import.meta.env
+      "Enhanced Revolutionary": import.meta.env;
         .VITE_ENABLE_ENHANCED_REVOLUTIONARY,
       WebSocket: import.meta.env.VITE_WEBSOCKET_ENABLED,
       "Cache Predictions": import.meta.env.VITE_CACHE_PREDICTIONS,
@@ -202,7 +202,7 @@ export class ProductionValidationService {
   }
 
   /**
-   * Validate service connectivity
+   * Validate service connectivity;
    */
   private async validateServiceConnectivity(): Promise<void> {
     const services = [
@@ -228,10 +228,8 @@ export class ProductionValidationService {
           continue;
         }
 
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-        const url = service.requiresKey
+        const url = service.requiresKey;
           ? `${service.url}?apiKey=${service.requiresKey}`
           : service.url;
 
@@ -270,10 +268,10 @@ export class ProductionValidationService {
   }
 
   /**
-   * Validate security configuration
+   * Validate security configuration;
    */
   private async validateSecurityConfiguration(): Promise<void> {
-    // Check for debug mode
+    // Check for debug mode;
     const debugMode =
       import.meta.env.VITE_DEBUG_MODE || import.meta.env.VITE_DEBUG_APIS;
     if (debugMode === "true") {
@@ -290,8 +288,8 @@ export class ProductionValidationService {
       );
     }
 
-    // Check error reporting
-    const errorReporting = import.meta.env.VITE_ENABLE_ERROR_REPORTING;
+    // Check error reporting;
+
     if (errorReporting === "true") {
       this.addValidation("Error Reporting", "pass", "Error reporting enabled");
     } else {
@@ -302,19 +300,19 @@ export class ProductionValidationService {
       );
     }
 
-    // Check CORS configuration
-    const corsEnabled = import.meta.env.VITE_CORS_ENABLED;
+    // Check CORS configuration;
+
     if (corsEnabled === "true") {
       this.addValidation("CORS", "pass", "CORS enabled for API access");
     }
   }
 
   /**
-   * Validate performance configuration
+   * Validate performance configuration;
    */
   private async validatePerformanceConfiguration(): Promise<void> {
-    // Check cache configuration
-    const cacheEnabled = import.meta.env.VITE_CACHE_PREDICTIONS;
+    // Check cache configuration;
+
     if (cacheEnabled === "true") {
       this.addValidation(
         "Caching",
@@ -329,8 +327,8 @@ export class ProductionValidationService {
       );
     }
 
-    // Check parallel processing
-    const parallelProcessing = import.meta.env.VITE_PARALLEL_PROCESSING;
+    // Check parallel processing;
+
     if (parallelProcessing === "true") {
       this.addValidation(
         "Parallel Processing",
@@ -339,8 +337,8 @@ export class ProductionValidationService {
       );
     }
 
-    // Check WebSocket configuration
-    const websocketEnabled = import.meta.env.VITE_WEBSOCKET_ENABLED;
+    // Check WebSocket configuration;
+
     if (websocketEnabled === "true") {
       this.addValidation(
         "WebSocket",
@@ -351,7 +349,7 @@ export class ProductionValidationService {
   }
 
   /**
-   * Add validation result
+   * Add validation result;
    */
   private addValidation(
     service: string,
@@ -363,17 +361,14 @@ export class ProductionValidationService {
   }
 
   /**
-   * Generate comprehensive production readiness report
+   * Generate comprehensive production readiness report;
    */
   private generateReport(): ProductionReadinessReport {
-    const passes = this.validations.filter((v) => v.status === "pass").length;
+
     const warnings = this.validations.filter(
       (v) => v.status === "warning",
     ).length;
-    const failures = this.validations.filter((v) => v.status === "fail").length;
 
-    const total = this.validations.length;
-    const readinessScore = Math.round((passes / total) * 100);
 
     let overallStatus: "ready" | "ready_with_warnings" | "not_ready";
     if (failures > 0) {
@@ -406,11 +401,11 @@ export class ProductionValidationService {
       );
     }
 
-    const configuredKeys = this.validations
+    const configuredKeys = this.validations;
       .filter((v) => v.service.includes("API Key") && v.status === "pass")
       .map((v) => v.service.replace(" API Key", ""));
 
-    const missingKeys = this.validations
+    const missingKeys = this.validations;
       .filter((v) => v.service.includes("API Key") && v.status !== "pass")
       .map((v) => v.service.replace(" API Key", ""));
 
@@ -444,7 +439,7 @@ export class ProductionValidationService {
   }
 
   /**
-   * Quick production readiness check
+   * Quick production readiness check;
    */
   async quickValidation(): Promise<{
     ready: boolean;
@@ -454,14 +449,14 @@ export class ProductionValidationService {
       {
         check: "Backend URL configured",
         valid: !!(
-          import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL
+          import.meta.env.VITE_BACKEND_URL || import.meta.env.VITE_API_URL;
         ),
       },
       {
         check: "At least one API key configured",
         valid: !!(
           import.meta.env.VITE_THEODDS_API_KEY ||
-          import.meta.env.VITE_SPORTRADAR_API_KEY
+          import.meta.env.VITE_SPORTRADAR_API_KEY;
         ),
       },
       {
@@ -470,7 +465,7 @@ export class ProductionValidationService {
       },
     ];
 
-    const criticalIssues = criticalChecks
+    const criticalIssues = criticalChecks;
       .filter((check) => !check.valid)
       .map((check) => check.check);
 
@@ -481,6 +476,6 @@ export class ProductionValidationService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const productionValidationService = new ProductionValidationService();
 export default productionValidationService;

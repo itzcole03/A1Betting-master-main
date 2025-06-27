@@ -4,7 +4,7 @@ import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Div
 import { Dashboard as DashboardIcon, Analytics as AnalyticsIcon, SportsSoccer as SportsIcon, Settings as SettingsIcon, TrendingUp as TrendingUpIcon, History as HistoryIcon, } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useThemeStore } from '@/stores/themeStore';
-const drawerWidth = 240;
+
 const menuItems = [
     { text: 'Dashboard', icon: _jsx(DashboardIcon, {}), path: '/' },
     { text: 'Predictions', icon: _jsx(SportsIcon, {}), path: '/predictions' },
@@ -14,10 +14,10 @@ const menuItems = [
     { text: 'Settings', icon: _jsx(SettingsIcon, {}), path: '/settings' },
 ];
 const Sidebar = ({ open = true, onClose, variant = 'permanent' }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+
+
+
+
     const { isDarkMode } = useThemeStore();
     const handleNavigation = (path) => {
         navigate(path);
@@ -29,7 +29,7 @@ const Sidebar = ({ open = true, onClose, variant = 'permanent' }) => {
                             '&.Mui-selected': {
                                 backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)',
                                 '&:hover': {
-                                    backgroundColor: isDarkMode
+                                    backgroundColor: isDarkMode;
                                         ? 'rgba(255, 255, 255, 0.12)'
                                         : 'rgba(0, 0, 0, 0.12)',
                                 },

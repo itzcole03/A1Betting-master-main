@@ -16,34 +16,34 @@ export class UnifiedBettingAnalytics extends EventEmitter {
         return UnifiedBettingAnalytics.instance;
     }
     initializeEventListeners() {
-        // Listen for real-time odds updates
+        // Listen for real-time odds updates;
         this.dataService.on('ws:prizepicks:odds_update', data => {
             this.analyzeOddsMovement(data);
         });
-        // Listen for model updates
+        // Listen for model updates;
         this.dataService.on('ws:odds_api:line_movement', data => {
             this.updatePredictions(data);
         });
     }
     calculateKellyCriterion(probability, odds) {
-        const decimalOdds = odds;
-        const q = 1 - probability;
-        const b = decimalOdds - 1;
-        const kelly = (probability * b - q) / b;
-        return Math.max(0, Math.min(kelly, 0.1)); // Cap at 10% of bankroll
+
+
+
+
+        return Math.max(0, Math.min(kelly, 0.1)); // Cap at 10% of bankroll;
     }
     async analyzeBettingOpportunity(market, odds, stake) {
         try {
-            // Fetch latest market data
-            const marketData = await this.dataService.fetchData(DataSource.PRIZEPICKS, `/markets/${market}`);
-            // Get prediction from model
-            const prediction = await this.generatePrediction(market, marketData.data);
-            // Calculate optimal stake using Kelly Criterion
-            const recommendedStake = this.calculateKellyCriterion(prediction.probability, odds);
-            // Assess risk factors
-            const riskFactors = this.assessRiskFactors(marketData.data, prediction);
-            // Find hedging opportunities
-            const hedging = await this.findHedgingOpportunities(market, odds);
+            // Fetch latest market data;
+
+            // Get prediction from model;
+
+            // Calculate optimal stake using Kelly Criterion;
+
+            // Assess risk factors;
+
+            // Find hedging opportunities;
+
             const analysis = {
                 predictionConfidence: prediction.probability,
                 recommendedStake: recommendedStake * stake,
@@ -64,16 +64,16 @@ export class UnifiedBettingAnalytics extends EventEmitter {
     }
     async generatePrediction(market, data) {
         try {
-            // Use PredictionEngine for unified predictions
+            // Use PredictionEngine for unified predictions;
             const { PredictionEngine } = await import('./PredictionEngine');
-            const predictionEngine = PredictionEngine.getInstance();
-            // Construct a PlayerProp-like object if needed
+
+            // Construct a PlayerProp-like object if needed;
             const prop = {
                 player: { id: data.playerId || market },
                 type: data.metric || market,
                 ...data,
             };
-            const predictionData = await predictionEngine.predict(prop);
+
             return {
                 probability: predictionData.value,
                 confidence: predictionData.confidence,
@@ -89,16 +89,16 @@ export class UnifiedBettingAnalytics extends EventEmitter {
         }
     }
     assessRiskFactors(marketData, prediction) {
-        const factors = [];
-        // Market volatility check
+
+        // Market volatility check;
         if ('volatility' in marketData && typeof marketData.volatility === 'number' && marketData.volatility > 0.5) {
             factors.push('High market volatility');
         }
-        // Prediction confidence check
+        // Prediction confidence check;
         if ('confidence' in prediction && typeof prediction.confidence === 'number' && prediction.confidence < 0.7) {
             factors.push('Low prediction confidence');
         }
-        // Time to event check
+        // Time to event check;
         if ('timeToEvent' in marketData && typeof marketData.timeToEvent === 'number' && marketData.timeToEvent < 60) {
             factors.push('Close to event start');
         }
@@ -113,9 +113,9 @@ export class UnifiedBettingAnalytics extends EventEmitter {
     }
     async findHedgingOpportunities(market, originalOdds) {
         try {
-            const relatedMarkets = await this.dataService.fetchData(DataSource.ODDS_API, `/related-markets/${market}`);
-            const markets = relatedMarkets.data;
-            return markets
+
+
+            return markets;
                 .filter(m => m.odds < originalOdds)
                 .map(m => ({
                 market: m.id,
@@ -129,16 +129,16 @@ export class UnifiedBettingAnalytics extends EventEmitter {
         }
     }
     calculateHedgeStake(originalOdds, hedgeOdds) {
-        // Kelly formula for hedging
-        // f* = (bp - q)/b, b = hedgeOdds-1, p = 1/originalOdds, q = 1-p
-        const b = hedgeOdds - 1;
-        const p = 1 / originalOdds;
-        const q = 1 - p;
-        const kelly = (p * b - q) / b;
-        return Math.max(0, Math.min(kelly, 0.2)); // Cap at 20% stake for safety
+        // Kelly formula for hedging;
+        // f* = (bp - q)/b, b = hedgeOdds-1, p = 1/originalOdds, q = 1-p;
+
+
+
+
+        return Math.max(0, Math.min(kelly, 0.2)); // Cap at 20% stake for safety;
     }
     analyzeOddsMovement(data) {
-        // Implement odds movement analysis
+        // Implement odds movement analysis;
         this.emit('odds_movement', {
             market: data.market,
             movement: data.movement,
@@ -146,13 +146,13 @@ export class UnifiedBettingAnalytics extends EventEmitter {
         });
     }
     updatePredictions(data) {
-        // Update prediction models based on new data
+        // Update prediction models based on new data;
         this.emit('predictions_updated', {
             market: data.market,
             updates: data.updates,
         });
     }
-    // Strategy management methods
+    // Strategy management methods;
     addStrategy(strategy) {
         this.activeStrategies.set(strategy.id, strategy);
         this.emit('strategy_added', strategy);
@@ -161,7 +161,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
         this.activeStrategies.delete(strategyId);
         this.emit('strategy_removed', strategyId);
     }
-    // Prediction model management methods
+    // Prediction model management methods;
     addPredictionModel(model) {
         this.predictionModels.set(model.id, model);
         this.emit('model_added', model);

@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { motion } from 'framer-motion';
 export const Skeleton = ({ className = '', variant = 'text', height, width, animate = true, }) => {
-    const baseClasses = 'bg-gray-200 dark:bg-gray-700';
+
     const variantClasses = {
         text: 'rounded',
         rectangular: 'rounded-md',

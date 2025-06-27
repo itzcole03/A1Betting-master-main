@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import type { ESPNHeadline } from '../types/index';
+import { Observable } from 'rxjs.ts';
+import type { ESPNHeadline } from '@/types/index.ts';
 type DataStreamType = 'news';
 interface DataStream<T> {
     type: DataStreamType;

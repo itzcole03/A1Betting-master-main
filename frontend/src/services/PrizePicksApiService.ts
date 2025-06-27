@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from 'axios';
-import { BaseApiService, ApiResponse, ApiServiceConfig } from './ApiService';
+import axios, { AxiosInstance } from 'axios.ts';
+import { BaseApiService, ApiResponse, ApiServiceConfig } from './ApiService.ts';
 
 
 
@@ -32,7 +32,7 @@ export class PrizePicksApiService extends BaseApiService {
 
   protected handleError(error: Error): void {
     this.emit('error', error);
-    console.error('[PrizePicks API Error]:', error);
+    // console statement removed
   }
 
   protected handleResponse<T>(response: ApiResponse<T>): void {
@@ -42,7 +42,7 @@ export class PrizePicksApiService extends BaseApiService {
   public async get<T>(endpoint: string, params?: Record<string, unknown>): Promise<T> {
     try {
       this.emit('request', endpoint);
-      const response = await this.client.get<T>(endpoint, { params });
+
       const apiResponse: ApiResponse<T> = {
         data: response.data,
         status: response.status,
@@ -59,7 +59,7 @@ export class PrizePicksApiService extends BaseApiService {
   public async post<T>(endpoint: string, data: unknown): Promise<T> {
     try {
       this.emit('request', endpoint);
-      const response = await this.client.post<T>(endpoint, data);
+
       const apiResponse: ApiResponse<T> = {
         data: response.data,
         status: response.status,
@@ -73,7 +73,7 @@ export class PrizePicksApiService extends BaseApiService {
     }
   }
 
-  // PrizePicks specific methods
+  // PrizePicks specific methods;
   public async getAvailableProps(): Promise<PrizePicksProp[]> {
     return this.get<PrizePicksProp[]>('/props/available');
   }

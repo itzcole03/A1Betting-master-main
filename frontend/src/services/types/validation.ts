@@ -29,11 +29,11 @@ export class DataValidationRule implements ValidationRule {
     public name: string,
     public description: string,
     private validator: (data: any) => Promise<boolean>,
-    private errorMessage: string
+    private errorMessage: string;
   ) {}
 
   async validate(data: any): Promise<void> {
-    const isValid = await this.validator(data);
+
     if (!isValid) {
       throw new Error(this.errorMessage);
     }
@@ -46,7 +46,7 @@ export class RangeValidationRule extends DataValidationRule {
       `range_${field}`,
       `Validates that ${field} is between ${min} and ${max}`,
       async (data: any) => {
-        const value = data[field];
+
         return value >= min && value <= max;
       },
       errorMessage || `${field} must be between ${min} and ${max}`
@@ -86,7 +86,7 @@ export class ArrayValidationRule extends DataValidationRule {
       `array_${field}`,
       `Validates that ${field} is an array with length between ${minLength} and ${maxLength}`,
       async (data: any) => {
-        const value = data[field];
+
         return Array.isArray(value) && value.length >= minLength && value.length <= maxLength;
       },
       errorMessage || `${field} must be an array with length between ${minLength} and ${maxLength}`
@@ -100,7 +100,7 @@ export class DateValidationRule extends DataValidationRule {
       `date_${field}`,
       `Validates that ${field} is a valid date${minDate ? ` after ${minDate}` : ''}${maxDate ? ` before ${maxDate}` : ''}`,
       async (data: any) => {
-        const value = new Date(data[field]);
+
         if (isNaN(value.getTime())) return false;
         if (minDate && value < minDate) return false;
         if (maxDate && value > maxDate) return false;
@@ -143,7 +143,7 @@ export class CustomValidationRule extends DataValidationRule {
     name: string,
     description: string,
     validator: (data: any) => Promise<boolean>,
-    errorMessage: string
+    errorMessage: string;
   ) {
     super(name, description, validator, errorMessage);
   }

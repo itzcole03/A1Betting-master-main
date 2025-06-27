@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 interface PerformanceMetrics {
     totalBets: number;
     winningBets: number;

@@ -6,12 +6,12 @@
  * Utility functions for custom performance and metric tracking using Sentry.
  * Provides tracing, custom metrics, and tagging for frontend observability.
  */
-import * as Sentry from "@sentry/react";
+import * as Sentry from '@sentry/react.ts';
 /**
- * PerformanceTrackingService
+ * PerformanceTrackingService;
  *
- * Provides utility functions to instrument custom performance monitoring
- * using Sentry. This allows for detailed tracing of application-specific
+ * Provides utility functions to instrument custom performance monitoring;
+ * using Sentry. This allows for detailed tracing of application-specific;
  * operations and collection of custom metrics.
  */
 declare class PerformanceTrackingService {
@@ -93,7 +93,7 @@ export {};
  *     // ... await Promise.all([...]) ...
  *     performanceTrackingService.recordMetric({ name: 'dashboard.data.items_loaded', value: 100 });
  *   } catch (e) {
- *     Sentry.captureException(e); // Capture error if something goes wrong
+ *     Sentry.captureException(e); // Capture error if something goes wrong;
  *   } finally {
  *     if(fetchDataSpan) performanceTrackingService.endSpan(fetchDataSpan);
  *     if(trace) performanceTrackingService.endTrace(trace);

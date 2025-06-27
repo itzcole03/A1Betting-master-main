@@ -1,11 +1,11 @@
-import { ModelOutput, RiskProfile, BetRecommendation } from '../types/prediction';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedMetrics } from '../metrics/types';
-import { RiskProfile, BettingOpportunity } from '../../types/betting';
-import { PredictionEngine } from '../FinalPredictionEngine/FinalPredictionEngine';
-import { EventBus } from '../../unified/EventBus';
-import { ErrorHandler } from '../../unified/ErrorHandler';
-import { PerformanceMonitor } from '../../unified/PerformanceMonitor';
+import { ModelOutput, RiskProfile, BetRecommendation } from '@/types/prediction.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
+import { RiskProfile, BettingOpportunity } from '@/types/betting.ts';
+import { PredictionEngine } from '@/FinalPredictionEngine/FinalPredictionEngine.ts';
+import { EventBus } from '@/unified/EventBus.ts';
+import { ErrorHandler } from '@/unified/ErrorHandler.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
 
 interface ModelPerformance {
   wins: number;
@@ -43,7 +43,7 @@ export class BestBetSelector {
     predictionEngine: PredictionEngine,
     eventBus: EventBus,
     errorHandler: ErrorHandler,
-    performanceMonitor: PerformanceMonitor
+    performanceMonitor: PerformanceMonitor;
   ) {
     this.modelPerformance = new Map();
     this.config = config;
@@ -55,13 +55,13 @@ export class BestBetSelector {
 
   public async selectBestBets(
     opportunities: BettingOpportunity[],
-    riskProfile: RiskProfile
+    riskProfile: RiskProfile;
   ): Promise<BettingOpportunity[]> {
-    const startTime = performance.now();
+
     try {
-      // Filter and validate opportunities
+      // Filter and validate opportunities;
       const validOpportunities = opportunities.filter(opportunity => {
-        const validation = this.validateRiskProfile(opportunity, riskProfile);
+
         if (!validation.isValid) {
           this.eventBus.emit('betting:validation_failed', {
             opportunity,
@@ -71,18 +71,17 @@ export class BestBetSelector {
         return validation.isValid;
       });
 
-      // Sort by expected value
+      // Sort by expected value;
       const sortedOpportunities = validOpportunities.sort((a, b) => {
-        const evA = this.calculateExpectedValue(a);
-        const evB = this.calculateExpectedValue(b);
+
+
         return evB - evA;
       });
 
-      // Limit to max concurrent bets
-      const selectedBets = sortedOpportunities.slice(0, riskProfile.max_concurrent_bets);
+      // Limit to max concurrent bets;
 
-      // Monitor performance
-      const endTime = performance.now();
+      // Monitor performance;
+
       this.performanceMonitor.recordOperation('selectBestBets', endTime - startTime);
 
       return selectedBets;
@@ -94,12 +93,11 @@ export class BestBetSelector {
 
   private validateRiskProfile(
     opportunity: BettingOpportunity,
-    riskProfile: RiskProfile
+    riskProfile: RiskProfile;
   ): ValidationResult {
-    const startTime = performance.now();
 
     try {
-      // Check confidence threshold
+      // Check confidence threshold;
       if (opportunity.confidence < riskProfile.min_confidence_threshold) {
         return {
           isValid: false,
@@ -107,8 +105,8 @@ export class BestBetSelector {
         };
       }
 
-      // Check stake percentage
-      const maxStake = opportunity.bankroll * riskProfile.max_stake_percentage;
+      // Check stake percentage;
+
       if (opportunity.stake > maxStake) {
         return {
           isValid: false,
@@ -116,7 +114,7 @@ export class BestBetSelector {
         };
       }
 
-      // Check volatility tolerance
+      // Check volatility tolerance;
       if (opportunity.volatility > riskProfile.volatility_tolerance) {
         return {
           isValid: false,
@@ -124,7 +122,7 @@ export class BestBetSelector {
         };
       }
 
-      // Check risk score
+      // Check risk score;
       if (opportunity.riskScore > riskProfile.max_risk_score) {
         return {
           isValid: false,
@@ -132,7 +130,7 @@ export class BestBetSelector {
         };
       }
 
-      // Check preferred sports
+      // Check preferred sports;
       if (!riskProfile.preferred_sports.includes(opportunity.sport)) {
         return {
           isValid: false,
@@ -140,7 +138,7 @@ export class BestBetSelector {
         };
       }
 
-      // Check preferred markets
+      // Check preferred markets;
       if (!riskProfile.preferred_markets.includes(opportunity.market)) {
         return {
           isValid: false,
@@ -148,7 +146,7 @@ export class BestBetSelector {
         };
       }
 
-      // Check excluded events
+      // Check excluded events;
       if (riskProfile.excluded_events?.includes(opportunity.eventId)) {
         return {
           isValid: false,
@@ -156,11 +154,11 @@ export class BestBetSelector {
         };
       }
 
-      // Check Kelly Criterion
+      // Check Kelly Criterion;
       const kellyStake = this.calculateKellyStake(
         opportunity.probability,
         opportunity.odds,
-        riskProfile.kelly_fraction
+        riskProfile.kelly_fraction;
       );
       if (opportunity.stake > kellyStake) {
         return {
@@ -169,7 +167,7 @@ export class BestBetSelector {
         };
       }
 
-      // Record performance
+      // Record performance;
       this.performanceMonitor.recordOperation('validateRiskProfile', performance.now() - startTime);
 
       return { isValid: true };
@@ -183,16 +181,16 @@ export class BestBetSelector {
   }
 
   private calculateKellyStake(probability: number, odds: number, kellyFraction: number): number {
-    const q = 1 - probability;
-    const b = odds - 1;
-    const kelly = (probability * b - q) / b;
+
+
+
     return Math.max(0, kelly * kellyFraction);
   }
 
   private calculateExpectedValue(opportunity: BettingOpportunity): number {
     const { odds, confidence, stake } = opportunity;
-    const winAmount = stake * (odds - 1);
-    const loseAmount = stake;
+
+
     return confidence * winAmount - (1 - confidence) * loseAmount;
   }
 
@@ -213,8 +211,7 @@ export class BestBetSelector {
       current.losses++;
     }
 
-    const profit = result.won ? result.payout - result.stake : -result.stake;
-    const totalStaked = (current.wins + current.losses) * result.stake;
+
     current.roi = totalStaked > 0 ? profit / totalStaked : 0;
     current.lastUpdated = new Date();
 

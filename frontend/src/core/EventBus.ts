@@ -1,13 +1,13 @@
-import EventEmitter from 'eventemitter3';
+import EventEmitter from 'eventemitter3.ts';
 
-// Minimal EventTypes for EventBus
+// Minimal EventTypes for EventBus;
 export interface EventTypes {
   [event: string]: unknown;
 }
 
 export class EventBus {
   private static instance: EventBus;
-  private emitter: any; // eventemitter3 v4+ workaround
+  private emitter: any; // eventemitter3 v4+ workaround;
 
   private constructor() {
     this.emitter = new (EventEmitter as any)();
@@ -52,7 +52,7 @@ export class EventBus {
     return this.emitter.eventNames() as Array<keyof EventTypes>;
   }
 
-  // Add onAny/offAny methods for DebugPanel
+  // Add onAny/offAny methods for DebugPanel;
   public onAny(listener: (eventName: string, data: any) => void): void {
     this.emitter.onAny(listener);
   }
@@ -62,5 +62,5 @@ export class EventBus {
   }
 }
 
-// Singleton instance for convenience
+// Singleton instance for convenience;
 export const eventBus = EventBus.getInstance();

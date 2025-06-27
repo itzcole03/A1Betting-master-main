@@ -1,23 +1,23 @@
-import { BaseModel } from '../models/BaseModel';
-import { AdvancedEnsembleModel } from '../models/AdvancedEnsembleModel';
-import { MarketIntelligenceModel } from '../models/MarketIntelligenceModel';
-import { GameTheoryModel } from '../models/GameTheoryModel';
-import { TemporalPatternModel } from '../models/TemporalPatternModel';
-import { AlternativeDataModel } from '../models/AlternativeDataModel';
-import { RealityExploitationEngine } from '../models/RealityExploitationEngine';
-import { QuantumProbabilityModel } from '../models/QuantumProbabilityModel';
-import { ModelConfig, AdvancedEnsembleConfig } from '@/types';
-import { validateModelConfig } from '../config/modelConfig';
-import { UnifiedErrorHandler } from '../../core/UnifiedErrorHandler';
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { UnifiedMonitor } from '../../core/UnifiedMonitor';
+import { BaseModel } from '@/models/BaseModel.ts';
+import { AdvancedEnsembleModel } from '@/models/AdvancedEnsembleModel.ts';
+import { MarketIntelligenceModel } from '@/models/MarketIntelligenceModel.ts';
+import { GameTheoryModel } from '@/models/GameTheoryModel.ts';
+import { TemporalPatternModel } from '@/models/TemporalPatternModel.ts';
+import { AlternativeDataModel } from '@/models/AlternativeDataModel.ts';
+import { RealityExploitationEngine } from '@/models/RealityExploitationEngine.ts';
+import { QuantumProbabilityModel } from '@/models/QuantumProbabilityModel.ts';
+import { ModelConfig, AdvancedEnsembleConfig } from '@/types.ts';
+import { validateModelConfig } from '@/config/modelConfig.ts';
+import { UnifiedErrorHandler } from '@/core/UnifiedErrorHandler.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedMonitor } from '@/core/UnifiedMonitor.ts';
 import {
   ModelError,
   ConfigurationError,
   TrainingError,
   PredictionError,
   PersistenceError,
-} from '../../core/UnifiedError';
+} from '@/core/UnifiedError.ts';
 
 export class ModelFactory {
   private static instance: ModelFactory;
@@ -96,14 +96,14 @@ export class ModelFactory {
 
   public trainModel(modelId: string, data: any): Promise<void> {
     try {
-      const model = this.getModel(modelId);
+
       if (!model) {
         throw new ModelError(`Model ${modelId} not found`);
       }
 
       this.logger.info(`Training model ${modelId}`);
       this.monitor.setMetric(`model_${modelId}_training_started`, true);
-      return model
+      return model;
         .train(data)
         .then(() => {
           this.logger.info(`Model ${modelId} trained successfully`);
@@ -124,14 +124,14 @@ export class ModelFactory {
 
   public predict(modelId: string, input: any): Promise<any> {
     try {
-      const model = this.getModel(modelId);
+
       if (!model) {
         throw new ModelError(`Model ${modelId} not found`);
       }
 
       this.logger.info(`Making prediction with model ${modelId}`);
       this.monitor.setMetric(`model_${modelId}_prediction_started`, true);
-      return model
+      return model;
         .predict(input)
         .then(result => {
           this.predictionHistory.push({
@@ -182,14 +182,14 @@ export class ModelFactory {
 
   public saveModel(modelId: string, path: string): Promise<void> {
     try {
-      const model = this.getModel(modelId);
+
       if (!model) {
         throw new ModelError(`Model ${modelId} not found`);
       }
 
       this.logger.info(`Saving model ${modelId} to ${path}`);
       this.monitor.setMetric(`model_${modelId}_save_started`, true);
-      return model
+      return model;
         .save(path)
         .then(() => {
           this.logger.info(`Model ${modelId} saved successfully`);
@@ -210,14 +210,14 @@ export class ModelFactory {
 
   public loadModel(modelId: string, path: string): Promise<void> {
     try {
-      const model = this.getModel(modelId);
+
       if (!model) {
         throw new ModelError(`Model ${modelId} not found`);
       }
 
       this.logger.info(`Loading model ${modelId} from ${path}`);
       this.monitor.setMetric(`model_${modelId}_load_started`, true);
-      return model
+      return model;
         .load(path)
         .then(() => {
           this.logger.info(`Model ${modelId} loaded successfully`);
@@ -266,8 +266,8 @@ export class ModelFactory {
         metrics: any;
       }
     | undefined {
-    const model = this.getModel(modelId);
-    const config = this.getModelConfig(modelId);
+
+
     if (!model || !config) {
       return undefined;
     }
@@ -281,7 +281,7 @@ export class ModelFactory {
   }
 
   public isModelTrained(modelId: string): boolean {
-    const model = this.getModel(modelId);
+
     return model ? model.isModelTrained() : false;
   }
 }

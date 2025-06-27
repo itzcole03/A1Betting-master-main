@@ -1,4 +1,4 @@
-import { EngineeredFeatures, FeatureMonitoringConfig } from '@/types';
+import { EngineeredFeatures, FeatureMonitoringConfig } from '@/types.ts';
 interface MonitoringMetrics {
     timestamp: string;
     featureCounts: {

@@ -1,16 +1,16 @@
 import './styles/index.css';
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { App } from './App';
+import React from 'react.ts';
+import ReactDOM from 'react-dom/client.ts';
+import { App } from './App.ts';
 
-// Initialize any global configurations or polyfills here
+// Initialize any global configurations or polyfills here;
 if (import.meta.env.MODE === 'development') {
   import('./mocks/browser').then(({ worker }) => {
     worker.start({ onUnhandledRequest: 'bypass' });
   });
 }
 
-// Check for dark mode preference
+// Check for dark mode preference;
 if (
   localStorage.theme === 'dark' ||
   (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
@@ -20,7 +20,7 @@ if (
   document.documentElement.classList.remove('dark');
 }
 
-// Listen for system dark mode changes
+// Listen for system dark mode changes;
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
   if (!('theme' in localStorage)) {
     if (e.matches) {
@@ -31,11 +31,10 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e =
   }
 });
 
-// Create root and render app
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+// Create root and render app;
 
 root.render(
-  <React.StrictMode>
-    <App />
+  <React.StrictMode key={143543}>
+    <App / key={103343}>
   </React.StrictMode>
 );

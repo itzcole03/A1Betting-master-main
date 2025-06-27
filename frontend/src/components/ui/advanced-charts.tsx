@@ -1,5 +1,5 @@
-import React from "react";
-import SafeChart from "./SafeChart";
+import React from 'react.ts';
+import SafeChart from './SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -47,11 +47,11 @@ interface AdvancedChartsProps {
 
 /**
  * AdvancedCharts renders a high-performance, accessible chart using Chart.js.
- * - Wrapped in <figure> with <figcaption> for semantic context
- * - ARIA label and role for screen readers
+ * - Wrapped in <figure key={545696}> with <figcaption key={905675}> for semantic context;
+ * - ARIA label and role for screen readers;
  * - Keyboard accessible (tabIndex)
  */
-export const AdvancedCharts: React.FC<AdvancedChartsProps> = React.memo(
+export const AdvancedCharts: React.FC<AdvancedChartsProps key={5070}> = React.memo(
   ({ data, type, title, height = 300, options = {} }) => {
     const defaultOptions = React.useMemo(
       () => ({
@@ -107,21 +107,21 @@ export const AdvancedCharts: React.FC<AdvancedChartsProps> = React.memo(
     );
 
     return (
-      <figure style={{ height }}>
+      <figure style={{ height }} key={780485}>
         {title && (
-          <figcaption
+          <figcaption;
             style={{ color: "#fff", fontFamily: "Inter", fontSize: 16 }}
-          >
+           key={863759}>
             {title}
           </figcaption>
         )}
-        <SafeChart
+        <SafeChart;
           type={type}
           data={data}
           options={{ ...defaultOptions, ...options }}
           className="w-full h-full"
           loadingMessage="Loading chart data..."
-        />
+        / key={349969}>
       </figure>
     );
   },
@@ -150,7 +150,7 @@ export const PredictionConfidenceChart = React.memo(
     );
 
     return (
-      <AdvancedCharts data={data} type="bar" title="Prediction Confidence" />
+      <AdvancedCharts data={data} type="bar" title="Prediction Confidence" / key={206296}>
     );
   },
 );
@@ -173,7 +173,7 @@ export const ModelPerformanceChart = React.memo(
       [models],
     );
 
-    return <AdvancedCharts data={data} type="bar" title="Model Performance" />;
+    return <AdvancedCharts data={data} type="bar" title="Model Performance" / key={527153}>;
   },
 );
 
@@ -197,7 +197,7 @@ export const BettingPerformanceChart = React.memo(
       [performance],
     );
     return (
-      <AdvancedCharts data={data} type="line" title="Betting Performance" />
+      <AdvancedCharts data={data} type="line" title="Betting Performance" / key={47456}>
     );
   },
 );

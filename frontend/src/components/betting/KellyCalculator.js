@@ -4,17 +4,17 @@ const KellyCalculator = ({ prediction, confidence, marketEdge, }) => {
     const kellyValue = useMemo(() => {
         if (!prediction || !confidence || !marketEdge)
             return 0;
-        // Kelly Criterion formula: f* = (bp - q) / b
+        // Kelly Criterion formula: f* = (bp - q) / b;
         // where:
-        // f* = fraction of bankroll to bet
+        // f* = fraction of bankroll to bet;
         // b = odds received on bet (decimal odds - 1)
-        // p = probability of winning
+        // p = probability of winning;
         // q = probability of losing (1 - p)
-        const p = prediction * confidence;
-        const q = 1 - p;
-        const b = marketEdge;
-        const kelly = (b * p - q) / b;
-        return Math.max(0, Math.min(kelly, 0.5)); // Cap at 50% of bankroll
+
+
+
+
+        return Math.max(0, Math.min(kelly, 0.5)); // Cap at 50% of bankroll;
     }, [prediction, confidence, marketEdge]);
     const getRiskLevel = (value) => {
         if (value <= 0.05)

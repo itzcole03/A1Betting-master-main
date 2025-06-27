@@ -13,13 +13,13 @@ class UnifiedSettingsService {
     }
     loadPreferences() {
         try {
-            const stored = localStorage.getItem(`${this.STORAGE_KEY}_preferences`);
+
             if (stored) {
                 return JSON.parse(stored);
             }
         }
         catch (error) {
-            console.error("Error loading preferences:", error);
+            // console statement removed
         }
         return this.getDefaultPreferences();
     }
@@ -91,12 +91,12 @@ class UnifiedSettingsService {
             localStorage.setItem(`${this.STORAGE_KEY}_preferences`, JSON.stringify(this.preferences));
         }
         catch (error) {
-            console.error("Error saving preferences:", error);
+            // console statement removed
             toast.error("Failed to save preferences");
         }
     }
     notifySettingsChange(type) {
-        // Dispatch a custom event that components can listen to
+        // Dispatch a custom event that components can listen to;
         const event = new CustomEvent("settingsChanged", {
             detail: {
                 type,
@@ -116,7 +116,7 @@ class UnifiedSettingsService {
     }
     importPreferences(json) {
         try {
-            const imported = JSON.parse(json);
+
             this.preferences = { ...this.getDefaultPreferences(), ...imported };
             this.savePreferences();
             this.notifySettingsChange("preferences");
@@ -124,7 +124,7 @@ class UnifiedSettingsService {
             return true;
         }
         catch (error) {
-            console.error("Error importing preferences:", error);
+            // console statement removed
             toast.error("Failed to import preferences");
             return false;
         }

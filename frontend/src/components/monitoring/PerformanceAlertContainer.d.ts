@@ -1,5 +1,5 @@
-import React from 'react';
-import { PerformanceAlert as AlertType } from './PerformanceAlert';
+import React from 'react.ts';
+import { PerformanceAlert as AlertType } from './PerformanceAlert.ts';
 interface PerformanceAlertContainerProps {
     alerts: AlertType[];
     onDismiss?: (id: string) => void;

@@ -1,4 +1,4 @@
-// Type definition
+// Type definition;
 interface Player {
   id: string;
   name: string;
@@ -39,7 +39,7 @@ export declare function useLineupAPI(): {
     unknown,
     Error,
     void,
-    unknown
+    unknown;
   >;
   isSubmitting: boolean;
   submitError: Error | null;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface SkeletonLoaderProps {
     /** Optional additional CSS classes */
     className?: string;

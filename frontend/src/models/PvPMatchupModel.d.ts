@@ -1,5 +1,5 @@
-import type { GameContext, ShapVector } from '../types/models.js';
-import { BaseModel, ModelConfig, ModelPrediction, ModelMetrics } from '../services/ml/models/BaseModel.js';
+import type { GameContext, ShapVector } from '@/types/models.js';
+import { BaseModel, ModelConfig, ModelPrediction, ModelMetrics } from '@/services/ml/models/BaseModel.js';
 export interface PvPMatchupResult {
     sport: 'nba' | 'wnba' | 'mlb' | 'soccer' | 'nhl';
     primaryPlayerId: string;
@@ -27,7 +27,7 @@ export declare class PvPMatchupModel extends BaseModel {
     private normalize;
 }
 /**
- * Strict ALPHA1-compliant top-level async function for modular integration
+ * Strict ALPHA1-compliant top-level async function for modular integration;
  * Extracts PvP matchup features and SHAP insights for two players.
  * Config-gated, singleton, strict typing, ESM-only.
  */

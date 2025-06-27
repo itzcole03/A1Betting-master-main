@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios.ts';
 
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
@@ -7,10 +7,10 @@ export const api = axios.create({
   },
 });
 
-// Add request interceptor for authentication
+// Add request interceptor for authentication;
 api.interceptors.request.use(
   (config: any) => {
-    const token = localStorage.getItem('token');
+
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -21,12 +21,12 @@ api.interceptors.request.use(
   }
 );
 
-// Add response interceptor for error handling
+// Add response interceptor for error handling;
 api.interceptors.response.use(
   (response: any) => response,
   (error: any) => {
     if (error.response?.status === 401) {
-      // Handle unauthorized access
+      // Handle unauthorized access;
       localStorage.removeItem('token');
       window.location.href = '/login';
     }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface EnhancedPropCardProps {
     playerName: string;
     team: string;

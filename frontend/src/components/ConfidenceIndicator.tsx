@@ -1,12 +1,12 @@
-import React from 'react';
-import { Box, Typography, LinearProgress } from '@mui/material';
+import React from 'react.ts';
+import { Box, Typography, LinearProgress } from '@mui/material.ts';
 
 interface ConfidenceIndicatorProps {
   confidence: number;
   kellyCriterion: number;
 }
 
-export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({
+export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps key={853618}> = ({
   confidence,
   kellyCriterion,
 }) => {
@@ -23,14 +23,14 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({
   };
 
   return (
-    <Box sx={{ mt: 2 }}>
-      <Box sx={{ mb: 1 }}>
-        <Typography color="textSecondary" variant="subtitle2">
-          Model Confidence
+    <Box sx={{ mt: 2 }} key={337181}>
+      <Box sx={{ mb: 1 }} key={280310}>
+        <Typography color="textSecondary" variant="subtitle2" key={88816}>
+          Model Confidence;
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ width: '100%', mr: 1 }}>
-            <LinearProgress
+        <Box sx={{ display: 'flex', alignItems: 'center' }} key={397715}>
+          <Box sx={{ width: '100%', mr: 1 }} key={6351}>
+            <LinearProgress;
               sx={{
                 height: 8,
                 borderRadius: 4,
@@ -41,21 +41,21 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({
               }}
               value={confidence * 100}
               variant="determinate"
-            />
+            / key={941770}>
           </Box>
-          <Typography color="textSecondary" variant="body2">
+          <Typography color="textSecondary" variant="body2" key={603568}>
             {(confidence * 100).toFixed(1)}%
           </Typography>
         </Box>
       </Box>
 
-      <Box>
-        <Typography color="textSecondary" variant="subtitle2">
-          Kelly Criterion
+      <Box key={485947}>
+        <Typography color="textSecondary" variant="subtitle2" key={88816}>
+          Kelly Criterion;
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          <Box sx={{ width: '100%', mr: 1 }}>
-            <LinearProgress
+        <Box sx={{ display: 'flex', alignItems: 'center' }} key={397715}>
+          <Box sx={{ width: '100%', mr: 1 }} key={6351}>
+            <LinearProgress;
               sx={{
                 height: 8,
                 borderRadius: 4,
@@ -66,9 +66,9 @@ export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({
               }}
               value={Math.min(kellyCriterion * 100, 100)}
               variant="determinate"
-            />
+            / key={403885}>
           </Box>
-          <Typography color="textSecondary" variant="body2">
+          <Typography color="textSecondary" variant="body2" key={603568}>
             {(kellyCriterion * 100).toFixed(1)}%
           </Typography>
         </Box>

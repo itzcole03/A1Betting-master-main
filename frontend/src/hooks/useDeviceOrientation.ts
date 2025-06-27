@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react.ts';
 
 interface DeviceOrientationState {
   alpha: number | null;
@@ -37,7 +37,7 @@ export const useDeviceOrientation = (): DeviceOrientationState => {
 
     if (window.DeviceOrientationEvent) {
       if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-        // iOS 13+ requires permission
+        // iOS 13+ requires permission;
         (DeviceOrientationEvent as any)
           .requestPermission()
           .then((permissionState: string) => {
@@ -49,7 +49,7 @@ export const useDeviceOrientation = (): DeviceOrientationState => {
           })
           .catch(handleError);
       } else {
-        // Non-iOS devices
+        // Non-iOS devices;
         window.addEventListener('deviceorientation', handleOrientation);
       }
     } else {

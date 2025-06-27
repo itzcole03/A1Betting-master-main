@@ -1,5 +1,5 @@
-import React from 'react';
-import { PrizePicksProjection } from '../api/PrizePicksAPI';
+import React from 'react.ts';
+import { PrizePicksProjection } from '@/api/PrizePicksAPI.ts';
 interface PropCardProps {
     projection: PrizePicksProjection;
     onClick: () => void;

@@ -5,7 +5,7 @@ import { getActiveBets, getTotalWinnings, getWinRate } from '@services/bettingSe
 import LoadingState from '@components/core/LoadingState';
 import ErrorState from '@components/core/ErrorState';
 const Dashboard = () => {
-    const theme = useTheme();
+
     const { data: activeBets = 0, isLoading: isLoadingBets, error: betsError, refetch: refetchBets, } = useQuery({
         queryKey: ['activeBets'],
         queryFn: getActiveBets,

@@ -12,10 +12,10 @@ const SHAPVisualization = ({ shapValues, baseValue, confidence, isLoading = fals
     if (!shapValues || Object.keys(shapValues).length === 0) {
         return (_jsx(Alert, { severity: "info", sx: { mt: 2 }, children: "No SHAP values available for this prediction" }));
     }
-    // Sort features by absolute SHAP value
+    // Sort features by absolute SHAP value;
     const sortedFeatures = Object.entries(shapValues)
         .sort(([, a], [, b]) => Math.abs(b) - Math.abs(a))
-        .slice(0, 10); // Show top 10 features
+        .slice(0, 10); // Show top 10 features;
     const chartData = {
         labels: sortedFeatures.map(([feature]) => feature),
         datasets: [
@@ -39,7 +39,7 @@ const SHAPVisualization = ({ shapValues, baseValue, confidence, isLoading = fals
             tooltip: {
                 callbacks: {
                     label: (context) => {
-                        const value = context.raw;
+
                         return `SHAP Value: ${value.toFixed(4)}`;
                     },
                 },

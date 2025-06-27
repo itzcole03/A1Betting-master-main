@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { Newspaper, Loader, AlertTriangle } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useAppStore } from '@/store/useAppStore';
+import React, { useEffect  } from 'react.ts';
+import { Newspaper, Loader, AlertTriangle } from 'lucide-react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
+import { useAppStore } from '@/store/useAppStore.ts';
 
 
 const ESPNHeadlinesTicker: React.FC = () => {
@@ -13,7 +13,7 @@ const ESPNHeadlinesTicker: React.FC = () => {
   } = useAppStore((state) => ({
     headlines: state.headlines,
     isLoadingHeadlines: state.isLoadingHeadlines,
-    error: state.error, // Assuming a general error field for headline fetching
+    error: state.error, // Assuming a general error field for headline fetching;
     fetchHeadlines: state.fetchHeadlines,
   }));
 
@@ -28,37 +28,37 @@ const ESPNHeadlinesTicker: React.FC = () => {
 
     const timer = setInterval(() => {
       setCurrentHeadlineIndex((prevIndex) => (prevIndex + 1) % headlines.length);
-    }, 7000); // Change headline every 7 seconds
+    }, 7000); // Change headline every 7 seconds;
     return () => clearInterval(timer);
   }, [headlines]);
 
   return (
-    <div className="p-6 glass rounded-2xl shadow-xl bg-gradient-to-r from-blue-900/70 to-blue-700/60 overflow-hidden h-full flex flex-col animate-fade-in">
-      <h3 className="text-xl font-bold text-blue-100 mb-3 flex items-center drop-shadow-lg">
-        <Newspaper className="w-7 h-7 mr-2 text-yellow-400 animate-pulse-soft" />
-        Live ESPN Headlines
+    <div className="p-6 glass rounded-2xl shadow-xl bg-gradient-to-r from-blue-900/70 to-blue-700/60 overflow-hidden h-full flex flex-col animate-fade-in" key={847766}>
+      <h3 className="text-xl font-bold text-blue-100 mb-3 flex items-center drop-shadow-lg" key={210650}>
+        <Newspaper className="w-7 h-7 mr-2 text-yellow-400 animate-pulse-soft" / key={32058}>
+        Live ESPN Headlines;
       </h3>
       {isLoadingHeadlines && (
-        <div className="flex-grow flex flex-col justify-center items-center">
-          <Loader className="w-8 h-8 animate-spin text-yellow-400 mb-2" />
-          <p className="text-blue-200">Loading Headlines...</p>
+        <div className="flex-grow flex flex-col justify-center items-center" key={313063}>
+          <Loader className="w-8 h-8 animate-spin text-yellow-400 mb-2" / key={884597}>
+          <p className="text-blue-200" key={894156}>Loading Headlines...</p>
         </div>
       )}
       {!isLoadingHeadlines && error && (
-        <div className="flex-grow flex flex-col justify-center items-center text-red-400 bg-red-500/10 p-3 rounded-lg">
-          <AlertTriangle className="w-8 h-8 mb-2" />
+        <div className="flex-grow flex flex-col justify-center items-center text-red-400 bg-red-500/10 p-3 rounded-lg" key={124152}>
+          <AlertTriangle className="w-8 h-8 mb-2" / key={962360}>
           Error: {error}
         </div>
       )}
       {!isLoadingHeadlines && !error && (!Array.isArray(headlines) || headlines.length === 0) && (
-        <div className="flex-grow flex flex-col justify-center items-center text-blue-200">
+        <div className="flex-grow flex flex-col justify-center items-center text-blue-200" key={853104}>
           No headlines available at the moment.
         </div>
       )}
       {!isLoadingHeadlines && !error && Array.isArray(headlines) && headlines.length > 0 && (
-        <div className="flex-grow flex items-center justify-center text-center overflow-x-hidden">
-          <AnimatePresence mode='wait'>
-            <motion.a
+        <div className="flex-grow flex items-center justify-center text-center overflow-x-hidden" key={392638}>
+          <AnimatePresence mode='wait' key={322527}>
+            <motion.a;
               key={headlines[currentHeadlineIndex]?.id}
               href={headlines[currentHeadlineIndex]?.link}
               target="_blank"
@@ -68,7 +68,7 @@ const ESPNHeadlinesTicker: React.FC = () => {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.5 }}
-            >
+             key={392628}>
               {headlines[currentHeadlineIndex]?.title}
             </motion.a>
           </AnimatePresence>

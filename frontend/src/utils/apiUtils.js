@@ -2,14 +2,14 @@ import axios, { AxiosError } from 'axios';
 const defaultRetryConfig = {
     maxRetries: 3,
     baseDelay: 1000,
-    maxDelay: 5000
+    maxDelay: 5000;
 };
 export async function retryableAxios(config, retryConfig = defaultRetryConfig) {
-    let lastError = null;
-    let delay = retryConfig.baseDelay;
-    for (let attempt = 0; attempt <= retryConfig.maxRetries; attempt++) {
+    const lastError = null;
+    const delay = retryConfig.baseDelay;
+    for (const attempt = 0; attempt <= retryConfig.maxRetries; attempt++) {
         try {
-            const response = await axios(config);
+
             return response.data;
         }
         catch (error) {
@@ -23,7 +23,7 @@ export async function retryableAxios(config, retryConfig = defaultRetryConfig) {
             if (attempt === retryConfig.maxRetries) {
                 break;
             }
-            // Exponential backoff with jitter
+            // Exponential backoff with jitter;
             delay = Math.min(delay * (1.5 + Math.random() * 0.5), retryConfig.maxDelay);
             await new Promise(resolve => setTimeout(resolve, delay));
         }
@@ -37,7 +37,7 @@ export function createAxiosWithRetry(baseURL, retryConfig) {
                 ...config,
                 method: 'GET',
                 url,
-                baseURL
+                baseURL;
             }, retryConfig);
         },
         post: async (url, data, config) => {
@@ -46,7 +46,7 @@ export function createAxiosWithRetry(baseURL, retryConfig) {
                 method: 'POST',
                 url,
                 data,
-                baseURL
+                baseURL;
             }, retryConfig);
         }
     };

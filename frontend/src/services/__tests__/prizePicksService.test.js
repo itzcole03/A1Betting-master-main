@@ -2,13 +2,13 @@ import { fetchPrizePicksProps, fetchPrizePicksPlayer, optimizePortfolio, } from 
 import { unifiedMonitor } from '../../core/UnifiedMonitor';
 import { AppError } from '../../core/UnifiedError';
 import { apiClient } from '../api/client';
-// Mock apiClient
+// Mock apiClient;
 jest.mock('../api/client', () => ({
     apiClient: {
         get: jest.fn(),
     },
 }));
-// Mock unifiedMonitor
+// Mock unifiedMonitor;
 jest.mock('../../core/UnifiedMonitor', () => ({
     unifiedMonitor: {
         reportError: jest.fn(),
@@ -67,7 +67,7 @@ describe('PrizePicksService', () => {
                 status: 200,
                 data: mockResponse,
             });
-            const props = await fetchPrizePicksProps('NBA', 'points');
+
             expect(props).toHaveLength(1);
             expect(props[0]).toMatchObject({
                 id: '1',
@@ -90,7 +90,7 @@ describe('PrizePicksService', () => {
                 status: 200,
                 data: { data: {} },
             });
-            const props = await fetchPrizePicksProps();
+
             expect(props).toEqual([]);
             expect(unifiedMonitor.reportError).toHaveBeenCalled();
         });
@@ -127,7 +127,7 @@ describe('PrizePicksService', () => {
                 status: 200,
                 data: mockPlayerResponse,
             });
-            const player = await fetchPrizePicksPlayer('1');
+
             expect(player).toMatchObject({
                 id: '1',
                 name: 'LeBron James',
@@ -141,7 +141,7 @@ describe('PrizePicksService', () => {
                 status: 200,
                 data: { data: {} },
             });
-            const player = await fetchPrizePicksPlayer('1');
+
             expect(player).toBeUndefined();
             expect(unifiedMonitor.reportError).toHaveBeenCalled();
         });
@@ -169,7 +169,7 @@ describe('PrizePicksService', () => {
             timeWindow: 'today',
         };
         it('should optimize portfolio successfully', async () => {
-            const result = await optimizePortfolio(mockConfig, mockProps);
+
             expect(result).toMatchObject({
                 props: expect.any(Array),
                 expectedValue: expect.any(Number),
@@ -182,8 +182,8 @@ describe('PrizePicksService', () => {
             const futureProps = [
                 {
                     ...mockProps[0],
-                    gameTime: new Date('2024-03-21T19:30:00Z'), // Tomorrow
-                    id: '1', // Ensure id is present and not possibly undefined
+                    gameTime: new Date('2024-03-21T19:30:00Z'), // Tomorrow;
+                    id: '1', // Ensure id is present and not possibly undefined;
                     playerName: 'LeBron James',
                     propType: 'points',
                     line: 25.5,
@@ -192,12 +192,12 @@ describe('PrizePicksService', () => {
                     sport: 'NBA',
                 },
             ];
-            const result = await optimizePortfolio(mockConfig, futureProps);
+
             expect(result.props).toHaveLength(0);
         });
         it('should respect portfolio size limit', async () => {
-            const manyProps = Array(5).fill(mockProps[0]);
-            const result = await optimizePortfolio(mockConfig, manyProps);
+
+
             expect(result.props.length).toBeLessThanOrEqual(mockConfig.portfolioSize);
         });
     });

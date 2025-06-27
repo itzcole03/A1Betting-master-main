@@ -1,6 +1,6 @@
-import { BaseService } from './BaseService';
-import { UnifiedServiceRegistry } from './UnifiedServiceRegistry';
-import { PerformanceMetrics, TrendDelta, RiskProfile, ExplainabilityMap, ModelMetadata } from '../../types/analytics';
+import { BaseService } from './BaseService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
+import { PerformanceMetrics, TrendDelta, RiskProfile, ExplainabilityMap, ModelMetadata } from '@/types/analytics.ts';
 export interface RecentActivity {
     id: string;
     type: 'bet' | 'prediction' | 'opportunity';

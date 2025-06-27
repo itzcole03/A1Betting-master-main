@@ -9,17 +9,17 @@ export const useBettingData = ({ sport, propType, autoRefresh = true, refreshInt
     const [opportunities, setOpportunities] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const store = useStore();
-    // Fallback for addToast if not present, memoized for hook safety
-    const addToast = React.useMemo(() => store.addToast || (() => { }), [store.addToast]);
-    // Fetch initial data
+
+    // Fallback for addToast if not present, memoized for hook safety;
+
+    // Fetch initial data;
     const fetchData = useCallback(async () => {
         try {
-            // Fetch player props using unified dailyFantasyService
-            const propsData = await dailyFantasyService.getPlayers({ sport, position: propType });
+            // Fetch player props using unified dailyFantasyService;
+
             setProps(propsData);
-            // Fetch arbitrage opportunities using unified oddsjamService
-            const opportunitiesData = await oddsjamService.getArbitrageOpportunities(sport || 'NBA');
+            // Fetch arbitrage opportunities using unified oddsjamService;
+
             setOpportunities(opportunitiesData);
             setError(null);
         }
@@ -36,31 +36,31 @@ export const useBettingData = ({ sport, propType, autoRefresh = true, refreshInt
             setIsLoading(false);
         }
     }, [sport, propType, addToast]);
-    // Handle WebSocket messages
+    // Handle WebSocket messages;
     const handleWebSocketMessage = useCallback((message) => {
         if (typeof message !== 'object' || message === null)
             return;
-        const msg = message;
+
         switch (msg.type) {
             case 'prop_update': {
-                const data = msg.data;
+
                 setProps(prev => {
-                    const index = prev.findIndex(p => p.id === data.id);
+
                     if (index === -1)
                         return [...prev, data];
-                    const updated = [...prev];
+
                     updated[index] = data;
                     return updated;
                 });
                 break;
             }
             case 'odds_update': {
-                const update = msg.data;
+
                 if (sport && update.sport !== sport)
                     return;
                 if (propType && update.propType !== propType)
                     return;
-                const oddsChange = Math.abs(update.newOdds - update.oldOdds);
+
                 if (oddsChange < minOddsChange)
                     return;
                 setOddsUpdates(prev => [update, ...prev].slice(0, 50));
@@ -75,7 +75,7 @@ export const useBettingData = ({ sport, propType, autoRefresh = true, refreshInt
                 break;
             }
             case 'arbitrage_alert': {
-                const opportunity = msg.data;
+
                 setOpportunities(prev => [opportunity, ...prev].slice(0, 50));
                 if (onNewOpportunity)
                     onNewOpportunity(opportunity);
@@ -88,10 +88,10 @@ export const useBettingData = ({ sport, propType, autoRefresh = true, refreshInt
                 break;
             }
             default:
-                console.log('Unknown message type:', msg.type);
+                // console statement removed
         }
     }, [sport, propType, minOddsChange, addToast, onNewOpportunity]);
-    // Set up the event listener
+    // Set up the event listener;
     useEffect(() => {
         webSocketManager.on('message', handleWebSocketMessage);
         return () => {
@@ -99,15 +99,15 @@ export const useBettingData = ({ sport, propType, autoRefresh = true, refreshInt
                 webSocketManager.off('message', handleWebSocketMessage);
             }
             catch (error) {
-                console.error('Error cleaning up WebSocket listener:', error);
+                // console statement removed
             }
         };
     }, [handleWebSocketMessage]);
-    // Setup auto-refresh
+    // Setup auto-refresh;
     useEffect(() => {
         fetchData();
         if (autoRefresh) {
-            const interval = setInterval(fetchData, refreshInterval);
+
             return () => clearInterval(interval);
         }
     }, [fetchData, autoRefresh, refreshInterval]);
@@ -122,6 +122,6 @@ export const useBettingData = ({ sport, propType, autoRefresh = true, refreshInt
         isLoading,
         isConnected,
         error,
-        refresh
+        refresh;
     };
 };

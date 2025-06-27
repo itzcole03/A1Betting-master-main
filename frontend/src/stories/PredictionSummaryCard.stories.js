@@ -38,8 +38,8 @@ export const WithCallbacks = {
     args: {
         ...Default.args,
         modelName: 'Interactive Model',
-        onDetailsClick: () => console.log('View details clicked'),
-        onAddToBetslip: () => console.log('Add to betslip clicked'),
+        onDetailsClick: () => // console statement removed,
+        onAddToBetslip: () => // console statement removed,
     },
 };
 export const HighRisk = {

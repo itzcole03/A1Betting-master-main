@@ -2,15 +2,15 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Brain, Activity, Cpu, Layers, RefreshCw, AlertCircle, CheckCircle, Calculator, Atom, Play, Pause, } from "lucide-react";
-// Import existing ML Dashboard component
+// Import existing ML Dashboard component;
 import UltraAdvancedMLDashboard from "../ml/UltraAdvancedMLDashboard";
-// Cyber UI Components
+// Cyber UI Components;
 import GlassCard from "../ui/GlassCard";
 import CyberButton from "../ui/CyberButton";
 import MetricCard from "../ui/MetricCard";
 import StatusIndicator from "../ui/StatusIndicator";
 const CyberMLDashboard = () => {
-    // State management
+    // State management;
     const [state, setState] = useState({
         isTraining: false,
         autoOptimize: true,
@@ -25,7 +25,7 @@ const CyberMLDashboard = () => {
         selectedTab: "overview",
         lastUpdate: null,
     });
-    // Generate model status data
+    // Generate model status data;
     const generateModelStatus = useCallback(() => {
         return [
             {
@@ -74,7 +74,7 @@ const CyberMLDashboard = () => {
             },
         ];
     }, []);
-    // Generate training pipeline data
+    // Generate training pipeline data;
     const generateTrainingPipeline = useCallback(() => {
         return [
             {
@@ -107,24 +107,24 @@ const CyberMLDashboard = () => {
             },
         ];
     }, []);
-    // Generate system health data
+    // Generate system health data;
     const generateSystemHealth = useCallback(() => {
         return {
             cpuUsage: Math.floor(Math.random() * 30) + 60, // 60-90%
             memoryUsage: Math.floor(Math.random() * 20) + 70, // 70-90%
             gpuUsage: Math.floor(Math.random() * 40) + 50, // 50-90%
-            temperature: Math.floor(Math.random() * 15) + 65, // 65-80°C
+            temperature: Math.floor(Math.random() * 15) + 65, // 65-80°C;
         };
     }, []);
-    // Perform system update
+    // Perform system update;
     const performSystemUpdate = useCallback(async () => {
         setState((prev) => ({ ...prev, isTraining: true }));
         try {
-            // Simulate system update
+            // Simulate system update;
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const models = generateModelStatus();
-            const pipeline = generateTrainingPipeline();
-            const systemHealth = generateSystemHealth();
+
+
+
             setState((prev) => ({
                 ...prev,
                 models,
@@ -135,24 +135,24 @@ const CyberMLDashboard = () => {
             }));
         }
         catch (error) {
-            console.error("System update failed:", error);
+            // console statement removed
             setState((prev) => ({ ...prev, isTraining: false }));
         }
     }, [generateModelStatus, generateTrainingPipeline, generateSystemHealth]);
-    // Auto refresh effect
+    // Auto refresh effect;
     useEffect(() => {
         let intervalId;
         if (state.autoOptimize) {
             intervalId = setInterval(() => {
                 performSystemUpdate();
-            }, 15000); // 15 seconds
+            }, 15000); // 15 seconds;
         }
         return () => {
             if (intervalId)
                 clearInterval(intervalId);
         };
     }, [state.autoOptimize, performSystemUpdate]);
-    // Initial load
+    // Initial load;
     useEffect(() => {
         performSystemUpdate();
     }, [performSystemUpdate]);
@@ -232,7 +232,7 @@ const CyberMLDashboard = () => {
                                 ].map((tab) => (_jsx(CyberButton, { label: tab.label, onClick: () => setState((prev) => ({ ...prev, selectedTab: tab.key })), variant: state.selectedTab === tab.key ? "primary" : "ghost", size: "sm", icon: tab.icon }, tab.key))) }), _jsxs("div", { className: "flex gap-4 items-center", children: [_jsx(CyberButton, { label: state.isTraining ? "UPDATING..." : "SYSTEM UPDATE", onClick: performSystemUpdate, variant: "primary", icon: "fa-refresh", disabled: state.isTraining }), _jsx(CyberButton, { label: state.autoOptimize ? "AUTO ON" : "AUTO OFF", onClick: () => setState((prev) => ({
                                             ...prev,
                                             autoOptimize: !prev.autoOptimize,
-                                        })), variant: state.autoOptimize ? "secondary" : "ghost", size: "md", icon: "fa-robot" }), _jsx(StatusIndicator, { status: state.isTraining ? "warning" : "active", label: state.lastUpdate
+                                        })), variant: state.autoOptimize ? "secondary" : "ghost", size: "md", icon: "fa-robot" }), _jsx(StatusIndicator, { status: state.isTraining ? "warning" : "active", label: state.lastUpdate;
                                             ? `Updated: ${state.lastUpdate.toLocaleTimeString()}`
                                             : "Ready" })] })] })] }), state.selectedTab === "models" && (_jsx(GlassCard, { title: "AI Model Status", glowing: true, children: _jsx("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: state.models.map((model, index) => (_jsxs(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: index * 0.1 }, className: "glass-card rounded-xl p-6", style: {
                             background: "rgba(255, 255, 255, 0.05)",

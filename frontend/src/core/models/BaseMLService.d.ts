@@ -1,7 +1,7 @@
-import { MLService } from './MLService';
-import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types';
-import { ModelManager } from './ModelManager';
-import { FeatureLogger } from '../../services/analytics/featureLogging';
+import { MLService } from './MLService.ts';
+import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types.ts';
+import { ModelManager } from './ModelManager.ts';
+import { FeatureLogger } from '@/services/analytics/featureLogging.ts';
 export declare abstract class BaseMLService implements MLService {
     protected modelManager: ModelManager;
     protected logger: FeatureLogger;

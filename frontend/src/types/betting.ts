@@ -34,7 +34,7 @@ export interface LineShoppingResult {
 }
 
 /**
- * Backend arbitrage opportunity structure
+ * Backend arbitrage opportunity structure;
  */
 export interface BackendArbitrageOpportunity {
   id: string;
@@ -59,7 +59,7 @@ export interface BackendArbitrageOpportunity {
 }
 
 /**
- * UI-friendly arbitrage opportunity type for component usage
+ * UI-friendly arbitrage opportunity type for component usage;
  */
 export interface ArbitrageOpportunity {
   id: string;
@@ -90,7 +90,7 @@ export interface ArbitrageOpportunity {
   }>;
   potentialProfit: number;
   expiresAt: string;
-  // Additional properties that components expect
+  // Additional properties that components expect;
   event_id?: string;
   profit_percentage?: number;
   total_probability?: number;
@@ -105,16 +105,16 @@ export interface ArbitrageOpportunity {
   riskLevel?: "low" | "medium" | "high";
 }
 
-// Legacy alias for backward compatibility
+// Legacy alias for backward compatibility;
 export type ArbitrageOpportunityItem = ArbitrageOpportunity;
 
-// Re-export market analytics types for dashboard usage
+// Re-export market analytics types for dashboard usage;
 export type {
   MarketAnomaly,
   MarketEfficiencyMetrics,
   MarketMetrics,
-} from "./market";
-// Core betting types
+} from './market.ts';
+// Core betting types;
 export enum BetType {
   STRAIGHT = "straight",
   PARLAY = "parlay",
@@ -134,7 +134,7 @@ export enum BetClassification {
   AGGRESSIVE_EDGE = "Aggressive Edge",
 }
 
-// Bookmaker and odds types
+// Bookmaker and odds types;
 export interface BookOdds {
   bookId: string;
   bookName: string;
@@ -142,7 +142,7 @@ export interface BookOdds {
   timestamp: number;
 }
 
-// Teaser betting types
+// Teaser betting types;
 export interface TeaserLeg {
   id: string;
   gameId: string;
@@ -167,7 +167,7 @@ export interface TeaserStrategy {
   potentialPayout?: number;
 }
 
-// Risk profile types
+// Risk profile types;
 export interface RiskProfile {
   profile_type: RiskProfileType;
   max_stake_percentage: number;
@@ -182,7 +182,7 @@ export interface RiskProfile {
   kelly_fraction: number;
 }
 
-// Default risk profiles
+// Default risk profiles;
 export const DEFAULT_RISK_PROFILES: Record<RiskProfileType, RiskProfile> = {
   [RiskProfileType.CONSERVATIVE]: {
     profile_type: RiskProfileType.CONSERVATIVE,
@@ -246,9 +246,9 @@ export interface UserConstraints {
 export interface BettingOdds {
   id: string;
   confidence: number;
-  metadata?: Record<string, unknown>; // Replaced any with type-safe Record
+  metadata?: Record<string, unknown>; // Replaced any with type-safe Record;
 
-  // Additional properties commonly used across services
+  // Additional properties commonly used across services;
   odds: number;
   value: number;
   eventId: string;

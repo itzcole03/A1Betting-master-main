@@ -1,5 +1,5 @@
-import React from 'react';
-import { RiskProfileType } from '@/types/betting';
+import React from 'react.ts';
+import { RiskProfileType } from '@/types/betting.ts';
 interface RiskProfileSelectorProps {
     currentProfile: RiskProfileType;
     onProfileChange: (profile: RiskProfileType) => void;

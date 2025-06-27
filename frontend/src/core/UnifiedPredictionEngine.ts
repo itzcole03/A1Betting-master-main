@@ -1,14 +1,14 @@
-import { AnalyticsService } from '../services/AnalyticsService';
-import { AdvancedAnalysisEngine } from './AdvancedAnalysisEngine';
-import { EventBus } from '@/core/EventBus';
-import { PerformanceMonitor } from './PerformanceMonitor';
-import { UnifiedConfigManager } from './UnifiedConfigManager';
+import { AnalyticsService } from '@/services/AnalyticsService.ts';
+import { AdvancedAnalysisEngine } from './AdvancedAnalysisEngine.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
+import { UnifiedConfigManager } from './UnifiedConfigManager.ts';
 
-import { getLineupSynergyFeatures } from '../models/LineupSynergyModel';
-import { getPlayerFormFeatures } from '../models/PlayerFormModel';
-import { getPvPMatchupFeatures } from '../models/PvPMatchupModel';
-import { getRefereeImpactFeatures } from '../models/RefereeImpactModel';
-import { getVenueEffectFeatures } from '../models/VenueEffectModel';
+import { getLineupSynergyFeatures } from '@/models/LineupSynergyModel.ts';
+import { getPlayerFormFeatures } from '@/models/PlayerFormModel.ts';
+import { getPvPMatchupFeatures } from '@/models/PvPMatchupModel.ts';
+import { getRefereeImpactFeatures } from '@/models/RefereeImpactModel.ts';
+import { getVenueEffectFeatures } from '@/models/VenueEffectModel.ts';
 
 import {
   BettingOpportunity,
@@ -16,7 +16,7 @@ import {
   MarketUpdate,
   PredictionState,
   TimestampedData,
-} from '../types/core';
+} from '@/types/core.ts';
 
 export interface PredictionContext {
   playerId: string;
@@ -82,9 +82,8 @@ export class UnifiedPredictionEngine {
   public async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
-    const traceId = this.performanceMonitor.startTrace('prediction-engine-init');
     try {
-      // Initialize prediction models
+      // Initialize prediction models;
       await this.initializePredictionModels();
 
       this.isInitialized = true;
@@ -96,21 +95,19 @@ export class UnifiedPredictionEngine {
   }
 
   public async generatePrediction(context: PredictionContext): Promise<BettingOpportunity> {
-    const traceId = this.performanceMonitor.startTrace('generate-prediction');
 
     try {
-      const config = await this.configManager.getConfig();
-      const shapContext: any[] = [];
-      const predictionInput = { ...context, features: {}, shapContext };
 
-      // Use feature flags from config.features for model gating
-      const features = config.features || {};
+      const shapContext: any[] = [];
+
+      // Use feature flags from config.features for model gating;
+
       if (features.enablePvPModel?.enabled && context.playerId && context.metric) {
-        const playerA = context.playerId;
-        const playerB = (context as any).opponentId || '';
-        const sport = (context as any).sport || 'nba';
+
+
+
         try {
-          const pvpResult = await getPvPMatchupFeatures(playerA, playerB, sport, context as any);
+
           predictionInput.features = { ...predictionInput.features, ...pvpResult.features };
           if (pvpResult.shapInsights?.length) shapContext.push(...pvpResult.shapInsights);
         } catch (err) {
@@ -118,9 +115,9 @@ export class UnifiedPredictionEngine {
         }
       }
       if (features.enablePlayerFormModel?.enabled && context.playerId) {
-        const sport = (context as any).sport || 'nba';
+
         try {
-          const pfResult = await getPlayerFormFeatures(context.playerId, sport, context as any);
+
           predictionInput.features = { ...predictionInput.features, ...pfResult.features };
           if (pfResult.shapInsights?.length) shapContext.push(...pfResult.shapInsights);
         } catch (err) {
@@ -128,9 +125,9 @@ export class UnifiedPredictionEngine {
         }
       }
       if (features.enableVenueEffectModel?.enabled && (context as any).venueId) {
-        const sport = (context as any).sport || 'nba';
+
         try {
-          const venueResult = await getVenueEffectFeatures((context as any).venueId, sport, context as any);
+
           predictionInput.features = { ...predictionInput.features, ...venueResult.features };
           if (venueResult.shapInsights?.length) shapContext.push(...venueResult.shapInsights);
         } catch (err) {
@@ -138,9 +135,9 @@ export class UnifiedPredictionEngine {
         }
       }
       if (features.enableRefereeImpactModel?.enabled && (context as any).refereeId) {
-        const sport = (context as any).sport || 'nba';
+
         try {
-          const refResult = await getRefereeImpactFeatures((context as any).refereeId, sport, context as any);
+
           predictionInput.features = { ...predictionInput.features, ...refResult.features };
           if (refResult.shapInsights?.length) shapContext.push(...refResult.shapInsights);
         } catch (err) {
@@ -148,19 +145,18 @@ export class UnifiedPredictionEngine {
         }
       }
       if (features.enableLineupSynergyModel?.enabled && Array.isArray((context as any).lineupIds)) {
-        const sport = (context as any).sport || 'nba';
+
         try {
-          const lineupResult = await getLineupSynergyFeatures((context as any).lineupIds, sport, context as any);
+
           predictionInput.features = { ...predictionInput.features, ...lineupResult.features };
           if (lineupResult.shapInsights?.length) shapContext.push(...lineupResult.shapInsights);
         } catch (err) {
           this.eventBus.emit('model:error', { model: 'LineupSynergyModel', error: err });
         }
       }
-      // Get predictions from all models
-      const modelPredictions = await this.getModelPredictions(predictionInput);
+      // Get predictions from all models;
 
-      // Filter out null predictions if any model failed
+      // Filter out null predictions if any model failed;
       const validModelPredictions = modelPredictions.filter(p => p.prediction !== null) as Array<{
         id: string;
         prediction: ModelPrediction;
@@ -168,18 +164,16 @@ export class UnifiedPredictionEngine {
       }>;
 
       if (validModelPredictions.length === 0) {
-        // Handle case where no models could generate a prediction
+        // Handle case where no models could generate a prediction;
         this.performanceMonitor.endTrace(traceId, new Error('No valid model predictions generated.'));
         throw new Error('Failed to generate any model predictions.');
       }
 
-      // Combine predictions using weighted ensemble
-      const combinedPrediction = this.combineModelPredictions(validModelPredictions);
+      // Combine predictions using weighted ensemble;
 
-      // Generate analysis result
-      const analysis = await this.generateAnalysis(predictionInput, validModelPredictions);
+      // Generate analysis result;
 
-      // Create betting opportunity
+      // Create betting opportunity;
       const opportunity: BettingOpportunity = {
         id: `opp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         propId: `${context.playerId}:${context.metric}`,
@@ -199,7 +193,7 @@ export class UnifiedPredictionEngine {
         },
       };
 
-      // Emit prediction update event
+      // Emit prediction update event;
       this.eventBus.emit('prediction:update', opportunity);
 
       this.performanceMonitor.endTrace(traceId);
@@ -211,7 +205,7 @@ export class UnifiedPredictionEngine {
   }
 
   private async initializePredictionModels(): Promise<void> {
-    // Initialize base models
+    // Initialize base models;
     const baseModels = [
       {
         id: 'historical_trends',
@@ -240,7 +234,7 @@ export class UnifiedPredictionEngine {
       },
     ];
 
-    // Create prediction states for each model
+    // Create prediction states for each model;
     for (const model of baseModels) {
       this.models.set(model.id, {
         id: model.id,
@@ -258,14 +252,14 @@ export class UnifiedPredictionEngine {
   }
 
   public async getModelPredictions(
-    context: PredictionContext
+    context: PredictionContext;
   ): Promise<Array<{ id: string; prediction: ModelPrediction | null; weight: number }>> {
     const predictions: Array<{ id: string; prediction: ModelPrediction | null; weight: number }> =
       [];
 
     for (const [modelId, model] of this.models) {
-      const prediction = await this.generateModelPrediction(modelId, context);
-      // We will push the prediction even if it's null, and handle filtering later
+
+      // We will push the prediction even if it's null, and handle filtering later;
       predictions.push({
         id: modelId,
         prediction,
@@ -278,13 +272,13 @@ export class UnifiedPredictionEngine {
 
   private async generateModelPrediction(
     modelId: string,
-    context: PredictionContext
+    context: PredictionContext;
   ): Promise<ModelPrediction | null> {
     try {
-      const model = this.models.get(modelId);
+
       if (!model) return null;
 
-      // Generate prediction based on model type
+      // Generate prediction based on model type;
       switch (model.type) {
         case 'time_series':
           return this.generateTimeSeriesPrediction(context);
@@ -292,7 +286,7 @@ export class UnifiedPredictionEngine {
           return this.generateMarketAnalysisPrediction(context);
         case 'performance_analysis':
           return this.generatePerformanceAnalysisPrediction(context);
-        // Remove calls to non-existent ESPN and Sportradar prediction methods
+        // Remove calls to non-existent ESPN and Sportradar prediction methods;
         default:
           return null;
       }
@@ -304,7 +298,7 @@ export class UnifiedPredictionEngine {
   private combineModelPredictions(
     predictions: Array<{ id: string; prediction: ModelPrediction; weight: number }>
   ): ModelPrediction {
-    const totalWeight = predictions.reduce((sum, p) => sum + p.weight, 0);
+
     if (totalWeight === 0) {
       return {
         value: 0,
@@ -321,11 +315,11 @@ export class UnifiedPredictionEngine {
     const weightedConfidence =
       predictions.reduce((sum, p) => sum + p.prediction.confidence * p.weight, 0) / totalWeight;
 
-    // Combine risk factors
-    const riskFactors = new Set<string>();
+    // Combine risk factors;
+
     predictions.forEach(p => p.prediction.analysis.risk_factors.forEach(rf => riskFactors.add(rf)));
 
-    // Combine prediction factors
+    // Combine prediction factors;
     const factors = predictions.flatMap(p =>
       p.prediction.factors.map(f => ({
         ...f,
@@ -352,14 +346,13 @@ export class UnifiedPredictionEngine {
     context: PredictionContext,
     predictions: Array<{ id: string; prediction: ModelPrediction; weight: number }>
   ): Promise<CoreAnalysisResult> {
-    const historicalTrends = await this.analyzeHistoricalTrends(context);
-    const marketSignals = context.marketState ? this.analyzeMarketSignals(context.marketState) : [];
 
-    // Ensure predictions array is not empty and totalWeight is not zero before division
-    const totalWeight = predictions.reduce((sum, p) => sum + p.weight, 0);
+
+    // Ensure predictions array is not empty and totalWeight is not zero before division;
+
     const confidence =
-      totalWeight > 0
-        ? predictions.reduce((sum, p) => sum + p.prediction.confidence * p.weight, 0) / totalWeight
+      totalWeight > 0;
+        ? predictions.reduce((sum, p) => sum + p.prediction.confidence * p.weight, 0) / totalWeight;
         : 0;
 
     return {
@@ -377,18 +370,16 @@ export class UnifiedPredictionEngine {
   }
 
   private async analyzeHistoricalTrends(
-    context: PredictionContext
+    context: PredictionContext;
   ): Promise<Array<{ trend: string; strength: number }>> {
     if (!context.historicalData) return [];
 
     const trends: Array<{ trend: string; strength: number }> = [];
-    const data = context.historicalData;
 
-    // Calculate moving averages
-    const shortMA = this.calculateMovingAverage(data, 5);
-    const longMA = this.calculateMovingAverage(data, 20);
+    // Calculate moving averages;
 
-    // Detect trend
+
+    // Detect trend;
     if (shortMA > longMA) {
       trends.push({ trend: 'upward', strength: (shortMA - longMA) / longMA });
     } else {
@@ -405,14 +396,14 @@ export class UnifiedPredictionEngine {
 
     const signals: Array<{ signal: string; strength: number }> = [];
 
-    // Analyze line movement
+    // Analyze line movement;
     if (marketState.movement === 'up') {
       signals.push({ signal: 'line_movement_up', strength: 0.7 });
     } else if (marketState.movement === 'down') {
       signals.push({ signal: 'line_movement_down', strength: 0.7 });
     }
 
-    // Analyze volume
+    // Analyze volume;
     if (marketState.volume > 1000) {
       signals.push({ signal: 'high_volume', strength: 0.8 });
     }
@@ -422,14 +413,14 @@ export class UnifiedPredictionEngine {
 
   private calculateMovingAverage(data: TimestampedData[], period: number): number {
     if (!data || data.length < period) return 0;
-    const values = data.slice(-period).map(d => d.value ?? 0);
+
     return values.reduce((sum, val) => (sum ?? 0) + (val ?? 0), 0) / period;
   }
 
   private setupEventListeners(): void {
-    // Use a type assertion to fix eventBus.on signature for market:update
+    // Use a type assertion to fix eventBus.on signature for market:update;
     this.eventBus.on('market:update', (update: unknown) => {
-      const marketUpdate = update as MarketUpdate;
+
       (async () => {
         try {
           const context: PredictionContext = {
@@ -444,7 +435,7 @@ export class UnifiedPredictionEngine {
           };
           await this.generatePrediction(context);
         } catch (error) {
-          // No trace for string, just log error
+          // No trace for string, just log error;
           // this.performanceMonitor.endTrace('market:update', error as Error);
         }
       })();
@@ -452,10 +443,10 @@ export class UnifiedPredictionEngine {
   }
 
   private async generateTimeSeriesPrediction(
-    context: PredictionContext
+    context: PredictionContext;
   ): Promise<ModelPrediction | null> {
     try {
-      const timeSeriesData = this.analyticsService.getTimeSeriesData('1d');
+
       if (!timeSeriesData || timeSeriesData.length === 0) {
         return {
           value: 0,
@@ -474,12 +465,10 @@ export class UnifiedPredictionEngine {
         };
       }
 
-      const recentData = timeSeriesData.slice(-5);
       const averageProfitLoss =
         recentData.reduce((sum, dp) => sum + dp.metrics.profitLoss, 0) / recentData.length;
-      const trendValue = averageProfitLoss > 0 ? 1 : -1;
 
-      const predictedValue = context.marketState
+      const predictedValue = context.marketState;
         ? context.marketState.line * (1 + trendValue * 0.05)
         : 50 + trendValue * 5;
 
@@ -509,10 +498,10 @@ export class UnifiedPredictionEngine {
   }
 
   private async generateMarketAnalysisPrediction(
-    context: PredictionContext
+    context: PredictionContext;
   ): Promise<ModelPrediction | null> {
     try {
-      const playerAnalysis = await this.advancedAnalysisEngine.analyzePlayer(context.playerId);
+
       if (!playerAnalysis || !playerAnalysis.meta_analysis) {
         return {
           value: context.marketState?.line || 0,
@@ -536,9 +525,7 @@ export class UnifiedPredictionEngine {
         };
       }
 
-      const marketEfficiency = playerAnalysis.meta_analysis.market_efficiency || 0.5;
-      const valueAdjustmentFactor = (marketEfficiency - 0.5) * 0.1;
-      const predictedValue = (context.marketState?.line || 50) * (1 + valueAdjustmentFactor);
+
 
       return {
         value: predictedValue,
@@ -560,7 +547,7 @@ export class UnifiedPredictionEngine {
         analysis: {
           risk_factors: [
             'market_volatility_proxy',
-            ...(playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0
+            ...(playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0;
               ? Object.values(playerAnalysis.risks).flatMap(r => r.factors)
               : ['unknown_market_risks']),
           ],
@@ -577,10 +564,9 @@ export class UnifiedPredictionEngine {
   }
 
   private async generatePerformanceAnalysisPrediction(
-    context: PredictionContext
+    context: PredictionContext;
   ): Promise<ModelPrediction | null> {
     try {
-      const playerAnalysis = await this.advancedAnalysisEngine.analyzePlayer(context.playerId);
 
       if (!playerAnalysis || !playerAnalysis.predictions[context.metric]) {
         return {
@@ -605,8 +591,6 @@ export class UnifiedPredictionEngine {
         };
       }
 
-      const metricPrediction = playerAnalysis.predictions[context.metric];
-
       return {
         value: metricPrediction.value,
         confidence: metricPrediction.confidence,
@@ -618,7 +602,7 @@ export class UnifiedPredictionEngine {
         })),
         analysis: {
           risk_factors:
-            playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0
+            playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0;
               ? Object.values(playerAnalysis.risks).flatMap(r => r.factors)
               : ['general_performance_variance'],
           meta_analysis: {

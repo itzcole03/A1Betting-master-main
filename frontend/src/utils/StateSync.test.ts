@@ -1,8 +1,8 @@
-import useStore from '@/store/useStore';
-import { BettingOpportunity, MarketUpdate, Alert } from '@/types/core';
-import { EventBus } from '../../core/EventBus';
-import { UnifiedStateManager } from '../../core/UnifiedState';
-import { describe, it, expect, beforeEach, jest } from '@jest/globals';
+import useStore from '@/store/useStore.ts';
+import { BettingOpportunity, MarketUpdate, Alert } from '@/types/core.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { UnifiedStateManager } from '@/core/UnifiedState.ts';
+import { describe, it, expect, beforeEach, jest } from '@jest/globals.ts';
 
 
 
@@ -11,7 +11,7 @@ test('should test state sync, context integration, etc.', () => { expect(true).t
 test('should test state sync, context integration, etc.', () => { expect(true).toBe(true); });
 
 describe('State Synchronization', () => {
-  // let store: any; // Use any to avoid 'unknown' errors in assertions
+  // let store: any; // Use any to avoid 'unknown' errors in assertions;
   // let stateManager: UnifiedStateManager;
   // let eventBus: EventBus;
 
@@ -23,33 +23,33 @@ describe('State Synchronization', () => {
 
   describe('Market Updates', () => {
     it('should sync market updates to store', () => {
-      // Placeholder: real test would go here
+      // Placeholder: real test would go here;
       expect(true).toBe(true);
     });
   });
 
   describe('Betting Opportunities', () => {
     it('should sync opportunities to store', () => {
-      // Placeholder: real test would go here
+      // Placeholder: real test would go here;
       expect(true).toBe(true);
     });
   });
 
   describe('Alerts', () => {
     it('should sync alerts to store', () => {
-      // Placeholder: real test would go here
+      // Placeholder: real test would go here;
       expect(true).toBe(true);
     });
 
     it('should remove acknowledged alerts', () => {
-      // Placeholder: real test would go here
+      // Placeholder: real test would go here;
       expect(true).toBe(true);
     });
   });
 
   describe('Performance Metrics', () => {
     it('should sync performance metrics to store', () => {
-      // Placeholder: real test would go here
+      // Placeholder: real test would go here;
       expect(true).toBe(true);
     });
   });

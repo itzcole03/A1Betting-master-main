@@ -1,41 +1,38 @@
-// Simple test file to check basic TypeScript compilation
-import React from 'react';
-import { analyticsService } from '@/services/AnalyticsService';
-import { predictionService } from '@/services/predictionService';
-import { formatCurrency, formatPercentage } from '@/utils/formatters';
-import { usePredictionStore } from '@/store/predictionStore';
+// Simple test file to check basic TypeScript compilation;
+import React from 'react.ts';
+import { analyticsService } from '@/services/AnalyticsService.ts';
+import { predictionService } from '@/services/predictionService.ts';
+import { formatCurrency, formatPercentage } from '@/utils/formatters.ts';
+import { usePredictionStore } from '@/store/predictionStore.ts';
 
-// Test basic type imports
-import type { Sport, PropType, BetResult } from '@/types/common';
-import type { LineupLeg, Lineup } from '@/types/lineup';
-import type { LineupBuilderStrategy, LineupBuilderOutput } from '@/types/predictions';
+// Test basic type imports;
+import type { Sport, PropType, BetResult } from '@/types/common.ts';
+import type { LineupLeg, Lineup } from '@/types/lineup.ts';
+import type { LineupBuilderStrategy, LineupBuilderOutput } from '@/types/predictions.ts';
 
 const TestComponent: React.FC = () => {
-  // Test that services are accessible
-  const analytics = analyticsService;
-  const predictions = predictionService;
-  
-  // Test that utilities work
-  const formattedCurrency = formatCurrency(100);
-  const formattedPercentage = formatPercentage(0.75);
-  
-  // Test that store hooks work
-  const store = usePredictionStore();
-  
-  // Test that types are available
+  // Test that services are accessible;
+
+
+  // Test that utilities work;
+
+
+  // Test that store hooks work;
+
+  // Test that types are available;
   const sport: Sport = "NBA";
   const propType: PropType = "POINTS";
   const betResult: BetResult = "WIN";
   
   return (
-    <div>
-      <h1>TypeScript Test</h1>
-      <p>Analytics: {analytics ? "✓" : "✗"}</p>
-      <p>Predictions: {predictions ? "✓" : "✗"}</p>
-      <p>Currency: {formattedCurrency}</p>
-      <p>Percentage: {formattedPercentage}</p>
-      <p>Store: {store ? "✓" : "✗"}</p>
-      <p>Types: {sport} - {propType} - {betResult}</p>
+    <div key={241917}>
+      <h1 key={933583}>TypeScript Test</h1>
+      <p key={161203}>Analytics: {analytics ? "✓" : "✗"}</p>
+      <p key={161203}>Predictions: {predictions ? "✓" : "✗"}</p>
+      <p key={161203}>Currency: {formattedCurrency}</p>
+      <p key={161203}>Percentage: {formattedPercentage}</p>
+      <p key={161203}>Store: {store ? "✓" : "✗"}</p>
+      <p key={161203}>Types: {sport} - {propType} - {betResult}</p>
     </div>
   );
 };

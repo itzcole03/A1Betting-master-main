@@ -1,1 +1,1 @@
-export { default as ThemeToggle, CyberThemeToggle } from "./ThemeToggle";
+export { default as ThemeToggle, CyberThemeToggle } from './ThemeToggle.ts';

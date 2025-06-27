@@ -1,4 +1,4 @@
-import { EventBus } from '@core/EventBus';
+import { EventBus } from '@core/EventBus.ts';
 export interface PrizePicksAPIConfig {
     apiKey?: string;
     baseUrl?: string;

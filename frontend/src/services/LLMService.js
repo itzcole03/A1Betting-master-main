@@ -1,6 +1,6 @@
 /**
- * LLM Service for connecting PropOllama to backend LLM engine
- * Handles chat, analysis, and sports expert agent communications
+ * LLM Service for connecting PropOllama to backend LLM engine;
+ * Handles chat, analysis, and sports expert agent communications;
  */
 
 class LLMService {
@@ -10,17 +10,17 @@ class LLMService {
     }
 
     /**
-     * Generate text response from LLM
+     * Generate text response from LLM;
      */
     async generateText(prompt, options = {}) {
         const {
             maxTokens = 500,
             temperature = 0.7,
-            stream = false
+            stream = false;
         } = options;
 
         try {
-            const endpoint = stream ? "/stream_generate" : "/generate";
+
             const response = await fetch(`${this.llmBaseURL}${endpoint}`, {
                 method: "POST",
                 headers: {
@@ -38,30 +38,29 @@ class LLMService {
             }
 
             if (stream) {
-                return response; // Return response for streaming
+                return response; // Return response for streaming;
             }
 
-            const data = await response.json();
             return data.text;
         } catch (error) {
-            console.error("LLM generation error:", error);
+            // console statement removed
             throw error;
         }
     }
 
     /**
-     * Generate sports analysis for PropOllama
+     * Generate sports analysis for PropOllama;
      */
     async generateSportsAnalysis(userQuery) {
         const sportsPrompt = `You are PropOllama, an elite AI sports betting analyst.
 User query: "${userQuery}"
 
 Please provide a comprehensive sports betting analysis with:
-1. Top player prop recommendations with confidence percentages
-2. Detailed reasoning for each pick
-3. Statistical backing and trends
-4. Risk assessment
-5. Suggested follow-up questions
+1. Top player prop recommendations with confidence percentages;
+2. Detailed reasoning for each pick;
+3. Statistical backing and trends;
+4. Risk assessment;
+5. Suggested follow-up questions;
 
 Format your response with clear sections and use emojis for visual appeal.`;
 
@@ -72,7 +71,7 @@ Format your response with clear sections and use emojis for visual appeal.`;
     }
 
     /**
-     * Explain a specific bet recommendation
+     * Explain a specific bet recommendation;
      */
     async explainBet(features) {
         try {
@@ -88,16 +87,15 @@ Format your response with clear sections and use emojis for visual appeal.`;
                 throw new Error(`Bet explanation failed: ${response.status}`);
             }
 
-            const data = await response.json();
             return data.explanation;
         } catch (error) {
-            console.error("Bet explanation error:", error);
+            // console statement removed
             throw error;
         }
     }
 
     /**
-     * Generate betting scenarios
+     * Generate betting scenarios;
      */
     async generateScenarios(query) {
         try {
@@ -113,16 +111,15 @@ Format your response with clear sections and use emojis for visual appeal.`;
                 throw new Error(`Scenario generation failed: ${response.status}`);
             }
 
-            const data = await response.json();
             return data.scenarios;
         } catch (error) {
-            console.error("Scenario generation error:", error);
+            // console statement removed
             throw error;
         }
     }
 
     /**
-     * Analyze sentiment of sports news/data
+     * Analyze sentiment of sports news/data;
      */
     async analyzeSentiment(text) {
         try {
@@ -138,20 +135,18 @@ Format your response with clear sections and use emojis for visual appeal.`;
                 throw new Error(`Sentiment analysis failed: ${response.status}`);
             }
 
-            const data = await response.json();
             return data;
         } catch (error) {
-            console.error("Sentiment analysis error:", error);
+            // console statement removed
             throw error;
         }
     }
 
     /**
-     * Get available LLM models
+     * Get available LLM models;
      */
     async getAvailableModels() {
         try {
-            const response = await fetch(`${this.llmBaseURL}/models`);
 
             if (!response.ok) {
                 throw new Error(`Models fetch failed: ${response.status}`);
@@ -159,36 +154,33 @@ Format your response with clear sections and use emojis for visual appeal.`;
 
             return await response.json();
         } catch (error) {
-            console.error("Models fetch error:", error);
+            // console statement removed
             return [];
         }
     }
 
     /**
-     * Get default model
+     * Get default model;
      */
     async getDefaultModel() {
         try {
-            const response = await fetch(`${this.llmBaseURL}/models/default`);
 
             if (!response.ok) {
                 throw new Error(`Default model fetch failed: ${response.status}`);
             }
 
-            const data = await response.json();
             return data.model;
         } catch (error) {
-            console.error("Default model fetch error:", error);
+            // console statement removed
             return null;
         }
     }
 
     /**
-     * Check LLM health status
+     * Check LLM health status;
      */
     async checkHealth() {
         try {
-            const response = await fetch(`${this.llmBaseURL}/health`);
 
             if (!response.ok) {
                 throw new Error(`Health check failed: ${response.status}`);
@@ -196,13 +188,13 @@ Format your response with clear sections and use emojis for visual appeal.`;
 
             return await response.json();
         } catch (error) {
-            console.error("LLM health check error:", error);
+            // console statement removed
             return { status: "unhealthy", error: error.message };
         }
     }
 
     /**
-     * Generate general analysis for different contexts
+     * Generate general analysis for different contexts;
      */
     async generateAnalysis(prompt, context = {}) {
         const analysisPrompt = `You are an expert sports betting analyst. ${prompt}
@@ -222,33 +214,33 @@ Provide a clear, concise analysis focusing on the key factors and their implicat
                 timestamp: new Date(),
             };
         } catch (error) {
-            console.error("Analysis generation error:", error);
+            // console statement removed
             throw error;
         }
     }
 
     /**
-     * Process PropOllama chat messages with context-aware responses
+     * Process PropOllama chat messages with context-aware responses;
      */
     async processChatMessage(message, context = {}) {
         const { previousMessages = [], gameData = {}, userPreferences = {} } = context;
 
-        // Build context-aware prompt
-        let prompt = `You are PropOllama, an elite AI sports betting assistant. You have access to real-time sports data and betting analytics.
+        // Build context-aware prompt;
+        const prompt = `You are PropOllama, an elite AI sports betting assistant. You have access to real-time sports data and betting analytics.
 
 Current Context:
 - User preferences: ${JSON.stringify(userPreferences)}
-- Available game data: ${Object.keys(gameData).length} games
-- Chat history length: ${previousMessages.length} messages
+- Available game data: ${Object.keys(gameData).length} games;
+- Chat history length: ${previousMessages.length} messages;
 
 User message: "${message}"
 
 Please provide a helpful, accurate response with:
-- Specific betting recommendations when appropriate
-- Confidence levels for predictions
-- Data-backed analysis
-- Actionable insights
-- Follow-up suggestions
+- Specific betting recommendations when appropriate;
+- Confidence levels for predictions;
+- Data-backed analysis;
+- Actionable insights;
+- Follow-up suggestions;
 
 Keep responses conversational but professional.`;
 
@@ -258,8 +250,7 @@ Keep responses conversational but professional.`;
                 temperature: 0.7,
             });
 
-            // Parse response for suggestions
-            const suggestions = this.extractSuggestions(response);
+            // Parse response for suggestions;
 
             return {
                 content: response,
@@ -267,7 +258,7 @@ Keep responses conversational but professional.`;
                 timestamp: new Date(),
             };
         } catch (error) {
-            console.error("Chat processing error:", error);
+            // console statement removed
             return {
                 content: "I'm having trouble connecting to my analysis engine right now. Please try again in a moment.",
                 suggestions: ["Check system status", "Retry request", "Contact support"],
@@ -277,11 +268,10 @@ Keep responses conversational but professional.`;
     }
 
     /**
-     * Extract suggestion prompts from LLM response
+     * Extract suggestion prompts from LLM response;
      */
     extractSuggestions(response) {
-        // Look for common patterns that suggest follow-up questions
-        const suggestions = [];
+        // Look for common patterns that suggest follow-up questions;
 
         if (response.includes("analyz")) {
             suggestions.push("Analyze more games");
@@ -299,28 +289,24 @@ Keep responses conversational but professional.`;
             suggestions.push("Track line movements");
         }
 
-        return suggestions.slice(0, 4); // Limit to 4 suggestions
+        return suggestions.slice(0, 4); // Limit to 4 suggestions;
     }
 
     /**
-     * Stream text generation for real-time responses
+     * Stream text generation for real-time responses;
      */
     async *streamText(prompt, options = {}) {
-        const response = await this.generateText(prompt, { ...options, stream: true });
 
         if (!response.body) {
             throw new Error("Streaming not supported");
         }
 
-        const reader = response.body.getReader();
-        const decoder = new TextDecoder();
 
         try {
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
 
-                const chunk = decoder.decode(value);
                 yield chunk;
             }
         } finally {
@@ -329,6 +315,6 @@ Keep responses conversational but professional.`;
     }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const llmService = new LLMService();
 export default llmService;

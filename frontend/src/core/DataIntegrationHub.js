@@ -15,15 +15,15 @@ export class DataIntegrationHub {
         this.correlationCache = new Map();
         this.dataCache = new Map();
         this.integratedData = this.initializeIntegratedData();
-        this.syncInterval = 30000; // 30 seconds default
+        this.syncInterval = 30000; // 30 seconds default;
         this.isRealTimeEnabled = false;
-        // Register all adapters
-        const espnAdapter = new ESPNAdapter();
+        // Register all adapters;
+
         this.registerDataSource(espnAdapter);
-        const socialSentimentAdapter = new SocialSentimentAdapter();
+
         this.registerDataSource(socialSentimentAdapter);
-        // Configure and register TheOddsAdapter
-        const theOddsApiKey = import.meta.env.VITE_THEODDS_API_KEY;
+        // Configure and register TheOddsAdapter;
+
         if (theOddsApiKey) {
             const theOddsAdapter = new TheOddsAdapter({
                 apiKey: theOddsApiKey,
@@ -33,10 +33,10 @@ export class DataIntegrationHub {
             this.registerDataSource(theOddsAdapter);
         }
         else {
-            console.warn('TheOddsAdapter not initialized: VITE_THEODDS_API_KEY is missing.');
+            // console statement removed
         }
-        // Configure and register SportsRadarAdapter
-        const sportsRadarApiKey = import.meta.env.VITE_SPORTRADAR_API_KEY;
+        // Configure and register SportsRadarAdapter;
+
         if (sportsRadarApiKey) {
             const sportsRadarAdapter = new SportsRadarAdapter({
                 apiKey: sportsRadarApiKey,
@@ -46,10 +46,10 @@ export class DataIntegrationHub {
             this.registerDataSource(sportsRadarAdapter);
         }
         else {
-            console.warn('SportsRadarAdapter not initialized: VITE_SPORTRADAR_API_KEY is missing.');
+            // console statement removed
         }
-        // Configure and register DailyFantasyAdapter
-        const dailyFantasyApiKey = import.meta.env.VITE_DAILYFANTASY_API_KEY;
+        // Configure and register DailyFantasyAdapter;
+
         if (dailyFantasyApiKey) {
             const dailyFantasyAdapter = new DailyFantasyAdapter({
                 apiKey: dailyFantasyApiKey,
@@ -59,20 +59,20 @@ export class DataIntegrationHub {
             this.registerDataSource(dailyFantasyAdapter);
         }
         else {
-            console.warn('DailyFantasyAdapter not initialized: VITE_DAILYFANTASY_API_KEY is missing.');
+            // console statement removed
         }
-        // Configure and register PrizePicksAdapter
-        const prizePicksApiKey = import.meta.env.VITE_PRIZEPICKS_API_KEY;
+        // Configure and register PrizePicksAdapter;
+
         if (prizePicksApiKey) {
             const prizePicksAdapter = new PrizePicksAdapter({
                 apiKey: prizePicksApiKey,
                 baseUrl: import.meta.env.VITE_PRIZEPICKS_API_URL || 'https://api.prizepicks.com',
-                cacheTimeout: 300000, // 5 minutes cache
+                cacheTimeout: 300000, // 5 minutes cache;
             });
             this.registerDataSource(prizePicksAdapter);
         }
         else {
-            console.warn('PrizePicksAdapter not initialized: VITE_PRIZEPICKS_API_KEY is missing.');
+            // console statement removed
         }
         this.setupEventListeners();
     }
@@ -112,12 +112,12 @@ export class DataIntegrationHub {
         this.syncInterval = milliseconds;
     }
     async synchronizeAll() {
-        const traceId = this.performanceMonitor.startTrace('data-sync');
+
         try {
             const syncPromises = Array.from(this.dataSources.entries()).map(async ([id, source]) => {
-                const startTime = Date.now();
+
                 try {
-                    const data = await source.fetch();
+
                     this.updateSourceMetrics(id, {
                         latency: [Date.now() - startTime],
                         errorRate: 0,
@@ -140,7 +140,7 @@ export class DataIntegrationHub {
                     };
                 }
             });
-            const results = await Promise.all(syncPromises);
+
             await this.integrateData(results);
             if (this.isRealTimeEnabled) {
                 setTimeout(() => this.synchronizeAll(), this.syncInterval);
@@ -157,7 +157,7 @@ export class DataIntegrationHub {
             this.metrics.set(sourceId, metrics);
         }
         else {
-            const existingMetrics = this.metrics.get(sourceId);
+
             this.metrics.set(sourceId, {
                 ...existingMetrics,
                 latency: [...existingMetrics.latency, ...metrics.latency].slice(-10),
@@ -169,23 +169,23 @@ export class DataIntegrationHub {
         this.emitMetricsUpdate(sourceId);
     }
     async integrateData(results) {
-        const newData = this.initializeIntegratedData();
-        const correlations = [];
+
+
         for (const result of results) {
             if (result.error)
                 continue;
-            // Cache the raw data with metadata
-            const confidence = this.calculateDataConfidence(result.data);
+            // Cache the raw data with metadata;
+
             this.dataCache.set(result.id, {
                 data: result.data,
                 timestamp: Date.now(),
-                correlations: [], // Placeholder, to be updated later if correlation analysis is run on this source
+                correlations: [], // Placeholder, to be updated later if correlation analysis is run on this source;
                 confidence,
             });
             this.updateIntegratedDataSource(newData, result);
         }
-        // After all individual sources are processed and cached, perform cross-source analysis
-        // For example, calculate correlations if multiple projection sources exist
+        // After all individual sources are processed and cached, perform cross-source analysis;
+        // For example, calculate correlations if multiple projection sources exist;
         // this.analyzeAndCacheCorrelations(results.filter(r => !r.error).map(r => ({id: r.id, data: r.data })));
         this.integratedData = newData;
         this.eventBus.emit('data:integrated', {
@@ -194,7 +194,7 @@ export class DataIntegrationHub {
         });
     }
     calculateDataConfidence(data) {
-        // Basic confidence: presence of data and key fields
+        // Basic confidence: presence of data and key fields;
         if (!data)
             return 0;
         if (data.projections && Array.isArray(data.projections) && data.projections.length > 0)
@@ -202,9 +202,9 @@ export class DataIntegrationHub {
         if (data.sentiment && Object.keys(data.sentiment).length > 0)
             return 0.7;
         // Add more sophisticated checks based on data quality, recency, etc.
-        return 0.5; // Default baseline confidence
+        return 0.5; // Default baseline confidence;
     }
-    // Placeholder for a more sophisticated correlation analysis if needed
+    // Placeholder for a more sophisticated correlation analysis if needed;
     // private analyzeAndCacheCorrelations(activeDataSources: Array<{id: string, data: any }>): void {
     //   // ... implementation ...
     // }
@@ -219,7 +219,7 @@ export class DataIntegrationHub {
                 this.integratePrizePicksProjections(newData, result.data);
                 break;
             case 'social-sentiment': // Assuming SocialSentimentAdapter.id is 'social-sentiment'
-                this.integrateSentiment(newData, result.data); // Assuming it's an array
+                this.integrateSentiment(newData, result.data); // Assuming it's an array;
                 break;
             case 'sports-radar': // Assuming SportsRadarAdapter.id is 'sports-radar'
                 this.integrateSportsData(newData, result.data);
@@ -227,16 +227,16 @@ export class DataIntegrationHub {
             case 'the-odds': // Assuming TheOddsAdapter.id is 'the-odds'
                 this.integrateOdds(newData, result.data);
                 break;
-            // Add cases for other adapters like ESPN if they have specific integration logic
+            // Add cases for other adapters like ESPN if they have specific integration logic;
             default:
-                console.warn(`DataIntegrationHub: No specific integration logic for source ID: ${result.id}`);
-                // Attempt a generic integration or log/ignore
+                // console statement removed
+                // Attempt a generic integration or log/ignore;
                 break;
         }
     }
     integrateProjections(newData, dailyFantasyData) {
         dailyFantasyData.projections.forEach(projection => {
-            const playerId = projection.name.toLowerCase().replace(/\s+/g, '-');
+
             if (!newData.projections[playerId]) {
                 newData.projections[playerId] = {
                     stats: {},
@@ -244,7 +244,7 @@ export class DataIntegrationHub {
                     lastUpdated: Date.now(),
                 };
             }
-            // Map DailyFantasy stats to our internal format
+            // Map DailyFantasy stats to our internal format;
             newData.projections[playerId].stats = {
                 points: projection.pts,
                 rebounds: projection.reb,
@@ -266,8 +266,8 @@ export class DataIntegrationHub {
                     lastUpdated: Date.now(),
                 };
             }
-            // Map PrizePicks stat types to our internal format
-            const statType = proj.statType.toLowerCase();
+            // Map PrizePicks stat types to our internal format;
+
             newData.projections[proj.playerId].stats[statType] = proj.line;
             newData.projections[proj.playerId].lastUpdated = Date.now();
         });
@@ -293,7 +293,7 @@ export class DataIntegrationHub {
     }
     integrateOdds(newData, oddsData) {
         oddsData.events.forEach(event => {
-            const markets = {};
+
             event.bookmakers.forEach(bookmaker => {
                 bookmaker.markets.forEach(market => {
                     market.outcomes.forEach(outcome => {
@@ -317,7 +317,7 @@ export class DataIntegrationHub {
         return statusImpact;
     }
     calculateOddsMovement(eventId, currentMarkets) {
-        const previousData = this.integratedData.odds[eventId];
+
         if (!previousData) {
             return { direction: 'stable', magnitude: 0 };
         }
@@ -325,8 +325,8 @@ export class DataIntegrationHub {
             Object.values(currentMarkets).length;
         const avgPreviousPrice = Object.values(previousData.markets).reduce((a, b) => a + b, 0) /
             Object.values(previousData.markets).length;
-        const difference = avgCurrentPrice - avgPreviousPrice;
-        const magnitude = Math.abs(difference);
+
+
         if (magnitude < 0.05)
             return { direction: 'stable', magnitude };
         return {
@@ -335,23 +335,23 @@ export class DataIntegrationHub {
         };
     }
     analyzeTrendsWithCorrelations(newData, correlations) {
-        // Analyze projection trends
+        // Analyze projection trends;
         this.analyzeProjectionTrends(newData);
-        // Analyze sentiment trends
+        // Analyze sentiment trends;
         this.analyzeSentimentTrends(newData);
-        // Analyze market trends
+        // Analyze market trends;
         this.analyzeMarketTrends(newData);
-        // Analyze correlation trends
+        // Analyze correlation trends;
         this.analyzeCorrelationTrends(newData, correlations);
     }
     analyzeProjectionTrends(newData) {
         Object.entries(newData.projections).forEach(([playerId, projection]) => {
             Object.entries(projection.stats).forEach(([metric, value]) => {
-                const trendKey = `${playerId}_${metric}`;
-                const previousValue = this.integratedData.projections[playerId]?.stats[metric];
+
+
                 if (previousValue !== undefined) {
-                    const change = value - previousValue;
-                    const significance = this.calculateTrendSignificance(change, previousValue);
+
+
                     newData.trends[trendKey] = {
                         value,
                         change,
@@ -363,12 +363,12 @@ export class DataIntegrationHub {
     }
     analyzeSentimentTrends(newData) {
         Object.entries(newData.sentiment).forEach(([playerId, sentiment]) => {
-            const trendKey = `${playerId}_sentiment`;
-            const previousSentiment = this.integratedData.sentiment[playerId];
+
+
             if (previousSentiment) {
-                const change = sentiment.sentiment.score - previousSentiment.sentiment.score;
-                const volumeChange = sentiment.sentiment.volume - previousSentiment.sentiment.volume;
-                const significance = this.calculateTrendSignificance(change, previousSentiment.sentiment.score);
+
+
+
                 newData.trends[trendKey] = {
                     value: sentiment.sentiment.score,
                     change,
@@ -380,11 +380,11 @@ export class DataIntegrationHub {
     analyzeMarketTrends(newData) {
         Object.entries(newData.odds).forEach(([eventId, odds]) => {
             Object.entries(odds.markets).forEach(([market, price]) => {
-                const trendKey = `${eventId}_${market}`;
-                const previousPrice = this.integratedData.odds[eventId]?.markets[market];
+
+
                 if (previousPrice !== undefined) {
-                    const change = price - previousPrice;
-                    const significance = this.calculateTrendSignificance(change, previousPrice);
+
+
                     newData.trends[trendKey] = {
                         value: price,
                         change,
@@ -395,24 +395,24 @@ export class DataIntegrationHub {
         });
     }
     analyzeCorrelationTrends(newData, correlations) {
-        // Analyze correlations between different data points
+        // Analyze correlations between different data points;
         Object.entries(newData.projections).forEach(([playerId, projection]) => {
-            const sentiment = newData.sentiment[playerId];
-            const injuries = newData.injuries[playerId];
+
+
             if (sentiment && projection) {
-                const correlationKey = `${playerId}_sentiment_correlation`;
-                const sentimentImpact = sentiment.sentiment.score * (sentiment.sentiment.volume / 1000);
+
+
                 const performanceCorrelation = this.calculateCorrelation(Object.values(projection.stats), [
                     sentimentImpact,
                 ]);
                 newData.trends[correlationKey] = {
                     value: performanceCorrelation,
-                    change: 0, // We don't track change for correlations
+                    change: 0, // We don't track change for correlations;
                     significance: Math.abs(performanceCorrelation),
                 };
             }
             if (injuries) {
-                const injuryKey = `${playerId}_injury_impact`;
+
                 newData.trends[injuryKey] = {
                     value: injuries.impact,
                     change: 0,
@@ -420,13 +420,13 @@ export class DataIntegrationHub {
                 };
             }
         });
-        // Analyze correlations with other data sources
+        // Analyze correlations with other data sources;
         for (const correlation of correlations) {
-            const sourceA = correlation.sourceA;
-            const sourceB = correlation.sourceB;
-            const correlationValue = correlation.correlation;
-            const significance = correlation.significance;
-            const trendKey = `${sourceA}_${sourceB}_correlation`;
+
+
+
+
+
             newData.trends[trendKey] = {
                 value: correlationValue,
                 change: 0,
@@ -437,16 +437,16 @@ export class DataIntegrationHub {
     calculateTrendSignificance(change, baseValue) {
         if (baseValue === 0)
             return change === 0 ? 0 : 1;
-        const percentageChange = Math.abs(change / baseValue);
+
         return Math.min(1, percentageChange);
     }
     calculateCorrelation(series1, series2) {
         if (series1.length !== series2.length || series1.length === 0)
             return 0;
-        const mean1 = series1.reduce((a, b) => a + b, 0) / series1.length;
-        const mean2 = series2.reduce((a, b) => a + b, 0) / series2.length;
-        const variance1 = series1.reduce((a, b) => a + Math.pow(b - mean1, 2), 0);
-        const variance2 = series2.reduce((a, b) => a + Math.pow(b - mean2, 2), 0);
+
+
+
+
         if (variance1 === 0 || variance2 === 0)
             return 0;
         const covariance = series1.reduce((a, b, i) => {
@@ -456,7 +456,7 @@ export class DataIntegrationHub {
     }
     setupEventListeners() {
         this.eventBus.on('dataSource:error', async (event) => {
-            const sourceId = event.sourceId;
+
             const metrics = this.metrics.get(sourceId) || {
                 latency: [],
                 errorRate: 0,
@@ -479,7 +479,7 @@ export class DataIntegrationHub {
         });
         this.eventBus.on('config:updated', event => {
             if (event.section === 'dataSources' || event.section === 'all') {
-                // Handle config updates
+                // Handle config updates;
             }
         });
     }
@@ -490,7 +490,7 @@ export class DataIntegrationHub {
         return new Map(this.metrics);
     }
     calculateMetrics(sourceId, data) {
-        const startTime = Date.now();
+
         return {
             latency: [Date.now() - startTime],
             errorRate: 0,

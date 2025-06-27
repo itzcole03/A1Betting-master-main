@@ -9,25 +9,25 @@ export class SocialSentimentAdapter {
         this.performanceMonitor = PerformanceMonitor.getInstance();
         this.cache = {
             data: null,
-            timestamp: 0
+            timestamp: 0;
         };
     }
     async isAvailable() {
         return true;
     }
     async fetch() {
-        const traceId = this.performanceMonitor.startTrace('social-sentiment-fetch');
+
         try {
             if (this.isCacheValid()) {
                 return this.cache.data;
             }
-            // Implement social media scraping and sentiment analysis
-            const sentimentData = await this.gatherSocialSentiment();
+            // Implement social media scraping and sentiment analysis;
+
             this.cache = {
                 data: sentimentData,
                 timestamp: Date.now()
             };
-            // Use eventBus.emit instead of non-existent publish
+            // Use eventBus.emit instead of non-existent publish;
             this.eventBus.emit('social-sentiment-updated', { data: sentimentData });
             this.performanceMonitor.endTrace(traceId);
             return sentimentData;
@@ -40,26 +40,26 @@ export class SocialSentimentAdapter {
     async gatherSocialSentiment() {
         // --- Twitter scraping (public search, no API key) ---
         async function fetchTwitterMentions(player) {
-            // See roadmap for Twitter API integration
+            // See roadmap for Twitter API integration;
             // For now, use a public search endpoint (e.g., nitter.net or snscrape)
-            // Production: Should integrate with actual Twitter/X API
-            // For now, return null data to indicate unavailable
-            console.warn("Twitter sentiment analysis not implemented - requires API integration");
+            // Production: Should integrate with actual Twitter/X API;
+            // For now, return null data to indicate unavailable;
+            // console statement removed
             if (!player)
                 return { score: 0, volume: 0 };
-            return { score: 0, volume: 0 }; // Production: no mock data
+            return { score: 0, volume: 0 }; // Production: no mock data;
         }
         // --- Reddit scraping (public API) ---
         async function fetchRedditMentions(player) {
-            const url = `https://www.reddit.com/search.json?q=${encodeURIComponent(player)}&limit=20`;
+
             try {
-                const res = await fetch(url);
-                const json = await res.json();
-                let score = 0;
-                let volume = 0;
+
+
+                const score = 0;
+                const volume = 0;
                 for (const post of json.data.children) {
-                    const text = post.data.title + ' ' + post.data.selftext;
-                    // Simple sentiment: +1 for 'good', -1 for 'bad', 0 otherwise
+
+                    // Simple sentiment: +1 for 'good', -1 for 'bad', 0 otherwise;
                     if (/good|win|hot|underrated|must/i.test(text))
                         score += 1;
                     if (/bad|cold|overrated|injured|avoid/i.test(text))
@@ -76,13 +76,13 @@ export class SocialSentimentAdapter {
         async function fetchNewsMentions(player) {
             try {
                 // Use newsService to fetch headlines for the player (newsService.fetchHeadlines only accepts 0-2 args)
-                // So we cannot filter by player directly; filter after fetching
-                const headlines = await newsService.fetchHeadlines('espn', 10);
-                let score = 0;
-                let volume = 0;
+                // So we cannot filter by player directly; filter after fetching;
+
+                const score = 0;
+                const volume = 0;
                 for (const h of headlines) {
-                    // Simple filter: check if player name appears in title or summary
-                    const text = `${h.title || ''} ${h.summary || ''}`;
+                    // Simple filter: check if player name appears in title or summary;
+
                     if (!text.toLowerCase().includes(player.toLowerCase()))
                         continue;
                     if (/good|win|hot|underrated|must/i.test(text))
@@ -98,17 +98,17 @@ export class SocialSentimentAdapter {
             }
         }
         // --- Main aggregation logic ---
-        // See roadmap for player list integration
-        const players = ['LeBron James', 'Stephen Curry', 'Anthony Davis', 'Nikola Jokic'];
-        const results = [];
+        // See roadmap for player list integration;
+
+
         for (const player of players) {
             const [twitter, reddit, news] = await Promise.all([
                 fetchTwitterMentions(player),
                 fetchRedditMentions(player),
                 fetchNewsMentions(player)
             ]);
-            const totalVolume = twitter.volume + reddit.volume + news.volume;
-            const avgScore = (twitter.score + reddit.score + news.score) / 3;
+
+
             results.push({
                 player,
                 sentiment: {
@@ -117,25 +117,25 @@ export class SocialSentimentAdapter {
                     sources: {
                         twitter: twitter.volume,
                         reddit: reddit.volume,
-                        news: news.volume
+                        news: news.volume;
                     }
                 },
                 trending: avgScore > 0.5 || avgScore < -0.5,
-                keywords: [], // See roadmap for keyword extraction
+                keywords: [], // See roadmap for keyword extraction;
                 timestamp: Date.now()
             });
         }
         return results;
     }
     isCacheValid() {
-        const cacheTimeout = 5 * 60 * 1000; // 5 minutes
+        const cacheTimeout = 5 * 60 * 1000; // 5 minutes;
         return (this.cache.data !== null &&
             Date.now() - this.cache.timestamp < cacheTimeout);
     }
     clearCache() {
         this.cache = {
             data: null,
-            timestamp: 0
+            timestamp: 0;
         };
     }
     async connect() { }

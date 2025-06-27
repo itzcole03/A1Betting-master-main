@@ -1,6 +1,6 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { ModelPerformanceMetrics } from '../types';
+import React from 'react.ts';
+import { useEffect, useState } from 'react.ts';
+import { ModelPerformanceMetrics } from '@/types.ts';
 
 export interface MetricsData {
     performance: ModelPerformanceMetrics;
@@ -10,7 +10,7 @@ export interface MetricsData {
 }
 
 export const useMetrics = (userId?: string): MetricsData => {
-    const [performance, setPerformance] = useState<ModelPerformanceMetrics>({
+    const [performance, setPerformance] = useState<ModelPerformanceMetrics key={938411}>({
         accuracy: 0,
         precision: 0,
         recall: 0,
@@ -28,21 +28,21 @@ export const useMetrics = (userId?: string): MetricsData => {
         winRate: 0,
         avgOdds: 0,
         totalBets: 0,
-        roi: 0
+        roi: 0;
     });
 
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | null key={121216}>(null);
 
     const refresh = async () => {
         setIsLoading(true);
         setError(null);
 
         try {
-            // Simulate API call
+            // Simulate API call;
             await new Promise(resolve => setTimeout(resolve, 1000));
 
-            // Mock data - replace with actual API call
+            // Mock data - replace with actual API call;
             const mockMetrics: ModelPerformanceMetrics = {
                 accuracy: 0.82,
                 precision: 0.78,
@@ -61,7 +61,7 @@ export const useMetrics = (userId?: string): MetricsData => {
                 winRate: 0.64,
                 avgOdds: 2.2,
                 totalBets: 156,
-                roi: 0.25
+                roi: 0.25;
             };
 
             setPerformance(mockMetrics);
@@ -80,7 +80,7 @@ export const useMetrics = (userId?: string): MetricsData => {
         performance,
         isLoading,
         error,
-        refresh
+        refresh;
     };
 };
 

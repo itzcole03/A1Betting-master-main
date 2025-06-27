@@ -2,9 +2,9 @@
 // BetTrackingService: Tracks user bets, ROI, streaks, and analytics.
 // Integrates with backend persistent storage and analytics APIs.
 
-// Use dynamic import for axios to ensure ESM compatibility
-import { wrapWithRateLimit } from '../rateLimit/wrapWithRateLimit.js';
-import { API_CONFIG } from '../../config/apiConfig.js';
+// Use dynamic import for axios to ensure ESM compatibility;
+import { wrapWithRateLimit } from '@/rateLimit/wrapWithRateLimit.js';
+import { API_CONFIG } from '@/config/apiConfig.js';
 
 
 
@@ -36,10 +36,10 @@ export interface BetAnalytics {
 
 export class BetTrackingService {
   /**
-   * Fetch all bets for a user from backend persistent storage
+   * Fetch all bets for a user from backend persistent storage;
    */
   getUserBets = wrapWithRateLimit(async (userId: string): Promise<BetRecord[]> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/users/${userId}/bets`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }
@@ -49,10 +49,10 @@ export class BetTrackingService {
   });
 
   /**
-   * Fetch analytics (ROI, streak, win/loss, etc.) for a user
+   * Fetch analytics (ROI, streak, win/loss, etc.) for a user;
    */
   getUserBetAnalytics = wrapWithRateLimit(async (userId: string): Promise<BetAnalytics> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/users/${userId}/bet-analytics`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }

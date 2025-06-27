@@ -5,20 +5,20 @@ import { Box, Card, CardContent, Typography, TextField, Button, Link, Alert, Cir
 import { useStore } from '@/store';
 import { authService } from '@/services/auth';
 export default function LoginPage() {
-    const navigate = useNavigate();
-    const location = useLocation();
+
+
     const { setUser } = useStore();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    const from = location.state?.from?.pathname || '/';
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError('');
         setLoading(true);
         try {
-            const response = await authService.login(email, password);
+
             setUser(response.user);
             navigate(from, { replace: true });
         }

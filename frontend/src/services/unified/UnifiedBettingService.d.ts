@@ -1,10 +1,10 @@
-import { BettingContext, MarketContext } from '@/types';
-import { BaseService } from './BaseService';
-import { UnifiedServiceRegistry } from './UnifiedServiceRegistry';
-import { Bet, BettingConfig, BettingStats, BettingOpportunity, BettingValidation } from '../../types/betting';
-import { Event, Market, Selection, Odds } from '../../types/sports';
-import { ModelOutput } from '../../types/prediction';
-import { BettingPreview, BettingPreviewRequest, BettingValidationRequest, BettingPlaceRequest } from '../../types/betting';
+import { BettingContext, MarketContext } from '@/types.ts';
+import { BaseService } from './BaseService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
+import { Bet, BettingConfig, BettingStats, BettingOpportunity, BettingValidation } from '@/types/betting.ts';
+import { Event, Market, Selection, Odds } from '@/types/sports.ts';
+import { ModelOutput } from '@/types/prediction.ts';
+import { BettingPreview, BettingPreviewRequest, BettingValidationRequest, BettingPlaceRequest } from '@/types/betting.ts';
 export interface Bet {
     id: string;
     event: string;

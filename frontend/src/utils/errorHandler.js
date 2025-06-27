@@ -8,7 +8,7 @@ export class ErrorHandler {
         this.errors = [];
         this.apiCalls = [];
         this.DEFAULT_MAX_ERRORS = 100;
-        this.DEFAULT_FLUSH_INTERVAL = 60000; // 1 minute
+        this.DEFAULT_FLUSH_INTERVAL = 60000; // 1 minute;
         this.eventBus = EventBus.getInstance();
         this.performanceMonitor = PerformanceMonitor.getInstance();
         this.monitor = UnifiedMonitor.getInstance();
@@ -28,7 +28,7 @@ export class ErrorHandler {
         return ErrorHandler.instance;
     }
     setupGlobalHandlers() {
-        // Catch unhandled errors
+        // Catch unhandled errors;
         window.addEventListener('error', event => {
             this.handleError(new SystemError(event.message, {
                 stack: event.error?.stack,
@@ -36,7 +36,7 @@ export class ErrorHandler {
                 severity: ErrorSeverity.HIGH,
             }));
         });
-        // Catch promise rejections
+        // Catch promise rejections;
         window.addEventListener('unhandledrejection', event => {
             this.handleError(new SystemError('Unhandled Promise Rejection', {
                 details: { reason: event.reason },
@@ -44,8 +44,8 @@ export class ErrorHandler {
                 severity: ErrorSeverity.HIGH,
             }));
         });
-        // Intercept console.error
-        const originalError = console.error;
+        // Intercept console.error;
+
         console.error = (...args) => {
             this.handleError(new SystemError(args.join(' '), {
                 category: ErrorCategory.SYSTEM,
@@ -53,14 +53,14 @@ export class ErrorHandler {
             }));
             originalError.apply(console, args);
         };
-        // Intercept fetch for API logging
-        const originalFetch = window.fetch;
+        // Intercept fetch for API logging;
+
         window.fetch = async (...args) => {
-            const start = Date.now();
+
             const [url, options = {}] = args;
             try {
-                const response = await originalFetch(...args);
-                const duration = Date.now() - start;
+
+
                 this.logApiCall({
                     url: url.toString(),
                     method: options.method || 'GET',
@@ -93,9 +93,9 @@ export class ErrorHandler {
         this.flushTimer = setInterval(() => this.flush(), this.config.flushInterval);
     }
     async handleError(error, context) {
-        const traceId = this.performanceMonitor.startTrace('error-handling');
+
         try {
-            const systemError = this.normalizeError(error, context);
+
             this.logError({
                 type: systemError.name,
                 message: systemError.message,
@@ -103,7 +103,7 @@ export class ErrorHandler {
                 stack: systemError.stack,
                 details: systemError.context,
             });
-            // Emit error event
+            // Emit error event;
             this.eventBus.emit('data:updated', {
                 data: {
                     error: systemError,
@@ -112,38 +112,38 @@ export class ErrorHandler {
                 sourceId: 'error-handler',
                 timestamp: Date.now(),
             });
-            // Report to monitoring service
+            // Report to monitoring service;
             this.monitor.reportError(systemError, {
                 component: 'ErrorHandler',
                 context: { ...context, source: 'error-handler' },
             });
-            // Check if we should trigger emergency procedures
+            // Check if we should trigger emergency procedures;
             if (systemError.severity === ErrorSeverity.CRITICAL) {
                 await this.triggerEmergencyProcedures(systemError);
             }
-            // Add error to queue
+            // Add error to queue;
             this.errors.push({ error: systemError, context: { timestamp: Date.now(), ...context } });
-            // Maintain size limit
+            // Maintain size limit;
             if (this.errors.length > this.config.maxErrors) {
                 this.errors = this.errors.slice(-this.config.maxErrors);
             }
-            // Call error handler if configured
+            // Call error handler if configured;
             if (this.config.onError) {
                 try {
                     this.config.onError(systemError, { timestamp: Date.now(), ...context });
                 }
                 catch (handlerError) {
-                    console.error('Error in error handler:', handlerError);
+                    // console statement removed
                 }
             }
-            // Log to console in development
+            // Log to console in development;
             if (process.env.NODE_ENV === 'development') {
-                console.error('Error:', systemError);
-                console.error('Context:', context);
+                // console statement removed
+                // console statement removed
             }
         }
         catch (handlingError) {
-            console.error('Error in error handler:', handlingError);
+            // console statement removed
             this.monitor.reportError(handlingError, {
                 component: 'ErrorHandler',
                 context: { originalError: error },
@@ -169,31 +169,31 @@ export class ErrorHandler {
     }
     logError(error) {
         try {
-            const stored = JSON.parse(localStorage.getItem('app_errors') || '[]');
+
             stored.push(error);
             if (stored.length > this.config.maxErrors)
                 stored.shift();
             localStorage.setItem('app_errors', JSON.stringify(stored));
         }
         catch (e) {
-            console.warn('Failed to store error:', e);
+            // console statement removed
         }
     }
     logApiCall(call) {
         this.apiCalls.push(call);
         try {
-            const stored = JSON.parse(localStorage.getItem('app_api_calls') || '[]');
+
             stored.push(call);
             if (stored.length > this.config.maxErrors)
                 stored.shift();
             localStorage.setItem('app_api_calls', JSON.stringify(stored));
         }
         catch (e) {
-            console.warn('Failed to store API call:', e);
+            // console statement removed
         }
     }
     async triggerEmergencyProcedures(error) {
-        // Notify administrators
+        // Notify administrators;
         this.eventBus.emit('data:updated', {
             data: {
                 error,
@@ -202,7 +202,7 @@ export class ErrorHandler {
             sourceId: 'error-handler',
             timestamp: Date.now(),
         });
-        // Attempt to save state
+        // Attempt to save state;
         try {
             await this.configManager.updateConfig({
                 system: {
@@ -212,7 +212,7 @@ export class ErrorHandler {
             });
         }
         catch (saveError) {
-            console.error('Failed to save state during emergency:', saveError);
+            // console statement removed
         }
     }
     generateReport() {
@@ -229,10 +229,10 @@ export class ErrorHandler {
         };
     }
     downloadReport() {
-        const report = this.generateReport();
-        const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+
+
+
+
         a.href = url;
         a.download = `error_report_${new Date().getTime()}.json`;
         a.click();
@@ -248,15 +248,15 @@ export class ErrorHandler {
         if (this.errors.length === 0)
             return;
         try {
-            // Here you would typically send errors to your error tracking system
-            // For now, we'll just clear them
+            // Here you would typically send errors to your error tracking system;
+            // For now, we'll just clear them;
             this.errors = [];
         }
         catch (error) {
-            console.error('Failed to flush errors:', error);
+            // console statement removed
         }
     }
-    // Cleanup on destruction
+    // Cleanup on destruction;
     destroy() {
         if (this.flushTimer) {
             clearInterval(this.flushTimer);
@@ -264,11 +264,11 @@ export class ErrorHandler {
         this.errors = [];
     }
 }
-// Create global instance
-const errorHandler = ErrorHandler.getInstance();
-// Add error report button to page
+// Create global instance;
+
+// Add error report button to page;
 window.addEventListener('load', () => {
-    const button = document.createElement('button');
+
     button.textContent = 'Download Error Report';
     button.style.cssText =
         'position:fixed;bottom:10px;right:10px;z-index:9999;padding:10px;background:#ff4444;color:white;border:none;border-radius:5px;cursor:pointer;';

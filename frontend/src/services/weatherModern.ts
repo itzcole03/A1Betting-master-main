@@ -1,12 +1,12 @@
-import { UnifiedConfig } from '../unified/UnifiedConfig.js';
-import { EventBus } from '../unified/EventBus.js';
-import type { WeatherData } from '../types/core.js';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.js';
+import { EventBus } from '@/unified/EventBus.js';
+import type { WeatherData } from '@/types/core.js';
 
 export class WeatherService {
   private readonly eventBus: EventBus;
   private readonly config: UnifiedConfig;
   private cache = new Map<string, { data: WeatherData; timestamp: number }>();
-  private readonly CACHE_TTL = 600000; // 10 minutes
+  private readonly CACHE_TTL = 600000; // 10 minutes;
 
   constructor() {
     this.config = UnifiedConfig.getInstance();
@@ -14,22 +14,21 @@ export class WeatherService {
   }
 
   /**
-   * Get current weather for a location
+   * Get current weather for a location;
    */
   async getCurrentWeather(location: string): Promise<WeatherData> {
     if (!this.config.get('enableWeather')) {
-      const error = new Error('Weather feature is disabled by config.');
+
       this.eventBus.emit('error:occurred', error);
       throw error;
     }
 
-    const cacheKey = `weather:${location}`;
-    const cached = this.getCachedData(cacheKey);
+
     if (cached) return cached;
 
     try {
-      // Replace with real API call using config values if available
-      // Example: fetch from OpenWeatherMap or similar
+      // Replace with real API call using config values if available;
+      // Example: fetch from OpenWeatherMap or similar;
       throw new Error('Weather API integration not implemented.');
     } catch (error) {
       this.eventBus.emit('error:occurred', error as Error);
@@ -38,12 +37,12 @@ export class WeatherService {
   }
 
   /**
-   * Get historical weather data
+   * Get historical weather data;
    */
    
   async getHistoricalWeather(_location: string, _date: string): Promise<WeatherData> {
     if (!this.config.get('enableWeather')) {
-      const error = new Error('Weather feature is disabled by config.');
+
       this.eventBus.emit('error:occurred', error);
       throw error;
     }
@@ -56,12 +55,12 @@ export class WeatherService {
   }
 
   /**
-   * Get weather alerts for a location
+   * Get weather alerts for a location;
    */
    
   async getWeatherAlerts(_location: string): Promise<WeatherData['alerts']> {
     if (!this.config.get('enableWeather')) {
-      const error = new Error('Weather feature is disabled by config.');
+
       this.eventBus.emit('error:occurred', error);
       throw error;
     }
@@ -74,10 +73,10 @@ export class WeatherService {
   }
 
   /**
-   * Get cached data if still valid
+   * Get cached data if still valid;
    */
   private getCachedData(key: string): WeatherData | null {
-    const cached = this.cache.get(key);
+
     if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
       return cached.data;
     }
@@ -85,5 +84,5 @@ export class WeatherService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const weatherService = new WeatherService();

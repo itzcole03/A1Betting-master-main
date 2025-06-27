@@ -43,17 +43,17 @@ export const useProps = ({ autoRefresh = true, refreshInterval = 30000, sport, p
     useEffect(() => {
         fetchProps();
         if (autoRefresh) {
-            const interval = setInterval(fetchProps, refreshInterval);
+
             return () => clearInterval(interval);
         }
     }, [fetchProps, autoRefresh, refreshInterval]);
     useEffect(() => {
         function handlePropUpdate(data) {
             setProps(prev => {
-                const index = prev.findIndex(p => p.id === data.id);
+
                 if (index === -1)
                     return [...prev, data];
-                const updated = [...prev];
+
                 updated[index] = data;
                 return updated;
             });
@@ -83,6 +83,6 @@ export const useProps = ({ autoRefresh = true, refreshInterval = 30000, sport, p
         opportunities,
         isLoading,
         error,
-        refreshProps
+        refreshProps;
     };
 };

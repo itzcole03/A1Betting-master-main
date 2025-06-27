@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react.ts';
 import {
   Box,
   Card,
@@ -14,14 +14,14 @@ import {
   Alert,
   Snackbar,
   CircularProgress,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
+} from '@mui/material.ts';
+import { styled } from '@mui/material/styles.ts';
 import {
   Edit as EditIcon,
   Save as SaveIcon,
   Cancel as CancelIcon,
   PhotoCamera as PhotoCameraIcon,
-} from '@mui/icons-material';
+} from '@mui/icons-material.ts';
 
 const ProfileCard = styled(Card)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.9)',
@@ -91,9 +91,9 @@ const DEFAULT_PROFILE: UserProfile = {
 };
 
 export const UserProfile: React.FC = () => {
-  const [profile, setProfile] = useState<UserProfile>(DEFAULT_PROFILE);
+  const [profile, setProfile] = useState<UserProfile key={623450}>(DEFAULT_PROFILE);
   const [isEditing, setIsEditing] = useState(false);
-  const [editedProfile, setEditedProfile] = useState<UserProfile>(DEFAULT_PROFILE);
+  const [editedProfile, setEditedProfile] = useState<UserProfile key={623450}>(DEFAULT_PROFILE);
   const [isLoading, setIsLoading] = useState(false);
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -113,8 +113,8 @@ export const UserProfile: React.FC = () => {
   const handleSave = async () => {
     setIsLoading(true);
     try {
-      // TODO: Implement profile update API call
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated API call
+      // TODO: Implement profile update API call;
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated API call;
       setProfile(editedProfile);
       setIsEditing(false);
       setSnackbar({
@@ -140,10 +140,10 @@ export const UserProfile: React.FC = () => {
     }));
   };
 
-  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement key={553350}>) => {
+
     if (file) {
-      const reader = new FileReader();
+
       reader.onloadend = () => {
         setEditedProfile(prev => ({
           ...prev,
@@ -155,18 +155,18 @@ export const UserProfile: React.FC = () => {
   };
 
   return (
-    <ProfileCard>
-      <CardContent>
-        <Grid container spacing={3}>
+    <ProfileCard key={444672}>
+      <CardContent key={452065}>
+        <Grid container spacing={3} key={459826}>
           {/* Profile Header */}
-          <Grid item xs={12} md={4} sx={{ textAlign: 'center' }}>
-            <Box position="relative" display="inline-block">
-              <StyledAvatar
+          <Grid item xs={12} md={4} sx={{ textAlign: 'center' }} key={644273}>
+            <Box position="relative" display="inline-block" key={260291}>
+              <StyledAvatar;
                 src={isEditing ? editedProfile.avatar : profile.avatar}
                 alt={profile.fullName}
-              />
+              / key={966074}>
               {isEditing && (
-                <IconButton
+                <IconButton;
                   component="label"
                   sx={{
                     position: 'absolute',
@@ -178,154 +178,154 @@ export const UserProfile: React.FC = () => {
                       backgroundColor: 'primary.dark',
                     },
                   }}
-                >
-                  <input
+                 key={122450}>
+                  <input;
                     type="file"
-                    hidden
+                    hidden;
                     accept="image/*"
                     onChange={handleAvatarChange}
-                  />
-                  <PhotoCameraIcon />
+                  / key={847224}>
+                  <PhotoCameraIcon / key={675476}>
                 </IconButton>
               )}
             </Box>
-            <Typography variant="h5" sx={{ mt: 2 }}>
+            <Typography variant="h5" sx={{ mt: 2 }} key={501535}>
               {isEditing ? (
-                <TextField
-                  fullWidth
+                <TextField;
+                  fullWidth;
                   value={editedProfile.fullName}
-                  onChange={(e) => handleInputChange('fullName', e.target.value)}
+                  onChange={(e) = key={73499}> handleInputChange('fullName', e.target.value)}
                 />
               ) : (
-                profile.fullName
+                profile.fullName;
               )}
             </Typography>
-            <Typography variant="subtitle1" color="textSecondary">
+            <Typography variant="subtitle1" color="textSecondary" key={682869}>
               @{isEditing ? (
-                <TextField
-                  fullWidth
+                <TextField;
+                  fullWidth;
                   value={editedProfile.username}
-                  onChange={(e) => handleInputChange('username', e.target.value)}
+                  onChange={(e) = key={443736}> handleInputChange('username', e.target.value)}
                 />
               ) : (
-                profile.username
+                profile.username;
               )}
             </Typography>
           </Grid>
 
           {/* Profile Details */}
-          <Grid item xs={12} md={8}>
-            <Box display="flex" justifyContent="flex-end" mb={2}>
+          <Grid item xs={12} md={8} key={230289}>
+            <Box display="flex" justifyContent="flex-end" mb={2} key={586241}>
               {isEditing ? (
                 <>
-                  <Button
-                    startIcon={<CancelIcon />}
+                  <Button;
+                    startIcon={<CancelIcon / key={181624}>}
                     onClick={handleCancel}
                     sx={{ mr: 1 }}
                   >
-                    Cancel
+                    Cancel;
                   </Button>
-                  <Button
-                    startIcon={<SaveIcon />}
+                  <Button;
+                    startIcon={<SaveIcon / key={668181}>}
                     variant="contained"
                     onClick={handleSave}
                     disabled={isLoading}
                   >
-                    {isLoading ? <CircularProgress size={24} /> : 'Save'}
+                    {isLoading ? <CircularProgress size={24} / key={548540}> : 'Save'}
                   </Button>
                 </>
               ) : (
-                <Button
-                  startIcon={<EditIcon />}
+                <Button;
+                  startIcon={<EditIcon / key={772257}>}
                   onClick={handleEdit}
                 >
-                  Edit Profile
+                  Edit Profile;
                 </Button>
               )}
             </Box>
 
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Bio
+            <Grid container spacing={2} key={272161}>
+              <Grid item xs={12} key={689816}>
+                <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                  Bio;
                 </Typography>
                 {isEditing ? (
-                  <TextField
-                    fullWidth
-                    multiline
+                  <TextField;
+                    fullWidth;
+                    multiline;
                     rows={3}
                     value={editedProfile.bio}
-                    onChange={(e) => handleInputChange('bio', e.target.value)}
+                    onChange={(e) = key={567422}> handleInputChange('bio', e.target.value)}
                   />
                 ) : (
-                  <Typography>{profile.bio}</Typography>
+                  <Typography key={705030}>{profile.bio}</Typography>
                 )}
               </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Email
+              <Grid item xs={12} sm={6} key={983460}>
+                <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                  Email;
                 </Typography>
                 {isEditing ? (
-                  <TextField
-                    fullWidth
+                  <TextField;
+                    fullWidth;
                     type="email"
                     value={editedProfile.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    onChange={(e) = key={838249}> handleInputChange('email', e.target.value)}
                   />
                 ) : (
-                  <Typography>{profile.email}</Typography>
+                  <Typography key={705030}>{profile.email}</Typography>
                 )}
               </Grid>
 
-              <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Location
+              <Grid item xs={12} sm={6} key={983460}>
+                <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                  Location;
                 </Typography>
                 {isEditing ? (
-                  <TextField
-                    fullWidth
+                  <TextField;
+                    fullWidth;
                     value={editedProfile.location}
-                    onChange={(e) => handleInputChange('location', e.target.value)}
+                    onChange={(e) = key={707318}> handleInputChange('location', e.target.value)}
                   />
                 ) : (
-                  <Typography>{profile.location}</Typography>
+                  <Typography key={705030}>{profile.location}</Typography>
                 )}
               </Grid>
 
-              <Grid item xs={12}>
-                <Divider sx={{ my: 2 }} />
+              <Grid item xs={12} key={689816}>
+                <Divider sx={{ my: 2 }} / key={369348}>
               </Grid>
 
               {/* Stats Section */}
-              <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom>
-                  Betting Statistics
+              <Grid item xs={12} key={689816}>
+                <Typography variant="h6" gutterBottom key={90207}>
+                  Betting Statistics;
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={6} sm={4}>
-                    <Typography variant="subtitle2" color="textSecondary">
-                      Total Bets
+                <Grid container spacing={2} key={272161}>
+                  <Grid item xs={6} sm={4} key={237888}>
+                    <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                      Total Bets;
                     </Typography>
-                    <Typography variant="h6">
+                    <Typography variant="h6" key={93421}>
                       {profile.stats.totalBets}
                     </Typography>
                   </Grid>
-                  <Grid item xs={6} sm={4}>
-                    <Typography variant="subtitle2" color="textSecondary">
-                      Win Rate
+                  <Grid item xs={6} sm={4} key={237888}>
+                    <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                      Win Rate;
                     </Typography>
-                    <Typography variant="h6">
+                    <Typography variant="h6" key={93421}>
                       {profile.stats.winRate}%
                     </Typography>
                   </Grid>
-                  <Grid item xs={6} sm={4}>
-                    <Typography variant="subtitle2" color="textSecondary">
-                      Net Profit
+                  <Grid item xs={6} sm={4} key={237888}>
+                    <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                      Net Profit;
                     </Typography>
-                    <Typography
+                    <Typography;
                       variant="h6"
-                      color={profile.stats.netProfit >= 0 ? 'success.main' : 'error.main'}
+                      color={profile.stats.netProfit  key={363854}>= 0 ? 'success.main' : 'error.main'}
                     >
                       ${profile.stats.netProfit.toLocaleString()}
                     </Typography>
@@ -333,49 +333,49 @@ export const UserProfile: React.FC = () => {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12}>
-                <Divider sx={{ my: 2 }} />
+              <Grid item xs={12} key={689816}>
+                <Divider sx={{ my: 2 }} / key={369348}>
               </Grid>
 
               {/* Preferences Section */}
-              <Grid item xs={12}>
-                <Typography variant="h6" gutterBottom>
-                  Preferences
+              <Grid item xs={12} key={689816}>
+                <Typography variant="h6" gutterBottom key={90207}>
+                  Preferences;
                 </Typography>
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <Typography variant="subtitle2" color="textSecondary">
-                      Favorite Sports
+                <Grid container spacing={2} key={272161}>
+                  <Grid item xs={12} key={689816}>
+                    <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                      Favorite Sports;
                     </Typography>
-                    <Box sx={{ mt: 1 }}>
+                    <Box sx={{ mt: 1 }} key={75957}>
                       {profile.preferences.favoriteSports.map((sport) => (
-                        <Chip
+                        <Chip;
                           key={sport}
                           label={sport}
                           sx={{ mr: 1, mb: 1 }}
-                        />
+                        / key={382498}>
                       ))}
                     </Box>
                   </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="subtitle2" color="textSecondary">
-                      Favorite Teams
+                  <Grid item xs={12} key={689816}>
+                    <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                      Favorite Teams;
                     </Typography>
-                    <Box sx={{ mt: 1 }}>
+                    <Box sx={{ mt: 1 }} key={75957}>
                       {profile.preferences.favoriteTeams.map((team) => (
-                        <Chip
+                        <Chip;
                           key={team}
                           label={team}
                           sx={{ mr: 1, mb: 1 }}
-                        />
+                        / key={836207}>
                       ))}
                     </Box>
                   </Grid>
-                  <Grid item xs={12}>
-                    <Typography variant="subtitle2" color="textSecondary">
-                      Betting Style
+                  <Grid item xs={12} key={689816}>
+                    <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                      Betting Style;
                     </Typography>
-                    <Typography>{profile.preferences.bettingStyle}</Typography>
+                    <Typography key={705030}>{profile.preferences.bettingStyle}</Typography>
                   </Grid>
                 </Grid>
               </Grid>
@@ -383,13 +383,13 @@ export const UserProfile: React.FC = () => {
           </Grid>
         </Grid>
 
-        <Snackbar
+        <Snackbar;
           open={snackbar.open}
           autoHideDuration={6000}
-          onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+          onClose={() = key={837606}> setSnackbar(prev => ({ ...prev, open: false }))}
         >
-          <Alert
-            onClose={() => setSnackbar(prev => ({ ...prev, open: false }))}
+          <Alert;
+            onClose={() = key={59214}> setSnackbar(prev => ({ ...prev, open: false }))}
             severity={snackbar.severity}
             sx={{ width: '100%' }}
           >

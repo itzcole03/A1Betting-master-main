@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface RegisterFormProps {
     onSuccess?: () => void;
     onToggleForm?: () => void;

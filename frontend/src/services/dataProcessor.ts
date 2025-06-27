@@ -41,14 +41,14 @@ export class DataProcessor {
       if (!source.connected || !source.data) return;
 
       try {
-        const sourceGames = this.extractGamesFromSource(source, sourceId);
+
         games.push(...sourceGames);
       } catch (error) {
-        console.warn(`Error processing games from ${sourceId}:`, error);
+        // console statement removed
       }
     });
 
-    // Remove duplicates and merge data
+    // Remove duplicates and merge data;
     return this.deduplicateGames(games);
   }
 
@@ -59,14 +59,14 @@ export class DataProcessor {
       if (!source.connected || !source.data) return;
 
       try {
-        const sourcePlayers = this.extractPlayersFromSource(source, sourceId);
+
         players.push(...sourcePlayers);
       } catch (error) {
-        console.warn(`Error processing players from ${sourceId}:`, error);
+        // console statement removed
       }
     });
 
-    // Remove duplicates and merge data
+    // Remove duplicates and merge data;
     return this.deduplicatePlayers(players);
   }
 
@@ -141,10 +141,9 @@ export class DataProcessor {
     // Extract players from projections (PrizePicks style)
     if (source.data?.projections) {
       source.data.projections.forEach((projection: any) => {
-        const playerId = `${sourceId}_player_${projection.player_name?.replace(/\s+/g, "_").toLowerCase()}`;
 
-        // Check if player already exists
-        let existingPlayer = players.find((p) => p.id === playerId);
+        // Check if player already exists;
+        const existingPlayer = players.find((p) => p.id === playerId);
 
         if (!existingPlayer) {
           existingPlayer = {
@@ -161,7 +160,7 @@ export class DataProcessor {
           players.push(existingPlayer);
         }
 
-        // Add projection as prop
+        // Add projection as prop;
         if (projection.stat_type && projection.line) {
           existingPlayer.props = existingPlayer.props || [];
           existingPlayer.props.push({
@@ -171,8 +170,8 @@ export class DataProcessor {
             expectedValue: projection.expected_value,
           });
 
-          // Update stats with projection line as season average
-          const statKey = projection.stat_type
+          // Update stats with projection line as season average;
+          const statKey = projection.stat_type;
             .toLowerCase()
             .replace(/[^a-z]/g, "");
           if (!existingPlayer.stats[statKey]) {
@@ -188,11 +187,11 @@ export class DataProcessor {
   private generateRecentForm(): number[] {
     // Generate realistic recent form (last 10 games)
     const form: number[] = [];
-    let currentForm = 0.5 + (Math.random() - 0.5) * 0.4; // Start around 0.3-0.7
+    const currentForm = 0.5 + (Math.random() - 0.5) * 0.4; // Start around 0.3-0.7;
 
-    for (let i = 0; i < 10; i++) {
-      // Add some momentum/trend
-      const change = (Math.random() - 0.5) * 0.3;
+    for (const i = 0; i < 10; i++) {
+      // Add some momentum/trend;
+
       currentForm = Math.max(0.1, Math.min(0.9, currentForm + change));
       form.push(currentForm);
     }
@@ -201,16 +200,14 @@ export class DataProcessor {
   }
 
   private deduplicateGames(games: ProcessedGame[]): ProcessedGame[] {
-    const gameMap = new Map<string, ProcessedGame>();
 
     games.forEach((game) => {
-      const key = `${game.sport}_${game.homeTeam}_${game.awayTeam}_${game.gameTime}`;
 
       if (!gameMap.has(key)) {
         gameMap.set(key, game);
       } else {
-        // Merge data from multiple sources
-        const existing = gameMap.get(key)!;
+        // Merge data from multiple sources;
+
         gameMap.set(key, this.mergeGameData(existing, game));
       }
     });
@@ -219,16 +216,14 @@ export class DataProcessor {
   }
 
   private deduplicatePlayers(players: ProcessedPlayer[]): ProcessedPlayer[] {
-    const playerMap = new Map<string, ProcessedPlayer>();
 
     players.forEach((player) => {
-      const key = `${player.sport}_${player.name}_${player.team}`;
 
       if (!playerMap.has(key)) {
         playerMap.set(key, player);
       } else {
-        // Merge data from multiple sources
-        const existing = playerMap.get(key)!;
+        // Merge data from multiple sources;
+
         playerMap.set(key, this.mergePlayerData(existing, player));
       }
     });
@@ -242,7 +237,7 @@ export class DataProcessor {
   ): ProcessedGame {
     return {
       ...existing,
-      // Keep most recent data
+      // Keep most recent data;
       status:
         incoming.status !== "Scheduled" ? incoming.status : existing.status,
       weather: incoming.weather || existing.weather,
@@ -265,36 +260,36 @@ export class DataProcessor {
           Object.entries(incoming.stats).filter(([_, value]) => value !== 0),
         ),
       },
-      // Use more recent form if available
+      // Use more recent form if available;
       recentForm:
-        incoming.recentForm.length > existing.recentForm.length
-          ? incoming.recentForm
+        incoming.recentForm.length > existing.recentForm.length;
+          ? incoming.recentForm;
           : existing.recentForm,
-      // Merge props
+      // Merge props;
       props: [...(existing.props || []), ...(incoming.props || [])],
-      // Update injury status if more specific
+      // Update injury status if more specific;
       injuryStatus:
         incoming.injuryStatus !== "Healthy"
-          ? incoming.injuryStatus
+          ? incoming.injuryStatus;
           : existing.injuryStatus,
       source: `${existing.source}, ${incoming.source}`,
     };
   }
 
   calculateDataQuality(data: ProcessedData): number {
-    let qualityScore = 0;
-    let factors = 0;
+    const qualityScore = 0;
+    const factors = 0;
 
-    // Game data quality
+    // Game data quality;
     if (data.games.length > 0) {
-      const gamesWithOdds = data.games.filter((g) => g.odds).length;
-      const gamesWithVenue = data.games.filter((g) => g.venue).length;
+
+
       qualityScore += (gamesWithOdds / data.games.length) * 0.3;
       qualityScore += (gamesWithVenue / data.games.length) * 0.1;
       factors += 0.4;
     }
 
-    // Player data quality
+    // Player data quality;
     if (data.players.length > 0) {
       const playersWithStats = data.players.filter(
         (p) => Object.keys(p.stats).length > 0,
@@ -316,15 +311,14 @@ export class DataProcessor {
   }
 
   calculateReliability(data: ProcessedData): number {
-    const dataAge = Date.now() - data.lastProcessed.getTime();
-    const ageHours = dataAge / (1000 * 60 * 60);
 
-    // Data reliability decreases with age
-    let reliabilityScore = Math.max(0, 1 - ageHours / 24); // Full reliability for < 1 hour, 0 after 24 hours
 
-    // Bonus for multiple sources
+    // Data reliability decreases with age;
+    const reliabilityScore = Math.max(0, 1 - ageHours / 24); // Full reliability for < 1 hour, 0 after 24 hours;
+
+    // Bonus for multiple sources;
     const avgSourcesPerItem =
-      data.games.length + data.players.length > 0
+      data.games.length + data.players.length > 0;
         ? (data.games.filter((g) => g.source.includes(",")).length +
             data.players.filter((p) => p.source.includes(",")).length) /
           (data.games.length + data.players.length)
@@ -336,9 +330,8 @@ export class DataProcessor {
   }
 
   processData(dataSources: Map<string, any>): ProcessedData {
-    const games = this.processGames(dataSources);
-    const players = this.processPlayers(dataSources);
-    const lastProcessed = new Date();
+
+
 
     const data: ProcessedData = {
       games,

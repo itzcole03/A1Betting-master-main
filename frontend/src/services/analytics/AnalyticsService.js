@@ -7,7 +7,7 @@ export class AnalyticsService {
         this.riskHistory = [];
         this.updateInterval = null;
         this.config = {
-            updateInterval: 60000, // 1 minute
+            updateInterval: 60000, // 1 minute;
             maxHistoryLength: 1000,
             performanceThresholds: {
                 minAccuracy: 0.55,
@@ -22,12 +22,12 @@ export class AnalyticsService {
             this.validatePerformanceMetrics(metrics);
             this.performanceHistory.push(metrics);
             this.trimHistory();
-            // Track metrics
+            // Track metrics;
             this.metrics.gauge('analytics.accuracy', metrics.accuracy);
             this.metrics.gauge('analytics.profit_loss', metrics.profitLoss);
             this.metrics.gauge('analytics.precision', metrics.precision);
             this.metrics.gauge('analytics.recall', metrics.recall);
-            // Check thresholds
+            // Check thresholds;
             this.checkPerformanceThresholds(metrics);
         }
         catch (error) {
@@ -39,14 +39,14 @@ export class AnalyticsService {
             this.validateRiskMetrics(metrics);
             this.riskHistory.push(metrics);
             this.trimHistory();
-            // Track metrics
+            // Track metrics;
             this.metrics.gauge('analytics.sharpe_ratio', metrics.sharpeRatio);
             this.metrics.gauge('analytics.max_drawdown', metrics.maxDrawdown);
             this.metrics.gauge('analytics.win_rate', metrics.winRate);
             this.metrics.gauge('analytics.profit_factor', metrics.profitFactor);
             this.metrics.gauge('analytics.kelly_criterion', metrics.kellyCriterion);
             this.metrics.gauge('analytics.expected_value', metrics.expectedValue);
-            // Check thresholds
+            // Check thresholds;
             this.checkRiskThresholds(metrics);
         }
         catch (error) {
@@ -63,7 +63,7 @@ export class AnalyticsService {
         if (this.performanceHistory.length === 0) {
             return 0;
         }
-        const recentMetrics = this.performanceHistory.slice(-10);
+
         const weights = {
             accuracy: 0.4,
             profitLoss: 0.3,
@@ -83,7 +83,7 @@ export class AnalyticsService {
         if (this.riskHistory.length === 0) {
             return 0;
         }
-        const recentMetrics = this.riskHistory.slice(-10);
+
         const weights = {
             sharpeRatio: 0.3,
             maxDrawdown: 0.2,
@@ -161,8 +161,8 @@ export class AnalyticsService {
     }
     startPeriodicUpdates() {
         this.updateInterval = setInterval(() => {
-            const performanceScore = this.calculatePerformanceScore();
-            const riskScore = this.calculateRiskScore();
+
+
             this.metrics.gauge('analytics.performance_score', performanceScore);
             this.metrics.gauge('analytics.risk_score', riskScore);
         }, this.config.updateInterval);

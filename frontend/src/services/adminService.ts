@@ -1,4 +1,4 @@
-import { api } from './api';
+import { api } from './api.ts';
 
 export interface User {
   id: string;
@@ -25,7 +25,7 @@ export interface SystemMetrics {
 
 class AdminService {
   async getUsers(): Promise<User[]> {
-    const response = await api.get('/admin/users');
+
     return response.data;
   }
 
@@ -34,12 +34,12 @@ class AdminService {
   }
 
   async getLogs(): Promise<SystemLog[]> {
-    const response = await api.get('/admin/logs');
+
     return response.data;
   }
 
   async getMetrics(): Promise<SystemMetrics> {
-    const response = await api.get('/admin/metrics');
+
     return response.data;
   }
 

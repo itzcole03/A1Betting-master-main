@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 import {
   Box,
   IconButton,
@@ -9,13 +9,13 @@ import {
   ListItemIcon,
   ListItemText,
   useTheme,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import SportsIcon from '@mui/icons-material/Sports';
-import AnalyticsIcon from '@mui/icons-material/Analytics';
-import SettingsIcon from '@mui/icons-material/Settings';
-import { useNavigate, useLocation } from 'react-router-dom';
+} from '@mui/material.ts';
+import CloseIcon from '@mui/icons-material/Close.ts';
+import DashboardIcon from '@mui/icons-material/Dashboard.ts';
+import SportsIcon from '@mui/icons-material/Sports.ts';
+import AnalyticsIcon from '@mui/icons-material/Analytics.ts';
+import SettingsIcon from '@mui/icons-material/Settings.ts';
+import { useNavigate, useLocation } from 'react-router-dom.ts';
 
 interface SmartSidebarProps {
   isOpen: boolean;
@@ -23,10 +23,10 @@ interface SmartSidebarProps {
 }
 
 const menuItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
-  { text: 'Sports', icon: <SportsIcon />, path: '/sports' },
-  { text: 'Analytics', icon: <AnalyticsIcon />, path: '/analytics' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+  { text: 'Dashboard', icon: <DashboardIcon / key={467532}>, path: '/' },
+  { text: 'Sports', icon: <SportsIcon / key={98948}>, path: '/sports' },
+  { text: 'Analytics', icon: <AnalyticsIcon / key={368242}>, path: '/analytics' },
+  { text: 'Settings', icon: <SettingsIcon / key={722197}>, path: '/settings' },
 ];
 
 const sidebarVariants = {
@@ -63,16 +63,15 @@ const backdropVariants = {
   },
 };
 
-export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const theme = useTheme();
+export const SmartSidebar: React.FC<SmartSidebarProps key={271562}> = ({ isOpen, onClose }) => {
+
+
 
   return (
-    <AnimatePresence>
+    <AnimatePresence key={359944}>
       {isOpen && (
         <>
-          <motion.div
+          <motion.div;
             animate="open"
             exit="closed"
             initial="closed"
@@ -87,8 +86,8 @@ export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) =
             }}
             variants={backdropVariants}
             onClick={onClose}
-          />
-          <motion.div
+          / key={775115}>
+          <motion.div;
             animate="open"
             exit="closed"
             initial="closed"
@@ -101,8 +100,8 @@ export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) =
               zIndex: 1200,
             }}
             variants={sidebarVariants}
-          >
-            <Box
+           key={394687}>
+            <Box;
               sx={{
                 height: '100%',
                 bgcolor: 'background.paper',
@@ -110,8 +109,8 @@ export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) =
                 display: 'flex',
                 flexDirection: 'column',
               }}
-            >
-              <Box
+             key={395270}>
+              <Box;
                 sx={{
                   p: 2,
                   display: 'flex',
@@ -120,11 +119,11 @@ export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) =
                   borderBottom: 1,
                   borderColor: 'divider',
                 }}
-              >
-                <Typography color="primary" component="h2" variant="h6">
-                  Navigation
+               key={630327}>
+                <Typography color="primary" component="h2" variant="h6" key={285947}>
+                  Navigation;
                 </Typography>
-                <IconButton
+                <IconButton;
                   size="small"
                   sx={{
                     '&:hover': {
@@ -132,18 +131,18 @@ export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) =
                     },
                   }}
                   onClick={onClose}
-                >
-                  <CloseIcon />
+                 key={303997}>
+                  <CloseIcon / key={90527}>
                 </IconButton>
               </Box>
 
-              <List sx={{ flex: 1, pt: 1 }}>
+              <List sx={{ flex: 1, pt: 1 }} key={953305}>
                 {menuItems.map(item => {
-                  const isActive = location.pathname === item.path;
+
                   return (
-                    <ListItem
+                    <ListItem;
                       key={item.text}
-                      button
+                      button;
                       sx={{
                         my: 0.5,
                         mx: 1,
@@ -153,21 +152,21 @@ export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) =
                           bgcolor: 'action.hover',
                         },
                       }}
-                      onClick={() => {
+                      onClick={() = key={497613}> {
                         navigate(item.path);
                         onClose();
                       }}
                     >
-                      <ListItemIcon sx={{ color: isActive ? 'primary.main' : 'inherit' }}>
+                      <ListItemIcon sx={{ color: isActive ? 'primary.main' : 'inherit' }} key={741519}>
                         {item.icon}
                       </ListItemIcon>
-                      <ListItemText
+                      <ListItemText;
                         primary={item.text}
                         primaryTypographyProps={{
                           color: isActive ? 'primary' : 'inherit',
                           fontWeight: isActive ? 600 : 400,
                         }}
-                      />
+                      / key={2046}>
                     </ListItem>
                   );
                 })}

@@ -1,4 +1,4 @@
-import { DataSource } from '../unified/DataSource';
+import { DataSource } from '@/unified/DataSource.ts';
 interface TheOddsConfig {
     apiKey: string;
     baseUrl: string;

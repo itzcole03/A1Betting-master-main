@@ -1,4 +1,4 @@
-import { apiService } from '../services/api/ApiService.js';
+import { apiService } from '@/services/api/ApiService.js';
 
 interface TwitterConfig {
   apiKey: string;
@@ -82,10 +82,9 @@ class TwitterService {
         ...(options || {}),
       };
 
-      const response = await apiService.get<Tweet[]>('/twitter/search', params);
       return response;
     } catch (error) {
-      console.error('Failed to search tweets:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -105,10 +104,9 @@ class TwitterService {
         ...(options || {}),
       };
 
-      const response = await apiService.get<SentimentAnalysis>('/twitter/sentiment', params);
       return response;
     } catch (error) {
-      console.error('Failed to get sentiment analysis:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -120,7 +118,7 @@ class TwitterService {
       });
       return response;
     } catch (error) {
-      console.error('Failed to get trending topics:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -138,7 +136,7 @@ class TwitterService {
       });
       return response;
     } catch (error) {
-      console.error('Failed to get user sentiment:', error);
+      // console statement removed
       throw error;
     }
   }

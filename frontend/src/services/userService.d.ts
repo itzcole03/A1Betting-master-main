@@ -1,4 +1,4 @@
-import { User, UserPreferences } from '../types/api.js';
+import { User, UserPreferences } from '@/types/api.js';
 /**
  * UserService: Handles user profile, preferences, and entry retrieval.
  * All methods are type-safe, production-ready, and rate-limited.

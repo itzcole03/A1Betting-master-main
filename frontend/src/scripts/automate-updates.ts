@@ -1,14 +1,14 @@
-import { execSync } from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
+import { execSync } from 'child_process.ts';
+import * as fs from 'fs.ts';
+import * as path from 'path.ts';
 
-// Configuration
+// Configuration;
 const CONFIG = {
   framerMotionVersion: '12.16.0',
   targetDirectories: ['src/components', 'src/hooks', 'src/services', 'src/types'],
 };
 
-// Utility functions
+// Utility functions;
 const readFile = (filePath: string): string => {
   return fs.readFileSync(filePath, 'utf-8');
 };
@@ -20,15 +20,15 @@ const writeFile = (filePath: string, content: string): void => {
 const updateFramerMotionImports = (content: string): string => {
   return content.replace(
     /import\s*{\s*motion\s*}\s*from\s*['"]framer-motion['"]/g,
-    `import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion'`
+    `import { motion, AnimatePresence } from 'framer-motion/dist/framer-motion.ts'`
   );
 };
 
 const createSmartSidebar = (): void => {
-  const sidebarContent = `import React from 'react';
-import { motion } from 'framer-motion/dist/framer-motion';
-import { useStore } from '@/stores/useStore';
-import { Button, Card } from './ui/UnifiedUI';
+
+import { motion } from 'framer-motion/dist/framer-motion.ts';
+import { useStore } from '@/stores/useStore.ts';
+import { Button, Card } from './ui/UnifiedUI.ts';
 
 interface SmartSidebarProps {
   isOpen: boolean;
@@ -39,7 +39,7 @@ export const SmartSidebar: React.FC<SmartSidebarProps> = ({ isOpen, onClose }) =
   const { state } = useStore();
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ x: -300 }}
       animate={{ x: isOpen ? 0 : -300 }}
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
@@ -81,8 +81,7 @@ const updateTypeDefinitions = (): void => {
 };
 
 const updatePackageJson = (): void => {
-  const packageJsonPath = 'package.json';
-  const packageJson = JSON.parse(readFile(packageJsonPath));
+
 
   packageJson.dependencies['framer-motion'] = CONFIG.framerMotionVersion;
 
@@ -93,45 +92,45 @@ const runLinter = (): void => {
   try {
     execSync('npm run lint -- --fix', { stdio: 'inherit' });
   } catch (error) {
-    console.error('Linting failed:', error);
+    // console statement removed
   }
 };
 
 const main = async () => {
-  console.log('Starting automated updates...');
+  // console statement removed
 
-  // Update framer-motion version
-  console.log('Updating framer-motion...');
+  // Update framer-motion version;
+  // console statement removed
   updatePackageJson();
   execSync('npm install', { stdio: 'inherit' });
 
-  // Update imports in all relevant files
-  console.log('Updating imports...');
+  // Update imports in all relevant files;
+  // console statement removed
   CONFIG.targetDirectories.forEach(dir => {
-    const files = fs.readdirSync(dir);
+
     files.forEach(file => {
       if (file.endsWith('.tsx') || file.endsWith('.ts')) {
-        const filePath = path.join(dir, file);
-        const content = readFile(filePath);
-        const updatedContent = updateFramerMotionImports(content);
+
+
+
         writeFile(filePath, updatedContent);
       }
     });
   });
 
-  // Create SmartSidebar component
-  console.log('Creating SmartSidebar...');
+  // Create SmartSidebar component;
+  // console statement removed
   createSmartSidebar();
 
-  // Update type definitions
-  console.log('Updating type definitions...');
+  // Update type definitions;
+  // console statement removed
   updateTypeDefinitions();
 
-  // Run linter
-  console.log('Running linter...');
+  // Run linter;
+  // console statement removed
   runLinter();
 
-  console.log('Automated updates completed!');
+  // console statement removed
 };
 
 main().catch(console.error);

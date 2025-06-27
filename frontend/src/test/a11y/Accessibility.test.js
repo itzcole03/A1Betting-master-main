@@ -12,8 +12,8 @@ import Settings from '../../components/modern/Settings';
 import useStore from '../../store/useStore';
 describe('Accessibility Tests', () => {
     beforeEach(() => {
-        // Reset store state
-        const store = useStore.getState();
+        // Reset store state;
+
         store.setProps([]);
         store.opportunities = [];
         store.alerts = [];
@@ -21,12 +21,12 @@ describe('Accessibility Tests', () => {
     });
     it('should have no accessibility violations in App', async () => {
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(App, {}) }));
-        const results = await axe(container);
+
         expect(results).toHaveNoViolations();
     });
     it('should have no accessibility violations in Dashboard', async () => {
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(Dashboard, {}) }));
-        const results = await axe(container);
+
         expect(results).toHaveNoViolations();
     });
     it('should have no accessibility violations in PropCards', async () => {
@@ -48,12 +48,12 @@ describe('Accessibility Tests', () => {
             },
         ];
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(PropCards, {}) }));
-        const results = await axe(container);
+
         expect(results).toHaveNoViolations();
     });
     it('should have no accessibility violations in MoneyMaker', async () => {
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(MoneyMaker, {}) }));
-        const results = await axe(container);
+
         expect(results).toHaveNoViolations();
     });
     it('should have no accessibility violations in EntryTracking', async () => {
@@ -92,31 +92,31 @@ describe('Accessibility Tests', () => {
             },
         ];
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(EntryTracking, { entries: entries }) }));
-        const results = await axe(container);
+
         expect(results).toHaveNoViolations();
     });
     it('should have no accessibility violations in Settings', async () => {
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(Settings, {}) }));
-        const results = await axe(container);
+
         expect(results).toHaveNoViolations();
     });
     it('should have proper ARIA labels and roles', async () => {
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(App, {}) }));
-        // Check navigation
+        // Check navigation;
         expect(container.querySelector('nav')).toHaveAttribute('aria-label', 'Main navigation');
         expect(container.querySelector('main')).toHaveAttribute('role', 'main');
-        // Check buttons
-        const buttons = container.querySelectorAll('button');
+        // Check buttons;
+
         buttons.forEach(button => {
             expect(button).toHaveAttribute('aria-label');
         });
-        // Check form inputs
-        const inputs = container.querySelectorAll('input');
+        // Check form inputs;
+
         inputs.forEach(input => {
             expect(input).toHaveAttribute('aria-label');
         });
-        // Check modal dialogs
-        const dialogs = container.querySelectorAll('[role="dialog"]');
+        // Check modal dialogs;
+
         dialogs.forEach(dialog => {
             expect(dialog).toHaveAttribute('aria-labelledby');
             expect(dialog).toHaveAttribute('aria-describedby');
@@ -133,21 +133,21 @@ describe('Accessibility Tests', () => {
     });
     it('should have proper keyboard navigation', async () => {
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(App, {}) }));
-        // Check tab indices
-        const focusableElements = container.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        // Check tab indices;
+
         focusableElements.forEach(element => {
             expect(element).toHaveAttribute('tabindex');
         });
-        // Check skip links
-        const skipLink = container.querySelector('[href="#main-content"]');
+        // Check skip links;
+
         expect(skipLink).toBeInTheDocument();
         expect(skipLink).toHaveAttribute('tabindex', '0');
     });
     it('should have proper heading hierarchy', async () => {
         const { container } = render(_jsx(BrowserRouter, { children: _jsx(App, {}) }));
-        const headings = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
-        const headingLevels = Array.from(headings).map(heading => parseInt(heading.tagName[1]));
-        // Check if heading levels are sequential
+
+
+        // Check if heading levels are sequential;
         headingLevels.reduce((prevLevel, currentLevel) => {
             expect(currentLevel).toBeLessThanOrEqual(prevLevel + 1);
             return currentLevel;

@@ -1,4 +1,4 @@
-import type { BettingSettings } from '../services/bettingService';
+import type { BettingSettings } from '@/services/bettingService.ts';
 export declare const useBettingSettings: () => {
     settings: any;
     isLoading: any;

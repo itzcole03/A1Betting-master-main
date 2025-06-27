@@ -1,8 +1,8 @@
 // ============================================================================
-// UNIVERSAL UTILITIES - Consolidated helper functions
+// UNIVERSAL UTILITIES - Consolidated helper functions;
 // ============================================================================
 
-// Format utilities
+// Format utilities;
 export const formatters = {
   currency: (amount: number, currency = "USD") => {
     return new Intl.NumberFormat("en-US", {
@@ -23,7 +23,7 @@ export const formatters = {
   },
 
   date: (date: Date | string, format = "short") => {
-    const d = typeof date === "string" ? new Date(date) : date;
+
     return new Intl.DateTimeFormat("en-US", {
       dateStyle: format as any,
       timeStyle: format === "full" ? "short" : undefined,
@@ -31,7 +31,7 @@ export const formatters = {
   },
 
   time: (date: Date | string) => {
-    const d = typeof date === "string" ? new Date(date) : date;
+
     return new Intl.DateTimeFormat("en-US", {
       timeStyle: "short",
     }).format(d);
@@ -45,7 +45,7 @@ export const formatters = {
   },
 };
 
-// Analytics utilities
+// Analytics utilities;
 export const analytics = {
   calculateWinRate: (wins: number, total: number) => {
     return total > 0 ? wins / total : 0;
@@ -66,8 +66,8 @@ export const analytics = {
     confidence = 0.95,
     sampleSize = 100,
   ) => {
-    const zScore = confidence === 0.95 ? 1.96 : 2.58;
-    const margin = zScore * Math.sqrt((value * (1 - value)) / sampleSize);
+
+
     return {
       lower: Math.max(0, value - margin),
       upper: Math.min(1, value + margin),
@@ -77,11 +77,9 @@ export const analytics = {
   calculateSharpeRatio: (returns: number[], riskFreeRate = 0.02): number => {
     if (returns.length === 0) return 0;
 
-    const meanReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
     const variance =
       returns.reduce((sum, r) => sum + Math.pow(r - meanReturn, 2), 0) /
       returns.length;
-    const stdDev = Math.sqrt(variance);
 
     return stdDev === 0 ? 0 : (meanReturn - riskFreeRate) / stdDev;
   },
@@ -92,20 +90,20 @@ export const analytics = {
     avgLoss: number,
   ) => {
     if (avgLoss === 0) return 0;
-    const b = avgWin / avgLoss;
+
     return (winRate * (b + 1) - 1) / b;
   },
 };
 
-// Validation utilities
+// Validation utilities;
 export const validators = {
   email: (email: string) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     return regex.test(email);
   },
 
   phone: (phone: string) => {
-    const regex = /^\+?[\d\s\-\(\)]+$/;
+
     return regex.test(phone) && phone.replace(/\D/g, "").length >= 10;
   },
 
@@ -129,7 +127,7 @@ export const validators = {
   },
 };
 
-// Color utilities
+// Color utilities;
 export const colors = {
   getConfidenceColor: (confidence: number) => {
     if (confidence >= 80) return "#06ffa5";
@@ -162,24 +160,24 @@ export const colors = {
   },
 };
 
-// Storage utilities
+// Storage utilities;
 export const storage = {
   set: (key: string, value: any) => {
     try {
       localStorage.setItem(key, JSON.stringify(value));
       return true;
     } catch (error) {
-      console.warn("Failed to save to localStorage:", error);
+      // console statement removed
       return false;
     }
   },
 
   get: (key: string, defaultValue: any = null) => {
     try {
-      const item = localStorage.getItem(key);
+
       return item ? JSON.parse(item) : defaultValue;
     } catch (error) {
-      console.warn("Failed to read from localStorage:", error);
+      // console statement removed
       return defaultValue;
     }
   },
@@ -189,7 +187,7 @@ export const storage = {
       localStorage.removeItem(key);
       return true;
     } catch (error) {
-      console.warn("Failed to remove from localStorage:", error);
+      // console statement removed
       return false;
     }
   },
@@ -199,13 +197,13 @@ export const storage = {
       localStorage.clear();
       return true;
     } catch (error) {
-      console.warn("Failed to clear localStorage:", error);
+      // console statement removed
       return false;
     }
   },
 };
 
-// Debounce utility
+// Debounce utility;
 export const debounce = <T extends (...args: any[]) => any>(
   func: T,
   wait: number,
@@ -217,7 +215,7 @@ export const debounce = <T extends (...args: any[]) => any>(
   };
 };
 
-// Throttle utility
+// Throttle utility;
 export const throttle = <T extends (...args: any[]) => any>(
   func: T,
   limit: number,
@@ -232,11 +230,11 @@ export const throttle = <T extends (...args: any[]) => any>(
   };
 };
 
-// Array utilities
+// Array utilities;
 export const arrayUtils = {
   chunk: <T>(array: T[], size: number): T[][] => {
     const chunks: T[][] = [];
-    for (let i = 0; i < array.length; i += size) {
+    for (const i = 0; i < array.length; i += size) {
       chunks.push(array.slice(i, i + size));
     }
     return chunks;
@@ -249,7 +247,7 @@ export const arrayUtils = {
   groupBy: <T>(array: T[], key: keyof T): Record<string, T[]> => {
     return array.reduce(
       (groups, item) => {
-        const group = String(item[key]);
+
         return {
           ...groups,
           [group]: [...(groups[group] || []), item],
@@ -265,8 +263,7 @@ export const arrayUtils = {
     direction: "asc" | "desc" = "asc",
   ): T[] => {
     return [...array].sort((a, b) => {
-      const aVal = a[key];
-      const bVal = b[key];
+
 
       if (aVal < bVal) return direction === "asc" ? -1 : 1;
       if (aVal > bVal) return direction === "asc" ? 1 : -1;
@@ -275,10 +272,10 @@ export const arrayUtils = {
   },
 };
 
-// URL utilities
+// URL utilities;
 export const url = {
   getParams: (): Record<string, string> => {
-    const params = new URLSearchParams(window.location.search);
+
     const result: Record<string, string> = {};
     params.forEach((value, key) => {
       result[key] = value;
@@ -287,26 +284,26 @@ export const url = {
   },
 
   setParam: (key: string, value: string) => {
-    const url = new URL(window.location.href);
+
     url.searchParams.set(key, value);
     window.history.replaceState({}, "", url.toString());
   },
 
   removeParam: (key: string) => {
-    const url = new URL(window.location.href);
+
     url.searchParams.delete(key);
     window.history.replaceState({}, "", url.toString());
   },
 };
 
-// Device utilities
+// Device utilities;
 export const device = {
   isMobile: () => window.innerWidth <= 768,
   isTablet: () => window.innerWidth > 768 && window.innerWidth <= 1024,
   isDesktop: () => window.innerWidth > 1024,
 
   getBreakpoint: () => {
-    const width = window.innerWidth;
+
     if (width <= 640) return "sm";
     if (width <= 768) return "md";
     if (width <= 1024) return "lg";
@@ -315,7 +312,7 @@ export const device = {
   },
 };
 
-// Export everything as default object for convenience
+// Export everything as default object for convenience;
 export default {
   formatters,
   analytics,

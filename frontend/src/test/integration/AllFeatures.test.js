@@ -13,7 +13,7 @@ import { UnifiedStrategyEngine } from '../../core/UnifiedStrategyEngine';
 import { UnifiedDataEngine } from '../../core/UnifiedDataEngine';
 import { EventBus } from '../../core/EventBus';
 import { AlertType } from '../../types/common';
-// Mock react-query
+// Mock react-query;
 jest.mock('@tanstack/react-query', () => ({
     QueryClient: jest.fn(() => ({
         defaultOptions: {
@@ -52,26 +52,26 @@ describe('Integration Tests', () => {
     describe('End-to-End Betting Flow', () => {
         it('should handle complete betting flow from prop selection to bet placement', async () => {
             renderApp();
-            // Wait for initial data load
+            // Wait for initial data load;
             await waitFor(() => {
                 expect(screen.getByTestId('dashboard')).toBeInTheDocument();
             });
-            // Select a prop
-            const propCard = screen.getByTestId('prop-card-1');
+            // Select a prop;
+
             fireEvent.click(propCard);
-            // Verify prop selection
+            // Verify prop selection;
             expect(store.selectedProps).toContain('prop-1');
-            // Open MoneyMaker
-            const moneyMakerButton = screen.getByTestId('money-maker-button');
+            // Open MoneyMaker;
+
             fireEvent.click(moneyMakerButton);
-            // Wait for analysis
+            // Wait for analysis;
             await waitFor(() => {
                 expect(screen.getByTestId('analysis-results')).toBeInTheDocument();
             });
-            // Place bet
-            const placeBetButton = screen.getByTestId('place-bet-button');
+            // Place bet;
+
             fireEvent.click(placeBetButton);
-            // Verify bet placement
+            // Verify bet placement;
             expect(store.bets).toHaveLength(1);
             expect(store.bets[0]).toMatchObject({
                 propId: 'prop-1',
@@ -82,7 +82,7 @@ describe('Integration Tests', () => {
     describe('Real-time Updates', () => {
         it('should handle real-time market updates', async () => {
             renderApp();
-            // Simulate market update
+            // Simulate market update;
             const update = {
                 id: 'market-1',
                 timestamp: Date.now(),
@@ -94,16 +94,16 @@ describe('Integration Tests', () => {
                 metadata: {},
             };
             eventBus.emit('market:update', update);
-            // Verify UI update
+            // Verify UI update;
             await waitFor(() => {
-                const updatedProp = screen.getByTestId('prop-market-1');
+
                 expect(updatedProp).toBeInTheDocument();
                 expect(updatedProp).toHaveTextContent('20.5');
             });
         });
         it('should handle real-time alerts', async () => {
             renderApp();
-            // Simulate alert
+            // Simulate alert;
             const alert = {
                 id: 'alert-1',
                 type: AlertType.LINE_MOVEMENT,
@@ -116,9 +116,9 @@ describe('Integration Tests', () => {
                 acknowledged: false,
             };
             eventBus.emit('alert', alert);
-            // Verify alert display
+            // Verify alert display;
             await waitFor(() => {
-                const alertElement = screen.getByTestId('alert-alert-1');
+
                 expect(alertElement).toBeInTheDocument();
                 expect(alertElement).toHaveTextContent('Significant Line Movement');
             });
@@ -127,10 +127,10 @@ describe('Integration Tests', () => {
     describe('Analytics Integration', () => {
         it('should display performance metrics', async () => {
             renderApp();
-            // Navigate to analytics
-            const analyticsLink = screen.getByTestId('nav-analytics');
+            // Navigate to analytics;
+
             fireEvent.click(analyticsLink);
-            // Update metrics
+            // Update metrics;
             const metrics = {
                 totalBets: 100,
                 winRate: 0.65,
@@ -148,7 +148,7 @@ describe('Integration Tests', () => {
             stateManager.updateBettingState({
                 performance: metrics,
             });
-            // Verify metrics display
+            // Verify metrics display;
             await waitFor(() => {
                 expect(screen.getByTestId('win-rate')).toHaveTextContent('65%');
                 expect(screen.getByTestId('roi')).toHaveTextContent('12%');
@@ -159,20 +159,20 @@ describe('Integration Tests', () => {
     describe('Strategy Engine Integration', () => {
         it('should generate and apply betting strategies', async () => {
             renderApp();
-            // Generate prediction
+            // Generate prediction;
             const prediction = await predictionEngine.generatePrediction({
                 playerId: 'player-1',
                 metric: 'points',
                 timestamp: Date.now(),
             });
-            // Verify strategy recommendation
+            // Verify strategy recommendation;
             await waitFor(() => {
-                const strategy = Array.from(strategyEngine['activeStrategies'].values())[0];
+
                 expect(strategy).toBeDefined();
                 expect(strategy.confidence).toBeGreaterThan(0.7);
             });
-            // Verify UI update
-            const strategyCard = screen.getByTestId('strategy-recommendation');
+            // Verify UI update;
+
             expect(strategyCard).toBeInTheDocument();
             expect(strategyCard).toHaveTextContent('High Confidence');
         });
@@ -180,7 +180,7 @@ describe('Integration Tests', () => {
     describe('Data Integration', () => {
         it('should handle data stream lifecycle', async () => {
             renderApp();
-            // Create data stream
+            // Create data stream;
             const stream = await dataEngine.createStream({
                 id: 'test-stream',
                 type: 'market',
@@ -190,10 +190,10 @@ describe('Integration Tests', () => {
                 timeoutMs: 5000,
                 batchSize: 100,
             });
-            // Verify stream creation
+            // Verify stream creation;
             expect(stream.isActive).toBe(true);
             expect(dataEngine.getStream('test-stream')).toBeDefined();
-            // Simulate data update
+            // Simulate data update;
             const update = {
                 id: 'data-1',
                 timestamp: Date.now(),
@@ -204,9 +204,9 @@ describe('Integration Tests', () => {
             stream.subscribe(data => {
                 expect(data).toMatchObject(update);
             });
-            // Verify UI update
+            // Verify UI update;
             await waitFor(() => {
-                const dataPoint = screen.getByTestId('data-point-1');
+
                 expect(dataPoint).toBeInTheDocument();
                 expect(dataPoint).toHaveTextContent('25.5');
             });
@@ -217,7 +217,7 @@ describe('Full App Integration', () => {
     it('renders all main pages and components', async () => {
         render(_jsx(App, {}));
         expect(screen.getByText(/Dashboard/i)).toBeInTheDocument();
-        // TODO: Add checks for all components/pages
+        // TODO: Add checks for all components/pages;
     });
     it('handles API errors gracefully', async () => {
         server.use(rest.get('https://api.betproai.com/props', (req, res, ctx) => {
@@ -228,7 +228,7 @@ describe('Full App Integration', () => {
     });
     it('toggles dark mode and persists theme', () => {
         render(_jsx(App, {}));
-        const toggle = screen.getByRole('button', { name: /toggle dark mode/i });
+
         fireEvent.click(toggle);
         expect(document.documentElement.classList.contains('dark')).toBe(true);
     });

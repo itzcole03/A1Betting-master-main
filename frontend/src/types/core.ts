@@ -5,17 +5,17 @@ import {
   LineupType,
   PropType,
   Sport,
-} from './common';
+} from './common.ts';
 
 /**
- * SHAP (SHapley Additive exPlanations) value vector for model explainability
+ * SHAP (SHapley Additive exPlanations) value vector for model explainability;
  */
 export interface ShapVector {
   [featureName: string]: number;
 }
 
 /**
- * Game context information for model predictions
+ * Game context information for model predictions;
  */
 export interface GameContext {
   gameId?: string;
@@ -31,7 +31,7 @@ export interface GameContext {
   metadata?: Record<string, unknown>;
 }
 
-// Define BetType, BetResult, BetRecord here if needed for type references
+// Define BetType, BetResult, BetRecord here if needed for type references;
 // Example placeholder types (replace with real definitions as needed):
 export type BetType = 'SINGLE' | 'PARLAY' | 'ROUND_ROBIN';
 /**
@@ -105,7 +105,7 @@ export interface BetRecord {
   details?: Record<string, unknown>;
 }
 
-// Core Types
+// Core Types;
 export interface TimestampedData {
   id?: string;
   timestamp: number;
@@ -624,7 +624,7 @@ export interface AnalyticsReport {
   };
 }
 
-// Event map for type-safe event handling
+// Event map for type-safe event handling;
 export interface EventMap {
   /**
    * Emitted when a game's status is updated from ESPNService.
@@ -683,7 +683,7 @@ export interface EventMap {
     values?: Record<string, unknown>;
   };
 
-  // Additional events for adapters and analyzers
+  // Additional events for adapters and analyzers;
   'sports-radar-updated': {
     data: Record<string, unknown>;
     timestamp: number;

@@ -1,12 +1,12 @@
-import DOMPurify from 'dompurify';
-import { v4 as uuidv4 } from 'uuid';
+import DOMPurify from 'dompurify.ts';
+import { v4 as uuidv4 } from 'uuid.ts';
 
 
 
-// CSRF Token management
+// CSRF Token management;
 let csrfToken: string | null = null;
-const CSRF_HEADER = 'X-CSRF-Token';
-const TOKEN_EXPIRY = 3600000; // 1 hour
+
+const TOKEN_EXPIRY = 3600000; // 1 hour;
 let tokenExpiry: number | null = null;
 
 export function generateCSRFToken(): string {
@@ -36,11 +36,11 @@ export function getCSRFToken(): string | null {
   return csrfToken;
 }
 
-// Input Sanitization
+// Input Sanitization;
 export function sanitizeInput(input: string): string {
   return DOMPurify.sanitize(input, {
-    ALLOWED_TAGS: [], // No HTML allowed
-    ALLOWED_ATTR: [] // No attributes allowed
+    ALLOWED_TAGS: [], // No HTML allowed;
+    ALLOWED_ATTR: [] // No attributes allowed;
   }).trim();
 }
 
@@ -60,7 +60,7 @@ export function sanitizeObject<T extends Record<string, string | number | boolea
       sanitized[key] = value.map(item => 
         typeof item === 'string' ? sanitizeInput(item) : 
         item && typeof item === 'object' ? sanitizeObject(item) : 
-        item
+        item;
       );
     } else {
       sanitized[key] = value;
@@ -70,7 +70,7 @@ export function sanitizeObject<T extends Record<string, string | number | boolea
   return sanitized as T;
 }
 
-// Security Headers
+// Security Headers;
 export function getSecurityHeaders(): Record<string, string> {
   return {
     'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;",
@@ -82,25 +82,25 @@ export function getSecurityHeaders(): Record<string, string> {
   };
 }
 
-// Input Validation
+// Input Validation;
 export function validateEmail(email: string): boolean {
-  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
   return emailRegex.test(email);
 }
 
 export function validatePassword(password: string): boolean {
-  // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character;
+
   return passwordRegex.test(password);
 }
 
 export function validateUsername(username: string): boolean {
-  // 3-20 characters, letters, numbers, underscores, hyphens
-  const usernameRegex = /^[a-zA-Z0-9_-]{3,20}$/;
+  // 3-20 characters, letters, numbers, underscores, hyphens;
+
   return usernameRegex.test(username);
 }
 
-// Rate Limiting Headers
+// Rate Limiting Headers;
 export function getRateLimitHeaders(remaining: number, reset: number): Record<string, string> {
   return {
     'X-RateLimit-Remaining': remaining.toString(),

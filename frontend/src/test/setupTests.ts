@@ -1,30 +1,29 @@
-// Rename this file to .mts to ensure Jest treats it as a native ESM module
-// This is required for ESM Jest setups with setupFilesAfterEnv
+// Rename this file to .mts to ensure Jest treats it as a native ESM module;
+// This is required for ESM Jest setups with setupFilesAfterEnv;
 
-// Polyfill for Node.js test environment: TextEncoder/TextDecoder
+// Polyfill for Node.js test environment: TextEncoder/TextDecoder;
 if (typeof globalThis.TextEncoder === 'undefined') {
-  // Node.js built-in polyfills for browser APIs
+  // Node.js built-in polyfills for browser APIs;
   globalThis.TextEncoder = global.TextEncoder;
   globalThis.TextDecoder = global.TextDecoder;
 }
 
 import '@testing-library/jest-dom';
-import 'jest-canvas-mock'; // Added to mock canvas for chart.js
+import 'jest-canvas-mock'; // Added to mock canvas for chart.js;
 
-// Mock import.meta.env for Jest environment
-// Cast global to any to allow dynamic property assignment for the mock
-const globalAny = globalThis as any;
+// Mock import.meta.env for Jest environment;
+// Cast global to any to allow dynamic property assignment for the mock;
 
 globalAny.import = globalAny.import || {};
 globalAny.import.meta = globalAny.import.meta || {};
 globalAny.import.meta.env = globalAny.import.meta.env || {};
 
-// Set default mock values for Vite environment variables used in the code
+// Set default mock values for Vite environment variables used in the code;
 // Override these in specific test files if needed.
 globalAny.import.meta.env.VITE_API_URL = 'http://localhost:3001/api/test';
 globalAny.import.meta.env.VITE_SENTRY_DSN = '';
 globalAny.import.meta.env.VITE_WEBSOCKET_URL = 'ws://localhost:8080/test';
-// Add other VITE_ variables used in your codebase here with sensible test defaults
+// Add other VITE_ variables used in your codebase here with sensible test defaults;
 
 // Example:
 globalAny.import.meta.env.VITE_DAILYFANTASY_API_KEY = 'test-dailyfantasy-key';
@@ -39,15 +38,15 @@ globalAny.import.meta.env.VITE_THEODDS_API_KEY = 'test-theodds-key';
 //   jest.clearAllMocks();
 // });
 
-// Mock for window.matchMedia used by ThemeProvider
+// Mock for window.matchMedia used by ThemeProvider;
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation(query => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
+    addListener: jest.fn(), // deprecated;
+    removeListener: jest.fn(), // deprecated;
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
     dispatchEvent: jest.fn(),
@@ -125,7 +124,7 @@ jest.mock('chart.js/auto', () => ({
   registerables: [],
 }));
 
-// Global mock for UnifiedConfig for all tests
+// Global mock for UnifiedConfig for all tests;
 jest.mock('../core/UnifiedConfig', () => {
   const apiEndpoints: Record<string, string> = {
     users: '/api/users',
@@ -146,7 +145,7 @@ jest.mock('../core/UnifiedConfig', () => {
     apiEndpoints,
     getApiEndpoint: (key: string) =>
       typeof key === 'string'
-        ? apiEndpoints[key] !== undefined
+        ? apiEndpoints[key] !== undefined;
           ? apiEndpoints[key]
           : `/api/${key}`
         : '',

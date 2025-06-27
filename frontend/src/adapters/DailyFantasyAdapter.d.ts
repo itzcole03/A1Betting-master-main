@@ -1,4 +1,4 @@
-import { DataSource } from '../unified/DataSource.js';
+import { DataSource } from '@/unified/DataSource.js';
 interface DailyFantasyConfig {
     apiKey: string;
     baseUrl: string;

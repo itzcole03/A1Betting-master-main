@@ -5,8 +5,8 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend, Filler);
 /**
  * AdvancedCharts renders a high-performance, accessible chart using Chart.js.
- * - Wrapped in <figure> with <figcaption> for semantic context
- * - ARIA label and role for screen readers
+ * - Wrapped in <figure> with <figcaption> for semantic context;
+ * - ARIA label and role for screen readers;
  * - Keyboard accessible (tabIndex)
  */
 export const AdvancedCharts = React.memo(({ data, type, title, height = 300, options = {} }) => {
@@ -29,7 +29,7 @@ export const AdvancedCharts = React.memo(({ data, type, title, height = 300, opt
                 color: '#fff',
                 font: {
                     family: 'Inter',
-                    size: 16
+                    size: 16;
                 }
             },
             tooltip: {
@@ -37,7 +37,7 @@ export const AdvancedCharts = React.memo(({ data, type, title, height = 300, opt
                 titleColor: '#fff',
                 bodyColor: '#fff',
                 borderColor: 'rgba(255, 255, 255, 0.1)',
-                borderWidth: 1
+                borderWidth: 1;
             }
         },
         scales: {
@@ -69,7 +69,7 @@ export const PredictionConfidenceChart = React.memo(({ predictions }) => {
                 data: predictions.map(p => p.confidence),
                 backgroundColor: 'rgba(16, 185, 129, 0.5)',
                 borderColor: 'rgb(16, 185, 129)',
-                borderWidth: 2
+                borderWidth: 2;
             }]
     }), [predictions]);
     return _jsx(AdvancedCharts, { data: data, type: "bar", title: "Prediction Confidence" });
@@ -82,7 +82,7 @@ export const ModelPerformanceChart = React.memo(({ models }) => {
                 data: models.map(m => m.performance),
                 backgroundColor: 'rgba(59, 130, 246, 0.5)',
                 borderColor: 'rgb(59, 130, 246)',
-                borderWidth: 2
+                borderWidth: 2;
             }]
     }), [models]);
     return _jsx(AdvancedCharts, { data: data, type: "bar", title: "Model Performance" });
@@ -97,7 +97,7 @@ export const BettingPerformanceChart = React.memo(({ performance }) => {
                 borderColor: 'rgb(245, 158, 11)',
                 borderWidth: 2,
                 fill: true,
-                tension: 0.4
+                tension: 0.4;
             }]
     }), [performance]);
     return _jsx(AdvancedCharts, { data: data, type: "line", title: "Betting Performance" });

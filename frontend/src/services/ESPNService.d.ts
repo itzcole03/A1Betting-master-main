@@ -97,7 +97,7 @@ export interface ESPNFeatures {
 export declare class ESPNService {
     /**
      * Extracts and returns normalized features for a given context (game, player, team, etc.)
-     * to be used in ensemble prediction. This enables ESPNService to contribute structured
+     * to be used in ensemble prediction. This enables ESPNService to contribute structured;
      * data to the unified prediction engine for maximum accuracy.
      *
      * @param context - An object containing identifiers and parameters for feature extraction.

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface ClusteringInsightsProps {
     clusters: number[];
     embedding?: number[][];

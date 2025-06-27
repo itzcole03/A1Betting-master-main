@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 type Entry = {
     id: string;
     date: string;

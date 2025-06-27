@@ -1,10 +1,10 @@
-import useStore from '../store/useStore';
-import type { PlayerProp, Opportunity, OddsUpdate } from '../types/core';
-import type { Sport, PropType } from '../types/common';
-import { oddsjamService } from '../services/oddsjam';
-import { dailyFantasyService } from '../services/dailyFantasy';
-import { useState, useEffect, useCallback } from 'react';
-import { webSocketManager } from '../services/unified/WebSocketManager';
+import useStore from '@/store/useStore.ts';
+import type { PlayerProp, Opportunity, OddsUpdate } from '@/types/core.ts';
+import type { Sport, PropType } from '@/types/common.ts';
+import { oddsjamService } from '@/services/oddsjam.ts';
+import { dailyFantasyService } from '@/services/dailyFantasy.ts';
+import { useState, useEffect, useCallback } from 'react.ts';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
 
 
 
@@ -23,7 +23,7 @@ export const useBettingData = ({
   autoRefresh = true,
   refreshInterval = 30000,
   minOddsChange = 0.1,
-  onNewOpportunity
+  onNewOpportunity;
 }: UseBettingDataOptions = {}) => {
   const [props, setProps] = useState<PlayerProp[]>([]);
   const [oddsUpdates, setOddsUpdates] = useState<OddsUpdate[]>([]);
@@ -31,19 +31,18 @@ export const useBettingData = ({
   const [isLoading, setIsLoading] = useState(true);
 
   const [error, setError] = useState<Error | null>(null);
-  const store = useStore();
-  // Fallback for addToast if not present, memoized for hook safety
-  const addToast = React.useMemo(() => store.addToast || (() => {}), [store.addToast]);
 
-  // Fetch initial data
+  // Fallback for addToast if not present, memoized for hook safety;
+
+  // Fetch initial data;
   const fetchData = useCallback(async () => {
     try {
-      // Fetch player props using unified dailyFantasyService
-      const propsData = await dailyFantasyService.getPlayers({ sport, position: propType });
+      // Fetch player props using unified dailyFantasyService;
+
       setProps(propsData as PlayerProp[]);
 
-      // Fetch arbitrage opportunities using unified oddsjamService
-      const opportunitiesData = await oddsjamService.getArbitrageOpportunities(sport || 'NBA');
+      // Fetch arbitrage opportunities using unified oddsjamService;
+
       setOpportunities(opportunitiesData as Opportunity[]);
       setError(null);
     } catch (err) {
@@ -59,27 +58,27 @@ export const useBettingData = ({
     }
   }, [sport, propType, addToast]);
 
-  // Handle WebSocket messages
+  // Handle WebSocket messages;
   const handleWebSocketMessage = useCallback((message: unknown) => {
     if (typeof message !== 'object' || message === null) return;
-    const msg = message as { type: string; data?: unknown };
+
     switch (msg.type) {
       case 'prop_update': {
-        const data = msg.data as PlayerProp;
+
         setProps(prev => {
-          const index = prev.findIndex(p => p.id === data.id);
+
           if (index === -1) return [...prev, data];
-          const updated = [...prev];
+
           updated[index] = data;
           return updated;
         });
         break;
       }
       case 'odds_update': {
-        const update = msg.data as OddsUpdate;
+
         if (sport && update.sport !== sport) return;
         if (propType && update.propType !== propType) return;
-        const oddsChange = Math.abs(update.newOdds - update.oldOdds);
+
         if (oddsChange < minOddsChange) return;
         setOddsUpdates(prev => [update, ...prev].slice(0, 50));
         if (oddsChange >= 0.5) {
@@ -93,7 +92,7 @@ export const useBettingData = ({
         break;
       }
       case 'arbitrage_alert': {
-        const opportunity = msg.data as Opportunity;
+
         setOpportunities(prev => [opportunity, ...prev].slice(0, 50));
         if (onNewOpportunity) onNewOpportunity(opportunity);
         addToast({
@@ -105,28 +104,28 @@ export const useBettingData = ({
         break;
       }
       default:
-        console.log('Unknown message type:', msg.type);
+        // console statement removed
     }
   }, [sport, propType, minOddsChange, addToast, onNewOpportunity]);
 
-  // Set up the event listener
+  // Set up the event listener;
   useEffect(() => {
     webSocketManager.on('message', handleWebSocketMessage);
     return () => {
       try {
         webSocketManager.off('message', handleWebSocketMessage);
       } catch (error) {
-        console.error('Error cleaning up WebSocket listener:', error);
+        // console statement removed
       }
     };
   }, [handleWebSocketMessage]);
 
-  // Setup auto-refresh
+  // Setup auto-refresh;
   useEffect(() => {
     fetchData();
 
     if (autoRefresh) {
-      const interval = setInterval(fetchData, refreshInterval);
+
       return () => clearInterval(interval);
     }
   }, [fetchData, autoRefresh, refreshInterval]);
@@ -143,6 +142,6 @@ export const useBettingData = ({
     isLoading,
     isConnected,
     error,
-    refresh
+    refresh;
   };
 }; 

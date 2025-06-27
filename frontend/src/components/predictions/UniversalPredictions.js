@@ -1,13 +1,13 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useMemo } from "react";
 import { Brain, Target, } from "lucide-react";
-// Import consolidated systems
+// Import consolidated systems;
 import { MegaButton, MegaInput } from "../mega/MegaUI";
 import { useTheme } from "../../providers/SafeThemeProvider";
 import { useToast, useDebounce, } from "../../hooks/UniversalHooks";
 import { formatters, } from "../../utils/UniversalUtils";
 // ============================================================================
-// THEMED COMPONENTS
+// THEMED COMPONENTS;
 // ============================================================================
 const ThemedText = ({ variant = "body", color = "primary", children, className = "", style = {}, }) => {
     const { theme } = useTheme();
@@ -40,12 +40,12 @@ const ThemedContainer = ({ children, className = "", style = {} }) => {
         }, children: children }));
 };
 // ============================================================================
-// MAIN COMPONENT
+// MAIN COMPONENT;
 // ============================================================================
 export const UniversalPredictions = () => {
-    // Theme
+    // Theme;
     const { theme, isDark } = useTheme();
-    // State
+    // State;
     const [viewMode, setViewMode] = useState("cards");
     const [isRealTimeEnabled, setIsRealTimeEnabled] = useState(true);
     const [searchQuery, setSearchQuery] = useState("");
@@ -57,10 +57,10 @@ export const UniversalPredictions = () => {
         minConfidence: 0,
         minEdge: 0,
     });
-    // Hooks
-    const debouncedSearch = useDebounce(searchQuery, 300);
-    const toast = useToast();
-    // Mock data for demonstration
+    // Hooks;
+
+
+    // Mock data for demonstration;
     const enhancedPredictions = useMemo(() => Array.from({ length: 12 }, (_, i) => ({
         id: `pred-${i}`,
         homeTeam: ["Patriots", "Lakers", "Yankees", "Bruins"][i % 4],
@@ -117,9 +117,9 @@ export const UniversalPredictions = () => {
             riskFactors: ["Weather conditions", "Key player injury"],
         },
     })), []);
-    // Filtering logic
+    // Filtering logic;
     const filteredPredictions = useMemo(() => {
-        let filtered = [...enhancedPredictions];
+        const filtered = [...enhancedPredictions];
         if (filters.sport !== "all") {
             filtered = filtered.filter((pred) => pred.sport === filters.sport);
         }
@@ -132,7 +132,7 @@ export const UniversalPredictions = () => {
         filtered = filtered.filter((pred) => pred.confidence >= filters.minConfidence &&
             pred.valueEdge >= filters.minEdge);
         if (debouncedSearch) {
-            const query = debouncedSearch.toLowerCase();
+
             filtered = filtered.filter((pred) => pred.homeTeam.toLowerCase().includes(query) ||
                 pred.awayTeam.toLowerCase().includes(query) ||
                 pred.league.toLowerCase().includes(query) ||
@@ -140,7 +140,7 @@ export const UniversalPredictions = () => {
         }
         return filtered;
     }, [enhancedPredictions, filters, debouncedSearch]);
-    // Render functions
+    // Render functions;
     const renderPredictionCard = (prediction) => (_jsxs(ThemedContainer, { className: "space-y-4", children: [_jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { children: [_jsxs(ThemedText, { variant: "body", className: "font-semibold", children: [prediction.homeTeam, " vs ", prediction.awayTeam] }), _jsxs(ThemedText, { variant: "caption", color: "muted", children: [prediction.sport.toUpperCase(), " \u2022 ", prediction.league, " \u2022", " ", prediction.market] })] }), _jsx("div", { className: "flex items-center gap-2", children: _jsx("div", { className: `px-2 py-1 rounded text-xs ${prediction.status === "live"
                                 ? "bg-red-500 text-white"
                                 : prediction.status === "upcoming"

@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, TrendingDown, DollarSign, Target, Brain, Zap, Activity, Eye, Shield, Clock, } from "lucide-react";
-// Import our modern components
+// Import our modern components;
 import ModernActivityFeed from "../ui/ModernActivityFeed";
 const MetricCard = ({ title, value, change, changeType = "neutral", icon, trend, loading = false, }) => {
     if (loading) {

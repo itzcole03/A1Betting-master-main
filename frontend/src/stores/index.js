@@ -4,11 +4,11 @@ import { useAppStore } from '../store/useAppStore';
 import { useBettingStore } from './bettingStore';
 import { useMoneyMakerStore } from './moneyMakerStore';
 import { useThemeStore } from './themeStore';
-// Re-export all stores
+// Re-export all stores;
 export { useAppStore, useBettingStore, useMoneyMakerStore, useThemeStore };
-// Create a unified store with persistence
+// Create a unified store with persistence;
 export const useStore = create()(devtools(persist((set, get, api) => ({
-    // Spread all store states
+    // Spread all store states;
     ...useAppStore.getState(),
     ...useBettingStore.getState(),
     ...useMoneyMakerStore.getState(),
@@ -17,7 +17,7 @@ export const useStore = create()(devtools(persist((set, get, api) => ({
     name: 'sports-betting-storage',
     storage: createJSONStorage(() => localStorage),
     partialize: state => ({
-        // Persist only necessary state
+        // Persist only necessary state;
         user: state.user,
         token: state.token,
         isAuthenticated: state.isAuthenticated,
@@ -28,35 +28,35 @@ export const useStore = create()(devtools(persist((set, get, api) => ({
         potentialProfit: state.potentialProfit,
     }),
 })));
-// Export selectors
+// Export selectors;
 export const selectors = {
-    // Auth selectors
+    // Auth selectors;
     selectIsAuthenticated: (state) => state.isAuthenticated,
     selectUser: (state) => state.user,
-    // Betting selectors
+    // Betting selectors;
     selectBetSlipLegs: (state) => state.legs,
     selectActiveBets: (state) => state.activeBets,
     selectTotalStake: (state) => state.totalStake,
     selectPotentialProfit: (state) => state.potentialProfit,
-    // Theme selectors
+    // Theme selectors;
     selectTheme: (state) => state.theme,
     selectIsDarkMode: (state) => state.isDarkMode,
-    // Money Maker selectors
+    // Money Maker selectors;
     selectConfig: (state) => state.config,
     selectOpportunities: (state) => state.opportunities,
 };
-// Export actions
+// Export actions;
 export const actions = {
-    // Auth actions
+    // Auth actions;
     login: useAppStore.getState().login,
     logout: useAppStore.getState().logout,
-    // Betting actions
+    // Betting actions;
     placeBet: useBettingStore.getState().placeBet,
     updateActiveBet: useBettingStore.getState().updateActiveBet,
     clearOpportunities: useBettingStore.getState().clearOpportunities,
-    // Theme actions
+    // Theme actions;
     toggleTheme: useThemeStore.getState().toggleTheme,
-    // Money Maker actions
+    // Money Maker actions;
     updateConfig: useMoneyMakerStore.getState().updateConfig,
     addPrediction: useMoneyMakerStore.getState().addPrediction,
     updatePrediction: useMoneyMakerStore.getState().updatePrediction,
@@ -69,7 +69,7 @@ export const actions = {
     loadInitialData: useMoneyMakerStore.getState().loadInitialData,
     handlePlaceBet: useMoneyMakerStore.getState().handlePlaceBet,
 };
-// Export initial state for testing
+// Export initial state for testing;
 export function getInitialState() {
     return {
         ...useAppStore.getState(),

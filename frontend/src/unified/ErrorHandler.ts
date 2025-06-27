@@ -1,5 +1,5 @@
-import { ErrorMetrics, EventMap } from '../types/core';
-import { EventBus } from '@/core/EventBus';
+import { ErrorMetrics, EventMap } from '@/types/core.ts';
+import { EventBus } from '@/core/EventBus.ts';
 
 export class ErrorHandler {
   private static instance: ErrorHandler;

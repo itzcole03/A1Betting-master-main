@@ -1,6 +1,6 @@
-// VenueEffectModel: ALPHA1-compliant modular model scaffold
-import type { GameContext, ShapVector } from '../types/core.js';
-import { UnifiedConfig } from '../unified/UnifiedConfig.js';
+// VenueEffectModel: ALPHA1-compliant modular model scaffold;
+import type { GameContext, ShapVector } from '@/types/core.js';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.js';
 
 export interface VenueEffectModelOutput {
   features: Record<string, number>;
@@ -11,9 +11,9 @@ export interface VenueEffectModelOutput {
 export async function getVenueEffectFeatures(
   venueId: string,
   sport: string,
-  context: GameContext
+  context: GameContext;
 ): Promise<VenueEffectModelOutput> {
-  const config = UnifiedConfig.getInstance();
+
   if (!config.get('enableVenueEffectModel')) {
     throw new Error('VenueEffectModel is disabled by config.');
   }
@@ -23,9 +23,9 @@ export async function getVenueEffectFeatures(
     altitudeEffect: Math.random(),
     crowdSize: Math.random(),
   };
-  // Generate SHAP insights
+  // Generate SHAP insights;
   const { calculateShap } = await import('../utils/shap.js');
-  const shap = calculateShap(features, 'venue');
+
   return {
     features,
     shapInsights: [shap],

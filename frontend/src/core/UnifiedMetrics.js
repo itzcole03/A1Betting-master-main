@@ -13,9 +13,9 @@ export class UnifiedMetrics {
         this.operations.set(operationName, { startTime: Date.now() });
     }
     endOperation(operationName, error) {
-        const operation = this.operations.get(operationName);
+
         if (operation) {
-            const duration = Date.now() - operation.startTime;
+
             this.recordMetric(`${operationName}_duration`, duration);
             if (error) {
                 this.recordMetric(`${operationName}_error`, 1);
@@ -24,7 +24,7 @@ export class UnifiedMetrics {
         }
     }
     recordMetric(name, value) {
-        const currentValue = this.metrics.get(name) || 0;
+
         this.metrics.set(name, currentValue + value);
     }
     getMetrics() {

@@ -1,6 +1,6 @@
-import { WebSocketManager } from '../WebSocketManager';
-import { FinalPredictionEngine } from '../../FinalPredictionEngine/types';
-import { UnifiedLogger } from '../../logging/types';
+import { WebSocketManager } from '@/WebSocketManager.ts';
+import { FinalPredictionEngine } from '@/FinalPredictionEngine/types.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
 export declare class PredictionHandler {
     private wsManager;
     private predictionEngine;

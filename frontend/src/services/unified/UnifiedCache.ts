@@ -7,7 +7,7 @@ interface CacheEntry<T> {
 export class UnifiedCache {
   private static instance: UnifiedCache;
   private cache: Map<string, CacheEntry<any>> = new Map();
-  private defaultTTL: number = 5 * 60 * 1000; // 5 minutes
+  private defaultTTL: number = 5 * 60 * 1000; // 5 minutes;
 
   private constructor() {}
 
@@ -27,7 +27,7 @@ export class UnifiedCache {
   }
 
   get<T>(key: string): T | null {
-    const entry = this.cache.get(key);
+
     if (!entry) return null;
 
     if (this.isExpired(entry)) {
@@ -39,7 +39,7 @@ export class UnifiedCache {
   }
 
   has(key: string): boolean {
-    const entry = this.cache.get(key);
+
     if (!entry) return false;
 
     if (this.isExpired(entry)) {

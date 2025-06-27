@@ -1,4 +1,4 @@
-import type { UserBetHistoryEntry, UserPerformanceHistory, ModelPerformanceHistory } from '../../types/history';
+import type { UserBetHistoryEntry, UserPerformanceHistory, ModelPerformanceHistory } from '@/types/history.ts';
 interface BetHistoryState {
     userHistory: UserPerformanceHistory | null;
     setUserHistory: (history: UserPerformanceHistory) => void;

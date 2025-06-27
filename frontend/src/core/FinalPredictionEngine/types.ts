@@ -1,8 +1,8 @@
-import { UnifiedError } from '../error/types';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedMetrics } from '../metrics/types';
-import { UnifiedConfigManager } from '../config/types';
-import { PredictionRequest, PredictionResponse, LatestPredictions } from '../types/prediction';
+import { UnifiedError } from '@/error/types.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
+import { UnifiedConfigManager } from '@/config/types.ts';
+import { PredictionRequest, PredictionResponse, LatestPredictions } from '@/types/prediction.ts';
 
 export type RiskLevel = 'low' | 'medium' | 'high';
 export type ModelType = 'historical' | 'market' | 'sentiment' | 'correlation';

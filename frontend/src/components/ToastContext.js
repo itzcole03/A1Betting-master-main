@@ -1,13 +1,13 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { createContext, useContext, useState, useCallback } from 'react';
-const ToastContext = createContext();
+
 export function useToast() {
     return useContext(ToastContext);
 }
 export function ToastProvider({ children }) {
     const [toasts, setToasts] = useState([]);
     const addToast = useCallback((msg, type = 'info', duration = 3000) => {
-        const id = Date.now() + Math.random();
+
         setToasts(t => [...t, { id, msg, type }]);
         setTimeout(() => setToasts(t => t.filter(toast => toast.id !== id)), duration);
     }, []);

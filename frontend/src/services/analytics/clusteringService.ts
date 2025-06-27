@@ -1,4 +1,4 @@
-// Enhanced interfaces for ClusteringService
+// Enhanced interfaces for ClusteringService;
 export interface ClusteringModelConfig {
   type: string;
   params: Record<string, unknown>;
@@ -77,7 +77,7 @@ class ClusteringService {
   }
 
   private async initializeClusteringModels() {
-    // Initialize K-Means
+    // Initialize K-Means;
     this.clusteringModels.set('kmeans', {
       type: 'kmeans',
       params: {
@@ -86,7 +86,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize DBSCAN
+    // Initialize DBSCAN;
     this.clusteringModels.set('dbscan', {
       type: 'dbscan',
       params: {
@@ -95,7 +95,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Hierarchical Clustering
+    // Initialize Hierarchical Clustering;
     this.clusteringModels.set('hierarchical', {
       type: 'hierarchical',
       params: {
@@ -104,7 +104,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Gaussian Mixture Model
+    // Initialize Gaussian Mixture Model;
     this.clusteringModels.set('gmm', {
       type: 'gmm',
       params: {
@@ -113,7 +113,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize PCA
+    // Initialize PCA;
     this.clusteringModels.set('pca', {
       type: 'pca',
       params: {
@@ -121,7 +121,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize ICA
+    // Initialize ICA;
     this.clusteringModels.set('ica', {
       type: 'ica',
       params: {
@@ -129,7 +129,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize t-SNE
+    // Initialize t-SNE;
     this.clusteringModels.set('tsne', {
       type: 'tsne',
       params: {
@@ -138,7 +138,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize UMAP
+    // Initialize UMAP;
     this.clusteringModels.set('umap', {
       type: 'umap',
       params: {
@@ -149,7 +149,7 @@ class ClusteringService {
   }
 
   private async initializeOptimizers() {
-    // Initialize Genetic Algorithm
+    // Initialize Genetic Algorithm;
     this.optimizers.set('genetic', {
       type: 'genetic',
       params: {
@@ -160,7 +160,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Particle Swarm Optimization
+    // Initialize Particle Swarm Optimization;
     this.optimizers.set('particleSwarm', {
       type: 'particleSwarm',
       params: {
@@ -171,7 +171,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Simulated Annealing
+    // Initialize Simulated Annealing;
     this.optimizers.set('simulatedAnnealing', {
       type: 'simulatedAnnealing',
       params: {
@@ -181,7 +181,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Bayesian Optimization
+    // Initialize Bayesian Optimization;
     this.optimizers.set('bayesian', {
       type: 'bayesian',
       params: {
@@ -190,7 +190,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Grid Search
+    // Initialize Grid Search;
     this.optimizers.set('gridSearch', {
       type: 'gridSearch',
       params: {
@@ -198,7 +198,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Random Search
+    // Initialize Random Search;
     this.optimizers.set('randomSearch', {
       type: 'randomSearch',
       params: {
@@ -206,7 +206,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Differential Evolution
+    // Initialize Differential Evolution;
     this.optimizers.set('differential', {
       type: 'differential',
       params: {
@@ -216,7 +216,7 @@ class ClusteringService {
       },
     });
 
-    // Initialize Ant Colony Optimization
+    // Initialize Ant Colony Optimization;
     this.optimizers.set('antColony', {
       type: 'antColony',
       params: {
@@ -228,9 +228,9 @@ class ClusteringService {
   }
   public async cluster(
     data: number[][],
-    config: ClusteringConfig
+    config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    const model = this.clusteringModels.get(config.modelType);
+
     if (!model) {
       throw new Error(`Clustering model ${config.modelType} not found`);
     }
@@ -238,7 +238,7 @@ class ClusteringService {
     try {
       return await this.performClustering(model, data, config);
     } catch (error) {
-      console.error(`Error clustering with ${config.modelType}:`, error);
+      // console statement removed
       throw error;
     }
   }
@@ -246,7 +246,7 @@ class ClusteringService {
   private async performClustering(
     model: ClusteringModelConfig,
     data: number[][],
-    config: ClusteringConfig
+    config: ClusteringConfig;
   ): Promise<ClusteringResult> {
     switch (model.type) {
       case 'kmeans':
@@ -271,69 +271,69 @@ class ClusteringService {
   }
   private async performKMeans(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement K-Means clustering
+    // Implement K-Means clustering;
     return { clusters: [] };
   }
 
   private async performDBSCAN(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement DBSCAN clustering
+    // Implement DBSCAN clustering;
     return { clusters: [] };
   }
 
   private async performHierarchical(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement Hierarchical clustering
+    // Implement Hierarchical clustering;
     return { clusters: [] };
   }
 
   private async performGMM(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement GMM clustering
+    // Implement GMM clustering;
     return { clusters: [] };
   }
 
   private async performPCA(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement PCA dimensionality reduction
+    // Implement PCA dimensionality reduction;
     return { clusters: [], embedding: [] };
   }
 
   private async performICA(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement ICA dimensionality reduction
+    // Implement ICA dimensionality reduction;
     return { clusters: [], embedding: [] };
   }
 
   private async performTSNE(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement t-SNE dimensionality reduction
+    // Implement t-SNE dimensionality reduction;
     return { clusters: [], embedding: [] };
   }
 
   private async performUMAP(
     _data: number[][],
-    _config: ClusteringConfig
+    _config: ClusteringConfig;
   ): Promise<ClusteringResult> {
-    // Implement UMAP dimensionality reduction
+    // Implement UMAP dimensionality reduction;
     return { clusters: [], embedding: [] };
   }
   public async optimize(config: OptimizationConfig): Promise<OptimizationResult> {
-    const optimizer = this.optimizers.get(config.algorithm);
+
     if (!optimizer) {
       throw new Error(`Optimizer ${config.algorithm} not found`);
     }
@@ -341,14 +341,14 @@ class ClusteringService {
     try {
       return await this.runOptimization(optimizer, config);
     } catch (error) {
-      console.error(`Error optimizing with ${config.algorithm}:`, error);
+      // console statement removed
       throw error;
     }
   }
 
   private async runOptimization(
     optimizer: OptimizerConfig,
-    config: OptimizationConfig
+    config: OptimizationConfig;
   ): Promise<OptimizationResult> {
     switch (optimizer.type) {
       case 'genetic':
@@ -372,42 +372,42 @@ class ClusteringService {
     }
   }
   private async runGeneticAlgorithm(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Genetic Algorithm optimization
+    // Implement Genetic Algorithm optimization;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 
   private async runParticleSwarm(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Particle Swarm Optimization
+    // Implement Particle Swarm Optimization;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 
   private async runSimulatedAnnealing(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Simulated Annealing
+    // Implement Simulated Annealing;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 
   private async runBayesianOptimization(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Bayesian Optimization
+    // Implement Bayesian Optimization;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 
   private async runGridSearch(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Grid Search
+    // Implement Grid Search;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 
   private async runRandomSearch(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Random Search
+    // Implement Random Search;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 
   private async runDifferentialEvolution(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Differential Evolution
+    // Implement Differential Evolution;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 
   private async runAntColony(_config: OptimizationConfig): Promise<OptimizationResult> {
-    // Implement Ant Colony Optimization
+    // Implement Ant Colony Optimization;
     return { bestParams: {}, bestValue: 0, history: [] };
   }
 }

@@ -1,8 +1,8 @@
-// Unified WebSocket message structure and payloads
+// Unified WebSocket message structure and payloads;
 export type WebSocketData = BetData | OddsUpdate | SystemMessage | null;
 
 export interface WebSocketMessage<T = WebSocketData> {
-  type?: string; // Message type identifier
+  type?: string; // Message type identifier;
   event?: string;
   data?: T;
   payload?: T;
@@ -11,7 +11,7 @@ export interface WebSocketMessage<T = WebSocketData> {
   correlationId?: string;
 }
 
-// Example strict types for WebSocketData
+// Example strict types for WebSocketData;
 export interface OddsUpdate {
   eventId: string;
   marketId: string;
@@ -25,7 +25,7 @@ export interface SystemMessage {
   timestamp: number;
 }
 
-// WebSocket configuration for client
+// WebSocket configuration for client;
 export interface WebSocketConfig {
   url: string;
   onMessage: (message: WebSocketMessage) => void;
@@ -36,7 +36,7 @@ export interface WebSocketConfig {
   batchInterval?: number;
 }
 
-// WebSocket connection metrics
+// WebSocket connection metrics;
 export interface WebSocketMetrics {
   latency: number;
   messageCount: number;
@@ -48,21 +48,21 @@ export interface WebSocketMetrics {
   timestamp: number;
 }
 
-// WebSocket connection instance
+// WebSocket connection instance;
 export interface WebSocketConnection {
   id: string;
   connectedAt: Date;
   metrics: WebSocketMetrics;
 }
 
-// WebSocket error structure
+// WebSocket error structure;
 export interface WebSocketError {
   message: string;
   code?: string;
   timestamp: number;
 }
 
-// Example payload types for betting and odds updates
+// Example payload types for betting and odds updates;
 export interface BetData {
   betId: string;
   eventId: string;
@@ -97,9 +97,9 @@ export interface StatusUpdate {
 
 // --- Specific Payload Types for Incoming Messages from shared/webSocket.ts ---
 export type LiveOddUpdatePayload = OddsUpdate;
-// Replaced 'unknown' with PrizePicksEntry and related types for type safety
-import type { PrizePicksEntry } from './prizePicks';
-import type { MarketUpdate, Prediction } from '@/types/core';
+// Replaced 'unknown' with PrizePicksEntry and related types for type safety;
+import type { PrizePicksEntry } from './prizePicks.ts';
+import type { MarketUpdate, Prediction } from '@/types/core.ts';
 export type EntryUpdatePayload = PrizePicksEntry;
 export type MarketUpdatePayload = MarketUpdate;
 export type PredictionStreamPayload = Prediction;

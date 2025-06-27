@@ -8,12 +8,12 @@ const SwipeableCardStack = ({ cards, onCardSwipe, onCardTap, }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [dragOffset, setDragOffset] = useState(0);
     const handleDragEnd = useCallback((info) => {
-        const threshold = 100;
-        const velocity = info.velocity.x;
-        const offset = info.offset.x;
+
+
+
         if (Math.abs(offset) > threshold || Math.abs(velocity) > 500) {
-            const direction = offset > 0 ? "right" : "left";
-            const currentCard = cards[currentIndex];
+
+
             if (currentCard) {
                 onCardSwipe(currentCard.id, direction);
             }
@@ -53,7 +53,7 @@ const SwipeableCardStack = ({ cards, onCardSwipe, onCardTap, }) => {
                         cursor: "pointer",
                     }, children: _jsx(Card, { sx: {
                             height: 240,
-                            background: index === 0
+                            background: index === 0;
                                 ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
                                 : "rgba(255,255,255,0.95)",
                             color: index === 0 ? "white" : "inherit",
@@ -65,7 +65,7 @@ const SwipeableCardStack = ({ cards, onCardSwipe, onCardTap, }) => {
                                 flexDirection: "column",
                                 justifyContent: "space-between",
                             }, children: [_jsxs(Box, { children: [_jsxs(Box, { display: "flex", justifyContent: "space-between", alignItems: "center", mb: 1, children: [_jsx(Chip, { label: card.category, size: "small", sx: {
-                                                        backgroundColor: index === 0
+                                                        backgroundColor: index === 0;
                                                             ? "rgba(255,255,255,0.2)"
                                                             : "primary.main",
                                                         color: index === 0 ? "white" : "white",
@@ -91,9 +91,9 @@ const SwipeableCardStack = ({ cards, onCardSwipe, onCardTap, }) => {
                     } }, index))) })] }));
 };
 export const MobileOptimizedInterface = () => {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-    // State Management
+
+
+    // State Management;
     const [activeTab, setActiveTab] = useState(0);
     const [drawerOpen, setDrawerOpen] = useState(false);
     const [quickActionsOpen, setQuickActionsOpen] = useState(false);
@@ -102,7 +102,7 @@ export const MobileOptimizedInterface = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
-    // Mock Data
+    // Mock Data;
     const mobileCards = [
         {
             id: "profit-today",
@@ -143,7 +143,7 @@ export const MobileOptimizedInterface = () => {
             subtitle: "Chiefs vs Bills - 89% confidence",
             priority: "medium",
             category: "ML",
-            action: () => console.log("View prediction"),
+            action: () => // console statement removed,
             timestamp: new Date(Date.now() - 900000),
         },
     ];
@@ -178,9 +178,9 @@ export const MobileOptimizedInterface = () => {
             action: () => handleQuickAction("portfolio"),
         },
     ];
-    // Event Handlers
+    // Event Handlers;
     const handleCardSwipe = useCallback((cardId, direction) => {
-        const action = direction === "right" ? "saved" : "dismissed";
+
         setSnackbarMessage(`Card ${action}`);
         setSnackbarOpen(true);
     }, []);
@@ -202,7 +202,7 @@ export const MobileOptimizedInterface = () => {
     const handleTabChange = useCallback((_, newValue) => {
         setActiveTab(newValue);
     }, []);
-    // Load notifications
+    // Load notifications;
     useEffect(() => {
         const mockNotifications = [
             {
@@ -258,7 +258,7 @@ export const MobileOptimizedInterface = () => {
                                                         border: 1,
                                                         borderColor: "divider",
                                                         borderRadius: 1,
-                                                    }, children: [_jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "medium", children: position }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: ["Stake: ", formatCurrency(100 + index * 50)] })] }), _jsxs(Box, { textAlign: "right", children: [_jsx(Typography, { variant: "body2", color: Math.random() > 0.5
+                                                    }, children: [_jsxs(Box, { children: [_jsx(Typography, { variant: "body2", fontWeight: "medium", children: position }), _jsxs(Typography, { variant: "caption", color: "textSecondary", children: ["Stake: ", formatCurrency(100 + index * 50)] })] }), _jsxs(Box, { textAlign: "right", children: [_jsx(Typography, { variant: "body2", color: Math.random() > 0.5;
                                                                         ? "success.main"
                                                                         : "error.main", fontWeight: "bold", children: formatCurrency((Math.random() - 0.5) * 100) }), _jsx(Typography, { variant: "caption", children: formatPercentage((Math.random() - 0.5) * 0.2) })] })] }, position))) })] }) })] }, "portfolio"))] }) }), _jsx(Paper, { sx: { position: "fixed", bottom: 0, left: 0, right: 0 }, elevation: 3, children: _jsxs(BottomNavigation, { value: activeTab, onChange: handleTabChange, children: [_jsx(BottomNavigationAction, { label: "Home", icon: _jsx(Home, {}) }), _jsx(BottomNavigationAction, { label: "Analytics", icon: _jsx(Analytics, {}) }), _jsx(BottomNavigationAction, { label: "Portfolio", icon: _jsx(AccountBalance, {}) }), _jsx(BottomNavigationAction, { label: "Settings", icon: _jsx(Settings, {}) })] }) }), _jsx(SpeedDial, { ariaLabel: "Quick Actions", sx: { position: "fixed", bottom: 80, right: 16 }, icon: _jsx(SpeedDialIcon, {}), open: quickActionsOpen, onClose: () => setQuickActionsOpen(false), onOpen: () => setQuickActionsOpen(true), children: quickActions.map((action) => (_jsx(SpeedDialAction, { icon: action.icon, tooltipTitle: action.label, onClick: action.action }, action.id))) }), _jsx(SwipeableDrawer, { anchor: "left", open: drawerOpen, onClose: () => setDrawerOpen(false), onOpen: () => setDrawerOpen(true), sx: {
                     "& .MuiDrawer-paper": {

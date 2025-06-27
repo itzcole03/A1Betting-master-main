@@ -1,5 +1,5 @@
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { SystemError } from './UnifiedError';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { SystemError } from './UnifiedError.ts';
 
 export class UnifiedErrorHandler {
   private static instance: UnifiedErrorHandler;
@@ -25,7 +25,7 @@ export class UnifiedErrorHandler {
 
   public handleError(error: Error, context: string, metadata: Record<string, any> = {}): void {
     try {
-      const timestamp = new Date().toISOString();
+
       this.errorLog.push({
         timestamp,
         error,
@@ -51,8 +51,8 @@ export class UnifiedErrorHandler {
         });
       }
     } catch (handlingError) {
-      console.error('Error in error handler:', handlingError);
-      console.error('Original error:', error);
+      // console statement removed
+      // console statement removed
     }
   }
 

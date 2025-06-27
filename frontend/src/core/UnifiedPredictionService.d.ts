@@ -1,5 +1,5 @@
-import EventEmitter from 'eventemitter3';
-import { PrizePicksProp } from './PrizePicksApiService';
+import EventEmitter from 'eventemitter3.ts';
+import { PrizePicksProp } from './PrizePicksApiService.ts';
 export interface PredictionResult {
     propId: string;
     confidence: number;

@@ -1,6 +1,6 @@
-import { WebSocket } from 'ws';
-import { EventEmitter } from 'events';
-import { UnifiedLogger } from '../logging/types';
+import { WebSocket } from 'ws.ts';
+import { EventEmitter } from 'events.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
 interface WebSocketMessage {
     type: string;
     data: any;

@@ -17,7 +17,7 @@ export const useModelCalibration = () => {
             if (!response.ok) {
                 throw new Error('Failed to fetch model calibration');
             }
-            const calibration = await response.json();
+
             setState(prev => ({
                 ...prev,
                 calibration,
@@ -38,40 +38,40 @@ export const useModelCalibration = () => {
         return state.calibration[state.calibration.length - 1];
     };
     const getCalibrationHistory = (model) => {
-        return state.calibration
+        return state.calibration;
             .filter(c => c.model === model)
             .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
     };
     const getCalibrationTrend = (model) => {
-        const history = getCalibrationHistory(model);
+
         return history.map(h => ({
             timestamp: h.timestamp,
             brier_score: h.brier_score,
         }));
     };
     const getCalibrationError = (model) => {
-        const latest = getLatestCalibration();
+
         if (!latest)
             return null;
-        const calibrationCurve = latest.calibration_curve;
-        let totalError = 0;
-        let totalCount = 0;
+
+        const totalError = 0;
+        const totalCount = 0;
         for (const point of calibrationCurve) {
-            const error = Math.abs(point.prob_pred - point.prob_true);
+
             totalError += error * point.count;
             totalCount += point.count;
         }
         return totalCount > 0 ? totalError / totalCount : null;
     };
     const getCalibrationReliability = (model) => {
-        const latest = getLatestCalibration();
+
         if (!latest)
             return null;
-        const calibrationCurve = latest.calibration_curve;
-        let reliability = 0;
-        let totalCount = 0;
+
+        const reliability = 0;
+        const totalCount = 0;
         for (const point of calibrationCurve) {
-            const reliabilityScore = 1 - Math.abs(point.prob_pred - point.prob_true);
+
             reliability += reliabilityScore * point.count;
             totalCount += point.count;
         }

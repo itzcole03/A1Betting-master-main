@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { CYBER_COLORS, CYBER_GRADIENTS, CyberText, } from "./CyberTheme";
 import { MegaCard, MegaButton, MegaAlert } from "./MegaUI";
 import { Shield, Target, TrendingUp, Zap, Brain, Activity, DollarSign, ArrowUp, ArrowDown, Star, } from "lucide-react";
-// MEGA FEATURES SYSTEM - Consolidates 50+ feature components
+// MEGA FEATURES SYSTEM - Consolidates 50+ feature components;
 // ============================================================================
 // MEGA ARBITRAGE ENGINE (Consolidates ArbitrageDetector + Arbitrage + ArbitrageOpportunities)
 // ============================================================================
@@ -13,7 +13,7 @@ export const MegaArbitrageEngine = ({ opportunities = [], isScanning = true, onT
     useEffect(() => {
         if (isScanning) {
             const interval = setInterval(() => {
-                // Simulate new arbitrage opportunities
+                // Simulate new arbitrage opportunities;
                 const newOpportunity = {
                     id: Date.now().toString(),
                     sport: ["NBA", "NFL", "MLB", "NHL"][Math.floor(Math.random() * 4)],
@@ -27,7 +27,7 @@ export const MegaArbitrageEngine = ({ opportunities = [], isScanning = true, onT
                 };
                 setScanResults((prev) => [newOpportunity, ...prev.slice(0, 4)]);
                 setTotalProfit((prev) => prev + newOpportunity.profit);
-            }, 15000); // Every 15 seconds
+            }, 15000); // Every 15 seconds;
             return () => clearInterval(interval);
         }
     }, [isScanning]);
@@ -48,12 +48,12 @@ export const MegaArbitrageEngine = ({ opportunities = [], isScanning = true, onT
                                         color: CYBER_COLORS.accent,
                                         fontSize: "20px",
                                         marginBottom: "4px",
-                                    }, children: [scanResults.length > 0
+                                    }, children: [scanResults.length > 0;
                                             ? (scanResults.reduce((sum, opp) => sum + opp.roi, 0) /
                                                 scanResults.length).toFixed(1)
                                             : "0", "%"] }), _jsx(CyberText, { variant: "caption", color: "muted", children: "Average ROI" })] }) }), _jsx(MegaCard, { variant: "glass", padding: "md", children: _jsxs("div", { style: { textAlign: "center" }, children: [_jsx(Activity, { size: 24, color: isScanning ? CYBER_COLORS.primary : CYBER_COLORS.text.muted, style: { marginBottom: "8px" } }), _jsx(CyberText, { variant: "title", style: {
-                                        color: isScanning
-                                            ? CYBER_COLORS.primary
+                                        color: isScanning;
+                                            ? CYBER_COLORS.primary;
                                             : CYBER_COLORS.text.muted,
                                         fontSize: "20px",
                                         marginBottom: "4px",
@@ -85,7 +85,7 @@ export const MegaArbitrageEngine = ({ opportunities = [], isScanning = true, onT
                                                 }, children: "ARBITRAGE" })] }), _jsxs(CyberText, { variant: "title", style: { marginBottom: "4px" }, children: [opportunity.event, " - ", opportunity.market] }), _jsxs("div", { style: { display: "flex", gap: "24px", marginBottom: "12px" }, children: [_jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: "Expected Profit" }), _jsxs(CyberText, { variant: "body", style: { color: CYBER_COLORS.primary, fontWeight: "600" }, children: ["$", opportunity.profit.toFixed(2)] })] }), _jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: "ROI" }), _jsxs(CyberText, { variant: "body", style: {
                                                             color: CYBER_COLORS.secondary,
                                                             fontWeight: "600",
-                                                        }, children: [opportunity.roi.toFixed(1), "%"] })] }), _jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: "Time Left" }), _jsx(CyberText, { variant: "body", style: { color: CYBER_COLORS.accent, fontWeight: "600" }, children: opportunity.expiry })] })] }), _jsxs("div", { style: { display: "flex", gap: "16px", fontSize: "12px" }, children: [_jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: opportunity.bookmaker1.name }), _jsx(CyberText, { variant: "body", children: opportunity.bookmaker1.odds.toFixed(2) })] }), _jsx(CyberText, { variant: "caption", color: "muted", children: "vs" }), _jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: opportunity.bookmaker2.name }), _jsx(CyberText, { variant: "body", children: opportunity.bookmaker2.odds.toFixed(2) })] })] })] }), _jsxs("div", { style: { textAlign: "right" }, children: [_jsx(MegaButton, { variant: "primary", size: "sm", onClick: () => console.log("Execute arbitrage:", opportunity.id), style: { marginBottom: "8px" }, children: "Execute" }), _jsx("div", { style: { fontSize: "10px", color: CYBER_COLORS.text.muted }, children: "Risk-free guaranteed profit" })] })] }) }, opportunity.id))) }), scanResults.length === 0 && (_jsx(MegaAlert, { type: "info", title: "No Arbitrage Opportunities", children: _jsxs(CyberText, { variant: "body", children: ["Scanner is ", isScanning ? "actively searching" : "paused", ". Arbitrage opportunities will appear here when detected."] }) }))] }));
+                                                        }, children: [opportunity.roi.toFixed(1), "%"] })] }), _jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: "Time Left" }), _jsx(CyberText, { variant: "body", style: { color: CYBER_COLORS.accent, fontWeight: "600" }, children: opportunity.expiry })] })] }), _jsxs("div", { style: { display: "flex", gap: "16px", fontSize: "12px" }, children: [_jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: opportunity.bookmaker1.name }), _jsx(CyberText, { variant: "body", children: opportunity.bookmaker1.odds.toFixed(2) })] }), _jsx(CyberText, { variant: "caption", color: "muted", children: "vs" }), _jsxs("div", { children: [_jsx(CyberText, { variant: "caption", color: "muted", children: opportunity.bookmaker2.name }), _jsx(CyberText, { variant: "body", children: opportunity.bookmaker2.odds.toFixed(2) })] })] })] }), _jsxs("div", { style: { textAlign: "right" }, children: [_jsx(MegaButton, { variant: "primary", size: "sm", onClick: () => // console statement removed, style: { marginBottom: "8px" }, children: "Execute" }), _jsx("div", { style: { fontSize: "10px", color: CYBER_COLORS.text.muted }, children: "Risk-free guaranteed profit" })] })] }) }, opportunity.id))) }), scanResults.length === 0 && (_jsx(MegaAlert, { type: "info", title: "No Arbitrage Opportunities", children: _jsxs(CyberText, { variant: "body", children: ["Scanner is ", isScanning ? "actively searching" : "paused", ". Arbitrage opportunities will appear here when detected."] }) }))] }));
 };
 // ============================================================================
 // MEGA PREDICTION ENGINE (Consolidates all prediction components)
@@ -101,7 +101,7 @@ export const MegaPredictionEngine = ({ predictions = [], isRealTime = true, clas
     useEffect(() => {
         if (isRealTime) {
             const interval = setInterval(() => {
-                // Simulate real-time predictions
+                // Simulate real-time predictions;
                 const newPrediction = {
                     id: Date.now().toString(),
                     sport: ["NBA", "NFL", "MLB", "NHL"][Math.floor(Math.random() * 4)],
@@ -124,7 +124,7 @@ export const MegaPredictionEngine = ({ predictions = [], isRealTime = true, clas
                     totalPredictions: prev.totalPredictions + 1,
                     accuracy: 95 + Math.random() * 5,
                 }));
-            }, 20000); // Every 20 seconds
+            }, 20000); // Every 20 seconds;
             return () => clearInterval(interval);
         }
     }, [isRealTime]);
@@ -214,7 +214,7 @@ export const MegaRevolutionaryInterface = ({ accuracyData, className = "" }) => 
         ],
         trending: "up",
     };
-    const data = accuracyData || defaultData;
+
     return (_jsx("div", { className: `mega-revolutionary-interface ${className}`, children: _jsxs(MegaCard, { variant: "glowing", padding: "lg", children: [_jsxs("div", { style: { textAlign: "center", marginBottom: "32px" }, children: [_jsx("div", { style: {
                                 width: "80px",
                                 height: "80px",

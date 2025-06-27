@@ -1,9 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from "react";
-// Temporary static UserStats component to prevent infinite loop issues
-// TODO: Restore dynamic functionality once store subscription issues are resolved
+// Temporary static UserStats component to prevent infinite loop issues;
+// TODO: Restore dynamic functionality once store subscription issues are resolved;
 const UserStats = () => {
-    // Static mock data to prevent store subscription issues
+    // Static mock data to prevent store subscription issues;
     const mockStats = {
         totalBets: 12,
         winRate: 83.3,

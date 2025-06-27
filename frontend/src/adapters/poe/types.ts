@@ -1,4 +1,4 @@
-// Poe App Creator types
+// Poe App Creator types;
 export interface PoeTeamForm {
   wins: number;
   losses: number;
@@ -99,7 +99,7 @@ export interface PoePlayer {
   publicBetting?: string;
 }
 
-// Local API types
+// Local API types;
 export interface ApiProp {
   playerId: string;
   playerName: string;

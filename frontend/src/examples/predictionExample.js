@@ -1,8 +1,8 @@
 import { UserPersonalizationService } from '../services/analytics/userPersonalizationService';
 async function example() {
-    // Initialize services
-    const userPersonalizationService = new UserPersonalizationService();
-    // Create a sample user
+    // Initialize services;
+
+    // Create a sample user;
     const user = {
         id: 'user123',
         username: 'johndoe',
@@ -24,7 +24,7 @@ async function example() {
             totalProfit: 0,
         },
     };
-    // Create a sample bet
+    // Create a sample bet;
     const bet = {
         id: 'bet123',
         userId: user.id,
@@ -44,7 +44,7 @@ async function example() {
             },
         },
     };
-    // Create a sample prediction
+    // Create a sample prediction;
     const prediction = {
         id: 'pred123',
         eventId: bet.eventId,
@@ -99,19 +99,12 @@ async function example() {
             },
         },
     };
-    // Update user profile with the bet and prediction
+    // Update user profile with the bet and prediction;
     userPersonalizationService.updateUserProfile(user, bet, prediction);
-    // Get personalized prediction
-    const personalizedPrediction = await userPersonalizationService.getPersonalizedPrediction(user.id, prediction);
-    console.log('Original Prediction:', {
-        probability: prediction.probability,
-        confidence: prediction.confidence,
-    });
-    console.log('Personalized Prediction:', {
-        probability: personalizedPrediction.probability,
-        confidence: personalizedPrediction.confidence,
-        breakdown: personalizedPrediction.metadata.predictionBreakdown,
-    });
+    // Get personalized prediction;
+
+    // console statement removed
+    // console statement removed
 }
-// Run the example
+// Run the example;
 example().catch(console.error);

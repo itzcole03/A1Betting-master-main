@@ -45,7 +45,7 @@ export declare class SportradarService {
     /**
      * Extracts and returns normalized features for ensemble prediction.
      * @param context - { playerId, teamId, matchupId }
-     * @returns Normalized feature object
+     * @returns Normalized feature object;
      */
     getFeatures(context: {
         playerId?: string;

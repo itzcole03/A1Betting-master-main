@@ -1,6 +1,6 @@
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
-import { unifiedMonitor } from './UnifiedMonitor';
-// import { SystemError } from '@/core/UnifiedError'; // Disabled: file not found
+import { unifiedMonitor } from './UnifiedMonitor.ts';
+// import { SystemError } from '@/core/UnifiedError.ts'; // Disabled: file not found;
 
 
 export interface LogContext {
@@ -55,11 +55,9 @@ export class UnifiedLogger {
       return this.config.format(context);
     }
 
-    const timestamp = new Date(context.timestamp).toISOString();
-    const component = context.component || this.config.component || 'system';
-    const action = context.action ? ` [${context.action}]` : '';
-    const details = context.details ? ` ${JSON.stringify(context.details)}` : '';
-    const error = context.error ? `\nError: ${context.error.message}` : '';
+
+
+
 
     return `[${timestamp}] ${context.level.toUpperCase()} [${component}]${action}: ${context.message}${details}${error}`;
   }
@@ -70,7 +68,7 @@ export class UnifiedLogger {
     }
 
     if (this.config.enableConsole) {
-      const formattedMessage = this.formatMessage(context);
+
       switch (context.level) {
         case 'debug':
           console.debug(formattedMessage);
@@ -79,16 +77,16 @@ export class UnifiedLogger {
           console.info(formattedMessage);
           break;
         case 'warn':
-          console.warn(formattedMessage);
+          // console statement removed
           break;
         case 'error':
-          console.error(formattedMessage);
+          // console statement removed
           break;
       }
     }
 
     if (this.config.enableMonitoring) {
-      // Metrics recording temporarily disabled - needs UnifiedMonitor interface update
+      // Metrics recording temporarily disabled - needs UnifiedMonitor interface update;
       // unifiedMonitor.recordMetric(`log.${context.level}`, 1, {
       //   component: context.component || this.config.component || 'system',
       //   action: context.action || 'unknown',
@@ -148,7 +146,7 @@ export class UnifiedLogger {
 
   public trace(message: string, context?: Partial<LogContext>): void {
     this.log({
-      level: 'debug', // Treat trace as debug level since our LogLevel doesn't have trace
+      level: 'debug', // Treat trace as debug level since our LogLevel doesn't have trace;
       message,
       timestamp: Date.now(),
       ...context,

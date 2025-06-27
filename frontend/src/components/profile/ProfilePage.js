@@ -27,11 +27,11 @@ export const ProfilePage = () => {
         setIsEditing(false);
     };
     const handleAvatarUpload = (event) => {
-        const file = event.target.files?.[0];
+
         if (file) {
-            const reader = new FileReader();
+
             reader.onload = (e) => {
-                const result = e.target?.result;
+
                 if (isEditing) {
                     setEditedProfile((prev) => ({ ...prev, avatar: result }));
                 }

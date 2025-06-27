@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface AccordionItem {
     title: string;
     content: React.ReactNode;

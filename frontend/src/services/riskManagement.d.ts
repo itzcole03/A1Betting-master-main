@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events';
-import { MLPrediction } from './mlPredictions';
+import { EventEmitter } from 'events.ts';
+import { MLPrediction } from './mlPredictions.ts';
 interface Bet {
     id: string;
     recommendationId: string;

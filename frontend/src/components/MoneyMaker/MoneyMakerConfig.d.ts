@@ -1,5 +1,5 @@
-import React from 'react';
-import { MoneyMakerConfig as ConfigType } from '@/types';
+import React from 'react.ts';
+import { MoneyMakerConfig as ConfigType } from '@/types.ts';
 interface Props {
     onConfigChange: (config: ConfigType) => void;
     onActivate: () => void;

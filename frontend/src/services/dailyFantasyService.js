@@ -13,7 +13,7 @@ class DailyFantasyService {
     }
     async getContests(sport) {
         try {
-            const response = await this.api.get(`/contests? sport=${sport}`);
+
             return response.data;
         }
         catch (error) {
@@ -23,7 +23,7 @@ class DailyFantasyService {
     }
     async getPlayers(contestId) {
         try {
-            const response = await this.api.get(`/contests/${contestId}/players`);
+
             return response.data;
         }
         catch (error) {
@@ -33,7 +33,7 @@ class DailyFantasyService {
     }
     async getPlayerProjections(playerId) {
         try {
-            const response = await this.api.get(`/players/${playerId}/projections`);
+
             return response.data.projectedPoints;
         }
         catch (error) {
@@ -55,7 +55,7 @@ class DailyFantasyService {
     }
     async getContestResults(contestId) {
         try {
-            const response = await this.api.get(`/contests/${contestId}/results`);
+
             return response.data;
         }
         catch (error) {
@@ -65,7 +65,7 @@ class DailyFantasyService {
     }
     async getPlayerStats(playerId, timeframe) {
         try {
-            const response = await this.api.get(`/players/${playerId}/stats?timeframe=${timeframe}`);
+
             return response.data;
         }
         catch (error) {
@@ -75,7 +75,7 @@ class DailyFantasyService {
     }
     async getContestTrends(contestId) {
         try {
-            const response = await this.api.get(`/contests/${contestId}/trends`);
+
             return response.data;
         }
         catch (error) {
@@ -85,7 +85,7 @@ class DailyFantasyService {
     }
     async getPlayerOwnership(contestId) {
         try {
-            const response = await this.api.get(`/contests/${contestId}/ownership`);
+
             return response.data;
         }
         catch (error) {
@@ -95,7 +95,7 @@ class DailyFantasyService {
     }
     async getSalaryChanges(contestId) {
         try {
-            const response = await this.api.get(`/contests/${contestId}/salary-changes`);
+
             return response.data;
         }
         catch (error) {

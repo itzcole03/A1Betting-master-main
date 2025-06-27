@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
-import { toast } from 'react-toastify';
+import { useCallback } from 'react.ts';
+import { toast } from 'react-toastify.ts';
 
 export const useErrorBoundary = () => {
   const showBoundary = useCallback((error: Error) => {
-    console.error('Error caught by boundary:', error);
+    // console statement removed
     toast.error(error.message || 'An error occurred');
   }, []);
 

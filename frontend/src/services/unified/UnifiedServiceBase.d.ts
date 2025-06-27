@@ -1,8 +1,8 @@
-import UnifiedErrorService from './errorService';
-import UnifiedNotificationService from './notificationService';
-import UnifiedLoggingService from './loggingService';
-import UnifiedSettingsService from './settingsService';
-import { UnifiedServiceRegistry } from './UnifiedServiceRegistry';
+import UnifiedErrorService from './errorService.ts';
+import UnifiedNotificationService from './notificationService.ts';
+import UnifiedLoggingService from './loggingService.ts';
+import UnifiedSettingsService from './settingsService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
 export declare abstract class UnifiedServiceBase {
     protected readonly errorService: UnifiedErrorService;
     protected readonly notificationService: UnifiedNotificationService;

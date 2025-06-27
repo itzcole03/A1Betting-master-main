@@ -3,7 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Dict, Any
 
 # Create a simple FastAPI app for testing
@@ -32,10 +32,10 @@ async def root():
 async def health_check():
     """Basic health check"""
     uptime = time.time() - app_start_time
-    
+
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "version": "1.0.0",
         "uptime": uptime,
         "services": {
@@ -48,10 +48,10 @@ async def health_check():
 async def get_comprehensive_health():
     """Comprehensive health check for all system components"""
     uptime = time.time() - app_start_time
-    
+
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow().isoformat(),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "version": "1.0.0",
         "uptime": uptime,
         "services": {

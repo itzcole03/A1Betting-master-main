@@ -12,8 +12,6 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
     modelMetadata: {},
   });
 
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const analyticsService = serviceRegistry.getService("analytics");
 
   useEffect(() => {
     if (!eventId || !marketId || !selectionId) return;
@@ -23,10 +21,10 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
       setError(null);
 
       try {
-        // Using available analytics service methods
+        // Using available analytics service methods;
         const [performanceMetrics, bettingStats] = await Promise.all([
           analyticsService?.getPerformanceMetrics("day").catch(() => ({})),
-          analyticsService
+          analyticsService;
             ?.getBettingStats(eventId, marketId, selectionId)
             .catch(() => ({})),
         ]);
@@ -60,8 +58,8 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
         });
       } catch (err) {
         const errorMessage =
-          err instanceof Error
-            ? err.message
+          err instanceof Error;
+            ? err.message;
             : "Failed to fetch event analytics";
         setError(errorMessage);
       } finally {
@@ -72,7 +70,7 @@ export const useEventAnalytics = (eventId, marketId, selectionId) => {
     fetchEventAnalytics();
   }, [eventId, marketId, selectionId, analyticsService]);
 
-  // Helper functions for UI styling
+  // Helper functions for UI styling;
   const getMetricColor = (metric, value) => {
     if (typeof value !== "number") return "gray";
     if (value >= 0.7) return "green";

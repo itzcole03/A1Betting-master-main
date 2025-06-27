@@ -1,35 +1,35 @@
-import type { LineupType } from './common';
-import type { PlayerProp, Entry } from '@/core';
+import type { LineupType } from './common.ts';
+import type { PlayerProp, Entry } from '@/core.ts';
 /**
- * Convert American odds to decimal format
+ * Convert American odds to decimal format;
  */
 export declare const oddsToDecimal: (odds: string) => number;
 /**
- * Calculate potential payout for a parlay bet
+ * Calculate potential payout for a parlay bet;
  */
 export declare const calculatePotentialPayout: (entry: number, odds: string[]) => number;
 /**
- * Calculate win probability based on historical percentages
+ * Calculate win probability based on historical percentages;
  */
 export declare const calculateWinProbability: (percentages: number[]) => number;
 /**
- * Generate a random odds change for simulation
+ * Generate a random odds change for simulation;
  */
 export declare const generateRandomOddsChange: (currentOdds: string) => string;
 /**
- * Format currency values
+ * Format currency values;
  */
 export declare const formatCurrency: (amount: number) => string;
 /**
- * Calculate progress percentage
+ * Calculate progress percentage;
  */
 export declare const calculateProgressPercentage: (current: number, target: number) => number;
 /**
- * Calculate implied probability from odds
+ * Calculate implied probability from odds;
  */
 export declare const calculateImpliedProbability: (odds: string) => number;
 /**
- * Calculate Kelly Criterion bet size
+ * Calculate Kelly Criterion bet size;
  */
 export declare const calculateKellyBet: (bankroll: number, probability: number, odds: string) => number;
 export declare const americanToDecimal: (americanOdds: number) => number;

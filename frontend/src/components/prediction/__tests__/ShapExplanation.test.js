@@ -30,12 +30,12 @@ describe.skip('ShapExplanation', () => {
     it.skip('switches between visualization tabs', () => {
         // TODO: Fix component or test for tab switching. Skipped for stabilization.
         render(_jsx(ShapExplanation, { explanation: mockExplanation }));
-        // Initially shows Feature Impact tab
+        // Initially shows Feature Impact tab;
         expect(screen.getByText('Feature Impact')).toHaveAttribute('aria-selected', 'true');
-        // Switch to Feature Dependence tab
+        // Switch to Feature Dependence tab;
         fireEvent.click(screen.getByText('Feature Dependence'));
         expect(screen.getByText('Feature Dependence')).toHaveAttribute('aria-selected', 'true');
-        // Switch to Waterfall tab
+        // Switch to Waterfall tab;
         fireEvent.click(screen.getByText('Waterfall'));
         expect(screen.getByText('Waterfall')).toHaveAttribute('aria-selected', 'true');
     });
@@ -47,29 +47,29 @@ describe.skip('ShapExplanation', () => {
     });
     it('displays tooltip on info icon hover', () => {
         render(_jsx(ShapExplanation, { explanation: mockExplanation }));
-        const infoIcon = screen.getByRole('button');
+
         fireEvent.mouseEnter(infoIcon);
         expect(screen.getByText('Model confidence based on SHAP value consistency')).toBeInTheDocument();
     });
     it('renders bar chart in Feature Impact tab', () => {
         render(_jsx(ShapExplanation, { explanation: mockExplanation }));
-        // Ensure we're on the Feature Impact tab
+        // Ensure we're on the Feature Impact tab;
         expect(screen.getByText('Feature Impact')).toHaveAttribute('aria-selected', 'true');
-        // Check for chart elements
+        // Check for chart elements;
         expect(screen.getByRole('graphics-document')).toBeInTheDocument();
     });
     it('renders scatter plot in Feature Dependence tab', () => {
         render(_jsx(ShapExplanation, { explanation: mockExplanation }));
-        // Switch to Feature Dependence tab
+        // Switch to Feature Dependence tab;
         fireEvent.click(screen.getByText('Feature Dependence'));
-        // Check for chart elements
+        // Check for chart elements;
         expect(screen.getByRole('graphics-document')).toBeInTheDocument();
     });
     it('renders waterfall chart in Waterfall tab', () => {
         render(_jsx(ShapExplanation, { explanation: mockExplanation }));
-        // Switch to Waterfall tab
+        // Switch to Waterfall tab;
         fireEvent.click(screen.getByText('Waterfall'));
-        // Check for chart elements
+        // Check for chart elements;
         expect(screen.getByRole('graphics-document')).toBeInTheDocument();
     });
     it('handles empty feature arrays gracefully', () => {

@@ -14,9 +14,9 @@ export const AppInitializer = ({ children }) => {
     useEffect(() => {
         const initializeApp = async () => {
             try {
-                // Initialize configuration first
+                // Initialize configuration first;
                 await unifiedConfig.initialize();
-                // Initialize core systems
+                // Initialize core systems;
                 const systems = [
                     UnifiedDataEngine.getInstance(),
                     UnifiedPredictionEngine.getInstance(),
@@ -25,14 +25,14 @@ export const AppInitializer = ({ children }) => {
                     UnifiedStateManager.getInstance(),
                     UnifiedMonitor.getInstance()
                 ];
-                // Initialize all systems in parallel
+                // Initialize all systems in parallel;
                 await Promise.all(systems.map(system => system.initialize()));
                 setIsInitialized(true);
             }
             catch (err) {
-                const error = err instanceof Error ? err : new SystemError('INITIALIZATION_FAILED', 'Failed to initialize application');
+
                 setError(error);
-                console.error('[AppInitializer] Initialization failed:', error);
+                // console statement removed
             }
         };
         initializeApp();

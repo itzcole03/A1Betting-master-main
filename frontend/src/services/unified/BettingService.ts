@@ -1,14 +1,14 @@
 
-import axios from 'axios';
-import { toast } from 'react-toastify';
-import { WebSocketManager } from './WebSocketManager';
+import axios from 'axios.ts';
+import { toast } from 'react-toastify.ts';
+import { WebSocketManager } from './WebSocketManager.ts';
 import {
   RiskProfileType,
   BettingMetrics,
   BettingHistoryEntry,
   BettingOpportunity,
   BetRecommendation,
-} from '../../types/betting';
+} from '@/types/betting.ts';
 
 interface BettingConfig {
   minConfidence: number;
@@ -56,7 +56,7 @@ class UnifiedBettingService {
   private handleBettingOpportunities(
     data: { opportunities: BettingOpportunity[] }
   ): void {
-    const opportunities = this.validateBettingOpportunities(data.opportunities);
+
     this.emit('betting_opportunities', { opportunities });
   }
 
@@ -69,15 +69,15 @@ class UnifiedBettingService {
     opportunities: BettingOpportunity[]
   ): BettingOpportunity[] {
     return opportunities.filter((opportunity) => {
-      const confidence = this.calculateOpportunityConfidence(opportunity);
+
       return confidence >= this.config.minConfidence;
     });
   }
 
   private calculateOpportunityConfidence(
-    opportunity: BettingOpportunity
+    opportunity: BettingOpportunity;
   ): number {
-    // Use only fields that exist on BettingOpportunity
+    // Use only fields that exist on BettingOpportunity;
     return opportunity.confidence;
   }
 
@@ -96,8 +96,8 @@ class UnifiedBettingService {
   }
 
   private calculateWinRate(result: BettingMetrics): number {
-    const wins = result.winningBets ?? 0;
-    const total = result.totalBets ?? 1;
+
+
     return total === 0 ? 0 : wins / total;
   }
 
@@ -106,8 +106,8 @@ class UnifiedBettingService {
   }
 
   private calculateROI(result: BettingMetrics): number {
-    const profit = result.totalProfit ?? 0;
-    const totalStaked = result.totalStake ?? 1;
+
+
     return totalStaked === 0 ? 0 : (profit / totalStaked) * 100;
   }
 
@@ -116,7 +116,7 @@ class UnifiedBettingService {
       const { data } = await axios.get(`${this.apiUrl}/api/betting/opportunities`) as { data: BettingOpportunity[] };
       return this.validateBettingOpportunities(data);
     } catch (error: unknown) {
-      console.error('Error fetching betting opportunities:', error);
+      // console statement removed
       toast.error('Failed to fetch betting opportunities');
       return [];
     }
@@ -128,7 +128,7 @@ class UnifiedBettingService {
       this.emit('bet_placed', bet);
       return true;
     } catch (error: unknown) {
-      console.error('Error placing bet:', error);
+      // console statement removed
       toast.error('Failed to place bet');
       return false;
     }
@@ -139,7 +139,7 @@ class UnifiedBettingService {
       const { data } = await axios.get(`${this.apiUrl}/api/betting/metrics`) as { data: BettingMetrics };
       return data;
     } catch (error: unknown) {
-      console.error('Error fetching betting metrics:', error);
+      // console statement removed
       return {
         totalBets: 0,
         winningBets: 0,
@@ -161,7 +161,7 @@ class UnifiedBettingService {
       const { data } = await axios.get(`${this.apiUrl}/api/betting/history`) as { data: BettingHistoryEntry[] };
       return data;
     } catch (error: unknown) {
-      console.error('Error fetching bet history:', error);
+      // console statement removed
       return [];
     }
   }
@@ -181,10 +181,10 @@ class UnifiedBettingService {
 
   public async get<T>(url: string): Promise<T> {
     try {
-      const response = await axios.get(`${this.apiUrl}${url}`);
+
       return ((response as unknown) as { data: T }).data;
     } catch (error: unknown) {
-      console.error(`Error fetching data from ${url}:`, error);
+      // console statement removed
       toast.error(`Failed to fetch data from ${url}`);
       throw error;
     }
@@ -192,7 +192,7 @@ class UnifiedBettingService {
 
   public async post<T>(url: string, data: unknown): Promise<T> {
     try {
-      const response = await axios.post(`${this.apiUrl}${url}`, data);
+
       return ((response as unknown) as { data: T }).data;
     } catch (error: unknown) {
       toast.error(`Failed to post data to ${url}`);

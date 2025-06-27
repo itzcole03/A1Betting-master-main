@@ -1,6 +1,6 @@
-import * as tf from '@tensorflow/tfjs';
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { KellyCriterion } from './KellyCriterion';
+import * as tf from '@tensorflow/tfjs.ts';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { KellyCriterion } from './KellyCriterion.ts';
 
 interface BetMetrics {
   accuracy: number;
@@ -32,14 +32,11 @@ export class BestBetSelector {
 
   public async selectBets(predictions: tf.Tensor, labels: tf.Tensor): Promise<BetSelection> {
     try {
-      const predArray = await predictions.array();
-      const labelArray = await labels.array();
 
-      // Calculate bet metrics
-      const metrics = await this.calculateBetMetrics(predArray, labelArray);
 
-      // Select best bets based on criteria
-      const selectedBets = this.filterBets(predArray, metrics);
+      // Calculate bet metrics;
+
+      // Select best bets based on criteria;
 
       return {
         selectedBets,
@@ -57,23 +54,17 @@ export class BestBetSelector {
     predictions: number[][],
     labels: number[][]
   ): Promise<BetMetrics> {
-    // Calculate accuracy
-    const accuracy = this.calculateAccuracy(predictions, labels);
+    // Calculate accuracy;
 
-    // Calculate ROI
-    const roi = this.calculateROI(predictions, labels);
+    // Calculate ROI;
 
-    // Calculate expected value
-    const expectedValue = this.calculateExpectedValue(predictions, labels);
+    // Calculate expected value;
 
-    // Calculate confidence
-    const confidence = this.calculateConfidence(predictions);
+    // Calculate confidence;
 
-    // Calculate risk level
-    const riskLevel = this.calculateRiskLevel(predictions);
+    // Calculate risk level;
 
-    // Calculate edge
-    const edge = this.calculateEdge(predictions, labels);
+    // Calculate edge;
 
     return {
       accuracy,
@@ -86,12 +77,11 @@ export class BestBetSelector {
   }
 
   private calculateAccuracy(predictions: number[][], labels: number[][]): number {
-    let correct = 0;
-    let total = 0;
+    const correct = 0;
+    const total = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      const pred = predictions[i].indexOf(Math.max(...predictions[i]));
-      const label = labels[i].indexOf(Math.max(...labels[i]));
+    for (const i = 0; i < predictions.length; i++) {
+
 
       if (pred === label) {
         correct++;
@@ -103,13 +93,12 @@ export class BestBetSelector {
   }
 
   private calculateROI(predictions: number[][], labels: number[][]): number {
-    let totalInvestment = 0;
-    let totalReturn = 0;
+    const totalInvestment = 0;
+    const totalReturn = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      const pred = predictions[i].indexOf(Math.max(...predictions[i]));
-      const label = labels[i].indexOf(Math.max(...labels[i]));
-      const confidence = Math.max(...predictions[i]);
+    for (const i = 0; i < predictions.length; i++) {
+
+
 
       totalInvestment += confidence;
       if (pred === label) {
@@ -121,13 +110,12 @@ export class BestBetSelector {
   }
 
   private calculateExpectedValue(predictions: number[][], labels: number[][]): number {
-    let totalEV = 0;
-    let count = 0;
+    const totalEV = 0;
+    const count = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      const pred = predictions[i].indexOf(Math.max(...predictions[i]));
-      const label = labels[i].indexOf(Math.max(...labels[i]));
-      const confidence = Math.max(...predictions[i]);
+    for (const i = 0; i < predictions.length; i++) {
+
+
 
       if (pred === label) {
         totalEV += confidence * (1 / confidence) - 1;
@@ -141,30 +129,28 @@ export class BestBetSelector {
   }
 
   private calculateConfidence(predictions: number[][]): number {
-    const confidences = predictions.map(p => Math.max(...p));
+
     return confidences.reduce((sum, conf) => sum + conf, 0) / confidences.length;
   }
 
   private calculateRiskLevel(predictions: number[][]): number {
-    const confidences = predictions.map(p => Math.max(...p));
-    const std = this.calculateStandardDeviation(confidences);
-    const mean = confidences.reduce((sum, conf) => sum + conf, 0) / confidences.length;
+
+
 
     return std / mean;
   }
 
   private calculateEdge(predictions: number[][], labels: number[][]): number {
-    let totalEdge = 0;
-    let count = 0;
+    const totalEdge = 0;
+    const count = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      const pred = predictions[i].indexOf(Math.max(...predictions[i]));
-      const label = labels[i].indexOf(Math.max(...labels[i]));
-      const confidence = Math.max(...predictions[i]);
+    for (const i = 0; i < predictions.length; i++) {
+
+
 
       if (pred === label) {
-        const impliedProb = 1 / confidence;
-        const actualProb = this.calculateActualProbability(predictions, labels, pred);
+
+
         totalEdge += actualProb - impliedProb;
       }
       count++;
@@ -174,23 +160,22 @@ export class BestBetSelector {
   }
 
   private calculateStandardDeviation(values: number[]): number {
-    const mean = values.reduce((sum, val) => sum + val, 0) / values.length;
-    const squareDiffs = values.map(value => Math.pow(value - mean, 2));
-    const avgSquareDiff = squareDiffs.reduce((sum, val) => sum + val, 0) / squareDiffs.length;
+
+
+
     return Math.sqrt(avgSquareDiff);
   }
 
   private calculateActualProbability(
     predictions: number[][],
     labels: number[][],
-    outcome: number
+    outcome: number;
   ): number {
-    let correct = 0;
-    let total = 0;
+    const correct = 0;
+    const total = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      const pred = predictions[i].indexOf(Math.max(...predictions[i]));
-      const label = labels[i].indexOf(Math.max(...labels[i]));
+    for (const i = 0; i < predictions.length; i++) {
+
 
       if (pred === outcome) {
         if (label === outcome) {
@@ -206,14 +191,13 @@ export class BestBetSelector {
   private filterBets(predictions: number[][], metrics: BetMetrics): number[] {
     const selectedBets: number[] = [];
 
-    for (let i = 0; i < predictions.length; i++) {
-      const confidence = Math.max(...predictions[i]);
-      const edge = this.calculateEdgeForBet(predictions[i], metrics);
+    for (const i = 0; i < predictions.length; i++) {
+
 
       if (
         confidence >= this.minConfidence &&
         edge >= this.minEdge &&
-        metrics.riskLevel <= this.maxRiskLevel
+        metrics.riskLevel <= this.maxRiskLevel;
       ) {
         selectedBets.push(i);
       }
@@ -223,14 +207,14 @@ export class BestBetSelector {
   }
 
   private calculateEdgeForBet(prediction: number[], metrics: BetMetrics): number {
-    const confidence = Math.max(...prediction);
-    const impliedProb = 1 / confidence;
+
+
     return metrics.accuracy - impliedProb;
   }
 
   public getBetRecommendations(
     selection: BetSelection,
-    bankroll: number
+    bankroll: number;
   ): Array<{
     betIndex: number;
     stake: number;
@@ -238,7 +222,7 @@ export class BestBetSelector {
     expectedValue: number;
   }> {
     return selection.selectedBets.map(betIndex => {
-      const confidence = Math.max(...selection.metrics.confidence);
+
       const stake = this.kellyCriterion.getBetSize(
         {
           fraction: confidence,
@@ -247,7 +231,7 @@ export class BestBetSelector {
           optimalStake: bankroll * confidence,
           confidence: confidence,
         },
-        bankroll
+        bankroll;
       );
 
       return {

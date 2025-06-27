@@ -23,7 +23,7 @@ export class ModelMetricsManager {
         }
     }
     calculateDriftMetrics(newData) {
-        // Implement drift detection logic here
+        // Implement drift detection logic here;
         this.metrics.driftMetrics = {
             featureDrift: {},
             predictionDrift: 0,
@@ -34,7 +34,7 @@ export class ModelMetricsManager {
         return JSON.stringify(this.metrics, null, 2);
     }
     static fromJSON(json) {
-        const metrics = JSON.parse(json);
+
         return new ModelMetricsManager(metrics);
     }
 }

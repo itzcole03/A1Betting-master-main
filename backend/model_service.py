@@ -9,7 +9,7 @@ import pickle
 import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
@@ -92,7 +92,7 @@ class ModelLoader:
             model_path = self.models_directory / metadata.file_path
 
             if not model_path.exists():
-                logger.error(f"Model file not found: {model_path}")
+                logger.error("Model file not found: {model_path}")
                 return False
 
             # Load model in thread pool to avoid blocking
@@ -113,11 +113,11 @@ class ModelLoader:
             self.loaded_models[metadata.name] = model
             self.model_metadata[metadata.name] = metadata
 
-            logger.info(f"Loaded model {metadata.name} v{metadata.version}")
+            logger.info("Loaded model {metadata.name} v{metadata.version}")
             return True
 
-        except Exception as e:
-            logger.error(f"Error loading model {metadata.name}: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error loading model {metadata.name}: {e!s}")
             return False
 
     async def unload_model(self, model_name: str):
@@ -125,7 +125,7 @@ class ModelLoader:
         if model_name in self.loaded_models:
             del self.loaded_models[model_name]
             del self.model_metadata[model_name]
-            logger.info(f"Unloaded model {model_name}")
+            logger.info("Unloaded model {model_name}")
 
     def get_model(self, model_name: str) -> Optional[Any]:
         """Get loaded model"""
@@ -168,7 +168,7 @@ class ModelInferenceEngine:
             metadata = self.model_loader.get_metadata(model_name)
 
             if not model or not metadata:
-                logger.error(f"Model {model_name} not loaded")
+                logger.error("Model {model_name} not loaded")
                 return None
 
             # Prepare features
@@ -224,8 +224,8 @@ class ModelInferenceEngine:
                 },
             )
 
-        except Exception as e:
-            logger.error(f"Error in single model prediction for {model_name}: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error in single model prediction for {model_name}: {e!s}")
             return None
 
     async def predict_ensemble(self, request: PredictionRequest) -> EnsemblePrediction:
@@ -301,9 +301,9 @@ class ModelInferenceEngine:
                 processing_time=processing_time,
             )
 
-        except Exception as e:
+        except Exception as e:  # pylint: disable=broad-exception-caught
             self.inference_stats["failed_predictions"] += 1
-            logger.error(f"Error in ensemble prediction: {e!s}")
+            logger.error("Error in ensemble prediction: {e!s}")
             raise
 
     def _prepare_features(
@@ -317,13 +317,13 @@ class ModelInferenceEngine:
                 if feature_name in features:
                     feature_vector.append(float(features[feature_name]))
                 else:
-                    logger.warning(f"Missing feature: {feature_name}")
+                    logger.warning("Missing feature: {feature_name}")
                     feature_vector.append(0.0)  # Default value
 
             return np.array(feature_vector).reshape(1, -1)
 
-        except Exception as e:
-            logger.error(f"Error preparing features: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error preparing features: {e!s}")
             return None
 
     def _predict_with_model(
@@ -359,8 +359,8 @@ class ModelInferenceEngine:
 
             return float(confidence)
 
-        except Exception as e:
-            logger.warning(f"Error calculating confidence: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Error calculating confidence: {e!s}")
             return 0.5
 
     async def _get_feature_importance(
@@ -379,8 +379,8 @@ class ModelInferenceEngine:
                 }
             else:
                 return {}
-        except Exception as e:
-            logger.warning(f"Error getting feature importance: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Error getting feature importance: {e!s}")
             return {}
 
     async def _get_shap_values(
@@ -398,8 +398,8 @@ class ModelInferenceEngine:
                 feature_name: float(np.random.uniform(-1, 1))
                 for feature_name in metadata.features
             }
-        except Exception as e:
-            logger.warning(f"Error getting SHAP values: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Error getting SHAP values: {e!s}")
             return {}
 
     def _calculate_ensemble_result(
@@ -456,8 +456,8 @@ class ModelService:
             self._initialized = True
             logger.info("Model service initialized successfully")
 
-        except Exception as e:
-            logger.error(f"Failed to initialize model service: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Failed to initialize model service: {e!s}")
             raise
 
     async def predict(self, request: PredictionRequest) -> EnsemblePrediction:
@@ -513,11 +513,11 @@ class ModelService:
                 if config.name == model_name:
                     return await self.model_loader.load_model(config)
 
-            logger.error(f"Model configuration not found: {model_name}")
+            logger.error("Model configuration not found: {model_name}")
             return False
 
-        except Exception as e:
-            logger.error(f"Error reloading model {model_name}: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error reloading model {model_name}: {e!s}")
             return False
 
     async def _load_default_models(self):
@@ -528,7 +528,7 @@ class ModelService:
             if config.is_active:
                 success = await self.model_loader.load_model(config)
                 if not success:
-                    logger.warning(f"Failed to load model: {config.name}")
+                    logger.warning("Failed to load model: {config.name}")
 
     async def _discover_models(self) -> List[ModelMetadata]:
         """Discover available models from filesystem"""
@@ -536,7 +536,7 @@ class ModelService:
         model_configs = []
 
         if not models_dir.exists():
-            logger.warning(f"Models directory not found: {models_dir}")
+            logger.warning("Models directory not found: {models_dir}")
             return []
 
         # Look for model configuration files
@@ -561,8 +561,8 @@ class ModelService:
 
                 model_configs.append(metadata)
 
-            except Exception as e:
-                logger.error(f"Error loading model config {config_file}: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Error loading model config {config_file}: {e!s}")
                 continue
 
         return model_configs
@@ -589,8 +589,8 @@ class ModelService:
 
                 await session.commit()
 
-        except Exception as e:
-            logger.error(f"Error storing prediction: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error storing prediction: {e!s}")
 
     async def _model_update_task(self):
         """Background task to check for model updates"""
@@ -620,8 +620,8 @@ class ModelService:
                         f"Model update: +{len(new_models)}, -{len(removed_models)}"
                     )
 
-            except Exception as e:
-                logger.error(f"Error in model update task: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Error in model update task: {e!s}")
 
     async def _performance_monitoring_task(self):
         """Background task to monitor and log performance"""
@@ -631,7 +631,7 @@ class ModelService:
 
                 # Log performance metrics
                 stats = self.inference_engine.inference_stats
-                logger.info(f"Model performance: {stats}")
+                logger.info("Model performance: {stats}")
 
                 # Store performance metrics in database
                 async with db_manager.get_session() as session:
@@ -640,16 +640,16 @@ class ModelService:
                             model_name=model_name,
                             metric_name="usage_count",
                             metric_value=float(usage_count),
-                            period_start=datetime.utcnow() - timedelta(minutes=5),
-                            period_end=datetime.utcnow(),
+                            period_start=datetime.now(timezone.utc) - timedelta(minutes=5),
+                            period_end=datetime.now(timezone.utc),
                             sample_size=usage_count,
                         )
                         session.add(performance)
 
                     await session.commit()
 
-            except Exception as e:
-                logger.error(f"Error in performance monitoring: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Error in performance monitoring: {e!s}")
 
     async def _get_system_resources(self) -> Dict[str, Any]:
         """Get system resource usage"""

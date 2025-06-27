@@ -1,5 +1,5 @@
-import { toast, ToastOptions } from 'react-toastify';
-import UnifiedSettingsService from './settingsService';
+import { toast, ToastOptions } from 'react-toastify.ts';
+import UnifiedSettingsService from './settingsService.ts';
 
 interface NotificationConfig {
   position: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
@@ -52,12 +52,12 @@ class UnifiedNotificationService {
 
   private loadNotifications(): void {
     try {
-      const stored = localStorage.getItem(this.STORAGE_KEY);
+
       if (stored) {
         this.notifications = JSON.parse(stored);
       }
     } catch (error) {
-      console.error('Error loading notifications:', error);
+      // console statement removed
       this.notifications = [];
     }
   }
@@ -66,7 +66,7 @@ class UnifiedNotificationService {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.notifications));
     } catch (error) {
-      console.error('Error saving notifications:', error);
+      // console statement removed
     }
   }
 
@@ -74,7 +74,7 @@ class UnifiedNotificationService {
     type: Notification['type'],
     message: string,
     title?: string,
-    data?: any
+    data?: any;
   ): Notification {
     return {
       id: Date.now().toString(),
@@ -88,7 +88,6 @@ class UnifiedNotificationService {
   }
 
   private showToast(notification: Notification, options?: ToastOptions): void {
-    const config = { ...this.defaultConfig, ...options };
 
     switch (notification.type) {
       case 'success':
@@ -110,33 +109,32 @@ class UnifiedNotificationService {
     message: string,
     title?: string,
     data?: any,
-    options?: ToastOptions
+    options?: ToastOptions;
   ): void {
-    const preferences = this.settingsService.getPreferences();
 
-    // Check if notifications are enabled
+    // Check if notifications are enabled;
     if (!preferences.notifications.enabled) {
       return;
     }
 
-    // Create and store notification
-    const notification = this.createNotification(type, message, title, data);
+    // Create and store notification;
+
     this.notifications.unshift(notification);
 
-    // Trim notifications if exceeding max limit
+    // Trim notifications if exceeding max limit;
     if (this.notifications.length > this.MAX_NOTIFICATIONS) {
       this.notifications = this.notifications.slice(0, this.MAX_NOTIFICATIONS);
     }
 
-    // Save notifications
+    // Save notifications;
     this.saveNotifications();
 
-    // Show toast if appropriate
+    // Show toast if appropriate;
     if (preferences.notifications.desktop) {
       this.showToast(notification, options);
     }
 
-    // Dispatch notification event
+    // Dispatch notification event;
     this.dispatchNotificationEvent(notification);
   }
 
@@ -156,7 +154,7 @@ class UnifiedNotificationService {
   }
 
   public markAsRead(id: string): void {
-    const notification = this.notifications.find(n => n.id === id);
+
     if (notification) {
       notification.read = true;
       this.saveNotifications();
@@ -174,7 +172,7 @@ class UnifiedNotificationService {
   }
 
   public clearOldNotifications(maxAge: number): void {
-    const cutoff = Date.now() - maxAge;
+
     this.notifications = this.notifications.filter(n => n.timestamp > cutoff);
     this.saveNotifications();
   }

@@ -15,7 +15,7 @@ export class EnsemblePredictor {
         this.initializeModels();
     }
     async initializeModels() {
-        // Initialize base models
+        // Initialize base models;
         for (const modelConfig of this.config.models) {
             let model;
             switch (modelConfig.type) {
@@ -49,7 +49,7 @@ export class EnsemblePredictor {
             this.models.set(modelConfig.name, model);
             this.historicalPredictions.set(modelConfig.name, []);
         }
-        // Initialize advanced models if enabled
+        // Initialize advanced models if enabled;
         if (this.config.marketIntelligence?.enabled) {
             this.marketIntelligence = new MarketIntelligenceModel({
                 name: 'market_intelligence',
@@ -97,36 +97,36 @@ export class EnsemblePredictor {
         }
     }
     async predict(features) {
-        // Get predictions from all models
+        // Get predictions from all models;
         const predictions = await Promise.all(Array.from(this.models.entries()).map(async ([name, model]) => {
-            const pred = await model.predict(features);
+
             return { name, prediction: pred };
         }));
-        // Get advanced model predictions
-        const advancedPredictions = await this.getAdvancedPredictions(features);
-        // Calculate weighted average
-        const weightedPrediction = this.calculateWeightedPrediction(predictions, advancedPredictions);
-        // Calculate confidence and risk metrics
+        // Get advanced model predictions;
+
+        // Calculate weighted average;
+
+        // Calculate confidence and risk metrics;
         const { confidence, riskLevel } = this.calculateConfidenceAndRisk(predictions, advancedPredictions);
-        // Calculate historical accuracy
-        const historicalAccuracy = this.calculateHistoricalAccuracy();
-        // Calculate expected value and edge
+        // Calculate historical accuracy;
+
+        // Calculate expected value and edge;
         const { expectedValue, edge } = this.calculateExpectedValueAndEdge(weightedPrediction, features);
-        // Calculate recommended stake
-        const recommendedStake = this.calculateRecommendedStake(expectedValue, riskLevel, historicalAccuracy);
-        // Generate factors
-        const factors = this.generateFactors(predictions, advancedPredictions);
-        // Uncertainty quantification using Bayesian/MCMC if enabled
-        let uncertainty = undefined;
+        // Calculate recommended stake;
+
+        // Generate factors;
+
+        // Uncertainty quantification using Bayesian/MCMC if enabled;
+        const uncertainty = undefined;
         if (this.config.bayesianInference?.enabled) {
-            const bayesian = await this.getBayesianPrediction(predictions, features);
+
             uncertainty = {
                 variance: bayesian.variance,
                 credibleInterval: bayesian.credibleInterval,
             };
         }
         // Feature attribution (SHAP or permutation importance proxy)
-        const featureAttribution = await this.computeFeatureAttribution(features);
+
         return {
             probability: weightedPrediction,
             confidence,
@@ -149,9 +149,9 @@ export class EnsemblePredictor {
         };
     }
     async getAdvancedPredictions(features) {
-        const advancedPredictions = {};
+
         if (this.marketIntelligence) {
-            const prediction = await this.marketIntelligence.predict(features);
+
             if (prediction.metadata) {
                 advancedPredictions.marketIntelligence = {
                     sharpAction: prediction.metadata.sharpAction || 0,
@@ -161,7 +161,7 @@ export class EnsemblePredictor {
             }
         }
         if (this.temporalPatterns) {
-            const prediction = await this.temporalPatterns.predict(features);
+
             if (prediction.metadata) {
                 advancedPredictions.temporalPatterns = {
                     microTrends: prediction.metadata.microTrends || 0,
@@ -172,7 +172,7 @@ export class EnsemblePredictor {
             }
         }
         if (this.alternativeData) {
-            const prediction = await this.alternativeData.predict(features);
+
             if (prediction.metadata) {
                 advancedPredictions.alternativeData = {
                     socialMediaSentiment: prediction.metadata.socialMediaSentiment || 0,
@@ -184,7 +184,7 @@ export class EnsemblePredictor {
             }
         }
         if (this.gameTheory) {
-            const prediction = await this.gameTheory.predict(features);
+
             if (prediction.metadata) {
                 advancedPredictions.gameTheory = {
                     strategicAdvantage: prediction.metadata.strategicAdvantage || 0,
@@ -196,7 +196,7 @@ export class EnsemblePredictor {
             }
         }
         if (this.quantumProbability) {
-            const prediction = await this.quantumProbability.predict(features);
+
             if (prediction.metadata) {
                 advancedPredictions.quantumProbability = {
                     superpositionScore: prediction.metadata.superpositionScore || 0,
@@ -210,39 +210,39 @@ export class EnsemblePredictor {
         return advancedPredictions;
     }
     calculateWeightedPrediction(predictions, advancedPredictions) {
-        let totalWeight = 0;
-        let weightedSum = 0;
-        // Add base model predictions
+        const totalWeight = 0;
+        const weightedSum = 0;
+        // Add base model predictions;
         for (const { prediction } of predictions) {
             weightedSum += prediction.probability * prediction.weight;
             totalWeight += prediction.weight;
         }
-        // Add advanced model predictions
+        // Add advanced model predictions;
         if (advancedPredictions.marketIntelligence) {
-            const weight = this.config.marketIntelligence?.weight || 0;
+
             weightedSum +=
                 this.calculateMarketIntelligenceScore(advancedPredictions.marketIntelligence) * weight;
             totalWeight += weight;
         }
         if (advancedPredictions.temporalPatterns) {
-            const weight = this.config.temporalPatterns?.weight || 0;
+
             weightedSum +=
                 this.calculateTemporalPatternsScore(advancedPredictions.temporalPatterns) * weight;
             totalWeight += weight;
         }
         if (advancedPredictions.alternativeData) {
-            const weight = this.config.alternativeData?.weight || 0;
+
             weightedSum +=
                 this.calculateAlternativeDataScore(advancedPredictions.alternativeData) * weight;
             totalWeight += weight;
         }
         if (advancedPredictions.gameTheory) {
-            const weight = this.config.gameTheory?.weight || 0;
+
             weightedSum += this.calculateGameTheoryScore(advancedPredictions.gameTheory) * weight;
             totalWeight += weight;
         }
         if (advancedPredictions.quantumProbability) {
-            const weight = this.config.quantumProbability?.weight || 0;
+
             weightedSum +=
                 this.calculateQuantumProbabilityScore(advancedPredictions.quantumProbability) * weight;
             totalWeight += weight;
@@ -282,12 +282,12 @@ export class EnsemblePredictor {
             quantumProbability.decoherenceRate * 0.2);
     }
     calculateConfidenceAndRisk(predictions, advancedPredictions) {
-        // Calculate base model confidence
+        // Calculate base model confidence;
         const baseConfidence = predictions.reduce((acc, { prediction }) => acc + prediction.confidence, 0) /
             predictions.length;
-        // Calculate advanced model confidence
-        let advancedConfidence = 0;
-        let advancedCount = 0;
+        // Calculate advanced model confidence;
+        const advancedConfidence = 0;
+        const advancedCount = 0;
         if (advancedPredictions.marketIntelligence) {
             advancedConfidence += this.calculateMarketIntelligenceScore(advancedPredictions.marketIntelligence);
             advancedCount++;
@@ -309,18 +309,18 @@ export class EnsemblePredictor {
             advancedCount++;
         }
         advancedConfidence = advancedCount > 0 ? advancedConfidence / advancedCount : 0;
-        // Calculate overall confidence
-        const confidence = (baseConfidence + advancedConfidence) / 2;
+        // Calculate overall confidence;
+
         // Calculate risk level (inverse of confidence)
-        const riskLevel = 1 - confidence;
+
         return { confidence, riskLevel };
     }
     calculateHistoricalAccuracy() {
-        let totalAccuracy = 0;
-        let totalModels = 0;
+        const totalAccuracy = 0;
+        const totalModels = 0;
         for (const [_, predictions] of this.historicalPredictions) {
             if (predictions.length > 0) {
-                const accuracy = predictions.reduce((acc, { prediction, actual }) => acc + (Math.abs(prediction - actual) < 0.1 ? 1 : 0), 0) / predictions.length;
+
                 totalAccuracy += accuracy;
                 totalModels++;
             }
@@ -328,27 +328,27 @@ export class EnsemblePredictor {
         return totalModels > 0 ? totalAccuracy / totalModels : 0.5;
     }
     calculateExpectedValueAndEdge(prediction, features) {
-        const odds = features.odds || 2.0;
-        const impliedProbability = 1 / odds;
-        const edge = prediction - impliedProbability;
-        const expectedValue = edge * odds;
+
+
+
+
         return { expectedValue, edge };
     }
     calculateRecommendedStake(expectedValue, riskLevel, historicalAccuracy) {
-        // Kelly Criterion with risk adjustment
-        const kellyFraction = expectedValue / (1 - expectedValue);
-        const riskAdjustedFraction = kellyFraction * (1 - riskLevel) * historicalAccuracy;
-        return Math.max(0, Math.min(riskAdjustedFraction, 0.1)); // Cap at 10% of bankroll
+        // Kelly Criterion with risk adjustment;
+
+
+        return Math.max(0, Math.min(riskAdjustedFraction, 0.1)); // Cap at 10% of bankroll;
     }
     generateFactors(predictions, advancedPredictions) {
-        const factors = [];
-        // Add base model factors
+
+        // Add base model factors;
         for (const { prediction } of predictions) {
             if (prediction.metadata?.factors) {
                 factors.push(...prediction.metadata.factors);
             }
         }
-        // Add advanced model factors
+        // Add advanced model factors;
         if (advancedPredictions.marketIntelligence) {
             if (advancedPredictions.marketIntelligence.sharpAction > 0.7) {
                 factors.push('Strong sharp money signal');
@@ -425,12 +425,12 @@ export class EnsemblePredictor {
                 factors.push('Low decoherence rate');
             }
         }
-        return [...new Set(factors)]; // Remove duplicates
+        return [...new Set(factors)]; // Remove duplicates;
     }
     async update(newData) {
-        // Update base models
+        // Update base models;
         await Promise.all(Array.from(this.models.values()).map(model => model.train(newData)));
-        // Update advanced models
+        // Update advanced models;
         if (this.marketIntelligence) {
             await this.marketIntelligence.update(newData);
         }
@@ -446,10 +446,10 @@ export class EnsemblePredictor {
         if (this.quantumProbability) {
             await this.quantumProbability.update(newData);
         }
-        // Update historical predictions
+        // Update historical predictions;
         for (const [name, model] of this.models.entries()) {
             const predictions = await Promise.all(newData.map(async (data) => {
-                const prediction = await model.predict(data);
+
                 return {
                     prediction: prediction.probability,
                     actual: data.target,
@@ -459,53 +459,53 @@ export class EnsemblePredictor {
         }
     }
     async evaluate(testData) {
-        const metrics = {};
-        // Evaluate base models
+
+        // Evaluate base models;
         for (const [name, model] of this.models.entries()) {
-            const predictions = await Promise.all(testData.map(data => model.predict(data)));
-            const actual = testData.map(data => data.target);
-            const predicted = predictions.map(p => p.probability);
+
+
+
             metrics[`${name}_mse`] = this.calculateMSE(actual, predicted);
             metrics[`${name}_mae`] = this.calculateMAE(actual, predicted);
             metrics[`${name}_mape`] = this.calculateMAPE(actual, predicted);
         }
-        // Evaluate advanced models
+        // Evaluate advanced models;
         if (this.marketIntelligence) {
-            const predictions = await Promise.all(testData.map(data => this.marketIntelligence.predict(data)));
-            const actual = testData.map(data => data.target);
-            const predicted = predictions.map(p => p.probability);
+
+
+
             metrics.market_intelligence_mse = this.calculateMSE(actual, predicted);
             metrics.market_intelligence_mae = this.calculateMAE(actual, predicted);
             metrics.market_intelligence_mape = this.calculateMAPE(actual, predicted);
         }
         if (this.temporalPatterns) {
-            const predictions = await Promise.all(testData.map(data => this.temporalPatterns.predict(data)));
-            const actual = testData.map(data => data.target);
-            const predicted = predictions.map(p => p.probability);
+
+
+
             metrics.temporal_patterns_mse = this.calculateMSE(actual, predicted);
             metrics.temporal_patterns_mae = this.calculateMAE(actual, predicted);
             metrics.temporal_patterns_mape = this.calculateMAPE(actual, predicted);
         }
         if (this.alternativeData) {
-            const predictions = await Promise.all(testData.map(data => this.alternativeData.predict(data)));
-            const actual = testData.map(data => data.target);
-            const predicted = predictions.map(p => p.probability);
+
+
+
             metrics.alternative_data_mse = this.calculateMSE(actual, predicted);
             metrics.alternative_data_mae = this.calculateMAE(actual, predicted);
             metrics.alternative_data_mape = this.calculateMAPE(actual, predicted);
         }
         if (this.gameTheory) {
-            const predictions = await Promise.all(testData.map(data => this.gameTheory.predict(data)));
-            const actual = testData.map(data => data.target);
-            const predicted = predictions.map(p => p.probability);
+
+
+
             metrics.game_theory_mse = this.calculateMSE(actual, predicted);
             metrics.game_theory_mae = this.calculateMAE(actual, predicted);
             metrics.game_theory_mape = this.calculateMAPE(actual, predicted);
         }
         if (this.quantumProbability) {
-            const predictions = await Promise.all(testData.map(data => this.quantumProbability.predict(data)));
-            const actual = testData.map(data => data.target);
-            const predicted = predictions.map(p => p.probability);
+
+
+
             metrics.quantum_probability_mse = this.calculateMSE(actual, predicted);
             metrics.quantum_probability_mae = this.calculateMAE(actual, predicted);
             metrics.quantum_probability_mape = this.calculateMAPE(actual, predicted);
@@ -523,22 +523,22 @@ export class EnsemblePredictor {
     }
     async getBayesianPrediction(basePredictions, features) {
         if (!this.config.bayesianInference?.enabled) {
-            const mean = this.calculateWeightedPrediction(basePredictions, {});
+
             return {
                 mean,
                 variance: 0,
                 credibleInterval: [mean, mean],
             };
         }
-        // Sample from posterior distribution
-        const samples = await this.performMCMCSampling(basePredictions, features);
-        // Calculate statistics
-        const mean = samples.reduce((a, b) => a + b, 0) / samples.length;
-        const variance = samples.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / samples.length;
-        // Calculate 95% credible interval
-        const sortedSamples = samples.sort((a, b) => a - b);
-        const lowerIndex = Math.floor(samples.length * 0.025);
-        const upperIndex = Math.floor(samples.length * 0.975);
+        // Sample from posterior distribution;
+
+        // Calculate statistics;
+
+
+        // Calculate 95% credible interval;
+
+
+
         return {
             mean,
             variance,
@@ -546,18 +546,18 @@ export class EnsemblePredictor {
         };
     }
     async performMCMCSampling(predictions, features) {
-        const samples = [];
-        const numSamples = this.config.bayesianInference?.mcmcSamples || 1000;
-        // Initialize with weighted average
-        let currentSample = this.calculateWeightedPrediction(predictions, {});
-        for (let i = 0; i < numSamples; i++) {
-            // Propose new sample
-            const proposal = currentSample + (Math.random() - 0.5) * 0.1;
-            // Calculate acceptance ratio
-            const currentLikelihood = this.calculateLikelihood(currentSample, predictions, features);
-            const proposalLikelihood = this.calculateLikelihood(proposal, predictions, features);
-            const acceptanceRatio = proposalLikelihood / currentLikelihood;
-            // Accept or reject
+
+
+        // Initialize with weighted average;
+        const currentSample = this.calculateWeightedPrediction(predictions, {});
+        for (const i = 0; i < numSamples; i++) {
+            // Propose new sample;
+
+            // Calculate acceptance ratio;
+
+
+
+            // Accept or reject;
             if (Math.random() < acceptanceRatio) {
                 currentSample = proposal;
             }
@@ -566,36 +566,36 @@ export class EnsemblePredictor {
         return samples;
     }
     calculateLikelihood(sample, predictions, features) {
-        // Calculate likelihood based on model predictions and prior
-        const priorStrength = this.config.bayesianInference?.priorStrength || 1;
-        // Model likelihood
+        // Calculate likelihood based on model predictions and prior;
+
+        // Model likelihood;
         const modelLikelihood = predictions.reduce((acc, { prediction }) => {
-            const diff = prediction.probability - sample;
+
             return acc * Math.exp((-0.5 * diff * diff) / (prediction.confidence || 0.1));
         }, 1);
         // Prior likelihood (assuming uniform prior)
-        const priorLikelihood = 1;
+
         return modelLikelihood * Math.pow(priorLikelihood, priorStrength);
     }
     async computeFeatureAttribution(features) {
-        // Proxy for SHAP: permutation feature importance
-        // For each feature, shuffle its value and measure the change in ensemble prediction
-        const basePrediction = await this.predictSingle(features);
-        const attributions = [];
+        // Proxy for SHAP: permutation feature importance;
+        // For each feature, shuffle its value and measure the change in ensemble prediction;
+
+
         for (const key of Object.keys(features)) {
-            const shuffled = { ...features, [key]: this.shuffleValue(features[key]) };
-            const shuffledPrediction = await this.predictSingle(shuffled);
+
+
             attributions.push({
                 feature: key,
                 value: features[key],
                 impact: Math.abs(basePrediction - shuffledPrediction),
             });
         }
-        // Sort by impact descending and return top 10
+        // Sort by impact descending and return top 10;
         return attributions.sort((a, b) => b.impact - a.impact).slice(0, 10);
     }
     shuffleValue(value) {
-        // Simple shuffle for numeric/categorical
+        // Simple shuffle for numeric/categorical;
         if (typeof value === 'number') {
             return value + (Math.random() - 0.5) * value * 0.1;
         }
@@ -603,7 +603,7 @@ export class EnsemblePredictor {
             return value.slice().sort(() => Math.random() - 0.5);
         }
         if (typeof value === 'string') {
-            return value
+            return value;
                 .split('')
                 .sort(() => Math.random() - 0.5)
                 .join('');
@@ -611,21 +611,21 @@ export class EnsemblePredictor {
         return value;
     }
     async predictSingle(features) {
-        // Use the ensemble to get a single probability prediction for feature attribution
-        // This should be a lightweight version of the main predict logic
+        // Use the ensemble to get a single probability prediction for feature attribution;
+        // This should be a lightweight version of the main predict logic;
         // ... implement a simplified ensemble prediction ...
-        return 0.5; // Placeholder, replace with actual logic
+        return 0.5; // Placeholder, replace with actual logic;
     }
     /**
      * Update ensemble configuration at runtime (e.g., weights, enabled models, meta-learning, risk profile)
      */
     updateConfig(newConfig) {
         this.config = { ...this.config, ...newConfig };
-        // Optionally re-initialize models if structure changes
+        // Optionally re-initialize models if structure changes;
         // this.initializeModels();
     }
     /**
-     * Update model weights at runtime
+     * Update model weights at runtime;
      */
     updateModelWeights(weights) {
         for (const model of this.config.models) {
@@ -635,15 +635,15 @@ export class EnsemblePredictor {
         }
     }
     /**
-     * Update risk profile parameters at runtime
+     * Update risk profile parameters at runtime;
      */
     updateRiskProfile(riskParams) {
-        // Example: adjust risk calculation logic or thresholds
-        // Extend as needed for your risk model
+        // Example: adjust risk calculation logic or thresholds;
+        // Extend as needed for your risk model;
         this.riskProfileParams = { ...this.riskProfileParams, ...riskParams };
     }
     /**
-     * Enable or disable meta-learning (stacked generalization) at runtime
+     * Enable or disable meta-learning (stacked generalization) at runtime;
      */
     setMetaLearning(enabled, metaModelType) {
         if (!this.config.stackedGeneralization)
@@ -655,7 +655,7 @@ export class EnsemblePredictor {
         }
     }
     /**
-     * Enable or disable Bayesian inference at runtime
+     * Enable or disable Bayesian inference at runtime;
      */
     setBayesianInference(enabled, priorStrength, mcmcSamples) {
         if (!this.config.bayesianInference)
@@ -669,8 +669,8 @@ export class EnsemblePredictor {
         }
     }
     async getMetaModel() {
-        // TODO: Implement meta-model selection and instantiation
-        // For now, return a dummy model that returns a fixed probability
+        // TODO: Implement meta-model selection and instantiation;
+        // For now, return a dummy model that returns a fixed probability;
         return {
             async predict() { return { probability: 0.5, confidence: 0.5, weight: 1, features: {}, metadata: {} }; },
             train: async () => { },

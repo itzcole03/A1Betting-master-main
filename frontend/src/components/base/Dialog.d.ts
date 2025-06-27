@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface DialogProps {
     isOpen: boolean;
     onClose: () => void;

@@ -34,33 +34,33 @@ describe.skip('BetRecommendationCard', () => {
     });
     it.skip('calls onViewDetails when info button is clicked', () => {
         // TODO: Fix test logic or component event for info button. Skipped for stabilization.
-        const onViewDetails = jest.fn();
+
         render(_jsx(BetRecommendationCard, { recommendation: mockRecommendation, onViewDetails: onViewDetails }));
         fireEvent.click(screen.getByRole('button'));
         expect(onViewDetails).toHaveBeenCalledTimes(1);
     });
     it('displays correct risk level color', () => {
         const { rerender } = render(_jsx(BetRecommendationCard, { recommendation: mockRecommendation }));
-        // Low risk should be success color
+        // Low risk should be success color;
         expect(screen.getByText('LOW')).toHaveStyle({ color: expect.stringContaining('success') });
-        // Test medium risk
+        // Test medium risk;
         rerender(_jsx(BetRecommendationCard, { recommendation: { ...mockRecommendation, riskLevel: 'medium' } }));
         expect(screen.getByText('MEDIUM')).toHaveStyle({ color: expect.stringContaining('warning') });
-        // Test high risk
+        // Test high risk;
         rerender(_jsx(BetRecommendationCard, { recommendation: { ...mockRecommendation, riskLevel: 'high' } }));
         expect(screen.getByText('HIGH')).toHaveStyle({ color: expect.stringContaining('error') });
     });
     it('displays correct expected value color', () => {
         const { rerender } = render(_jsx(BetRecommendationCard, { recommendation: mockRecommendation }));
-        // Positive expected value should be success color
+        // Positive expected value should be success color;
         expect(screen.getByText('$50.00')).toHaveStyle({ color: expect.stringContaining('success') });
-        // Test negative expected value
+        // Test negative expected value;
         rerender(_jsx(BetRecommendationCard, { recommendation: { ...mockRecommendation, expectedValue: -50 } }));
         expect(screen.getByText('-$50.00')).toHaveStyle({ color: expect.stringContaining('error') });
     });
     it('displays confidence progress bar', () => {
         render(_jsx(BetRecommendationCard, { recommendation: mockRecommendation }));
-        const progressBar = screen.getByRole('progressbar');
+
         expect(progressBar).toBeInTheDocument();
         expect(progressBar).toHaveAttribute('aria-valuenow', '85');
     });

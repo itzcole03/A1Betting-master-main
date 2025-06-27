@@ -7,13 +7,13 @@ export const ErrorLogs = () => {
     const [logs, setLogs] = useState([]);
     const [severityFilter, setSeverityFilter] = useState('all');
     const fetchLogs = () => {
-        const allLogs = errorLogger.getLogs();
+
         setLogs(allLogs);
     };
     useEffect(() => {
         fetchLogs();
-        // Refresh logs every 30 seconds
-        const interval = setInterval(fetchLogs, 30000);
+        // Refresh logs every 30 seconds;
+
         return () => clearInterval(interval);
     }, []);
     const handleClearLogs = () => {
@@ -21,10 +21,10 @@ export const ErrorLogs = () => {
         setLogs([]);
     };
     const handleSeverityChange = (event) => {
-        const severity = event.target.value;
+
         setSeverityFilter(severity);
     };
-    const filteredLogs = severityFilter === 'all' ? logs : logs.filter(log => log.severity === severityFilter);
+
     const getSeverityColor = (severity) => {
         switch (severity) {
             case 'error':

@@ -1,23 +1,21 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { User } from '@/types';
+import React, { createContext, useContext, useState, useEffect  } from 'react.ts';
+import { User } from '@/types.ts';
 
 interface AuthContextType {
   user: User | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<void key={132647}>;
   logout: () => void;
-  register: (email: string, password: string, username: string) => Promise<void>;
-  updateProfile: (data: Partial<User>) => Promise<void>;
+  register: (email: string, password: string, username: string) => Promise<void key={132647}>;
+  updateProfile: (data: Partial<User key={43469}>) => Promise<void key={132647}>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null key={41137}>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('auth_token');
+
     if (token) {
       validateToken(token);
     } else {
@@ -34,13 +32,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (response.ok) {
-        const userData = await response.json();
+
         setUser(userData);
       } else {
         localStorage.removeItem('auth_token');
       }
     } catch (error) {
-      console.error('Token validation failed:', error);
+      // console statement removed
       localStorage.removeItem('auth_token');
     } finally {
       setIsLoading(false);
@@ -64,7 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('auth_token', token);
       setUser(userData);
     } catch (error) {
-      console.error('Login error:', error);
+      // console statement removed
       throw error;
     } finally {
       setIsLoading(false);
@@ -88,7 +86,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('auth_token', token);
       setUser(userData);
     } catch (error) {
-      console.error('Registration error:', error);
+      // console statement removed
       throw error;
     } finally {
       setIsLoading(false);
@@ -100,8 +98,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setUser(null);
   };
 
-  const updateProfile = async (data: Partial<User>) => {
-    const token = localStorage.getItem('auth_token');
+  const updateProfile = async (data: Partial<User key={43469}>) => {
+
     if (!token) throw new Error('Not authenticated');
 
     try {
@@ -118,16 +116,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         throw new Error('Profile update failed');
       }
 
-      const updatedUser = await response.json();
       setUser(updatedUser);
     } catch (error) {
-      console.error('Profile update error:', error);
+      // console statement removed
       throw error;
     }
   };
 
   return (
-    <AuthContext.Provider
+    <AuthContext.Provider;
       value={{
         user,
         isLoading,
@@ -136,14 +133,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         register,
         updateProfile,
       }}
-    >
+     key={245424}>
       {children}
     </AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
-  const context = useContext(AuthContext);
+
   if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }

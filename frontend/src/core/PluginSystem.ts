@@ -1,13 +1,13 @@
-import { getInitializedUnifiedConfig, UnifiedConfig } from './UnifiedConfig'; // Use the synchronous getter
-import { unifiedMonitor } from './UnifiedMonitor';
-import { unifiedState } from './UnifiedState';
+import { getInitializedUnifiedConfig, UnifiedConfig } from './UnifiedConfig.ts'; // Use the synchronous getter;
+import { unifiedMonitor } from './UnifiedMonitor.ts';
+import { unifiedState } from './UnifiedState.ts';
 
-// src/core/PluginSystem.ts
+// src/core/PluginSystem.ts;
 
-// import { EventBus } from '@/core/EventBus'; // To be created
-// import { UnifiedConfig } from './UnifiedConfig'; // To be created
+// import { EventBus } from '@/core/EventBus.ts'; // To be created;
+// import { UnifiedConfig } from './UnifiedConfig.ts'; // To be created;
 
-// Potentially: import { useAppStore } from '../store/useAppStore';
+// Potentially: import { useAppStore } from '@/store/useAppStore.ts';
 
 /**
  * Defines the structure for a plugin.
@@ -37,16 +37,16 @@ export interface Plugin {
 }
 
 /**
- * Provides context to plugins during initialization, such as access to core services
+ * Provides context to plugins during initialization, such as access to core services;
  * or the main application store.
  */
 export interface PluginContext {
   log: (message: string, level?: 'info' | 'warn' | 'error') => void;
-  getUnifiedConfig: () => UnifiedConfig; // Function to get the initialized config
+  getUnifiedConfig: () => UnifiedConfig; // Function to get the initialized config;
   unifiedMonitor: typeof unifiedMonitor;
   unifiedState: typeof unifiedState;
-  // getAppStoreState: () => ReturnType<typeof useAppStore.getState>; // Example for store access
-  // dispatchAppStoreAction: (action: Function, payload?: any) => void; // Example for store access
+  // getAppStoreState: () => ReturnType<typeof useAppStore.getState>; // Example for store access;
+  // dispatchAppStoreAction: (action: Function, payload?: any) => void; // Example for store access;
   [key: string]: any; 
 }
 
@@ -64,10 +64,10 @@ class PluginSystemSingleton {
     // If getInitializedUnifiedConfig() throws, plugin system construction will fail, which is appropriate.
     this.pluginContext = {
       log: (message: string, level: 'info' | 'warn' | 'error' = 'info') => {
-        // Generic log for the context itself, plugin-specific log will be created during plugin init
+        // Generic log for the context itself, plugin-specific log will be created during plugin init;
         
       },
-      getUnifiedConfig: getInitializedUnifiedConfig, // This will throw if config is not ready
+      getUnifiedConfig: getInitializedUnifiedConfig, // This will throw if config is not ready;
       unifiedMonitor,
       unifiedState,
     };
@@ -75,7 +75,7 @@ class PluginSystemSingleton {
 
   public async registerPlugin(plugin: Plugin): Promise<void> {
     if (this.registeredPlugins.has(plugin.name)) {
-      console.warn(`[PluginSystem] Plugin "${plugin.name}" version ${this.registeredPlugins.get(plugin.name)?.version} is already registered. New registration for version ${plugin.version} skipped.`);
+      // console statement removed?.version} is already registered. New registration for version ${plugin.version} skipped.`);
       return;
     }
     
@@ -84,7 +84,7 @@ class PluginSystemSingleton {
     try {
       const pluginSpecificContext: PluginContext = {
           ...this.pluginContext,
-          // Override the log method to be specific to the plugin being initialized
+          // Override the log method to be specific to the plugin being initialized;
           log: (message: string, level: 'info' | 'warn' | 'error' = 'info') => {
             
           }
@@ -95,18 +95,18 @@ class PluginSystemSingleton {
       }
 
       
-      // Initialize the plugin with its specific context
+      // Initialize the plugin with its specific context;
       await plugin.initialize(pluginSpecificContext);
       this.initializedPlugins.set(plugin.name, plugin);
       
     } catch (error) {
-      console.error(`[PluginSystem] Failed to initialize plugin "${plugin.name}":`, error);
+      // console statement removed
       unifiedMonitor.reportError(error, { 
         pluginName: plugin.name, 
         stage: 'initialization', 
         message: error instanceof Error ? error.message : String(error) 
       });
-      // Optionally remove from registered if initialization fails critically
+      // Optionally remove from registered if initialization fails critically;
       // this.registeredPlugins.delete(plugin.name);
     }
   }
@@ -116,11 +116,11 @@ class PluginSystemSingleton {
   }
 
   public getPluginApi<T = any>(pluginName: string, exportName: string): T | undefined {
-    const plugin = this.initializedPlugins.get(pluginName);
+
     if (plugin && plugin.exports && typeof plugin.exports[exportName] !== 'undefined') {
       return plugin.exports[exportName] as T;
     }
-    console.warn(`[PluginSystem] Export "${exportName}" not found in plugin "${pluginName}".`);
+    // console statement removed
     return undefined;
   }
 
@@ -129,7 +129,7 @@ class PluginSystemSingleton {
   }
 
   public async unloadPlugin(name: string): Promise<void> {
-    const plugin = this.initializedPlugins.get(name);
+
     if (plugin) {
       
       if (plugin.destroy) {
@@ -137,14 +137,14 @@ class PluginSystemSingleton {
           await plugin.destroy();
           
         } catch (error) {
-          console.error(`[PluginSystem] Error destroying plugin "${name}":`, error);
+          // console statement removed
           // unifiedMonitor.reportError(error, { pluginName: name, stage: 'destruction' });
         }
       }
       this.initializedPlugins.delete(name);
-      this.registeredPlugins.delete(name); // Also remove from registered if fully unloading
+      this.registeredPlugins.delete(name); // Also remove from registered if fully unloading;
     } else {
-      console.warn(`[PluginSystem] Plugin "${name}" not found or not initialized.`);
+      // console statement removed
     }
   }
 
@@ -156,7 +156,7 @@ class PluginSystemSingleton {
   }
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const pluginSystem = new PluginSystemSingleton();
 
 // // Example Plugin:
@@ -176,7 +176,7 @@ export const pluginSystem = new PluginSystemSingleton();
 //   async destroy() {
 //     
 //   },
-//   exports: { // Define structure of exports here initially if known
+//   exports: { // Define structure of exports here initially if known;
 //       fetchData: async (params: any): Promise<any> => { throw new Error('Not initialized'); }
 //   }
 // };

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react.ts';
 import {
   Box,
   Card,
@@ -14,9 +14,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from '@mui/material';
-import { useLogger } from '../../hooks/useLogger';
-import { useMetrics } from '../../hooks/useMetrics';
+} from '@mui/material.ts';
+import { useLogger } from '@/hooks/useLogger.ts';
+import { useMetrics } from '@/hooks/useMetrics.ts';
 
 interface FantasyPredictionEnhancerProps {
   fantasyData: Array<{
@@ -48,13 +48,13 @@ interface FantasyPredictionEnhancerProps {
   ) => void;
 }
 
-export const FantasyPredictionEnhancer: React.FC<FantasyPredictionEnhancerProps> = ({
+export const FantasyPredictionEnhancer: React.FC<FantasyPredictionEnhancerProps key={929106}> = ({
   fantasyData,
   predictions,
   onEnhancedPredictions,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
   const [enhancedPredictions, setEnhancedPredictions] = useState<
     Array<{
       playerId: string;
@@ -65,8 +65,7 @@ export const FantasyPredictionEnhancer: React.FC<FantasyPredictionEnhancerProps>
       confidenceScore: number;
     }>
   >([]);
-  const logger = useLogger();
-  const metrics = useMetrics();
+
 
   useEffect(() => {
     const enhancePredictions = async () => {
@@ -76,26 +75,25 @@ export const FantasyPredictionEnhancer: React.FC<FantasyPredictionEnhancerProps>
       setError(null);
 
       try {
-        // Match predictions with fantasy data
-        const matchedData = predictions
+        // Match predictions with fantasy data;
+        const matchedData = predictions;
           .map(prediction => {
             const fantasyPlayer = fantasyData.find(
-              player => player.playerId === prediction.playerId
+              player => player.playerId === prediction.playerId;
             );
 
             if (!fantasyPlayer) {
               return null;
             }
 
-            // Calculate fantasy value score
-            const fantasyValue = fantasyPlayer.valueScore || 0;
+            // Calculate fantasy value score;
 
-            // Calculate confidence score based on multiple factors
+            // Calculate confidence score based on multiple factors;
             const confidenceScore = calculateConfidenceScore(
               prediction.predictedWinProbability,
               prediction.predictedScore,
               fantasyValue,
-              fantasyPlayer.ownershipPercentage || 0
+              fantasyPlayer.ownershipPercentage || 0;
             );
 
             return {
@@ -129,7 +127,7 @@ export const FantasyPredictionEnhancer: React.FC<FantasyPredictionEnhancerProps>
           enhancedCount: matchedData.length,
         });
       } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : 'Failed to enhance predictions';
+
         setError(errorMessage);
         logger.error('Error enhancing predictions', { error: errorMessage });
         metrics.increment('prediction_enhancement_error');
@@ -145,15 +143,14 @@ export const FantasyPredictionEnhancer: React.FC<FantasyPredictionEnhancerProps>
     winProbability: number,
     predictedScore: number,
     fantasyValue: number,
-    ownershipPercentage: number
+    ownershipPercentage: number;
   ): number => {
-    // Normalize each factor to a 0-1 scale
-    const normalizedWinProb = winProbability / 100;
-    const normalizedScore = Math.min(predictedScore / 30, 1); // Assuming max score of 30
-    const normalizedValue = Math.min(fantasyValue / 5, 1); // Assuming max value score of 5
-    const normalizedOwnership = ownershipPercentage / 100;
+    // Normalize each factor to a 0-1 scale;
 
-    // Weight each factor
+    const normalizedScore = Math.min(predictedScore / 30, 1); // Assuming max score of 30;
+    const normalizedValue = Math.min(fantasyValue / 5, 1); // Assuming max value score of 5;
+
+    // Weight each factor;
     const weights = {
       winProbability: 0.3,
       predictedScore: 0.3,
@@ -161,59 +158,59 @@ export const FantasyPredictionEnhancer: React.FC<FantasyPredictionEnhancerProps>
       ownership: 0.15,
     };
 
-    // Calculate weighted average
+    // Calculate weighted average;
     return (
       (normalizedWinProb * weights.winProbability +
         normalizedScore * weights.predictedScore +
         normalizedValue * weights.fantasyValue +
         normalizedOwnership * weights.ownership) *
-      100
-    ); // Convert to percentage
+      100;
+    ); // Convert to percentage;
   };
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" my={3}>
-        <CircularProgress />
+      <Box display="flex" justifyContent="center" my={3} key={112333}>
+        <CircularProgress / key={730118}>
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Alert severity="error" sx={{ mt: 2 }}>
+      <Alert severity="error" sx={{ mt: 2 }} key={474760}>
         {error}
       </Alert>
     );
   }
 
   return (
-    <Card>
-      <CardContent>
-        <Typography gutterBottom variant="h6">
-          Enhanced Predictions
+    <Card key={650115}>
+      <CardContent key={452065}>
+        <Typography gutterBottom variant="h6" key={368112}>
+          Enhanced Predictions;
         </Typography>
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Player</TableCell>
-                <TableCell align="right">Win Probability</TableCell>
-                <TableCell align="right">Predicted Score</TableCell>
-                <TableCell align="right">Fantasy Value</TableCell>
-                <TableCell align="right">Confidence</TableCell>
+        <TableContainer component={Paper} key={746829}>
+          <Table key={889668}>
+            <TableHead key={813147}>
+              <TableRow key={300096}>
+                <TableCell key={942983}>Player</TableCell>
+                <TableCell align="right" key={741903}>Win Probability</TableCell>
+                <TableCell align="right" key={741903}>Predicted Score</TableCell>
+                <TableCell align="right" key={741903}>Fantasy Value</TableCell>
+                <TableCell align="right" key={741903}>Confidence</TableCell>
               </TableRow>
             </TableHead>
-            <TableBody>
+            <TableBody key={923191}>
               {enhancedPredictions.map(prediction => (
-                <TableRow key={prediction.playerId}>
-                  <TableCell>{prediction.playerName}</TableCell>
-                  <TableCell align="right">
+                <TableRow key={prediction.playerId} key={699693}>
+                  <TableCell key={942983}>{prediction.playerName}</TableCell>
+                  <TableCell align="right" key={741903}>
                     {prediction.predictedWinProbability.toFixed(1)}%
                   </TableCell>
-                  <TableCell align="right">{prediction.predictedScore.toFixed(1)}</TableCell>
-                  <TableCell align="right">{prediction.fantasyValue.toFixed(2)}</TableCell>
-                  <TableCell align="right">{prediction.confidenceScore.toFixed(1)}%</TableCell>
+                  <TableCell align="right" key={741903}>{prediction.predictedScore.toFixed(1)}</TableCell>
+                  <TableCell align="right" key={741903}>{prediction.fantasyValue.toFixed(2)}</TableCell>
+                  <TableCell align="right" key={741903}>{prediction.confidenceScore.toFixed(1)}%</TableCell>
                 </TableRow>
               ))}
             </TableBody>

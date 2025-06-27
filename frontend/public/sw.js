@@ -1,12 +1,10 @@
-// A1Betting Progressive Web App Service Worker
-// Phase 4: Advanced PWA with offline capabilities and native app experience
+// A1Betting Progressive Web App Service Worker;
+// Phase 4: Advanced PWA with offline capabilities and native app experience;
 
-const CACHE_NAME = "a1betting-v1.0.0";
-const STATIC_CACHE = "a1betting-static-v1.0.0";
-const DYNAMIC_CACHE = "a1betting-dynamic-v1.0.0";
-const API_CACHE = "a1betting-api-v1.0.0";
 
-// Cache strategies for different resource types
+
+
+// Cache strategies for different resource types;
 const CACHE_STRATEGIES = {
   CACHE_FIRST: "cache-first",
   NETWORK_FIRST: "network-first",
@@ -15,7 +13,7 @@ const CACHE_STRATEGIES = {
   CACHE_ONLY: "cache-only",
 };
 
-// Resources to cache immediately
+// Resources to cache immediately;
 const STATIC_ASSETS = [
   "/",
   "/static/js/bundle.js",
@@ -27,7 +25,7 @@ const STATIC_ASSETS = [
   "/offline.html",
 ];
 
-// API endpoints to cache
+// API endpoints to cache;
 const API_ENDPOINTS = [
   "/api/opportunities",
   "/api/predictions",
@@ -36,7 +34,7 @@ const API_ENDPOINTS = [
   "/api/models",
 ];
 
-// Routes that should work offline
+// Routes that should work offline;
 const OFFLINE_ROUTES = [
   "/",
   "/dashboard",
@@ -45,74 +43,73 @@ const OFFLINE_ROUTES = [
   "/settings",
 ];
 
-// Install event - cache static assets
+// Install event - cache static assets;
 self.addEventListener("install", (event) => {
-  console.log("[SW] Installing service worker...");
+  // console statement removed
 
   event.waitUntil(
     Promise.all([
-      // Cache static assets
+      // Cache static assets;
       caches.open(STATIC_CACHE).then((cache) => {
-        console.log("[SW] Caching static assets");
+        // console statement removed
         return cache.addAll(STATIC_ASSETS);
       }),
 
-      // Cache offline page
+      // Cache offline page;
       caches.open(DYNAMIC_CACHE).then((cache) => {
         return cache.add("/offline.html");
       }),
     ]).then(() => {
-      console.log("[SW] Installation complete");
-      // Skip waiting to activate immediately
+      // console statement removed
+      // Skip waiting to activate immediately;
       return self.skipWaiting();
     }),
   );
 });
 
-// Activate event - clean up old caches
+// Activate event - clean up old caches;
 self.addEventListener("activate", (event) => {
-  console.log("[SW] Activating service worker...");
+  // console statement removed
 
   event.waitUntil(
     Promise.all([
-      // Clean up old caches
+      // Clean up old caches;
       caches.keys().then((cacheNames) => {
         return Promise.all(
-          cacheNames
+          cacheNames;
             .filter((cacheName) => {
               return (
                 cacheName.startsWith("a1betting-") &&
                 cacheName !== STATIC_CACHE &&
                 cacheName !== DYNAMIC_CACHE &&
-                cacheName !== API_CACHE
+                cacheName !== API_CACHE;
               );
             })
             .map((cacheName) => {
-              console.log("[SW] Deleting old cache:", cacheName);
+              // console statement removed
               return caches.delete(cacheName);
             }),
         );
       }),
 
-      // Take control of all pages immediately
+      // Take control of all pages immediately;
       self.clients.claim(),
     ]).then(() => {
-      console.log("[SW] Activation complete");
+      // console statement removed
     }),
   );
 });
 
-// Fetch event - implement caching strategies
+// Fetch event - implement caching strategies;
 self.addEventListener("fetch", (event) => {
   const { request } = event;
-  const url = new URL(request.url);
 
-  // Skip cross-origin requests
+  // Skip cross-origin requests;
   if (url.origin !== location.origin) {
     return;
   }
 
-  // Handle different request types
+  // Handle different request types;
   if (request.method === "GET") {
     if (isStaticAsset(request)) {
       event.respondWith(handleStaticAsset(request));
@@ -126,9 +123,9 @@ self.addEventListener("fetch", (event) => {
   }
 });
 
-// Background sync for offline actions
+// Background sync for offline actions;
 self.addEventListener("sync", (event) => {
-  console.log("[SW] Background sync triggered:", event.tag);
+  // console statement removed
 
   if (event.tag === "background-sync-bets") {
     event.waitUntil(syncOfflineBets());
@@ -137,9 +134,9 @@ self.addEventListener("sync", (event) => {
   }
 });
 
-// Push notifications
+// Push notifications;
 self.addEventListener("push", (event) => {
-  console.log("[SW] Push notification received");
+  // console statement removed
 
   const options = {
     body: "New betting opportunity available!",
@@ -165,7 +162,7 @@ self.addEventListener("push", (event) => {
   };
 
   if (event.data) {
-    const data = event.data.json();
+
     options.body = data.message || options.body;
     options.data = { ...options.data, ...data };
   }
@@ -173,28 +170,28 @@ self.addEventListener("push", (event) => {
   event.waitUntil(self.registration.showNotification("A1Betting", options));
 });
 
-// Notification click handling
+// Notification click handling;
 self.addEventListener("notificationclick", (event) => {
-  console.log("[SW] Notification clicked:", event.notification.tag);
+  // console statement removed
 
   event.notification.close();
 
   if (event.action === "explore") {
     event.waitUntil(clients.openWindow("/opportunities"));
   } else if (event.action === "close") {
-    // Just close the notification
+    // Just close the notification;
     return;
   } else {
-    // Default action - open the app
+    // Default action - open the app;
     event.waitUntil(
       clients.matchAll({ type: "window" }).then((clientList) => {
-        // If app is already open, focus it
+        // If app is already open, focus it;
         for (const client of clientList) {
           if (client.url === "/" && "focus" in client) {
             return client.focus();
           }
         }
-        // Otherwise open new window
+        // Otherwise open new window;
         if (clients.openWindow) {
           return clients.openWindow("/");
         }
@@ -203,7 +200,7 @@ self.addEventListener("notificationclick", (event) => {
   }
 });
 
-// Helper functions
+// Helper functions;
 function isStaticAsset(request) {
   return (
     request.url.includes("/static/") ||
@@ -224,127 +221,120 @@ function isPageRequest(request) {
   return request.headers.get("accept").includes("text/html");
 }
 
-// Cache-first strategy for static assets
+// Cache-first strategy for static assets;
 async function handleStaticAsset(request) {
   try {
-    const cache = await caches.open(STATIC_CACHE);
-    const cachedResponse = await cache.match(request);
+
 
     if (cachedResponse) {
-      // Return cached version and update in background
+      // Return cached version and update in background;
       updateCacheInBackground(request, cache);
       return cachedResponse;
     }
 
-    // If not in cache, fetch and cache
-    const response = await fetch(request);
+    // If not in cache, fetch and cache;
+
     if (response.ok) {
       cache.put(request, response.clone());
     }
     return response;
   } catch (error) {
-    console.log("[SW] Static asset fetch failed:", error);
+    // console statement removed
     return new Response("Asset not available offline", { status: 503 });
   }
 }
 
-// Network-first strategy for API requests with offline fallback
+// Network-first strategy for API requests with offline fallback;
 async function handleAPIRequest(request) {
   try {
-    const response = await fetch(request);
 
     if (response.ok) {
-      // Cache successful API responses
-      const cache = await caches.open(API_CACHE);
+      // Cache successful API responses;
+
       cache.put(request, response.clone());
     }
 
     return response;
   } catch (error) {
-    console.log("[SW] API request failed, trying cache:", error);
+    // console statement removed
 
-    // Try to serve from cache
-    const cache = await caches.open(API_CACHE);
-    const cachedResponse = await cache.match(request);
+    // Try to serve from cache;
+
 
     if (cachedResponse) {
       return cachedResponse;
     }
 
-    // Return offline data if available
+    // Return offline data if available;
     return generateOfflineAPIResponse(request);
   }
 }
 
-// Stale-while-revalidate for pages
+// Stale-while-revalidate for pages;
 async function handlePageRequest(request) {
   try {
-    const cache = await caches.open(DYNAMIC_CACHE);
-    const cachedResponse = await cache.match(request);
 
-    // Return cached version immediately
+
+    // Return cached version immediately;
     if (cachedResponse) {
-      // Update cache in background
+      // Update cache in background;
       updateCacheInBackground(request, cache);
       return cachedResponse;
     }
 
-    // If not cached, fetch and cache
-    const response = await fetch(request);
+    // If not cached, fetch and cache;
+
     if (response.ok) {
       cache.put(request, response.clone());
     }
     return response;
   } catch (error) {
-    console.log("[SW] Page request failed:", error);
+    // console statement removed
 
-    // Try to serve from cache
-    const cache = await caches.open(DYNAMIC_CACHE);
-    const cachedResponse = await cache.match(request);
+    // Try to serve from cache;
+
 
     if (cachedResponse) {
       return cachedResponse;
     }
 
-    // Return offline page
+    // Return offline page;
     return caches.match("/offline.html");
   }
 }
 
-// Generic dynamic content handler
+// Generic dynamic content handler;
 async function handleDynamicRequest(request) {
   try {
-    const response = await fetch(request);
 
     if (response.ok) {
-      const cache = await caches.open(DYNAMIC_CACHE);
+
       cache.put(request, response.clone());
     }
 
     return response;
   } catch (error) {
-    const cache = await caches.open(DYNAMIC_CACHE);
+
     return cache.match(request) || caches.match("/offline.html");
   }
 }
 
-// Background cache update
+// Background cache update;
 async function updateCacheInBackground(request, cache) {
   try {
-    const response = await fetch(request);
+
     if (response.ok) {
       cache.put(request, response.clone());
     }
   } catch (error) {
-    console.log("[SW] Background update failed:", error);
+    // console statement removed
   }
 }
 
-// Generate offline API responses
+// Generate offline API responses;
 function generateOfflineAPIResponse(request) {
-  const url = new URL(request.url);
 
-  // Mock data for different endpoints
+  // Mock data for different endpoints;
   const offlineData = {
     "/api/opportunities": {
       opportunities: [],
@@ -379,13 +369,12 @@ function generateOfflineAPIResponse(request) {
   });
 }
 
-// Sync offline bets when connection is restored
+// Sync offline bets when connection is restored;
 async function syncOfflineBets() {
   try {
-    console.log("[SW] Syncing offline bets...");
+    // console statement removed
 
-    // Get offline bets from IndexedDB
-    const offlineBets = await getOfflineBets();
+    // Get offline bets from IndexedDB;
 
     for (const bet of offlineBets) {
       try {
@@ -399,49 +388,49 @@ async function syncOfflineBets() {
 
         if (response.ok) {
           await removeOfflineBet(bet.id);
-          console.log("[SW] Bet synced successfully:", bet.id);
+          // console statement removed
         }
       } catch (error) {
-        console.log("[SW] Failed to sync bet:", bet.id, error);
+        // console statement removed
       }
     }
   } catch (error) {
-    console.log("[SW] Sync failed:", error);
+    // console statement removed
   }
 }
 
-// Sync analytics data
+// Sync analytics data;
 async function syncAnalyticsData() {
   try {
-    console.log("[SW] Syncing analytics data...");
+    // console statement removed
 
-    // Implementation would depend on your analytics strategy
+    // Implementation would depend on your analytics strategy;
     const response = await fetch("/api/analytics/sync", {
       method: "POST",
     });
 
     if (response.ok) {
-      console.log("[SW] Analytics synced successfully");
+      // console statement removed
     }
   } catch (error) {
-    console.log("[SW] Analytics sync failed:", error);
+    // console statement removed
   }
 }
 
-// IndexedDB operations for offline storage
+// IndexedDB operations for offline storage;
 async function getOfflineBets() {
-  // Implementation would use IndexedDB to store offline bets
+  // Implementation would use IndexedDB to store offline bets;
   return [];
 }
 
 async function removeOfflineBet(betId) {
-  // Implementation would remove bet from IndexedDB
-  console.log("[SW] Removing offline bet:", betId);
+  // Implementation would remove bet from IndexedDB;
+  // console statement removed
 }
 
-// Message handling for communication with main thread
+// Message handling for communication with main thread;
 self.addEventListener("message", (event) => {
-  console.log("[SW] Message received:", event.data);
+  // console statement removed
 
   if (event.data.type === "SKIP_WAITING") {
     self.skipWaiting();
@@ -452,18 +441,18 @@ self.addEventListener("message", (event) => {
   }
 });
 
-// Cache analytics data for offline viewing
+// Cache analytics data for offline viewing;
 async function cacheAnalyticsData(data) {
   try {
-    const cache = await caches.open(API_CACHE);
+
     const response = new Response(JSON.stringify(data), {
       headers: { "Content-Type": "application/json" },
     });
     await cache.put("/api/analytics/cached", response);
-    console.log("[SW] Analytics data cached");
+    // console statement removed
   } catch (error) {
-    console.log("[SW] Failed to cache analytics data:", error);
+    // console statement removed
   }
 }
 
-console.log("[SW] Service Worker script loaded");
+// console statement removed

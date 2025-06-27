@@ -1,6 +1,6 @@
-// useNotificationCenter: React hook for managing notifications
-// TODO: Add tests
-import { useState, useCallback } from 'react';
+// useNotificationCenter: React hook for managing notifications;
+// TODO: Add tests;
+import { useState, useCallback } from 'react.ts';
 
 export type NotificationType = 'success' | 'error' | 'info';
 export interface Notification {

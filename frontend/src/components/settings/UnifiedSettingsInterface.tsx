@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Settings, Bell, Shield, Palette, Database, Key } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Badge } from "../ui/badge";
+import React, { useState  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
+import { Settings, Bell, Shield, Palette, Database, Key } from 'lucide-react.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/ui/card.ts';
+import { Badge } from '@/ui/badge.ts';
 
 export const UnifiedSettingsInterface: React.FC = () => {
   const [isImporting, setIsImporting] = useState(false);
@@ -57,141 +57,141 @@ export const UnifiedSettingsInterface: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Header */}
-      <motion.div
+      <motion.div;
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-8"
-      >
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          ⚙️ Settings & Preferences
+       key={951381}>
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent" key={11526}>
+          ⚙️ Settings & Preferences;
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
-          Customize your betting experience and account preferences
+        <p className="text-gray-600 dark:text-gray-400 mt-2" key={616181}>
+          Customize your betting experience and account preferences;
         </p>
       </motion.div>
 
       {/* Notifications */}
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Bell className="w-5 h-5 text-blue-500" />
-            Notifications
+      <Card className="glass-card" key={851506}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center gap-2" key={587456}>
+            <Bell className="w-5 h-5 text-blue-500" / key={211316}>
+            Notifications;
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Bet Alerts</div>
-              <div className="text-sm text-gray-500">
-                Get notified when your bets are settled
+        <CardContent className="space-y-4" key={796196}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Bet Alerts</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Get notified when your bets are settled;
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
+            <label className="relative inline-flex items-center cursor-pointer" key={742813}>
+              <input;
                 type="checkbox"
                 checked={settings.notifications.betAlerts}
-                onChange={() => handleToggle("notifications", "betAlerts")}
+                onChange={() = key={299200}> handleToggle("notifications", "betAlerts")}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" key={734788}></div>
             </label>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Price Changes</div>
-              <div className="text-sm text-gray-500">
-                Alert when odds move significantly
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Price Changes</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Alert when odds move significantly;
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
+            <label className="relative inline-flex items-center cursor-pointer" key={742813}>
+              <input;
                 type="checkbox"
                 checked={settings.notifications.priceChanges}
-                onChange={() => handleToggle("notifications", "priceChanges")}
+                onChange={() = key={469310}> handleToggle("notifications", "priceChanges")}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" key={734788}></div>
             </label>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Daily Reports</div>
-              <div className="text-sm text-gray-500">
-                Receive daily performance summaries
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Daily Reports</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Receive daily performance summaries;
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
+            <label className="relative inline-flex items-center cursor-pointer" key={742813}>
+              <input;
                 type="checkbox"
                 checked={settings.notifications.dailyReports}
-                onChange={() => handleToggle("notifications", "dailyReports")}
+                onChange={() = key={416819}> handleToggle("notifications", "dailyReports")}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" key={734788}></div>
             </label>
           </div>
         </CardContent>
       </Card>
 
       {/* Privacy & Security */}
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-green-500" />
-            Privacy & Security
+      <Card className="glass-card" key={851506}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center gap-2" key={587456}>
+            <Shield className="w-5 h-5 text-green-500" / key={178785}>
+            Privacy & Security;
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Share Statistics</div>
-              <div className="text-sm text-gray-500">
-                Allow others to see your betting stats
+        <CardContent className="space-y-4" key={796196}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Share Statistics</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Allow others to see your betting stats;
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
+            <label className="relative inline-flex items-center cursor-pointer" key={742813}>
+              <input;
                 type="checkbox"
                 checked={settings.privacy.shareStats}
-                onChange={() => handleToggle("privacy", "shareStats")}
+                onChange={() = key={882848}> handleToggle("privacy", "shareStats")}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" key={734788}></div>
             </label>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Public Profile</div>
-              <div className="text-sm text-gray-500">
-                Make your profile visible to other users
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Public Profile</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Make your profile visible to other users;
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
+            <label className="relative inline-flex items-center cursor-pointer" key={742813}>
+              <input;
                 type="checkbox"
                 checked={settings.privacy.publicProfile}
-                onChange={() => handleToggle("privacy", "publicProfile")}
+                onChange={() = key={560672}> handleToggle("privacy", "publicProfile")}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" key={734788}></div>
             </label>
           </div>
 
-          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-            <div className="flex items-center gap-2 mb-2">
-              <Key className="w-4 h-4 text-blue-600" />
-              <span className="font-medium text-blue-800 dark:text-blue-200">
-                Two-Factor Authentication
+          <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg" key={633132}>
+            <div className="flex items-center gap-2 mb-2" key={988706}>
+              <Key className="w-4 h-4 text-blue-600" / key={900248}>
+              <span className="font-medium text-blue-800 dark:text-blue-200" key={217378}>
+                Two-Factor Authentication;
               </span>
-              <Badge variant="success">Enabled</Badge>
+              <Badge variant="success" key={925752}>Enabled</Badge>
             </div>
-            <p className="text-sm text-blue-600 dark:text-blue-400">
-              Your account is protected with 2FA. You can manage this in your
+            <p className="text-sm text-blue-600 dark:text-blue-400" key={20057}>
+              Your account is protected with 2FA. You can manage this in your;
               account security settings.
             </p>
           </div>
@@ -199,157 +199,157 @@ export const UnifiedSettingsInterface: React.FC = () => {
       </Card>
 
       {/* Trading Preferences */}
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Database className="w-5 h-5 text-purple-500" />
-            Trading Preferences
+      <Card className="glass-card" key={851506}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center gap-2" key={587456}>
+            <Database className="w-5 h-5 text-purple-500" / key={758142}>
+            Trading Preferences;
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Risk Level</div>
-              <div className="text-sm text-gray-500">
-                Default risk tolerance for recommendations
+        <CardContent className="space-y-4" key={796196}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Risk Level</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Default risk tolerance for recommendations;
               </div>
             </div>
-            <select
+            <select;
               value={settings.trading.riskLevel}
-              onChange={(e) =>
+              onChange={(e) = key={661820}>
                 handleSelect("trading", "riskLevel", e.target.value)
               }
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
             >
-              <option value="low">Low</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+              <option value="low" key={209001}>Low</option>
+              <option value="medium" key={248541}>Medium</option>
+              <option value="high" key={228722}>High</option>
             </select>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Max Bet Amount</div>
-              <div className="text-sm text-gray-500">
-                Maximum amount for a single bet
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Max Bet Amount</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Maximum amount for a single bet;
               </div>
             </div>
-            <input
+            <input;
               type="number"
               value={settings.trading.maxBetAmount}
-              onChange={(e) =>
+              onChange={(e) = key={769340}>
                 handleSelect("trading", "maxBetAmount", Number(e.target.value))
               }
               className="w-24 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
             />
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Follow ML Recommendations</div>
-              <div className="text-sm text-gray-500">
-                Auto-execute high-confidence ML predictions
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Follow ML Recommendations</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Auto-execute high-confidence ML predictions;
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
+            <label className="relative inline-flex items-center cursor-pointer" key={742813}>
+              <input;
                 type="checkbox"
                 checked={settings.trading.followMLRecommendations}
-                onChange={() =>
+                onChange={() = key={559032}>
                   handleToggle("trading", "followMLRecommendations")
                 }
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" key={734788}></div>
             </label>
           </div>
         </CardContent>
       </Card>
 
       {/* Display Preferences */}
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Palette className="w-5 h-5 text-orange-500" />
-            Display Preferences
+      <Card className="glass-card" key={851506}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center gap-2" key={587456}>
+            <Palette className="w-5 h-5 text-orange-500" / key={161186}>
+            Display Preferences;
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Theme</div>
-              <div className="text-sm text-gray-500">
-                Choose your preferred color scheme
+        <CardContent className="space-y-4" key={796196}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Theme</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Choose your preferred color scheme;
               </div>
             </div>
-            <select
+            <select;
               value={settings.display.theme}
-              onChange={(e) => handleSelect("display", "theme", e.target.value)}
+              onChange={(e) = key={58129}> handleSelect("display", "theme", e.target.value)}
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
             >
-              <option value="light">Light</option>
-              <option value="dark">Dark</option>
-              <option value="auto">Auto</option>
+              <option value="light" key={952149}>Light</option>
+              <option value="dark" key={884357}>Dark</option>
+              <option value="auto" key={68249}>Auto</option>
             </select>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Currency</div>
-              <div className="text-sm text-gray-500">
-                Default currency for display
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Currency</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Default currency for display;
               </div>
             </div>
-            <select
+            <select;
               value={settings.display.currency}
-              onChange={(e) =>
+              onChange={(e) = key={129145}>
                 handleSelect("display", "currency", e.target.value)
               }
               className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800"
             >
-              <option value="USD">USD ($)</option>
-              <option value="EUR">EUR (€)</option>
-              <option value="GBP">GBP (£)</option>
-              <option value="CAD">CAD (C$)</option>
+              <option value="USD" key={42064}>USD ($)</option>
+              <option value="EUR" key={973543}>EUR (€)</option>
+              <option value="GBP" key={681888}>GBP (£)</option>
+              <option value="CAD" key={946387}>CAD (C$)</option>
             </select>
           </div>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <div className="font-medium">Decimal Odds</div>
-              <div className="text-sm text-gray-500">
-                Display odds in decimal format
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <div className="font-medium" key={471146}>Decimal Odds</div>
+              <div className="text-sm text-gray-500" key={826371}>
+                Display odds in decimal format;
               </div>
             </div>
-            <label className="relative inline-flex items-center cursor-pointer">
-              <input
+            <label className="relative inline-flex items-center cursor-pointer" key={742813}>
+              <input;
                 type="checkbox"
                 checked={settings.display.decimalOdds}
-                onChange={() => handleToggle("display", "decimalOdds")}
+                onChange={() = key={874571}> handleToggle("display", "decimalOdds")}
                 className="sr-only peer"
               />
-              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600" key={734788}></div>
             </label>
           </div>
         </CardContent>
       </Card>
 
       {/* Import/Export Section */}
-      <Card className="glass-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Database className="w-5 h-5 text-indigo-500" />
-            Data Management
+      <Card className="glass-card" key={851506}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center gap-2" key={587456}>
+            <Database className="w-5 h-5 text-indigo-500" / key={285535}>
+            Data Management;
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <button
-              onClick={() => {
-                const data = JSON.stringify(settings, null, 2);
-                const blob = new Blob([data], { type: "application/json" });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement("a");
+        <CardContent className="space-y-4" key={796196}>
+          <div className="flex flex-col sm:flex-row gap-4" key={415578}>
+            <button;
+              onClick={() = key={619354}> {
+
+
+
+
                 a.href = url;
                 a.download = "betting-settings.json";
                 a.click();
@@ -357,17 +357,17 @@ export const UnifiedSettingsInterface: React.FC = () => {
               }}
               className="flex-1 px-4 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-lg hover:from-green-700 hover:to-emerald-700 transition-all duration-200 shadow-lg"
             >
-              Export Settings
+              Export Settings;
             </button>
-            <div className="flex-1 relative">
-              <input
+            <div className="flex-1 relative" key={639463}>
+              <input;
                 type="file"
                 accept=".json"
-                onChange={(e) => {
-                  const file = e.target.files?.[0];
+                onChange={(e) = key={354683}> {
+
                   if (file) {
                     setIsImporting(true);
-                    const reader = new FileReader();
+
                     reader.onload = (event) => {
                       try {
                         const importedSettings = JSON.parse(
@@ -387,7 +387,7 @@ export const UnifiedSettingsInterface: React.FC = () => {
                     };
                     reader.readAsText(file);
                   }
-                  // Reset the input value to allow selecting the same file again
+                  // Reset the input value to allow selecting the same file again;
                   e.target.value = "";
                 }}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
@@ -395,14 +395,14 @@ export const UnifiedSettingsInterface: React.FC = () => {
                   zIndex: 10,
                 }}
               />
-              <div
+              <div;
                 className="w-full px-4 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg text-center pointer-events-none"
                 style={{
                   position: "relative",
                   zIndex: 1,
                   opacity: isImporting ? 0.7 : 1,
                 }}
-              >
+               key={182940}>
                 {isImporting ? "Importing..." : "Import Settings"}
               </div>
             </div>
@@ -411,19 +411,19 @@ export const UnifiedSettingsInterface: React.FC = () => {
       </Card>
 
       {/* Save Button */}
-      <div
+      <div;
         className="flex justify-center pt-6"
         style={{ position: "relative", zIndex: 1 }}
-      >
-        <button
-          onClick={() => {
-            // Save settings logic here
+       key={456489}>
+        <button;
+          onClick={() = key={403652}> {
+            // Save settings logic here;
             alert("Settings saved successfully!");
           }}
           className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg"
           style={{ position: "relative", zIndex: 2 }}
         >
-          Save Settings
+          Save Settings;
         </button>
       </div>
     </div>

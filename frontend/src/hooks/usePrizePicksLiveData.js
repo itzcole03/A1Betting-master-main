@@ -5,10 +5,10 @@ export function usePrizePicksLiveData() {
     useEffect(() => {
         const handler = (prop) => {
             setLivePrizePicksData(prev => {
-                // Replace if id exists, else add
-                const idx = prev.findIndex(p => p.id === prop.id);
+                // Replace if id exists, else add;
+
                 if (idx !== -1) {
-                    const updated = [...prev];
+
                     updated[idx] = prop;
                     return updated;
                 }

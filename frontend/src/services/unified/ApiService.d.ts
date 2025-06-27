@@ -1,5 +1,5 @@
-import EventEmitter from 'eventemitter3';
-import { AxiosInstance } from 'axios';
+import EventEmitter from 'eventemitter3.ts';
+import { AxiosInstance } from 'axios.ts';
 export interface ApiResponse<T> {
     data: T;
     status: number;

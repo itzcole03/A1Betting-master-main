@@ -2,9 +2,9 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, useState, useEffect } from 'react';
 import { authService } from '../services/authService';
 import { errorLogger } from '../utils/errorLogger';
-const AuthContext = createContext(undefined);
+
 export const useAuth = () => {
-    const context = useContext(AuthContext);
+
     if (!context) {
         throw new Error('useAuth must be used within an AuthProvider');
     }
@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const initializeAuth = async () => {
             try {
-                const currentUser = await authService.getCurrentUser();
+
                 setUser(currentUser);
             }
             catch (err) {
@@ -33,11 +33,11 @@ export const AuthProvider = ({ children }) => {
         try {
             setLoading(true);
             setError(null);
-            const user = await authService.login(email, password);
+
             setUser(user);
         }
         catch (err) {
-            const error = err;
+
             setError(error.message);
             errorLogger.logError(error, { context: 'AuthProvider.login' });
             throw error;
@@ -53,7 +53,7 @@ export const AuthProvider = ({ children }) => {
             setUser(null);
         }
         catch (err) {
-            const error = err;
+
             setError(error.message);
             errorLogger.logError(error, { context: 'AuthProvider.logout' });
             throw error;
@@ -66,11 +66,11 @@ export const AuthProvider = ({ children }) => {
         try {
             setLoading(true);
             setError(null);
-            const user = await authService.register(email, password, name);
+
             setUser(user);
         }
         catch (err) {
-            const error = err;
+
             setError(error.message);
             errorLogger.logError(error, { context: 'AuthProvider.register' });
             throw error;

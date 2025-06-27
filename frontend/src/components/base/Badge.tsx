@@ -1,7 +1,7 @@
-import React from 'react';
-import { cn } from '@/utils/classNames';
+import React from 'react.ts';
+import { cn } from '@/utils/classNames.ts';
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement key={282626}> {
   variant?: 'default' | 'success' | 'warning' | 'danger' | 'info';
   size?: 'sm' | 'md' | 'lg';
   glow?: boolean;
@@ -30,24 +30,23 @@ const glowColors = {
   info: 'shadow-blue-500/20',
 };
 
-export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
+export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps key={555961}>(
   (
     { variant = 'default', size = 'md', glow = false, dot = false, className, children, ...props },
-    ref
+    ref;
   ) => {
-    const baseClasses = 'inline-flex items-center gap-1.5 font-medium rounded-full';
-    const variantClasses = variants[variant];
-    const sizeClasses = sizes[size];
-    const glowClasses = glow ? `shadow-lg ${glowColors[variant]}` : '';
+
+
+
 
     return (
-      <span
+      <span;
         ref={ref}
         className={cn(baseClasses, variantClasses, sizeClasses, glowClasses, className)}
         {...props}
-      >
+       key={943951}>
         {dot && (
-          <span
+          <span;
             className={cn('h-2 w-2 rounded-full', {
               'bg-gray-500 dark:bg-gray-400': variant === 'default',
               'bg-green-500 dark:bg-green-400': variant === 'success',
@@ -55,7 +54,7 @@ export const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
               'bg-red-500 dark:bg-red-400': variant === 'danger',
               'bg-blue-500 dark:bg-blue-400': variant === 'info',
             })}
-          />
+          / key={474926}>
         )}
         {children}
       </span>

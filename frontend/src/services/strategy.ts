@@ -1,5 +1,5 @@
-import { apiService } from './api';
-import { StrategyRecommendation, BettingDecision, BetRecord } from '@/types/core';
+import { apiService } from './api.ts';
+import { StrategyRecommendation, BettingDecision, BetRecord } from '@/types/core.ts';
 
 class StrategyService {
   private static instance: StrategyService;
@@ -16,30 +16,30 @@ class StrategyService {
 
   async getStrategies(): Promise<StrategyRecommendation[]> {
     try {
-      const response = await apiService.getStrategies();
+
       return response;
     } catch (error) {
-      console.error('Failed to fetch strategies:', error);
+      // console statement removed
       throw error;
     }
   }
 
   async analyzeStrategy(strategyId: string): Promise<StrategyRecommendation> {
     try {
-      const response = await apiService.analyzeStrategy(strategyId);
+
       return response;
     } catch (error) {
-      console.error('Failed to analyze strategy:', error);
+      // console statement removed
       throw error;
     }
   }
 
   async executeStrategy(strategyId: string): Promise<BettingDecision[]> {
     try {
-      const response = await apiService.executeStrategy(strategyId);
+
       return response;
     } catch (error) {
-      console.error('Failed to execute strategy:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -51,20 +51,20 @@ class StrategyService {
     totalBets: number;
   }> {
     try {
-      const response = await apiService.getStrategyPerformance(strategyId);
+
       return response;
     } catch (error) {
-      console.error('Failed to fetch strategy performance:', error);
+      // console statement removed
       throw error;
     }
   }
 
   async getStrategyHistory(strategyId: string): Promise<BetRecord[]> {
     try {
-      const response = await apiService.getStrategyHistory(strategyId);
+
       return response;
     } catch (error) {
-      console.error('Failed to fetch strategy history:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -89,17 +89,17 @@ class StrategyService {
     try {
       await apiService.updateStrategySettings(strategyId, settings);
     } catch (error) {
-      console.error('Failed to update strategy settings:', error);
+      // console statement removed
       throw error;
     }
   }
 
   async getStrategyRecommendations(): Promise<StrategyRecommendation[]> {
     try {
-      const response = await apiService.getStrategyRecommendations();
+
       return response;
     } catch (error) {
-      console.error('Failed to fetch strategy recommendations:', error);
+      // console statement removed
       throw error;
     }
   }

@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { Users, Star, DollarSign, TrendingUp, Target, Zap } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Badge } from "../ui/badge";
+import React, { useState  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
+import { Users, Star, DollarSign, TrendingUp, Target, Zap } from 'lucide-react.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/ui/card.ts';
+import { Badge } from '@/ui/badge.ts';
 
 interface Player {
   id: string;
@@ -17,7 +17,7 @@ interface Player {
 }
 
 export const SmartLineupBuilder: React.FC = () => {
-  const [selectedPlayers, setSelectedPlayers] = useState<Player[]>([]);
+  const [selectedPlayers, setSelectedPlayers] = useState<Player[] key={702301}>([]);
   const [remainingSalary, setRemainingSalary] = useState(50000);
   const [lineup] = useState({
     projectedTotal: 0,
@@ -26,7 +26,7 @@ export const SmartLineupBuilder: React.FC = () => {
     floor: 0,
   });
 
-  const [availablePlayers] = useState<Player[]>([
+  const [availablePlayers] = useState<Player[] key={702301}>([
     {
       id: "1",
       name: "LeBron James",
@@ -107,7 +107,7 @@ export const SmartLineupBuilder: React.FC = () => {
   };
 
   const removePlayer = (playerId: string) => {
-    const player = selectedPlayers.find((p) => p.id === playerId);
+
     if (player) {
       setSelectedPlayers(selectedPlayers.filter((p) => p.id !== playerId));
       setRemainingSalary(remainingSalary + player.salary);
@@ -115,64 +115,64 @@ export const SmartLineupBuilder: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Header */}
-      <motion.div
+      <motion.div;
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-8"
-      >
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          📋 Smart Lineup Builder
+       key={951381}>
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent" key={11526}>
+          📋 Smart Lineup Builder;
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2">
-          AI-powered daily fantasy lineup optimization with advanced analytics
+        <p className="text-gray-600 dark:text-gray-400 mt-2" key={616181}>
+          AI-powered daily fantasy lineup optimization with advanced analytics;
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6" key={793741}>
         {/* Lineup Construction */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-6" key={381409}>
           {/* Current Lineup */}
-          <Card className="glass-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-blue-500" />
+          <Card className="glass-card" key={851506}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center gap-2" key={587456}>
+                <Users className="w-5 h-5 text-blue-500" / key={28315}>
                 Current Lineup ({selectedPlayers.length}/8)
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent key={452065}>
               {selectedPlayers.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-gray-500" key={998723}>
                   No players selected. Start building your lineup!
                 </div>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-3" key={186520}>
                   {selectedPlayers.map((player) => (
-                    <div
+                    <div;
                       key={player.id}
                       className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
-                    >
-                      <div className="flex items-center gap-3">
-                        <Badge variant="secondary">{player.position}</Badge>
-                        <div>
-                          <div className="font-medium">{player.name}</div>
-                          <div className="text-sm text-gray-500">
+                     key={104885}>
+                      <div className="flex items-center gap-3" key={443099}>
+                        <Badge variant="secondary" key={147627}>{player.position}</Badge>
+                        <div key={241917}>
+                          <div className="font-medium" key={471146}>{player.name}</div>
+                          <div className="text-sm text-gray-500" key={826371}>
                             {player.team}
                           </div>
                         </div>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="text-right">
-                          <div className="font-medium">
+                      <div className="flex items-center gap-4" key={782146}>
+                        <div className="text-right" key={144468}>
+                          <div className="font-medium" key={471146}>
                             ${player.salary.toLocaleString()}
                           </div>
-                          <div className="text-sm text-gray-500">
-                            {player.projectedPoints} pts
+                          <div className="text-sm text-gray-500" key={826371}>
+                            {player.projectedPoints} pts;
                           </div>
                         </div>
-                        <button
-                          onClick={() => removePlayer(player.id)}
+                        <button;
+                          onClick={() = key={670278}> removePlayer(player.id)}
                           className="text-red-500 hover:text-red-700"
                         >
                           ×
@@ -186,48 +186,48 @@ export const SmartLineupBuilder: React.FC = () => {
           </Card>
 
           {/* Available Players */}
-          <Card className="glass-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Star className="w-5 h-5 text-yellow-500" />
-                Available Players
+          <Card className="glass-card" key={851506}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center gap-2" key={587456}>
+                <Star className="w-5 h-5 text-yellow-500" / key={760994}>
+                Available Players;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
+            <CardContent key={452065}>
+              <div className="space-y-3" key={186520}>
                 {availablePlayers.map((player) => (
-                  <div
+                  <div;
                     key={player.id}
                     className="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 cursor-pointer"
-                    onClick={() => addPlayer(player)}
+                    onClick={() = key={688606}> addPlayer(player)}
                   >
-                    <div className="flex items-center gap-3">
-                      <Badge variant="outline">{player.position}</Badge>
-                      <div>
-                        <div className="font-medium">{player.name}</div>
-                        <div className="text-sm text-gray-500">
+                    <div className="flex items-center gap-3" key={443099}>
+                      <Badge variant="outline" key={93734}>{player.position}</Badge>
+                      <div key={241917}>
+                        <div className="font-medium" key={471146}>{player.name}</div>
+                        <div className="text-sm text-gray-500" key={826371}>
                           {player.team}
                         </div>
                       </div>
-                      <Badge className={getTierColor(player.tier)}>
+                      <Badge className={getTierColor(player.tier)} key={863223}>
                         {player.tier}
                       </Badge>
                     </div>
-                    <div className="flex items-center gap-4">
-                      <div className="text-right">
-                        <div className="font-medium">
+                    <div className="flex items-center gap-4" key={782146}>
+                      <div className="text-right" key={144468}>
+                        <div className="font-medium" key={471146}>
                           ${player.salary.toLocaleString()}
                         </div>
-                        <div className="text-sm text-gray-500">
-                          {player.projectedPoints} pts
+                        <div className="text-sm text-gray-500" key={826371}>
+                          {player.projectedPoints} pts;
                         </div>
                       </div>
-                      <div className="text-right">
-                        <div className="text-sm font-medium text-green-600">
-                          {player.value}x
+                      <div className="text-right" key={144468}>
+                        <div className="text-sm font-medium text-green-600" key={169783}>
+                          {player.value}x;
                         </div>
-                        <div className="text-sm text-gray-500">
-                          {player.ownership}% own
+                        <div className="text-sm text-gray-500" key={826371}>
+                          {player.ownership}% own;
                         </div>
                       </div>
                     </div>
@@ -239,86 +239,86 @@ export const SmartLineupBuilder: React.FC = () => {
         </div>
 
         {/* Lineup Analysis */}
-        <div className="space-y-6">
+        <div className="space-y-6" key={501869}>
           {/* Salary Information */}
-          <Card className="glass-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <DollarSign className="w-5 h-5 text-green-500" />
-                Salary Cap
+          <Card className="glass-card" key={851506}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center gap-2" key={587456}>
+                <DollarSign className="w-5 h-5 text-green-500" / key={926676}>
+                Salary Cap;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div>
-                  <div className="flex justify-between mb-2">
-                    <span className="text-sm text-gray-600">Used</span>
-                    <span className="text-sm font-medium">
+            <CardContent key={452065}>
+              <div className="space-y-4" key={160407}>
+                <div key={241917}>
+                  <div className="flex justify-between mb-2" key={99106}>
+                    <span className="text-sm text-gray-600" key={279234}>Used</span>
+                    <span className="text-sm font-medium" key={318054}>
                       ${(50000 - remainingSalary).toLocaleString()}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-200 rounded-full h-2">
-                    <div
+                  <div className="w-full bg-gray-200 rounded-full h-2" key={205936}>
+                    <div;
                       className="bg-blue-600 h-2 rounded-full"
                       style={{
                         width: `${((50000 - remainingSalary) / 50000) * 100}%`,
                       }}
-                    ></div>
+                     key={751771}></div>
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="text-lg font-bold text-green-600">
+                <div className="text-center" key={120206}>
+                  <div className="text-lg font-bold text-green-600" key={134873}>
                     ${remainingSalary.toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-500">Remaining</div>
+                  <div className="text-sm text-gray-500" key={826371}>Remaining</div>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           {/* Lineup Projections */}
-          <Card className="glass-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-purple-500" />
-                Projections
+          <Card className="glass-card" key={851506}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center gap-2" key={587456}>
+                <TrendingUp className="w-5 h-5 text-purple-500" / key={312580}>
+                Projections;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Projected Total</span>
-                  <span className="font-bold">
-                    {selectedPlayers
+            <CardContent key={452065}>
+              <div className="space-y-4" key={160407}>
+                <div className="flex justify-between" key={588832}>
+                  <span className="text-gray-600" key={588716}>Projected Total</span>
+                  <span className="font-bold" key={369632}>
+                    {selectedPlayers;
                       .reduce((sum, p) => sum + p.projectedPoints, 0)
                       .toFixed(1)}{" "}
-                    pts
+                    pts;
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Avg Ownership</span>
-                  <span className="font-bold">
-                    {selectedPlayers.length > 0
+                <div className="flex justify-between" key={588832}>
+                  <span className="text-gray-600" key={588716}>Avg Ownership</span>
+                  <span className="font-bold" key={369632}>
+                    {selectedPlayers.length > 0;
                       ? (
                           selectedPlayers.reduce(
                             (sum, p) => sum + p.ownership,
                             0,
-                          ) / selectedPlayers.length
+                          ) / selectedPlayers.length;
                         ).toFixed(1)
                       : 0}
                     %
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-600">Lineup Value</span>
-                  <span className="font-bold text-green-600">
-                    {selectedPlayers.length > 0
+                <div className="flex justify-between" key={588832}>
+                  <span className="text-gray-600" key={588716}>Lineup Value</span>
+                  <span className="font-bold text-green-600" key={391195}>
+                    {selectedPlayers.length > 0;
                       ? (
                           selectedPlayers.reduce((sum, p) => sum + p.value, 0) /
-                          selectedPlayers.length
+                          selectedPlayers.length;
                         ).toFixed(2)
                       : 0}
-                    x
+                    x;
                   </span>
                 </div>
               </div>
@@ -326,55 +326,55 @@ export const SmartLineupBuilder: React.FC = () => {
           </Card>
 
           {/* Optimization Tools */}
-          <Card className="glass-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Zap className="w-5 h-5 text-orange-500" />
-                AI Tools
+          <Card className="glass-card" key={851506}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center gap-2" key={587456}>
+                <Zap className="w-5 h-5 text-orange-500" / key={856273}>
+                AI Tools;
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-3">
-              <button className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all">
-                Generate Optimal Lineup
+            <CardContent className="space-y-3" key={445386}>
+              <button className="w-full py-2 px-4 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all" key={600257}>
+                Generate Optimal Lineup;
               </button>
-              <button className="w-full py-2 px-4 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
-                Optimize Current
+              <button className="w-full py-2 px-4 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all" key={251824}>
+                Optimize Current;
               </button>
-              <button className="w-full py-2 px-4 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all">
-                Generate Contrarian
+              <button className="w-full py-2 px-4 bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-all" key={251824}>
+                Generate Contrarian;
               </button>
-              <button className="w-full py-2 px-4 bg-green-100 text-green-800 rounded-lg hover:bg-green-200 transition-all">
-                Export Lineup
+              <button className="w-full py-2 px-4 bg-green-100 text-green-800 rounded-lg hover:bg-green-200 transition-all" key={744081}>
+                Export Lineup;
               </button>
             </CardContent>
           </Card>
 
           {/* Lineup Rating */}
-          <Card className="glass-card">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Target className="w-5 h-5 text-red-500" />
-                Lineup Rating
+          <Card className="glass-card" key={851506}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center gap-2" key={587456}>
+                <Target className="w-5 h-5 text-red-500" / key={825954}>
+                Lineup Rating;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-purple-600 mb-2">
+            <CardContent key={452065}>
+              <div className="text-center" key={120206}>
+                <div className="text-3xl font-bold text-purple-600 mb-2" key={545184}>
                   {selectedPlayers.length > 0 ? "87" : "--"}
                 </div>
-                <div className="text-sm text-gray-500 mb-4">Overall Score</div>
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span>Value</span>
-                    <span className="text-green-600">A+</span>
+                <div className="text-sm text-gray-500 mb-4" key={607339}>Overall Score</div>
+                <div className="space-y-2" key={725977}>
+                  <div className="flex justify-between text-sm" key={353204}>
+                    <span key={595076}>Value</span>
+                    <span className="text-green-600" key={209818}>A+</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Ceiling</span>
-                    <span className="text-blue-600">A-</span>
+                  <div className="flex justify-between text-sm" key={353204}>
+                    <span key={595076}>Ceiling</span>
+                    <span className="text-blue-600" key={489125}>A-</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span>Ownership</span>
-                    <span className="text-orange-600">B+</span>
+                  <div className="flex justify-between text-sm" key={353204}>
+                    <span key={595076}>Ownership</span>
+                    <span className="text-orange-600" key={893512}>B+</span>
                   </div>
                 </div>
               </div>

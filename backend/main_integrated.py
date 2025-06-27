@@ -28,15 +28,15 @@ async def lifespan(app: FastAPI):
         # intelligent_scheduler.start()
         # logger.info("✅ Background job scheduler started")
         logger.info("⚠️ Background job scheduler temporarily disabled")
-    except Exception as e:
-        logger.error(f"❌ Failed to start scheduler: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("❌ Failed to start scheduler: {e}")
 
     # Initialize betting service
     try:
 
         logger.info("✅ Betting opportunity service initialized")
-    except Exception as e:
-        logger.error(f"❌ Failed to initialize betting service: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("❌ Failed to initialize betting service: {e}")
 
     yield  # Cleanup on shutdown
     logger.info("🛑 Shutting down A1Betting Backend Server...")
@@ -46,14 +46,15 @@ async def lifespan(app: FastAPI):
         # intelligent_scheduler.shutdown()
         # logger.info("✅ Background job scheduler stopped")
         logger.info("⚠️ Background job scheduler cleanup skipped")
-    except Exception as e:
-        logger.error(f"❌ Failed to stop scheduler: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("❌ Failed to stop scheduler: {e}")
 
 
 # Create main FastAPI application
 app = FastAPI(
     title="A1Betting Complete API",
-    description="Complete backend for A1Betting frontend with PrizePicks integration, ML predictions, and PropOllama AI",
+    description=("Complete backend for A1Betting frontend with PrizePicks integration, ML predictions, and"
+            "PropOllama AI",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
@@ -87,7 +88,7 @@ try:
     app.include_router(api_router)
     logger.info("✅ API integration routes loaded")
 except ImportError as e:
-    logger.error(f"❌ Failed to load API integration: {e}")
+    logger.error("❌ Failed to load API integration: {e}")
 
 try:
     # Import and include existing sports expert routes
@@ -98,7 +99,7 @@ try:
     #     logger.info("✅ Sports expert routes loaded")
     logger.info("⚠️ Sports expert routes temporarily disabled")
 except ImportError as e:
-    logger.error(f"❌ Failed to load sports expert routes: {e}")
+    logger.error("❌ Failed to load sports expert routes: {e}")
 
 try:
     # Import and include betting opportunity routes
@@ -108,7 +109,7 @@ try:
         app.include_router(betting_router)
         logger.info("✅ Betting opportunity routes loaded")
 except ImportError as e:
-    logger.error(f"❌ Failed to load betting routes: {e}")
+    logger.error("❌ Failed to load betting routes: {e}")
 
 
 # Health check endpoints
@@ -126,7 +127,7 @@ async def api_health_check():
         from betting_opportunity_service import betting_opportunity_service
 
         services["betting_service"] = "healthy"
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         services["betting_service"] = "unavailable"
 
     # Check sports expert agent
@@ -135,7 +136,7 @@ async def api_health_check():
 
         agent = getattr(betting_opportunity_service, "sports_expert_agent", None)
         services["sports_expert_agent"] = "healthy" if agent else "unavailable"
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         services["sports_expert_agent"] = "unavailable"
 
     # Check scheduler
@@ -143,7 +144,7 @@ async def api_health_check():
         from sports_expert_api import intelligent_scheduler
 
         services["scheduler"] = "healthy" if intelligent_scheduler else "unavailable"
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         services["scheduler"] = "unavailable"
 
     return {
@@ -176,7 +177,7 @@ async def not_found_handler(request, exc):
 @app.exception_handler(500)
 async def internal_error_handler(request, exc):
     """Handle 500 errors."""
-    logger.error(f"Internal server error: {exc}")
+    logger.error("Internal server error: {exc}")
     return {
         "status": "error",
         "code": "INTERNAL_ERROR",

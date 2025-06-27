@@ -33,7 +33,7 @@ export class EventBus {
     eventNames() {
         return this.emitter.eventNames();
     }
-    // Add onAny/offAny methods for DebugPanel
+    // Add onAny/offAny methods for DebugPanel;
     onAny(listener) {
         this.emitter.onAny(listener);
     }
@@ -41,5 +41,5 @@ export class EventBus {
         this.emitter.offAny(listener);
     }
 }
-// Singleton instance for convenience
+// Singleton instance for convenience;
 export const eventBus = EventBus.getInstance();

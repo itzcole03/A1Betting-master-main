@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { devtools } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
-import { v4 as uuidv4 } from 'uuid';
-import { updatePerformanceMetrics } from './monitoring';
+import { create } from 'zustand.ts';
+import { persist } from 'zustand/middleware.ts';
+import { devtools } from 'zustand/middleware.ts';
+import { immer } from 'zustand/middleware/immer.ts';
+import { v4 as uuidv4 } from 'uuid.ts';
+import { updatePerformanceMetrics } from './monitoring.ts';
 
 export interface UserStateData {
   id: string;
@@ -60,12 +60,12 @@ export const useUserStore = create<UserStore>()(
         ...initialState,
         setState: updater => {
           set(state => {
-            const start = performance.now();
+
             const { setState, ...userState } = state;
-            const newState = updater(userState);
-            const end = performance.now();
+
+
             updatePerformanceMetrics(end - start);
-            // Validate state
+            // Validate state;
             const errors: string[] = [];
             if (!newState.data.name) {
               errors.push('Name is required');
@@ -75,7 +75,7 @@ export const useUserStore = create<UserStore>()(
             } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newState.data.email)) {
               errors.push('Invalid email format');
             }
-            // Update validation and metrics
+            // Update validation and metrics;
             newState.validation.isValid = errors.length === 0;
             newState.validation.errors = errors;
             newState.metrics.updateCount += 1;

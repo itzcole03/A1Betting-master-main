@@ -1,9 +1,9 @@
-import React from "react";
-import ErrorBoundary from "../ErrorBoundary";
-import UniversalAnalytics from "./UniversalAnalytics";
+import React from 'react.ts';
+import ErrorBoundary from '@/ErrorBoundary.ts';
+import UniversalAnalytics from './UniversalAnalytics.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export interface ConsolidatedAnalyticsProps {
@@ -26,11 +26,11 @@ export interface ConsolidatedAnalyticsProps {
 }
 
 // ============================================================================
-// MAIN CONSOLIDATED ANALYTICS COMPONENT
+// MAIN CONSOLIDATED ANALYTICS COMPONENT;
 // ============================================================================
 
 /**
- * ConsolidatedUniversalAnalytics - The unified analytics component
+ * ConsolidatedUniversalAnalytics - The unified analytics component;
  *
  * This component consolidates ALL analytics variants into a single, comprehensive component:
  * - AdvancedAnalytics (advanced metrics)
@@ -61,14 +61,14 @@ export interface ConsolidatedAnalyticsProps {
  * - SuperAnalyticsEngine (super-powered)
  *
  * Features preserved from ALL variants:
- * ✅ Multi-tab interface: overview, models, performance, risk, betting, system
- * ✅ Real-time metrics monitoring and model performance analysis
- * ✅ Comprehensive betting analytics and system health monitoring
- * ✅ Advanced charting, alert management, data export capabilities
- * ✅ Time range filtering and model comparison tools
+ * ✅ Multi-tab interface: overview, models, performance, risk, betting, system;
+ * ✅ Real-time metrics monitoring and model performance analysis;
+ * ✅ Comprehensive betting analytics and system health monitoring;
+ * ✅ Advanced charting, alert management, data export capabilities;
+ * ✅ Time range filtering and model comparison tools;
  */
 export const ConsolidatedUniversalAnalytics: React.FC<
-  ConsolidatedAnalyticsProps
+  ConsolidatedAnalyticsProps;
 > = ({
   variant = "advanced",
   features = {
@@ -87,12 +87,12 @@ export const ConsolidatedUniversalAnalytics: React.FC<
   refreshInterval = 30000,
   className = "",
 }) => {
-  // Return the clean analytics without nested navigation
-  // All features are now integrated into the main app navigation
+  // Return the clean analytics without nested navigation;
+  // All features are now integrated into the main app navigation;
   return (
-    <ErrorBoundary>
-      <div className={className}>
-        <UniversalAnalytics />
+    <ErrorBoundary key={390256}>
+      <div className={className} key={684864}>
+        <UniversalAnalytics / key={703902}>
       </div>
     </ErrorBoundary>
   );

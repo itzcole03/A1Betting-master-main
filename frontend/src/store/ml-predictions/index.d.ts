@@ -1,4 +1,4 @@
-import { ModelOutput, PredictionState } from '../../types/prediction';
+import { ModelOutput, PredictionState } from '@/types/prediction.ts';
 interface MLPredictionsState extends PredictionState {
     setPredictions: (predictions: Map<string, ModelOutput>) => void;
     addPrediction: (id: string, prediction: ModelOutput) => void;

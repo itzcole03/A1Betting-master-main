@@ -2,11 +2,11 @@
  * Advanced ensemble model that combines multiple specialized models for improved predictions.
  */
 
-import { BaseModel } from './BaseModel';
-import { AdvancedEnsembleConfig, ModelMetrics, ModelPrediction } from '@/types';
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../core/UnifiedErrorHandler';
-import { MarketIntelligenceModel } from './MarketIntelligenceModel';
+import { BaseModel } from './BaseModel.ts';
+import { AdvancedEnsembleConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/core/UnifiedErrorHandler.ts';
+import { MarketIntelligenceModel } from './MarketIntelligenceModel.ts';
 
 export class AdvancedEnsembleModel extends BaseModel {
   private models: Map<string, BaseModel> = new Map();
@@ -24,7 +24,7 @@ export class AdvancedEnsembleModel extends BaseModel {
   private initializeModels(config: AdvancedEnsembleConfig): void {
     try {
       config.models.forEach(modelConfig => {
-        const model = this.createModel(modelConfig);
+
         this.models.set(modelConfig.name, model);
         this.weights.set(modelConfig.name, modelConfig.weight);
       });
@@ -38,8 +38,8 @@ export class AdvancedEnsembleModel extends BaseModel {
   }
 
   private createModel(config: any): BaseModel {
-    // For now, we'll use MarketIntelligenceModel as a concrete implementation
-    // In a real implementation, this would create different model types based on config.type
+    // For now, we'll use MarketIntelligenceModel as a concrete implementation;
+    // In a real implementation, this would create different model types based on config.type;
     return new MarketIntelligenceModel(config);
   }
 
@@ -48,7 +48,7 @@ export class AdvancedEnsembleModel extends BaseModel {
       const predictions: Array<{ model: string; prediction: any; confidence: number }> = [];
 
       for (const [modelName, model] of this.models) {
-        const prediction = await model.predict(data);
+
         predictions.push({
           model: modelName,
           prediction: prediction.output,
@@ -56,7 +56,6 @@ export class AdvancedEnsembleModel extends BaseModel {
         });
       }
 
-      const weightedPrediction = this.combinePredictions(predictions);
       return this.createPrediction(weightedPrediction, this.calculateConfidence(predictions));
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'AdvancedEnsembleModel.predict', { data });
@@ -69,10 +68,10 @@ export class AdvancedEnsembleModel extends BaseModel {
   ): any {
     const totalWeight = predictions.reduce(
       (sum, pred) => sum + (this.weights.get(pred.model) || 0),
-      0
+      0;
     );
     return predictions.reduce((sum, pred) => {
-      const weight = (this.weights.get(pred.model) || 0) / totalWeight;
+
       return sum + pred.prediction * weight;
     }, 0);
   }
@@ -82,10 +81,10 @@ export class AdvancedEnsembleModel extends BaseModel {
   ): number {
     const totalWeight = predictions.reduce(
       (sum, pred) => sum + (this.weights.get(pred.model) || 0),
-      0
+      0;
     );
     return predictions.reduce((sum, pred) => {
-      const weight = (this.weights.get(pred.model) || 0) / totalWeight;
+
       return sum + pred.confidence * weight;
     }, 0);
   }
@@ -107,14 +106,14 @@ export class AdvancedEnsembleModel extends BaseModel {
   async evaluate(data: any): Promise<ModelMetrics> {
     try {
       const metrics: ModelMetrics = {};
-      let totalWeight = 0;
+      const totalWeight = 0;
 
       for (const [modelName, model] of this.models) {
-        const modelMetrics = await model.evaluate(data);
-        const weight = this.weights.get(modelName) || 0;
+
+
         totalWeight += weight;
 
-        // Combine metrics with weights
+        // Combine metrics with weights;
         Object.entries(modelMetrics).forEach(([key, value]) => {
           if (value !== undefined) {
             metrics[key as keyof ModelMetrics] =
@@ -123,7 +122,7 @@ export class AdvancedEnsembleModel extends BaseModel {
         });
       }
 
-      // Normalize metrics by total weight
+      // Normalize metrics by total weight;
       Object.keys(metrics).forEach(key => {
         if (metrics[key as keyof ModelMetrics] !== undefined) {
           metrics[key as keyof ModelMetrics] =

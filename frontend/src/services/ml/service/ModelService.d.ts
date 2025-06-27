@@ -1,6 +1,6 @@
-import { ModelConfig } from '../models/BaseModel';
-import { AdvancedEnsembleConfig } from '../models/AdvancedEnsembleModel';
-import { ModelType } from '../registry/ModelRegistry';
+import { ModelConfig } from '@/models/BaseModel.ts';
+import { AdvancedEnsembleConfig } from '@/models/AdvancedEnsembleModel.ts';
+import { ModelType } from '@/registry/ModelRegistry.ts';
 export declare class ModelService {
     private static instance;
     private modelManager;

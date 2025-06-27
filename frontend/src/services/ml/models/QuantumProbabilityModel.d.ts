@@ -1,8 +1,8 @@
 /**
  * Model for analyzing quantum probability patterns and generating predictions.
  */
-import { BaseModel } from './BaseModel';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types';
+import { BaseModel } from './BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
 export declare class QuantumProbabilityModel extends BaseModel {
     protected config: ModelConfig;
     private quantumThreshold;

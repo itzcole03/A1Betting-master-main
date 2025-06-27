@@ -1,17 +1,17 @@
-import { WebSocketManager } from '../WebSocketManager';
-import { FinalPredictionEngine } from '../../FinalPredictionEngine/types';
-import { UnifiedLogger } from '../../logging/types';
-import { PredictionRequest, PredictionResponse } from '../../types/prediction';
+import { WebSocketManager } from '@/WebSocketManager.ts';
+import { FinalPredictionEngine } from '@/FinalPredictionEngine/types.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { PredictionRequest, PredictionResponse } from '@/types/prediction.ts';
 
 export class PredictionHandler {
   private readonly PREDICTION_TOPIC = 'predictions';
-  private readonly UPDATE_INTERVAL = 5000; // 5 seconds
+  private readonly UPDATE_INTERVAL = 5000; // 5 seconds;
   private updateInterval: NodeJS.Timeout | null = null;
 
   constructor(
     private wsManager: WebSocketManager,
     private predictionEngine: FinalPredictionEngine,
-    private logger: UnifiedLogger
+    private logger: UnifiedLogger;
   ) {
     this.setupEventHandlers();
   }
@@ -30,10 +30,10 @@ export class PredictionHandler {
 
   private async handlePredictionRequest(
     clientId: string,
-    request: PredictionRequest
+    request: PredictionRequest;
   ): Promise<void> {
     try {
-      const prediction = await this.predictionEngine.generatePrediction(request);
+
       this.wsManager.sendMessage(clientId, {
         type: 'prediction_response',
         data: prediction,
@@ -56,26 +56,25 @@ export class PredictionHandler {
 
     this.updateInterval = setInterval(async () => {
       try {
-        const activeClients = this.wsManager.getSubscriberCount(this.PREDICTION_TOPIC);
+
         if (activeClients === 0) {
           return;
         }
 
-        // Get predictions for active events
+        // Get predictions for active events;
         const request: PredictionRequest = {
           sport: 'all',
           eventId: 'active',
           riskProfile: { level: 'medium' },
         };
 
-        const prediction = await this.predictionEngine.generatePrediction(request);
         this.wsManager.broadcast(
           {
             type: 'prediction_update',
             data: prediction,
             timestamp: Date.now(),
           },
-          this.PREDICTION_TOPIC
+          this.PREDICTION_TOPIC;
         );
       } catch (error) {
         this.logger.error(`Error in real-time prediction updates: ${error}`);

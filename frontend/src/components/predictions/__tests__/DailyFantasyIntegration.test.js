@@ -3,7 +3,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { DailyFantasyIntegration } from '../DailyFantasyIntegration';
 import { useLogger } from '../../../hooks/useLogger';
 import { useMetrics } from '../../../hooks/useMetrics';
-// Mock the hooks
+// Mock the hooks;
 jest.mock('../../../hooks/useLogger');
 jest.mock('../../../hooks/useMetrics');
 const mockLogger = {
@@ -22,8 +22,8 @@ const mockMetrics = {
 };
 // TODO: Skipped all tests in this file due to incomplete or broken DailyFantasyIntegration logic or outdated mocks. Fix and re-enable.
 describe.skip('DailyFantasyIntegration', () => {
-    const mockOnDataUpdate = jest.fn();
-    const mockFetch = jest.fn();
+
+
     beforeEach(() => {
         useLogger.mockReturnValue(mockLogger);
         useMetrics.mockReturnValue(mockMetrics);
@@ -67,7 +67,7 @@ describe.skip('DailyFantasyIntegration', () => {
             json: () => Promise.resolve(mockFantasyData),
         });
         render(_jsx(DailyFantasyIntegration, { date: "2024-01-01", sport: "nfl", onDataUpdate: mockOnDataUpdate }));
-        const apiKeyInput = screen.getByLabelText('API Key');
+
         fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
         await waitFor(() => {
             expect(mockFetch).toHaveBeenCalledWith('/api/dailyfantasy/nfl', expect.objectContaining({
@@ -96,7 +96,7 @@ describe.skip('DailyFantasyIntegration', () => {
     it('handles API errors gracefully', async () => {
         mockFetch.mockRejectedValueOnce(new Error('API Error'));
         render(_jsx(DailyFantasyIntegration, { date: "2024-01-01", sport: "nfl", onDataUpdate: mockOnDataUpdate }));
-        const apiKeyInput = screen.getByLabelText('API Key');
+
         fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
         await waitFor(() => {
             expect(screen.getByText('API Error')).toBeInTheDocument();
@@ -110,10 +110,10 @@ describe.skip('DailyFantasyIntegration', () => {
             json: () => Promise.resolve(mockFantasyData),
         });
         render(_jsx(DailyFantasyIntegration, { date: "2024-01-01", sport: "nfl", onDataUpdate: mockOnDataUpdate }));
-        const siteSelect = screen.getByLabelText('Site');
+
         fireEvent.mouseDown(siteSelect);
         fireEvent.click(screen.getByText('FanDuel'));
-        const apiKeyInput = screen.getByLabelText('API Key');
+
         fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
         await waitFor(() => {
             expect(mockFetch).toHaveBeenCalledWith(expect.any(String), expect.objectContaining({
@@ -129,7 +129,7 @@ describe.skip('DailyFantasyIntegration', () => {
             json: () => Promise.resolve(mockFantasyData),
         });
         render(_jsx(DailyFantasyIntegration, { date: "2024-01-01", sport: "nfl", onDataUpdate: mockOnDataUpdate }));
-        const apiKeyInput = screen.getByLabelText('API Key');
+
         fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
         await waitFor(() => {
             expect(screen.getByText('2 players loaded')).toBeInTheDocument();

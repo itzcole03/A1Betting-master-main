@@ -142,9 +142,9 @@ class LLMEngine:
             self.task_model_map["embed"] = self._choose_embedding_model()
             self.task_model_map["generation"] = self._choose_generation_model()
             self.last_model_refresh = time.time()
-            logger.info(f"LLM models discovered: {self.models}")
-        except Exception as e:
-            logger.error(f"LLM discovery failed: {e}")
+            logger.info("LLM models discovered: {self.models}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("LLM discovery failed: {e}")
 
     def _choose_embedding_model(self) -> str:
         # prefer named embedding models

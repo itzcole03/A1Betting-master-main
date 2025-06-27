@@ -1,4 +1,4 @@
-// AuditLogger: Centralized audit logging for sensitive actions
+// AuditLogger: Centralized audit logging for sensitive actions;
 // Persistent storage, compliance integration, and rate limiting are tracked in dev/copilot_roadmap.md under audit enhancements.
 export class AuditLogger {
     constructor() {

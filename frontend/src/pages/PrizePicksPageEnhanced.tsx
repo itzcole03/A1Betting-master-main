@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from 'react.ts';
 import {
   Search,
   Filter,
@@ -6,9 +6,9 @@ import {
   TrendingDown,
   Clock,
   Star,
-} from "lucide-react";
-import { useUnifiedStore } from "../store/unified/UnifiedStoreManager";
-import { dataPipeline } from "../services/data/UnifiedDataPipeline";
+} from 'lucide-react.ts';
+import { useUnifiedStore } from '@/store/unified/UnifiedStoreManager.ts';
+import { dataPipeline } from '@/services/data/UnifiedDataPipeline.ts';
 
 interface PlayerProjection {
   id: string;
@@ -25,7 +25,7 @@ interface PlayerProjection {
 }
 
 const PrizePicksPageEnhanced: React.FC = () => {
-  const [projections, setProjections] = useState<PlayerProjection[]>([]);
+  const [projections, setProjections] = useState<PlayerProjection[] key={690961}>([]);
   const [filteredProjections, setFilteredProjections] = useState<
     PlayerProjection[]
   >([]);
@@ -36,12 +36,12 @@ const PrizePicksPageEnhanced: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { actions } = useUnifiedStore();
 
-  // Mock data - in real app, this would come from PrizePicks API
+  // Mock data - in real app, this would come from PrizePicks API;
   useEffect(() => {
     const loadProjections = async () => {
       setIsLoading(true);
       try {
-        // Simulate API call
+        // Simulate API call;
         await new Promise((resolve) => setTimeout(resolve, 1000));
 
         const mockProjections: PlayerProjection[] = [
@@ -136,15 +136,14 @@ const PrizePicksPageEnhanced: React.FC = () => {
     loadProjections();
   }, [actions]);
 
-  // Filter projections based on search and filters
+  // Filter projections based on search and filters;
   useEffect(() => {
-    let filtered = projections.filter((proj) => {
+    const filtered = projections.filter((proj) => {
       const matchesSearch =
         proj.playerName.toLowerCase().includes(searchTerm.toLowerCase()) ||
         proj.team.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesPosition =
         selectedPosition === "all" || proj.position === selectedPosition;
-      const matchesConfidence = proj.confidence >= minConfidence;
 
       return matchesSearch && matchesPosition && matchesConfidence;
     });
@@ -155,11 +154,11 @@ const PrizePicksPageEnhanced: React.FC = () => {
   const getTrendIcon = (trend: string) => {
     switch (trend) {
       case "up":
-        return <TrendingUp className="w-4 h-4 text-green-500" />;
+        return <TrendingUp className="w-4 h-4 text-green-500" / key={247600}>;
       case "down":
-        return <TrendingDown className="w-4 h-4 text-red-500" />;
+        return <TrendingDown className="w-4 h-4 text-red-500" / key={886344}>;
       default:
-        return <Clock className="w-4 h-4 text-gray-500" />;
+        return <Clock className="w-4 h-4 text-gray-500" / key={855423}>;
     }
   };
 
@@ -174,73 +173,73 @@ const PrizePicksPageEnhanced: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-6" key={258171}>
+      <div className="max-w-7xl mx-auto" key={70872}>
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            PrizePicks Enhanced
+        <div className="mb-8" key={286587}>
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2" key={716154}>
+            PrizePicks Enhanced;
           </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            AI-powered player prop analysis with ML predictions
+          <p className="text-gray-600 dark:text-gray-400" key={300965}>
+            AI-powered player prop analysis with ML predictions;
           </p>
         </div>
 
         {/* Filters */}
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 mb-6" key={621302}>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4" key={426410}>
             {/* Search */}
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
-              <input
+            <div className="relative" key={579431}>
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" / key={62531}>
+              <input;
                 type="text"
                 placeholder="Search players..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e) = key={684503}> setSearchTerm(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
               />
             </div>
 
             {/* Position Filter */}
-            <div>
-              <select
+            <div key={241917}>
+              <select;
                 value={selectedPosition}
-                onChange={(e) => setSelectedPosition(e.target.value)}
+                onChange={(e) = key={619693}> setSelectedPosition(e.target.value)}
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
               >
-                <option value="all">All Positions</option>
-                <option value="PG">Point Guard</option>
-                <option value="SG">Shooting Guard</option>
-                <option value="SF">Small Forward</option>
-                <option value="PF">Power Forward</option>
-                <option value="C">Center</option>
+                <option value="all" key={673287}>All Positions</option>
+                <option value="PG" key={68889}>Point Guard</option>
+                <option value="SG" key={478131}>Shooting Guard</option>
+                <option value="SF" key={38552}>Small Forward</option>
+                <option value="PF" key={249896}>Power Forward</option>
+                <option value="C" key={563747}>Center</option>
               </select>
             </div>
 
             {/* Confidence Filter */}
-            <div>
-              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1">
+            <div key={241917}>
+              <label className="block text-sm text-gray-600 dark:text-gray-400 mb-1" key={72597}>
                 Min Confidence: {(minConfidence * 100).toFixed(0)}%
               </label>
-              <input
+              <input;
                 type="range"
                 min="0.5"
                 max="1"
                 step="0.05"
                 value={minConfidence}
-                onChange={(e) => setMinConfidence(parseFloat(e.target.value))}
+                onChange={(e) = key={1420}> setMinConfidence(parseFloat(e.target.value))}
                 className="w-full"
               />
             </div>
 
             {/* Refresh */}
-            <div className="flex items-end">
-              <button
-                onClick={() => window.location.reload()}
+            <div className="flex items-end" key={915862}>
+              <button;
+                onClick={() = key={206350}> window.location.reload()}
                 className="w-full px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center justify-center space-x-2"
               >
-                <Filter className="w-4 h-4" />
-                <span>Refresh</span>
+                <Filter className="w-4 h-4" / key={552221}>
+                <span key={595076}>Refresh</span>
               </button>
             </div>
           </div>
@@ -248,9 +247,9 @@ const PrizePicksPageEnhanced: React.FC = () => {
 
         {/* Loading State */}
         {isLoading && (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mx-auto mb-4"></div>
-            <p className="text-gray-600 dark:text-gray-400">
+          <div className="text-center py-12" key={752807}>
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mx-auto mb-4" key={433550}></div>
+            <p className="text-gray-600 dark:text-gray-400" key={300965}>
               Loading projections...
             </p>
           </div>
@@ -258,72 +257,72 @@ const PrizePicksPageEnhanced: React.FC = () => {
 
         {/* Projections Grid */}
         {!isLoading && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={881323}>
             {filteredProjections.map((projection) => (
-              <div
+              <div;
                 key={projection.id}
                 className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6 hover:shadow-md transition-shadow"
-              >
+               key={990069}>
                 {/* Header */}
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white">
+                <div className="flex items-center justify-between mb-4" key={810034}>
+                  <div key={241917}>
+                    <h3 className="font-bold text-gray-900 dark:text-white" key={231855}>
                       {projection.playerName}
                     </h3>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span>{projection.team}</span>
-                      <span>•</span>
-                      <span>{projection.position}</span>
+                    <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400" key={700533}>
+                      <span key={595076}>{projection.team}</span>
+                      <span key={595076}>•</span>
+                      <span key={595076}>{projection.position}</span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2" key={740830}>
                     {getTrendIcon(projection.trend)}
-                    <Star className="w-4 h-4 text-yellow-500" />
+                    <Star className="w-4 h-4 text-yellow-500" / key={625691}>
                   </div>
                 </div>
 
                 {/* Stat Info */}
-                <div className="text-center mb-4">
-                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
+                <div className="text-center mb-4" key={692984}>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white" key={543826}>
                     {projection.line}
                   </div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
                     {projection.statType}
                   </div>
                 </div>
 
                 {/* Odds */}
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Over
+                <div className="grid grid-cols-2 gap-3 mb-4" key={735112}>
+                  <div className="text-center p-2 bg-green-50 dark:bg-green-900/20 rounded" key={381716}>
+                    <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+                      Over;
                     </div>
-                    <div className="font-semibold text-green-600">
+                    <div className="font-semibold text-green-600" key={56507}>
                       {projection.over}
                     </div>
                   </div>
-                  <div className="text-center p-2 bg-red-50 dark:bg-red-900/20 rounded">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Under
+                  <div className="text-center p-2 bg-red-50 dark:bg-red-900/20 rounded" key={967507}>
+                    <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+                      Under;
                     </div>
-                    <div className="font-semibold text-red-600">
+                    <div className="font-semibold text-red-600" key={22220}>
                       {projection.under}
                     </div>
                   </div>
                 </div>
 
                 {/* Recent Performance */}
-                <div className="mb-4">
-                  <div className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <div className="mb-4" key={158827}>
+                  <div className="text-sm text-gray-600 dark:text-gray-400 mb-2" key={799167}>
                     Last 5 Games (Avg:{" "}
                     {calculateAverage(projection.recent).toFixed(1)})
                   </div>
-                  <div className="flex space-x-1">
+                  <div className="flex space-x-1" key={828285}>
                     {projection.recent.map((value, index) => (
-                      <div
+                      <div;
                         key={index}
                         className={`flex-1 h-8 rounded flex items-center justify-center text-xs font-medium ${
-                          value > projection.line
+                          value  key={242769}> projection.line;
                             ? "bg-green-100 text-green-800"
                             : "bg-red-100 text-red-800"
                         }`}
@@ -335,13 +334,13 @@ const PrizePicksPageEnhanced: React.FC = () => {
                 </div>
 
                 {/* Confidence */}
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
-                    ML Confidence
+                <div className="flex items-center justify-between" key={96335}>
+                  <span className="text-sm text-gray-600 dark:text-gray-400" key={10584}>
+                    ML Confidence;
                   </span>
-                  <span
+                  <span;
                     className={`px-2 py-1 rounded text-xs font-medium ${getConfidenceColor(projection.confidence)}`}
-                  >
+                   key={814681}>
                     {(projection.confidence * 100).toFixed(0)}%
                   </span>
                 </div>
@@ -352,13 +351,13 @@ const PrizePicksPageEnhanced: React.FC = () => {
 
         {/* No Results */}
         {!isLoading && filteredProjections.length === 0 && (
-          <div className="text-center py-12">
-            <div className="text-gray-400 text-6xl mb-4">🔍</div>
-            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-              No projections found
+          <div className="text-center py-12" key={752807}>
+            <div className="text-gray-400 text-6xl mb-4" key={4879}>🔍</div>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2" key={112114}>
+              No projections found;
             </h3>
-            <p className="text-gray-600 dark:text-gray-400">
-              Try adjusting your filters or search terms
+            <p className="text-gray-600 dark:text-gray-400" key={300965}>
+              Try adjusting your filters or search terms;
             </p>
           </div>
         )}

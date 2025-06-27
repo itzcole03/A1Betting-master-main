@@ -1,11 +1,11 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material';
-import { useTheme, alpha } from '@mui/material/styles';
-import MenuIcon from '@mui/icons-material/Menu';
-import SmartMenuIcon from '@mui/icons-material/SmartToy';
-import ThemeToggle from './ThemeToggle';
+import React from 'react.ts';
+import { AppBar, Toolbar, Typography, IconButton, Box } from '@mui/material.ts';
+import { useTheme, alpha } from '@mui/material/styles.ts';
+import MenuIcon from '@mui/icons-material/Menu.ts';
+import SmartMenuIcon from '@mui/icons-material/SmartToy.ts';
+import ThemeToggle from './ThemeToggle.ts';
 
-import { motion } from 'framer-motion';
+import { motion } from 'framer-motion.ts';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -13,17 +13,14 @@ interface NavbarProps {
   title?: string;
 }
 
-const MotionIconButton = motion.create(IconButton);
-
 const Navbar = ({
   onMenuClick,
   onSmartSidebarClick,
   title = 'Sports Betting App',
 }: NavbarProps) => {
-  const theme = useTheme();
 
   return (
-    <AppBar
+    <AppBar;
       position="fixed"
       sx={{
         zIndex: theme.zIndex.drawer + 1,
@@ -32,9 +29,9 @@ const Navbar = ({
         borderBottom: 1,
         borderColor: 'divider',
       }}
-    >
-      <Toolbar>
-        <MotionIconButton
+     key={410905}>
+      <Toolbar key={629347}>
+        <MotionIconButton;
           aria-label="open drawer"
           color="primary"
           edge="start"
@@ -42,11 +39,11 @@ const Navbar = ({
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={onMenuClick}
-        >
-          <MenuIcon />
+         key={474873}>
+          <MenuIcon / key={955480}>
         </MotionIconButton>
-        <Typography
-          noWrap
+        <Typography;
+          noWrap;
           component="div"
           sx={{
             flexGrow: 1,
@@ -54,11 +51,11 @@ const Navbar = ({
             fontWeight: 600,
           }}
           variant="h6"
-        >
+         key={694322}>
           {title}
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <MotionIconButton
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }} key={387055}>
+          <MotionIconButton;
             aria-label="open smart sidebar"
             color="primary"
             edge="start"
@@ -66,10 +63,10 @@ const Navbar = ({
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={onSmartSidebarClick}
-          >
-            <SmartMenuIcon />
+           key={943031}>
+            <SmartMenuIcon / key={256358}>
           </MotionIconButton>
-          <ThemeToggle />
+          <ThemeToggle / key={862563}>
         </Box>
       </Toolbar>
     </AppBar>

@@ -1,4 +1,4 @@
-// Types for daily fantasy projections
+// Types for daily fantasy projections;
 export interface DailyFantasyProjection {
   id: string;
   playerId: string;

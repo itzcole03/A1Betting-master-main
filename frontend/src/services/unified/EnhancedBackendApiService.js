@@ -1,6 +1,6 @@
 /**
- * Enhanced Backend API Integration Service
- * Complete integration with enhanced mathematical backend services
+ * Enhanced Backend API Integration Service;
+ * Complete integration with enhanced mathematical backend services;
  */
 import axios from "axios";
 import { UnifiedLogger } from "./UnifiedLogger";
@@ -14,7 +14,7 @@ class EnhancedBackendApiService {
         this.baseURL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
         this.client = axios.create({
             baseURL: this.baseURL,
-            timeout: 30000, // Increased for mathematical computations
+            timeout: 30000, // Increased for mathematical computations;
             headers: {
                 "Content-Type": "application/json",
             },
@@ -28,7 +28,7 @@ class EnhancedBackendApiService {
         return EnhancedBackendApiService.instance;
     }
     setupInterceptors() {
-        // Request interceptor
+        // Request interceptor;
         this.client.interceptors.request.use((config) => {
             this.logger.info("Enhanced Backend API Request", {
                 url: config.url,
@@ -40,7 +40,7 @@ class EnhancedBackendApiService {
             this.errorService.handleError(error, "API_REQUEST_ERROR");
             return Promise.reject(error);
         });
-        // Response interceptor
+        // Response interceptor;
         this.client.interceptors.response.use((response) => {
             this.logger.info("Enhanced Backend API Response", {
                 url: response.config.url,
@@ -54,20 +54,20 @@ class EnhancedBackendApiService {
             return Promise.reject(error);
         });
     }
-    // Enhanced Revolutionary Prediction
+    // Enhanced Revolutionary Prediction;
     async getEnhancedRevolutionaryPrediction(request) {
-        const cacheKey = `enhanced_revolutionary:${request.event_id}:${JSON.stringify(request)}`;
+
         try {
-            // Check cache first
-            const cached = await this.cache.get(cacheKey);
+            // Check cache first;
+
             if (cached) {
                 this.logger.info("Returning cached enhanced revolutionary prediction", {
                     eventId: request.event_id,
                 });
                 return cached;
             }
-            const response = await this.client.post("/api/enhanced-revolutionary/predict/enhanced", request);
-            const result = response.data;
+
+
             // Cache for 2 minutes (mathematical computations are expensive)
             await this.cache.set(cacheKey, result, 120);
             this.logger.info("Generated enhanced revolutionary prediction", {
@@ -87,10 +87,10 @@ class EnhancedBackendApiService {
             throw error;
         }
     }
-    // Enhanced Feature Engineering
+    // Enhanced Feature Engineering;
     async getEnhancedFeatureEngineering(request) {
         try {
-            const response = await this.client.post("/api/enhanced-features/engineer", request);
+
             this.logger.info("Enhanced feature engineering completed", {
                 originalDim: response.data.dimensionality_reduction.original_dim,
                 reducedDim: response.data.dimensionality_reduction.reduced_dim,
@@ -107,10 +107,10 @@ class EnhancedBackendApiService {
             throw error;
         }
     }
-    // Enhanced Risk Assessment
+    // Enhanced Risk Assessment;
     async getEnhancedRiskAssessment(request) {
         try {
-            const response = await this.client.post("/api/enhanced-risk/assess", request);
+
             this.logger.info("Enhanced risk assessment completed", {
                 valueAtRisk: response.data.portfolio_risk.value_at_risk,
                 expectedShortfall: response.data.portfolio_risk.expected_shortfall,
@@ -127,10 +127,10 @@ class EnhancedBackendApiService {
             throw error;
         }
     }
-    // Mathematical Analysis and Validation
+    // Mathematical Analysis and Validation;
     async getMathematicalAnalysis(request) {
         try {
-            const response = await this.client.post("/api/enhanced-revolutionary/analyze/mathematical-rigor", request);
+
             this.logger.info("Mathematical analysis completed", {
                 analysisDepth: response.data.analysis_depth,
                 rigorScore: response.data.mathematical_rigor_score,
@@ -147,16 +147,16 @@ class EnhancedBackendApiService {
             throw error;
         }
     }
-    // Get Mathematical Foundations
+    // Get Mathematical Foundations;
     async getMathematicalFoundations() {
-        const cacheKey = "mathematical_foundations";
+
         try {
-            const cached = await this.cache.get(cacheKey);
+
             if (cached) {
                 return cached;
             }
-            const response = await this.client.get("/api/enhanced-revolutionary/research/mathematical-foundations");
-            const result = response.data;
+
+
             // Cache for 1 hour (foundations don't change often)
             await this.cache.set(cacheKey, result, 3600);
             this.logger.info("Retrieved mathematical foundations");
@@ -169,10 +169,10 @@ class EnhancedBackendApiService {
             throw error;
         }
     }
-    // Enhanced Model Status
+    // Enhanced Model Status;
     async getEnhancedModelStatus() {
         try {
-            const response = await this.client.get("/api/enhanced-models/status");
+
             this.logger.info("Retrieved enhanced model status", {
                 totalModels: response.data.models.length,
                 activeModels: response.data.models.filter((m) => m.status === "active")
@@ -192,10 +192,10 @@ class EnhancedBackendApiService {
     // Unified Prediction (orchestrates all services)
     async getUnifiedPrediction(request) {
         try {
-            const startTime = Date.now();
-            // Parallel processing for efficiency
+
+            // Parallel processing for efficiency;
             const [enhancedPrediction, featureEngineering, riskAssessment] = await Promise.all([
-                // Enhanced revolutionary prediction
+                // Enhanced revolutionary prediction;
                 this.getEnhancedRevolutionaryPrediction({
                     event_id: request.event_id,
                     sport: request.sport,
@@ -223,7 +223,7 @@ class EnhancedBackendApiService {
                         include_all_enhancements: request.include_all_enhancements,
                     },
                 }),
-                // Feature engineering
+                // Feature engineering;
                 this.getEnhancedFeatureEngineering({
                     data: { features: Object.values(request.features) },
                     feature_types: ["numerical", "temporal", "categorical"],
@@ -236,7 +236,7 @@ class EnhancedBackendApiService {
                         request.processing_level === "revolutionary",
                     target_dimensionality: request.processing_level === "revolutionary" ? 32 : 16,
                 }),
-                // Risk assessment
+                // Risk assessment;
                 this.getEnhancedRiskAssessment({
                     portfolio: { prediction: 1.0 },
                     market_data: { features: Object.values(request.features) },
@@ -265,7 +265,7 @@ class EnhancedBackendApiService {
                 verify_theoretical_guarantees: request.processing_level !== "basic",
                 check_mathematical_consistency: true,
             });
-            // Calculate unified confidence
+            // Calculate unified confidence;
             const confidenceComponents = [
                 enhancedPrediction.prediction_confidence,
                 featureEngineering.dimensionality_reduction.explained_variance,
@@ -274,7 +274,7 @@ class EnhancedBackendApiService {
             ];
             const unifiedConfidence = confidenceComponents.reduce((a, b) => a + b, 0) /
                 confidenceComponents.length;
-            const totalTime = Date.now() - startTime;
+
             const result = {
                 predictions: {
                     enhanced_revolutionary: enhancedPrediction.final_prediction,
@@ -295,7 +295,7 @@ class EnhancedBackendApiService {
                     processing_level: request.processing_level,
                     mathematical_guarantees_met: Object.values(enhancedPrediction.mathematical_guarantees).filter(Boolean).length,
                     rigor_score: mathematicalAnalysis.mathematical_rigor_score,
-                    stability_verified: mathematicalAnalysis.mathematical_analysis.theoretical_guarantees
+                    stability_verified: mathematicalAnalysis.mathematical_analysis.theoretical_guarantees;
                         ?.asymptotic_stability || false,
                     convergence_achieved: enhancedPrediction.convergence_rate > 0.8,
                     numerical_stability: Object.values(enhancedPrediction.numerical_stability).every(Boolean),
@@ -318,12 +318,12 @@ class EnhancedBackendApiService {
             throw error;
         }
     }
-    // Health check
+    // Health check;
     async healthCheck() {
-        const startTime = Date.now();
+
         try {
-            const response = await this.client.get("/health");
-            const responseTime = Date.now() - startTime;
+
+
             return {
                 status: "healthy",
                 services: response.data.services || {},
@@ -332,7 +332,7 @@ class EnhancedBackendApiService {
             };
         }
         catch (error) {
-            const responseTime = Date.now() - startTime;
+
             this.logger.error("Backend health check failed", {
                 error: error.message,
                 responseTime,

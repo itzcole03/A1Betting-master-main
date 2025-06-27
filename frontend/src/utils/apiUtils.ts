@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios.ts';
 
 
 
@@ -11,19 +11,19 @@ interface RetryConfig {
 const defaultRetryConfig: RetryConfig = {
   maxRetries: 3,
   baseDelay: 1000,
-  maxDelay: 5000
+  maxDelay: 5000;
 };
 
 export async function retryableAxios<T>(
   config: AxiosRequestConfig,
-  retryConfig: RetryConfig = defaultRetryConfig
+  retryConfig: RetryConfig = defaultRetryConfig;
 ): Promise<T> {
   let lastError: Error | null = null;
-  let delay = retryConfig.baseDelay;
+  const delay = retryConfig.baseDelay;
 
-  for (let attempt = 0; attempt <= retryConfig.maxRetries; attempt++) {
+  for (const attempt = 0; attempt <= retryConfig.maxRetries; attempt++) {
     try {
-      const response = await axios(config);
+
       return response.data;
     } catch (error: any) {
       lastError = error as Error;
@@ -39,10 +39,10 @@ export async function retryableAxios<T>(
         break;
       }
 
-      // Exponential backoff with jitter
+      // Exponential backoff with jitter;
       delay = Math.min(
         delay * (1.5 + Math.random() * 0.5),
-        retryConfig.maxDelay
+        retryConfig.maxDelay;
       );
 
       await new Promise(resolve => setTimeout(resolve, delay));
@@ -59,7 +59,7 @@ export function createAxiosWithRetry(baseURL: string, retryConfig?: RetryConfig)
         ...config,
         method: 'GET',
         url,
-        baseURL
+        baseURL;
       }, retryConfig);
     },
     post: async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> => {
@@ -68,7 +68,7 @@ export function createAxiosWithRetry(baseURL: string, retryConfig?: RetryConfig)
         method: 'POST',
         url,
         data,
-        baseURL
+        baseURL;
       }, retryConfig);
     }
   };

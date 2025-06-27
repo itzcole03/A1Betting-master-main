@@ -1,5 +1,5 @@
-import { useLocalStorage } from './useLocalStorage';
-import { useState, useCallback, useEffect } from 'react';
+import { useLocalStorage } from './useLocalStorage.ts';
+import { useState, useCallback, useEffect } from 'react.ts';
 
 
 
@@ -28,7 +28,7 @@ export function useDataSync<T>({
   syncInterval = 30000,
   retryAttempts = 3,
   retryDelay = 1000,
-  onError
+  onError;
 }: SyncOptions<T>) {
   const [storedData, setStoredData] = useLocalStorage<T>(key, initialData);
   const [state, setState] = useState<SyncState<T>>({
@@ -36,7 +36,7 @@ export function useDataSync<T>({
     isSyncing: false,
     lastSynced: null,
     error: null,
-    pendingChanges: false
+    pendingChanges: false;
   });
 
   const sync = useCallback(async (retryCount = 0) => {
@@ -45,14 +45,14 @@ export function useDataSync<T>({
     setState(prev => ({ ...prev, isSyncing: true }));
 
     try {
-      const syncedData = await onSync(state.data);
+
       setState(prev => ({
         ...prev,
         data: syncedData,
         lastSynced: new Date(),
         isSyncing: false,
         error: null,
-        pendingChanges: false
+        pendingChanges: false;
       }));
       setStoredData(syncedData);
     } catch (error) {
@@ -64,7 +64,7 @@ export function useDataSync<T>({
             ...prev,
             isSyncing: false,
             error,
-            pendingChanges: true
+            pendingChanges: true;
           }));
           onError?.(error);
         }
@@ -74,11 +74,11 @@ export function useDataSync<T>({
 
   const update = useCallback((updater: (prev: T) => T) => {
     setState(prev => {
-      const newData = updater(prev.data);
+
       return {
         ...prev,
         data: newData,
-        pendingChanges: true
+        pendingChanges: true;
       };
     });
   }, []);
@@ -87,11 +87,11 @@ export function useDataSync<T>({
     setState(prev => ({
       ...prev,
       data: initialData,
-      pendingChanges: true
+      pendingChanges: true;
     }));
   }, [initialData]);
 
-  // Auto-sync on interval
+  // Auto-sync on interval;
   useEffect(() => {
     if (!syncInterval) return;
 
@@ -104,7 +104,7 @@ export function useDataSync<T>({
     return () => clearInterval(intervalId);
   }, [sync, syncInterval, state.pendingChanges, state.isSyncing]);
 
-  // Sync on window focus
+  // Sync on window focus;
   useEffect(() => {
     const handleFocus = () => {
       if (state.pendingChanges && !state.isSyncing) {
@@ -120,7 +120,7 @@ export function useDataSync<T>({
     ...state,
     update,
     sync,
-    reset
+    reset;
   };
 }
 
@@ -146,7 +146,7 @@ function UserDataManager() {
     error,
     pendingChanges,
     update,
-    sync
+    sync;
   } = useDataSync<UserData>({
     key: 'user-data',
     initialData: {
@@ -161,7 +161,7 @@ function UserDataManager() {
       return response.json();
     },
     syncInterval: 60000,
-    onError: (error) => console.error('Sync failed:', error)
+    onError: (error) => // console statement removed
   });
 
   const addBet = (bet: { id: string; amount: number }) => {

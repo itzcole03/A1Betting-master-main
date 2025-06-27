@@ -1,13 +1,13 @@
-// Type definitions for feature engineering analytics
+// Type definitions for feature engineering analytics;
 export type FeatureConfig = object;
 
 export type EngineeredFeatures = object;
 
 export type RawPlayerData = object;
 
-// Feature flags interface for configService
+// Feature flags interface for configService;
 export interface FeatureFlags {
-  // Basic features
+  // Basic features;
   INJURIES?: boolean;
   NEWS?: boolean;
   WEATHER?: boolean;
@@ -16,7 +16,7 @@ export interface FeatureFlags {
   ODDS?: boolean;
   ANALYTICS?: boolean;
 
-  // Extended features
+  // Extended features;
   enableNews?: boolean;
   enableWeather?: boolean;
   enableInjuries?: boolean;
@@ -26,18 +26,18 @@ export interface FeatureFlags {
   showAdvancedAnalyticsDashboard?: boolean;
   useNewSentimentModel?: boolean;
 
-  // Model features
+  // Model features;
   enablePvPModel?: boolean;
   enablePlayerFormModel?: boolean;
   enableVenueEffectModel?: boolean;
   enableRefereeImpactModel?: boolean;
   enableLineupSynergyModel?: boolean;
 
-  // Additional features can be added as needed
+  // Additional features can be added as needed;
   [key: string]: boolean | undefined;
 }
 
-// ESPN Headline interface for newsService
+// ESPN Headline interface for newsService;
 export interface ESPNHeadline {
   id: string;
   title: string;

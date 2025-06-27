@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { jest, beforeAll, afterAll } from '@jest/globals';
-// Mock WebSocket
+// Mock WebSocket;
 class MockWebSocket {
     constructor(url) {
         this.binaryType = 'blob';
@@ -16,7 +16,7 @@ class MockWebSocket {
         MockWebSocket.instances.push(this);
     }
     send(_data) {
-        // Mock send implementation
+        // Mock send implementation;
     }
     close(code, reason) {
         this.readyState = MockWebSocket.CLOSED;
@@ -24,21 +24,21 @@ class MockWebSocket {
             this.onclose(new CloseEvent('close', { code, reason }));
         }
     }
-    // Helper methods for testing
+    // Helper methods for testing;
     static clearInstances() {
         MockWebSocket.instances = [];
     }
     static getLastInstance() {
         return MockWebSocket.instances[MockWebSocket.instances.length - 1];
     }
-    // Simulate connection
+    // Simulate connection;
     simulateOpen() {
         this.readyState = MockWebSocket.OPEN;
         if (this.onopen) {
             this.onopen(new Event('open'));
         }
     }
-    // Simulate message
+    // Simulate message;
     simulateMessage(data) {
         if (this.onmessage) {
             const messageEvent = new MessageEvent('message', {
@@ -47,13 +47,13 @@ class MockWebSocket {
             this.onmessage(messageEvent);
         }
     }
-    // Simulate error
+    // Simulate error;
     simulateError() {
         if (this.onerror) {
             this.onerror(new Event('error'));
         }
     }
-    // Required WebSocket interface methods
+    // Required WebSocket interface methods;
     addEventListener(_type, _listener, _options) { }
     removeEventListener(_type, _listener, _options) { }
     dispatchEvent(_event) {
@@ -65,9 +65,9 @@ MockWebSocket.CONNECTING = 0;
 MockWebSocket.OPEN = 1;
 MockWebSocket.CLOSING = 2;
 MockWebSocket.CLOSED = 3;
-// Replace global WebSocket with mock
+// Replace global WebSocket with mock;
 global.WebSocket = MockWebSocket;
-// Mock fetch
+// Mock fetch;
 const mockFetch = jest.fn().mockImplementation((_input, _init) => {
     return Promise.resolve({
         ok: true,
@@ -78,7 +78,7 @@ const mockFetch = jest.fn().mockImplementation((_input, _init) => {
     });
 });
 global.fetch = mockFetch;
-// Mock IntersectionObserver
+// Mock IntersectionObserver;
 class MockIntersectionObserver {
     constructor(_callback, _options) {
         this.observe = jest.fn();
@@ -87,7 +87,7 @@ class MockIntersectionObserver {
     }
 }
 global.IntersectionObserver = MockIntersectionObserver;
-// Mock ResizeObserver
+// Mock ResizeObserver;
 class MockResizeObserver {
     constructor(_callback) {
         this.observe = jest.fn();
@@ -96,7 +96,7 @@ class MockResizeObserver {
     }
 }
 global.ResizeObserver = MockResizeObserver;
-// Mock window.matchMedia
+// Mock window.matchMedia;
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation((query) => ({
@@ -110,9 +110,9 @@ Object.defineProperty(window, 'matchMedia', {
         dispatchEvent: jest.fn(),
     })),
 });
-// Mock localStorage
+// Mock localStorage;
 const localStorageMock = (() => {
-    let store = {};
+    const store = {};
     return {
         getItem: (key) => store[key] || null,
         setItem: (key, value) => {
@@ -127,9 +127,9 @@ const localStorageMock = (() => {
     };
 })();
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-// Mock sessionStorage
+// Mock sessionStorage;
 const sessionStorageMock = (() => {
-    let store = {};
+    const store = {};
     return {
         getItem: (key) => store[key] || null,
         setItem: (key, value) => {
@@ -144,8 +144,8 @@ const sessionStorageMock = (() => {
     };
 })();
 Object.defineProperty(window, 'sessionStorage', { value: sessionStorageMock });
-// Mock window.location
-const originalLocation = window.location;
+// Mock window.location;
+
 delete window.location;
 window.location = {
     ...originalLocation,
@@ -162,8 +162,8 @@ window.location = {
     replace: jest.fn(),
     reload: jest.fn(),
 };
-// Mock window.history
-const originalHistory = window.history;
+// Mock window.history;
+
 delete window.history;
 window.history = {
     ...originalHistory,
@@ -173,8 +173,8 @@ window.history = {
     forward: jest.fn(),
     go: jest.fn(),
 };
-// Mock window.navigator
-const originalNavigator = window.navigator;
+// Mock window.navigator;
+
 delete window.navigator;
 window.navigator = {
     ...originalNavigator,
@@ -194,8 +194,8 @@ window.navigator = {
     product: 'Gecko',
     productSub: '20030107',
 };
-// Suppress console errors during tests
-const originalError = console.error;
+// Suppress console errors during tests;
+
 beforeAll(() => {
     console.error = (..._args) => {
         if (typeof args[0] === 'string' &&

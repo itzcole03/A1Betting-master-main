@@ -17,26 +17,26 @@ export const WebSocketLoadBalancerAnalytics = () => {
     const [timestamps, setTimestamps] = useState([]);
     useEffect(() => {
         const updateMetrics = () => {
-            const currentMetrics = webSocketLoadBalancer.getMetrics();
+
             setMetrics(currentMetrics);
         };
-        const interval = setInterval(updateMetrics, 1000);
+
         return () => clearInterval(interval);
     }, []);
     useEffect(() => {
         const handleServerHealth = (event) => {
             const { server, metrics, timestamp } = event;
             setServerLatencies(prev => {
-                const latencies = prev.get(server) || [];
+
                 return new Map(prev).set(server, [...latencies.slice(-20), metrics.latency]);
             });
             setServerErrorRates(prev => {
-                const rates = prev.get(server) || [];
+
                 return new Map(prev).set(server, [...rates.slice(-20), metrics.errorRate]);
             });
             setTimestamps(prev => [...prev.slice(-20), timestamp]);
         };
-        const eventBus = EventBus.getInstance();
+
         eventBus.subscribe('websocket:server:health', handleServerHealth);
         return () => {
             eventBus.unsubscribe('websocket:server:health', handleServerHealth);

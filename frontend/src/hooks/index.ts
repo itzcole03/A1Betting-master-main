@@ -1,21 +1,21 @@
 // ============================================================================
-// UNIVERSAL HOOKS SYSTEM EXPORTS
+// UNIVERSAL HOOKS SYSTEM EXPORTS;
 // ============================================================================
 
 export {
-  // Data hooks
+  // Data hooks;
   usePredictions,
   useEngineMetrics,
   useBettingOpportunities,
   useUserProfile,
 
-  // UI hooks
+  // UI hooks;
   useUniversalTheme,
   useUniversalForm,
   useModal,
   useToast,
 
-  // Utility hooks
+  // Utility hooks;
   useDebounce,
   useLocalStorage,
   useWindowSize,
@@ -23,56 +23,52 @@ export {
   useClickOutside,
   useWebSocket,
 
-  // Performance hooks
+  // Performance hooks;
   useAnimation,
   usePerformanceMonitor,
-} from "./UniversalHooks";
+} from './UniversalHooks.ts';
 
-// Default export
-export { default } from "./UniversalHooks";
+// Default export;
+export { default } from './UniversalHooks.ts';
 
 // ============================================================================
 // LEGACY COMPATIBILITY EXPORTS (Deprecated - Use Universal equivalents)
 // ============================================================================
 
-// Theme hooks
-export { useUniversalTheme as useTheme } from "./UniversalHooks";
-export { useUniversalTheme as useDarkMode } from "./UniversalHooks";
+// Theme hooks;
+export { useUniversalTheme as useTheme } from './UniversalHooks.ts';
+export { useUniversalTheme as useDarkMode } from './UniversalHooks.ts';
 
-// Form hooks
-export { useUniversalForm as useForm } from "./UniversalHooks";
+// Form hooks;
+export { useUniversalForm as useForm } from './UniversalHooks.ts';
 
 // Analytics hooks (redirect to consolidated system)
-export { usePredictions as useAnalytics } from "./UniversalHooks";
-export { useBettingOpportunities as useBettingCore } from "./UniversalHooks";
+export { usePredictions as useAnalytics } from './UniversalHooks.ts';
+export { useBettingOpportunities as useBettingCore } from './UniversalHooks.ts';
 
-// Prediction hooks
-export { usePredictions as usePredictionService } from "./UniversalHooks";
-export { usePredictions as useRealtimePredictions } from "./UniversalHooks";
+// Prediction hooks;
+export { usePredictions as usePredictionService } from './UniversalHooks.ts';
+export { usePredictions as useRealtimePredictions } from './UniversalHooks.ts';
 
-// Ultimate Settings Hook
-export { default as useUltimateSettings } from "./useUltimateSettings";
+// Ultimate Settings Hook;
+export { default as useUltimateSettings } from './useUltimateSettings.ts';
 
 // ============================================================================
-// DEPRECATED HOOK NOTICES
+// DEPRECATED HOOK NOTICES;
 // ============================================================================
 
 /**
- * @deprecated Use useUniversalTheme from UniversalHooks instead
+ * @deprecated Use useUniversalTheme from UniversalHooks instead;
  */
 export const useThemeStore = () => {
-  console.warn(
-    "useThemeStore is deprecated. Use useUniversalTheme from UniversalHooks instead.",
-  );
+  // console statement removed
   return {};
 };
 
 /**
- * @deprecated Use consolidated hooks from UniversalHooks instead
+ * @deprecated Use consolidated hooks from UniversalHooks instead;
  */
 export const useMLAnalytics = () => {
-  console.warn(
-    "useMLAnalytics is deprecated. Use usePredictions or useEngineMetrics from UniversalHooks instead.",
-  );
+  // console statement removed
   return {};
 };

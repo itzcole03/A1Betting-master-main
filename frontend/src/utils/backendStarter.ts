@@ -1,10 +1,10 @@
 /**
- * Backend Starter Utility
- * Provides functions to start/restart the backend development server
+ * Backend Starter Utility;
+ * Provides functions to start/restart the backend development server;
  */
 
-import { api } from "../services/api";
-import { consoleManager } from "./consoleUtils";
+import { api } from '@/services/api.ts';
+import { consoleManager } from './consoleUtils.ts';
 
 export interface BackendStatus {
   isOnline: boolean;
@@ -13,16 +13,15 @@ export interface BackendStatus {
 }
 
 export class BackendStarter {
-  private static CHECK_TIMEOUT = 5000; // 5 seconds timeout for health checks
+  private static CHECK_TIMEOUT = 5000; // 5 seconds timeout for health checks;
 
   /**
-   * Test if the backend is currently online
+   * Test if the backend is currently online;
    */
   static async checkBackendStatus(): Promise<BackendStatus> {
     try {
-      const startTime = Date.now();
 
-      // Use the API service which already handles errors gracefully
+      // Use the API service which already handles errors gracefully;
       const health = await Promise.race([
         api.getHealthStatus(),
         new Promise((_, reject) =>
@@ -33,10 +32,8 @@ export class BackendStarter {
         ),
       ]);
 
-      const responseTime = Date.now() - startTime;
-
       if (health && health.status !== "offline") {
-        console.log(`✅ Backend online - Response time: ${responseTime}ms`);
+        // console statement removed
         consoleManager.logBackendOnline();
         return {
           isOnline: true,
@@ -51,9 +48,9 @@ export class BackendStarter {
         };
       }
     } catch (error) {
-      // Don't log network errors in production environments
+      // Don't log network errors in production environments;
       if (this.isLocalDevelopment()) {
-        console.warn("Backend health check failed:", error);
+        // console statement removed
       }
 
       consoleManager.logBackendOffline();
@@ -67,13 +64,13 @@ export class BackendStarter {
 
   /**
    * Attempt to start the backend (in development, this would typically be a manual process)
-   * In a real application, this might call a process manager API or docker container management
+   * In a real application, this might call a process manager API or docker container management;
    */
   static async startBackend(): Promise<{ success: boolean; message: string }> {
     try {
-      console.log("Attempting to start backend services...");
+      // console statement removed
 
-      // Check environment first
+      // Check environment first;
       if (!this.isLocalDevelopment()) {
         return {
           success: false,
@@ -82,8 +79,8 @@ export class BackendStarter {
         };
       }
 
-      // First, check if backend is already running
-      const currentStatus = await this.checkBackendStatus();
+      // First, check if backend is already running;
+
       if (currentStatus.isOnline) {
         return {
           success: true,
@@ -92,7 +89,6 @@ export class BackendStarter {
       }
 
       // Try to find backend on other ports (only in local dev)
-      const foundUrl = await this.scanForBackend();
 
       if (foundUrl) {
         return {
@@ -103,12 +99,12 @@ export class BackendStarter {
 
       // If not found, try basic API start attempt (only in local dev)
       try {
-        const apiResult = await this.tryStartViaAPI();
+
         if (apiResult.success) {
           return apiResult;
         }
       } catch (error) {
-        console.warn("API start attempt failed:", error);
+        // console statement removed
       }
 
       return {
@@ -125,14 +121,14 @@ export class BackendStarter {
   }
 
   /**
-   * Try to start backend via API call
+   * Try to start backend via API call;
    */
   private static async tryStartViaAPI(): Promise<{
     success: boolean;
     message: string;
   }> {
     try {
-      // Try to ping the backend health endpoint first with proper timeout
+      // Try to ping the backend health endpoint first with proper timeout;
       const healthResponse = await Promise.race([
         fetch(`${this.getBackendUrl()}/health`, {
           method: "GET",
@@ -149,12 +145,12 @@ export class BackendStarter {
         };
       }
     } catch (error) {
-      // Backend is definitely offline, continue with start attempts
-      console.log("Health check failed, attempting to start backend...");
+      // Backend is definitely offline, continue with start attempts;
+      // console statement removed
     }
 
     try {
-      // Try to send a wake-up call to backend with proper timeout
+      // Try to send a wake-up call to backend with proper timeout;
       const startResponse = await Promise.race([
         fetch(`${this.getBackendUrl()}/start`, {
           method: "POST",
@@ -167,10 +163,9 @@ export class BackendStarter {
       ]);
 
       if (startResponse.ok) {
-        // Wait for backend to be ready
+        // Wait for backend to be ready;
         await new Promise((resolve) => setTimeout(resolve, 3000));
 
-        const status = await this.checkBackendStatus();
         if (status.isOnline) {
           return {
             success: true,
@@ -179,7 +174,7 @@ export class BackendStarter {
         }
       }
     } catch (error) {
-      console.warn("API start method failed:", error);
+      // console statement removed
     }
 
     throw new Error("API start method failed");
@@ -193,8 +188,8 @@ export class BackendStarter {
     message: string;
   }> {
     try {
-      // Skip WebSocket attempts for now to avoid connection errors
-      // This would be implemented when we have a proper WebSocket endpoint
+      // Skip WebSocket attempts for now to avoid connection errors;
+      // This would be implemented when we have a proper WebSocket endpoint;
       throw new Error("WebSocket start method not available");
     } catch (error) {
       throw new Error("WebSocket start method failed");
@@ -202,13 +197,13 @@ export class BackendStarter {
   }
 
   /**
-   * Provide manual instructions as fallback
+   * Provide manual instructions as fallback;
    */
   private static async tryManualInstructions(): Promise<{
     success: boolean;
     message: string;
   }> {
-    // Final fallback - provide instructions
+    // Final fallback - provide instructions;
     return {
       success: false,
       message:
@@ -217,20 +212,19 @@ export class BackendStarter {
   }
 
   /**
-   * Restart the backend service
+   * Restart the backend service;
    */
   static async restartBackend(): Promise<{
     success: boolean;
     message: string;
   }> {
     try {
-      console.log("Restarting backend services...");
+      // console statement removed
 
-      // Simulate restart process
+      // Simulate restart process;
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Check status
-      const status = await this.checkBackendStatus();
+      // Check status;
 
       if (status.isOnline) {
         return {
@@ -252,7 +246,7 @@ export class BackendStarter {
   }
 
   /**
-   * Get development instructions for starting the backend
+   * Get development instructions for starting the backend;
    */
   static getStartupInstructions(): string[] {
     return [
@@ -268,7 +262,7 @@ export class BackendStarter {
   }
 
   /**
-   * Get the backend URL based on environment
+   * Get the backend URL based on environment;
    */
   static getBackendUrl(): string {
     return import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
@@ -278,24 +272,19 @@ export class BackendStarter {
    * Scan common ports to find running backend (only in local development)
    */
   static async scanForBackend(): Promise<string | null> {
-    // Skip port scanning if we're not in a local development environment
+    // Skip port scanning if we're not in a local development environment;
     if (!this.isLocalDevelopment()) {
-      console.log(
-        "🌐 Skipping port scan - not in local development environment",
-      );
+      // console statement removed
       return null;
     }
 
-    const commonPorts = [8000, 8080, 3000, 5000, 8888, 9000];
-    const baseUrl = "http://localhost";
 
-    console.log("🔍 Scanning localhost ports for backend...");
+    // console statement removed
 
     for (const port of commonPorts) {
       try {
-        const testUrl = `${baseUrl}:${port}`;
 
-        // Use Promise.race for proper timeout handling
+        // Use Promise.race for proper timeout handling;
         const response = await Promise.race([
           fetch(`${testUrl}/health`, {
             method: "GET",
@@ -306,26 +295,25 @@ export class BackendStarter {
         ]);
 
         if (response.ok) {
-          console.log(`✅ Found backend running on port ${port}`);
+          // console statement removed
           return testUrl;
         }
       } catch (error) {
-        // Port not responding, continue scanning
+        // Port not responding, continue scanning;
         continue;
       }
     }
 
-    console.log("❌ No backend found on common localhost ports");
+    // console statement removed
     return null;
   }
 
   /**
-   * Check if we're running in local development environment
+   * Check if we're running in local development environment;
    */
   private static isLocalDevelopment(): boolean {
     if (typeof window === "undefined") return false;
 
-    const hostname = window.location.hostname;
     const isLocal =
       hostname === "localhost" ||
       hostname === "127.0.0.1" ||
@@ -337,21 +325,20 @@ export class BackendStarter {
   }
 
   /**
-   * Enhanced connection check with port scanning
+   * Enhanced connection check with port scanning;
    */
   static async checkBackendStatusWithScan(): Promise<BackendStatus> {
-    // First try the default URL
-    const defaultStatus = await this.checkBackendStatus();
+    // First try the default URL;
+
     if (defaultStatus.isOnline) {
       return defaultStatus;
     }
 
-    // If default fails, scan for backend on other ports
-    console.log("🔍 Scanning for backend on other ports...");
-    const foundUrl = await this.scanForBackend();
+    // If default fails, scan for backend on other ports;
+    // console statement removed
 
     if (foundUrl) {
-      // Update the environment variable for future calls
+      // Update the environment variable for future calls;
       if (typeof window !== "undefined") {
         (window as any).__VITE_API_BASE_URL = foundUrl;
       }

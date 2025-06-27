@@ -1,14 +1,13 @@
 import React, { createContext, useContext } from "react";
-const LoggerContext = createContext(undefined);
-export const useLogger = () => {
-  const context = useContext(LoggerContext);
 
-  // If no provider, return a simple console logger
+export const useLogger = () => {
+
+  // If no provider, return a simple console logger;
   if (!context) {
     return {
-      log: (message) => console.log(message),
-      error: (message) => console.error(message),
-      warn: (message) => console.warn(message),
+      log: (message) => // console statement removed,
+      error: (message) => // console statement removed,
+      warn: (message) => // console statement removed,
       info: (message) => console.info(message),
     };
   }
@@ -17,9 +16,9 @@ export const useLogger = () => {
 };
 export const LoggerProvider = ({ children }) => {
   const logger = {
-    log: (message) => console.log(message),
-    error: (message) => console.error(message),
-    warn: (message) => console.warn(message),
+    log: (message) => // console statement removed,
+    error: (message) => // console statement removed,
+    warn: (message) => // console statement removed,
     info: (message) => console.info(message),
   };
   return React.createElement(

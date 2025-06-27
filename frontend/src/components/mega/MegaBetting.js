@@ -60,12 +60,12 @@ const MegaBetting = ({ userBalance = 127430.5, riskProfile = "moderate", autoMod
         weeklyProfit: 1247,
         weeklyROI: 8.7,
     });
-    // Auto-scan for opportunities every 30 seconds
+    // Auto-scan for opportunities every 30 seconds;
     useEffect(() => {
         if (!scanning)
             return;
         const interval = setInterval(() => {
-            // Simulate new opportunities
+            // Simulate new opportunities;
             const newOpportunity = {
                 id: Date.now(),
                 type: ["arbitrage", "value", "kelly"][Math.floor(Math.random() * 3)],
@@ -150,7 +150,7 @@ const MegaBetting = ({ userBalance = 127430.5, riskProfile = "moderate", autoMod
                         color: CYBER_COLORS.purple,
                     },
                 ].map((stat, index) => {
-                    const Icon = stat.icon;
+
                     return (_jsxs(CyberContainer, { variant: "card", style: { padding: "16px", textAlign: "center" }, children: [_jsx(Icon, { size: 24, color: stat.color, style: { marginBottom: "8px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: {
                                     color: stat.color,
                                     fontSize: "20px",
@@ -188,7 +188,7 @@ const MegaBetting = ({ userBalance = 127430.5, riskProfile = "moderate", autoMod
                                             alignItems: "center",
                                             gap: "4px",
                                             marginBottom: "12px",
-                                        }, children: [_jsx(Clock, { size: 14, color: CYBER_COLORS.text.muted }), _jsx(CyberText, { variant: "caption", color: "muted", children: opp.timeLeft })] }), _jsx(CyberButton, { variant: "primary", onClick: () => console.log("Place bet:", opp.id), style: { width: "auto", padding: "8px 16px", marginBottom: 0 }, children: "Place Bet" })] })] }), _jsx("div", { style: {
+                                        }, children: [_jsx(Clock, { size: 14, color: CYBER_COLORS.text.muted }), _jsx(CyberText, { variant: "caption", color: "muted", children: opp.timeLeft })] }), _jsx(CyberButton, { variant: "primary", onClick: () => // console statement removed, style: { width: "auto", padding: "8px 16px", marginBottom: 0 }, children: "Place Bet" })] })] }), _jsx("div", { style: {
                             width: "100%",
                             height: "4px",
                             backgroundColor: "rgba(255, 255, 255, 0.1)",
@@ -227,7 +227,7 @@ const MegaBetting = ({ userBalance = 127430.5, riskProfile = "moderate", autoMod
                             alignItems: "center",
                             marginBottom: "16px",
                         }, children: [_jsxs("div", { children: [_jsx(CyberText, { variant: "title", style: { fontSize: "28px", marginBottom: "4px" }, children: "Ultimate Money Maker" }), _jsx(CyberText, { variant: "body", color: "muted", children: "AI-powered betting opportunities with quantum edge detection" })] }), _jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [_jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [scanning ? (_jsx(Zap, { size: 16, color: CYBER_COLORS.primary, style: { animation: "cyber-pulse 1s infinite" } })) : (_jsx(Timer, { size: 16, color: CYBER_COLORS.text.muted })), _jsx(CyberText, { variant: "caption", color: scanning ? "accent" : "muted", children: scanning ? "Scanning..." : "Paused" })] }), _jsx(CyberButton, { variant: scanning ? "primary" : "secondary", onClick: () => setScanning(!scanning), children: scanning ? "Stop Scanning" : "Start Scanning" })] })] }), _jsx("div", { style: { display: "flex", gap: "8px" }, children: tabs.map((tab) => {
-                            const Icon = tab.icon;
+
                             return (_jsx(CyberButton, { variant: activeTab === tab.key ? "primary" : "secondary", active: activeTab === tab.key, onClick: () => setActiveTab(tab.key), icon: _jsx(Icon, { size: 16 }), style: { marginBottom: 0, width: "auto", padding: "8px 16px" }, children: tab.label }, tab.key));
                         }) })] }), _jsxs("div", { style: { minHeight: "500px" }, children: [activeTab === "opportunities" && renderOpportunitiesTab(), activeTab === "kelly" && renderKellyTab(), activeTab === "active" && (_jsxs(CyberContainer, { variant: "card", style: { padding: "40px", textAlign: "center" }, children: [_jsx(Activity, { size: 48, color: CYBER_COLORS.secondary, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "Active Bets Dashboard" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Live tracking of your placed bets and their performance" })] })), activeTab === "arbitrage" && (_jsxs(CyberContainer, { variant: "card", style: { padding: "40px", textAlign: "center" }, children: [_jsx(Shield, { size: 48, color: CYBER_COLORS.accent, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "Arbitrage Scanner" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Advanced arbitrage detection across multiple sportsbooks" })] }))] })] }));
 };

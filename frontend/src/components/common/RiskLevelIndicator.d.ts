@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface RiskLevelIndicatorProps {
     level: 'low' | 'medium' | 'high';
     showIcon?: boolean;

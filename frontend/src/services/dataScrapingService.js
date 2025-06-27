@@ -1,10 +1,10 @@
 import { APIError, AppError } from "../core/UnifiedError";
 import axios from "axios";
-import { unifiedMonitor } from "../core/UnifiedMonitor"; // Added for tracing/error reporting
+import { unifiedMonitor } from "../core/UnifiedMonitor"; // Added for tracing/error reporting;
 // Import relevant types for scraped data (e.g., from ../types/scrapedData.ts - to be created)
 // interface DailyFantasyProjection { ... }
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-const DATA_SCRAPING_BACKEND_PREFIX = `${API_BASE_URL}/api/data-scraping`;
+
+
 /**
  * Fetches daily fantasy projections from the backend.
  * The backend /api/data-scraping/daily-fantasy-projections endpoint is currently mocked.
@@ -28,17 +28,17 @@ export const fetchDailyFantasyProjections = async (date, league) => {
     "http.client",
   );
   try {
-    let endpoint = `${DATA_SCRAPING_BACKEND_PREFIX}/daily-fantasy-projections`;
-    const params = new URLSearchParams();
+    const endpoint = `${DATA_SCRAPING_BACKEND_PREFIX}/daily-fantasy-projections`;
+
     if (date) params.append("game_date", date);
     if (league) params.append("league", league);
     if (params.toString()) endpoint += `?${params.toString()}`;
-    const response = await axios.get(endpoint);
+
     if (trace) {
       trace.setHttpStatus(response.status);
       unifiedMonitor.endTrace(trace);
     }
-    const mappedData = response.data
+    const mappedData = response.data;
       ? response.data.map(mapBackendDFPToFrontend)
       : [];
     return mappedData;
@@ -83,16 +83,16 @@ export const triggerScrapingJob = async (job_type, league, target_date) => {
     "http.client",
   );
   try {
-    let endpoint = `${DATA_SCRAPING_BACKEND_PREFIX}/trigger-job`;
-    const params = new URLSearchParams();
+    const endpoint = `${DATA_SCRAPING_BACKEND_PREFIX}/trigger-job`;
+
     if (job_type) params.append("job_type", job_type);
     if (league) params.append("league", league);
-    if (target_date) params.append("target_date", target_date); // alias is target_date in backend for target_date_str
+    if (target_date) params.append("target_date", target_date); // alias is target_date in backend for target_date_str;
     // Note: Backend uses POST but takes params in URL for this mock. Adjust if backend changes to use request body.
     if (params.toString()) endpoint += `?${params.toString()}`;
     // Backend endpoint is POST, but parameters are query parameters for the mock.
     // If it were a true POST with body, it'd be: axios.post<BackendScrapingJobStatus>(endpoint, { job_type, league, target_date })
-    const response = await axios.post(endpoint, null); // Sending null body as params are in URL
+    const response = await axios.post(endpoint, null); // Sending null body as params are in URL;
     if (trace) {
       trace.setHttpStatus(response.status);
       unifiedMonitor.endTrace(trace);
@@ -129,16 +129,16 @@ const mapBackendDFPToFrontend = (backendItem) => {
     playerId: backendItem.player_id,
     playerName: backendItem.player_name,
     team: backendItem.team,
-    // opponent: undefined, // Backend mock doesn't provide opponent
+    // opponent: undefined, // Backend mock doesn't provide opponent;
     projection: backendItem.projection,
-    statType: backendItem.position, // Or a more specific mapping if available
+    statType: backendItem.position, // Or a more specific mapping if available;
     salary: backendItem.salary,
     source: backendItem.source,
-    lastUpdatedAt: new Date(backendItem.game_date).toISOString(), // Using game_date as lastUpdatedAt for now
+    lastUpdatedAt: new Date(backendItem.game_date).toISOString(), // Using game_date as lastUpdatedAt for now;
   };
 };
 export const dataScrapingService = {
   fetchDailyFantasyProjections,
   triggerScrapingJob,
-  // getJobStatus: async (jobId: string) => { /* ... */ }, // Future implementation
+  // getJobStatus: async (jobId: string) => { /* ... */ }, // Future implementation;
 };

@@ -1,8 +1,8 @@
-import { WebSocket } from 'ws';
-import { v4 as uuidv4 } from 'uuid';
-import { EventEmitter } from 'events';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedError } from '../error/types';
+import { WebSocket } from 'ws.ts';
+import { v4 as uuidv4 } from 'uuid.ts';
+import { EventEmitter } from 'events.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedError } from '@/error/types.ts';
 
 interface WebSocketMessage {
   type: string;
@@ -39,7 +39,7 @@ export class WebSocketManager extends EventEmitter {
 
   override on<K extends keyof WebSocketEvents>(
     event: K,
-    listener: (...args: WebSocketEvents[K]) => void
+    listener: (...args: WebSocketEvents[K]) => void;
   ): this {
     return super.on(event, listener);
   }
@@ -61,7 +61,7 @@ export class WebSocketManager extends EventEmitter {
   }
 
   async connect(socket: WebSocket): Promise<string> {
-    const clientId = uuidv4();
+
     const client: WebSocketClient = {
       id: clientId,
       socket,
@@ -81,7 +81,7 @@ export class WebSocketManager extends EventEmitter {
   private setupSocketHandlers(client: WebSocketClient): void {
     client.socket.on('message', (data: string) => {
       try {
-        const message = JSON.parse(data);
+
         this.handleMessage(client, message);
       } catch (error) {
         this.logger.error(`Error parsing message from client ${client.id}: ${error}`);
@@ -140,7 +140,7 @@ export class WebSocketManager extends EventEmitter {
   }
 
   private handleClientDisconnect(clientId: string): void {
-    const client = this.clients.get(clientId);
+
     if (!client) return;
 
     if (client.reconnectAttempts < this.MAX_RECONNECT_ATTEMPTS) {
@@ -155,9 +155,9 @@ export class WebSocketManager extends EventEmitter {
 
   private async attemptReconnect(client: WebSocketClient): Promise<void> {
     try {
-      // Implement reconnection logic here
+      // Implement reconnection logic here;
       this.logger.info(`Attempting to reconnect client ${client.id}`);
-      // For now, just remove the client
+      // For now, just remove the client;
       this.removeClient(client.id);
     } catch (error) {
       this.logger.error(`Reconnection failed for client ${client.id}: ${error}`);
@@ -166,7 +166,7 @@ export class WebSocketManager extends EventEmitter {
   }
 
   private removeClient(clientId: string): void {
-    const client = this.clients.get(clientId);
+
     if (!client) return;
 
     client.socket.close();
@@ -176,7 +176,7 @@ export class WebSocketManager extends EventEmitter {
   }
 
   sendMessage(clientId: string, message: WebSocketMessage): void {
-    const client = this.clients.get(clientId);
+
     if (!client) return;
 
     if (client.socket.readyState === WebSocket.OPEN) {
@@ -188,7 +188,7 @@ export class WebSocketManager extends EventEmitter {
 
   private queueMessage(client: WebSocketClient, message: WebSocketMessage): void {
     if (client.messageQueue.length >= this.MESSAGE_QUEUE_LIMIT) {
-      client.messageQueue.shift(); // Remove oldest message
+      client.messageQueue.shift(); // Remove oldest message;
     }
     client.messageQueue.push(message);
   }
@@ -218,7 +218,7 @@ export class WebSocketManager extends EventEmitter {
   }
 
   getSubscriberCount(topic: string): number {
-    let count = 0;
+    const count = 0;
     this.clients.forEach(client => {
       if (client.subscriptions.has(topic)) count++;
     });

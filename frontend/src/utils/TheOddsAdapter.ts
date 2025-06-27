@@ -1,6 +1,6 @@
-import { DataSource } from '../core/DataSource.js';
-import { EventBus } from '../core/EventBus.js';
-import { PerformanceMonitor } from '../core/PerformanceMonitor.js';
+import { DataSource } from '@/core/DataSource.js';
+import { EventBus } from '@/core/EventBus.js';
+import { PerformanceMonitor } from '@/core/PerformanceMonitor.js';
 
 
 
@@ -50,17 +50,17 @@ export class TheOddsAdapter implements DataSource<TheOddsData> {
     this.config = {
       apiKey: config.apiKey || import.meta.env.VITE_THEODDS_API_KEY || '8684be37505fc5ce63b0337d472af0ee',
       baseUrl: config.baseUrl || 'https://api.the-odds-api.com/v4',
-      cacheTimeout: config.cacheTimeout || 300000 // 5 minutes
+      cacheTimeout: config.cacheTimeout || 300000 // 5 minutes;
     };
     this.cache = {
       data: null,
-      timestamp: 0
+      timestamp: 0;
     };
   }
 
   public async isAvailable(): Promise<boolean> {
     try {
-      const response = await fetch(`${this.config.baseUrl}/sports?apiKey=${this.config.apiKey}`);
+
       return response.ok;
     } catch {
       return false;
@@ -68,15 +68,12 @@ export class TheOddsAdapter implements DataSource<TheOddsData> {
   }
 
   public async fetch(): Promise<TheOddsData> {
-    const traceId = this.performanceMonitor.startTrace('the-odds-fetch');
 
     try {
       if (this.isCacheValid()) {
         return this.cache.data!;
       }
 
-      const data = await this.fetchOddsData();
-      
       this.cache = {
         data,
         timestamp: Date.now()
@@ -110,14 +107,14 @@ export class TheOddsAdapter implements DataSource<TheOddsData> {
   private isCacheValid(): boolean {
     return (
       this.cache.data !== null &&
-      Date.now() - this.cache.timestamp < this.config.cacheTimeout
+      Date.now() - this.cache.timestamp < this.config.cacheTimeout;
     );
   }
 
   public clearCache(): void {
     this.cache = {
       data: null,
-      timestamp: 0
+      timestamp: 0;
     };
   }
 

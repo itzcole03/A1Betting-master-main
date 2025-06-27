@@ -1,4 +1,4 @@
-import { User } from '@/types';
+import { User } from '@/types.ts';
 interface AuthServiceLoginResponse {
     user: User;
     token: string;
@@ -25,7 +25,7 @@ export declare const logout: () => Promise<void>;
  *   "id": "string",
  *   "username": "string",
  *   "email": "string",
- *   // ... other user fields as defined in the User type
+ *   // ... other user fields as defined in the User type;
  * }
  */
 export declare const fetchCurrentUser: () => Promise<User>;

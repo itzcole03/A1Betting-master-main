@@ -9,11 +9,11 @@ export class DataCache {
         this.cache.set(key, {
             data,
             timestamp: Date.now(),
-            ttl: ttl ?? this.defaultTtl
+            ttl: ttl ?? this.defaultTtl;
         });
     }
     get(key) {
-        const entry = this.cache.get(key);
+
         if (!entry)
             return undefined;
         if (Date.now() - entry.timestamp > entry.ttl) {
@@ -32,7 +32,7 @@ export class StreamingDataPipeline {
         cacheTtl: 5 * 60 * 1000,
         processingInterval: 1000,
         retryAttempts: 3,
-        batchSize: 100
+        batchSize: 100;
     }) {
         this.source = source;
         this.stages = stages;
@@ -45,7 +45,7 @@ export class StreamingDataPipeline {
             errorCount: 0,
             averageLatency: 0,
             lastProcessed: 0,
-            throughput: 0
+            throughput: 0;
         };
         this.cache = new DataCache(options.cacheTtl);
         this.eventBus = EventBus.getInstance();
@@ -82,33 +82,33 @@ export class StreamingDataPipeline {
                 sourceId: this.source.id,
                 sinkId: this.sink.id,
                 timestamp: Date.now(),
-                metrics: this.metrics
+                metrics: this.metrics;
             }
         });
     }
     async process() {
         const traceId = this.performanceMonitor.startTrace('pipeline-processing', {
             sourceId: this.source.id,
-            sinkId: this.sink.id
+            sinkId: this.sink.id;
         });
         try {
-            const startTime = Date.now();
-            const data = await this.source.fetch();
+
+
             if (this.options.cacheEnabled) {
-                const cacheKey = this.generateCacheKey(data);
-                const cached = this.cache.get(cacheKey);
+
+
                 if (cached) {
                     this.performanceMonitor.endTrace(traceId);
                     return;
                 }
                 this.cache.set(cacheKey, data);
             }
-            let transformed = data;
+            const transformed = data;
             for (const stage of this.stages) {
-                const stageTraceId = this.performanceMonitor.startTrace(`pipeline-stage-${stage.id}`);
+
                 try {
                     if (stage.validate) {
-                        const isValid = await stage.validate(transformed);
+
                         if (!isValid) {
                             throw new Error(`Validation failed at stage ${stage.id}`);
                         }
@@ -122,7 +122,7 @@ export class StreamingDataPipeline {
                 }
             }
             await this.sink.write(transformed);
-            const duration = Date.now() - startTime;
+
             this.updateMetrics(duration);
             this.eventBus.publish({
                 type: 'pipeline:processed',

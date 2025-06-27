@@ -2,9 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import { UnifiedServiceRegistry } from '../services/unified/UnifiedServiceRegistry';
 import { webSocketManager } from '../services/unified/WebSocketManager';
 export const usePredictions = () => {
-    const serviceRegistry = UnifiedServiceRegistry.getInstance();
-    const predictionService = serviceRegistry.getService('prediction');
-    const analyticsService = serviceRegistry.getService('analytics');
+
+
+
     const [state, setState] = useState({
         predictions: [],
         loading: true,
@@ -36,7 +36,7 @@ export const usePredictions = () => {
     const loadPredictions = useCallback(async () => {
         try {
             setState(prev => ({ ...prev, loading: true, error: null }));
-            const predictions = await predictionService.getPredictions();
+
             const processedPredictions = predictions.map(pred => ({
                 id: pred.id,
                 event: pred.event,
@@ -61,13 +61,13 @@ export const usePredictions = () => {
     }, [predictionService, processModelOutput]);
     useEffect(() => {
         loadPredictions();
-        // Setup WebSocket connection for real-time updates
+        // Setup WebSocket connection for real-time updates;
         let unsub;
-        let isMounted = true;
-        const reconnectTimeout = null;
-        const reconnectAttempts = 0;
-        const maxReconnectAttempts = 5;
-        const reconnectInterval = 3000;
+        const isMounted = true;
+
+
+
+
         function handlePredictionUpdate(data) {
             if (!isMounted)
                 return;
@@ -86,7 +86,7 @@ export const usePredictions = () => {
                 ],
             }));
         }
-        // Subscribe to predictions event
+        // Subscribe to predictions event;
         webSocketManager.on('predictions', handlePredictionUpdate);
         return () => {
             isMounted = false;

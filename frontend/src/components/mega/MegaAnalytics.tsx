@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from 'react.ts';
 import {
   CYBER_COLORS,
   CYBER_GRADIENTS,
@@ -6,7 +6,7 @@ import {
   CyberContainer,
   CyberText,
   CyberButton,
-} from "./CyberTheme";
+} from './CyberTheme.ts';
 import {
   Brain,
   BarChart3,
@@ -24,9 +24,9 @@ import {
   Percent,
   Clock,
   Calendar,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// MEGA ANALYTICS COMPONENT - Consolidates all analytics and ML insights
+// MEGA ANALYTICS COMPONENT - Consolidates all analytics and ML insights;
 const MegaAnalytics: React.FC<{
   timeRange?: "1h" | "24h" | "7d" | "30d";
   autoRefresh?: boolean;
@@ -83,7 +83,7 @@ const MegaAnalytics: React.FC<{
     },
   });
 
-  // Auto-refresh data every 10 seconds
+  // Auto-refresh data every 10 seconds;
   useEffect(() => {
     if (!autoRefresh) return;
 
@@ -139,13 +139,13 @@ const MegaAnalytics: React.FC<{
   };
 
   const renderOverviewTab = () => (
-    <div
+    <div;
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
         gap: "24px",
       }}
-    >
+     key={641337}>
       {/* Key Metrics */}
       {[
         {
@@ -177,51 +177,51 @@ const MegaAnalytics: React.FC<{
           color: CYBER_COLORS.purple,
         },
       ].map((metric, index) => {
-        const Icon = metric.icon;
+
         return (
-          <CyberContainer
+          <CyberContainer;
             key={index}
             variant="card"
             style={{ padding: "20px" }}
-          >
-            <div
+           key={118299}>
+            <div;
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "flex-start",
                 marginBottom: "16px",
               }}
-            >
-              <div>
-                <CyberText variant="caption" color="muted">
+             key={155985}>
+              <div key={241917}>
+                <CyberText variant="caption" color="muted" key={505352}>
                   {metric.title}
                 </CyberText>
-                <CyberText
+                <CyberText;
                   variant="title"
                   style={{
                     fontSize: "24px",
                     color: metric.color,
                     marginBottom: "4px",
                   }}
-                >
+                 key={881631}>
                   {metric.value}
                 </CyberText>
-                <CyberText
+                <CyberText;
                   variant="caption"
                   style={{ color: CYBER_COLORS.primary }}
-                >
-                  {metric.trend} today
+                 key={220200}>
+                  {metric.trend} today;
                 </CyberText>
               </div>
-              <div
+              <div;
                 style={{
                   padding: "12px",
                   borderRadius: "8px",
                   backgroundColor: "rgba(255, 255, 255, 0.05)",
                   border: `1px solid ${metric.color}30`,
                 }}
-              >
-                <Icon size={20} color={metric.color} />
+               key={773440}>
+                <Icon size={20} color={metric.color} / key={854511}>
               </div>
             </div>
           </CyberContainer>
@@ -229,25 +229,25 @@ const MegaAnalytics: React.FC<{
       })}
 
       {/* Performance Chart Placeholder */}
-      <CyberContainer
+      <CyberContainer;
         variant="card"
         style={{ gridColumn: "span 2", padding: "20px" }}
-      >
-        <CyberText
+       key={437785}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <TrendingUp
+         key={738204}>
+          <TrendingUp;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.primary }}
-          />
-          Performance Over Time
+          / key={103927}>
+          Performance Over Time;
         </CyberText>
-        <div
+        <div;
           style={{
             height: "200px",
             background: "rgba(6, 255, 165, 0.05)",
@@ -257,31 +257,31 @@ const MegaAnalytics: React.FC<{
             alignItems: "center",
             justifyContent: "center",
           }}
-        >
-          <CyberText variant="body" color="muted">
-            Advanced charting visualization will be implemented here
+         key={248144}>
+          <CyberText variant="body" color="muted" key={892775}>
+            Advanced charting visualization will be implemented here;
           </CyberText>
         </div>
       </CyberContainer>
 
       {/* Recent Insights */}
-      <CyberContainer
+      <CyberContainer;
         variant="card"
         style={{ gridColumn: "span 2", padding: "20px" }}
-      >
-        <CyberText
+       key={437785}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <Brain
+         key={738204}>
+          <Brain;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.secondary }}
-          />
-          AI Insights & Recommendations
+          / key={808603}>
+          AI Insights & Recommendations;
         </CyberText>
         {[
           {
@@ -307,7 +307,7 @@ const MegaAnalytics: React.FC<{
             time: "1 hour ago",
           },
         ].map((insight, index) => (
-          <div
+          <div;
             key={index}
             style={{
               display: "flex",
@@ -316,21 +316,21 @@ const MegaAnalytics: React.FC<{
               borderBottom:
                 index < 3 ? "1px solid rgba(255, 255, 255, 0.05)" : "none",
             }}
-          >
-            <div style={{ marginRight: "12px", marginTop: "2px" }}>
+           key={669491}>
+            <div style={{ marginRight: "12px", marginTop: "2px" }} key={33543}>
               {insight.type === "success" && (
-                <CheckCircle size={16} color={CYBER_COLORS.primary} />
+                <CheckCircle size={16} color={CYBER_COLORS.primary} / key={545247}>
               )}
               {insight.type === "warning" && (
-                <AlertCircle size={16} color={CYBER_COLORS.accent} />
+                <AlertCircle size={16} color={CYBER_COLORS.accent} / key={85302}>
               )}
               {insight.type === "info" && (
-                <Eye size={16} color={CYBER_COLORS.secondary} />
+                <Eye size={16} color={CYBER_COLORS.secondary} / key={387287}>
               )}
             </div>
-            <div style={{ flex: 1 }}>
-              <CyberText variant="body">{insight.message}</CyberText>
-              <CyberText variant="caption" color="muted">
+            <div style={{ flex: 1 }} key={130883}>
+              <CyberText variant="body" key={794207}>{insight.message}</CyberText>
+              <CyberText variant="caption" color="muted" key={505352}>
                 {insight.time}
               </CyberText>
             </div>
@@ -341,28 +341,28 @@ const MegaAnalytics: React.FC<{
   );
 
   const renderModelsTab = () => (
-    <div
+    <div;
       style={{
         display: "grid",
         gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
         gap: "24px",
       }}
-    >
+     key={260114}>
       {/* Model Status Overview */}
-      <CyberContainer variant="card" style={{ padding: "20px" }}>
-        <CyberText
+      <CyberContainer variant="card" style={{ padding: "20px" }} key={24342}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <Brain
+         key={738204}>
+          <Brain;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.primary }}
-          />
-          Model Fleet Status
+          / key={849090}>
+          Model Fleet Status;
         </CyberText>
         {[
           {
@@ -390,25 +390,25 @@ const MegaAnalytics: React.FC<{
             color: CYBER_COLORS.purple,
           },
         ].map((model, index) => (
-          <div key={index} style={{ marginBottom: "16px" }}>
-            <div
+          <div key={index} style={{ marginBottom: "16px" }} key={177947}>
+            <div;
               style={{
                 display: "flex",
                 justifyContent: "space-between",
                 marginBottom: "8px",
               }}
-            >
-              <CyberText variant="body" color="secondary">
+             key={428024}>
+              <CyberText variant="body" color="secondary" key={196444}>
                 {model.label}
               </CyberText>
-              <CyberText
+              <CyberText;
                 variant="body"
                 style={{ color: model.color, fontWeight: "600" }}
-              >
+               key={882420}>
                 {model.value}/{model.max}
               </CyberText>
             </div>
-            <div
+            <div;
               style={{
                 width: "100%",
                 height: "6px",
@@ -416,79 +416,79 @@ const MegaAnalytics: React.FC<{
                 borderRadius: "3px",
                 overflow: "hidden",
               }}
-            >
-              <div
+             key={610978}>
+              <div;
                 style={{
                   width: `${(model.value / model.max) * 100}%`,
                   height: "100%",
                   backgroundColor: model.color,
                   transition: "width 0.3s ease",
                 }}
-              />
+              / key={940663}>
             </div>
           </div>
         ))}
       </CyberContainer>
 
       {/* Top Performing Models */}
-      <CyberContainer variant="card" style={{ padding: "20px" }}>
-        <CyberText
+      <CyberContainer variant="card" style={{ padding: "20px" }} key={24342}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <Target
+         key={738204}>
+          <Target;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.secondary }}
-          />
-          Top Performers
+          / key={981679}>
+          Top Performers;
         </CyberText>
-        <div style={{ marginBottom: "16px" }}>
-          <CyberText
+        <div style={{ marginBottom: "16px" }} key={864356}>
+          <CyberText;
             variant="body"
             style={{
               color: CYBER_COLORS.primary,
               fontWeight: "600",
               marginBottom: "4px",
             }}
-          >
+           key={685402}>
             Best: {analyticsData.models.bestModel.name}
           </CyberText>
-          <CyberText variant="caption" color="muted">
+          <CyberText variant="caption" color="muted" key={505352}>
             Accuracy: {analyticsData.models.bestModel.accuracy}%
           </CyberText>
         </div>
-        <div>
-          <CyberText
+        <div key={241917}>
+          <CyberText;
             variant="body"
             style={{ color: "#ff4757", fontWeight: "600", marginBottom: "4px" }}
-          >
+           key={801244}>
             Needs Attention: {analyticsData.models.worstModel.name}
           </CyberText>
-          <CyberText variant="caption" color="muted">
+          <CyberText variant="caption" color="muted" key={505352}>
             Accuracy: {analyticsData.models.worstModel.accuracy}%
           </CyberText>
         </div>
       </CyberContainer>
 
       {/* System Health */}
-      <CyberContainer variant="card" style={{ padding: "20px" }}>
-        <CyberText
+      <CyberContainer variant="card" style={{ padding: "20px" }} key={24342}>
+        <CyberText;
           variant="title"
           style={{
             marginBottom: "16px",
             display: "flex",
             alignItems: "center",
           }}
-        >
-          <Cpu
+         key={738204}>
+          <Cpu;
             size={20}
             style={{ marginRight: "8px", color: CYBER_COLORS.accent }}
-          />
-          System Health
+          / key={10001}>
+          System Health;
         </CyberText>
         {[
           {
@@ -516,9 +516,9 @@ const MegaAnalytics: React.FC<{
             threshold: { good: 50, warning: 100 },
           },
         ].map((metric, index) => {
-          const color = getStatusColor(metric.value, metric.threshold);
+
           return (
-            <div
+            <div;
               key={index}
               style={{
                 display: "flex",
@@ -528,14 +528,14 @@ const MegaAnalytics: React.FC<{
                 borderBottom:
                   index < 3 ? "1px solid rgba(255, 255, 255, 0.05)" : "none",
               }}
-            >
-              <CyberText variant="body" color="secondary">
+             key={464107}>
+              <CyberText variant="body" color="secondary" key={196444}>
                 {metric.label}
               </CyberText>
-              <CyberText
+              <CyberText;
                 variant="body"
                 style={{ color: color, fontWeight: "600" }}
-              >
+               key={800906}>
                 {metric.value.toFixed(metric.unit === "ms" ? 0 : 1)}
                 {metric.unit}
               </CyberText>
@@ -547,7 +547,7 @@ const MegaAnalytics: React.FC<{
   );
 
   return (
-    <div
+    <div;
       className={`mega-analytics ${className}`}
       style={{
         minHeight: "100vh",
@@ -555,55 +555,55 @@ const MegaAnalytics: React.FC<{
         padding: "24px",
         color: CYBER_COLORS.text.primary,
       }}
-    >
+     key={59052}>
       {/* Header */}
-      <CyberContainer
+      <CyberContainer;
         variant="panel"
         style={{ marginBottom: "24px", padding: "20px" }}
-      >
-        <div
+       key={555499}>
+        <div;
           style={{
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
             marginBottom: "16px",
           }}
-        >
-          <div>
-            <CyberText
+         key={580818}>
+          <div key={241917}>
+            <CyberText;
               variant="title"
               style={{ fontSize: "28px", marginBottom: "4px" }}
-            >
-              Advanced Analytics Hub
+             key={851908}>
+              Advanced Analytics Hub;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Real-time ML insights and predictive performance analytics
+            <CyberText variant="body" color="muted" key={892775}>
+              Real-time ML insights and predictive performance analytics;
             </CyberText>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "12px" }} key={333019}>
             {refreshing && (
-              <div
+              <div;
                 style={{ display: "flex", alignItems: "center", gap: "8px" }}
-              >
-                <Activity
+               key={929522}>
+                <Activity;
                   size={16}
                   color={CYBER_COLORS.primary}
                   style={{ animation: "cyber-pulse 1s infinite" }}
-                />
-                <CyberText variant="caption" color="accent">
+                / key={866162}>
+                <CyberText variant="caption" color="accent" key={194784}>
                   Refreshing...
                 </CyberText>
               </div>
             )}
-            <div style={{ display: "flex", gap: "4px" }}>
+            <div style={{ display: "flex", gap: "4px" }} key={430025}>
               {timeRanges.map((range) => (
-                <CyberButton
+                <CyberButton;
                   key={range.key}
                   variant={
                     selectedTimeRange === range.key ? "primary" : "secondary"
                   }
                   active={selectedTimeRange === range.key}
-                  onClick={() => setSelectedTimeRange(range.key as any)}
+                  onClick={() = key={712327}> setSelectedTimeRange(range.key as any)}
                   style={{
                     marginBottom: 0,
                     width: "auto",
@@ -619,16 +619,16 @@ const MegaAnalytics: React.FC<{
         </div>
 
         {/* Tab Navigation */}
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div style={{ display: "flex", gap: "8px" }} key={772482}>
           {tabs.map((tab) => {
-            const Icon = tab.icon;
+
             return (
-              <CyberButton
+              <CyberButton;
                 key={tab.key}
                 variant={activeTab === tab.key ? "primary" : "secondary"}
                 active={activeTab === tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                icon={<Icon size={16} />}
+                onClick={() = key={287146}> setActiveTab(tab.key)}
+                icon={<Icon size={16} / key={856509}>}
                 style={{ marginBottom: 0, width: "auto", padding: "8px 16px" }}
               >
                 {tab.label}
@@ -639,60 +639,60 @@ const MegaAnalytics: React.FC<{
       </CyberContainer>
 
       {/* Content */}
-      <div style={{ minHeight: "500px" }}>
+      <div style={{ minHeight: "500px" }} key={298126}>
         {activeTab === "overview" && renderOverviewTab()}
         {activeTab === "models" && renderModelsTab()}
         {activeTab === "performance" && (
-          <CyberContainer
+          <CyberContainer;
             variant="card"
             style={{ padding: "40px", textAlign: "center" }}
-          >
-            <TrendingUp
+           key={933437}>
+            <TrendingUp;
               size={48}
               color={CYBER_COLORS.accent}
               style={{ marginBottom: "16px", margin: "0 auto" }}
-            />
-            <CyberText variant="title" style={{ marginBottom: "8px" }}>
-              Performance Analytics
+            / key={712156}>
+            <CyberText variant="title" style={{ marginBottom: "8px" }} key={813364}>
+              Performance Analytics;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Deep performance metrics and trend analysis
+            <CyberText variant="body" color="muted" key={892775}>
+              Deep performance metrics and trend analysis;
             </CyberText>
           </CyberContainer>
         )}
         {activeTab === "realtime" && (
-          <CyberContainer
+          <CyberContainer;
             variant="card"
             style={{ padding: "40px", textAlign: "center" }}
-          >
-            <Activity
+           key={933437}>
+            <Activity;
               size={48}
               color={CYBER_COLORS.primary}
               style={{ marginBottom: "16px", margin: "0 auto" }}
-            />
-            <CyberText variant="title" style={{ marginBottom: "8px" }}>
-              Real-time Monitoring
+            / key={829134}>
+            <CyberText variant="title" style={{ marginBottom: "8px" }} key={813364}>
+              Real-time Monitoring;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Live system metrics and prediction streams
+            <CyberText variant="body" color="muted" key={892775}>
+              Live system metrics and prediction streams;
             </CyberText>
           </CyberContainer>
         )}
         {activeTab === "insights" && (
-          <CyberContainer
+          <CyberContainer;
             variant="card"
             style={{ padding: "40px", textAlign: "center" }}
-          >
-            <Eye
+           key={933437}>
+            <Eye;
               size={48}
               color={CYBER_COLORS.secondary}
               style={{ marginBottom: "16px", margin: "0 auto" }}
-            />
-            <CyberText variant="title" style={{ marginBottom: "8px" }}>
-              AI Insights Engine
+            / key={935175}>
+            <CyberText variant="title" style={{ marginBottom: "8px" }} key={813364}>
+              AI Insights Engine;
             </CyberText>
-            <CyberText variant="body" color="muted">
-              Intelligent pattern recognition and market insights
+            <CyberText variant="body" color="muted" key={892775}>
+              Intelligent pattern recognition and market insights;
             </CyberText>
           </CyberContainer>
         )}

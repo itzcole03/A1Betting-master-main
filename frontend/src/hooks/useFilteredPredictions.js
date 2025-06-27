@@ -10,28 +10,28 @@ export function useFilteredPredictions() {
         if (!predictions)
             return [];
         return predictions.filter(prediction => {
-            // Filter by sport
+            // Filter by sport;
             if (strategyInput.selectedSports.length > 0 &&
                 !strategyInput.selectedSports.includes(prediction.sport)) {
                 return false;
             }
-            // Filter by prop type
+            // Filter by prop type;
             if (strategyInput.selectedPropTypes.length > 0 &&
                 !strategyInput.selectedPropTypes.includes(prediction.propType)) {
                 return false;
             }
-            // Filter by confidence
+            // Filter by confidence;
             if (prediction.confidence < strategyInput.minConfidence) {
                 return false;
             }
-            // Filter by payout range
-            const payout = prediction.odds;
+            // Filter by payout range;
+
             if (payout < strategyInput.minPayout || payout > strategyInput.maxPayout) {
                 return false;
             }
-            // Filter by active filters
-            const confidenceLevel = prediction.confidence >= 0.65 ? 'high' : prediction.confidence >= 0.55 ? 'medium' : 'low';
-            const payoutLevel = payout >= 5 ? 'high' : payout >= 2 ? 'medium' : 'low';
+            // Filter by active filters;
+
+
             const relevantFilters = [
                 prediction.sport,
                 prediction.propType,
@@ -41,7 +41,7 @@ export function useFilteredPredictions() {
             return relevantFilters.some(filter => activeFilters.has(filter));
         });
     }, [predictions, activeFilters, strategyInput]);
-    const hasResults = filteredPredictions.length > 0;
+
     return {
         predictions: filteredPredictions,
         loading: isLoading,

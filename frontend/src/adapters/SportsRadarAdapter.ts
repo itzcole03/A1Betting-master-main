@@ -1,7 +1,7 @@
-import { DataSource } from "../unified/DataSource";
-import { EventBus } from "../unified/EventBus";
-import { PerformanceMonitor } from "../unified/PerformanceMonitor";
-import { sportsRadarService, type OddsData, type GameData } from "@/services/SportsRadarService";
+import { DataSource } from '@/unified/DataSource.ts';
+import { EventBus } from '@/unified/EventBus.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
+import { sportsRadarService, type OddsData, type GameData } from '@/services/SportsRadarService.ts';
 
 export interface OddsProvider {
   getOdds(eventId: string): Promise<unknown>;
@@ -43,7 +43,7 @@ export interface SportsRadarData {
   }[];
 }
 
-export class SportsRadarAdapter
+export class SportsRadarAdapter;
   implements DataSource<SportsRadarData>, OddsProvider {
   public readonly id = "sports-radar";
   public readonly type = "sports-data";
@@ -80,7 +80,7 @@ export class SportsRadarAdapter
 
   public async isAvailable(): Promise<boolean> {
     try {
-      const healthCheck = await sportsRadarService.healthCheck();
+
       return healthCheck.status === 'healthy';
     } catch {
       return false;
@@ -91,14 +91,11 @@ export class SportsRadarAdapter
    * Fetches the latest SportsRadar data, using enhanced service with cache if valid.
    */
   public async fetch(): Promise<SportsRadarData> {
-    const traceId = this.performanceMonitor.startTrace("sports-radar-fetch");
 
     try {
       if (this.isCacheValid()) {
         return this.cache.data!;
       }
-
-      const data = await this.fetchSportsRadarData();
 
       this.cache = {
         data,
@@ -123,10 +120,9 @@ export class SportsRadarAdapter
 
   private async fetchSportsRadarData(): Promise<SportsRadarData> {
     try {
-      // Use the enhanced service to get NBA games
-      const nbaGames = await sportsRadarService.getNBAGames();
-      
-      // Transform GameData to SportsRadarData format for backward compatibility
+      // Use the enhanced service to get NBA games;
+
+      // Transform GameData to SportsRadarData format for backward compatibility;
       const games = nbaGames.map((game: GameData) => ({
         id: game.gameId,
         status: game.status,
@@ -141,12 +137,12 @@ export class SportsRadarAdapter
           alias: game.awayTeam.abbreviation,
           statistics: {}
         },
-        players: [] // Will be populated with additional requests if needed
+        players: [] // Will be populated with additional requests if needed;
       }));
 
       return { games };
     } catch (error) {
-      // Fallback to direct API call if enhanced service fails
+      // Fallback to direct API call if enhanced service fails;
       const response = await fetch(
         `${this.config.baseUrl}/nba/v7/en/games/${new Date().toISOString().split('T')[0]}/schedule.json?api_key=${this.config.apiKey}`,
       );
@@ -155,9 +151,7 @@ export class SportsRadarAdapter
         throw new Error(`SportsRadar API error: ${response.statusText}`);
       }
 
-      const result = await response.json();
-      
-      // Transform response to expected format
+      // Transform response to expected format;
       return {
         games: result.games?.map((game: any) => ({
           id: game.id,
@@ -182,7 +176,7 @@ export class SportsRadarAdapter
   private isCacheValid(): boolean {
     return (
       this.cache.data !== null &&
-      Date.now() - this.cache.timestamp < this.config.cacheTimeout
+      Date.now() - this.cache.timestamp < this.config.cacheTimeout;
     );
   }
 
@@ -212,44 +206,42 @@ export class SportsRadarAdapter
 
   async getOdds(eventId: string): Promise<unknown> {
     if (!this.apiKey) {
-      console.warn("SportsRadar API key not configured. Skipping odds fetch.");
+      // console statement removed
       return null;
     }
 
     try {
-      // Use enhanced service for odds comparison
-      const oddsData = await sportsRadarService.getOddsComparison('basketball', eventId);
+      // Use enhanced service for odds comparison;
+
       return oddsData.length > 0 ? oddsData[0] : null;
     } catch (error) {
-      console.error("Error fetching odds from SportsRadar:", error);
+      // console statement removed
       return null;
     }
   }
 
   async getEventDetails(eventId: string): Promise<unknown> {
     if (!this.apiKey) {
-      console.warn(
-        "SportsRadar API key not configured. Skipping event details fetch.",
-      );
+      // console statement removed
       return null;
     }
 
     try {
-      // Use enhanced service for player props
-      const playerProps = await sportsRadarService.getPlayerPropsOdds('basketball', eventId);
+      // Use enhanced service for player props;
+
       return { playerProps };
     } catch (error) {
-      console.error("Error fetching event details from SportsRadar:", error);
+      // console statement removed
       return null;
     }
   }
 
-  // New enhanced methods using the service
+  // New enhanced methods using the service;
   async getPlayerStats(sport: string, playerId: string): Promise<unknown> {
     try {
       return await sportsRadarService.getPlayerStats(sport, playerId);
     } catch (error) {
-      console.error("Error fetching player stats:", error);
+      // console statement removed
       return null;
     }
   }
@@ -258,7 +250,7 @@ export class SportsRadarAdapter
     try {
       return await sportsRadarService.getOddsComparison(sport);
     } catch (error) {
-      console.error("Error fetching odds comparison:", error);
+      // console statement removed
       return [];
     }
   }

@@ -1,7 +1,7 @@
 import { useAnimation } from 'framer-motion';
 import { useCallback, useState, useEffect } from 'react';
 export const useCustomAnimation = ({ duration = 0.3, delay = 0, ease = 'easeInOut' } = {}) => {
-    const controls = useAnimation();
+
     const [isAnimating, setIsAnimating] = useState(false);
     const animate = useCallback(async (variants, options) => {
         setIsAnimating(true);
@@ -11,7 +11,7 @@ export const useCustomAnimation = ({ duration = 0.3, delay = 0, ease = 'easeInOu
                 duration,
                 delay,
                 ease,
-                ...options?.transition
+                ...options?.transition;
             }
         });
         setIsAnimating(false);
@@ -19,12 +19,12 @@ export const useCustomAnimation = ({ duration = 0.3, delay = 0, ease = 'easeInOu
     const fadeIn = useCallback((options) => animate({
         opacity: 1,
         y: 0,
-        scale: 1
+        scale: 1;
     }, options), [animate]);
     const fadeOut = useCallback((options) => animate({
         opacity: 0,
         y: 20,
-        scale: 0.95
+        scale: 0.95;
     }, options), [animate]);
     const slideIn = useCallback((direction, options) => {
         const variants = {
@@ -47,7 +47,7 @@ export const useCustomAnimation = ({ duration = 0.3, delay = 0, ease = 'easeInOu
         transition: {
             duration: 0.4,
             times: [0, 0.5, 1],
-            ...options?.transition
+            ...options?.transition;
         }
     }, options), [animate]);
     const shake = useCallback((options) => animate({
@@ -55,7 +55,7 @@ export const useCustomAnimation = ({ duration = 0.3, delay = 0, ease = 'easeInOu
         transition: {
             duration: 0.5,
             times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-            ...options?.transition
+            ...options?.transition;
         }
     }, options), [animate]);
     const bounce = useCallback((options) => animate({
@@ -63,7 +63,7 @@ export const useCustomAnimation = ({ duration = 0.3, delay = 0, ease = 'easeInOu
         transition: {
             duration: 0.6,
             times: [0, 0.5, 1],
-            ...options?.transition
+            ...options?.transition;
         }
     }, options), [animate]);
     return {
@@ -75,7 +75,7 @@ export const useCustomAnimation = ({ duration = 0.3, delay = 0, ease = 'easeInOu
         pulse,
         shake,
         bounce,
-        animate
+        animate;
     };
 };
 export const fadeInUp = {
@@ -103,7 +103,7 @@ export const scaleIn = {
     transition: { duration: 0.3 }
 };
 export const useOddsAnimation = (value) => {
-    const controls = useAnimation();
+
     useEffect(() => {
         controls.start({
             scale: 1.1,
@@ -123,7 +123,7 @@ export const bounceIn = {
     transition: {
         type: 'spring',
         stiffness: 300,
-        damping: 20
+        damping: 20;
     }
 };
 export const staggerChildren = {
@@ -131,7 +131,7 @@ export const staggerChildren = {
     animate: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.1
+            staggerChildren: 0.1;
         }
     }
 };

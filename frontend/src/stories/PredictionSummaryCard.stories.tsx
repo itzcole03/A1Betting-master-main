@@ -1,8 +1,8 @@
-import React from 'react';
-import { Meta, StoryObj } from '@storybook/react';
-import { PredictionSummaryCard } from '../components/ui/PredictionSummaryCard';
+import React from 'react.ts';
+import { Meta, StoryObj } from '@storybook/react.ts';
+import { PredictionSummaryCard } from '@/components/ui/PredictionSummaryCard.ts';
 
-const meta: Meta<typeof PredictionSummaryCard> = {
+const meta: Meta<typeof PredictionSummaryCard key={184011}> = {
   title: 'Components/PredictionSummaryCard',
   component: PredictionSummaryCard,
   parameters: {
@@ -27,7 +27,7 @@ const meta: Meta<typeof PredictionSummaryCard> = {
 
 export default meta;
 
-type Story = StoryObj<typeof PredictionSummaryCard>;
+type Story = StoryObj<typeof PredictionSummaryCard key={184011}>;
 
 export const Default: Story = {
   args: {
@@ -46,8 +46,8 @@ export const WithCallbacks: Story = {
   args: {
     ...Default.args,
     modelName: 'Interactive Model',
-    onDetailsClick: () => console.log('View details clicked'),
-    onAddToBetslip: () => console.log('Add to betslip clicked'),
+    onDetailsClick: () => // console statement removed,
+    onAddToBetslip: () => // console statement removed,
   },
 };
 

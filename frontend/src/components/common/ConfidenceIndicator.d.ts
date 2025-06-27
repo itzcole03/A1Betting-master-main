@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface ConfidenceIndicatorProps {
     value: number;
     size?: 'small' | 'medium' | 'large';

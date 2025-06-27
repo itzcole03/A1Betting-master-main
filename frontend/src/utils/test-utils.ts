@@ -1,8 +1,8 @@
 /**
- * Enhanced Test Utilities for A1Betting
+ * Enhanced Test Utilities for A1Betting;
  */
 
-// Mock data generators
+// Mock data generators;
 export const mockUserStats = {
   balance: 1250.75,
   winRate: 78.5,
@@ -41,7 +41,7 @@ export const mockPrediction = {
   factors: ['team_form', 'head_to_head', 'injuries'],
 };
 
-// API mocking utilities
+// API mocking utilities;
 export const createMockApiResponse = <T,>(data: T, delay = 0): Promise<T> => {
   return new Promise<T>((resolve) => {
     setTimeout(() => resolve(data), delay);
@@ -56,23 +56,23 @@ export const createMockApiError = (message = 'API Error', status = 500) => {
   });
 };
 
-// Performance testing utilities
+// Performance testing utilities;
 export const measureRenderTime = async (renderFn: () => void) => {
-  const start = performance.now();
+
   renderFn();
-  const end = performance.now();
+
   return end - start;
 };
 
-// Component testing utilities
+// Component testing utilities;
 export const waitForLoadingToFinish = async () => {
   await new Promise(resolve => setTimeout(resolve, 0));
 };
 
-// WebSocket mocking
+// WebSocket mocking;
 export class MockWebSocket {
   public url: string;
-  public readyState: number = 1; // OPEN
+  public readyState: number = 1; // OPEN;
   public onopen: ((event: Event) => void) | null = null;
   public onmessage: ((event: MessageEvent) => void) | null = null;
   public onclose: ((event: CloseEvent) => void) | null = null;
@@ -86,15 +86,15 @@ export class MockWebSocket {
   }
 
   send(data: string) {
-    // Mock sending data
+    // Mock sending data;
   }
 
   close() {
-    this.readyState = 3; // CLOSED
+    this.readyState = 3; // CLOSED;
     this.onclose?.(new CloseEvent('close'));
   }
 
-  // Helper method to simulate receiving messages
+  // Helper method to simulate receiving messages;
   simulateMessage(data: any) {
     if (this.onmessage) {
       this.onmessage(new MessageEvent('message', { data: JSON.stringify(data) }));
@@ -102,7 +102,7 @@ export class MockWebSocket {
   }
 }
 
-// Test data factories
+// Test data factories;
 export const createTestUser = (overrides = {}) => ({
   id: 'test-user-1',
   name: 'Test User',
@@ -122,7 +122,7 @@ export const createTestBet = (overrides = {}) => ({
   ...overrides,
 });
 
-// Validation utilities
+// Validation utilities;
 export const isValidBettingOpportunity = (opportunity: any): boolean => {
   return opportunity &&
     typeof opportunity.id === 'string' &&

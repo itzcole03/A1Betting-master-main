@@ -95,8 +95,8 @@ class MonitoringService:
         """
         try:
             await self.db.insert_performance(data)
-        except Exception as e:
-            logging.error(f"Error recording performance data: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logging.error("Error recording performance data: {e!s}")
             raise
 
     async def get_performance_summary(
@@ -122,8 +122,8 @@ class MonitoringService:
             return await self.db.aggregate_performance(
                 start_time, end_time, metric_name
             )
-        except Exception as e:
-            logging.error(f"Error getting performance summary: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logging.error("Error getting performance summary: {e!s}")
             raise
 
     async def get_performance_alerts(self) -> List[PerformanceAlert]:
@@ -136,8 +136,8 @@ class MonitoringService:
         """
         try:
             return await self.db.query_alerts()
-        except Exception as e:
-            logging.error(f"Error getting performance alerts: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logging.error("Error getting performance alerts: {e!s}")
             raise
 
     async def get_performance_trends(
@@ -158,8 +158,8 @@ class MonitoringService:
         """
         try:
             return await self.db.aggregate_trends(metric_name, interval, limit)
-        except Exception as e:
-            logging.error(f"Error getting performance trends: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logging.error("Error getting performance trends: {e!s}")
             raise
 
     async def _check_alerts(self, data: PerformanceData) -> List[PerformanceAlert]:
@@ -200,8 +200,8 @@ class MonitoringService:
         """
         try:
             await self.db.insert_alerts(alerts)
-        except Exception as e:
-            logging.error(f"Error storing alerts: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logging.error("Error storing alerts: {e!s}")
             raise
 
     async def _update_aggregated_metrics(self, data: PerformanceData) -> None:
@@ -214,8 +214,8 @@ class MonitoringService:
         """
         try:
             await self.db.update_aggregates(data)
-        except Exception as e:
-            logging.error(f"Error updating aggregated metrics: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logging.error("Error updating aggregated metrics: {e!s}")
             raise
 
     def _parse_interval(self, interval: str) -> int:

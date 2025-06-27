@@ -1,4 +1,4 @@
-import { Close as CloseIcon } from '@mui/icons-material';
+import { Close as CloseIcon } from '@mui/icons-material.ts';
 import {
   Alert,
   AlertTitle,
@@ -13,41 +13,40 @@ import {
   Select,
   Stack,
   Typography,
-} from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { PerformanceMonitor } from '../../core/analytics/PerformanceMonitor';
-import { UnifiedMetrics } from '../../core/UnifiedMetrics';
-import { useLogger } from '../../hooks/useLogger';
+} from '@mui/material.ts';
+import React, { useEffect, useState  } from 'react.ts';
+import { PerformanceMonitor } from '@/core/analytics/PerformanceMonitor.ts';
+import { UnifiedMetrics } from '@/core/UnifiedMetrics.ts';
+import { useLogger } from '@/hooks/useLogger.ts';
 
 interface PerformanceAlertsProps {
   modelName?: string;
   onAlertClick?: (alert: any) => void;
 }
 
-export const PerformanceAlerts: React.FC<PerformanceAlertsProps> = ({
+export const PerformanceAlerts: React.FC<PerformanceAlertsProps key={279705}> = ({
   modelName,
   onAlertClick,
 }) => {
-  const [alerts, setAlerts] = useState<any[]>([]);
+  const [alerts, setAlerts] = useState<any[] key={594112}>([]);
   const [severity, setSeverity] = useState<'warning' | 'critical' | 'all'>('all');
   const [timeframe, setTimeframe] = useState<'day' | 'week' | 'month' | 'all'>('day');
-  const logger = useLogger();
-  const metrics = UnifiedMetrics.getInstance();
+
 
   useEffect(() => {
     const fetchAlerts = () => {
-      const monitor = PerformanceMonitor.getInstance(logger, metrics);
-      const startTime = getStartTime(timeframe);
+
+
       const filteredAlerts = monitor.getAlerts(
         modelName,
         severity === 'all' ? undefined : severity,
-        startTime
+        startTime;
       );
       setAlerts(filteredAlerts);
     };
 
     fetchAlerts();
-    const interval = setInterval(fetchAlerts, 30000); // Refresh every 30 seconds
+    const interval = setInterval(fetchAlerts, 30000); // Refresh every 30 seconds;
 
     return () => clearInterval(interval);
   }, [modelName, severity, timeframe, logger, metrics]);
@@ -55,7 +54,6 @@ export const PerformanceAlerts: React.FC<PerformanceAlertsProps> = ({
   const getStartTime = (timeframe: string): Date | undefined => {
     if (timeframe === 'all') return undefined;
 
-    const now = new Date();
     switch (timeframe) {
       case 'day':
         return new Date(now.setDate(now.getDate() - 1));
@@ -69,7 +67,7 @@ export const PerformanceAlerts: React.FC<PerformanceAlertsProps> = ({
   };
 
   const handleClearAlerts = () => {
-    const monitor = PerformanceMonitor.getInstance(logger, metrics);
+
     monitor.clearAlerts(modelName);
     setAlerts([]);
   };
@@ -82,66 +80,66 @@ export const PerformanceAlerts: React.FC<PerformanceAlertsProps> = ({
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Box alignItems="center" display="flex" justifyContent="space-between" mb={2}>
-          <Typography variant="h6">Performance Alerts</Typography>
-          <Stack direction="row" spacing={2}>
-            <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel>Severity</InputLabel>
-              <Select
+    <Card key={650115}>
+      <CardContent key={452065}>
+        <Box alignItems="center" display="flex" justifyContent="space-between" mb={2} key={881353}>
+          <Typography variant="h6" key={93421}>Performance Alerts</Typography>
+          <Stack direction="row" spacing={2} key={926315}>
+            <FormControl size="small" sx={{ minWidth: 120 }} key={402711}>
+              <InputLabel key={405232}>Severity</InputLabel>
+              <Select;
                 label="Severity"
                 value={severity}
-                onChange={e => setSeverity(e.target.value as any)}
+                onChange={e = key={12100}> setSeverity(e.target.value as any)}
               >
-                <MenuItem value="all">All</MenuItem>
-                <MenuItem value="warning">Warning</MenuItem>
-                <MenuItem value="critical">Critical</MenuItem>
+                <MenuItem value="all" key={641531}>All</MenuItem>
+                <MenuItem value="warning" key={22971}>Warning</MenuItem>
+                <MenuItem value="critical" key={476826}>Critical</MenuItem>
               </Select>
             </FormControl>
-            <FormControl size="small" sx={{ minWidth: 120 }}>
-              <InputLabel>Timeframe</InputLabel>
-              <Select
+            <FormControl size="small" sx={{ minWidth: 120 }} key={402711}>
+              <InputLabel key={405232}>Timeframe</InputLabel>
+              <Select;
                 label="Timeframe"
                 value={timeframe}
-                onChange={e => setTimeframe(e.target.value as any)}
+                onChange={e = key={713594}> setTimeframe(e.target.value as any)}
               >
-                <MenuItem value="day">Last 24 Hours</MenuItem>
-                <MenuItem value="week">Last Week</MenuItem>
-                <MenuItem value="month">Last Month</MenuItem>
-                <MenuItem value="all">All Time</MenuItem>
+                <MenuItem value="day" key={6685}>Last 24 Hours</MenuItem>
+                <MenuItem value="week" key={671139}>Last Week</MenuItem>
+                <MenuItem value="month" key={43097}>Last Month</MenuItem>
+                <MenuItem value="all" key={641531}>All Time</MenuItem>
               </Select>
             </FormControl>
-            <IconButton size="small" onClick={handleClearAlerts}>
-              <CloseIcon />
+            <IconButton size="small" onClick={handleClearAlerts} key={563374}>
+              <CloseIcon / key={90527}>
             </IconButton>
           </Stack>
         </Box>
 
-        <Stack spacing={2}>
+        <Stack spacing={2} key={169333}>
           {alerts.length === 0 ? (
-            <Alert severity="info">No alerts in the selected timeframe.</Alert>
+            <Alert severity="info" key={150543}>No alerts in the selected timeframe.</Alert>
           ) : (
             alerts.map((alert, index) => (
-              <Alert
+              <Alert;
                 key={index}
                 severity={alert.severity}
                 sx={{ cursor: onAlertClick ? 'pointer' : 'default' }}
-                onClick={() => onAlertClick?.(alert)}
+                onClick={() = key={358418}> onAlertClick?.(alert)}
               >
-                <AlertTitle>
+                <AlertTitle key={841861}>
                   {alert.modelName} - {alert.metric}
                 </AlertTitle>
-                <Box alignItems="center" display="flex" gap={1}>
-                  <Typography>
+                <Box alignItems="center" display="flex" gap={1} key={110385}>
+                  <Typography key={705030}>
                     Current value: {formatMetricValue(alert.metric, alert.value)}
                   </Typography>
-                  <Chip
+                  <Chip;
                     color={alert.severity === 'critical' ? 'error' : 'warning'}
                     label={`Threshold: ${formatMetricValue(alert.metric, alert.threshold)}`}
                     size="small"
-                  />
-                  <Typography color="text.secondary" variant="caption">
+                  / key={165408}>
+                  <Typography color="text.secondary" variant="caption" key={290635}>
                     {new Date(alert.timestamp).toLocaleString()}
                   </Typography>
                 </Box>

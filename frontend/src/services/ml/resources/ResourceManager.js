@@ -1,4 +1,4 @@
-// Minimal browser-compatible EventEmitter
+// Minimal browser-compatible EventEmitter;
 class EventEmitter {
     constructor() {
         this.listeners = {};
@@ -34,32 +34,32 @@ export class ResourceManager extends EventEmitter {
     }
     async initializeResources() {
         try {
-            // GPU/CPU info collection disabled for browser build
+            // GPU/CPU info collection disabled for browser build;
             this.totalGPUMemory = 0;
             this.gpuMemoryLimit = 0;
             this.totalCPUMemory = 0;
             this.cpuMemoryLimit = 0;
         }
         catch (error) {
-            console.error('Failed to initialize resources:', error);
-            // Fallback to conservative limits
-            this.totalGPUMemory = 4 * 1024 * 1024 * 1024; // 4GB
+            // console statement removed
+            // Fallback to conservative limits;
+            this.totalGPUMemory = 4 * 1024 * 1024 * 1024; // 4GB;
             this.gpuMemoryLimit = this.totalGPUMemory * 0.5;
-            this.totalCPUMemory = 8 * 1024 * 1024 * 1024; // 8GB
+            this.totalCPUMemory = 8 * 1024 * 1024 * 1024; // 8GB;
             this.cpuMemoryLimit = this.totalCPUMemory * 0.5;
         }
     }
     async allocateResources(model) {
-        const modelId = model.config.name;
+
         if (this.allocations.has(modelId)) {
             throw new Error(`Resources already allocated for model ${modelId}`);
         }
         try {
-            // Get model resource requirements
-            const requirements = await this.getModelRequirements(model);
-            // Check if resources are available
+            // Get model resource requirements;
+
+            // Check if resources are available;
             await this.checkResourceAvailability(requirements);
-            // Allocate resources
+            // Allocate resources;
             this.allocations.set(modelId, {
                 modelId,
                 gpuMemory: requirements.gpuMemory,
@@ -77,33 +77,33 @@ export class ResourceManager extends EventEmitter {
         }
     }
     async releaseResources(modelId) {
-        const allocation = this.allocations.get(modelId);
+
         if (allocation) {
             this.allocations.delete(modelId);
             this.emit('resourcesReleased', { modelId, allocation });
         }
     }
     async getModelRequirements(model) {
-        // Estimate resource requirements based on model type and configuration
-        const baseMemory = 100 * 1024 * 1024; // 100MB base memory
-        let gpuMemory = baseMemory;
-        let cpuMemory = baseMemory;
+        // Estimate resource requirements based on model type and configuration;
+        const baseMemory = 100 * 1024 * 1024; // 100MB base memory;
+        const gpuMemory = baseMemory;
+        const cpuMemory = baseMemory;
         switch (model.config.type) {
             case 'deepLearning':
-                gpuMemory *= 4; // Deep learning models need more GPU memory
+                gpuMemory *= 4; // Deep learning models need more GPU memory;
                 break;
             case 'timeSeries':
-                cpuMemory *= 2; // Time series models need more CPU memory
+                cpuMemory *= 2; // Time series models need more CPU memory;
                 break;
             case 'optimization':
-                cpuMemory *= 3; // Optimization models need more CPU memory
+                cpuMemory *= 3; // Optimization models need more CPU memory;
                 break;
         }
         return { gpuMemory, cpuMemory };
     }
     async checkResourceAvailability(requirements) {
-        const currentGPUUsage = this.getCurrentGPUUsage();
-        const currentCPUUsage = this.getCurrentCPUUsage();
+
+
         if (currentGPUUsage + requirements.gpuMemory > this.gpuMemoryLimit) {
             throw new Error('Insufficient GPU memory available');
         }
@@ -118,8 +118,8 @@ export class ResourceManager extends EventEmitter {
         return Array.from(this.allocations.values()).reduce((total, allocation) => total + allocation.cpuMemory, 0);
     }
     getResourceUtilization() {
-        const gpuUsed = this.getCurrentGPUUsage();
-        const cpuUsed = this.getCurrentCPUUsage();
+
+
         return {
             gpu: {
                 used: gpuUsed,
@@ -134,10 +134,10 @@ export class ResourceManager extends EventEmitter {
         };
     }
     async cleanup() {
-        // Release all allocated resources
-        const modelIds = Array.from(this.allocations.keys());
+        // Release all allocated resources;
+
         await Promise.all(modelIds.map(id => this.releaseResources(id)));
-        // Clear GPU memory
+        // Clear GPU memory;
         await tf.disposeVariables();
         this.emit('cleanupComplete');
     }

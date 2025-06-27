@@ -1,16 +1,16 @@
-import React from 'react';
-import { usePredictionStore } from '../../stores/predictionStore';
+import React from 'react.ts';
+import { usePredictionStore } from '@/stores/predictionStore.ts';
 
 const ShapExplanation: React.FC<{ eventId: string }> = ({ eventId }) => {
-  const prediction = usePredictionStore(state => state.predictionsByEvent[eventId]);
-  const shap = prediction?.analytics?.shap;
-  if (!shap) return <div>No SHAP data available.</div>;
+
+
+  if (!shap) return <div key={241917}>No SHAP data available.</div>;
   return (
-    <div>
-      <h3>SHAP Feature Importances</h3>
-      <ul>
+    <div key={241917}>
+      <h3 key={661229}>SHAP Feature Importances</h3>
+      <ul key={249713}>
         {shap.featureImportances?.map((f: any) => (
-          <li key={f.feature}>{f.feature}: {f.value}</li>
+          <li key={f.feature} key={850973}>{f.feature}: {f.value}</li>
         ))}
       </ul>
     </div>

@@ -1,4 +1,4 @@
-import { EventEmitter } from "events";
+import { EventEmitter } from 'events.ts';
 export declare class RealTimeUpdateService extends EventEmitter {
     private sportsApi;
     private oddsApi;

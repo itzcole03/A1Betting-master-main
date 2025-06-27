@@ -1,7 +1,7 @@
-import { createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material/styles';
-import { useMediaQuery } from '@mui/material';
+import { createTheme as createMuiTheme, Theme, ThemeOptions } from '@mui/material/styles.ts';
+import { useMediaQuery } from '@mui/material.ts';
 
-// Define the theme type
+// Define the theme type;
 declare module '@mui/material/styles' {
   interface Theme {
     custom: {
@@ -23,9 +23,8 @@ declare module '@mui/material/styles' {
   }
 }
 
-// Create theme function
+// Create theme function;
 export const createTheme = (mode: 'light' | 'dark' = 'light'): Theme => {
-  const isDark = mode === 'dark';
 
   return createMuiTheme({
     palette: {
@@ -142,8 +141,8 @@ export const createTheme = (mode: 'light' | 'dark' = 'light'): Theme => {
   });
 };
 
-// Hook to get the current theme
+// Hook to get the current theme;
 export const useTheme = () => {
-  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
   return createTheme(prefersDarkMode ? 'dark' : 'light');
 };

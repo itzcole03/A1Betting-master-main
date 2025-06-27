@@ -1,7 +1,7 @@
 /**
- * PrizePicks Projections Service
- * Free API integration for real player projections and daily fantasy data
- * No API key required - public endpoint
+ * PrizePicks Projections Service;
+ * Free API integration for real player projections and daily fantasy data;
+ * No API key required - public endpoint;
  */
 
 interface PrizePicksProjection {
@@ -76,18 +76,18 @@ interface ProcessedProjection {
 export class PrizePicksProjectionsService {
   private readonly baseUrl: string = "https://api.prizepicks.com";
   private readonly cache: Map<string, { data: any; timestamp: number }>;
-  private readonly cacheTTL: number = 300000; // 5 minutes for projections
+  private readonly cacheTTL: number = 300000; // 5 minutes for projections;
   private lastRequestTime: number = 0;
-  private readonly rateLimitMs: number = 1000; // 1 second between requests
+  private readonly rateLimitMs: number = 1000; // 1 second between requests;
 
   constructor() {
     this.cache = new Map();
-    console.log("✓ PrizePicks Projections Service initialized (free API)");
+    // console statement removed");
   }
 
   private async enforceRateLimit(): Promise<void> {
-    const now = Date.now();
-    const timeSinceLastRequest = now - this.lastRequestTime;
+
+
     if (timeSinceLastRequest < this.rateLimitMs) {
       await new Promise((resolve) =>
         setTimeout(resolve, this.rateLimitMs - timeSinceLastRequest),
@@ -100,19 +100,16 @@ export class PrizePicksProjectionsService {
     endpoint: string,
     useCache: boolean = true,
   ): Promise<T> {
-    const cacheKey = endpoint;
 
-    // Check cache first
+    // Check cache first;
     if (useCache) {
-      const cached = this.cache.get(cacheKey);
+
       if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
         return cached.data;
       }
     }
 
     await this.enforceRateLimit();
-
-    const url = `${this.baseUrl}${endpoint}`;
 
     try {
       const response = await fetch(url, {
@@ -129,9 +126,7 @@ export class PrizePicksProjectionsService {
         );
       }
 
-      const data = await response.json();
-
-      // Cache the response
+      // Cache the response;
       if (useCache) {
         this.cache.set(cacheKey, {
           data,
@@ -141,13 +136,13 @@ export class PrizePicksProjectionsService {
 
       return data;
     } catch (error) {
-      console.error("PrizePicks API request failed:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get all current projections from PrizePicks
+   * Get all current projections from PrizePicks;
    */
   async getProjections(): Promise<{
     projections: ProcessedProjection[];
@@ -157,7 +152,6 @@ export class PrizePicksProjectionsService {
     processed_count: number;
   }> {
     try {
-      const data = await this.makeRequest("/projections");
 
       if (!data || !data.data) {
         throw new Error("Invalid response from PrizePicks API");
@@ -171,19 +165,17 @@ export class PrizePicksProjectionsService {
       const leagues: PrizePicksLeague[] =
         data.included?.filter((item: any) => item.type === "league") || [];
 
-      // Create lookup maps for efficient processing
-      const playerMap = new Map<string, PrizePicksPlayer>();
+      // Create lookup maps for efficient processing;
+
       players.forEach((player) => playerMap.set(player.id, player));
 
-      const leagueMap = new Map<string, PrizePicksLeague>();
       leagues.forEach((league) => leagueMap.set(league.id, league));
 
-      // Process projections
+      // Process projections;
       const processedProjections = projections.map((projection) => {
         const player = playerMap.get(
           projection.relationships.new_player.data.id,
         );
-        const league = leagueMap.get(projection.relationships.league.data.id);
 
         const valueScore = this.calculateValueScore(
           projection.attributes.line_score,
@@ -223,7 +215,7 @@ export class PrizePicksProjectionsService {
         processed_count: processedProjections.length,
       };
     } catch (error) {
-      console.error("Error fetching PrizePicks projections:", error);
+      // console statement removed
       return {
         projections: [],
         leagues: [],
@@ -235,32 +227,29 @@ export class PrizePicksProjectionsService {
   }
 
   /**
-   * Get projections filtered by sport
+   * Get projections filtered by sport;
    */
   async getProjectionsBySport(sport: string): Promise<ProcessedProjection[]> {
     try {
-      const data = await this.getProjections();
 
-      const sportFilter = sport.toLowerCase();
       return data.projections.filter(
         (projection) =>
           projection.sport.toLowerCase().includes(sportFilter) ||
           projection.league.toLowerCase().includes(sportFilter),
       );
     } catch (error) {
-      console.error(`Error fetching ${sport} projections:`, error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get projections for specific stat types
+   * Get projections for specific stat types;
    */
   async getProjectionsByStatType(
     statTypes: string[],
   ): Promise<ProcessedProjection[]> {
     try {
-      const data = await this.getProjections();
 
       return data.projections.filter((projection) =>
         statTypes.some((statType) =>
@@ -268,102 +257,97 @@ export class PrizePicksProjectionsService {
         ),
       );
     } catch (error) {
-      console.error("Error fetching projections by stat type:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get high-value projections based on value score
+   * Get high-value projections based on value score;
    */
   async getHighValueProjections(
     minValueScore: number = 0.6,
   ): Promise<ProcessedProjection[]> {
     try {
-      const data = await this.getProjections();
 
-      return data.projections
+      return data.projections;
         .filter((projection) => projection.value_score >= minValueScore)
         .sort((a, b) => b.value_score - a.value_score);
     } catch (error) {
-      console.error("Error fetching high-value projections:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get projections for NBA
+   * Get projections for NBA;
    */
   async getNBAProjections(): Promise<ProcessedProjection[]> {
     return this.getProjectionsBySport("nba");
   }
 
   /**
-   * Get projections for NFL
+   * Get projections for NFL;
    */
   async getNFLProjections(): Promise<ProcessedProjection[]> {
     return this.getProjectionsBySport("nfl");
   }
 
   /**
-   * Get projections for MLB
+   * Get projections for MLB;
    */
   async getMLBProjections(): Promise<ProcessedProjection[]> {
     return this.getProjectionsBySport("mlb");
   }
 
   /**
-   * Get player prop alternatives for DFS optimization
+   * Get player prop alternatives for DFS optimization;
    */
   async getPlayerPropAlternatives(
     playerName: string,
   ): Promise<ProcessedProjection[]> {
     try {
-      const data = await this.getProjections();
 
       return data.projections.filter((projection) =>
         projection.player_name.toLowerCase().includes(playerName.toLowerCase()),
       );
     } catch (error) {
-      console.error(`Error fetching props for ${playerName}:`, error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Calculate value score for a projection
+   * Calculate value score for a projection;
    */
   private calculateValueScore(
     line: number,
     overOdds: number,
     underOdds: number,
   ): number {
-    // Convert odds to implied probability
-    const overImplied = Math.abs(overOdds) / (Math.abs(overOdds) + 100);
-    const underImplied = Math.abs(underOdds) / (Math.abs(underOdds) + 100);
+    // Convert odds to implied probability;
+
 
     // Calculate market efficiency (lower is better for value)
-    const totalImplied = overImplied + underImplied;
-    const marketEfficiency = Math.max(0, 1 - totalImplied);
 
-    // Factor in line size relative to sport averages
-    const lineValue = this.normalizeLineValue(line);
 
-    // Combine factors for overall value score
+    // Factor in line size relative to sport averages;
+
+    // Combine factors for overall value score;
     return Math.min(1, marketEfficiency * 0.6 + lineValue * 0.4);
   }
 
   /**
-   * Calculate projection confidence based on various factors
+   * Calculate projection confidence based on various factors;
    */
   private calculateProjectionConfidence(
     statType: string,
     status: string,
     sport: string,
   ): number {
-    let confidence = 0.75; // Base confidence
+    const confidence = 0.75; // Base confidence;
 
-    // Adjust based on stat type reliability
+    // Adjust based on stat type reliability;
     const reliableStats = [
       "points",
       "rebounds",
@@ -375,7 +359,7 @@ export class PrizePicksProjectionsService {
       confidence += 0.1;
     }
 
-    // Adjust based on status
+    // Adjust based on status;
     if (status === "active") {
       confidence += 0.1;
     } else if (status === "pending") {
@@ -384,28 +368,28 @@ export class PrizePicksProjectionsService {
 
     // Adjust based on sport (some sports have more predictable stats)
     if (sport === "NBA") {
-      confidence += 0.05; // Higher scoring, more predictable
+      confidence += 0.05; // Higher scoring, more predictable;
     } else if (sport === "NFL") {
-      confidence -= 0.05; // More variance
+      confidence -= 0.05; // More variance;
     }
 
     return Math.min(1, Math.max(0, confidence));
   }
 
   /**
-   * Normalize line value for comparison across different stat types
+   * Normalize line value for comparison across different stat types;
    */
   private normalizeLineValue(line: number): number {
-    // Simple normalization - could be improved with sport-specific logic
+    // Simple normalization - could be improved with sport-specific logic;
     if (line <= 0) return 0;
-    if (line >= 100) return 0.3; // Very high lines are typically harder to predict
+    if (line >= 100) return 0.3; // Very high lines are typically harder to predict;
     if (line >= 50) return 0.5;
     if (line >= 20) return 0.7;
-    return 0.9; // Lower lines typically have more historical data
+    return 0.9; // Lower lines typically have more historical data;
   }
 
   /**
-   * Get market comparison data
+   * Get market comparison data;
    */
   async getMarketComparison(): Promise<{
     sport_breakdown: Record<string, number>;
@@ -415,23 +399,22 @@ export class PrizePicksProjectionsService {
     total_markets: number;
   }> {
     try {
-      const data = await this.getProjections();
 
       const sportBreakdown: Record<string, number> = {};
       const statTypeBreakdown: Record<string, number> = {};
-      let totalOverOdds = 0;
-      let totalUnderOdds = 0;
+      const totalOverOdds = 0;
+      const totalUnderOdds = 0;
 
       data.projections.forEach((projection) => {
-        // Sport breakdown
+        // Sport breakdown;
         sportBreakdown[projection.sport] =
           (sportBreakdown[projection.sport] || 0) + 1;
 
-        // Stat type breakdown
+        // Stat type breakdown;
         statTypeBreakdown[projection.stat_type] =
           (statTypeBreakdown[projection.stat_type] || 0) + 1;
 
-        // Odds accumulation
+        // Odds accumulation;
         totalOverOdds += projection.over_odds;
         totalUnderOdds += projection.under_odds;
       });
@@ -440,17 +423,17 @@ export class PrizePicksProjectionsService {
         sport_breakdown: sportBreakdown,
         stat_type_breakdown: statTypeBreakdown,
         avg_over_odds:
-          data.projections.length > 0
-            ? totalOverOdds / data.projections.length
+          data.projections.length > 0;
+            ? totalOverOdds / data.projections.length;
             : 0,
         avg_under_odds:
-          data.projections.length > 0
-            ? totalUnderOdds / data.projections.length
+          data.projections.length > 0;
+            ? totalUnderOdds / data.projections.length;
             : 0,
         total_markets: data.projections.length,
       };
     } catch (error) {
-      console.error("Error generating market comparison:", error);
+      // console statement removed
       return {
         sport_breakdown: {},
         stat_type_breakdown: {},
@@ -462,7 +445,7 @@ export class PrizePicksProjectionsService {
   }
 
   /**
-   * Health check for PrizePicks API
+   * Health check for PrizePicks API;
    */
   async healthCheck(): Promise<{
     status: string;
@@ -471,13 +454,9 @@ export class PrizePicksProjectionsService {
     sports_covered: string[];
     last_updated: string;
   }> {
-    const startTime = Date.now();
 
     try {
-      const data = await this.getProjections();
-      const responseTime = Date.now() - startTime;
 
-      const sportsSet = new Set(data.projections.map((p) => p.sport));
 
       return {
         status: data.projections.length > 0 ? "healthy" : "degraded",
@@ -498,17 +477,17 @@ export class PrizePicksProjectionsService {
   }
 
   /**
-   * Clear cache
+   * Clear cache;
    */
   clearCache(): void {
     this.cache.clear();
   }
 
   /**
-   * Get cache statistics
+   * Get cache statistics;
    */
   getCacheStats(): { size: number; hit_rate: number; data_freshness: number } {
-    const now = Date.now();
+
     const freshDataCount = Array.from(this.cache.values()).filter(
       (item) => now - item.timestamp < this.cacheTTL,
     ).length;
@@ -522,6 +501,6 @@ export class PrizePicksProjectionsService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const prizePicksProjectionsService = new PrizePicksProjectionsService();
 export default prizePicksProjectionsService;

@@ -1,5 +1,5 @@
-import React from 'react';
-import { EngineStatus } from '@/types';
+import React from 'react.ts';
+import { EngineStatus } from '@/types.ts';
 interface MoneyMakerStatusProps {
     status: EngineStatus;
     lastUpdate: string;

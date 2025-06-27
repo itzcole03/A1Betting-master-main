@@ -1,6 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React from 'react.ts';
+import { useState } from 'react.ts';
+import { useNavigate, useLocation } from 'react-router-dom.ts';
 import {
   Box,
   Card,
@@ -11,9 +11,9 @@ import {
   Link,
   Alert,
   CircularProgress,
-} from '@mui/material';
-import { useStore } from '@/store';
-import { authService } from '@/services/auth';
+} from '@mui/material.ts';
+import { useStore } from '@/store.ts';
+import { authService } from '@/services/auth.ts';
 
 interface LocationState {
   from: {
@@ -22,15 +22,13 @@ interface LocationState {
 }
 
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const location = useLocation();
+
+
   const { setUser } = useStore();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-
-  const from = (location.state as LocationState)?.from?.pathname || '/';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,7 +36,7 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const response = await authService.login(email, password);
+
       setUser(response.user);
       navigate(from, { replace: true });
     } catch (err) {
@@ -49,7 +47,7 @@ export default function LoginPage() {
   };
 
   return (
-    <Box
+    <Box;
       sx={{
         minHeight: '100vh',
         display: 'flex',
@@ -57,57 +55,57 @@ export default function LoginPage() {
         justifyContent: 'center',
         bgcolor: 'background.default',
       }}
-    >
-      <Card sx={{ maxWidth: 400, width: '100%', mx: 2 }}>
-        <CardContent sx={{ p: 4 }}>
-          <Typography gutterBottom align="center" variant="h4">
-            Welcome Back
+     key={581216}>
+      <Card sx={{ maxWidth: 400, width: '100%', mx: 2 }} key={884179}>
+        <CardContent sx={{ p: 4 }} key={818243}>
+          <Typography gutterBottom align="center" variant="h4" key={224194}>
+            Welcome Back;
           </Typography>
-          <Typography align="center" color="text.secondary" sx={{ mb: 4 }} variant="body2">
-            Sign in to continue to Betting Analyzer
+          <Typography align="center" color="text.secondary" sx={{ mb: 4 }} variant="body2" key={9893}>
+            Sign in to continue to Betting Analyzer;
           </Typography>
 
-          <form onSubmit={handleSubmit}>
-            <TextField
-              autoFocus
-              fullWidth
-              required
+          <form onSubmit={handleSubmit} key={956425}>
+            <TextField;
+              autoFocus;
+              fullWidth;
+              required;
               label="Email"
               margin="normal"
               type="email"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={e = key={983944}> setEmail(e.target.value)}
             />
-            <TextField
-              fullWidth
-              required
+            <TextField;
+              fullWidth;
+              required;
               label="Password"
               margin="normal"
               type="password"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={e = key={965219}> setPassword(e.target.value)}
             />
 
             {error && (
-              <Alert severity="error" sx={{ mt: 2 }}>
+              <Alert severity="error" sx={{ mt: 2 }} key={474760}>
                 {error}
               </Alert>
             )}
 
-            <Button
-              fullWidth
+            <Button;
+              fullWidth;
               disabled={loading}
               size="large"
               sx={{ mt: 3, mb: 2 }}
               type="submit"
               variant="contained"
-            >
-              {loading ? <CircularProgress size={24} /> : 'Sign In'}
+             key={472935}>
+              {loading ? <CircularProgress size={24} / key={548540}> : 'Sign In'}
             </Button>
 
-            <Box sx={{ textAlign: 'center' }}>
-              <Link component="button" variant="body2" onClick={() => navigate('/register')}>
-                Don't have an account? Sign up
+            <Box sx={{ textAlign: 'center' }} key={678519}>
+              <Link component="button" variant="body2" onClick={() = key={886330}> navigate('/register')}>
+                Don't have an account? Sign up;
               </Link>
             </Box>
           </form>

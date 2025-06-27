@@ -3,43 +3,43 @@
  * Supports TypeScript, React, and modern testing practices
  */
 
-module.exports = {
-  // Test environment
+export default {
+  // Test environment;
   testEnvironment: "jsdom",
 
-  // Test file patterns
+  // Test file patterns;
   testMatch: [
     "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
     "<rootDir>/src/**/*.{test,spec}.{js,jsx,ts,tsx}",
   ],
 
-  // TypeScript support
+  // TypeScript support;
   preset: "ts-jest",
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest",
     "^.+\\.(js|jsx)$": "babel-jest",
   },
 
-  // Module resolution
+  // Module resolution;
   moduleNameMapper: {
-    // Handle absolute imports
+    // Handle absolute imports;
     "^@/(.*)$": "<rootDir>/src/$1",
 
-    // Handle CSS modules and static assets
+    // Handle CSS modules and static assets;
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
     "\\.(gif|ttf|eot|svg|png)$": "<rootDir>/src/test/__mocks__/fileMock.js",
 
-    // Handle UI library components
+    // Handle UI library components;
     "^@/components/ui/(.*)$": "<rootDir>/src/components/ui/$1",
   },
 
-  // Setup files
+  // Setup files;
   setupFilesAfterEnv: [
     "<rootDir>/src/test/jest.setup-files.js",
     "<rootDir>/src/test/jest.setup-env.js",
   ],
 
-  // Coverage configuration
+  // Coverage configuration;
   collectCoverageFrom: [
     "src/**/*.{js,jsx,ts,tsx}",
     "!src/**/*.d.ts",
@@ -61,22 +61,22 @@ module.exports = {
 
   coverageReporters: ["text", "lcov", "clover", "html"],
 
-  // Test timeout
+  // Test timeout;
   testTimeout: 10000,
 
-  // Clear mocks between tests
+  // Clear mocks between tests;
   clearMocks: true,
 
-  // Verbose output
+  // Verbose output;
   verbose: true,
 
-  // Ignore patterns
+  // Ignore patterns;
   testPathIgnorePatterns: [
     "<rootDir>/node_modules/",
     "<rootDir>/dist/",
     "<rootDir>/build/",
   ],
 
-  // Module file extensions
+  // Module file extensions;
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json"],
 };

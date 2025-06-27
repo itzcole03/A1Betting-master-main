@@ -14,25 +14,25 @@ class BackendIntegrationService {
         return BackendIntegrationService.instance;
     }
     async getPrediction(request) {
-        const cacheKey = `prediction:${request.player_id}:${request.metric}:${request.timeframe}`;
+
         try {
-            // Check cache first
-            const cached = await this.cache.get(cacheKey);
+            // Check cache first;
+
             if (cached) {
                 this.logger.info("Returning cached prediction", {
                     playerId: request.player_id,
                 });
                 return cached;
             }
-            // Make API call to backend
+            // Make API call to backend;
             const response = await axios.post(`${this.baseURL}/api/predictions/generate`, request, {
                 timeout: 10000,
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
-            const result = response.data;
-            // Cache for 5 minutes
+
+            // Cache for 5 minutes;
             await this.cache.set(cacheKey, result, 300);
             this.logger.info("Generated new prediction", {
                 playerId: request.player_id,
@@ -45,7 +45,7 @@ class BackendIntegrationService {
                 error: error.message,
                 request,
             });
-            // Return fallback prediction
+            // Return fallback prediction;
             return this.getFallbackPrediction(request);
         }
     }
@@ -137,9 +137,9 @@ class BackendIntegrationService {
         }
     }
     getFallbackPrediction(request) {
-        // Generate reasonable fallback data when backend is unavailable
-        const confidence = 0.65 + Math.random() * 0.25; // 65-90% confidence
-        const baseValue = 20 + Math.random() * 30; // Base prediction value
+        // Generate reasonable fallback data when backend is unavailable;
+        const confidence = 0.65 + Math.random() * 0.25; // 65-90% confidence;
+        const baseValue = 20 + Math.random() * 30; // Base prediction value;
         return {
             prediction: {
                 value: baseValue,
@@ -167,14 +167,14 @@ class BackendIntegrationService {
         };
     }
     getFallbackOpportunities() {
-        // Generate sample opportunities when backend is unavailable
+        // Generate sample opportunities when backend is unavailable;
         const players = [
             "LeBron James",
             "Steph Curry",
             "Giannis Antetokounmpo",
             "Luka Doncic",
         ];
-        const stats = ["Points", "Assists", "Rebounds", "Threes Made"];
+
         return players.slice(0, 3).map((player, index) => ({
             id: `fallback-${index}`,
             player_name: player,
@@ -194,7 +194,7 @@ class BackendIntegrationService {
             },
         }));
     }
-    // Health check for backend connection
+    // Health check for backend connection;
     async healthCheck() {
         try {
             const response = await axios.get(`${this.baseURL}/health`, {
@@ -211,8 +211,8 @@ class BackendIntegrationService {
         if (process.env.NODE_ENV === "development") {
             try {
                 this.logger.info("Attempting to start backend service...");
-                // In production, this would trigger a backend startup
-                // For now, just log the attempt
+                // In production, this would trigger a backend startup;
+                // For now, just log the attempt;
             }
             catch (error) {
                 this.logger.error("Failed to start backend", { error: error.message });

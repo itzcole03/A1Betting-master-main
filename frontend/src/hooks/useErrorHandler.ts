@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react.ts';
 
 
 
@@ -16,19 +16,18 @@ export function useErrorHandler(options: ErrorHandlerOptions = {}) {
   const [errorState, setErrorState] = useState<ErrorState>({ error: null });
 
   const handleError = useCallback((error: unknown, info?: Record<string, string | number | boolean | object>) => {
-    const normalizedError = error instanceof Error ? error : new Error(String(error));
 
     setErrorState({ error: normalizedError, info });
     
-    // Call the provided error handler if any
+    // Call the provided error handler if any;
     options.onError?.(normalizedError, info);
 
-    // Log error to console in development
+    // Log error to console in development;
     if (import.meta.env.MODE === 'development') {
-      console.error('Error caught by useErrorHandler:', normalizedError, info);
+      // console statement removed
     }
 
-    // Optionally rethrow the error
+    // Optionally rethrow the error;
     if (options.shouldRethrow) {
       throw normalizedError;
     }
@@ -43,7 +42,7 @@ export function useErrorHandler(options: ErrorHandlerOptions = {}) {
     errorInfo: errorState.info,
     handleError,
     clearError,
-    hasError: errorState.error !== null
+    hasError: errorState.error !== null;
   };
 }
 
@@ -51,8 +50,8 @@ export function useErrorHandler(options: ErrorHandlerOptions = {}) {
 // function MyComponent() {
 //   const { error, handleError, clearError } = useErrorHandler({
 //     onError: (error) => {
-//       // Log to error tracking service
-//       console.error('Component error:', error);
+//       // Log to error tracking service;
+//       // console statement removed
 //     }
 //   });
 //

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react.ts';
 
 
 
@@ -10,7 +10,7 @@ export function useTheme() {
 
   const [mode, setMode] = useState<ThemeMode>(() => {
     if (typeof window !== 'undefined') {
-      const saved = localStorage.getItem('theme-mode') as ThemeMode;
+
       if (saved === 'light' || saved === 'dark' || saved === 'system') return saved;
       return 'system';
     }
@@ -27,7 +27,7 @@ export function useTheme() {
 
   useEffect(() => {
     if (mode === 'system') {
-      const updateSystemTheme = () => setResolvedTheme(getSystemTheme());
+
       updateSystemTheme();
       window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateSystemTheme);
       return () => {
@@ -39,13 +39,11 @@ export function useTheme() {
   }, [mode]);
 
   useEffect(() => {
-    const root = window.document.documentElement;
+
     root.classList.remove('light', 'dark');
     root.classList.add(resolvedTheme);
     localStorage.setItem('theme-mode', mode);
   }, [resolvedTheme, mode]);
-
-  const setThemeMode = (newMode: ThemeMode) => setMode(newMode);
 
   return {
     mode, // 'light' | 'dark' | 'system'

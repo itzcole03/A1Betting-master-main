@@ -17,7 +17,7 @@ export class AdvancedEnsembleModel extends BaseModel {
     initializeModels(config) {
         try {
             config.models.forEach(modelConfig => {
-                const model = this.createModel(modelConfig);
+
                 this.models.set(modelConfig.name, model);
                 this.weights.set(modelConfig.name, modelConfig.weight);
             });
@@ -31,22 +31,22 @@ export class AdvancedEnsembleModel extends BaseModel {
         }
     }
     createModel(config) {
-        // For now, we'll use MarketIntelligenceModel as a concrete implementation
-        // In a real implementation, this would create different model types based on config.type
+        // For now, we'll use MarketIntelligenceModel as a concrete implementation;
+        // In a real implementation, this would create different model types based on config.type;
         return new MarketIntelligenceModel(config);
     }
     async predict(data) {
         try {
-            const predictions = [];
+
             for (const [modelName, model] of this.models) {
-                const prediction = await model.predict(data);
+
                 predictions.push({
                     model: modelName,
                     prediction: prediction.output,
                     confidence: prediction.confidence || 1.0,
                 });
             }
-            const weightedPrediction = this.combinePredictions(predictions);
+
             return this.createPrediction(weightedPrediction, this.calculateConfidence(predictions));
         }
         catch (error) {
@@ -55,16 +55,16 @@ export class AdvancedEnsembleModel extends BaseModel {
         }
     }
     combinePredictions(predictions) {
-        const totalWeight = predictions.reduce((sum, pred) => sum + (this.weights.get(pred.model) || 0), 0);
+
         return predictions.reduce((sum, pred) => {
-            const weight = (this.weights.get(pred.model) || 0) / totalWeight;
+
             return sum + pred.prediction * weight;
         }, 0);
     }
     calculateConfidence(predictions) {
-        const totalWeight = predictions.reduce((sum, pred) => sum + (this.weights.get(pred.model) || 0), 0);
+
         return predictions.reduce((sum, pred) => {
-            const weight = (this.weights.get(pred.model) || 0) / totalWeight;
+
             return sum + pred.confidence * weight;
         }, 0);
     }
@@ -84,13 +84,13 @@ export class AdvancedEnsembleModel extends BaseModel {
     }
     async evaluate(data) {
         try {
-            const metrics = {};
-            let totalWeight = 0;
+
+            const totalWeight = 0;
             for (const [modelName, model] of this.models) {
-                const modelMetrics = await model.evaluate(data);
-                const weight = this.weights.get(modelName) || 0;
+
+
                 totalWeight += weight;
-                // Combine metrics with weights
+                // Combine metrics with weights;
                 Object.entries(modelMetrics).forEach(([key, value]) => {
                     if (value !== undefined) {
                         metrics[key] =
@@ -98,7 +98,7 @@ export class AdvancedEnsembleModel extends BaseModel {
                     }
                 });
             }
-            // Normalize metrics by total weight
+            // Normalize metrics by total weight;
             Object.keys(metrics).forEach(key => {
                 if (metrics[key] !== undefined) {
                     metrics[key] =

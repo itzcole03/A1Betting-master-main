@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 
 export interface AlertProps {
     children: React.ReactNode;
@@ -6,7 +6,7 @@ export interface AlertProps {
     className?: string;
 }
 
-export const Alert: React.FC<AlertProps> = ({
+export const Alert: React.FC<AlertProps key={895913}> = ({
     children,
     variant = 'default',
     className = ''
@@ -19,7 +19,7 @@ export const Alert: React.FC<AlertProps> = ({
     };
 
     return (
-        <div className={`rounded-lg border p-4 ${variantClasses[variant]} ${className}`}>
+        <div className={`rounded-lg border p-4 ${variantClasses[variant]} ${className}`} key={375922}>
             {children}
         </div>
     );
@@ -30,12 +30,12 @@ export interface AlertDescriptionProps {
     className?: string;
 }
 
-export const AlertDescription: React.FC<AlertDescriptionProps> = ({
+export const AlertDescription: React.FC<AlertDescriptionProps key={630443}> = ({
     children,
     className = ''
 }) => {
     return (
-        <div className={`text-sm ${className}`}>
+        <div className={`text-sm ${className}`} key={225410}>
             {children}
         </div>
     );
@@ -46,12 +46,12 @@ export interface AlertTitleProps {
     className?: string;
 }
 
-export const AlertTitle: React.FC<AlertTitleProps> = ({
+export const AlertTitle: React.FC<AlertTitleProps key={995716}> = ({
     children,
     className = ''
 }) => {
     return (
-        <h5 className={`mb-1 font-medium leading-none tracking-tight ${className}`}>
+        <h5 className={`mb-1 font-medium leading-none tracking-tight ${className}`} key={575910}>
             {children}
         </h5>
     );

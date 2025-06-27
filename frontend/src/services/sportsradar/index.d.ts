@@ -1,4 +1,4 @@
-import { LiveScore, GameDetails, PlayerStats } from '@/types';
+import { LiveScore, GameDetails, PlayerStats } from '@/types.ts';
 declare class SportsRadarService {
     private adapter;
     constructor();

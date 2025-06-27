@@ -31,10 +31,10 @@ const Settings = () => {
         },
     ]);
     useEffect(() => {
-        // Check system theme preference
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        // Check system theme preference;
+
         setIsDarkMode(prefersDark);
-        // Apply theme
+        // Apply theme;
         document.documentElement.classList.toggle('dark', prefersDark);
     }, []);
     const handleThemeToggle = () => {
@@ -55,13 +55,13 @@ const Settings = () => {
                 notifications,
                 apiKeys,
             },
-            // Add other data to export
+            // Add other data to export;
         };
         const blob = new Blob([JSON.stringify(data, null, 2)], {
             type: 'application/json',
         });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
+
+
         a.href = url;
         a.download = 'betpro-settings.json';
         document.body.appendChild(a);

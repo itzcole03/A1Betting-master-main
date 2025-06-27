@@ -1,10 +1,9 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import axios from 'axios';
-import ArbitragePage from './ArbitragePage';
+import React from 'react.ts';
+import { render, screen, waitFor } from '@testing-library/react.ts';
+import axios from 'axios.ts';
+import ArbitragePage from './ArbitragePage.ts';
 
 jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('ArbitragePage Integration', () => {
   it('renders loading, fetches and displays arbitrage opportunities', async () => {
@@ -23,7 +22,7 @@ describe('ArbitragePage Integration', () => {
         },
       ],
     });
-    render(<ArbitragePage />);
+    render(<ArbitragePage / key={346797}>);
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText(/lakers vs celtics/i)).toBeInTheDocument());
     expect(screen.getByText(/nba/i)).toBeInTheDocument();
@@ -33,7 +32,7 @@ describe('ArbitragePage Integration', () => {
 
   it('shows error on API failure', async () => {
     mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
-    render(<ArbitragePage />);
+    render(<ArbitragePage / key={346797}>);
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText(/api error/i)).toBeInTheDocument());
   });

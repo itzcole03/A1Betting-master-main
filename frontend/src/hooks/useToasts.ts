@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react.ts';
 
 export interface Toast {
   id: string;
@@ -17,7 +17,6 @@ export function useToasts() {
       type: Toast["type"] = "info",
       duration: number = 5000,
     ) => {
-      const id = `toast_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
       const newToast: Toast = {
         id,
@@ -29,7 +28,7 @@ export function useToasts() {
 
       setToasts((prev) => [...prev, newToast]);
 
-      // Auto remove after duration
+      // Auto remove after duration;
       if (duration > 0) {
         setTimeout(() => {
           removeToast(id);

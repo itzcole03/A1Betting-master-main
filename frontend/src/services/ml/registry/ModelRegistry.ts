@@ -1,6 +1,6 @@
-import { BaseModel } from '../models/BaseModel';
-import { ModelConfig, ModelMetrics, ModelType } from '@/types';
-import { EventEmitter } from 'events';
+import { BaseModel } from '@/models/BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelType } from '@/types.ts';
+import { EventEmitter } from 'events.ts';
 
 export class ModelRegistry extends EventEmitter {
   private static instance: ModelRegistry;
@@ -20,7 +20,7 @@ export class ModelRegistry extends EventEmitter {
   }
 
   public registerModel(model: BaseModel): void {
-    const config = model.getConfig();
+
     this.models.set(config.name, model);
     this.modelMetrics.set(config.name, {});
     this.modelWeights.set(config.name, 1.0);
@@ -56,10 +56,10 @@ export class ModelRegistry extends EventEmitter {
   }
 
   public updateModelWeights(): void {
-    let totalAccuracy = 0;
-    let modelCount = 0;
+    const totalAccuracy = 0;
+    const modelCount = 0;
 
-    // Calculate total accuracy
+    // Calculate total accuracy;
     for (const [name, metrics] of this.modelMetrics.entries()) {
       if (metrics.accuracy !== undefined) {
         totalAccuracy += metrics.accuracy;
@@ -69,12 +69,10 @@ export class ModelRegistry extends EventEmitter {
 
     if (modelCount === 0) return;
 
-    const averageAccuracy = totalAccuracy / modelCount;
-
-    // Update weights based on relative accuracy
+    // Update weights based on relative accuracy;
     for (const [name, metrics] of this.modelMetrics.entries()) {
       if (metrics.accuracy !== undefined) {
-        const weight = metrics.accuracy / averageAccuracy;
+
         this.modelWeights.set(name, weight);
       }
     }
@@ -87,14 +85,14 @@ export class ModelRegistry extends EventEmitter {
   }
 
   public async trainAllModels(data: any): Promise<void> {
-    const trainingPromises = Array.from(this.models.values()).map(model => model.train(data));
+
     await Promise.all(trainingPromises);
     this.emit('allModelsTrained');
   }
 
   public async evaluateAllModels(data: any): Promise<void> {
     const evaluationPromises = Array.from(this.models.values()).map(async model => {
-      const metrics = await model.evaluate(data);
+
       this.updateModelMetrics(model.getName(), metrics);
     });
     await Promise.all(evaluationPromises);

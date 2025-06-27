@@ -1,8 +1,8 @@
-import type { AlertSeverity } from '../types/common';
-import { AlertType } from '../types/common';
-import { EventBus } from './EventBus';
-import { UnifiedConfigManager } from './UnifiedConfigManager';
-import { UnifiedMonitor } from './UnifiedMonitor';
+import type { AlertSeverity } from '@/types/common.ts';
+import { AlertType } from '@/types/common.ts';
+import { EventBus } from './EventBus.ts';
+import { UnifiedConfigManager } from './UnifiedConfigManager.ts';
+import { UnifiedMonitor } from './UnifiedMonitor.ts';
 
 
 
@@ -91,7 +91,7 @@ export class UnifiedRiskManager {
         diversificationRules: {
           maxPositionsPerMarket: 2,
           maxPositionsTotal: 10,
-          minDiversificationScore: 0.8
+          minDiversificationScore: 0.8;
         },
         customRules: []
       },
@@ -107,7 +107,7 @@ export class UnifiedRiskManager {
         diversificationRules: {
           maxPositionsPerMarket: 3,
           maxPositionsTotal: 15,
-          minDiversificationScore: 0.6
+          minDiversificationScore: 0.6;
         },
         customRules: []
       },
@@ -123,7 +123,7 @@ export class UnifiedRiskManager {
         diversificationRules: {
           maxPositionsPerMarket: 5,
           maxPositionsTotal: 25,
-          minDiversificationScore: 0.4
+          minDiversificationScore: 0.4;
         },
         customRules: []
       }
@@ -143,11 +143,11 @@ export class UnifiedRiskManager {
   }
 
   public updateRiskProfile(profileId: string, updates: Partial<RiskProfile>): void {
-    const profile = this.riskProfiles.get(profileId);
+
     if (!profile) {
       throw new Error(`Risk profile with ID ${profileId} not found`);
     }
-    const updatedProfile = { ...profile, ...updates };
+
     this.riskProfiles.set(profileId, updatedProfile);
     this.eventBus.emit('risk:profile:updated', { profileId });
   }
@@ -161,7 +161,7 @@ export class UnifiedRiskManager {
   }
 
   public getRiskProfile(profileId: string): RiskProfile {
-    const profile = this.riskProfiles.get(profileId);
+
     if (!profile) {
       throw new Error(`Risk profile with ID ${profileId} not found`);
     }
@@ -173,7 +173,7 @@ export class UnifiedRiskManager {
   }
 
   public getRiskMetrics(profileId: string): RiskMetrics {
-    const metrics = this.riskMetrics.get(profileId);
+
     if (!metrics) {
       throw new Error(`Risk metrics for profile ${profileId} not found`);
     }
@@ -181,15 +181,15 @@ export class UnifiedRiskManager {
   }
 
   private checkMarketRisk(update: any): void {
-    const checkId = `market_${update.id}_${Date.now()}`;
+
     if (this.activeRiskChecks.has(checkId)) {
-      return; // Prevent duplicate checks
+      return; // Prevent duplicate checks;
     }
     this.activeRiskChecks.add(checkId);
 
     try {
       this.riskProfiles.forEach((profile, profileId) => {
-        const metrics = this.calculateRiskMetrics(profile, update);
+
         this.riskMetrics.set(profileId, metrics);
 
         if (metrics.violatedRules.length > 0) {
@@ -200,7 +200,7 @@ export class UnifiedRiskManager {
           this.monitor.logError('risk', new Error('Maximum exposure exceeded'), {
             profileId,
             currentExposure: metrics.currentExposure,
-            maxExposure: profile.maxExposure
+            maxExposure: profile.maxExposure;
           });
         }
 
@@ -208,7 +208,7 @@ export class UnifiedRiskManager {
           this.monitor.logError('risk', new Error('Maximum drawdown exceeded'), {
             profileId,
             currentDrawdown: metrics.currentDrawdown,
-            maxDrawdown: profile.maxDrawdown
+            maxDrawdown: profile.maxDrawdown;
           });
         }
       });
@@ -218,7 +218,7 @@ export class UnifiedRiskManager {
   }
 
   private checkPredictionRisk(update: any): void {
-    const checkId = `prediction_${update.id}_${Date.now()}`;
+
     if (this.activeRiskChecks.has(checkId)) {
       return;
     }
@@ -230,7 +230,7 @@ export class UnifiedRiskManager {
           this.monitor.logError('risk', new Error('Low prediction confidence'), {
             profileId,
             predictionId: update.id,
-            confidence: update.confidence
+            confidence: update.confidence;
           });
         }
 
@@ -238,7 +238,7 @@ export class UnifiedRiskManager {
           this.monitor.logError('risk', new Error('High market volatility'), {
             profileId,
             predictionId: update.id,
-            volatility: update.volatility
+            volatility: update.volatility;
           });
         }
       });
@@ -248,8 +248,8 @@ export class UnifiedRiskManager {
   }
 
   private calculateRiskMetrics(profile: RiskProfile, marketUpdate: any): RiskMetrics {
-    // This is a simplified implementation
-    // In a real system, this would involve complex calculations
+    // This is a simplified implementation;
+    // In a real system, this would involve complex calculations;
     return {
       currentExposure: 0,
       currentDrawdown: 0,
@@ -271,7 +271,7 @@ export class UnifiedRiskManager {
       metadata: {
         profileId: profile.id,
         violatedRules: metrics.violatedRules,
-        metrics
+        metrics;
       }
     };
 
@@ -286,13 +286,13 @@ export class UnifiedRiskManager {
       action: string;
     }
   ): void {
-    const profile = this.getRiskProfile(profileId);
+
     const newRule = {
       id: `rule_${Date.now()}`,
       name: rule.name,
       condition: rule.condition,
       action: rule.action,
-      enabled: true
+      enabled: true;
     };
 
     profile.customRules.push(newRule);
@@ -310,15 +310,15 @@ export class UnifiedRiskManager {
       enabled: boolean;
     }>
   ): void {
-    const profile = this.getRiskProfile(profileId);
-    const ruleIndex = profile.customRules.findIndex(r => r.id === ruleId);
+
+
     if (ruleIndex === -1) {
       throw new Error(`Rule ${ruleId} not found in profile ${profileId}`);
     }
 
     profile.customRules[ruleIndex] = {
       ...profile.customRules[ruleIndex],
-      ...updates
+      ...updates;
     };
 
     this.riskProfiles.set(profileId, profile);
@@ -326,35 +326,35 @@ export class UnifiedRiskManager {
   }
 
   public deleteCustomRule(profileId: string, ruleId: string): void {
-    const profile = this.getRiskProfile(profileId);
+
     profile.customRules = profile.customRules.filter(r => r.id !== ruleId);
     this.riskProfiles.set(profileId, profile);
     this.eventBus.emit('risk:rule:deleted', { profileId, ruleId });
   }
 
   public evaluateCustomRules(profileId: string, context: Record<string, any>): void {
-    const profile = this.getRiskProfile(profileId);
-    profile.customRules
+
+    profile.customRules;
       .filter(rule => rule.enabled)
       .forEach(rule => {
         try {
-          // In a real implementation, this would use a proper rule engine
-          // This is just a simplified example
-          const condition = new Function('context', `return ${rule.condition}`);
+          // In a real implementation, this would use a proper rule engine;
+          // This is just a simplified example;
+
           if (condition(context)) {
-            const action = new Function('context', rule.action);
+
             action(context);
             this.eventBus.emit('risk:rule:executed', {
               profileId,
               ruleId: rule.id,
-              context
+              context;
             });
           }
         } catch (error) {
           this.monitor.logError('risk', error as Error, {
             profileId,
             ruleId: rule.id,
-            context
+            context;
           });
         }
       });

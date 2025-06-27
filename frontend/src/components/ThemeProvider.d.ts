@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface ThemeContextType {
     mode: 'light' | 'dark' | 'system';
     setThemeMode: (mode: 'light' | 'dark' | 'system') => void;

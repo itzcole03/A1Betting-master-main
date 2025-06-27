@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
-import { useTheme } from "../providers/SafeThemeProvider";
-import { useBettingSettings } from "./useBettingSettings";
-import { useSettings } from "./useSettings";
+import { useState, useEffect, useCallback } from 'react.ts';
+import { useTheme } from '@/providers/SafeThemeProvider.ts';
+import { useBettingSettings } from './useBettingSettings.ts';
+import { useSettings } from './useSettings.ts';
 
 export interface UltimateSettingsState {
-  // Account & Profile
+  // Account & Profile;
   account: {
     name: string;
     email: string;
@@ -16,7 +16,7 @@ export interface UltimateSettingsState {
     twoFactorEnabled: boolean;
   };
 
-  // Betting Preferences
+  // Betting Preferences;
   betting: {
     riskProfile: "conservative" | "medium" | "aggressive" | "custom";
     defaultStake: number;
@@ -32,7 +32,7 @@ export interface UltimateSettingsState {
     favoriteBookmakers: string[];
   };
 
-  // Appearance & Display
+  // Appearance & Display;
   appearance: {
     theme: string;
     colorScheme: "light" | "dark" | "auto";
@@ -46,7 +46,7 @@ export interface UltimateSettingsState {
     reduceMotion: boolean;
   };
 
-  // Notifications & Alerts
+  // Notifications & Alerts;
   notifications: {
     betAlerts: boolean;
     priceChanges: boolean;
@@ -66,7 +66,7 @@ export interface UltimateSettingsState {
     };
   };
 
-  // Privacy & Security
+  // Privacy & Security;
   privacy: {
     shareStats: boolean;
     publicProfile: boolean;
@@ -79,7 +79,7 @@ export interface UltimateSettingsState {
     ipWhitelist: string[];
   };
 
-  // Analytics & Data
+  // Analytics & Data;
   analytics: {
     enabledSources: string[];
     refreshInterval: number;
@@ -91,7 +91,7 @@ export interface UltimateSettingsState {
     backupFrequency: "daily" | "weekly" | "monthly";
   };
 
-  // Automation & AI
+  // Automation & AI;
   automation: {
     autoExecute: boolean;
     autoExecuteThreshold: number;
@@ -105,7 +105,7 @@ export interface UltimateSettingsState {
     takeProfit: boolean;
   };
 
-  // System & Performance
+  // System & Performance;
   system: {
     performanceMode: "performance" | "balanced" | "power-saver";
     memoryUsage: "low" | "normal" | "high";
@@ -236,14 +236,14 @@ export const useUltimateSettings = () => {
 
   const [settings, setSettings] = useState<UltimateSettingsState>(() => {
     try {
-      const saved = localStorage.getItem("ultimateSettings");
+
       if (saved) {
-        const parsed = JSON.parse(saved);
-        // Merge with defaults to ensure all properties exist
+
+        // Merge with defaults to ensure all properties exist;
         return {
           ...DEFAULT_SETTINGS,
           ...parsed,
-          // Ensure nested objects are merged properly
+          // Ensure nested objects are merged properly;
           account: { ...DEFAULT_SETTINGS.account, ...parsed.account },
           betting: { ...DEFAULT_SETTINGS.betting, ...parsed.betting },
           appearance: { ...DEFAULT_SETTINGS.appearance, ...parsed.appearance },
@@ -262,7 +262,7 @@ export const useUltimateSettings = () => {
         };
       }
     } catch (error) {
-      console.warn("Failed to load settings from localStorage:", error);
+      // console statement removed
     }
     return DEFAULT_SETTINGS;
   });
@@ -270,7 +270,7 @@ export const useUltimateSettings = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
-  // Sync appearance settings with theme provider
+  // Sync appearance settings with theme provider;
   useEffect(() => {
     setSettings((prev) => ({
       ...prev,
@@ -313,10 +313,10 @@ export const useUltimateSettings = () => {
   const saveSettings = useCallback(async () => {
     setIsLoading(true);
     try {
-      // Save to localStorage
+      // Save to localStorage;
       localStorage.setItem("ultimateSettings", JSON.stringify(settings));
 
-      // Sync with existing hooks/services
+      // Sync with existing hooks/services;
       if (updateBettingSettings) {
         await updateBettingSettings(settings.betting);
       }
@@ -328,7 +328,7 @@ export const useUltimateSettings = () => {
         });
       }
 
-      // Apply theme changes
+      // Apply theme changes;
       if (settings.appearance.colorScheme !== (isDark ? "dark" : "light")) {
         toggleDarkMode();
       }
@@ -336,7 +336,7 @@ export const useUltimateSettings = () => {
       setHasUnsavedChanges(false);
       return { success: true };
     } catch (error) {
-      console.error("Failed to save settings:", error);
+      // console statement removed
       return { success: false, error };
     } finally {
       setIsLoading(false);
@@ -363,10 +363,10 @@ export const useUltimateSettings = () => {
   }, []);
 
   const exportSettings = useCallback(() => {
-    const dataStr = JSON.stringify(settings, null, 2);
-    const dataBlob = new Blob([dataStr], { type: "application/json" });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement("a");
+
+
+
+
     link.href = url;
     link.download = `a1betting-settings-${new Date().toISOString().split("T")[0]}.json`;
     link.click();
@@ -376,14 +376,14 @@ export const useUltimateSettings = () => {
   const importSettings = useCallback(
     (jsonString: string) => {
       try {
-        const imported = JSON.parse(jsonString);
-        // Validate the structure
+
+        // Validate the structure;
         if (typeof imported === "object" && imported !== null) {
-          // Merge with current settings to avoid missing properties
+          // Merge with current settings to avoid missing properties;
           const mergedSettings = {
             ...settings,
             ...imported,
-            // Ensure nested objects are properly merged
+            // Ensure nested objects are properly merged;
             account: { ...settings.account, ...imported.account },
             betting: { ...settings.betting, ...imported.betting },
             appearance: { ...settings.appearance, ...imported.appearance },
@@ -408,7 +408,7 @@ export const useUltimateSettings = () => {
           throw new Error("Invalid settings format");
         }
       } catch (error) {
-        console.error("Failed to import settings:", error);
+        // console statement removed
         return { success: false, error: error.message };
       }
     },
@@ -427,7 +427,7 @@ export const useUltimateSettings = () => {
     isLoading,
     hasUnsavedChanges,
 
-    // Convenience getters for common settings
+    // Convenience getters for common settings;
     get isDarkMode() {
       return settings.appearance.colorScheme === "dark";
     },
@@ -443,7 +443,7 @@ export const useUltimateSettings = () => {
     get notificationsEnabled() {
       return (
         settings.notifications.emailNotifications ||
-        settings.notifications.pushNotifications
+        settings.notifications.pushNotifications;
       );
     },
   };

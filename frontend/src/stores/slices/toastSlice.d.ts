@@ -1,5 +1,5 @@
-import { StateCreator } from 'zustand';
-import { Toast } from '@/types';
+import { StateCreator } from 'zustand.ts';
+import { Toast } from '@/types.ts';
 export interface ToastSlice {
     toasts: Toast[];
     addToast: (type: Toast['type'], message: string) => void;

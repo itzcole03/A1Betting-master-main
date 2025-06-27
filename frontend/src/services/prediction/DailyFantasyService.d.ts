@@ -1,7 +1,7 @@
 /**
  * Service for generating daily fantasy sports recommendations.
  */
-import type { DailyFantasyRecommendation } from '@/types';
+import type { DailyFantasyRecommendation } from '@/types.ts';
 export interface FantasyRequest {
     predictions: {
         realityExploitation: number;

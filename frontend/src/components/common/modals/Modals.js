@@ -14,4 +14,4 @@ const Modal = ({ isOpen, onClose, title, children, size = 'md' }) => {
 };
 // ModalsManager component has been removed as individual components will manage their modal instances.
 // If global modal management is needed, it should be handled via useAppStore.
-export { Modal }; // Exporting only the Modal component 
+export { Modal }; // Exporting only the Modal component; 

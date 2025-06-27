@@ -1,6 +1,6 @@
-import { EventEmitter } from 'events';
-import { ArbitrageOpportunity } from '../../types/betting';
-import { LineShoppingResult } from '../../types/betting';
+import { EventEmitter } from 'events.ts';
+import { ArbitrageOpportunity } from '@/types/betting.ts';
+import { LineShoppingResult } from '@/types/betting.ts';
 
 export interface Notification {
   id: string;
@@ -22,8 +22,8 @@ export interface NotificationPreferences {
   minConfidenceThreshold: number;
   quietHours: {
     enabled: boolean;
-    start: number; // 0-23
-    end: number; // 0-23
+    start: number; // 0-23;
+    end: number; // 0-23;
   };
 }
 
@@ -43,14 +43,14 @@ export class NotificationManager extends EventEmitter {
       minConfidenceThreshold: 0.7, // 70%
       quietHours: {
         enabled: false,
-        start: 22, // 10 PM
-        end: 7, // 7 AM
+        start: 22, // 10 PM;
+        end: 7, // 7 AM;
       },
     };
   }
 
   /**
-   * Update notification preferences
+   * Update notification preferences;
    */
   public updatePreferences(preferences: Partial<NotificationPreferences>): void {
     this.preferences = { ...this.preferences, ...preferences };
@@ -58,22 +58,21 @@ export class NotificationManager extends EventEmitter {
   }
 
   /**
-   * Get current notification preferences
+   * Get current notification preferences;
    */
   public getPreferences(): NotificationPreferences {
     return { ...this.preferences };
   }
 
   /**
-   * Check if notifications should be sent based on quiet hours
+   * Check if notifications should be sent based on quiet hours;
    */
   private isWithinQuietHours(): boolean {
     if (!this.preferences.quietHours.enabled) {
       return false;
     }
 
-    const now = new Date();
-    const currentHour = now.getHours();
+
     const { start, end } = this.preferences.quietHours;
 
     if (start <= end) {
@@ -85,14 +84,14 @@ export class NotificationManager extends EventEmitter {
   }
 
   /**
-   * Create a new notification
+   * Create a new notification;
    */
   private createNotification(
     type: Notification['type'],
     title: string,
     message: string,
     priority: Notification['priority'],
-    data?: any
+    data?: any;
   ): Notification {
     const notification: Notification = {
       id: `${type}-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
@@ -105,10 +104,10 @@ export class NotificationManager extends EventEmitter {
       read: false,
     };
 
-    // Maintain maximum notification limit
+    // Maintain maximum notification limit;
     if (this.notifications.size >= this.MAX_NOTIFICATIONS) {
       const oldestNotification = Array.from(this.notifications.values()).sort(
-        (a, b) => a.timestamp - b.timestamp
+        (a, b) => a.timestamp - b.timestamp;
       )[0];
       this.notifications.delete(oldestNotification.id);
     }
@@ -118,7 +117,7 @@ export class NotificationManager extends EventEmitter {
   }
 
   /**
-   * Notify about arbitrage opportunity
+   * Notify about arbitrage opportunity;
    */
   public notifyArbitrageOpportunity(opportunity: ArbitrageOpportunity): void {
     if (!this.preferences.arbitrage || this.isWithinQuietHours()) {
@@ -127,7 +126,7 @@ export class NotificationManager extends EventEmitter {
 
     if (
       opportunity.profitMargin * 100 < this.preferences.minProfitThreshold ||
-      opportunity.risk.confidence < this.preferences.minConfidenceThreshold
+      opportunity.risk.confidence < this.preferences.minConfidenceThreshold;
     ) {
       return;
     }
@@ -136,17 +135,17 @@ export class NotificationManager extends EventEmitter {
       'arbitrage',
       'Arbitrage Opportunity Found',
       `Found ${opportunity.profitMargin.toFixed(2)}% profit opportunity in ${
-        opportunity.legs[0].propId
+        opportunity.legs[0].propId;
       }`,
       'high',
-      opportunity
+      opportunity;
     );
 
     this.emit('newNotification', notification);
   }
 
   /**
-   * Notify about line shopping opportunity
+   * Notify about line shopping opportunity;
    */
   public notifyLineShoppingOpportunity(result: LineShoppingResult): void {
     if (!this.preferences.lineShopping || this.isWithinQuietHours()) {
@@ -155,7 +154,7 @@ export class NotificationManager extends EventEmitter {
 
     if (
       result.priceImprovement < this.preferences.minProfitThreshold ||
-      result.confidence < this.preferences.minConfidenceThreshold
+      result.confidence < this.preferences.minConfidenceThreshold;
     ) {
       return;
     }
@@ -165,14 +164,14 @@ export class NotificationManager extends EventEmitter {
       'Better Odds Available',
       `Found ${result.priceImprovement.toFixed(2)}% better odds at ${result.bestOdds.bookmaker}`,
       'medium',
-      result
+      result;
     );
 
     this.emit('newNotification', notification);
   }
 
   /**
-   * Notify about model updates
+   * Notify about model updates;
    */
   public notifyModelUpdate(message: string, data?: any): void {
     if (!this.preferences.modelUpdates || this.isWithinQuietHours()) {
@@ -184,14 +183,14 @@ export class NotificationManager extends EventEmitter {
       'Model Update',
       message,
       'low',
-      data
+      data;
     );
 
     this.emit('newNotification', notification);
   }
 
   /**
-   * Notify about system alerts
+   * Notify about system alerts;
    */
   public notifySystemAlert(
     title: string,
@@ -202,16 +201,14 @@ export class NotificationManager extends EventEmitter {
       return;
     }
 
-    const notification = this.createNotification('system', title, message, priority);
-
     this.emit('newNotification', notification);
   }
 
   /**
-   * Mark notification as read
+   * Mark notification as read;
    */
   public markAsRead(notificationId: string): void {
-    const notification = this.notifications.get(notificationId);
+
     if (notification) {
       notification.read = true;
       this.emit('notificationUpdated', notification);
@@ -219,7 +216,7 @@ export class NotificationManager extends EventEmitter {
   }
 
   /**
-   * Mark all notifications as read
+   * Mark all notifications as read;
    */
   public markAllAsRead(): void {
     this.notifications.forEach(notification => {
@@ -229,21 +226,21 @@ export class NotificationManager extends EventEmitter {
   }
 
   /**
-   * Get all notifications
+   * Get all notifications;
    */
   public getNotifications(): Notification[] {
     return Array.from(this.notifications.values()).sort((a, b) => b.timestamp - a.timestamp);
   }
 
   /**
-   * Get unread notifications
+   * Get unread notifications;
    */
   public getUnreadNotifications(): Notification[] {
     return this.getNotifications().filter(n => !n.read);
   }
 
   /**
-   * Clear all notifications
+   * Clear all notifications;
    */
   public clearNotifications(): void {
     this.notifications.clear();

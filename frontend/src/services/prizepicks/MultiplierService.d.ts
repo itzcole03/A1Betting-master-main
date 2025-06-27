@@ -1,6 +1,6 @@
-import { z } from 'zod';
-import { UnifiedLogger } from '../../core/logging/types';
-import { UnifiedMetrics } from '../../core/metrics/types';
+import { z } from 'zod.ts';
+import { UnifiedLogger } from '@/core/logging/types.ts';
+import { UnifiedMetrics } from '@/core/metrics/types.ts';
 declare const propSchema: z.ZodObject<{
     playerId: z.ZodString;
     playerName: z.ZodString;

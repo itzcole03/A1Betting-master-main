@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
+import { create } from 'zustand.ts';
+import { devtools } from 'zustand/middleware.ts';
 import {
   PlayerProp,
   Entry,
@@ -7,9 +7,9 @@ import {
   BettingOpportunity,
   Alert,
   BetRecord,
-} from '../types/core';
-import { ProcessedPrizePicksProp } from '../types/prizePicks';
-import { persist } from 'zustand/middleware';
+} from '@/types/core.ts';
+import { ProcessedPrizePicksProp } from '@/types/prizePicks.ts';
+import { persist } from 'zustand/middleware.ts';
 
 interface User {
   id: string;
@@ -19,28 +19,28 @@ interface User {
 }
 
 interface AppState {
-  // Auth
+  // Auth;
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   register: (name: string, email: string, password: string) => Promise<void>;
   logout: () => void;
 
-  // Props and Entries
+  // Props and Entries;
   props: ProcessedPrizePicksProp[];
   selectedProps: string[];
   entries: Entry[];
 
-  // Performance and Analytics
+  // Performance and Analytics;
   metrics: PerformanceMetrics | null;
   opportunities: BettingOpportunity[];
   alerts: Alert[];
 
-  // UI State
+  // UI State;
   darkMode: boolean;
   sidebarOpen: boolean;
   activeModal: string | null;
 
-  // Actions
+  // Actions;
   setProps: (props: ProcessedPrizePicksProp[]) => void;
   togglePropSelection: (propId: string) => void;
   addEntry: (entry: Entry) => void;
@@ -75,7 +75,7 @@ const useStore = create<AppState>()(
   devtools(
     persist(
       set => ({
-        // Initial State
+        // Initial State;
         user: null,
         props: [],
         selectedProps: [],
@@ -91,10 +91,10 @@ const useStore = create<AppState>()(
         isLoading: false,
         error: null,
 
-        // Auth Actions
+        // Auth Actions;
         login: async (email: string, password: string) => {
           try {
-            // TODO: Replace with actual API call
+            // TODO: Replace with actual API call;
             const response = await fetch('/api/auth/login', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -105,7 +105,6 @@ const useStore = create<AppState>()(
               throw new Error('Invalid credentials');
             }
 
-            const user = await response.json();
             set({ user });
           } catch (error) {
             throw error;
@@ -114,7 +113,7 @@ const useStore = create<AppState>()(
 
         register: async (name: string, email: string, password: string) => {
           try {
-            // TODO: Replace with actual API call
+            // TODO: Replace with actual API call;
             const response = await fetch('/api/auth/register', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -125,7 +124,6 @@ const useStore = create<AppState>()(
               throw new Error('Registration failed');
             }
 
-            const user = await response.json();
             set({ user });
           } catch (error) {
             throw error;
@@ -134,7 +132,7 @@ const useStore = create<AppState>()(
 
         logout: () => set({ user: null }),
 
-        // Actions
+        // Actions;
         setProps: props => set({ props }),
 
         togglePropSelection: propId =>
@@ -152,7 +150,7 @@ const useStore = create<AppState>()(
         updateEntry: (entryId, updates) =>
           set(state => ({
             entries: state.entries.map(entry =>
-              entry.id === entryId ? { ...entry, ...updates } : entry
+              entry.id === entryId ? { ...entry, ...updates } : entry;
             ),
           })),
 

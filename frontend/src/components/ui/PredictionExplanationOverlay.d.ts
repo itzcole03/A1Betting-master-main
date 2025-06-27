@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface PredictionExplanationData {
     sentiment?: string;
     news?: string;

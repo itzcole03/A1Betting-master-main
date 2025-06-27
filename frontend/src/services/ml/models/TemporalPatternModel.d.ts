@@ -1,8 +1,8 @@
 /**
  * Model for analyzing temporal patterns and generating predictions.
  */
-import { BaseModel } from './BaseModel';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types';
+import { BaseModel } from './BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
 export declare class TemporalPatternModel extends BaseModel {
     protected config: ModelConfig;
     private microTrendWindow;

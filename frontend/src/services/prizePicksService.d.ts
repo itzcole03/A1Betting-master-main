@@ -1,5 +1,5 @@
-import { PrizePicksProps, // Frontend representation
-PrizePicksPlayer, PrizePicksLines } from '@/types';
+import { PrizePicksProps, // Frontend representation;
+PrizePicksPlayer, PrizePicksLines } from '@/types.ts';
 export declare const fetchPrizePicksProps: (league?: string, statType?: string) => Promise<PrizePicksProps[]>;
 /**
  * Fetches a specific player's details.

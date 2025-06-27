@@ -1,4 +1,4 @@
-import { CacheService } from '@/types';
+import { CacheService } from '@/types.ts';
 declare class CacheServiceImpl implements CacheService {
     private static instance;
     private cache;

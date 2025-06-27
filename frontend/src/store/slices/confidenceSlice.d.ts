@@ -1,4 +1,4 @@
-import type { ConfidenceBand, WinProbability, PredictionWithConfidence } from '../../types/confidence';
+import type { ConfidenceBand, WinProbability, PredictionWithConfidence } from '@/types/confidence.ts';
 interface ConfidenceState {
     prediction: PredictionWithConfidence | null;
     setPrediction: (prediction: PredictionWithConfidence) => void;

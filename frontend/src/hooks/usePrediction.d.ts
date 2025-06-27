@@ -1,4 +1,4 @@
-import { PredictionResponse, GeneralInsight } from '../services/predictionService';
+import { PredictionResponse, GeneralInsight } from '@/services/predictionService.ts';
 interface UsePredictionReturn {
     makePrediction: (features: {
         [key: string]: number;

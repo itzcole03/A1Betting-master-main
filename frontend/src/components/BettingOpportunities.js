@@ -25,7 +25,7 @@ export const BettingOpportunities = ({ opportunities, onBetPlacement, alerts, is
                     },
                     gap: 2,
                 }, children: opportunities.map((opportunity, index) => {
-                    const hasAlert = alerts.some(alert => alert.metadata?.gameId === opportunity.event_id);
+
                     return (_jsxs(Card, { sx: {
                             height: '100%',
                             display: 'flex',

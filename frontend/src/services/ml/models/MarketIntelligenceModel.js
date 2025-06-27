@@ -15,8 +15,8 @@ export class MarketIntelligenceModel extends BaseModel {
     }
     async predict(data) {
         try {
-            const metrics = this.extractMarketMetrics(data);
-            const prediction = this.analyzeMarketMetrics(metrics);
+
+
             return this.createPrediction(prediction, this.calculateConfidence(metrics));
         }
         catch (error) {
@@ -25,7 +25,7 @@ export class MarketIntelligenceModel extends BaseModel {
         }
     }
     async update(data) {
-        // Implement model update logic
+        // Implement model update logic;
         this.lastUpdate = new Date().toISOString();
         this.metadata = {
             ...this.metadata,
@@ -35,7 +35,7 @@ export class MarketIntelligenceModel extends BaseModel {
     }
     async train(data) {
         try {
-            // Implement training logic here
+            // Implement training logic here;
             this.isTrained = true;
             this.lastUpdate = new Date().toISOString();
             this.logger.info('Trained market intelligence model');
@@ -66,7 +66,7 @@ export class MarketIntelligenceModel extends BaseModel {
     }
     async save(path) {
         try {
-            // Implement save logic here
+            // Implement save logic here;
             this.logger.info(`Saved market intelligence model to: ${path}`);
         }
         catch (error) {
@@ -76,7 +76,7 @@ export class MarketIntelligenceModel extends BaseModel {
     }
     async load(path) {
         try {
-            // Implement load logic here
+            // Implement load logic here;
             this.logger.info(`Loaded market intelligence model from: ${path}`);
         }
         catch (error) {
@@ -85,7 +85,7 @@ export class MarketIntelligenceModel extends BaseModel {
         }
     }
     extractMarketMetrics(data) {
-        // Implement market metrics extraction logic here
+        // Implement market metrics extraction logic here;
         return {
             volumeProfile: {
                 totalVolume: 0,
@@ -122,11 +122,11 @@ export class MarketIntelligenceModel extends BaseModel {
         };
     }
     analyzeMarketMetrics(metrics) {
-        // Implement market analysis logic here
+        // Implement market analysis logic here;
         return 0;
     }
     calculateConfidence(metrics) {
-        // Implement confidence calculation logic here
+        // Implement confidence calculation logic here;
         return 0.8;
     }
 }

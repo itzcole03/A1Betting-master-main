@@ -1,5 +1,5 @@
-import { EventBus } from '@/core/EventBus';
-import { PerformanceMonitor } from './PerformanceMonitor';
+import { EventBus } from '@/core/EventBus.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
 
 export interface FeatureMetadata {
   id: string;
@@ -49,17 +49,16 @@ export class ComposableFeature<T, U> implements FeatureComponent<T, U> {
     });
 
     try {
-      // Validate input if validator exists
+      // Validate input if validator exists;
       if (this.validator && !(await this.validate(input))) {
         throw new Error(`Input validation failed for feature ${this.metadata.id}`);
       }
 
-      // Process the input
-      const startTime = Date.now();
-      const result = await this.processor(input, context);
-      const duration = Date.now() - startTime;
+      // Process the input;
 
-      // Emit success event
+
+
+      // Emit success event;
       this.eventBus.publish({
         type: 'feature:executed',
         payload: {
@@ -74,14 +73,14 @@ export class ComposableFeature<T, U> implements FeatureComponent<T, U> {
       this.performanceMonitor.endTrace(traceId);
       return result;
     } catch (error) {
-      // Handle error and attempt rollback
+      // Handle error and attempt rollback;
       this.performanceMonitor.endTrace(traceId, error as Error);
 
       if (this.rollbackHandler) {
         await this.rollbackHandler(input, error as Error);
       }
 
-      // Emit error event
+      // Emit error event;
       this.eventBus.publish({
         type: 'feature:error',
         payload: {
@@ -108,7 +107,7 @@ export class ComposableFeature<T, U> implements FeatureComponent<T, U> {
         tags: [...new Set([...this.metadata.tags, ...next.metadata.tags])],
       },
       async (input: T, context: FeatureContext) => {
-        const intermediate = await this.process(input, context);
+
         return next.process(intermediate, context);
       }
     );
@@ -171,10 +170,9 @@ export class FeatureRegistry {
 
   composeFeatures<T, U, V>(
     firstFeatureId: string,
-    secondFeatureId: string
+    secondFeatureId: string;
   ): FeatureComponent<T, V> | undefined {
-    const first = this.getFeature<T, U>(firstFeatureId);
-    const second = this.getFeature<U, V>(secondFeatureId);
+
 
     if (!first || !second) {
       return undefined;
@@ -184,7 +182,7 @@ export class FeatureRegistry {
   }
 
   async executeFeature<T, U>(featureId: string, input: T, context: FeatureContext): Promise<U> {
-    const feature = this.getFeature<T, U>(featureId);
+
     if (!feature) {
       throw new Error(`Feature ${featureId} not found`);
     }

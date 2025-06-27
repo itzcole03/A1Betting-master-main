@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events';
-import { apiService } from './api/ApiService';
+import { EventEmitter } from 'events.ts';
+import { apiService } from './api/ApiService.ts';
 
 interface OddsData {
   id: string;
@@ -44,11 +44,11 @@ interface MarketAnalysis {
 }
 
 /**
- * Modern OddsService with proper TypeScript and error handling
+ * Modern OddsService with proper TypeScript and error handling;
  */
 export class OddsService extends EventEmitter {
   private cache = new Map<string, { data: any; timestamp: number }>();
-  private readonly CACHE_TTL = 30000; // 30 seconds
+  private readonly CACHE_TTL = 30000; // 30 seconds;
 
   constructor() {
     super();
@@ -56,25 +56,23 @@ export class OddsService extends EventEmitter {
   }
 
   private initializeHealthChecking(): void {
-    // Report status for monitoring
+    // Report status for monitoring;
     setInterval(() => {
       this.reportStatus('odds-service', true, 0.9);
     }, 30000);
   }
 
   /**
-   * Fetch live odds for sports events
+   * Fetch live odds for sports events;
    */
   async getLiveOdds(sport: string = 'americanfootball_nfl'): Promise<OddsData[]> {
-    const cacheKey = `live-odds-${sport}`;
-    
-    // Check cache first
-    const cached = this.getCachedData<OddsData[]>(cacheKey);
+
+    // Check cache first;
+
     if (cached) return cached;
 
     try {
-      const response = await apiService.getOdds({ sport });
-      
+
       if (response.success && response.data) {
         this.setCachedData(cacheKey, response.data);
         this.emit('odds:updated', { sport, data: response.data });
@@ -84,14 +82,14 @@ export class OddsService extends EventEmitter {
       
       throw new Error('Failed to fetch live odds');
     } catch (error) {
-      console.error('Error fetching live odds:', error);
+      // console statement removed
       this.reportStatus('live-odds', false, 0.1);
       return this.getFallbackOdds(sport);
     }
   }
 
   /**
-   * Get market analysis for a specific market
+   * Get market analysis for a specific market;
    */
   async getMarketAnalysis(
     market: string,
@@ -111,13 +109,13 @@ export class OddsService extends EventEmitter {
       });
       return response;
     } catch (error) {
-      console.error('Error fetching market analysis:', error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get available bookmakers
+   * Get available bookmakers;
    */
   async getBookmakers(): Promise<string[]> {
     try {
@@ -128,13 +126,13 @@ export class OddsService extends EventEmitter {
       });
       return response;
     } catch (error) {
-      console.error('Error fetching bookmakers:', error);
+      // console statement removed
       return ['draftkings', 'fanduel', 'betmgm', 'caesars'];
     }
   }
 
   /**
-   * Get historical odds data
+   * Get historical odds data;
    */
   async getHistoricalOdds(
     market: string,
@@ -164,13 +162,13 @@ export class OddsService extends EventEmitter {
       }
       return [];
     } catch (error) {
-      console.error('Error fetching historical odds:', error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get arbitrage opportunities
+   * Get arbitrage opportunities;
    */
   async getArbitrageOpportunities(options?: {
     sport?: string;
@@ -202,16 +200,16 @@ export class OddsService extends EventEmitter {
       }
       return [];
     } catch (error) {
-      console.error('Error fetching arbitrage opportunities:', error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get cached data if still valid
+   * Get cached data if still valid;
    */
   private getCachedData<T>(key: string): T | null {
-    const cached = this.cache.get(key);
+
     if (cached && Date.now() - cached.timestamp < this.CACHE_TTL) {
       return cached.data as T;
     }
@@ -219,14 +217,14 @@ export class OddsService extends EventEmitter {
   }
 
   /**
-   * Set data in cache
+   * Set data in cache;
    */
   private setCachedData<T>(key: string, data: T): void {
     this.cache.set(key, { data, timestamp: Date.now() });
   }
 
   /**
-   * Report service status for monitoring
+   * Report service status for monitoring;
    */
   private reportStatus(source: string, connected: boolean, quality: number): void {
     if (typeof window !== 'undefined') {
@@ -237,7 +235,7 @@ export class OddsService extends EventEmitter {
   }
 
   /**
-   * Fallback odds data when API fails
+   * Fallback odds data when API fails;
    */
   private getFallbackOdds(sport: string): OddsData[] {
     return [
@@ -268,5 +266,5 @@ export class OddsService extends EventEmitter {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const oddsService = new OddsService();

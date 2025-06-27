@@ -1,14 +1,14 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-// Removed unused CyberTheme imports
+// Removed unused CyberTheme imports;
 import { useTheme } from "../../providers/SafeThemeProvider";
 import { MegaButton } from "./MegaUI";
-// Removed problematic import
+// Removed problematic import;
 import { Brain, Menu, X, Bell, User, LogOut, Search, Wifi, WifiOff, ChevronRight, Sun, Moon, UserCircle, } from "lucide-react";
-// MEGA LAYOUT SYSTEM - Consolidates 23 layout components
+// MEGA LAYOUT SYSTEM - Consolidates 23 layout components;
 // ============================================================================
-// USER AVATAR DROPDOWN COMPONENT
+// USER AVATAR DROPDOWN COMPONENT;
 // ============================================================================
 const UserAvatarDropdown = ({ user, isDark, onNavigate }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,17 +18,17 @@ const UserAvatarDropdown = ({ user, isDark, onNavigate }) => {
         top: 0,
         right: 0,
     });
-    // Calculate dropdown position based on button position
+    // Calculate dropdown position based on button position;
     useEffect(() => {
         if (isOpen && buttonRef) {
-            const rect = buttonRef.getBoundingClientRect();
+
             setDropdownPosition({
                 top: rect.bottom + 8,
                 right: window.innerWidth - rect.right,
             });
         }
     }, [isOpen, buttonRef]);
-    // Close dropdown when clicking outside
+    // Close dropdown when clicking outside;
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (dropdownRef &&
@@ -46,19 +46,19 @@ const UserAvatarDropdown = ({ user, isDark, onNavigate }) => {
         }
     }, [dropdownRef, buttonRef, isOpen]);
     const handleAccountProfile = () => {
-        // Navigate to profile page using app navigation
+        // Navigate to profile page using app navigation;
         if (onNavigate) {
             onNavigate("profile");
         }
         setIsOpen(false);
     };
     const handleSignOut = () => {
-        // Handle sign out
+        // Handle sign out;
         if (confirm("Are you sure you want to sign out?")) {
-            // Clear any stored auth data
+            // Clear any stored auth data;
             localStorage.removeItem("authToken");
             sessionStorage.clear();
-            // Redirect to login or home page
+            // Redirect to login or home page;
             window.location.href = "/login";
         }
         setIsOpen(false);
@@ -151,7 +151,7 @@ export const MegaSidebar = ({ isOpen, onToggle, navigationItems, currentPage, on
     const { theme } = useTheme();
     const [expandedSubmenus, setExpandedSubmenus] = useState(new Set());
     const toggleSubmenu = (itemId) => {
-        const newExpanded = new Set(expandedSubmenus);
+
         if (newExpanded.has(itemId)) {
             newExpanded.delete(itemId);
         }
@@ -167,10 +167,10 @@ export const MegaSidebar = ({ isOpen, onToggle, navigationItems, currentPage, on
             return { icon: Wifi, color: "#00d4ff", text: "Limited" };
         return { icon: Wifi, color: "#06ffa5", text: "Connected" };
     };
-    const status = getStatusIcon();
-    const StatusIcon = status.icon;
-    const sidebarWidth = isOpen ? "280px" : "64px";
-    const isCompact = !isOpen || variant === "compact";
+
+
+
+
     return (_jsxs("div", { className: `mega-sidebar ${className}`, style: {
             width: sidebarWidth,
             height: "100vh",
@@ -314,15 +314,15 @@ export const MegaSidebar = ({ isOpen, onToggle, navigationItems, currentPage, on
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
-                            }, children: _jsx(Menu, { size: 16 }) }) }))] }), _jsx("nav", { style: { flex: 1, padding: "0 16px", overflowY: "auto" }, children: _jsx("div", { style: { marginBottom: "8px" }, children: navigationItems
+                            }, children: _jsx(Menu, { size: 16 }) }) }))] }), _jsx("nav", { style: { flex: 1, padding: "0 16px", overflowY: "auto" }, children: _jsx("div", { style: { marginBottom: "8px" }, children: navigationItems;
                         .filter((item) => !["settings", "profile", "Settings", "Profile"].includes(item.id) &&
                         !item.label?.toLowerCase().includes("settings") &&
                         !item.label?.toLowerCase().includes("profile"))
                         .map((item, index) => {
-                        const Icon = item.icon;
-                        const isActive = currentPage === item.id;
-                        const hasSubmenu = item.submenu && item.submenu.length > 0;
-                        const isExpanded = expandedSubmenus.has(item.id);
+
+
+
+
                         return (_jsxs("div", { style: { marginBottom: "6px" }, children: [_jsxs("button", { onClick: () => {
                                         if (hasSubmenu && !isCompact) {
                                             toggleSubmenu(item.id);
@@ -341,17 +341,17 @@ export const MegaSidebar = ({ isOpen, onToggle, navigationItems, currentPage, on
                                         cursor: "pointer",
                                         transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                                         justifyContent: isCompact ? "center" : "flex-start",
-                                        border: isActive
+                                        border: isActive;
                                             ? "1px solid rgba(6, 255, 165, 0.3)"
                                             : "1px solid transparent",
-                                        background: isActive
+                                        background: isActive;
                                             ? "linear-gradient(135deg, rgba(6, 255, 165, 0.95), rgba(0, 255, 136, 0.9))"
                                             : "rgba(255, 255, 255, 0.03)",
                                         color: isActive ? "#000" : "#e2e8f0",
                                         backdropFilter: "blur(20px) saturate(1.8)",
                                         position: "relative",
                                         overflow: "hidden",
-                                        boxShadow: isActive
+                                        boxShadow: isActive;
                                             ? "0 8px 32px rgba(6, 255, 165, 0.25), 0 2px 8px rgba(0, 0, 0, 0.1)"
                                             : "0 2px 8px rgba(0, 0, 0, 0.05)",
                                     }, onMouseEnter: (e) => {
@@ -386,7 +386,7 @@ export const MegaSidebar = ({ isOpen, onToggle, navigationItems, currentPage, on
                                                         textAlign: "left",
                                                         letterSpacing: "-0.01em",
                                                     }, children: item.label }), item.badge && (_jsx("span", { style: {
-                                                        background: isActive
+                                                        background: isActive;
                                                             ? "rgba(0, 0, 0, 0.15)"
                                                             : "#06ffa5",
                                                         color: isActive ? "#000" : "#000",
@@ -397,13 +397,13 @@ export const MegaSidebar = ({ isOpen, onToggle, navigationItems, currentPage, on
                                                         marginLeft: "8px",
                                                     }, children: item.badge })), hasSubmenu && (_jsx(ChevronRight, { size: 16, style: {
                                                         marginLeft: "8px",
-                                                        transform: isExpanded
+                                                        transform: isExpanded;
                                                             ? "rotate(90deg)"
                                                             : "rotate(0deg)",
                                                         transition: "transform 0.3s ease",
                                                         color: isActive ? "#000" : "#94a3b8",
                                                     } }))] }))] }), hasSubmenu && isExpanded && !isCompact && (_jsx("div", { style: { marginLeft: "16px", marginTop: "4px" }, children: item.submenu.map((subItem) => {
-                                        const SubIcon = subItem.icon;
+
                                         return (_jsx(MegaButton, { variant: "secondary", onClick: () => onNavigate(subItem.id), icon: SubIcon ? (_jsx("span", { style: { fontSize: "14px" }, children: SubIcon })) : undefined, style: {
                                                 marginBottom: "2px",
                                                 fontSize: "12px",
@@ -494,21 +494,21 @@ export const MegaSidebar = ({ isOpen, onToggle, navigationItems, currentPage, on
 // ============================================================================
 export const MegaHeader = ({ title, subtitle, leftActions, rightActions, showSearch = false, onSearch, notifications = 0, onNotificationsClick, user, onNavigate, className = "", }) => {
     const [searchQuery, setSearchQuery] = useState("");
-    // Use try-catch to handle any theme access errors
+    // Use try-catch to handle any theme access errors;
     let theme, isDark, toggleDarkMode;
     try {
-        const themeContext = useTheme();
+
         theme = themeContext.theme;
         isDark = themeContext.isDark;
         toggleDarkMode = themeContext.toggleDarkMode;
     }
     catch (error) {
-        console.warn("Theme context error in MegaHeader, using fallback:", error);
+        // console statement removed
         theme = null;
         isDark = false;
-        toggleDarkMode = () => console.warn("Theme toggle not available");
+        toggleDarkMode = () => // console statement removed
     }
-    // Comprehensive fallback theme
+    // Comprehensive fallback theme;
     const defaultTheme = {
         colors: {
             surface: "rgba(255, 255, 255, 0.8)",
@@ -527,8 +527,8 @@ export const MegaHeader = ({ title, subtitle, leftActions, rightActions, showSea
             primary: "linear-gradient(135deg, #06ffa5, #00ff88)",
         },
     };
-    // Ensure we always have a complete theme object
-    const safeTheme = theme?.colors ? theme : defaultTheme;
+    // Ensure we always have a complete theme object;
+
     return (_jsxs("header", { className: `mega-header ${className}`, style: {
             background: "rgba(15, 23, 42, 0.95)",
             backdropFilter: "blur(40px) saturate(180%)",
@@ -663,17 +663,17 @@ export const MegaHeader = ({ title, subtitle, leftActions, rightActions, showSea
 // MEGA APP SHELL (Complete layout wrapper)
 // ============================================================================
 export const MegaAppShell = ({ children, sidebar, header, footer, sidebarOpen = true, className = "", }) => {
-    // Use try-catch to handle any theme access errors
+    // Use try-catch to handle any theme access errors;
     let safeTheme;
     try {
         const { theme } = useTheme();
         safeTheme = theme;
     }
     catch (error) {
-        console.warn("Theme context error, using fallback:", error);
+        // console statement removed
         safeTheme = null;
     }
-    // Comprehensive fallback theme with all required properties
+    // Comprehensive fallback theme with all required properties;
     const defaultTheme = {
         colors: {
             background: "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%, #f8fafc 100%)",
@@ -694,8 +694,8 @@ export const MegaAppShell = ({ children, sidebar, header, footer, sidebarOpen = 
             shadow: "0 8px 32px rgba(15, 23, 42, 0.1)",
         },
     };
-    // Ensure we always have a complete theme object
-    const finalTheme = safeTheme?.colors ? safeTheme : defaultTheme;
+    // Ensure we always have a complete theme object;
+
     return (_jsxs("div", { className: `mega-app-shell ${className}`, style: {
             display: "flex",
             minHeight: "100vh",

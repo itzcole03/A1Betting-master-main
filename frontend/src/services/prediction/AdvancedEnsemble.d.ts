@@ -1,6 +1,6 @@
-import { AdvancedPrediction } from '../../types/prediction';
-import { MarketContext, BettingContext } from '@/types/core';
-import { ShapExplanation } from '../../types/ml';
+import { AdvancedPrediction } from '@/types/prediction.ts';
+import { MarketContext, BettingContext } from '@/types/core.ts';
+import { ShapExplanation } from '@/types/ml.ts';
 export declare class AdvancedEnsemble {
     private static instance;
     private readonly MIN_WEIGHT;

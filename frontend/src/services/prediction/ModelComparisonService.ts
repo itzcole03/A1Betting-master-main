@@ -2,9 +2,9 @@
  * Service for comparing model predictions and performance.
  */
 
-import type { ModelPrediction } from '../ml/models/BaseModel';
-import type { ModelEvaluation } from './ModelEvaluationService';
-import type { ModelComparisonResult } from '@/types';
+import type { ModelPrediction } from '@/ml/models/BaseModel.ts';
+import type { ModelEvaluation } from './ModelEvaluationService.ts';
+import type { ModelComparisonResult } from '@/types.ts';
 
 export interface ModelPredictionInput {
   name: string;
@@ -40,7 +40,7 @@ export class ModelComparisonService {
 
   async compareModels(request: ComparisonRequest): Promise<ComparisonResponse> {
     try {
-      // Calculate consensus prediction using weighted average
+      // Calculate consensus prediction using weighted average;
       const weightedSum = request.predictions.reduce((sum, model) => {
         return sum + model.prediction * (model.performance?.accuracy || 0.5);
       }, 0);
@@ -49,13 +49,9 @@ export class ModelComparisonService {
         return sum + (model.performance?.accuracy || 0.5);
       }, 0);
 
-      const consensusPrediction = weightedSum / totalWeight;
+      // Calculate model agreement;
 
-      // Calculate model agreement
-      const agreement = this.calculateModelAgreement(request.predictions);
-
-      // Calculate consensus confidence
-      const consensusConfidence = this.calculateConsensusConfidence(request.predictions);
+      // Calculate consensus confidence;
 
       const result: ModelComparisonResult = {
         models: request.predictions.map(model => ({
@@ -77,9 +73,9 @@ export class ModelComparisonService {
         timestamp: request.timestamp,
       };
 
-      // Store comparison result
-      const comparisonKey = request.timestamp;
-      const comparisons = this.comparisons.get(comparisonKey) || [];
+      // Store comparison result;
+
+
       comparisons.push(result);
       this.comparisons.set(comparisonKey, comparisons);
 
@@ -106,14 +102,14 @@ export class ModelComparisonService {
   private calculateModelAgreement(predictions: ModelPredictionInput[]): number {
     if (predictions.length <= 1) return 1;
 
-    const threshold = 0.1; // Consider predictions within 10% as agreeing
-    let agreementCount = 0;
-    let totalComparisons = 0;
+    const threshold = 0.1; // Consider predictions within 10% as agreeing;
+    const agreementCount = 0;
+    const totalComparisons = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      for (let j = i + 1; j < predictions.length; j++) {
-        const diff = Math.abs(predictions[i].prediction - predictions[j].prediction);
-        const avg = (predictions[i].prediction + predictions[j].prediction) / 2;
+    for (const i = 0; i < predictions.length; i++) {
+      for (const j = i + 1; j < predictions.length; j++) {
+
+
         if (diff / avg <= threshold) {
           agreementCount++;
         }
@@ -143,11 +139,10 @@ export class ModelComparisonService {
   }
 
   async getLatestComparison(): Promise<ModelComparisonResult | null> {
-    const timestamps = Array.from(this.comparisons.keys()).sort();
+
     if (timestamps.length === 0) return null;
 
-    const latestTimestamp = timestamps[timestamps.length - 1];
-    const comparisons = this.comparisons.get(latestTimestamp) || [];
+
     return comparisons.length > 0 ? comparisons[comparisons.length - 1] : null;
   }
 }

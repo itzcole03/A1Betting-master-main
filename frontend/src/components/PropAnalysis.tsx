@@ -1,7 +1,7 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { BookmakerAnalysis } from './BookmakerAnalysis';
-import { useBookmakerAnalysis } from '../hooks/useBookmakerAnalysis';
+import React from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
+import { BookmakerAnalysis } from './BookmakerAnalysis.ts';
+import { useBookmakerAnalysis } from '@/hooks/useBookmakerAnalysis.ts';
 
 interface PropAnalysisProps {
   playerId: string;
@@ -14,7 +14,7 @@ interface PropAnalysisProps {
   className?: string;
 }
 
-export const PropAnalysis: React.FC<PropAnalysisProps> = ({
+export const PropAnalysis: React.FC<PropAnalysisProps key={357133}> = ({
   playerId,
   playerName,
   propType,
@@ -37,113 +37,113 @@ export const PropAnalysis: React.FC<PropAnalysisProps> = ({
     switch (tag) {
       case 'demon':
         return (
-          <svg className="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20">
-            <path
+          <svg className="w-6 h-6 text-red-500" fill="currentColor" viewBox="0 0 20 20" key={344486}>
+            <path;
               clipRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z"
               fillRule="evenodd"
-            />
+            / key={153520}>
           </svg>
         );
       case 'goblin':
         return (
-          <svg className="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-            <path
+          <svg className="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20" key={86338}>
+            <path;
               clipRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
               fillRule="evenodd"
-            />
+            / key={447854}>
           </svg>
         );
       default:
         return (
-          <svg className="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-            <path
+          <svg className="w-6 h-6 text-gray-500" fill="currentColor" viewBox="0 0 20 20" key={324088}>
+            <path;
               clipRule="evenodd"
               d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12z"
               fillRule="evenodd"
-            />
+            / key={108367}>
           </svg>
         );
     }
   };
 
   return (
-    <motion.div
+    <motion.div;
       animate={{ opacity: 1, y: 0 }}
       className={`bg-gray-900 rounded-xl p-6 shadow-xl ${className}`}
       initial={{ opacity: 0, y: 20 }}
-    >
+     key={738313}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-bold text-white">{playerName}</h2>
-          <p className="text-gray-400">{propType}</p>
+      <div className="flex items-center justify-between mb-6" key={530716}>
+        <div key={241917}>
+          <h2 className="text-2xl font-bold text-white" key={416278}>{playerName}</h2>
+          <p className="text-gray-400" key={545335}>{propType}</p>
         </div>
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2" key={740830}>
           {getTagIcon(tag)}
-          <span className="text-lg font-semibold text-white">{projectedValue}</span>
+          <span className="text-lg font-semibold text-white" key={248867}>{projectedValue}</span>
         </div>
       </div>
 
       {/* Analysis Section */}
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" key={725119}>
         {isLoading ? (
-          <motion.div
+          <motion.div;
             key="loading"
             animate={{ opacity: 1 }}
             className="flex justify-center py-8"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-          >
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white" />
+           key={72085}>
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white" / key={38225}>
           </motion.div>
         ) : error ? (
-          <motion.div
+          <motion.div;
             key="error"
             animate={{ opacity: 1 }}
             className="bg-red-900/50 border border-red-500/50 rounded-lg p-4"
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-          >
-            <p className="text-red-100">{error}</p>
-            <button
+           key={52747}>
+            <p className="text-red-100" key={463843}>{error}</p>
+            <button;
               className="mt-2 text-red-300 hover:text-red-100 text-sm"
               onClick={refreshAnalysis}
-            >
-              Try Again
+             key={359398}>
+              Try Again;
             </button>
           </motion.div>
         ) : analysis ? (
-          <motion.div
+          <motion.div;
             key="analysis"
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             initial={{ opacity: 0 }}
-          >
-            <BookmakerAnalysis analysis={analysis} />
+           key={83340}>
+            <BookmakerAnalysis analysis={analysis} / key={989892}>
 
             {/* Historical Stats */}
-            <div className="mt-6 p-4 bg-gray-800/50 rounded-lg">
-              <h3 className="text-lg font-semibold text-white mb-2">Historical Stats</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-gray-400">Average</p>
-                  <p className="text-xl font-bold text-white">{historicalAverage.toFixed(1)}</p>
+            <div className="mt-6 p-4 bg-gray-800/50 rounded-lg" key={222658}>
+              <h3 className="text-lg font-semibold text-white mb-2" key={945112}>Historical Stats</h3>
+              <div className="grid grid-cols-2 gap-4" key={354810}>
+                <div key={241917}>
+                  <p className="text-gray-400" key={545335}>Average</p>
+                  <p className="text-xl font-bold text-white" key={648053}>{historicalAverage.toFixed(1)}</p>
                 </div>
-                <div>
-                  <p className="text-gray-400">Current Odds</p>
-                  <p className="text-xl font-bold text-white">{currentOdds.toFixed(2)}</p>
+                <div key={241917}>
+                  <p className="text-gray-400" key={545335}>Current Odds</p>
+                  <p className="text-xl font-bold text-white" key={648053}>{currentOdds.toFixed(2)}</p>
                 </div>
               </div>
             </div>
 
             {/* Refresh Button */}
-            <button
+            <button;
               className="mt-4 w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
               onClick={refreshAnalysis}
-            >
-              Refresh Analysis
+             key={123840}>
+              Refresh Analysis;
             </button>
           </motion.div>
         ) : null}

@@ -7,15 +7,15 @@ const BuilderIntegrationTest = () => {
     useEffect(() => {
         const testIntegration = async () => {
             try {
-                console.log("Testing Builder.io integration...");
-                console.log("API Key:", builder.apiKey);
-                // Test fetching content
-                const content = await builder
+                // console statement removed
+                // console statement removed
+                // Test fetching content;
+                const content = await builder;
                     .get("page", {
                     url: "/builder-test",
                 })
                     .promise();
-                console.log("Builder content:", content);
+                // console statement removed
                 if (content) {
                     setBuilderContent(content);
                     setStatus("success");
@@ -25,7 +25,7 @@ const BuilderIntegrationTest = () => {
                 }
             }
             catch (error) {
-                console.error("Builder.io integration error:", error);
+                // console statement removed
                 setStatus("error");
             }
         };

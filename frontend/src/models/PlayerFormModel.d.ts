@@ -1,6 +1,6 @@
-import type { GameContext, ShapVector } from '../types/models.js';
-import { BaseModel } from '../services/ml/models/BaseModel.js';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '../services/ml/types.js';
+import type { GameContext, ShapVector } from '@/types/models.js';
+import { BaseModel } from '@/services/ml/models/BaseModel.js';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/services/ml/types.js';
 export interface PlayerFormModelOutput {
     features: Record<string, number>;
     shapInsights: ShapVector[];
@@ -28,7 +28,7 @@ export declare class PlayerFormModel extends BaseModel {
     private calculateFormScore;
 }
 /**
- * Strict ALPHA1-compliant top-level async function for modular integration
+ * Strict ALPHA1-compliant top-level async function for modular integration;
  * Extracts player form features and SHAP insights for a player.
  * Config-gated, singleton, strict typing, ESM-only.
  */

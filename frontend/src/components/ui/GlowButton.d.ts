@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface GlowButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
     className?: string;

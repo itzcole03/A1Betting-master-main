@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import useStore from '@/store/useStore';
+import React, { useState  } from 'react.ts';
+import { Link, useLocation } from 'react-router-dom.ts';
+import { motion } from 'framer-motion.ts';
+import useStore from '@/store/useStore.ts';
 
 interface NavItem {
   path: string;
@@ -24,7 +24,7 @@ const navItems: NavItem[] = [
 
 const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const location = useLocation();
+
   const { darkMode, toggleDarkMode } = useStore();
 
   const toggleSidebar = () => {
@@ -41,51 +41,51 @@ const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex h-screen bg-gray-100 dark:bg-gray-900" key={453711}>
       {/* Sidebar */}
-      <motion.div
+      <motion.div;
         animate={{ width: sidebarOpen ? 280 : 80 }}
         className="fixed left-0 top-0 h-full bg-white dark:bg-gray-800 shadow-lg z-30"
         initial={{ width: 280 }}
-      >
-        <div className="flex flex-col h-full">
+       key={507327}>
+        <div className="flex flex-col h-full" key={46356}>
           {/* Logo */}
-          <div className="flex items-center justify-between p-4">
-            <Link className="flex items-center space-x-2" to="/">
-              <img alt="Logo" className="w-8 h-8" src="/logo.png" />
+          <div className="flex items-center justify-between p-4" key={588613}>
+            <Link className="flex items-center space-x-2" to="/" key={544879}>
+              <img alt="Logo" className="w-8 h-8" src="/logo.png" / key={404205}>
               {sidebarOpen && (
-                <span className="text-xl font-bold bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent">
-                  Elite Sports
+                <span className="text-xl font-bold bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent" key={841298}>
+                  Elite Sports;
                 </span>
               )}
             </Link>
-            <button
+            <button;
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
               onClick={toggleSidebar}
-            >
-              <i className={`fas fa-chevron-${sidebarOpen ? 'left' : 'right'}`} />
+             key={284290}>
+              <i className={`fas fa-chevron-${sidebarOpen ? 'left' : 'right'}`} / key={631025}>
             </button>
           </div>
 
           {/* Navigation */}
-          <nav className="flex-1 overflow-y-auto py-4">
+          <nav className="flex-1 overflow-y-auto py-4" key={739797}>
             {navItems.map(item => {
-              const isActive = location.pathname === item.path;
+
               return (
-                <Link
+                <Link;
                   key={item.path}
                   className={`flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${
                     isActive ? 'bg-primary-50 dark:bg-primary-900' : ''
                   }`}
                   to={item.path}
-                >
-                  <i className={`${item.icon} w-6`} />
-                  {sidebarOpen && <span className="ml-3">{item.label}</span>}
+                 key={136153}>
+                  <i className={`${item.icon} w-6`} / key={134577}>
+                  {sidebarOpen && <span className="ml-3" key={954191}>{item.label}</span>}
                   {isActive && (
-                    <motion.div
+                    <motion.div;
                       className="absolute left-0 w-1 h-8 bg-primary-500 rounded-r"
                       layoutId="activeIndicator"
-                    />
+                    / key={648971}>
                   )}
                 </Link>
               );
@@ -93,21 +93,21 @@ const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           </nav>
 
           {/* Theme Toggle */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700">
-            <button
+          <div className="p-4 border-t border-gray-200 dark:border-gray-700" key={528850}>
+            <button;
               className="flex items-center justify-center w-full p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
               onClick={handleDarkModeToggle}
-            >
-              <i className={`fas fa-${darkMode ? 'sun' : 'moon'} w-6`} />
-              {sidebarOpen && <span className="ml-3">{darkMode ? 'Light Mode' : 'Dark Mode'}</span>}
+             key={782538}>
+              <i className={`fas fa-${darkMode ? 'sun' : 'moon'} w-6`} / key={608340}>
+              {sidebarOpen && <span className="ml-3" key={954191}>{darkMode ? 'Light Mode' : 'Dark Mode'}</span>}
             </button>
           </div>
         </div>
       </motion.div>
 
       {/* Main Content */}
-      <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-280' : 'ml-80'}`}>
-        <main className="h-full overflow-y-auto">{children}</main>
+      <div className={`flex-1 transition-all duration-300 ${sidebarOpen ? 'ml-280' : 'ml-80'}`} key={729570}>
+        <main className="h-full overflow-y-auto" key={930829}>{children}</main>
       </div>
     </div>
   );

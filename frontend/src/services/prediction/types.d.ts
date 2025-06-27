@@ -1,8 +1,8 @@
 /**
  * Type definitions for the prediction service.
  */
-import type { ModelPrediction } from '../ml/models/BaseModel';
-import type { ModelEvaluation } from './ModelEvaluationService';
+import type { ModelPrediction } from '@/ml/models/BaseModel.ts';
+import type { ModelEvaluation } from './ModelEvaluationService.ts';
 export interface PredictionRequest {
     eventId: string;
     sport: string;

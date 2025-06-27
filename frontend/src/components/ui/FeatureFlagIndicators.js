@@ -12,7 +12,7 @@ export const FeatureFlagIndicators = () => {
     const [flags, setFlags] = React.useState({});
     React.useEffect(() => {
         const fetchFlags = async () => {
-            const results = {};
+
             for (const feature of features) {
                 results[feature] = await isFeatureEnabled(feature);
             }

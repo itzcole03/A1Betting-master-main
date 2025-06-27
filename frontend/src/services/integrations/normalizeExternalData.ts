@@ -1,7 +1,7 @@
-// Utility to normalize external API data to Alpha1 internal schema
+// Utility to normalize external API data to Alpha1 internal schema;
 
-import type { PlayerProp } from '../../types/core.js';
-import type { PropType } from '../../types/common.js';
+import type { PlayerProp } from '@/types/core.js';
+import type { PropType } from '@/types/common.js';
 
 interface GameState {
   id: string;
@@ -24,9 +24,9 @@ interface SentimentSnapshot {
 }
 
 export function normalizePlayerProp(raw: unknown): PlayerProp | undefined {
-  // Map raw API fields to PlayerProp
+  // Map raw API fields to PlayerProp;
   if (!raw || typeof raw !== 'object') return undefined;
-  const obj = raw as Record<string, unknown>;
+
   return {
     id: String(obj.id ?? obj.prop_id),
     player: obj.player ?? obj.athlete,
@@ -40,7 +40,7 @@ export function normalizePlayerProp(raw: unknown): PlayerProp | undefined {
 
 export function normalizeGameState(raw: unknown): GameState | undefined {
   if (!raw || typeof raw !== 'object') return undefined;
-  const obj = raw as Record<string, unknown>;
+
   return {
     id: String(obj.id ?? obj.game_id),
     homeTeam: String(obj.home_team ?? obj.home),
@@ -48,9 +48,9 @@ export function normalizeGameState(raw: unknown): GameState | undefined {
     score: obj.score,
     status: String(obj.status ?? ''),
     startTime: (typeof obj.start_time === 'string' || typeof obj.start_time === 'number')
-      ? obj.start_time
+      ? obj.start_time;
       : (typeof obj.startTime === 'string' || typeof obj.startTime === 'number')
-        ? obj.startTime
+        ? obj.startTime;
         : Date.now(),
     league: String(obj.league ?? ''),
     updated: typeof obj.updated === 'number' ? obj.updated : Date.now(),
@@ -59,7 +59,7 @@ export function normalizeGameState(raw: unknown): GameState | undefined {
 
 export function normalizeSentiment(raw: unknown): SentimentSnapshot | undefined {
   if (!raw || typeof raw !== 'object') return undefined;
-  const obj = raw as Record<string, unknown>;
+
   return {
     id: String(obj.id ?? ''),
     entity: String(obj.entity ?? ''),
@@ -70,4 +70,4 @@ export function normalizeSentiment(raw: unknown): SentimentSnapshot | undefined 
   };
 }
 
-// Add more normalization utilities as needed
+// Add more normalization utilities as needed;

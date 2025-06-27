@@ -1,4 +1,4 @@
-import type { BettingMetrics, ModelPerformance, BettingStats, LineMovement, ArbitrageOpportunity } from "../../types/betting";
+import type { BettingMetrics, ModelPerformance, BettingStats, LineMovement, ArbitrageOpportunity } from '@/types/betting.ts';
 interface AnalyticsConfig {
     autoRefresh: boolean;
     refreshInterval: number;

@@ -1,15 +1,14 @@
-import React from 'react';
-import { IconButton, useTheme } from '@mui/material';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
-import { useTheme as useCustomTheme } from '../../hooks/useTheme';
+import React from 'react.ts';
+import { IconButton, useTheme } from '@mui/material.ts';
+import { Brightness4, Brightness7 } from '@mui/icons-material.ts';
+import { useTheme as useCustomTheme } from '@/hooks/useTheme.ts';
 
 const ThemeToggle: React.FC = () => {
   const { theme } = useCustomTheme();
-  const muiTheme = useTheme();
-  const isDark = muiTheme.palette.mode === 'dark';
+
 
   return (
-    <IconButton
+    <IconButton;
       aria-label="toggle theme"
       color="inherit"
       sx={{
@@ -19,8 +18,8 @@ const ThemeToggle: React.FC = () => {
         },
       }}
       onClick={theme.toggle}
-    >
-      {isDark ? <Brightness7 /> : <Brightness4 />}
+     key={479101}>
+      {isDark ? <Brightness7 / key={835748}> : <Brightness4 / key={722417}>}
     </IconButton>
   );
 };

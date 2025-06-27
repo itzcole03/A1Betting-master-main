@@ -1,8 +1,8 @@
-import React from "react";
-import { cva, type VariantProps } from "class-variance-authority";
-import { cn } from "../../lib/utils";
+import React from 'react.ts';
+import { cva, type VariantProps } from 'class-variance-authority.ts';
+import { cn } from '@/lib/utils.ts';
 
-// Button Component with CVA variants
+// Button Component with CVA variants;
 const buttonVariants = cva(
   "inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
   {
@@ -41,26 +41,26 @@ const buttonVariants = cva(
   },
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+export interface ButtonProps;
+  extends React.ButtonHTMLAttributes<HTMLButtonElement key={390513}>,
+    VariantProps<typeof buttonVariants key={901402}> {
   asChild?: boolean;
 }
 
-const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps key={212207}>(
   ({ className, variant, size, asChild = false, ...props }, ref) => {
     return (
-      <button
+      <button;
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
         {...props}
-      />
+      / key={607073}>
     );
   },
 );
 Button.displayName = "Button";
 
-// Card Component with variants
+// Card Component with variants;
 const cardVariants = cva("rounded-xl transition-all duration-300 ease-out", {
   variants: {
     variant: {
@@ -96,24 +96,24 @@ const cardVariants = cva("rounded-xl transition-all duration-300 ease-out", {
   },
 });
 
-export interface CardProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof cardVariants> {}
+export interface CardProps;
+  extends React.HTMLAttributes<HTMLDivElement key={92993}>,
+    VariantProps<typeof cardVariants key={541832}> {}
 
-const Card = React.forwardRef<HTMLDivElement, CardProps>(
+const Card = React.forwardRef<HTMLDivElement, CardProps key={622448}>(
   ({ className, variant, padding, rounded, ...props }, ref) => {
     return (
-      <div
+      <div;
         ref={ref}
         className={cn(cardVariants({ variant, padding, rounded, className }))}
         {...props}
-      />
+      / key={21431}>
     );
   },
 );
 Card.displayName = "Card";
 
-// Badge Component
+// Badge Component;
 const badgeVariants = cva(
   "inline-flex items-center font-medium transition-all duration-200",
   {
@@ -146,24 +146,24 @@ const badgeVariants = cva(
   },
 );
 
-export interface BadgeProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof badgeVariants> {}
+export interface BadgeProps;
+  extends React.HTMLAttributes<HTMLDivElement key={92993}>,
+    VariantProps<typeof badgeVariants key={999863}> {}
 
-const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
+const Badge = React.forwardRef<HTMLDivElement, BadgeProps key={579562}>(
   ({ className, variant, size, ...props }, ref) => {
     return (
-      <div
+      <div;
         ref={ref}
         className={cn(badgeVariants({ variant, size, className }))}
         {...props}
-      />
+      / key={533167}>
     );
   },
 );
 Badge.displayName = "Badge";
 
-// Input Component
+// Input Component;
 const inputVariants = cva(
   "flex w-full transition-all duration-300 ease-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50",
   {
@@ -198,26 +198,26 @@ const inputVariants = cva(
   },
 );
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement>,
-    VariantProps<typeof inputVariants> {}
+export interface InputProps;
+  extends React.InputHTMLAttributes<HTMLInputElement key={553350}>,
+    VariantProps<typeof inputVariants key={875267}> {}
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Input = React.forwardRef<HTMLInputElement, InputProps key={14480}>(
   ({ className, variant, inputSize, rounded, ...props }, ref) => {
     return (
-      <input
+      <input;
         className={cn(
           inputVariants({ variant, inputSize, rounded, className }),
         )}
         ref={ref}
         {...props}
-      />
+      / key={125853}>
     );
   },
 );
 Input.displayName = "Input";
 
-// Progress Component
+// Progress Component;
 const progressVariants = cva(
   "w-full overflow-hidden transition-all duration-500",
   {
@@ -271,15 +271,15 @@ const progressFillVariants = cva(
   },
 );
 
-export interface ProgressProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof progressVariants> {
+export interface ProgressProps;
+  extends React.HTMLAttributes<HTMLDivElement key={92993}>,
+    VariantProps<typeof progressVariants key={249486}> {
   value?: number;
   max?: number;
-  fillVariant?: VariantProps<typeof progressFillVariants>["variant"];
+  fillVariant?: VariantProps<typeof progressFillVariants key={370250}>["variant"];
 }
 
-const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
+const Progress = React.forwardRef<HTMLDivElement, ProgressProps key={731135}>(
   (
     {
       className,
@@ -289,31 +289,30 @@ const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
       value = 0,
       max = 100,
       fillVariant = "default",
-      ...props
+      ...props;
     },
     ref,
   ) => {
-    const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
 
     return (
-      <div
+      <div;
         ref={ref}
         className={cn(progressVariants({ variant, size, rounded, className }))}
         {...props}
-      >
-        <div
+       key={60223}>
+        <div;
           className={cn(
             progressFillVariants({ variant: fillVariant, rounded }),
           )}
           style={{ width: `${percentage}%` }}
-        />
+        / key={201773}>
       </div>
     );
   },
 );
 Progress.displayName = "Progress";
 
-// Loading Spinner Component
+// Loading Spinner Component;
 const spinnerVariants = cva("animate-spin rounded-full border-solid", {
   variants: {
     variant: {
@@ -336,24 +335,24 @@ const spinnerVariants = cva("animate-spin rounded-full border-solid", {
   },
 });
 
-export interface SpinnerProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof spinnerVariants> {}
+export interface SpinnerProps;
+  extends React.HTMLAttributes<HTMLDivElement key={92993}>,
+    VariantProps<typeof spinnerVariants key={356813}> {}
 
-const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps>(
+const Spinner = React.forwardRef<HTMLDivElement, SpinnerProps key={498234}>(
   ({ className, variant, size, ...props }, ref) => {
     return (
-      <div
+      <div;
         ref={ref}
         className={cn(spinnerVariants({ variant, size, className }))}
         {...props}
-      />
+      / key={288399}>
     );
   },
 );
 Spinner.displayName = "Spinner";
 
-// Skeleton Component for loading states
+// Skeleton Component for loading states;
 const skeletonVariants = cva("animate-pulse bg-gray-200 dark:bg-gray-700", {
   variants: {
     variant: {
@@ -369,24 +368,24 @@ const skeletonVariants = cva("animate-pulse bg-gray-200 dark:bg-gray-700", {
   },
 });
 
-export interface SkeletonProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof skeletonVariants> {}
+export interface SkeletonProps;
+  extends React.HTMLAttributes<HTMLDivElement key={92993}>,
+    VariantProps<typeof skeletonVariants key={566344}> {}
 
-const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps>(
+const Skeleton = React.forwardRef<HTMLDivElement, SkeletonProps key={949857}>(
   ({ className, variant, ...props }, ref) => {
     return (
-      <div
+      <div;
         ref={ref}
         className={cn(skeletonVariants({ variant, className }))}
         {...props}
-      />
+      / key={877995}>
     );
   },
 );
 Skeleton.displayName = "Skeleton";
 
-// Export all components
+// Export all components;
 export {
   Button,
   buttonVariants,
@@ -404,7 +403,7 @@ export {
   skeletonVariants,
 };
 
-// Export types
+// Export types;
 export type {
   ButtonProps,
   CardProps,

@@ -165,8 +165,8 @@ async def generate_ultra_accurate_prediction(
 
         return response
 
-    except Exception as e:
-        logger.error(f"Error generating ultra-accurate prediction {prediction_id}: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error generating ultra-accurate prediction {prediction_id}: {e}")
         processing_time = time.time() - start_time
 
         return UltraAccuracyResponse(
@@ -200,8 +200,8 @@ async def analyze_market_efficiency(request: MarketEfficiencyRequest):
             },
         }
 
-    except Exception as e:
-        logger.error(f"Error analyzing market efficiency: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error analyzing market efficiency: {e}")
         raise HTTPException(
             status_code=500, detail=f"Market efficiency analysis failed: {e!s}"
         )
@@ -224,8 +224,8 @@ async def analyze_behavioral_patterns(request: BehavioralPatternsRequest):
             "pattern_strength": patterns.get("pattern_strength", 0),
         }
 
-    except Exception as e:
-        logger.error(f"Error analyzing behavioral patterns: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error analyzing behavioral patterns: {e}")
         raise HTTPException(
             status_code=500, detail=f"Behavioral pattern analysis failed: {e!s}"
         )
@@ -250,8 +250,8 @@ async def update_model_performance(
             "prediction_id": request.prediction_id,
         }
 
-    except Exception as e:
-        logger.error(f"Error updating model performance: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error updating model performance: {e}")
         raise HTTPException(
             status_code=500, detail=f"Performance update failed: {e!s}"
         )
@@ -292,8 +292,8 @@ async def get_system_performance_metrics():
 
         return {"success": True, "metrics": metrics}
 
-    except Exception as e:
-        logger.error(f"Error getting performance metrics: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error getting performance metrics: {e}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get performance metrics: {e!s}"
         )
@@ -319,8 +319,8 @@ async def get_system_status():
 
         return {"success": True, "status": status}
 
-    except Exception as e:
-        logger.error(f"Error getting system status: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Error getting system status: {e}")
         raise HTTPException(
             status_code=500, detail=f"Failed to get system status: {e!s}"
         )

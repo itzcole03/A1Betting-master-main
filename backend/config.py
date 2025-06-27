@@ -122,8 +122,8 @@ class BackendConfig(BaseSettings):
         return v
 
     model_config = ConfigDict(
-        env_file=".env", 
-        env_prefix="A1BETTING_", 
+        env_file=".env",
+        env_prefix="A1BETTING_",
         extra="allow"
     )
 
@@ -145,7 +145,7 @@ class ConfigManager:
     def __init__(self):
         self.config = BackendConfig()
         self._validate_config()
-        logger.info(f"Configuration loaded for environment: {self.config.environment}")
+        logger.info("Configuration loaded for environment: {self.config.environment}")
 
     def _validate_config(self):
         """Validate critical configuration settings"""

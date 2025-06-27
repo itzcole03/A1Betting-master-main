@@ -1,5 +1,5 @@
-import { webSocketManager } from '@/services/unified/WebSocketManager';
-import { useEffect, useState } from 'react';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
+import { useEffect, useState } from 'react.ts';
 
 export interface PrizePicksEdgeLiveData {
     id: string;
@@ -22,10 +22,10 @@ export function usePrizePicksLiveData() {
     useEffect(() => {
         const handler = (prop: PrizePicksEdgeLiveData) => {
             setLivePrizePicksData(prev => {
-                // Replace if id exists, else add
-                const idx = prev.findIndex(p => p.id === prop.id);
+                // Replace if id exists, else add;
+
                 if (idx !== -1) {
-                    const updated = [...prev];
+
                     updated[idx] = prop;
                     return updated;
                 }

@@ -1,4 +1,4 @@
-// Model Status Types
+// Model Status Types;
 export interface ModelStatus {
   id: string;
   name: string;
@@ -13,7 +13,7 @@ export interface ModelStatus {
   };
 }
 
-// Prediction Types
+// Prediction Types;
 export interface Prediction {
   id: string;
   timestamp: string;
@@ -30,7 +30,7 @@ export interface Prediction {
   };
 }
 
-// MoneyMaker Tab Types
+// MoneyMaker Tab Types;
 export type MoneyMakerTab = 'unified' | 'prizepicks' | 'ml' | 'config' | 'results';
 
 export interface MoneyMakerTabConfig {
@@ -39,7 +39,7 @@ export interface MoneyMakerTabConfig {
   icon: string;
 }
 
-// MoneyMaker Props
+// MoneyMaker Props;
 export interface MoneyMakerProps {
   predictions?: Prediction[];
   opportunities?: BettingOpportunity[];
@@ -47,7 +47,7 @@ export interface MoneyMakerProps {
   initialTab?: MoneyMakerTab;
 }
 
-// MoneyMaker State
+// MoneyMaker State;
 export interface MoneyMakerState {
   activeTab: MoneyMakerTab;
   mlModels: ModelStatus[];
@@ -57,7 +57,7 @@ export interface MoneyMakerState {
   error: string | null;
 }
 
-// MoneyMaker Actions
+// MoneyMaker Actions;
 export interface MoneyMakerActions {
   setActiveTab: (tab: MoneyMakerTab) => void;
   setMLModels: (models: ModelStatus[]) => void;
@@ -69,7 +69,7 @@ export interface MoneyMakerActions {
   handlePlaceBet: (betData: any) => Promise<any>;
 }
 
-// MoneyMaker Configuration Types
+// MoneyMaker Configuration Types;
 export interface MoneyMakerConfig {
   investmentAmount: number;
   riskProfile: 'conservative' | 'moderate' | 'aggressive';
@@ -96,7 +96,7 @@ export interface MoneyMakerConfig {
   };
 }
 
-// MoneyMaker Prediction Types
+// MoneyMaker Prediction Types;
 export interface MoneyMakerPrediction {
   eventId: string;
   marketType: string;
@@ -108,7 +108,7 @@ export interface MoneyMakerPrediction {
   modelContributions: {
     [key: string]: number;
   };
-  // Enhanced prediction data
+  // Enhanced prediction data;
   uncertainty: {
     epistemic: number;
     aleatoric: number;
@@ -162,7 +162,7 @@ export interface MoneyMakerPrediction {
   status: 'pending' | 'active' | 'completed' | 'cancelled';
 }
 
-// MoneyMaker Portfolio Types
+// MoneyMaker Portfolio Types;
 export interface MoneyMakerPortfolio {
   id: string;
   legs: MoneyMakerPrediction[];
@@ -179,7 +179,7 @@ export interface MoneyMakerPortfolio {
   updatedAt: string;
 }
 
-// MoneyMaker Performance Metrics
+// MoneyMaker Performance Metrics;
 export interface MoneyMakerMetrics {
   totalBets: number;
   winningBets: number;
@@ -194,7 +194,7 @@ export interface MoneyMakerMetrics {
   lossStreak: number;
 }
 
-// MoneyMaker Store State
+// MoneyMaker Store State;
 export interface MoneyMakerStoreState {
   config: MoneyMakerConfig;
   predictions: MoneyMakerPrediction[];
@@ -221,7 +221,7 @@ export interface MoneyMakerStoreState {
   };
 }
 
-// MoneyMaker Store Actions
+// MoneyMaker Store Actions;
 export interface MoneyMakerStoreActions {
   updateConfig: (config: Partial<MoneyMakerConfig>) => void;
   addPrediction: (prediction: MoneyMakerPrediction) => void;

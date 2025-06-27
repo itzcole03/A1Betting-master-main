@@ -1,9 +1,9 @@
-import { BettingOpportunity } from '../../types/betting';
-import axios from 'axios';
-import type { ModelPrediction } from '../../types/prediction';
-import { toast } from 'react-toastify';
+import { BettingOpportunity } from '@/types/betting.ts';
+import axios from 'axios.ts';
+import type { ModelPrediction } from '@/types/prediction.ts';
+import { toast } from 'react-toastify.ts';
 
-// Core interfaces
+// Core interfaces;
 export interface WeatherCondition {
   temperature: number;
   windSpeed: number;
@@ -136,11 +136,11 @@ class UnifiedPredictionService {
   }
 
   public async analyzePredictionFactors(
-    opportunity: BettingOpportunity
+    opportunity: BettingOpportunity;
   ): Promise<PredictionFactor[]> {
     const factors: PredictionFactor[] = [];
 
-    // Parallel execution of factor analysis
+    // Parallel execution of factor analysis;
     const [injuryFactors, weatherFactor, sentimentFactor, patternFactors] = await Promise.all([
       this.analyzeInjuryImpact(opportunity),
       this.analyzeWeatherImpact(opportunity),
@@ -157,8 +157,8 @@ class UnifiedPredictionService {
   }
 
   private async analyzeInjuryImpact(opportunity: BettingOpportunity): Promise<PredictionFactor[]> {
-    const injuries = this.injuryCache.get(opportunity.event_name) || [];
-    return injuries
+
+    return injuries;
       .filter(injury => injury.impactScore > 0.3)
       .map(injury => ({
         name: 'Injury Impact',
@@ -185,12 +185,11 @@ class UnifiedPredictionService {
   }
 
   private async analyzeWeatherImpact(
-    opportunity: BettingOpportunity
+    opportunity: BettingOpportunity;
   ): Promise<PredictionFactor | null> {
-    const weather = this.weatherCache.get(opportunity.event_name);
+
     if (!weather) return null;
 
-    const impact = this.calculateWeatherImpact(weather);
     if (Math.abs(impact) < 0.2) return null;
 
     return {
@@ -203,7 +202,7 @@ class UnifiedPredictionService {
   }
 
   private calculateWeatherImpact(weather: WeatherData): number {
-    let impact = 0;
+    const impact = 0;
 
     if (weather.windSpeed > 15) {
       impact -= (weather.windSpeed - 15) / 30;
@@ -213,8 +212,7 @@ class UnifiedPredictionService {
       impact -= weather.precipitation / 10;
     }
 
-    const optimalTemp = 70;
-    const tempDiff = Math.abs(weather.temperature - optimalTemp);
+
     if (tempDiff > 30) {
       impact -= (tempDiff - 30) / 50;
     }
@@ -223,7 +221,6 @@ class UnifiedPredictionService {
   }
 
   private async analyzeSentiment(opportunity: BettingOpportunity): Promise<PredictionFactor> {
-    const sentimentData = this.sentimentCache.get(opportunity.event_name) || [];
 
     if (sentimentData.length === 0) {
       return {
@@ -235,12 +232,10 @@ class UnifiedPredictionService {
       };
     }
 
-    const recentSentiment = sentimentData
+    const recentSentiment = sentimentData;
       .filter(data => Date.now() - data.timestamp < 24 * 60 * 60 * 1000)
       .reduce((acc, data) => acc + data.sentiment * data.volume, 0);
 
-    const totalVolume = sentimentData.reduce((acc, data) => acc + data.volume, 0);
-    const averageSentiment = totalVolume > 0 ? recentSentiment / totalVolume : 0;
 
     return {
       name: 'Market Sentiment',
@@ -255,7 +250,7 @@ class UnifiedPredictionService {
   }
 
   private aggregateKeywords(sentimentData: SentimentData[]): string[] {
-    const keywordCounts = new Map<string, number>();
+
     sentimentData.forEach(data => {
       data.keywords.forEach(keyword => {
         keywordCounts.set(keyword, (keywordCounts.get(keyword) || 0) + 1);
@@ -269,9 +264,9 @@ class UnifiedPredictionService {
   }
 
   private async findHistoricalPatterns(
-    opportunity: BettingOpportunity
+    opportunity: BettingOpportunity;
   ): Promise<PredictionFactor[]> {
-    const patterns = await this.findSimilarHistoricalScenarios(opportunity);
+
     return patterns.map(pattern => ({
       name: 'Historical Pattern',
       impact: this.calculatePatternImpact(pattern),
@@ -282,7 +277,7 @@ class UnifiedPredictionService {
   }
 
   private async findSimilarHistoricalScenarios(
-    opportunity: BettingOpportunity
+    opportunity: BettingOpportunity;
   ): Promise<HistoricalPattern[]> {
     try {
       const response = await axios.post(`${this.apiUrl}/api/predictions/historical-patterns`, {
@@ -292,7 +287,7 @@ class UnifiedPredictionService {
       });
       return response.data.patterns;
     } catch (error) {
-      console.error('Error finding historical patterns:', error);
+      // console statement removed
       return [];
     }
   }
@@ -302,7 +297,7 @@ class UnifiedPredictionService {
   }
 
   private normalizePredictionFactors(factors: PredictionFactor[]): PredictionFactor[] {
-    const totalConfidence = factors.reduce((sum, factor) => sum + factor.confidence, 0);
+
     return factors.map(factor => ({
       ...factor,
       impact: factor.impact * (factor.confidence / totalConfidence),
@@ -311,10 +306,10 @@ class UnifiedPredictionService {
 
   public async getPredictions(eventId: string): Promise<ModelPrediction[]> {
     try {
-      const response = await axios.get(`${this.apiUrl}/api/predictions/${eventId}`);
+
       return this.processPredictions(response.data);
     } catch (error) {
-      console.error('Error fetching predictions:', error);
+      // console statement removed
       toast.error('Failed to fetch predictions');
       return [];
     }
@@ -330,14 +325,14 @@ class UnifiedPredictionService {
   }
 
   private calculateConfidence(prediction: ModelPrediction): number {
-    const baseConfidence = prediction.confidence || 0.5;
-    const modelWeight = this.modelWeights[prediction.modelType] || 0.2;
+
+
     return baseConfidence * modelWeight;
   }
 
   private calculateTimeDecay(timestamp: string): number {
-    const age = Date.now() - new Date(timestamp).getTime();
-    return Math.exp(-age / (24 * 60 * 60 * 1000)); // 24-hour decay
+
+    return Math.exp(-age / (24 * 60 * 60 * 1000)); // 24-hour decay;
   }
 
   private calculatePerformanceFactor(performance: Record<string, unknown>): number {
@@ -345,7 +340,7 @@ class UnifiedPredictionService {
   }
 
   public async updateModelWeights(performance: { [key: string]: number }): Promise<void> {
-    const totalPerformance = Object.values(performance).reduce((sum, val) => sum + val, 0);
+
     Object.keys(performance).forEach(model => {
       this.modelWeights[model] = performance[model] / totalPerformance;
     });
@@ -361,10 +356,10 @@ class UnifiedPredictionService {
 
   public async getRecentPredictions(): Promise<Prediction[]> {
     try {
-      const response = await axios.get(`${this.apiUrl}/api/predictions/recent`);
+
       return response.data;
     } catch (error) {
-      console.error('Error fetching recent predictions:', error);
+      // console statement removed
       return [];
     }
   }
@@ -377,17 +372,17 @@ class UnifiedPredictionService {
       });
       return response.data;
     } catch (error) {
-      console.error('Error generating prediction:', error);
+      // console statement removed
       return null;
     }
   }
 
   public async getEngineMetrics(): Promise<Record<string, unknown>> {
     try {
-      const response = await axios.get(`${this.apiUrl}/api/predictions/metrics`);
+
       return response.data;
     } catch (error) {
-      console.error('Error fetching engine metrics:', error);
+      // console statement removed
       return null;
     }
   }
@@ -399,7 +394,7 @@ class UnifiedPredictionService {
       );
       return response.data;
     } catch (error) {
-      console.error('Error fetching model performance:', error);
+      // console statement removed
       return null;
     }
   }
@@ -411,22 +406,22 @@ class UnifiedPredictionService {
       );
       return response.data;
     } catch (error) {
-      console.error('Failed to fetch feature importance:', error);
+      // console statement removed
       return {};
     }
   }
 
   public async getShapValues(eventId: string): Promise<Record<string, number>> {
     try {
-      const response = await axios.get(`${this.apiUrl}/api/predictions/shap-values/${eventId}`);
+
       return response.data;
     } catch (error) {
-      console.error('Failed to fetch SHAP values:', error);
+      // console statement removed
       return {};
     }
   }
 
-  // Cache management methods
+  // Cache management methods;
   public updateWeatherData(market: string, data: WeatherData): void {
     this.weatherCache.set(market, data);
   }
@@ -436,7 +431,7 @@ class UnifiedPredictionService {
   }
 
   public updateSentimentData(market: string, data: SentimentData): void {
-    const existingData = this.sentimentCache.get(market) || [];
+
     this.sentimentCache.set(market, [...existingData, data]);
   }
 

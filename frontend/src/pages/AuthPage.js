@@ -4,14 +4,14 @@ import { Button } from '@mui/material';
 import { useAppStore } from '../store/useAppStore';
 import { useNavigate } from 'react-router-dom';
 const AuthPage = () => {
-    const navigate = useNavigate();
+
     const { login, isLoading, isAuthenticated } = useAppStore((state) => ({
         login: state.login,
         isLoading: state.isLoading,
         isAuthenticated: state.isAuthenticated,
     }));
-    const [email, setEmail] = useState('testuser@example.com'); // Default for easier testing
-    const [password, setPassword] = useState('password123'); // Default for easier testing
+    const [email, setEmail] = useState('testuser@example.com'); // Default for easier testing;
+    const [password, setPassword] = useState('password123'); // Default for easier testing;
     const [localError, setLocalError] = useState(null);
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,26 +25,26 @@ const AuthPage = () => {
             await login({ email, password });
         }
         catch (err) {
-            const msg = err?.message || 'Login failed. Please check your credentials.';
+
             useAppStore.getState().addToast({ message: msg, type: 'error' });
             setLocalError(msg);
         }
     };
     // DEV BYPASS BUTTON (development only)
     const handleDevBypass = () => {
-        const token = window.prompt('Paste the JWT token from backend console:');
+
         if (token && token.length > 10) {
-            localStorage.setItem('authToken', token); // Use the correct key for the auth system
+            localStorage.setItem('authToken', token); // Use the correct key for the auth system;
             window.location.reload();
         }
     };
     React.useEffect(() => {
         if (isAuthenticated) {
-            navigate('/'); // Redirect to dashboard or main app page after login
+            navigate('/'); // Redirect to dashboard or main app page after login;
         }
     }, [isAuthenticated, navigate]);
     React.useEffect(() => {
-        const err = useAppStore.getState().error;
+
         if (typeof err === 'string' && err.length > 0) {
             setLocalError(err);
             useAppStore.getState().addToast({ message: err, type: 'error' });

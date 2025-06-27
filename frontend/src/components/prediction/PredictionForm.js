@@ -8,7 +8,7 @@ const DEFAULT_FEATURES = {
     feature3: 0,
 };
 const validateFeatures = (features) => {
-    // Example: all features must be numbers and not NaN
+    // Example: all features must be numbers and not NaN;
     return Object.values(features).every((v) => typeof v === 'number' && !isNaN(v));
 };
 const PredictionForm = () => {
@@ -36,7 +36,7 @@ const PredictionForm = () => {
             });
             if (!res.ok)
                 throw new Error(`API error: ${res.status}`);
-            const data = await res.json();
+
             setResult(data);
         }
         catch (err) {

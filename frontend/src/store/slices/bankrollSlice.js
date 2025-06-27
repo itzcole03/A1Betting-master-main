@@ -1,5 +1,5 @@
-// bankrollSlice.ts
-// Zustand slice for bankroll state and actions
+// bankrollSlice.ts;
+// Zustand slice for bankroll state and actions;
 import { create } from 'zustand';
 export const useBankrollStore = create((set, get) => ({
     transactions: [],
@@ -25,20 +25,20 @@ export const useBankrollStore = create((set, get) => ({
     },
     refreshStats: () => {
         // In production, sync with bankrollService.getStats()
-        // For now, recalc from local state
+        // For now, recalc from local state;
         const { transactions, stats } = get();
-        const wins = transactions.filter(t => t.type === 'win');
-        const losses = transactions.filter(t => t.type === 'loss');
-        const bets = transactions.filter(t => t.type === 'bet');
-        const totalWins = wins.reduce((acc, t) => acc + t.amount, 0);
-        const totalLosses = losses.reduce((acc, t) => acc + t.amount, 0);
-        const netProfit = totalWins - totalLosses;
-        const currentBalance = stats.startingBalance + netProfit;
-        const winRate = bets.length ? wins.length / bets.length : 0;
-        const averageBetSize = bets.length ? bets.reduce((acc, t) => acc + t.amount, 0) / bets.length : 0;
-        const largestWin = wins.length ? Math.max(...wins.map(t => t.amount)) : 0;
-        const largestLoss = losses.length ? Math.max(...losses.map(t => t.amount)) : 0;
-        const roi = bets.length ? netProfit / bets.reduce((acc, t) => acc + t.amount, 0) : 0;
+
+
+
+
+
+
+
+
+
+
+
+
         set({
             stats: {
                 ...stats,

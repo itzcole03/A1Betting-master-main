@@ -1,5 +1,5 @@
-import type { PlayerProp, Opportunity, OddsUpdate } from '../types/core';
-import type { Sport, PropType } from '../types/common';
+import type { PlayerProp, Opportunity, OddsUpdate } from '@/types/core.ts';
+import type { Sport, PropType } from '@/types/common.ts';
 interface UseBettingDataOptions {
     sport?: Sport;
     propType?: PropType;

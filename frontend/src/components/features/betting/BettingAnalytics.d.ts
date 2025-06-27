@@ -1,5 +1,5 @@
-import React from 'react';
-import { BettingOpportunity } from '../services/bettingStrategy';
+import React from 'react.ts';
+import { BettingOpportunity } from '@/services/bettingStrategy.ts';
 interface BettingAnalyticsProps {
     onOpportunitySelect?: (opportunity: BettingOpportunity) => void;
 }

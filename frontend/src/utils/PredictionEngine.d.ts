@@ -1,7 +1,7 @@
-import { AnalysisPlugin } from './AnalysisFramework';
-import { PipelineStage } from './DataPipeline';
-import { FeatureComponent } from './FeatureComposition';
-import { StrategyComponent, StrategyResult } from './StrategyComposition';
+import { AnalysisPlugin } from './AnalysisFramework.ts';
+import { PipelineStage } from './DataPipeline.ts';
+import { FeatureComponent } from './FeatureComposition.ts';
+import { StrategyComponent, StrategyResult } from './StrategyComposition.ts';
 export interface PredictionData {
     value: number;
     timestamp: number;

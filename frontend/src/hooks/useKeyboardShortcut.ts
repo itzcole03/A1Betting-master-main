@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react.ts';
 
 
 
@@ -29,8 +29,6 @@ export const useKeyboardShortcut = (
     (event: KeyboardEvent) => {
       if (!enabled) return;
 
-      const shortcutArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
-
       for (const shortcut of shortcutArray) {
         const {
           key,
@@ -39,14 +37,12 @@ export const useKeyboardShortcut = (
           shiftKey = false,
           metaKey = false,
           preventDefault = true,
-          handler
+          handler;
         } = shortcut;
 
-        const matchesKey = event.key.toLowerCase() === key.toLowerCase();
-        const matchesCtrl = event.ctrlKey === ctrlKey;
-        const matchesAlt = event.altKey === altKey;
-        const matchesShift = event.shiftKey === shiftKey;
-        const matchesMeta = event.metaKey === metaKey;
+
+
+
 
         if (matchesKey && matchesCtrl && matchesAlt && matchesShift && matchesMeta) {
           if (preventDefault) {
@@ -66,7 +62,7 @@ export const useKeyboardShortcut = (
   }, [handleKeyDown]);
 };
 
-// Predefined shortcuts for common actions
+// Predefined shortcuts for common actions;
 export const useEscapeKey = (handler: KeyHandler, enabled = true) => {
   useKeyboardShortcut({ key: 'Escape', handler }, { enabled });
 };

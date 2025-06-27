@@ -1,10 +1,10 @@
-import { AlertTriangle, Loader2 } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { GeneralInsight, predictionService } from '../../../services/predictionService';
+import { AlertTriangle, Loader2 } from 'lucide-react.ts';
+import React, { useEffect, useState  } from 'react.ts';
+import { GeneralInsight, predictionService } from '@/../services/predictionService.ts';
 
-// import { useAppStore } from '@/store/useAppStore'; // If insights come via general app state
+// import { useAppStore } from '@/store/useAppStore.ts'; // If insights come via general app state;
 
-// interface Insight { // Using GeneralInsight from service now
+// interface Insight { // Using GeneralInsight from service now;
 //     id: string;
 //     text: string;
 //     source: string;
@@ -12,21 +12,21 @@ import { GeneralInsight, predictionService } from '../../../services/predictionS
 // }
 
 const MLInsights: React.FC = () => {
-  const [insights, setInsights] = useState<GeneralInsight[]>([]);
+  const [insights, setInsights] = useState<GeneralInsight[] key={251751}>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
 
   useEffect(() => {
     const fetchInsights = async () => {
       setIsLoading(true);
       setError(null);
       try {
-        const data = await predictionService.fetchGeneralInsights();
+
         setInsights(data);
       } catch (e: any) {
-        console.error("Failed to fetch ML insights", e);
+        // console statement removed
         setError(e.message || "An unknown error occurred while fetching insights.");
-        setInsights([]); // Clear insights on error
+        setInsights([]); // Clear insights on error;
       } finally {
         setIsLoading(false);
       }
@@ -34,7 +34,7 @@ const MLInsights: React.FC = () => {
     fetchInsights();
   }, []);
 
-  // Placeholder content removed
+  // Placeholder content removed;
   // const placeholderInsights = [
   //   { id: 'insight1', text: 'Based on recent trends, consider Player A for Over 25.5 Points.', source: 'Performance Analyzer' },
   //   { id: 'insight2', text: 'Social sentiment for Team B is highly positive for their upcoming match.', source: 'Sentiment Engine' },
@@ -42,29 +42,29 @@ const MLInsights: React.FC = () => {
   // ];
 
   if (isLoading) return (
-    <div className="flex items-center justify-center p-6 glass rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 animate-pulse-soft">
-      <Loader2 className="w-6 h-6 animate-spin text-primary mr-2" />
-      <p className="text-text-muted">Loading AI insights...</p>
+    <div className="flex items-center justify-center p-6 glass rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 animate-pulse-soft" key={178860}>
+      <Loader2 className="w-6 h-6 animate-spin text-primary mr-2" / key={517131}>
+      <p className="text-text-muted" key={342783}>Loading AI insights...</p>
     </div>
   );
 
   if (error) return (
-    <div className="p-6 glass rounded-xl bg-red-500/10 text-red-400 flex items-center animate-fade-in">
-      <AlertTriangle size={20} className="mr-2" /> Error: {error}
+    <div className="p-6 glass rounded-xl bg-red-500/10 text-red-400 flex items-center animate-fade-in" key={446857}>
+      <AlertTriangle size={20} className="mr-2" / key={887873}> Error: {error}
     </div>
   );
 
   return (
-    <div className="space-y-4">
-      <div className="mb-2 flex items-center gap-3">
-        <span className="text-2xl">🤖</span>
-        <h4 className="text-lg font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">Machine Learning Insights</h4>
+    <div className="space-y-4" key={160407}>
+      <div className="mb-2 flex items-center gap-3" key={239935}>
+        <span className="text-2xl" key={18044}>🤖</span>
+        <h4 className="text-lg font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent" key={858009}>Machine Learning Insights</h4>
       </div>
       {Array.isArray(insights) && insights.length > 0 ? (
         (insights || []).map(insight => (
-          <div key={insight.id} className="p-4 glass rounded-xl shadow-md bg-gradient-to-r from-purple-400/10 to-blue-400/10 animate-fade-in">
-            <p className="text-base text-text font-semibold mb-1">{insight.text}</p>
-            <p className="text-xs text-text-muted mt-1">
+          <div key={insight.id} className="p-4 glass rounded-xl shadow-md bg-gradient-to-r from-purple-400/10 to-blue-400/10 animate-fade-in" key={555272}>
+            <p className="text-base text-text font-semibold mb-1" key={660210}>{insight.text}</p>
+            <p className="text-xs text-text-muted mt-1" key={246317}>
               Source: {insight.source}
               {insight.confidence && ` | Confidence: ${(insight.confidence * 100).toFixed(0)}%`}
               {insight.type && ` | Type: ${insight.type}`}
@@ -72,7 +72,7 @@ const MLInsights: React.FC = () => {
           </div>
         ))
       ) : (
-        <p className="text-text-muted text-center p-4">No AI insights available at the moment.</p>
+        <p className="text-text-muted text-center p-4" key={398093}>No AI insights available at the moment.</p>
       )}
     </div>
   );

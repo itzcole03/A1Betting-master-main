@@ -46,9 +46,9 @@ const backdropVariants = {
     },
 };
 export const SmartSidebar = ({ isOpen, onClose }) => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const theme = useTheme();
+
+
+
     return (_jsx(AnimatePresence, { children: isOpen && (_jsxs(_Fragment, { children: [_jsx(motion.div, { animate: "open", exit: "closed", initial: "closed", style: {
                         position: 'fixed',
                         top: 0,
@@ -82,7 +82,7 @@ export const SmartSidebar = ({ isOpen, onClose }) => {
                                                 bgcolor: 'action.hover',
                                             },
                                         }, onClick: onClose, children: _jsx(CloseIcon, {}) })] }), _jsx(List, { sx: { flex: 1, pt: 1 }, children: menuItems.map(item => {
-                                    const isActive = location.pathname === item.path;
+
                                     return (_jsxs(ListItem, { button: true, sx: {
                                             my: 0.5,
                                             mx: 1,

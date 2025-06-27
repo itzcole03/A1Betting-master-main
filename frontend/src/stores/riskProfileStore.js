@@ -21,7 +21,7 @@ export const useRiskProfileStore = create()(devtools((set, get) => ({
     },
     getRiskAdjustedStake: (baseStake) => {
         const { currentProfile, bankroll } = get();
-        const maxStake = bankroll * currentProfile.max_stake_percentage;
+
         return Math.min(baseStake, maxStake);
     },
     setProfileType: (type) => {

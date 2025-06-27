@@ -1,10 +1,10 @@
-import type { PrizePicksProps } from '../types/prizePicks';
-import type { OddsData } from '@/types/betting';
+import type { PrizePicksProps } from '@/types/prizePicks.ts';
+import type { OddsData } from '@/types/betting.ts';
 /**
  * UnifiedDataEngine (Client-Side Orchestrator)
  *
- * This client-side engine is responsible for orchestrating data retrieval from various
- * specialized services and potentially transforming or combining this data into formats
+ * This client-side engine is responsible for orchestrating data retrieval from various;
+ * specialized services and potentially transforming or combining this data into formats;
  * suitable for UI components or other core engines.
  *
  * The actual heavy lifting of fetching from diverse external raw sources (Sportradar, Twitter, etc.)

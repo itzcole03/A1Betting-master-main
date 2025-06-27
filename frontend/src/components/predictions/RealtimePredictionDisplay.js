@@ -12,7 +12,7 @@ const RealtimePredictionDisplay = ({ sport, eventId, }) => {
     useEffect(() => {
         if (lastMessage) {
             try {
-                const data = JSON.parse(lastMessage);
+
                 setPrediction(data);
                 setError(null);
             }

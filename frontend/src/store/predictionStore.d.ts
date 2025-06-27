@@ -1,5 +1,5 @@
-import { MoneyMakerOpportunity } from '@/types/predictions';
-import { Lineup } from '@/types/lineup';
+import { MoneyMakerOpportunity } from '@/types/predictions.ts';
+import { Lineup } from '@/types/lineup.ts';
 interface PredictionSettings {
     enableSocialSentiment: boolean;
     enableWeatherData: boolean;

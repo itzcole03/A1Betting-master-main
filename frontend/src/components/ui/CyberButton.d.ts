@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react.ts';
 interface CyberButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: "primary" | "secondary" | "success" | "danger" | "ghost";
     size?: "sm" | "md" | "lg";

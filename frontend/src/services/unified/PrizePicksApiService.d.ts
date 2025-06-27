@@ -1,6 +1,6 @@
-import type { AxiosInstance } from 'axios';
+import type { AxiosInstance } from 'axios.ts';
 import { BaseApiService, ApiResponse } from './ApiService.js';
-import type { PrizePicksPlayer, Game, PrizePicksProjection } from '../../types/prizePicks.js';
+import type { PrizePicksPlayer, Game, PrizePicksProjection } from '@/types/prizePicks.js';
 export declare class PrizePicksApiService extends BaseApiService {
     protected initializeClient(): AxiosInstance;
     protected handleError(error: Error): void;

@@ -34,7 +34,7 @@ export const RiskProfileManager = () => {
     };
     const handleSave = async () => {
         if (editedProfile) {
-            const success = await updateProfile(editedProfile);
+
             if (success) {
                 setIsEditing(false);
             }

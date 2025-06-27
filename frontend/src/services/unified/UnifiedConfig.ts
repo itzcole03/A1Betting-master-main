@@ -24,7 +24,7 @@ export class UnifiedConfig {
   }
 
   get<T>(key: string, defaultValue?: T): T {
-    const value = this.config[key];
+
     if (value !== undefined) return value as T;
     if (defaultValue !== undefined) return defaultValue;
     throw new Error(`Configuration key "${key}" not found`);

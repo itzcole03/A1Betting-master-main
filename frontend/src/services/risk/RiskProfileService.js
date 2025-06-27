@@ -63,7 +63,7 @@ export class RiskProfileService {
         defaultProfiles.forEach(profile => {
             this.profiles.set(profile.id, profile);
         });
-        // Set default active profile
+        // Set default active profile;
         this.activeProfile = defaultProfiles[0];
     }
     setupEventListeners() {
@@ -71,7 +71,7 @@ export class RiskProfileService {
             this.handlePredictionUpdate(prediction);
         });
         this.eventBus.on('risk:update', (data) => {
-            const profile = this.profiles.get(data.profileId);
+
             if (!profile) {
                 this.errorHandler.handleError(new Error(`Risk profile with ID ${data.profileId} not found`), 'risk_profile_update');
                 return;
@@ -81,7 +81,7 @@ export class RiskProfileService {
     }
     handlePredictionUpdate(prediction) {
         try {
-            const riskAssessment = this.assessPredictionRisk(prediction);
+
             this.eventBus.emit('risk:assessment', riskAssessment);
         }
         catch (error) {
@@ -98,7 +98,7 @@ export class RiskProfileService {
         }
     }
     assessPredictionRisk(prediction) {
-        const startTime = Date.now();
+
         try {
             const riskAssessment = {
                 predictionId: prediction.id,
@@ -107,7 +107,7 @@ export class RiskProfileService {
                 maxStake: this.calculateMaxStake(prediction),
                 timestamp: Date.now(),
             };
-            const duration = Date.now() - startTime;
+
             this.performanceMonitor.trackMetric('risk_assessment_duration', duration);
             return riskAssessment;
         }
@@ -132,8 +132,8 @@ export class RiskProfileService {
     calculateMaxStake(prediction) {
         const { confidence } = prediction;
         const { maxStake, minStake } = this.activeProfile;
-        // Calculate stake based on confidence and risk profile
-        const stake = Math.floor(maxStake * confidence);
+        // Calculate stake based on confidence and risk profile;
+
         return Math.max(minStake, Math.min(stake, maxStake));
     }
     getActiveProfile() {
@@ -149,7 +149,7 @@ export class RiskProfileService {
         if (!this.profiles.has(profile.id)) {
             throw new Error(`Risk profile with ID ${profile.id} not found`);
         }
-        // Validate profile updates
+        // Validate profile updates;
         if (profile.maxStake < profile.minStake) {
             throw new Error('Maximum stake cannot be less than minimum stake');
         }
@@ -160,7 +160,7 @@ export class RiskProfileService {
         }
     }
     setActiveProfile(id) {
-        const profile = this.profiles.get(id);
+
         if (!profile) {
             throw new Error(`Risk profile with ID ${id} not found`);
         }

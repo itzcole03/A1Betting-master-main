@@ -2,41 +2,41 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { BarChart3, Activity, } from "lucide-react";
-// Import existing analytics component
+// Import existing analytics component;
 import AdvancedAnalyticsHub from "../analytics/AdvancedAnalyticsHub";
-// Cyber UI Components
+// Cyber UI Components;
 import GlassCard from "../ui/GlassCard";
 import CyberButton from "../ui/CyberButton";
 import MetricCard from "../ui/MetricCard";
 import StatusIndicator from "../ui/StatusIndicator";
-// Store integration
+// Store integration;
 import { usePredictions, useBetting, } from "../../store/unified/UnifiedStoreManager";
 const CyberAnalyticsHub = () => {
-    // State management
+    // State management;
     const [state, setState] = useState({
         isAnalyzing: false,
         autoRefresh: true,
-        refreshInterval: 10000, // 10 seconds
+        refreshInterval: 10000, // 10 seconds;
         metrics: [],
         modelAnalytics: [],
         timeRange: "24h",
         selectedTab: "overview",
         lastUpdate: null,
     });
-    // Store integration
+    // Store integration;
     const { latestPredictions } = usePredictions();
     const { bets, opportunities } = useBetting();
-    // Generate enhanced metrics
+    // Generate enhanced metrics;
     const generateCyberMetrics = useCallback(() => {
-        const currentTime = Date.now();
+
         const timeRangeMs = {
             "1h": 3600000,
             "24h": 86400000,
             "7d": 604800000,
             "30d": 2592000000,
         }[state.timeRange];
-        const recentPredictions = latestPredictions.filter((p) => currentTime - p.timestamp < timeRangeMs);
-        const recentBets = bets.filter((b) => currentTime - b.timestamp < timeRangeMs);
+
+
         return [
             {
                 name: "Quantum Accuracy",
@@ -60,10 +60,10 @@ const CyberAnalyticsHub = () => {
             },
             {
                 name: "Confidence Score",
-                value: recentPredictions.length > 0
+                value: recentPredictions.length > 0;
                     ? (recentPredictions.reduce((sum, p) => sum + p.confidence, 0) /
                         recentPredictions.length) *
-                        100
+                        100;
                     : 0,
                 unit: "%",
                 change: 1.8,
@@ -104,7 +104,7 @@ const CyberAnalyticsHub = () => {
             },
         ];
     }, [latestPredictions, bets, state.timeRange]);
-    // Generate model analytics
+    // Generate model analytics;
     const generateModelAnalytics = useCallback(() => {
         return [
             {
@@ -114,7 +114,7 @@ const CyberAnalyticsHub = () => {
                 predictions: 1247,
                 profitability: 156.8,
                 status: "active",
-                lastUpdate: new Date(Date.now() - 300000), // 5 minutes ago
+                lastUpdate: new Date(Date.now() - 300000), // 5 minutes ago;
             },
             {
                 modelName: "Neural Network Pro",
@@ -123,7 +123,7 @@ const CyberAnalyticsHub = () => {
                 predictions: 987,
                 profitability: 134.2,
                 status: "active",
-                lastUpdate: new Date(Date.now() - 180000), // 3 minutes ago
+                lastUpdate: new Date(Date.now() - 180000), // 3 minutes ago;
             },
             {
                 modelName: "Quantum Predictor",
@@ -132,7 +132,7 @@ const CyberAnalyticsHub = () => {
                 predictions: 456,
                 profitability: 198.7,
                 status: "training",
-                lastUpdate: new Date(Date.now() - 600000), // 10 minutes ago
+                lastUpdate: new Date(Date.now() - 600000), // 10 minutes ago;
             },
             {
                 modelName: "Ensemble Alpha",
@@ -141,7 +141,7 @@ const CyberAnalyticsHub = () => {
                 predictions: 2134,
                 profitability: 112.5,
                 status: "active",
-                lastUpdate: new Date(Date.now() - 120000), // 2 minutes ago
+                lastUpdate: new Date(Date.now() - 120000), // 2 minutes ago;
             },
             {
                 modelName: "Deep Learning V2",
@@ -150,18 +150,18 @@ const CyberAnalyticsHub = () => {
                 predictions: 1567,
                 profitability: 145.3,
                 status: "active",
-                lastUpdate: new Date(Date.now() - 90000), // 1.5 minutes ago
+                lastUpdate: new Date(Date.now() - 90000), // 1.5 minutes ago;
             },
         ];
     }, []);
-    // Perform cyber analysis
+    // Perform cyber analysis;
     const performCyberAnalysis = useCallback(async () => {
         setState((prev) => ({ ...prev, isAnalyzing: true }));
         try {
-            // Simulate analysis process
+            // Simulate analysis process;
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            const metrics = generateCyberMetrics();
-            const modelAnalytics = generateModelAnalytics();
+
+
             setState((prev) => ({
                 ...prev,
                 metrics,
@@ -171,11 +171,11 @@ const CyberAnalyticsHub = () => {
             }));
         }
         catch (error) {
-            console.error("Cyber analysis failed:", error);
+            // console statement removed
             setState((prev) => ({ ...prev, isAnalyzing: false }));
         }
     }, [generateCyberMetrics, generateModelAnalytics]);
-    // Auto refresh effect
+    // Auto refresh effect;
     useEffect(() => {
         let intervalId;
         if (state.autoRefresh) {
@@ -186,7 +186,7 @@ const CyberAnalyticsHub = () => {
                 clearInterval(intervalId);
         };
     }, [state.autoRefresh, state.refreshInterval, performCyberAnalysis]);
-    // Initial analysis
+    // Initial analysis;
     useEffect(() => {
         performCyberAnalysis();
     }, [performCyberAnalysis]);
@@ -217,7 +217,7 @@ const CyberAnalyticsHub = () => {
     return (_jsxs("div", { className: "space-y-8 animate-slide-in-up", children: [_jsxs("div", { className: "text-center mb-8", children: [_jsx("div", { className: "text-6xl mb-6 text-electric-400 float-element", children: _jsx(BarChart3, { className: "w-16 h-16 mx-auto" }) }), _jsx("h1", { className: "holographic text-4xl font-black mb-4", children: "QUANTUM ANALYTICS" }), _jsx("p", { className: "text-xl text-gray-400 max-w-2xl mx-auto", children: "Advanced AI-powered analytics with real-time performance monitoring" })] }), _jsxs(GlassCard, { title: "Analytics Control Center", glowing: state.isAnalyzing, children: [_jsxs("div", { className: "flex flex-wrap gap-4 items-center justify-between mb-6", children: [_jsx("div", { className: "flex space-x-2", children: ["1h", "24h", "7d", "30d"].map((range) => (_jsx(CyberButton, { label: range, onClick: () => setState((prev) => ({ ...prev, timeRange: range })), variant: state.timeRange === range ? "primary" : "ghost", size: "sm" }, range))) }), _jsxs("div", { className: "flex gap-4 items-center", children: [_jsx(CyberButton, { label: state.isAnalyzing ? "ANALYZING..." : "QUANTUM ANALYSIS", onClick: performCyberAnalysis, variant: "primary", icon: "fa-chart-line", disabled: state.isAnalyzing }), _jsx(CyberButton, { label: state.autoRefresh ? "AUTO ON" : "AUTO OFF", onClick: () => setState((prev) => ({
                                             ...prev,
                                             autoRefresh: !prev.autoRefresh,
-                                        })), variant: state.autoRefresh ? "secondary" : "ghost", size: "md", icon: "fa-refresh" }), _jsx(StatusIndicator, { status: state.isAnalyzing ? "warning" : "active", label: state.lastUpdate
+                                        })), variant: state.autoRefresh ? "secondary" : "ghost", size: "md", icon: "fa-refresh" }), _jsx(StatusIndicator, { status: state.isAnalyzing ? "warning" : "active", label: state.lastUpdate;
                                             ? `Updated: ${state.lastUpdate.toLocaleTimeString()}`
                                             : "Ready" })] })] }), _jsx("div", { className: "flex space-x-4 mb-6", children: [
                             { key: "overview", label: "Overview", icon: "fa-eye" },

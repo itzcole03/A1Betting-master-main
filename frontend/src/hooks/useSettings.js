@@ -6,7 +6,7 @@ const defaultSettings = {
 };
 export const useSettings = () => {
     const [settings, setSettings] = useState(() => {
-        const savedSettings = localStorage.getItem('appSettings');
+
         return savedSettings ? JSON.parse(savedSettings) : defaultSettings;
     });
     useEffect(() => {

@@ -1,7 +1,7 @@
 import helmet from 'helmet';
 import { UnifiedLogger } from '../services/core/UnifiedLogger';
-const logger = UnifiedLogger.getInstance();
-// Security headers configuration
+
+// Security headers configuration;
 const securityHeaders = {
     'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' wss: https:;",
     'X-Content-Type-Options': 'nosniff',
@@ -11,14 +11,14 @@ const securityHeaders = {
     'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
     'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
 };
-// Security middleware
+// Security middleware;
 export const securityMiddleware = (req, res, next) => {
     try {
-        // Add security headers
+        // Add security headers;
         Object.entries(securityHeaders).forEach(([key, value]) => {
             res.setHeader(key, value);
         });
-        // Log security events
+        // Log security events;
         logger.info(`Security headers applied for ${req.method} ${req.path}`, 'security', {
             path: req.path,
             method: req.method,
@@ -31,7 +31,7 @@ export const securityMiddleware = (req, res, next) => {
         next(error);
     }
 };
-// Helmet configuration
+// Helmet configuration;
 export const helmetConfig = helmet({
     contentSecurityPolicy: {
         directives: {

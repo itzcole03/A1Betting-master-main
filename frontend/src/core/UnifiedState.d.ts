@@ -1,8 +1,8 @@
 /**
- * UnifiedState
+ * UnifiedState;
  *
- * Manages critical, low-level, cross-cutting global application state that may not fit
- * directly into Zustand stores, or is more tightly coupled with the operational state
+ * Manages critical, low-level, cross-cutting global application state that may not fit;
+ * directly into Zustand stores, or is more tightly coupled with the operational state;
  * of the core engines.
  *
  * ⚠️ Use with caution. Most UI-related and data-cache state should reside in Zustand stores (`useAppStore`).
@@ -11,7 +11,7 @@
  * Examples of potential use (if not handled elsewhere):
  * - System-wide flags (e.g., 'MAINTENANCE_MODE', 'INITIAL_LOAD_COMPLETE')
  * - Core engine operational status (e.g., 'PredictionEngine_STATUS: ready | degraded')
- * - Singleton service readiness flags
+ * - Singleton service readiness flags;
  */
 interface CriticalStateStore {
     [key: string]: any;

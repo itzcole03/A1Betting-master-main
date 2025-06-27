@@ -1,11 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getLogger } from './../../core/logging/logger'; // Added .ts extension
-import { getMetrics } from './../../core/metrics/metrics'; // Added .ts extension
-import { PredictionIntegrationService } from './../../services/prediction/PredictionIntegrationService';
+import { NextApiRequest, NextApiResponse } from 'next.ts';
+import { getLogger } from './../../core/logging/logger.ts'; // Added .ts extension;
+import { getMetrics } from './../../core/metrics/metrics.ts'; // Added .ts extension;
+import { PredictionIntegrationService } from './../../services/prediction/PredictionIntegrationService.ts';
 
-const logger = getLogger('PredictionGenerator');
-const metrics = getMetrics();
-const predictionService = new PredictionIntegrationService();
+
 
 interface GeneratePredictionsRequest {
   modelName: string;
@@ -24,9 +22,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const startTime = Date.now();
-    const predictions = await predictionService.generatePredictions(modelName, date);
-    const duration = Date.now() - startTime;
+
+
 
     metrics.timing('prediction_generation_duration', duration, {
       modelName,
@@ -41,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json(predictions);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
     logger.error('Error generating predictions', {
       error: errorMessage,
       modelName,

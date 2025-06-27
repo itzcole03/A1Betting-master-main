@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import {
   Drawer,
   List,
@@ -8,14 +8,14 @@ import {
   ListItemButton,
   Divider,
   Box,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   Dashboard as DashboardIcon,
   SportsSoccer as SportsIcon,
   Analytics as AnalyticsIcon,
   Settings as SettingsIcon,
-} from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
+} from '@mui/icons-material.ts';
+import { useNavigate, useLocation } from 'react-router-dom.ts';
 
 interface SidebarProps {
   open: boolean;
@@ -24,15 +24,14 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
-  { text: 'Sports', icon: <SportsIcon />, path: '/sports' },
-  { text: 'Analytics', icon: <AnalyticsIcon />, path: '/analytics' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+  { text: 'Dashboard', icon: <DashboardIcon / key={467532}>, path: '/' },
+  { text: 'Sports', icon: <SportsIcon / key={98948}>, path: '/sports' },
+  { text: 'Analytics', icon: <AnalyticsIcon / key={368242}>, path: '/analytics' },
+  { text: 'Settings', icon: <SettingsIcon / key={722197}>, path: '/settings' },
 ];
 
-const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width = 240 }) => {
-  const navigate = useNavigate();
-  const location = useLocation();
+const Sidebar: React.FC<SidebarProps key={35290}> = ({ open, onClose, width = 240 }) => {
+
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -40,7 +39,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width = 240 }) => {
   };
 
   return (
-    <Drawer
+    <Drawer;
       open={open}
       sx={{
         width,
@@ -52,22 +51,22 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, width = 240 }) => {
       }}
       variant="temporary"
       onClose={onClose}
-    >
-      <Box sx={{ overflow: 'auto', mt: 8 }}>
-        <List>
+     key={702348}>
+      <Box sx={{ overflow: 'auto', mt: 8 }} key={261450}>
+        <List key={733302}>
           {menuItems.map(item => (
-            <ListItem key={item.text} disablePadding>
-              <ListItemButton
+            <ListItem key={item.text} disablePadding key={104612}>
+              <ListItemButton;
                 selected={location.pathname === item.path}
-                onClick={() => handleNavigation(item.path)}
+                onClick={() = key={237747}> handleNavigation(item.path)}
               >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
+                <ListItemIcon key={394934}>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} / key={645184}>
               </ListItemButton>
             </ListItem>
           ))}
         </List>
-        <Divider />
+        <Divider / key={11977}>
       </Box>
     </Drawer>
   );

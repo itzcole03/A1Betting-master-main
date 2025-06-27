@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 interface GridProps {

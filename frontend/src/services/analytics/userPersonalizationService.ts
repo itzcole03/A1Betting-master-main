@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { User } from '../../models/User';
-import { Bet } from '../../models/Bet';
-import { Prediction } from '../../models/Prediction';
-import { Cluster } from '../../models/Cluster';
-import { BehaviorProfile } from '../../models/BehaviorProfile';
-import { EventEmitter } from 'events';
+import { Injectable } from '@nestjs/common.ts';
+import { User } from '@/models/User.ts';
+import { Bet } from '@/models/Bet.ts';
+import { Prediction } from '@/models/Prediction.ts';
+import { Cluster } from '@/models/Cluster.ts';
+import { BehaviorProfile } from '@/models/BehaviorProfile.ts';
+import { EventEmitter } from 'events.ts';
 
 @Injectable()
 export class UserPersonalizationService extends EventEmitter {
@@ -22,7 +22,7 @@ export class UserPersonalizationService extends EventEmitter {
   }
 
   public async initialize(): Promise<void> {
-    // Initialize user personalization service
+    // Initialize user personalization service;
   }
 
   private userProfiles: Map<string, BehaviorProfile> = new Map();
@@ -31,34 +31,34 @@ export class UserPersonalizationService extends EventEmitter {
   private readonly maxClusters = 5;
 
   public updateUserProfile(user: User, bet: Bet, prediction: Prediction): void {
-    let profile = this.userProfiles.get(user.id);
+    const profile = this.userProfiles.get(user.id);
     if (!profile) {
       profile = this.createNewProfile(user.id);
       this.userProfiles.set(user.id, profile);
     }
-    // Update betting behavior
+    // Update betting behavior;
     profile.bettingBehavior.update(
       bet.amount,
       bet.odds,
       prediction.confidence,
       bet.status === 'won'
     );
-    // Update performance metrics
+    // Update performance metrics;
     profile.performanceMetrics.update(bet.status === 'won', bet.amount, bet.odds);
-    // Update risk profile
+    // Update risk profile;
     profile.riskProfile.update(bet.amount, bet.odds, prediction.confidence);
-    // Update prediction preferences
+    // Update prediction preferences;
     profile.predictionPreferences.update(
       prediction.modelType,
       prediction.marketFactors?.movement || 0,
-      prediction.temporalFactors?.timeToEvent || 0
+      prediction.temporalFactors?.timeToEvent || 0;
     );
-    // Update clusters
+    // Update clusters;
     this.updateClusters();
   }
 
   private createNewProfile(userId: string): BehaviorProfile {
-    // Create a new profile with working update methods
+    // Create a new profile with working update methods;
     const profile: BehaviorProfile = {
       userId,
       bettingBehavior: {
@@ -91,7 +91,7 @@ export class UserPersonalizationService extends EventEmitter {
             this.profitLoss -= stake;
           }
           this.roi = this.profitLoss / (stake > 0 ? stake : 1);
-          // winRate and averageOdds are recalculated externally
+          // winRate and averageOdds are recalculated externally;
         },
       },
       riskProfile: {
@@ -99,7 +99,7 @@ export class UserPersonalizationService extends EventEmitter {
         oddsPreference: 0,
         confidenceThreshold: 0.5,
         update: function (stake: number, odds: number, confidence: number) {
-          // No-op for now; calculated externally
+          // No-op for now; calculated externally;
         },
       },
       predictionPreferences: {
@@ -107,7 +107,7 @@ export class UserPersonalizationService extends EventEmitter {
         marketSensitivity: 0,
         temporalPreference: 0,
         update: function (modelType: string, marketImpact: number, temporalImpact: number) {
-          // No-op for now; calculated externally
+          // No-op for now; calculated externally;
         },
       },
     };
@@ -115,21 +115,21 @@ export class UserPersonalizationService extends EventEmitter {
   }
 
   private async updateClusters(): Promise<void> {
-    const profiles = Array.from(this.userProfiles.values());
-    // Extract features for clustering
+
+    // Extract features for clustering;
     const features = profiles.map((profile: BehaviorProfile) => ({
       stakeVariation: profile.riskProfile.stakeVariation,
       oddsPreference: profile.riskProfile.oddsPreference,
       marketSensitivity: profile.predictionPreferences.marketSensitivity,
       temporalPreference: profile.predictionPreferences.temporalPreference,
     }));
-    // Perform clustering
-    const clusters = await this.performClustering(features);
-    // Update cluster assignments
+    // Perform clustering;
+
+    // Update cluster assignments;
     profiles.forEach((profile: BehaviorProfile, index: number) => {
       profile.clusterId = clusters[index];
     });
-    // Update cluster statistics
+    // Update cluster statistics;
     this.updateClusterStatistics(clusters);
   }
 
@@ -141,16 +141,16 @@ export class UserPersonalizationService extends EventEmitter {
       temporalPreference: number;
     }>
   ): Promise<number[]> {
-    let k = Math.floor(features.length / this.minClusterSize);
+    const k = Math.floor(features.length / this.minClusterSize);
     if (k < 1) k = 1;
     k = Math.min(this.maxClusters, k);
-    const centroids = this.initializeCentroids(features, k);
+
     let assignments: number[] = [];
     let previousAssignments: number[] = [];
     do {
       previousAssignments = assignments;
       assignments = this.assignToClusters(features, centroids);
-      for (let i = 0; i < centroids.length; i++) {
+      for (const i = 0; i < centroids.length; i++) {
         centroids[i] = this.updateCentroid(features, assignments, i);
       }
     } while (!this.areAssignmentsEqual(assignments, previousAssignments));
@@ -164,7 +164,7 @@ export class UserPersonalizationService extends EventEmitter {
       marketSensitivity: number;
       temporalPreference: number;
     }>,
-    k: number
+    k: number;
   ): Array<{
     stakeVariation: number;
     oddsPreference: number;
@@ -177,18 +177,18 @@ export class UserPersonalizationService extends EventEmitter {
       marketSensitivity: number;
       temporalPreference: number;
     }> = [];
-    const firstCentroid = features[Math.floor(Math.random() * features.length)];
+
     centroids.push({ ...firstCentroid });
-    for (let i = 1; i < k; i++) {
+    for (const i = 1; i < k; i++) {
       const distances = features.map(feature =>
         Math.min(...centroids.map(centroid => this.calculateDistance(feature, centroid)))
       );
-      const sum = distances.reduce((a: number, b: number) => a + b, 0);
-      const probabilities = distances.map((d: number) => d / sum);
-      let cumulative = 0;
-      const random = Math.random();
-      let selectedIndex = 0;
-      for (let j = 0; j < probabilities.length; j++) {
+
+
+      const cumulative = 0;
+
+      const selectedIndex = 0;
+      for (const j = 0; j < probabilities.length; j++) {
         cumulative += probabilities[j];
         if (random <= cumulative) {
           selectedIndex = j;
@@ -215,7 +215,7 @@ export class UserPersonalizationService extends EventEmitter {
     }>
   ): number[] {
     return features.map(feature => {
-      const distances = centroids.map(centroid => this.calculateDistance(feature, centroid));
+
       return distances.indexOf(Math.min(...distances));
     });
   }
@@ -228,14 +228,14 @@ export class UserPersonalizationService extends EventEmitter {
       temporalPreference: number;
     }>,
     assignments: number[],
-    clusterId: number
+    clusterId: number;
   ): {
     stakeVariation: number;
     oddsPreference: number;
     marketSensitivity: number;
     temporalPreference: number;
   } {
-    const clusterFeatures = features.filter((_, i) => assignments[i] === clusterId);
+
     if (clusterFeatures.length === 0) {
       return { stakeVariation: 0, oddsPreference: 0, marketSensitivity: 0, temporalPreference: 0 };
     }
@@ -270,8 +270,8 @@ export class UserPersonalizationService extends EventEmitter {
   }
 
   private average(numbers: number[]): number {
-    return numbers.length > 0
-      ? numbers.reduce((a: number, b: number) => a + b, 0) / numbers.length
+    return numbers.length > 0;
+      ? numbers.reduce((a: number, b: number) => a + b, 0) / numbers.length;
       : 0;
   }
 
@@ -281,10 +281,10 @@ export class UserPersonalizationService extends EventEmitter {
   }
 
   private updateClusterStatistics(clusters: number[]): void {
-    const clusterProfiles = new Map<number, BehaviorProfile[]>();
+
     this.userProfiles.forEach((profile: BehaviorProfile) => {
       if (profile.clusterId !== undefined) {
-        const clusterProfilesList = clusterProfiles.get(profile.clusterId) || [];
+
         clusterProfilesList.push(profile);
         clusterProfiles.set(profile.clusterId, clusterProfilesList);
       }
@@ -307,29 +307,29 @@ export class UserPersonalizationService extends EventEmitter {
   }
 
   async getPersonalizedPrediction(userId: string, prediction: Prediction): Promise<Prediction> {
-    const profile = this.userProfiles.get(userId);
+
     if (!profile) {
       return prediction;
     }
 
-    // Adjust prediction based on user's cluster
-    const cluster = this.clusters.find(c => c.id === profile.clusterId);
+    // Adjust prediction based on user's cluster;
+
     if (cluster) {
       prediction = this.adjustPredictionForCluster(prediction, cluster);
     }
 
-    // Adjust prediction based on user's preferences
+    // Adjust prediction based on user's preferences;
     prediction = this.adjustPredictionForUser(prediction, profile);
 
     return prediction;
   }
 
   private adjustPredictionForCluster(prediction: Prediction, cluster: Cluster): Prediction {
-    // Adjust confidence based on cluster's risk profile
-    const confidenceAdjustment = cluster.riskProfile.confidenceThreshold - 0.5;
+    // Adjust confidence based on cluster's risk profile;
+
     prediction.confidence = Math.max(0, Math.min(1, prediction.confidence + confidenceAdjustment));
 
-    // Adjust stake recommendation based on cluster's average stake
+    // Adjust stake recommendation based on cluster's average stake;
     if (prediction.recommendedStake) {
       prediction.recommendedStake *= cluster.averageStake;
     }
@@ -338,22 +338,22 @@ export class UserPersonalizationService extends EventEmitter {
   }
 
   private adjustPredictionForUser(prediction: Prediction, profile: BehaviorProfile): Prediction {
-    // Adjust based on user's model trust
-    const modelTrust = profile.predictionPreferences.modelTrust;
+    // Adjust based on user's model trust;
+
     if (modelTrust[prediction.modelType]) {
       prediction.confidence *= modelTrust[prediction.modelType];
     }
 
-    // Adjust based on user's market sensitivity
-    const marketSensitivity = profile.predictionPreferences.marketSensitivity;
+    // Adjust based on user's market sensitivity;
+
     if (prediction.marketFactors) {
       Object.keys(prediction.marketFactors).forEach((key: string) => {
         (prediction.marketFactors as any)[key] *= marketSensitivity;
       });
     }
 
-    // Adjust based on user's temporal preference
-    const temporalPreference = profile.predictionPreferences.temporalPreference;
+    // Adjust based on user's temporal preference;
+
     if (prediction.temporalFactors) {
       Object.keys(prediction.temporalFactors).forEach((key: string) => {
         (prediction.temporalFactors as any)[key] *= temporalPreference;
@@ -365,43 +365,40 @@ export class UserPersonalizationService extends EventEmitter {
 
   private calculateROI(bettingBehavior: BehaviorProfile['bettingBehavior']): number {
     const totalProfit = bettingBehavior.outcomeHistory.reduce((sum, outcome, index) => {
-      const stake = bettingBehavior.stakeHistory[index];
-      const odds = bettingBehavior.oddsHistory[index];
+
+
       return sum + (outcome ? stake * (odds - 1) : -stake);
     }, 0);
 
-    const totalStake = bettingBehavior.totalStake;
     return totalStake > 0 ? totalProfit / totalStake : 0;
   }
 
   private calculateWinRate(bettingBehavior: BehaviorProfile['bettingBehavior']): number {
-    const wins = bettingBehavior.outcomeHistory.filter(outcome => outcome).length;
+
     return bettingBehavior.totalBets > 0 ? wins / bettingBehavior.totalBets : 0;
   }
 
   private calculateAverageOdds(bettingBehavior: BehaviorProfile['bettingBehavior']): number {
-    return bettingBehavior.oddsHistory.length > 0
+    return bettingBehavior.oddsHistory.length > 0;
       ? bettingBehavior.oddsHistory.reduce((sum, odds) => sum + odds, 0) /
-          bettingBehavior.oddsHistory.length
+          bettingBehavior.oddsHistory.length;
       : 0;
   }
 
   private calculateStakeVariation(bettingBehavior: BehaviorProfile['bettingBehavior']): number {
     if (bettingBehavior.stakeHistory.length < 2) return 0;
 
-    const mean = bettingBehavior.averageStake;
     const variance =
       bettingBehavior.stakeHistory.reduce((sum, stake) => sum + Math.pow(stake - mean, 2), 0) /
       bettingBehavior.stakeHistory.length;
 
-    return Math.sqrt(variance) / mean; // Coefficient of variation
+    return Math.sqrt(variance) / mean; // Coefficient of variation;
   }
 
   private calculateOddsPreference(bettingBehavior: BehaviorProfile['bettingBehavior']): number {
     if (bettingBehavior.oddsHistory.length === 0) return 0;
 
-    const averageOdds = this.calculateAverageOdds(bettingBehavior);
-    const preferredOdds = 2.0; // Base preferred odds
+    const preferredOdds = 2.0; // Base preferred odds;
 
     return Math.max(0, Math.min(1, 1 - Math.abs(averageOdds - preferredOdds) / preferredOdds));
   }
@@ -411,25 +408,25 @@ export class UserPersonalizationService extends EventEmitter {
   ): number {
     if (bettingBehavior.confidenceHistory.length === 0) return 0.5;
 
-    // Calculate optimal confidence threshold based on historical performance
+    // Calculate optimal confidence threshold based on historical performance;
     const successfulPredictions = bettingBehavior.confidenceHistory.filter(
       (confidence, index) => confidence > 0.5 && bettingBehavior.outcomeHistory[index]
     );
 
-    return successfulPredictions.length > 0
-      ? successfulPredictions.reduce((sum, conf) => sum + conf, 0) / successfulPredictions.length
+    return successfulPredictions.length > 0;
+      ? successfulPredictions.reduce((sum, conf) => sum + conf, 0) / successfulPredictions.length;
       : 0.5;
   }
 
   private calculateModelTrust(
     bettingBehavior: BehaviorProfile['bettingBehavior'],
-    prediction: Prediction
+    prediction: Prediction;
   ): Record<string, number> {
     const modelTrust: Record<string, number> = {};
 
-    // Calculate trust based on historical performance with this model type
+    // Calculate trust based on historical performance with this model type;
     const modelPredictions = bettingBehavior.confidenceHistory.filter(
-      (_, index) => prediction.modelType === 'modelType' // Replace with actual model type comparison
+      (_, index) => prediction.modelType === 'modelType' // Replace with actual model type comparison;
     );
 
     const successfulPredictions = modelPredictions.filter(
@@ -437,8 +434,8 @@ export class UserPersonalizationService extends EventEmitter {
     );
 
     modelTrust[prediction.modelType] =
-      successfulPredictions.length > 0
-        ? successfulPredictions.length / modelPredictions.length
+      successfulPredictions.length > 0;
+        ? successfulPredictions.length / modelPredictions.length;
         : 0.5;
 
     return modelTrust;
@@ -447,10 +444,10 @@ export class UserPersonalizationService extends EventEmitter {
   private calculateMarketSensitivity(bettingBehavior: BehaviorProfile['bettingBehavior']): number {
     if (bettingBehavior.totalBets === 0) return 0.5;
 
-    // Calculate how well the user responds to market movements
+    // Calculate how well the user responds to market movements;
     const marketResponses = bettingBehavior.outcomeHistory.filter((outcome, index) => {
-      const confidence = bettingBehavior.confidenceHistory[index];
-      return confidence > 0.7 && outcome; // High confidence bets that won
+
+      return confidence > 0.7 && outcome; // High confidence bets that won;
     });
 
     return marketResponses.length / bettingBehavior.totalBets;
@@ -459,10 +456,10 @@ export class UserPersonalizationService extends EventEmitter {
   private calculateTemporalPreference(bettingBehavior: BehaviorProfile['bettingBehavior']): number {
     if (bettingBehavior.totalBets === 0) return 0.5;
 
-    // Calculate how well the user performs with time-based predictions
+    // Calculate how well the user performs with time-based predictions;
     const temporalBets = bettingBehavior.outcomeHistory.filter((outcome, index) => {
-      const confidence = bettingBehavior.confidenceHistory[index];
-      return confidence > 0.6 && outcome; // Medium-high confidence bets that won
+
+      return confidence > 0.6 && outcome; // Medium-high confidence bets that won;
     });
 
     return temporalBets.length / bettingBehavior.totalBets;

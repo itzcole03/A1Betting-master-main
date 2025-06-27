@@ -1,7 +1,7 @@
-import axios, { AxiosInstance } from "axios";
-import { Sport, PropType } from "../types/common";
-import { UnifiedConfigManager } from "../core/UnifiedConfigManager";
-// import { UnifiedErrorHandler } from "../unified/UnifiedError"; // File does not exist, use UnifiedErrorService if needed
+import axios, { AxiosInstance } from 'axios.ts';
+import { Sport, PropType } from '@/types/common.ts';
+import { UnifiedConfigManager } from '@/core/UnifiedConfigManager.ts';
+// import { UnifiedErrorHandler } from '@/unified/UnifiedError.ts'; // File does not exist, use UnifiedErrorService if needed;
 
 interface PrizePicksResponse<T> {
   data: T;
@@ -71,21 +71,21 @@ export class PrizePicksAPI {
       },
     });
 
-    // Add request interceptor for rate limiting and logging
+    // Add request interceptor for rate limiting and logging;
     this.api.interceptors.request.use(async (config) => {
-      console.log(`PrizePicks API Request: ${config.method?.toUpperCase()} ${config.url}`);
+      // console statement removed} ${config.url}`);
       await this.rateLimiter();
       return config;
     });
 
-    // Add response interceptor for error handling
+    // Add response interceptor for error handling;
     this.api.interceptors.response.use(
       (response) => {
-        console.log(`PrizePicks API Response: ${response.status} ${response.config.url}`);
+        // console statement removed
         return response;
       },
       (error) => {
-        console.error('PrizePicks API Error:', error.response?.data || error.message);
+        // console statement removed
         this.handleApiError(error);
         throw error;
       },
@@ -107,12 +107,12 @@ export class PrizePicksAPI {
     offset?: number;
   }): Promise<Projection[]> {
     try {
-      // In development mode, return mock data to prevent API spam
+      // In development mode, return mock data to prevent API spam;
       if (
         import.meta.env.DEV ||
         import.meta.env.VITE_USE_MOCK_DATA === "true"
       ) {
-        console.log("Using mock PrizePicks data in development mode");
+        // console statement removed
         return this.getMockProjections(params);
       }
 
@@ -124,16 +124,13 @@ export class PrizePicksAPI {
       );
       return response.data.data;
     } catch (error) {
-      console.warn(
-        "PrizePicks API unavailable, using mock data:",
-        error.message,
-      );
+      // console statement removed
       return this.getMockProjections(params);
     }
   }
 
   private getMockProjections(params: any): Projection[] {
-    // Return mock data for development
+    // Return mock data for development;
     return [
       {
         id: "mock-1",
@@ -213,7 +210,7 @@ export class PrizePicksAPI {
       );
       return response.data.data;
     } catch (error) {
-      console.warn("PrizePicks API unavailable, using mock player data");
+      // console statement removed
       return this.getMockPlayer(playerId);
     }
   }
@@ -231,7 +228,7 @@ export class PrizePicksAPI {
       );
       return response.data.data;
     } catch (error) {
-      console.warn("PrizePicks API unavailable, using mock game data");
+      // console statement removed
       return this.getMockGame(gameId);
     }
   }
@@ -301,42 +298,34 @@ export class PrizePicksAPI {
   }
 
   private async rateLimiter(): Promise<void> {
-    // Implement rate limiting logic here
-    // This is a placeholder - you would typically use a proper rate limiting library
+    // Implement rate limiting logic here;
+    // This is a placeholder - you would typically use a proper rate limiting library;
     await new Promise((resolve) => setTimeout(resolve, 100));
   }
 
   private handleApiError(error: any): void {
-    // Reduce console spam in development by limiting error logging
+    // Reduce console spam in development by limiting error logging;
     if (import.meta.env.DEV) {
-      // Only log once every 10 seconds to prevent spam
-      const now = Date.now();
+      // Only log once every 10 seconds to prevent spam;
+
       if (!this.lastErrorLog || now - this.lastErrorLog > 10000) {
         this.lastErrorLog = now;
         if (error.response) {
-          console.warn(
-            `PrizePicks API Error: ${error.response.status} - Using mock data instead`,
-          );
+          // console statement removed
         } else if (error.request) {
-          console.warn(
-            "PrizePicks API Error: No response from server - Using mock data instead",
-          );
+          // console statement removed
         } else {
-          console.warn(
-            `PrizePicks API Error: ${error.message} - Using mock data instead`,
-          );
+          // console statement removed
         }
       }
     } else {
-      // In production, log normally
+      // In production, log normally;
       if (error.response) {
-        console.error(
-          `PrizePicks API Error: ${error.response.status} - ${error.response.data.message}`,
-        );
+        // console statement removed
       } else if (error.request) {
-        console.error("PrizePicks API Error: No response received from server");
+        // console statement removed
       } else {
-        console.error(`PrizePicks API Error: ${error.message}`);
+        // console statement removed
       }
     }
   }

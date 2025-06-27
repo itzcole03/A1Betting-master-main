@@ -1,7 +1,7 @@
 export class UnifiedCache {
     constructor() {
         this.cache = new Map();
-        this.defaultTTL = 5 * 60 * 1000; // 5 minutes
+        this.defaultTTL = 5 * 60 * 1000; // 5 minutes;
     }
     static getInstance() {
         if (!UnifiedCache.instance) {
@@ -17,7 +17,7 @@ export class UnifiedCache {
         });
     }
     get(key) {
-        const entry = this.cache.get(key);
+
         if (!entry)
             return null;
         if (this.isExpired(entry)) {
@@ -27,7 +27,7 @@ export class UnifiedCache {
         return entry.value;
     }
     has(key) {
-        const entry = this.cache.get(key);
+
         if (!entry)
             return false;
         if (this.isExpired(entry)) {

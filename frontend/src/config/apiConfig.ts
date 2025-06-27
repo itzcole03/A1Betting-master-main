@@ -1,4 +1,4 @@
-// Centralized API config for all integrations
+// Centralized API config for all integrations;
 export const API_CONFIG = {
   SPORTS_DATA: {
     BASE_URL: import.meta.env.VITE_SPORTS_API_URL || "",

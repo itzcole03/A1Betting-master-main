@@ -4,7 +4,7 @@ declare class EventEmitter {
     off(event: string, listener: Function): void;
     emit(event: string, ...args: any[]): void;
 }
-import { BettingOdds, MarketMetrics, MarketEfficiencyMetrics, MarketAnomaly } from "../types/betting";
+import { BettingOdds, MarketMetrics, MarketEfficiencyMetrics, MarketAnomaly } from '@/types/betting.ts';
 export declare class MarketAnalysisService extends EventEmitter {
     private static instance;
     private marketMetrics;

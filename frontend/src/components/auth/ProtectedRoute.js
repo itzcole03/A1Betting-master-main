@@ -4,13 +4,13 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../providers/useAuth';
 const ProtectedRoute = ({ children, requiredRole }) => {
     const { user, isAuthenticated } = useAuth();
-    const location = useLocation();
+
     if (!isAuthenticated) {
-        // Redirect to login page with return url
+        // Redirect to login page with return url;
         return _jsx(Navigate, { replace: true, state: { from: location }, to: "/login" });
     }
     if (requiredRole && user?.role !== requiredRole) {
-        // Redirect to unauthorized page
+        // Redirect to unauthorized page;
         return _jsx(Navigate, { replace: true, to: "/unauthorized" });
     }
     return _jsx(_Fragment, { children: children });

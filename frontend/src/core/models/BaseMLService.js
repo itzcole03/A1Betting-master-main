@@ -5,7 +5,7 @@ export class BaseMLService {
         this.modelManager = new ModelManager(config.modelManagerConfig);
         this.logger = new FeatureLogger(config.loggerConfig);
     }
-    // Model Management
+    // Model Management;
     async createModel(metadata) {
         try {
             return await this.modelManager.createModel(metadata);
@@ -42,7 +42,7 @@ export class BaseMLService {
             throw error;
         }
     }
-    // Version Management
+    // Version Management;
     async getVersions(modelId) {
         try {
             return await this.modelManager.getModelVersions(modelId);
@@ -54,8 +54,8 @@ export class BaseMLService {
     }
     async getVersion(modelId, version) {
         try {
-            const versions = await this.getVersions(modelId);
-            const modelVersion = versions.find(v => v.version === version);
+
+
             if (!modelVersion) {
                 throw new Error(`Version ${version} not found for model ${modelId}`);
             }
@@ -68,9 +68,9 @@ export class BaseMLService {
     }
     async deleteVersion(modelId, version) {
         try {
-            const versions = await this.getVersions(modelId);
-            const updatedVersions = versions.filter(v => v.version !== version);
-            // Implementation depends on storage mechanism
+
+
+            // Implementation depends on storage mechanism;
             this.logger.info(`Deleted version ${version} for model ${modelId}`);
         }
         catch (error) {
@@ -78,7 +78,7 @@ export class BaseMLService {
             throw error;
         }
     }
-    // Evaluation
+    // Evaluation;
     async evaluate(modelId, data) {
         try {
             return await this.modelManager.evaluateModel(modelId, data);
@@ -90,8 +90,8 @@ export class BaseMLService {
     }
     async evaluateVersion(modelId, version, data) {
         try {
-            const modelVersion = await this.getVersion(modelId, version);
-            // Implementation depends on evaluation mechanism
+
+            // Implementation depends on evaluation mechanism;
             return {};
         }
         catch (error) {
@@ -99,10 +99,10 @@ export class BaseMLService {
             throw error;
         }
     }
-    // Model Registry
+    // Model Registry;
     async registerModel(modelId) {
         try {
-            // Implementation depends on registry mechanism
+            // Implementation depends on registry mechanism;
             this.logger.info(`Registered model ${modelId}`);
         }
         catch (error) {
@@ -112,7 +112,7 @@ export class BaseMLService {
     }
     async unregisterModel(modelId) {
         try {
-            // Implementation depends on registry mechanism
+            // Implementation depends on registry mechanism;
             this.logger.info(`Unregistered model ${modelId}`);
         }
         catch (error) {
@@ -120,7 +120,7 @@ export class BaseMLService {
             throw error;
         }
     }
-    // Model Lifecycle
+    // Model Lifecycle;
     async archiveModel(modelId) {
         try {
             await this.updateModel(modelId, { status: 'archived' });

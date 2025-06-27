@@ -7,18 +7,18 @@ export class ModelComparisonService {
     }
     async compareModels(request) {
         try {
-            // Calculate consensus prediction using weighted average
+            // Calculate consensus prediction using weighted average;
             const weightedSum = request.predictions.reduce((sum, model) => {
                 return sum + model.prediction * (model.performance?.accuracy || 0.5);
             }, 0);
             const totalWeight = request.predictions.reduce((sum, model) => {
                 return sum + (model.performance?.accuracy || 0.5);
             }, 0);
-            const consensusPrediction = weightedSum / totalWeight;
-            // Calculate model agreement
-            const agreement = this.calculateModelAgreement(request.predictions);
-            // Calculate consensus confidence
-            const consensusConfidence = this.calculateConsensusConfidence(request.predictions);
+
+            // Calculate model agreement;
+
+            // Calculate consensus confidence;
+
             const result = {
                 models: request.predictions.map(model => ({
                     name: model.name,
@@ -38,9 +38,9 @@ export class ModelComparisonService {
                 },
                 timestamp: request.timestamp,
             };
-            // Store comparison result
-            const comparisonKey = request.timestamp;
-            const comparisons = this.comparisons.get(comparisonKey) || [];
+            // Store comparison result;
+
+
             comparisons.push(result);
             this.comparisons.set(comparisonKey, comparisons);
             return {
@@ -65,13 +65,13 @@ export class ModelComparisonService {
     calculateModelAgreement(predictions) {
         if (predictions.length <= 1)
             return 1;
-        const threshold = 0.1; // Consider predictions within 10% as agreeing
-        let agreementCount = 0;
-        let totalComparisons = 0;
-        for (let i = 0; i < predictions.length; i++) {
-            for (let j = i + 1; j < predictions.length; j++) {
-                const diff = Math.abs(predictions[i].prediction - predictions[j].prediction);
-                const avg = (predictions[i].prediction + predictions[j].prediction) / 2;
+        const threshold = 0.1; // Consider predictions within 10% as agreeing;
+        const agreementCount = 0;
+        const totalComparisons = 0;
+        for (const i = 0; i < predictions.length; i++) {
+            for (const j = i + 1; j < predictions.length; j++) {
+
+
                 if (diff / avg <= threshold) {
                     agreementCount++;
                 }
@@ -95,11 +95,11 @@ export class ModelComparisonService {
         return this.comparisons.get(timestamp) || [];
     }
     async getLatestComparison() {
-        const timestamps = Array.from(this.comparisons.keys()).sort();
+
         if (timestamps.length === 0)
             return null;
-        const latestTimestamp = timestamps[timestamps.length - 1];
-        const comparisons = this.comparisons.get(latestTimestamp) || [];
+
+
         return comparisons.length > 0 ? comparisons[comparisons.length - 1] : null;
     }
 }

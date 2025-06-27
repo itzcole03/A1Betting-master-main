@@ -3,7 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { TrendingUp, Target, Activity, ArrowDownRight, Brain, ChevronRight, MoreHorizontal, Play, Pause, RefreshCw, Filter, PieChart, LineChart, AlertTriangle, CheckCircle, } from "lucide-react";
 // ============================================================================
-// MOCK DATA
+// MOCK DATA;
 // ============================================================================
 const mockMetrics = [
     {
@@ -98,7 +98,7 @@ const mockRecentActivity = [
     },
 ];
 // ============================================================================
-// COMPONENTS
+// COMPONENTS;
 // ============================================================================
 const MetricCard = ({ metric, index }) => {
     const getColorClasses = (color) => {
@@ -184,7 +184,7 @@ const ActivityItem = ({ activity, }) => {
     return (_jsxs("div", { className: "flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors", children: [_jsx("div", { className: "flex-shrink-0", children: getIcon() }), _jsxs("div", { className: "flex-1 min-w-0", children: [_jsx("p", { className: "text-sm font-medium text-gray-900 truncate", children: activity.message }), activity.confidence && (_jsxs("p", { className: "text-xs text-blue-600", children: ["Confidence: ", activity.confidence] }))] }), _jsxs("div", { className: "text-right flex-shrink-0", children: [activity.amount && (_jsx("p", { className: "text-sm font-bold text-green-600", children: activity.amount })), _jsx("p", { className: "text-xs text-gray-500", children: activity.time })] })] }));
 };
 // ============================================================================
-// MAIN DASHBOARD COMPONENT
+// MAIN DASHBOARD COMPONENT;
 // ============================================================================
 const ConsolidatedUniversalDashboard = () => {
     const [isLive, setIsLive] = useState(true);

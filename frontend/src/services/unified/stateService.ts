@@ -6,10 +6,10 @@ import {
   UserConstraints,
   BettingMetrics,
   BettingOpportunity,
-} from '@/types/betting';
-import UnifiedLoggingService from './loggingService';
-import UnifiedErrorService from './errorService';
-import UnifiedSettingsService from './settingsService';
+} from '@/types/betting.ts';
+import UnifiedLoggingService from './loggingService.ts';
+import UnifiedErrorService from './errorService.ts';
+import UnifiedSettingsService from './settingsService.ts';
 
 interface StateConfig {
   persistToStorage: boolean;
@@ -84,7 +84,7 @@ class UnifiedStateService {
     if (!this.config.persistToStorage) return;
 
     try {
-      const savedState = localStorage.getItem(this.STORAGE_KEY);
+
       if (savedState) {
         this.state = JSON.parse(savedState);
       }
@@ -125,7 +125,7 @@ class UnifiedStateService {
     previousState: BettingInterfaceState,
     newState: BettingInterfaceState,
     source: string,
-    action: string
+    action: string;
   ): void {
     const change: StateChange<BettingInterfaceState> = {
       timestamp: Date.now(),
@@ -146,7 +146,7 @@ class UnifiedStateService {
   }
 
   public setState(updates: Partial<BettingInterfaceState>, source: string, action: string): void {
-    const previousState = { ...this.state };
+
     this.state = {
       ...this.state,
       ...updates,
@@ -171,8 +171,8 @@ class UnifiedStateService {
     source: string,
     action: string = 'updateState'
   ): void {
-    const previousState = { ...this.state };
-    const updates = updater(this.state);
+
+
     this.state = { ...this.state, ...updates };
 
     this.recordStateChange(previousState, this.state, source, action);
@@ -184,7 +184,7 @@ class UnifiedStateService {
     previousState: BettingInterfaceState,
     newState: BettingInterfaceState,
     source: string,
-    action: string
+    action: string;
   ): void {
     const event = new CustomEvent('stateChange', {
       detail: {
@@ -213,7 +213,6 @@ class UnifiedStateService {
       return;
     }
 
-    const targetState = this.history[index].newState;
     this.state = { ...targetState };
     this.saveState();
     this.dispatchStateChange(this.state, targetState, 'StateService', 'timeTravel');

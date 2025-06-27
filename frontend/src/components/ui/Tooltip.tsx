@@ -1,5 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef, useEffect  } from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 
 interface TooltipProps {
   content: React.ReactNode;
@@ -9,7 +9,7 @@ interface TooltipProps {
   className?: string;
 }
 
-export const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip: React.FC<TooltipProps key={457}> = ({
   content,
   children,
   delay = 300,
@@ -19,18 +19,15 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const [isVisible, setIsVisible] = useState(false);
   const [coords, setCoords] = useState({ x: 0, y: 0 });
   const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-  const timeoutRef = useRef<number>();
-  const tooltipRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLDivElement>(null);
+
+
 
   const updatePosition = () => {
     if (triggerRef.current && tooltipRef.current) {
-      const triggerRect = triggerRef.current.getBoundingClientRect();
-      const tooltipRect = tooltipRef.current.getBoundingClientRect();
-      
-      let x = 0;
-      let y = 0;
-      const offset = 8;
+
+
+      const x = 0;
+      const y = 0;
 
       switch (position) {
         case 'top':
@@ -51,7 +48,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
           break;
       }
 
-      // Ensure tooltip stays within viewport
+      // Ensure tooltip stays within viewport;
       x = Math.max(offset, Math.min(window.innerWidth - tooltipRect.width - offset, x));
       y = Math.max(offset, Math.min(window.innerHeight - tooltipRect.height - offset, y));
 
@@ -65,7 +62,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
     }
     timeoutRef.current = window.setTimeout(() => {
       setIsVisible(true);
-      // Wait for the tooltip to be visible before calculating position
+      // Wait for the tooltip to be visible before calculating position;
       requestAnimationFrame(updatePosition);
     }, delay);
   };
@@ -99,21 +96,21 @@ export const Tooltip: React.FC<TooltipProps> = ({
   };
 
   return (
-    <div className="relative inline-block">
-      <div
+    <div className="relative inline-block" key={46364}>
+      <div;
         ref={triggerRef}
         onMouseEnter={showTooltip}
         onMouseLeave={hideTooltip}
         onFocus={showTooltip}
         onBlur={hideTooltip}
         className="inline-block"
-      >
+       key={719008}>
         {children}
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence key={359944}>
         {isVisible && (
-          <motion.div
+          <motion.div;
             ref={tooltipRef}
             className={`fixed z-50 px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md shadow-lg whitespace-nowrap pointer-events-none ${className}`}
             style={{
@@ -130,9 +127,9 @@ export const Tooltip: React.FC<TooltipProps> = ({
               damping: 25,
               stiffness: 300,
             }}
-          >
+           key={435794}>
             {content}
-            <div 
+            <div; 
               className="absolute w-2 h-2 bg-gray-900 transform -translate-x-1/2 -translate-y-1/2 rotate-45"
               style={{
                 left: '50%',
@@ -142,7 +139,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
                 ...(position === 'bottom' && { top: '100%', transform: 'translate(-50%, -50%) rotate(45deg)' }),
                 ...(position === 'left' && { left: '100%', top: '50%', transform: 'translate(-50%, -50%) rotate(45deg)' }),
               }}
-            />
+            / key={939419}>
           </motion.div>
         )}
       </AnimatePresence>

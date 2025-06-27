@@ -1,6 +1,6 @@
-import { BaseModel } from '../models/BaseModel';
-import { ModelMetrics, ModelType } from '@/types';
-import { EventEmitter } from 'events';
+import { BaseModel } from '@/models/BaseModel.ts';
+import { ModelMetrics, ModelType } from '@/types.ts';
+import { EventEmitter } from 'events.ts';
 export declare class ModelRegistry extends EventEmitter {
     private static instance;
     private models;

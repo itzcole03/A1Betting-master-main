@@ -355,7 +355,7 @@ def verify_token(
             raise HTTPException(status_code=401, detail="Token expired")
 
         return token_data
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         raise HTTPException(status_code=401, detail="Invalid token")
 
 
@@ -571,7 +571,7 @@ async def refresh_token(request: RefreshTokenRequest):
         new_refresh_token = create_refresh_token(user["id"])
 
         return api_response({"token": access_token, "refreshToken": new_refresh_token})
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         raise HTTPException(status_code=401, detail="Invalid refresh token")
 
 
@@ -790,8 +790,8 @@ async def analyze_prediction(request: AnalysisRequest):
                     request.playerId, request.statType, request.line
                 )
                 return api_response(analysis)
-        except Exception as e:
-            logger.error(f"Agent analysis failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Agent analysis failed: {e}")
 
     # Fallback to mock analysis
     analysis = AnalysisResponse(
@@ -992,8 +992,8 @@ async def ai_chat(
                         "suggestions": response.get("suggestions", []),
                     }
                 )
-        except Exception as e:
-            logger.error(f"AI chat failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("AI chat failed: {e}")
 
     # Fallback response
     return api_response(

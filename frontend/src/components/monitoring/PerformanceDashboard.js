@@ -4,7 +4,7 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, } from 'chart.js';
 import { performanceService } from '../../services/performanceService';
 import { toast } from 'react-toastify';
-// Register ChartJS components
+// Register ChartJS components;
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 const PerformanceDashboard = () => {
     const [metrics, setMetrics] = useState([]);
@@ -14,27 +14,27 @@ const PerformanceDashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Fetch performance metrics
-                const metricsData = await performanceService.getMetrics(selectedMetric);
+                // Fetch performance metrics;
+
                 setMetrics(metricsData);
-                // Fetch alerts
-                const response = await fetch('/api/monitoring/performance/alerts');
-                const alertsData = await response.json();
+                // Fetch alerts;
+
+
                 setAlerts(alertsData);
-                // Show toast for new critical alerts
-                alertsData
+                // Show toast for new critical alerts;
+                alertsData;
                     .filter((alert) => alert.severity === 'critical')
                     .forEach((alert) => {
                     toast.error(`Critical alert: ${alert.metric_name} exceeded threshold (${alert.current_value} > ${alert.threshold})`);
                 });
             }
             catch (error) {
-                console.error('Error fetching performance data:', error);
+                // console statement removed
                 toast.error('Failed to fetch performance data');
             }
         };
         fetchData();
-        const interval = setInterval(fetchData, 60000); // Refresh every minute
+        const interval = setInterval(fetchData, 60000); // Refresh every minute;
         return () => clearInterval(interval);
     }, [selectedMetric, timeRange]);
     const chartData = {

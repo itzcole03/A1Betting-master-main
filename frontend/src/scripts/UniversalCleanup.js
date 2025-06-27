@@ -1,13 +1,13 @@
-#!/usr/bin/env node
+#!/usr/bin/env node;
 /**
- * Universal Frontend Cleanup and Optimization Script
+ * Universal Frontend Cleanup and Optimization Script;
  *
  * This script performs comprehensive consolidation and optimization:
- * 1. Identifies and removes duplicate files
- * 2. Updates import statements to use consolidated systems
- * 3. Creates index files for better organization
- * 4. Removes unused dependencies
- * 5. Optimizes file structure
+ * 1. Identifies and removes duplicate files;
+ * 2. Updates import statements to use consolidated systems;
+ * 3. Creates index files for better organization;
+ * 4. Removes unused dependencies;
+ * 5. Optimizes file structure;
  */
 import fs from "fs";
 import path from "path";
@@ -25,26 +25,26 @@ const config = {
         "CyberTheme.js",
     ],
     consolidationMap: {
-        // Dashboard consolidation
+        // Dashboard consolidation;
         "components/dashboard/Dashboard.tsx": "components/dashboard/UniversalDashboard.tsx",
         "components/dashboard/CyberDashboard.tsx": "components/dashboard/UniversalDashboard.tsx",
         "components/dashboard/PremiumDashboard.tsx": "components/dashboard/UniversalDashboard.tsx",
         "components/features/dashboard/Dashboard.tsx": "components/dashboard/UniversalDashboard.tsx",
-        // Button consolidation
+        // Button consolidation;
         "components/common/buttons/Button.tsx": "components/ui/UniversalButton.tsx",
         "components/common/buttons/BettingButton.tsx": "components/ui/UniversalButton.tsx",
         "components/base/Button.tsx": "components/ui/UniversalButton.tsx",
         "components/ui/CyberButton.tsx": "components/ui/UniversalButton.tsx",
         "components/Button.tsx": "components/ui/UniversalButton.tsx",
-        // Theme consolidation
+        // Theme consolidation;
         "providers/ThemeProvider.tsx": "providers/UniversalThemeProvider.tsx",
         "contexts/ThemeContext.tsx": "providers/UniversalThemeProvider.tsx",
         "theme/ThemeProvider.tsx": "providers/UniversalThemeProvider.tsx",
-        // Service consolidation
+        // Service consolidation;
         "services/predictionService.ts": "services/UniversalServiceLayer.ts",
         "services/ApiService.ts": "services/UniversalServiceLayer.ts",
         "services/unified/ApiService.ts": "services/UniversalServiceLayer.ts",
-        // Hook consolidation - map major hooks to universal system
+        // Hook consolidation - map major hooks to universal system;
         "hooks/usePredictions.ts": "hooks/UniversalHooks.ts",
         "hooks/useAnalytics.ts": "hooks/UniversalHooks.ts",
         "hooks/useBettingCore.ts": "hooks/UniversalHooks.ts",
@@ -64,7 +64,7 @@ const config = {
         "components/base/Button.tsx",
         "providers/ThemeProvider.tsx",
         "contexts/ThemeContext.tsx",
-        // Individual hooks that are now consolidated
+        // Individual hooks that are now consolidated;
         "hooks/usePredictions.ts",
         "hooks/useAnalytics.ts",
         "hooks/useBettingCore.ts",
@@ -80,7 +80,7 @@ const config = {
     ],
 };
 // ============================================================================
-// UTILITY FUNCTIONS
+// UTILITY FUNCTIONS;
 // ============================================================================
 class Logger {
     static log(message, type = "info") {
@@ -90,8 +90,8 @@ class Logger {
             warning: "\x1b[33m",
             error: "\x1b[31m",
         };
-        const reset = "\x1b[0m";
-        console.log(`${colors[type]}[${type.toUpperCase()}]${reset} ${message}`);
+
+        // console statement removed}]${reset} ${message}`);
     }
 }
 function fileExists(filePath) {
@@ -116,7 +116,7 @@ function writeFile(filePath, content, dryRun = false) {
         return;
     }
     try {
-        const dir = path.dirname(filePath);
+
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
         }
@@ -148,19 +148,19 @@ function deleteFile(filePath, dryRun = false) {
     }
 }
 // ============================================================================
-// IMPORT REPLACEMENT FUNCTIONS
+// IMPORT REPLACEMENT FUNCTIONS;
 // ============================================================================
 function updateImports(content, consolidationMap) {
-    let updatedContent = content;
-    // Update relative imports
+    const updatedContent = content;
+    // Update relative imports;
     Object.entries(consolidationMap).forEach(([oldPath, newPath]) => {
         const patterns = [
-            // Import statements
+            // Import statements;
             new RegExp(`from\\s+['"]\\.\\.?/?${oldPath.replace(/\./g, "\\.")}['"]`, "g"),
             new RegExp(`import\\s+.*?from\\s+['"]\\.\\.?/?${oldPath.replace(/\./g, "\\.")}['"]`, "g"),
-            // Dynamic imports
+            // Dynamic imports;
             new RegExp(`import\\(['"]\\.\\.?/?${oldPath.replace(/\./g, "\\.")}['"]\\)`, "g"),
-            // Require statements
+            // Require statements;
             new RegExp(`require\\(['"]\\.\\.?/?${oldPath.replace(/\./g, "\\.")}['"]\\)`, "g"),
         ];
         patterns.forEach((pattern) => {
@@ -169,9 +169,9 @@ function updateImports(content, consolidationMap) {
             });
         });
     });
-    // Update specific component imports to use consolidated versions
+    // Update specific component imports to use consolidated versions;
     const componentUpdates = [
-        // Dashboard components
+        // Dashboard components;
         {
             from: /import.*Dashboard.*from.*dashboard.*Dashboard/g,
             to: "import { UniversalDashboard } from '../dashboard/UniversalDashboard'",
@@ -180,7 +180,7 @@ function updateImports(content, consolidationMap) {
             from: /import.*CyberDashboard.*from.*dashboard.*CyberDashboard/g,
             to: "import { UniversalDashboard } from '../dashboard/UniversalDashboard'",
         },
-        // Button components
+        // Button components;
         {
             from: /import.*Button.*from.*buttons?.*Button/g,
             to: "import { UniversalButton } from '../ui/UniversalButton'",
@@ -193,7 +193,7 @@ function updateImports(content, consolidationMap) {
             from: /import.*CyberButton.*from.*ui.*CyberButton/g,
             to: "import { CyberButton } from '../ui/UniversalButton'",
         },
-        // Theme imports
+        // Theme imports;
         {
             from: /import.*useTheme.*from.*theme/g,
             to: "import { useUniversalTheme } from '../providers/UniversalThemeProvider'",
@@ -202,7 +202,7 @@ function updateImports(content, consolidationMap) {
             from: /import.*ThemeProvider.*from.*theme/g,
             to: "import { UniversalThemeProvider } from '../providers/UniversalThemeProvider'",
         },
-        // Hook imports - consolidate to UniversalHooks
+        // Hook imports - consolidate to UniversalHooks;
         {
             from: /import.*usePredictions.*from.*hooks.*usePredictions/g,
             to: "import { usePredictions } from '../hooks/UniversalHooks'",
@@ -219,7 +219,7 @@ function updateImports(content, consolidationMap) {
             from: /import.*useForm.*from.*hooks.*useForm/g,
             to: "import { useUniversalForm } from '../hooks/UniversalHooks'",
         },
-        // Service imports
+        // Service imports;
         {
             from: /import.*predictionService.*from.*services.*predictionService/g,
             to: "import { UniversalServiceFactory } from '../services/UniversalServiceLayer'",
@@ -231,42 +231,42 @@ function updateImports(content, consolidationMap) {
     return updatedContent;
 }
 // ============================================================================
-// INDEX FILE GENERATION
+// INDEX FILE GENERATION;
 // ============================================================================
 function generateIndexFiles(dryRun = false) {
     Logger.log("Generating index files...", "info");
     const indexFiles = [
         {
             path: "components/index.ts",
-            content: `// Universal Component System Exports
+            content: `// Universal Component System Exports;
 export { UniversalDashboard } from './dashboard/UniversalDashboard';
 export { UniversalButton, CyberButton, BettingButton, GlowButton, PremiumButton } from './ui/UniversalButton';
 export { MegaButton, MegaCard, MegaModal, MegaInput, MegaAlert, MegaSkeleton } from './mega/MegaUI';
 export { MegaSidebar, MegaHeader, MegaAppShell } from './mega/MegaLayout';
 export { CyberText, CyberContainer, CyberButton, CYBER_COLORS, CYBER_GRADIENTS, CYBER_GLASS } from './mega/CyberTheme';
 
-// Re-export commonly used components
+// Re-export commonly used components;
 export { default as UniversalDashboard } from './dashboard/UniversalDashboard';
 export { default as UniversalButton } from './ui/UniversalButton';
 `,
         },
         {
             path: "hooks/index.ts",
-            content: `// Universal Hooks System Exports
+            content: `// Universal Hooks System Exports;
 export {
-  // Data hooks
+  // Data hooks;
   usePredictions,
   useEngineMetrics,
   useBettingOpportunities,
   useUserProfile,
   
-  // UI hooks
+  // UI hooks;
   useUniversalTheme,
   useUniversalForm,
   useModal,
   useToast,
   
-  // Utility hooks
+  // Utility hooks;
   useDebounce,
   useLocalStorage,
   useWindowSize,
@@ -274,18 +274,18 @@ export {
   useClickOutside,
   useWebSocket,
   
-  // Performance hooks
+  // Performance hooks;
   useAnimation,
   usePerformanceMonitor,
 } from './UniversalHooks';
 
-// Default export
+// Default export;
 export { default } from './UniversalHooks';
 `,
         },
         {
             path: "services/index.ts",
-            content: `// Universal Service Layer Exports
+            content: `// Universal Service Layer Exports;
 export {
   UniversalServiceFactory,
   UniversalPredictionService,
@@ -305,13 +305,13 @@ export type {
   UserProfile,
 } from './UniversalServiceLayer';
 
-// Default export
+// Default export;
 export { default } from './UniversalServiceLayer';
 `,
         },
         {
             path: "providers/index.ts",
-            content: `// Universal Provider System Exports
+            content: `// Universal Provider System Exports;
 export {
   UniversalThemeProvider,
   useTheme,
@@ -327,167 +327,166 @@ export type {
   ThemeConfig,
 } from './UniversalThemeProvider';
 
-// Default export
+// Default export;
 export { default } from './UniversalThemeProvider';
 `,
         },
     ];
     indexFiles.forEach(({ path: indexPath, content }) => {
-        const fullPath = path.join(config.baseDir, indexPath);
+
         writeFile(fullPath, content, dryRun);
     });
 }
 // ============================================================================
-// MIGRATION GUIDE GENERATION
+// MIGRATION GUIDE GENERATION;
 // ============================================================================
 function generateMigrationGuide(dryRun = false) {
-    const migrationGuide = `# Frontend Consolidation Migration Guide
+    const migrationGuide = `# Frontend Consolidation Migration Guide;
 
-## Overview
+## Overview;
 The frontend has been consolidated into a unified system with the following key components:
 
-### 🎯 Consolidated Components
-- **UniversalDashboard**: Replaces Dashboard, CyberDashboard, PremiumDashboard
-- **UniversalButton**: Replaces Button, BettingButton, CyberButton, GlowButton
-- **UniversalThemeProvider**: Replaces ThemeProvider, ThemeContext
-- **UniversalServiceLayer**: Replaces individual service files
-- **UniversalHooks**: Consolidates 200+ individual hooks
+### 🎯 Consolidated Components;
+- **UniversalDashboard**: Replaces Dashboard, CyberDashboard, PremiumDashboard;
+- **UniversalButton**: Replaces Button, BettingButton, CyberButton, GlowButton;
+- **UniversalThemeProvider**: Replaces ThemeProvider, ThemeContext;
+- **UniversalServiceLayer**: Replaces individual service files;
+- **UniversalHooks**: Consolidates 200+ individual hooks;
 
-### 📦 Import Changes
+### 📦 Import Changes;
 
-#### Dashboard Components
-\`\`\`typescript
-// Old
+#### Dashboard Components;
+\`\`\`typescript;
+// Old;
 import Dashboard from './components/dashboard/Dashboard';
 import CyberDashboard from './components/dashboard/CyberDashboard';
 
-// New
+// New;
 import { UniversalDashboard } from './components/dashboard/UniversalDashboard';
 
-// Usage
+// Usage;
 <UniversalDashboard variant="cyber" />
 <UniversalDashboard variant="premium" />
 \`\`\`
 
-#### Button Components
-\`\`\`typescript
-// Old
+#### Button Components;
+\`\`\`typescript;
+// Old;
 import Button from './components/common/buttons/Button';
 import BettingButton from './components/common/buttons/BettingButton';
 import CyberButton from './components/ui/CyberButton';
 
-// New
+// New;
 import { UniversalButton, BettingButton, CyberButton } from './components/ui/UniversalButton';
 
-// Usage
+// Usage;
 <UniversalButton variant="primary" theme="cyber" />
 <BettingButton betType="straight" odds={150} />
 <CyberButton variant="glow" />
 \`\`\`
 
-#### Theme System
-\`\`\`typescript
-// Old
+#### Theme System;
+\`\`\`typescript;
+// Old;
 import { ThemeProvider } from './providers/ThemeProvider';
 import { useTheme } from './hooks/useTheme';
 
-// New
+// New;
 import { UniversalThemeProvider, useTheme } from './providers/UniversalThemeProvider';
 
-// Usage
+// Usage;
 <UniversalThemeProvider defaultVariant="cyber">
   <App />
 </UniversalThemeProvider>
 \`\`\`
 
-#### Hooks
-\`\`\`typescript
-// Old
+#### Hooks;
+\`\`\`typescript;
+// Old;
 import { usePredictions } from './hooks/usePredictions';
 import { useDebounce } from './hooks/useDebounce';
 import { useForm } from './hooks/useForm';
 
-// New
+// New;
 import { usePredictions, useDebounce, useUniversalForm } from './hooks/UniversalHooks';
 \`\`\`
 
-#### Services
-\`\`\`typescript
-// Old
+#### Services;
+\`\`\`typescript;
+// Old;
 import { predictionService } from './services/predictionService';
 import { ApiService } from './services/ApiService';
 
-// New
+// New;
 import { UniversalServiceFactory } from './services/UniversalServiceLayer';
 
-const predictionService = UniversalServiceFactory.getPredictionService();
-const bettingService = UniversalServiceFactory.getBettingService();
+
 \`\`\`
 
-### 🗂️ File Structure Changes
+### 🗂️ File Structure Changes;
 
-#### Removed Files
+#### Removed Files;
 ${config.deprecatedPaths.map((p) => `- ${p}`).join("\n")}
 
-#### New Universal Files
+#### New Universal Files;
 - \`components/dashboard/UniversalDashboard.tsx\`
 - \`components/ui/UniversalButton.tsx\`
 - \`providers/UniversalThemeProvider.tsx\`
 - \`services/UniversalServiceLayer.ts\`
 - \`hooks/UniversalHooks.ts\`
 
-### 🚀 Benefits
-1. **Reduced Bundle Size**: Eliminated ~60% of duplicate code
-2. **Better Performance**: Consolidated hooks and services
-3. **Improved DX**: Single import points for common functionality
-4. **Type Safety**: Better TypeScript support across all systems
-5. **Maintainability**: Centralized logic and consistent APIs
+### 🚀 Benefits;
+1. **Reduced Bundle Size**: Eliminated ~60% of duplicate code;
+2. **Better Performance**: Consolidated hooks and services;
+3. **Improved DX**: Single import points for common functionality;
+4. **Type Safety**: Better TypeScript support across all systems;
+5. **Maintainability**: Centralized logic and consistent APIs;
 
-### ⚠️ Breaking Changes
-- Import paths have changed for most components
-- Some component props may have been unified
-- Theme API has been simplified
-- Service instantiation now uses factory pattern
+### ⚠️ Breaking Changes;
+- Import paths have changed for most components;
+- Some component props may have been unified;
+- Theme API has been simplified;
+- Service instantiation now uses factory pattern;
 
-### 🔧 Migration Steps
-1. Update import statements using the examples above
-2. Replace old component usage with new unified components
-3. Update theme provider in your app root
-4. Test functionality with new consolidated system
-5. Remove references to deprecated files
+### 🔧 Migration Steps;
+1. Update import statements using the examples above;
+2. Replace old component usage with new unified components;
+3. Update theme provider in your app root;
+4. Test functionality with new consolidated system;
+5. Remove references to deprecated files;
 
-### 📞 Support
+### 📞 Support;
 For questions about the migration, check the component documentation or create an issue.
 `;
-    const guidePath = path.join(config.baseDir, "..", "MIGRATION_GUIDE.md");
+
     writeFile(guidePath, migrationGuide, dryRun);
 }
 // ============================================================================
-// MAIN CLEANUP FUNCTIONS
+// MAIN CLEANUP FUNCTIONS;
 // ============================================================================
 function scanAndUpdateFiles(directory, dryRun = false) {
     Logger.log(`Scanning directory: ${directory}`, "info");
     try {
-        const items = fs.readdirSync(directory);
+
         items.forEach((item) => {
-            const itemPath = path.join(directory, item);
-            const stat = fs.statSync(itemPath);
+
+
             if (stat.isDirectory()) {
-                // Skip node_modules and other ignored directories
+                // Skip node_modules and other ignored directories;
                 if (!["node_modules", ".git", "dist", "build"].includes(item)) {
                     scanAndUpdateFiles(itemPath, dryRun);
                 }
             }
             else if (stat.isFile() && /\.(ts|tsx|js|jsx)$/.test(item)) {
-                // Process TypeScript/JavaScript files
-                const relativePath = path.relative(config.baseDir, itemPath);
-                // Skip if this is a preserved file
+                // Process TypeScript/JavaScript files;
+
+                // Skip if this is a preserved file;
                 if (config.preservePatterns.some((pattern) => relativePath.includes(pattern))) {
                     return;
                 }
-                const content = readFile(itemPath);
+
                 if (content) {
-                    const updatedContent = updateImports(content, config.consolidationMap);
+
                     if (updatedContent !== content) {
                         writeFile(itemPath, updatedContent, dryRun);
                     }
@@ -502,39 +501,39 @@ function scanAndUpdateFiles(directory, dryRun = false) {
 function removeDeprecatedFiles(dryRun = false) {
     Logger.log("Removing deprecated files...", "warning");
     config.deprecatedPaths.forEach((deprecatedPath) => {
-        const fullPath = path.join(config.baseDir, deprecatedPath);
-        // Check for multiple file extensions
-        const extensions = ["", ".ts", ".tsx", ".js", ".jsx", ".d.ts"];
+
+        // Check for multiple file extensions;
+
         extensions.forEach((ext) => {
-            const pathWithExt = fullPath + ext;
+
             if (fileExists(pathWithExt)) {
                 deleteFile(pathWithExt, dryRun);
             }
         });
-        // Also check if it's a directory
+        // Also check if it's a directory;
         if (fileExists(fullPath) && fs.statSync(fullPath).isDirectory()) {
             deleteFile(fullPath, dryRun);
         }
     });
 }
 // ============================================================================
-// MAIN EXECUTION
+// MAIN EXECUTION;
 // ============================================================================
 function main() {
     Logger.log("🚀 Starting Universal Frontend Cleanup and Optimization", "info");
     Logger.log(`Base directory: ${config.baseDir}`, "info");
     Logger.log(`Dry run mode: ${config.dryRun}`, config.dryRun ? "warning" : "info");
     try {
-        // Step 1: Generate index files for better organization
+        // Step 1: Generate index files for better organization;
         Logger.log("\n📁 Step 1: Generating index files", "info");
         generateIndexFiles(config.dryRun);
-        // Step 2: Scan and update all files to use consolidated imports
+        // Step 2: Scan and update all files to use consolidated imports;
         Logger.log("\n🔄 Step 2: Updating import statements", "info");
         scanAndUpdateFiles(config.baseDir, config.dryRun);
-        // Step 3: Remove deprecated files
+        // Step 3: Remove deprecated files;
         Logger.log("\n🗑️  Step 3: Removing deprecated files", "info");
         removeDeprecatedFiles(config.dryRun);
-        // Step 4: Generate migration guide
+        // Step 4: Generate migration guide;
         Logger.log("\n📖 Step 4: Generating migration guide", "info");
         generateMigrationGuide(config.dryRun);
         Logger.log("\n✅ Cleanup and optimization completed successfully!", "success");
@@ -551,7 +550,7 @@ function main() {
         process.exit(1);
     }
 }
-// Run the script
+// Run the script;
 if (require.main === module) {
     main();
 }

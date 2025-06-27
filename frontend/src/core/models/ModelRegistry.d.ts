@@ -1,4 +1,4 @@
-import { ModelMetadata, ModelVersion, ModelRegistryConfig } from '@/types';
+import { ModelMetadata, ModelVersion, ModelRegistryConfig } from '@/types.ts';
 export declare class ModelRegistry {
     private config;
     private logger;

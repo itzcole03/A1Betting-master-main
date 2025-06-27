@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect, useState } from 'react';
 import { builder, BuilderComponent } from '@builder.io/react';
-// A simple test component to debug Builder.io integration
+// A simple test component to debug Builder.io integration;
 const BuilderTest = () => {
     const [builderContentJson, setBuilderContentJson] = useState(null);
     const [debugStatus, setDebugStatus] = useState({
@@ -9,41 +9,41 @@ const BuilderTest = () => {
         isEditing: builder.isEditing,
         userAgent: navigator.userAgent,
         viewportWidth: window.innerWidth,
-        viewportHeight: window.innerHeight
+        viewportHeight: window.innerHeight;
     });
     useEffect(() => {
-        // Output debug info to console
-        console.log('[Builder.io DEBUG] Initializing with API key:', builder.apiKey);
-        console.log('[Builder.io DEBUG] User attributes:', builder.getUserAttributes());
-        console.log('[Builder.io DEBUG] Environment:', builder);
-        // Fetch test content
+        // Output debug info to console;
+        // console statement removed
+        // console statement removed);
+        // console statement removed
+        // Fetch test content;
         async function fetchBuilderContent() {
             try {
                 const content = await builder.get('page')
                     .promise();
-                console.log('[Builder.io DEBUG] Content result:', content);
+                // console statement removed
                 setBuilderContentJson(content);
             }
             catch (error) {
-                console.error('[Builder.io DEBUG] Error fetching content:', error);
+                // console statement removed
             }
         }
         fetchBuilderContent();
-        // Create global debug helper
+        // Create global debug helper;
         window.BUILDER_DEBUG = {
             forcePreview: () => {
                 builder.setUserAttributes({ ...builder.getUserAttributes(), preview: true });
-                console.log('[Builder.io DEBUG] Preview mode forced');
+                // console statement removed
                 return 'Preview mode enabled';
             },
             disableTracking: () => {
-                // @ts-ignore
+                // @ts-ignore;
                 builder.canTrack = false;
-                console.log('[Builder.io DEBUG] Tracking disabled');
+                // console statement removed
                 return 'Tracking disabled';
             },
             getRegistry: () => {
-                console.log('[Builder.io DEBUG] Component registry:', builder.registry);
+                // console statement removed
                 return builder.registry;
             },
             dumpStatus: () => {
@@ -53,7 +53,7 @@ const BuilderTest = () => {
                     components: Object.keys(builder.registry).length,
                     userAttributes: builder.getUserAttributes()
                 };
-                console.log('[Builder.io DEBUG] Current status:', status);
+                // console statement removed
                 return status;
             }
         };

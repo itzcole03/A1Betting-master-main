@@ -1,6 +1,6 @@
-import { DataSource } from './PredictionEngine';
-import { EventBus } from '@/core/EventBus';
-import { PerformanceMonitor } from './PerformanceMonitor';
+import { DataSource } from './PredictionEngine.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
 
 export interface PipelineMetrics {
   processedCount: number;
@@ -39,7 +39,7 @@ export class DataCache<T> {
   }
 
   get(key: string): T | undefined {
-    const entry = this.cache.get(key);
+
     if (!entry) return undefined;
 
     if (Date.now() - entry.timestamp > entry.ttl) {
@@ -140,12 +140,11 @@ export class StreamingDataPipeline<T, U> {
     });
 
     try {
-      const startTime = Date.now();
-      const data = await this.source.fetch();
+
 
       if (this.options.cacheEnabled) {
-        const cacheKey = this.generateCacheKey(data as T);
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached) {
           this.performanceMonitor.endTrace(traceId);
           return;
@@ -153,13 +152,12 @@ export class StreamingDataPipeline<T, U> {
         this.cache.set(cacheKey, data as T);
       }
 
-      let transformed = data;
+      const transformed = data;
       for (const stage of this.stages) {
-        const stageTraceId = this.performanceMonitor.startTrace(`pipeline-stage-${stage.id}`);
 
         try {
           if (stage.validate) {
-            const isValid = await stage.validate(transformed);
+
             if (!isValid) {
               throw new Error(`Validation failed at stage ${stage.id}`);
             }
@@ -175,7 +173,6 @@ export class StreamingDataPipeline<T, U> {
 
       await this.sink.write(transformed as U);
 
-      const duration = Date.now() - startTime;
       this.updateMetrics(duration);
 
       this.eventBus.publish({

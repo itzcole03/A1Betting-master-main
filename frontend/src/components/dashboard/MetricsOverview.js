@@ -92,11 +92,11 @@ export const MetricsOverview = ({ className = "", layout = "grid", showTrends = 
             gradient: "from-gray-600 to-gray-700",
         },
     ]);
-    // Simulate real-time updates
+    // Simulate real-time updates;
     useEffect(() => {
         const interval = setInterval(() => {
             setMetrics((prev) => prev.map((metric) => {
-                const variation = (Math.random() - 0.5) * 0.1;
+
                 const newValue = typeof metric.value === "number"
                     ? Math.max(0, metric.value + variation)
                     : metric.value;
@@ -114,7 +114,7 @@ export const MetricsOverview = ({ className = "", layout = "grid", showTrends = 
     }, []);
     const formatValue = (metric) => {
         const { value, prefix = "", suffix = "", isPercentage } = metric;
-        const numValue = typeof value === "number" ? value : parseFloat(value.toString());
+
         if (isPercentage || suffix === "%") {
             return `${prefix}${numValue.toFixed(1)}${suffix}`;
         }
@@ -144,29 +144,29 @@ export const MetricsOverview = ({ className = "", layout = "grid", showTrends = 
         }
     };
     const renderTrendLine = (trend) => {
-        const max = Math.max(...trend);
-        const min = Math.min(...trend);
-        const range = max - min || 1;
-        const points = trend
+
+
+
+        const points = trend;
             .map((value, index) => {
-            const x = (index / (trend.length - 1)) * 60;
-            const y = 20 - ((value - min) / range) * 15;
+
+
             return `${x},${y}`;
         })
             .join(" ");
         return (_jsx("svg", { width: "60", height: "20", className: "opacity-60", children: _jsx("polyline", { points: points, fill: "none", stroke: "currentColor", strokeWidth: "1.5", className: "text-current" }) }));
     };
     return (_jsxs("div", { className: className, children: [_jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8", children: metrics.map((metric, index) => (_jsxs(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: index * 0.1 }, className: `
-              relative p-6 rounded-2xl backdrop-blur-xl border transition-all
+              relative p-6 rounded-2xl backdrop-blur-xl border transition-all;
               bg-gradient-to-br ${metric.gradient} ${metric.borderColor}
-              hover:shadow-xl hover:scale-105 cursor-pointer group
+              hover:shadow-xl hover:scale-105 cursor-pointer group;
             `, children: [_jsxs("div", { className: "flex items-start justify-between mb-4", children: [_jsx("div", { className: "p-3 rounded-xl bg-white/5 group-hover:bg-white/10 transition-all", children: _jsx("div", { className: "text-white group-hover:scale-110 transition-transform", children: metric.icon }) }), _jsxs("div", { className: `flex items-center space-x-1 text-sm ${getChangeColor(metric.changeType)}`, children: [getChangeIcon(metric.changeType), _jsxs("span", { children: [metric.change > 0 ? "+" : "", metric.change, "%"] })] })] }), _jsxs("div", { className: "mb-3", children: [_jsx("div", { className: "text-3xl font-bold text-white mb-1", children: formatValue(metric) }), _jsx("div", { className: "text-sm text-gray-400", children: metric.label })] }), _jsxs("div", { className: "flex items-center justify-between", children: [_jsx("div", { className: "text-xs text-gray-400", children: metric.description }), showTrends && (_jsx("div", { className: "text-gray-400", children: renderTrendLine(metric.trend) }))] })] }, metric.id))) }), _jsx("div", { className: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6", children: aiMetrics.map((metric, index) => (_jsxs(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: (index + 4) * 0.1 }, className: `
-              relative p-6 rounded-2xl backdrop-blur-xl
+              relative p-6 rounded-2xl backdrop-blur-xl;
               bg-gradient-to-br ${metric.gradient}
-              hover:shadow-xl hover:scale-105 cursor-pointer group
-              transition-all duration-300
+              hover:shadow-xl hover:scale-105 cursor-pointer group;
+              transition-all duration-300;
             `, children: [_jsxs("div", { className: "flex items-center justify-between mb-2", children: [_jsx("div", { className: "text-xs font-semibold text-white/70 uppercase tracking-wider", children: metric.label }), _jsx("div", { className: `
-                text-xs font-bold px-2 py-1 rounded-full
+                text-xs font-bold px-2 py-1 rounded-full;
                 ${metric.trend === "up"
                                         ? "bg-green-500/20 text-green-400"
                                         : metric.trend === "down"

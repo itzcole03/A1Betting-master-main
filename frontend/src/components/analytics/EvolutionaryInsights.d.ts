@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface EvolutionaryInsightsProps {
     autoUpdateInterval?: number;
     showGameTheory?: boolean;

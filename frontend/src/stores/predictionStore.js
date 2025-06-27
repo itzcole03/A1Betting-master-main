@@ -14,10 +14,10 @@ export const usePredictionStore = create()(devtools((set, get) => ({
         return get().predictionsByEvent[eventId];
     },
     getLatestPredictions: () => {
-        const predictions = get().predictionsByEvent;
+
         return Object.values(predictions).sort((a, b) => {
-            const ta = a.timestamp ? new Date(a.timestamp).getTime() : 0;
-            const tb = b.timestamp ? new Date(b.timestamp).getTime() : 0;
+
+
             return tb - ta;
         });
     },

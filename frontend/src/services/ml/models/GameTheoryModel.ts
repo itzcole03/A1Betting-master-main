@@ -2,7 +2,7 @@
  * Model for analyzing game theory and generating predictions.
  */
 
-import { BaseModel, ModelConfig, ModelPrediction, ModelMetrics } from './BaseModel';
+import { BaseModel, ModelConfig, ModelPrediction, ModelMetrics } from './BaseModel.ts';
 
 export class GameTheoryModel extends BaseModel {
   constructor(config: ModelConfig, modelId: string) {
@@ -10,7 +10,7 @@ export class GameTheoryModel extends BaseModel {
   }
 
   async predict(data: unknown): Promise<ModelPrediction> {
-    // Implement game theory prediction logic
+    // Implement game theory prediction logic;
     return {
       value: 0.75,
       confidence: 0.82,
@@ -24,7 +24,7 @@ export class GameTheoryModel extends BaseModel {
   }
 
   async update(data: unknown): Promise<void> {
-    // Implement model update logic
+    // Implement model update logic;
     this.lastUpdate = new Date().toISOString();
     this.metadata = {
       ...this.metadata,
@@ -34,7 +34,7 @@ export class GameTheoryModel extends BaseModel {
   }
 
   async train(data: any[]): Promise<void> {
-    // Implement training logic
+    // Implement training logic;
     this.isTrained = true;
   }
 
@@ -52,11 +52,11 @@ export class GameTheoryModel extends BaseModel {
   }
 
   async save(path: string): Promise<void> {
-    // Implement save logic
+    // Implement save logic;
   }
 
   async load(path: string): Promise<void> {
-    // Implement load logic
+    // Implement load logic;
     this.isTrained = true;
   }
 }

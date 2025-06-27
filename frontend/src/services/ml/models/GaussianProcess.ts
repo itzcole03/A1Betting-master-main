@@ -25,18 +25,18 @@ export class GaussianProcess {
     this.X = X;
     this.y = y;
 
-    // Compute kernel matrix
+    // Compute kernel matrix;
     this.K = this.computeKernelMatrix(X, X);
 
-    // Add noise to diagonal
-    for (let i = 0; i < this.K.length; i++) {
+    // Add noise to diagonal;
+    for (const i = 0; i < this.K.length; i++) {
       this.K[i][i] += this.config.noise;
     }
 
-    // Compute Cholesky decomposition
+    // Compute Cholesky decomposition;
     this.L = this.cholesky(this.K);
 
-    // Solve for alpha
+    // Solve for alpha;
     this.alpha = this.solveTriangular(this.L, this.y);
   }
 
@@ -45,28 +45,25 @@ export class GaussianProcess {
       return [0, this.config.signalVariance!];
     }
 
-    // Compute kernel between test point and training points
-    const k = this.X.map(x => this.kernel(X, x));
+    // Compute kernel between test point and training points;
 
-    // Compute mean
-    const mean = k.reduce((sum, ki, i) => sum + ki * this.alpha[i], 0);
+    // Compute mean;
 
-    // Compute variance
-    const v = this.solveTriangular(this.L, k);
-    const variance = this.kernel(X, X) - v.reduce((sum, vi) => sum + vi * vi, 0);
+    // Compute variance;
+
 
     return [mean, Math.max(0, variance)];
   }
 
   private computeKernelMatrix(X1: number[][], X2: number[][]): number[][] {
-    const n1 = X1.length;
-    const n2 = X2.length;
+
+
     const K = Array(n1)
       .fill(null)
       .map(() => Array(n2).fill(0));
 
-    for (let i = 0; i < n1; i++) {
-      for (let j = 0; j < n2; j++) {
+    for (const i = 0; i < n1; i++) {
+      for (const j = 0; j < n2; j++) {
         K[i][j] = this.kernel(X1[i], X2[j]);
       }
     }
@@ -88,8 +85,8 @@ export class GaussianProcess {
   }
 
   private rbfKernel(x1: number[], x2: number[]): number {
-    const diff = x1.map((xi, i) => xi - x2[i]);
-    const squaredDist = diff.reduce((sum, d) => sum + d * d, 0);
+
+
     return (
       this.config.signalVariance! *
       Math.exp((-0.5 * squaredDist) / (this.config.lengthScale! * this.config.lengthScale!))
@@ -97,9 +94,9 @@ export class GaussianProcess {
   }
 
   private maternKernel(x1: number[], x2: number[]): number {
-    const diff = x1.map((xi, i) => xi - x2[i]);
-    const dist = Math.sqrt(diff.reduce((sum, d) => sum + d * d, 0));
-    const scaledDist = (Math.sqrt(3) * dist) / this.config.lengthScale!;
+
+
+
     return this.config.signalVariance! * (1 + scaledDist) * Math.exp(-scaledDist);
   }
 
@@ -108,22 +105,22 @@ export class GaussianProcess {
   }
 
   private cholesky(A: number[][]): number[][] {
-    const n = A.length;
+
     const L = Array(n)
       .fill(null)
       .map(() => Array(n).fill(0));
 
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j <= i; j++) {
-        let sum = 0;
+    for (const i = 0; i < n; i++) {
+      for (const j = 0; j <= i; j++) {
+        const sum = 0;
 
         if (j === i) {
-          for (let k = 0; k < j; k++) {
+          for (const k = 0; k < j; k++) {
             sum += L[j][k] * L[j][k];
           }
           L[j][j] = Math.sqrt(A[j][j] - sum);
         } else {
-          for (let k = 0; k < j; k++) {
+          for (const k = 0; k < j; k++) {
             sum += L[i][k] * L[j][k];
           }
           L[i][j] = (A[i][j] - sum) / L[j][j];
@@ -135,13 +132,12 @@ export class GaussianProcess {
   }
 
   private solveTriangular(L: number[][], b: number[]): number[] {
-    const n = L.length;
-    const x = Array(n).fill(0);
 
-    // Forward substitution
-    for (let i = 0; i < n; i++) {
-      let sum = 0;
-      for (let j = 0; j < i; j++) {
+
+    // Forward substitution;
+    for (const i = 0; i < n; i++) {
+      const sum = 0;
+      for (const j = 0; j < i; j++) {
         sum += L[i][j] * x[j];
       }
       x[i] = (b[i] - sum) / L[i][i];

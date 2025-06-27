@@ -1,8 +1,8 @@
-import { EventBus } from '../../unified/EventBus';
-import { ErrorHandler } from '../../core/ErrorHandler';
-import { PerformanceMonitor } from '../../unified/PerformanceMonitor';
-import { UnifiedConfig } from '../../unified/UnifiedConfig';
-import { RiskProfile, Prediction, EventMap } from '@/types/core';
+import { EventBus } from '@/unified/EventBus.ts';
+import { ErrorHandler } from '@/core/ErrorHandler.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.ts';
+import { RiskProfile, Prediction, EventMap } from '@/types/core.ts';
 
 export class RiskProfileService {
   private static instance: RiskProfileService;
@@ -77,7 +77,7 @@ export class RiskProfileService {
       this.profiles.set(profile.id, profile);
     });
 
-    // Set default active profile
+    // Set default active profile;
     this.activeProfile = defaultProfiles[0];
   }
 
@@ -87,7 +87,7 @@ export class RiskProfileService {
     });
 
     this.eventBus.on('risk:update', (data: EventMap['risk:update']) => {
-      const profile = this.profiles.get(data.profileId);
+
       if (!profile) {
         this.errorHandler.handleError(
           new Error(`Risk profile with ID ${data.profileId} not found`),
@@ -101,7 +101,7 @@ export class RiskProfileService {
 
   private handlePredictionUpdate(prediction: Prediction): void {
     try {
-      const riskAssessment = this.assessPredictionRisk(prediction);
+
       this.eventBus.emit('risk:assessment', riskAssessment);
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'prediction_risk_assessment');
@@ -118,7 +118,7 @@ export class RiskProfileService {
   }
 
   private assessPredictionRisk(prediction: Prediction): EventMap['risk:assessment'] {
-    const startTime = Date.now();
+
     try {
       const riskAssessment: EventMap['risk:assessment'] = {
         predictionId: prediction.id,
@@ -128,7 +128,6 @@ export class RiskProfileService {
         timestamp: Date.now(),
       };
 
-      const duration = Date.now() - startTime;
       this.performanceMonitor.trackMetric('risk_assessment_duration', duration);
       return riskAssessment;
     } catch (error) {
@@ -154,8 +153,8 @@ export class RiskProfileService {
     const { confidence } = prediction;
     const { maxStake, minStake } = this.activeProfile;
 
-    // Calculate stake based on confidence and risk profile
-    const stake = Math.floor(maxStake * confidence);
+    // Calculate stake based on confidence and risk profile;
+
     return Math.max(minStake, Math.min(stake, maxStake));
   }
 
@@ -176,7 +175,7 @@ export class RiskProfileService {
       throw new Error(`Risk profile with ID ${profile.id} not found`);
     }
 
-    // Validate profile updates
+    // Validate profile updates;
     if (profile.maxStake < profile.minStake) {
       throw new Error('Maximum stake cannot be less than minimum stake');
     }
@@ -190,7 +189,7 @@ export class RiskProfileService {
   }
 
   public setActiveProfile(id: string): void {
-    const profile = this.profiles.get(id);
+
     if (!profile) {
       throw new Error(`Risk profile with ID ${id} not found`);
     }

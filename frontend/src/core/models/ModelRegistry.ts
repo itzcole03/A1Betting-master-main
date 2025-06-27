@@ -1,7 +1,7 @@
-import { ModelMetadata, ModelVersion, ModelRegistryConfig } from '@/types';
-import { FeatureLogger } from '../../services/analytics/featureLogging';
-import * as fs from 'fs/promises';
-import * as path from 'path';
+import { ModelMetadata, ModelVersion, ModelRegistryConfig } from '@/types.ts';
+import { FeatureLogger } from '@/services/analytics/featureLogging.ts';
+import * as fs from 'fs/promises.ts';
+import * as path from 'path.ts';
 
 export class ModelRegistry {
   private config: ModelRegistryConfig;
@@ -29,11 +29,11 @@ export class ModelRegistry {
 
   private async loadModels(): Promise<void> {
     try {
-      const files = await fs.readdir(this.config.storagePath);
+
       for (const file of files) {
         if (file.endsWith('.json')) {
-          const content = await fs.readFile(path.join(this.config.storagePath, file), 'utf-8');
-          const model = JSON.parse(content) as ModelMetadata;
+
+
           this.models.set(model.id, model);
           await this.loadVersions(model.id);
         }
@@ -46,13 +46,13 @@ export class ModelRegistry {
 
   private async loadVersions(modelId: string): Promise<void> {
     try {
-      const versionPath = path.join(this.config.storagePath, modelId, 'versions');
-      const files = await fs.readdir(versionPath);
+
+
       const versions: ModelVersion[] = [];
 
       for (const file of files) {
         if (file.endsWith('.json')) {
-          const content = await fs.readFile(path.join(versionPath, file), 'utf-8');
+
           versions.push(JSON.parse(content) as ModelVersion);
         }
       }
@@ -66,7 +66,7 @@ export class ModelRegistry {
 
   async registerModel(metadata: ModelMetadata): Promise<string> {
     try {
-      const modelPath = path.join(this.config.storagePath, metadata.id);
+
       await fs.mkdir(modelPath, { recursive: true });
       await fs.mkdir(path.join(modelPath, 'versions'), { recursive: true });
 
@@ -84,7 +84,7 @@ export class ModelRegistry {
   }
 
   async getModel(modelId: string): Promise<ModelMetadata> {
-    const model = this.models.get(modelId);
+
     if (!model) {
       throw new Error(`Model not found: ${modelId}`);
     }
@@ -93,10 +93,10 @@ export class ModelRegistry {
 
   async updateModel(modelId: string, version: ModelVersion): Promise<void> {
     try {
-      const versions = this.versions.get(modelId) || [];
+
       versions.push(version);
 
-      // Maintain version limit
+      // Maintain version limit;
       if (versions.length > this.config.maxVersions) {
         versions.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
         versions.splice(this.config.maxVersions);
@@ -120,7 +120,7 @@ export class ModelRegistry {
   }
 
   async getModelMetadata(modelId: string): Promise<ModelMetadata> {
-    const model = this.models.get(modelId);
+
     if (!model) {
       throw new Error(`Model not found: ${modelId}`);
     }
@@ -129,8 +129,7 @@ export class ModelRegistry {
 
   async updateModelMetadata(modelId: string, metadata: Partial<ModelMetadata>): Promise<void> {
     try {
-      const model = await this.getModel(modelId);
-      const updatedModel = { ...model, ...metadata, updatedAt: new Date() };
+
 
       await fs.writeFile(
         path.join(this.config.storagePath, modelId, 'metadata.json'),
@@ -147,12 +146,11 @@ export class ModelRegistry {
 
   async updateMetrics(modelId: string, evaluation: any): Promise<void> {
     try {
-      const versions = this.versions.get(modelId);
+
       if (!versions || versions.length === 0) {
         throw new Error(`No versions found for model ${modelId}`);
       }
 
-      const latestVersion = versions[versions.length - 1];
       latestVersion.metrics = evaluation;
 
       await fs.writeFile(
@@ -169,7 +167,7 @@ export class ModelRegistry {
 
   async deleteModel(modelId: string): Promise<void> {
     try {
-      const modelPath = path.join(this.config.storagePath, modelId);
+
       await fs.rm(modelPath, { recursive: true });
 
       this.models.delete(modelId);
@@ -186,12 +184,11 @@ export class ModelRegistry {
     if (!this.config.backupEnabled) return;
 
     try {
-      const backupPath = path.join(this.config.storagePath, 'backups', new Date().toISOString());
+
       await fs.mkdir(backupPath, { recursive: true });
 
       for (const [modelId, model] of this.models.entries()) {
-        const modelPath = path.join(this.config.storagePath, modelId);
-        const backupModelPath = path.join(backupPath, modelId);
+
 
         await fs.mkdir(backupModelPath, { recursive: true });
         await fs.cp(modelPath, backupModelPath, { recursive: true });

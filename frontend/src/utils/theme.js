@@ -1,8 +1,8 @@
 import { createTheme as createMuiTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-// Create theme function
+// Create theme function;
 export const createTheme = (mode = 'light') => {
-    const isDark = mode === 'dark';
+
     return createMuiTheme({
         palette: {
             mode,
@@ -117,8 +117,8 @@ export const createTheme = (mode = 'light') => {
         },
     });
 };
-// Hook to get the current theme
+// Hook to get the current theme;
 export const useTheme = () => {
-    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+
     return createTheme(prefersDarkMode ? 'dark' : 'light');
 };

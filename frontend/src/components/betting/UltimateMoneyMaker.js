@@ -10,11 +10,11 @@ const UltimateMoneyMaker = () => {
     const [stakeAmount, setStakeAmount] = useState(0);
     const { bankroll, addBet, addOpportunity } = useBetting();
     const { preferences } = useUser();
-    // Scan for opportunities
+    // Scan for opportunities;
     const scanForOpportunities = async () => {
         setIsScanning(true);
         try {
-            // Simulate scanning process
+            // Simulate scanning process;
             await new Promise((resolve) => setTimeout(resolve, 2000));
             const mockOpportunities = [
                 {
@@ -63,7 +63,7 @@ const UltimateMoneyMaker = () => {
                     expectedReturn: 0,
                 },
             ];
-            // Calculate expected returns
+            // Calculate expected returns;
             mockOpportunities.forEach((opp) => {
                 opp.expectedReturn =
                     opp.recommendedStake *
@@ -71,7 +71,7 @@ const UltimateMoneyMaker = () => {
                         opp.predictedProbability;
             });
             setOpportunities(mockOpportunities);
-            // Add to betting store
+            // Add to betting store;
             mockOpportunities.forEach((opp) => {
                 addOpportunity({
                     id: opp.id,
@@ -93,13 +93,13 @@ const UltimateMoneyMaker = () => {
             });
         }
         catch (error) {
-            console.error("Failed to scan for opportunities:", error);
+            // console statement removed
         }
         finally {
             setIsScanning(false);
         }
     };
-    // Place bet
+    // Place bet;
     const placeBet = (opportunity, amount) => {
         addBet({
             eventId: opportunity.eventId,
@@ -117,17 +117,17 @@ const UltimateMoneyMaker = () => {
         setSelectedOpportunity(null);
         setStakeAmount(0);
     };
-    // Auto-scan when component mounts
+    // Auto-scan when component mounts;
     useEffect(() => {
         scanForOpportunities();
     }, []);
-    // Auto-mode scanning
+    // Auto-mode scanning;
     useEffect(() => {
         if (!autoMode)
             return;
         const interval = setInterval(() => {
             scanForOpportunities();
-        }, 60000); // Scan every minute
+        }, 60000); // Scan every minute;
         return () => clearInterval(interval);
     }, [autoMode]);
     const getRiskColor = (risk) => {
@@ -142,12 +142,12 @@ const UltimateMoneyMaker = () => {
                 return "text-gray-600 bg-gray-100";
         }
     };
-    const totalPotentialReturn = opportunities.reduce((sum, opp) => sum + opp.expectedReturn, 0);
-    const averageConfidence = opportunities.length > 0
+
+    const averageConfidence = opportunities.length > 0;
         ? opportunities.reduce((sum, opp) => sum + opp.confidence, 0) /
-            opportunities.length
+            opportunities.length;
         : 0;
-    return (_jsxs("div", { className: "space-y-6", children: [_jsx("div", { className: "bg-gradient-to-r from-green-500 to-blue-600 rounded-lg p-6 text-white", children: _jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { children: [_jsx("h1", { className: "text-2xl font-bold mb-2", children: "Ultimate Money Maker" }), _jsx("p", { className: "opacity-90", children: "AI-powered value betting opportunities" })] }), _jsxs("div", { className: "text-right", children: [_jsxs("div", { className: "text-3xl font-bold", children: ["$", totalPotentialReturn.toFixed(2)] }), _jsx("div", { className: "opacity-90", children: "Potential Return" })] })] }) }), _jsxs("div", { className: "bg-white dark:bg-gray-800 rounded-lg p-6", children: [_jsxs("div", { className: "flex items-center justify-between mb-4", children: [_jsx("h2", { className: "text-xl font-semibold text-gray-900 dark:text-white", children: "Opportunity Scanner" }), _jsxs("div", { className: "flex items-center space-x-3", children: [_jsxs("label", { className: "flex items-center space-x-2", children: [_jsx("input", { type: "checkbox", checked: autoMode, onChange: (e) => setAutoMode(e.target.checked), className: "rounded" }), _jsx("span", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Auto Mode" })] }), _jsx("button", { onClick: scanForOpportunities, disabled: isScanning, className: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2", children: isScanning ? (_jsxs(_Fragment, { children: [_jsx("div", { className: "animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" }), _jsx("span", { children: "Scanning..." })] })) : (_jsxs(_Fragment, { children: [_jsx(Zap, { className: "w-4 h-4" }), _jsx("span", { children: "Scan Now" })] })) })] })] }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 mb-6", children: [_jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsx("div", { className: "text-2xl font-bold text-gray-900 dark:text-white", children: opportunities.length }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Opportunities" })] }), _jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsxs("div", { className: "text-2xl font-bold text-green-600", children: [(averageConfidence * 100).toFixed(0), "%"] }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Avg Confidence" })] }), _jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsxs("div", { className: "text-2xl font-bold text-blue-600", children: ["$", bankroll.toLocaleString()] }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Bankroll" })] }), _jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsx("div", { className: "text-2xl font-bold text-purple-600", children: opportunities.filter((o) => o.riskLevel === "low").length }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Low Risk" })] })] })] }), _jsxs("div", { className: "bg-white dark:bg-gray-800 rounded-lg p-6", children: [_jsx("h2", { className: "text-xl font-semibold text-gray-900 dark:text-white mb-4", children: "Current Opportunities" }), opportunities.length === 0 ? (_jsxs("div", { className: "text-center py-8", children: [_jsx(Brain, { className: "w-12 h-12 text-gray-400 mx-auto mb-4" }), _jsx("p", { className: "text-gray-500 dark:text-gray-400", children: isScanning
+    return (_jsxs("div", { className: "space-y-6", children: [_jsx("div", { className: "bg-gradient-to-r from-green-500 to-blue-600 rounded-lg p-6 text-white", children: _jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { children: [_jsx("h1", { className: "text-2xl font-bold mb-2", children: "Ultimate Money Maker" }), _jsx("p", { className: "opacity-90", children: "AI-powered value betting opportunities" })] }), _jsxs("div", { className: "text-right", children: [_jsxs("div", { className: "text-3xl font-bold", children: ["$", totalPotentialReturn.toFixed(2)] }), _jsx("div", { className: "opacity-90", children: "Potential Return" })] })] }) }), _jsxs("div", { className: "bg-white dark:bg-gray-800 rounded-lg p-6", children: [_jsxs("div", { className: "flex items-center justify-between mb-4", children: [_jsx("h2", { className: "text-xl font-semibold text-gray-900 dark:text-white", children: "Opportunity Scanner" }), _jsxs("div", { className: "flex items-center space-x-3", children: [_jsxs("label", { className: "flex items-center space-x-2", children: [_jsx("input", { type: "checkbox", checked: autoMode, onChange: (e) => setAutoMode(e.target.checked), className: "rounded" }), _jsx("span", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Auto Mode" })] }), _jsx("button", { onClick: scanForOpportunities, disabled: isScanning, className: "px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2", children: isScanning ? (_jsxs(_Fragment, { children: [_jsx("div", { className: "animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" }), _jsx("span", { children: "Scanning..." })] })) : (_jsxs(_Fragment, { children: [_jsx(Zap, { className: "w-4 h-4" }), _jsx("span", { children: "Scan Now" })] })) })] })] }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 mb-6", children: [_jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsx("div", { className: "text-2xl font-bold text-gray-900 dark:text-white", children: opportunities.length }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Opportunities" })] }), _jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsxs("div", { className: "text-2xl font-bold text-green-600", children: [(averageConfidence * 100).toFixed(0), "%"] }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Avg Confidence" })] }), _jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsxs("div", { className: "text-2xl font-bold text-blue-600", children: ["$", bankroll.toLocaleString()] }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Bankroll" })] }), _jsxs("div", { className: "text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg", children: [_jsx("div", { className: "text-2xl font-bold text-purple-600", children: opportunities.filter((o) => o.riskLevel === "low").length }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Low Risk" })] })] })] }), _jsxs("div", { className: "bg-white dark:bg-gray-800 rounded-lg p-6", children: [_jsx("h2", { className: "text-xl font-semibold text-gray-900 dark:text-white mb-4", children: "Current Opportunities" }), opportunities.length === 0 ? (_jsxs("div", { className: "text-center py-8", children: [_jsx(Brain, { className: "w-12 h-12 text-gray-400 mx-auto mb-4" }), _jsx("p", { className: "text-gray-500 dark:text-gray-400", children: isScanning;
                                     ? "Scanning for opportunities..."
                                     : "No opportunities found. Click scan to search for value bets." })] })) : (_jsx("div", { className: "space-y-4", children: opportunities.map((opportunity) => (_jsxs("div", { className: "border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow", children: [_jsxs("div", { className: "flex items-center justify-between mb-3", children: [_jsxs("div", { children: [_jsx("h3", { className: "font-semibold text-gray-900 dark:text-white", children: opportunity.description }), _jsxs("div", { className: "flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400", children: [_jsxs("span", { children: ["Odds: ", opportunity.currentOdds] }), _jsx("span", { children: "\u2022" }), _jsxs("span", { children: ["Edge: ", (opportunity.valueEdge * 100).toFixed(1), "%"] })] })] }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx("span", { className: `px-2 py-1 rounded text-xs font-medium ${getRiskColor(opportunity.riskLevel)}`, children: opportunity.riskLevel.toUpperCase() }), _jsxs("span", { className: "text-lg font-bold text-green-600", children: ["$", opportunity.expectedReturn.toFixed(2)] })] })] }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-5 gap-4 mb-3", children: [_jsxs("div", { className: "text-center", children: [_jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Confidence" }), _jsxs("div", { className: "font-semibold text-gray-900 dark:text-white", children: [(opportunity.confidence * 100).toFixed(0), "%"] })] }), _jsxs("div", { className: "text-center", children: [_jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Probability" }), _jsxs("div", { className: "font-semibold text-gray-900 dark:text-white", children: [(opportunity.predictedProbability * 100).toFixed(1), "%"] })] }), _jsxs("div", { className: "text-center", children: [_jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Kelly %" }), _jsxs("div", { className: "font-semibold text-gray-900 dark:text-white", children: [(opportunity.kellyFraction * 100).toFixed(1), "%"] })] }), _jsxs("div", { className: "text-center", children: [_jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Recommended" }), _jsxs("div", { className: "font-semibold text-green-600", children: ["$", opportunity.recommendedStake.toFixed(2)] })] }), _jsxs("div", { className: "text-center", children: [_jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Max Stake" }), _jsxs("div", { className: "font-semibold text-gray-900 dark:text-white", children: ["$", opportunity.maxStake.toFixed(2)] })] })] }), _jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { className: "flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400", children: [_jsx(Target, { className: "w-4 h-4" }), _jsxs("span", { children: ["Expected Return: $", opportunity.expectedReturn.toFixed(2)] })] }), _jsxs("button", { onClick: () => {
                                                 setSelectedOpportunity(opportunity);

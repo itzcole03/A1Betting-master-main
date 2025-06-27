@@ -8,8 +8,6 @@ const SmartControlsBar = () => {
   const [useVolatility, setUseVolatility] = useState(true);
   const [entryAmount, setEntryAmount] = useState(10);
 
-  const payoutTable = { 2: 3, 3: 5, 4: 10, 5: 20, 6: 30 };
-  const payout = payoutTable[legs] * entryAmount || 0;
 
   return (
     <div className="p-4 mb-4 border rounded-md bg-white shadow-md grid gap-4 md:grid-cols-2">
@@ -34,12 +32,12 @@ const SmartControlsBar = () => {
       <div className="flex flex-wrap gap-4 items-center">
         <label className="flex items-center gap-1">
           <input type="checkbox" checked={useSentiment} onChange={() => setUseSentiment(!useSentiment)} />
-          Social Sentiment
+          Social Sentiment;
         </label>
 
         <label className="flex items-center gap-1">
           <input type="checkbox" checked={useVolatility} onChange={() => setUseVolatility(!useVolatility)} />
-          Volatility
+          Volatility;
         </label>
 
         <label className="font-medium">Entry: $

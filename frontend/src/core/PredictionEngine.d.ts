@@ -1,8 +1,8 @@
-import { PerformanceMetrics, PlayerProp } from '@/types';
-import { AnalysisPlugin } from './AnalysisFramework';
-import { PipelineStage } from './DataPipeline';
-import { FeatureComponent } from './FeatureComposition';
-import { StrategyComponent, StrategyResult } from './StrategyComposition';
+import { PerformanceMetrics, PlayerProp } from '@/types.ts';
+import { AnalysisPlugin } from './AnalysisFramework.ts';
+import { PipelineStage } from './DataPipeline.ts';
+import { FeatureComponent } from './FeatureComposition.ts';
+import { StrategyComponent, StrategyResult } from './StrategyComposition.ts';
 export interface DataSource<T = unknown> {
     id: string;
     fetch(): Promise<T>;

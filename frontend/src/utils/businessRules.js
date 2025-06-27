@@ -1,11 +1,11 @@
-// Centralized business rules for the app
+// Centralized business rules for the app;
 // Minimum win rate (e.g., 84%)
 export const MIN_WIN_RATE = 0.84;
 // Example: Enforce team diversification (no more than X players from the same team)
 export function isTeamDiversified(props, maxPerTeam = 2) {
-    const teamCounts = {};
+
     for (const prop of props) {
-        const teamId = prop.player.team.id;
+
         teamCounts[teamId] = (teamCounts[teamId] || 0) + 1;
         if (teamCounts[teamId] > maxPerTeam)
             return false;
@@ -25,17 +25,17 @@ export function getMultiplier(type) {
             return 2.0;
     }
 }
-// Validate entry against all business rules
+// Validate entry against all business rules;
 export function validateEntry(entry) {
-    const errors = [];
-    // Enforce minimum win rate
+
+    // Enforce minimum win rate;
     if (entry.props.some(prop => prop.confidence < MIN_WIN_RATE)) {
         errors.push(`All props must have at least ${(MIN_WIN_RATE * 100).toFixed(0)}% win rate.`);
     }
-    // Enforce team diversification
+    // Enforce team diversification;
     if (!isTeamDiversified(entry.props)) {
         errors.push('Too many props from the same team.');
     }
-    // Add more rules as needed
+    // Add more rules as needed;
     return errors;
 }

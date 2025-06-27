@@ -1,6 +1,6 @@
-import { ModelMetrics } from '../types/ModelMetrics';
-import { ModelMetadata } from '../models/ModelMetadata';
-import * as tf from '@tensorflow/tfjs';
+import { ModelMetrics } from '@/types/ModelMetrics.ts';
+import { ModelMetadata } from '@/models/ModelMetadata.ts';
+import * as tf from '@tensorflow/tfjs.ts';
 export declare class ModelEvaluator {
     private static instance;
     private logger;

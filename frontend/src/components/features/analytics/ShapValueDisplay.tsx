@@ -1,7 +1,7 @@
-import React from 'react';
-import { useState } from 'react';
-import { ShapValue } from '../../../types/explainability';
-import { ShapBreakdownModal } from './ShapBreakdownModal';
+import React from 'react.ts';
+import { useState } from 'react.ts';
+import { ShapValue } from '@/../types/explainability.ts';
+import { ShapBreakdownModal } from './ShapBreakdownModal.ts';
 
 interface ShapValueDisplayProps {
   feature: ShapValue;
@@ -17,46 +17,46 @@ export function ShapValueDisplay({ feature }: ShapValueDisplayProps) {
   };
 
   const getBarWidth = (value: number) => {
-    // Normalize the value to a percentage between 0 and 100
-    const normalizedValue = Math.abs(value) * 100;
+    // Normalize the value to a percentage between 0 and 100;
+
     return Math.min(normalizedValue, 100);
   };
 
   return (
     <>
-      <div
+      <div;
         className="space-y-1 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-700 p-2 rounded transition-colors"
-        onClick={() => setIsModalOpen(true)}
+        onClick={() = key={339193}> setIsModalOpen(true)}
       >
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-gray-600 dark:text-gray-400">{feature.feature}</span>
-          <span className="font-medium">{feature.value.toFixed(3)}</span>
+        <div className="flex items-center justify-between text-sm" key={20634}>
+          <span className="text-gray-600 dark:text-gray-400" key={517223}>{feature.feature}</span>
+          <span className="font-medium" key={514486}>{feature.value.toFixed(3)}</span>
         </div>
-        <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-          <div
+        <div className="h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden" key={514168}>
+          <div;
             className={`${getColor(feature.value)} h-full transition-all duration-300 ease-in-out`}
             style={{
               width: `${getBarWidth(feature.value)}%`,
               marginLeft: feature.value < 0 ? 'auto' : '0',
             }}
-          />
+          / key={973181}>
         </div>
-        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-          <span>Weight: {feature.weight?.toFixed(2) ?? 'N/A'}</span>
-          <span>
-            {feature.value > 0
+        <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400" key={898716}>
+          <span key={595076}>Weight: {feature.weight?.toFixed(2) ?? 'N/A'}</span>
+          <span key={595076}>
+            {feature.value > 0;
               ? 'Positive Impact'
-              : feature.value < 0
+              : feature.value < 0;
                 ? 'Negative Impact'
                 : 'Neutral'}
           </span>
         </div>
       </div>
 
-      <ShapBreakdownModal
+      <ShapBreakdownModal;
         feature={feature}
         isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
+        onClose={() = key={417397}> setIsModalOpen(false)}
       />
     </>
   );

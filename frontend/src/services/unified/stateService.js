@@ -31,7 +31,7 @@ class UnifiedStateService {
         if (!this.config.persistToStorage)
             return;
         try {
-            const savedState = localStorage.getItem(this.STORAGE_KEY);
+
             if (savedState) {
                 this.state = JSON.parse(savedState);
             }
@@ -74,7 +74,7 @@ class UnifiedStateService {
         return { ...this.state };
     }
     setState(updates, source, action) {
-        const previousState = { ...this.state };
+
         this.state = {
             ...this.state,
             ...updates,
@@ -91,8 +91,8 @@ class UnifiedStateService {
         this.subscribers.forEach(callback => callback(this.state));
     }
     updateState(updater, source, action = 'updateState') {
-        const previousState = { ...this.state };
-        const updates = updater(this.state);
+
+
         this.state = { ...this.state, ...updates };
         this.recordStateChange(previousState, this.state, source, action);
         this.saveState();
@@ -122,7 +122,7 @@ class UnifiedStateService {
             this.errorService.handleError(new Error('Invalid history index'), 'StateService', 'low');
             return;
         }
-        const targetState = this.history[index].newState;
+
         this.state = { ...targetState };
         this.saveState();
         this.dispatchStateChange(this.state, targetState, 'StateService', 'timeTravel');

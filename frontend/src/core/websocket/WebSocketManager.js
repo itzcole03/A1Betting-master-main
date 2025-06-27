@@ -32,7 +32,7 @@ export class WebSocketManager extends EventEmitter {
         }, this.PING_INTERVAL);
     }
     async connect(socket) {
-        const clientId = uuidv4();
+
         const client = {
             id: clientId,
             socket,
@@ -49,7 +49,7 @@ export class WebSocketManager extends EventEmitter {
     setupSocketHandlers(client) {
         client.socket.on('message', (data) => {
             try {
-                const message = JSON.parse(data);
+
                 this.handleMessage(client, message);
             }
             catch (error) {
@@ -101,7 +101,7 @@ export class WebSocketManager extends EventEmitter {
         this.sendMessage(client.id, { type: 'pong', data: null, timestamp: Date.now() });
     }
     handleClientDisconnect(clientId) {
-        const client = this.clients.get(clientId);
+
         if (!client)
             return;
         if (client.reconnectAttempts < this.MAX_RECONNECT_ATTEMPTS) {
@@ -116,9 +116,9 @@ export class WebSocketManager extends EventEmitter {
     }
     async attemptReconnect(client) {
         try {
-            // Implement reconnection logic here
+            // Implement reconnection logic here;
             this.logger.info(`Attempting to reconnect client ${client.id}`);
-            // For now, just remove the client
+            // For now, just remove the client;
             this.removeClient(client.id);
         }
         catch (error) {
@@ -127,7 +127,7 @@ export class WebSocketManager extends EventEmitter {
         }
     }
     removeClient(clientId) {
-        const client = this.clients.get(clientId);
+
         if (!client)
             return;
         client.socket.close();
@@ -136,7 +136,7 @@ export class WebSocketManager extends EventEmitter {
         this.emit('disconnect', clientId);
     }
     sendMessage(clientId, message) {
-        const client = this.clients.get(clientId);
+
         if (!client)
             return;
         if (client.socket.readyState === WebSocket.OPEN) {
@@ -148,7 +148,7 @@ export class WebSocketManager extends EventEmitter {
     }
     queueMessage(client, message) {
         if (client.messageQueue.length >= this.MESSAGE_QUEUE_LIMIT) {
-            client.messageQueue.shift(); // Remove oldest message
+            client.messageQueue.shift(); // Remove oldest message;
         }
         client.messageQueue.push(message);
     }
@@ -173,7 +173,7 @@ export class WebSocketManager extends EventEmitter {
         return this.clients.size;
     }
     getSubscriberCount(topic) {
-        let count = 0;
+        const count = 0;
         this.clients.forEach(client => {
             if (client.subscriptions.has(topic))
                 count++;

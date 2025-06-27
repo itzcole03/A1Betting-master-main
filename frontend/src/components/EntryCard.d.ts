@@ -1,5 +1,5 @@
-import React from 'react';
-import type { Entry } from '@/types';
+import React from 'react.ts';
+import type { Entry } from '@/types.ts';
 interface EntryCardProps {
     entry: Entry;
     onClick?: () => void;

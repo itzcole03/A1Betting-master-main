@@ -1,5 +1,5 @@
-import React from 'react';
-import { Bet } from '../../types/betting';
+import React from 'react.ts';
+import { Bet } from '@/types/betting.ts';
 interface BetSlipProps {
     onPlaceBet: (bet: Omit<Bet, 'id' | 'status' | 'timestamp'>) => void;
 }

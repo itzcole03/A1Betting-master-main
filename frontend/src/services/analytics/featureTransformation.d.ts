@@ -1,4 +1,4 @@
-import { FeatureConfig } from '@/types';
+import { FeatureConfig } from '@/types.ts';
 export declare class FeatureTransformer {
     private readonly config;
     private readonly logger;

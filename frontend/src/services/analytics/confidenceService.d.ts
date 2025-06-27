@@ -1,4 +1,4 @@
-import type { PredictionWithConfidence } from '../../types/confidence';
+import type { PredictionWithConfidence } from '@/types/confidence.ts';
 declare class ConfidenceService {
     private static _instance;
     private cache;

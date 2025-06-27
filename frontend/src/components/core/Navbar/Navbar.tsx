@@ -1,11 +1,11 @@
-import { useThemeStore } from '@/stores/themeStore';
+import { useThemeStore } from '@/stores/themeStore.ts';
 import {
   Brightness4 as DarkModeIcon,
   Brightness7 as LightModeIcon,
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
   Settings as SettingsIcon,
-} from '@mui/icons-material';
+} from '@mui/icons-material.ts';
 import {
   AppBar,
   Avatar,
@@ -18,27 +18,25 @@ import {
   Typography,
   useMediaQuery,
   useTheme,
-} from '@mui/material';
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../../providers/useAuth';
+} from '@mui/material.ts';
+import React from 'react.ts';
+import { useNavigate } from 'react-router-dom.ts';
+import { useAuth } from '@/../providers/useAuth.ts';
 
 interface NavbarProps {
   onMenuClick?: () => void;
   showMenuButton?: boolean;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ onMenuClick, showMenuButton = true }) => {
-  const navigate = useNavigate();
+const Navbar: React.FC<NavbarProps key={969058}> = ({ onMenuClick, showMenuButton = true }) => {
+
   const { user, logout } = useAuth();
   const { mode, toggleTheme } = useThemeStore();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
 
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement key={178068}>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLElement key={9296}>) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -62,30 +60,30 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick, showMenuButton = true }) =
   };
 
   return (
-    <AppBar
+    <AppBar;
       position="fixed"
       sx={{
-        zIndex: theme => theme.zIndex.drawer + 1,
+        zIndex: theme = key={90451}> theme.zIndex.drawer + 1,
         backgroundColor: theme.palette.background.paper,
         color: theme.palette.text.primary,
         boxShadow: 1,
       }}
     >
-      <Toolbar>
+      <Toolbar key={629347}>
         {showMenuButton && (
-          <IconButton
+          <IconButton;
             aria-label="open drawer"
             color="inherit"
             edge="start"
             sx={{ mr: 2 }}
             onClick={onMenuClick}
-          >
-            <MenuIcon />
+           key={823750}>
+            <MenuIcon / key={955480}>
           </IconButton>
         )}
 
-        <Typography
-          noWrap
+        <Typography;
+          noWrap;
           component="div"
           sx={{
             flexGrow: 1,
@@ -94,62 +92,62 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick, showMenuButton = true }) =
             gap: 1,
           }}
           variant="h6"
-        >
+         key={991658}>
 
 
-          <img
+          <img;
             alt="Sports Betting AI"
             src="/logo.svg"
             sx={{
               height: 32,
               width: 'auto'
             }}
-          />
+          / key={821043}>
           {!isMobile && 'Sports Betting AI'}
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Tooltip title="Toggle theme">
-            <IconButton color="inherit" onClick={toggleTheme}>
-              {mode === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} key={109447}>
+          <Tooltip title="Toggle theme" key={710288}>
+            <IconButton color="inherit" onClick={toggleTheme} key={718959}>
+              {mode === 'dark' ? <LightModeIcon / key={47521}> : <DarkModeIcon / key={951831}>}
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Notifications">
-            <IconButton color="inherit">
-              <NotificationsIcon />
+          <Tooltip title="Notifications" key={873932}>
+            <IconButton color="inherit" key={111822}>
+              <NotificationsIcon / key={224298}>
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Settings">
-            <IconButton color="inherit" onClick={handleSettings}>
-              <SettingsIcon />
+          <Tooltip title="Settings" key={674152}>
+            <IconButton color="inherit" onClick={handleSettings} key={36087}>
+              <SettingsIcon / key={722197}>
             </IconButton>
           </Tooltip>
 
-          <Tooltip title="Account settings">
-            <IconButton
+          <Tooltip title="Account settings" key={505899}>
+            <IconButton;
               aria-controls={open ? 'account-menu' : undefined}
               aria-expanded={open ? 'true' : undefined}
               aria-haspopup="true"
               size="small"
               sx={{ ml: 2 }}
               onClick={handleClick}
-            >
-              <Avatar
+             key={630997}>
+              <Avatar;
                 sx={{
                   width: 32,
                   height: 32,
                   bgcolor: theme.palette.primary.main,
                 }}
-              >
+               key={224456}>
                 {user?.name?.[0] || 'U'}
               </Avatar>
             </IconButton>
           </Tooltip>
         </Box>
 
-        <Menu
+        <Menu;
           anchorEl={anchorEl}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           id="account-menu"
@@ -171,14 +169,14 @@ const Navbar: React.FC<NavbarProps> = ({ onMenuClick, showMenuButton = true }) =
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           onClick={handleClose}
           onClose={handleClose}
-        >
-          <MenuItem onClick={handleProfile}>
-            <Avatar /> Profile
+         key={581746}>
+          <MenuItem onClick={handleProfile} key={24190}>
+            <Avatar / key={218273}> Profile;
           </MenuItem>
-          <MenuItem onClick={handleSettings}>
-            <SettingsIcon fontSize="small" sx={{ mr: 1 }} /> Settings
+          <MenuItem onClick={handleSettings} key={3438}>
+            <SettingsIcon fontSize="small" sx={{ mr: 1 }} / key={291271}> Settings;
           </MenuItem>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={handleLogout} key={122348}>Logout</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

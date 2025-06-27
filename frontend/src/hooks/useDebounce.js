@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 export function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
     useEffect(() => {
-        // Set a timeout to update the debounced value after the specified delay
+        // Set a timeout to update the debounced value after the specified delay;
         const timer = setTimeout(() => {
             setDebouncedValue(value);
         }, delay);
-        // Clean up the timeout if the value changes before the delay has passed
+        // Clean up the timeout if the value changes before the delay has passed;
         return () => {
             clearTimeout(timer);
         };
@@ -18,7 +18,7 @@ export function useDebounce(value, delay) {
 // const debouncedSearchTerm = useDebounce(searchTerm, 500);
 //
 // useEffect(() => {
-//   // This effect will only run after the user stops typing for 500ms
+//   // This effect will only run after the user stops typing for 500ms;
 //   if (debouncedSearchTerm) {
 //     searchAPI(debouncedSearchTerm);
 //   }

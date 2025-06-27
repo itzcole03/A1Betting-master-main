@@ -1,6 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, useState } from "react";
-const CyberAppContext = createContext(null);
+
 export const CyberAppContextProvider = ({ children }) => {
     const [currentPage, setCurrentPage] = useState("dashboard");
     const [user] = useState({
@@ -23,7 +23,7 @@ export const CyberAppContextProvider = ({ children }) => {
     return (_jsx(CyberAppContext.Provider, { value: value, children: children }));
 };
 export const useCyberApp = () => {
-    const context = useContext(CyberAppContext);
+
     if (!context) {
         throw new Error("useCyberApp must be used within a CyberAppContextProvider");
     }

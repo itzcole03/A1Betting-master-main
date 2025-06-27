@@ -1,11 +1,11 @@
 /**
- * Custom WebSocket hook for real-time data streaming
- * Provides connection management, reconnection, and typed message handling
+ * Custom WebSocket hook for real-time data streaming;
+ * Provides connection management, reconnection, and typed message handling;
  */
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import toast from "react-hot-toast";
-import { websocketHealthMonitor } from "../utils/websocketHealthMonitor";
+import { useState, useEffect, useRef, useCallback } from 'react.ts';
+import toast from 'react-hot-toast.ts';
+import { websocketHealthMonitor } from '@/utils/websocketHealthMonitor.ts';
 
 interface WebSocketMessage {
   type: string;
@@ -55,10 +55,8 @@ export const useWebSocket = (
     connectionAttempts: 0,
   });
 
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const shouldReconnectRef = useRef(shouldReconnect);
 
-  // Update shouldReconnect ref when option changes
+  // Update shouldReconnect ref when option changes;
   useEffect(() => {
     shouldReconnectRef.current = shouldReconnect;
   }, [shouldReconnect]);
@@ -72,12 +70,11 @@ export const useWebSocket = (
 
     try {
       const wsUrl = url.startsWith("ws")
-        ? url
+        ? url;
         : `ws://${window.location.host}${url}`;
-      const socket = new WebSocket(wsUrl);
 
       socket.onopen = () => {
-        console.log("WebSocket connected");
+        // console statement removed
         setState((prev) => ({
           ...prev,
           socket,
@@ -87,7 +84,7 @@ export const useWebSocket = (
           connectionAttempts: 0,
         }));
 
-        // Register with health monitor
+        // Register with health monitor;
         websocketHealthMonitor.registerConnection(wsUrl);
         websocketHealthMonitor.updateConnectionHealth(wsUrl, true);
 
@@ -98,7 +95,7 @@ export const useWebSocket = (
       };
 
       socket.onclose = (event) => {
-        console.log("WebSocket disconnected:", event.code, event.reason);
+        // console statement removed
         setState((prev) => ({
           ...prev,
           socket: null,
@@ -106,9 +103,9 @@ export const useWebSocket = (
           isConnecting: false,
         }));
 
-        // Update health monitor
+        // Update health monitor;
         const wsUrl = url.startsWith("ws")
-          ? url
+          ? url;
           : `ws://${window.location.host}${url}`;
         websocketHealthMonitor.updateConnectionHealth(
           wsUrl,
@@ -118,13 +115,13 @@ export const useWebSocket = (
 
         onDisconnect?.();
 
-        // Only show user-facing messages for non-development errors
+        // Only show user-facing messages for non-development errors;
         if (event.code !== 1006 && !event.reason?.includes("development")) {
-          // Attempt to reconnect if enabled and within retry limits
+          // Attempt to reconnect if enabled and within retry limits;
           if (
             shouldReconnectRef.current &&
             state.connectionAttempts < reconnectAttempts &&
-            !event.wasClean
+            !event.wasClean;
           ) {
             setState((prev) => ({
               ...prev,
@@ -132,8 +129,7 @@ export const useWebSocket = (
             }));
 
             reconnectTimeoutRef.current = setTimeout(() => {
-              console.log(
-                `Attempting to reconnect... (${state.connectionAttempts + 1}/${reconnectAttempts})`,
+              // console statement removed`,
               );
               connect();
             }, reconnectInterval);
@@ -144,7 +140,7 @@ export const useWebSocket = (
       };
 
       socket.onerror = (error) => {
-        console.error("WebSocket error:", error);
+        // console statement removed
         setState((prev) => ({
           ...prev,
           error: "WebSocket connection error",
@@ -152,7 +148,7 @@ export const useWebSocket = (
         }));
         onError?.(error);
 
-        // Only show error toast if it's not a development/HMR related error
+        // Only show error toast if it's not a development/HMR related error;
         if (!url.includes("localhost") || shouldReconnectRef.current) {
           toast.error("Connection error occurred");
         }
@@ -164,11 +160,11 @@ export const useWebSocket = (
           setState((prev) => ({ ...prev, lastMessage: message }));
           onMessage?.(message);
         } catch (error) {
-          console.error("Failed to parse WebSocket message:", error);
+          // console statement removed
         }
       };
     } catch (error) {
-      console.error("Failed to create WebSocket connection:", error);
+      // console statement removed
       setState((prev) => ({
         ...prev,
         error: "Failed to create connection",
@@ -218,12 +214,12 @@ export const useWebSocket = (
           state.socket.send(messageString);
           return true;
         } catch (error) {
-          console.error("Failed to send WebSocket message:", error);
+          // console statement removed
           toast.error("Failed to send message");
           return false;
         }
       } else {
-        console.warn("WebSocket is not connected");
+        // console statement removed
         toast.warning("Connection not available");
         return false;
       }
@@ -231,11 +227,11 @@ export const useWebSocket = (
     [state.socket, state.isConnected],
   );
 
-  // Auto-connect on mount
+  // Auto-connect on mount;
   useEffect(() => {
     connect();
 
-    // Cleanup on unmount
+    // Cleanup on unmount;
     return () => {
       shouldReconnectRef.current = false;
       if (reconnectTimeoutRef.current) {
@@ -247,7 +243,7 @@ export const useWebSocket = (
     };
   }, [url]);
 
-  // Cleanup timeout on unmount
+  // Cleanup timeout on unmount;
   useEffect(() => {
     return () => {
       if (reconnectTimeoutRef.current) {
@@ -257,23 +253,23 @@ export const useWebSocket = (
   }, []);
 
   return {
-    // Connection state
+    // Connection state;
     isConnected: state.isConnected,
     isConnecting: state.isConnecting,
     error: state.error,
     connectionAttempts: state.connectionAttempts,
 
-    // Data
+    // Data;
     lastMessage: state.lastMessage,
 
-    // Actions
+    // Actions;
     connect,
     disconnect,
     sendMessage,
 
-    // Connection info
+    // Connection info;
     readyState: state.socket?.readyState,
   };
 };
 
-// Named export only to prevent import confusion
+// Named export only to prevent import confusion;

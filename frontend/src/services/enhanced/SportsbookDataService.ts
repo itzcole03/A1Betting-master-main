@@ -1,7 +1,7 @@
 /**
- * Sportsbook Data Aggregation Service
- * Integrates with real sportsbook APIs and provides unified data access
- * Supports DraftKings, FanDuel, BetMGM, Caesars, and other major sportsbooks
+ * Sportsbook Data Aggregation Service;
+ * Integrates with real sportsbook APIs and provides unified data access;
+ * Supports DraftKings, FanDuel, BetMGM, Caesars, and other major sportsbooks;
  */
 
 interface SportsbookOdds {
@@ -60,17 +60,17 @@ interface SportsbookAvailability {
 export class SportsbookDataService {
   private readonly baseUrl: string;
   private readonly cache: Map<string, { data: any; timestamp: number }>;
-  private readonly cacheTTL: number = 15000; // 15 seconds for live odds
-  private readonly longCacheTTL: number = 300000; // 5 minutes for static data
+  private readonly cacheTTL: number = 15000; // 15 seconds for live odds;
+  private readonly longCacheTTL: number = 300000; // 5 minutes for static data;
 
-  // WebSocket connections for real-time updates
+  // WebSocket connections for real-time updates;
   private wsConnections: Map<string, WebSocket> = new Map();
   private eventListeners: Map<string, Set<(data: LiveUpdate) => void>> =
     new Map();
 
-  // Rate limiting
+  // Rate limiting;
   private lastRequestTime: number = 0;
-  private readonly rateLimitMs: number = 500; // 500ms between requests
+  private readonly rateLimitMs: number = 500; // 500ms between requests;
 
   // Sportsbook endpoints (these would be configured based on available APIs)
   private readonly sportsbookEndpoints = {
@@ -78,7 +78,7 @@ export class SportsbookDataService {
     fanduel: "https://sportsbook.fanduel.com/api/odds",
     betmgm: "https://sports.betmgm.com/api/odds",
     caesars: "https://caesars.com/sportsbook/api/odds",
-    // Note: These are example endpoints - real integrations would use official APIs
+    // Note: These are example endpoints - real integrations would use official APIs;
   };
 
   constructor() {
@@ -88,16 +88,14 @@ export class SportsbookDataService {
       "http://localhost:8000";
     this.cache = new Map();
 
-    // Production validation
-    console.log(
-      "✓ Enhanced Sportsbook Data Service initialized for production",
-    );
-    console.log(`✓ Backend URL: ${this.baseUrl}`);
+    // Production validation;
+    // console statement removed
+    // console statement removed
   }
 
   private async enforceRateLimit(): Promise<void> {
-    const now = Date.now();
-    const timeSinceLastRequest = now - this.lastRequestTime;
+
+
     if (timeSinceLastRequest < this.rateLimitMs) {
       await new Promise((resolve) =>
         setTimeout(resolve, this.rateLimitMs - timeSinceLastRequest),
@@ -112,12 +110,11 @@ export class SportsbookDataService {
     useCache: boolean = true,
     customTTL?: number,
   ): Promise<T> {
-    const cacheKey = `${endpoint}:${JSON.stringify(options)}`;
-    const ttl = customTTL || this.cacheTTL;
 
-    // Check cache first
+
+    // Check cache first;
     if (useCache) {
-      const cached = this.cache.get(cacheKey);
+
       if (cached && Date.now() - cached.timestamp < ttl) {
         return cached.data;
       }
@@ -126,7 +123,7 @@ export class SportsbookDataService {
     await this.enforceRateLimit();
 
     const url = endpoint.startsWith("http")
-      ? endpoint
+      ? endpoint;
       : `${this.baseUrl}${endpoint}`;
 
     try {
@@ -144,9 +141,7 @@ export class SportsbookDataService {
         );
       }
 
-      const data = await response.json();
-
-      // Cache the response
+      // Cache the response;
       if (useCache) {
         this.cache.set(cacheKey, {
           data,
@@ -156,20 +151,20 @@ export class SportsbookDataService {
 
       return data;
     } catch (error) {
-      console.error("Sportsbook API request failed:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get aggregated odds from multiple sportsbooks
+   * Get aggregated odds from multiple sportsbooks;
    */
   async getAggregatedOdds(
     sport: string,
     league?: string,
   ): Promise<SportsbookEvent[]> {
     try {
-      // Try to get data from our backend aggregation service first
+      // Try to get data from our backend aggregation service first;
       const backendData = await this.makeRequest<SportsbookEvent[]>(
         `/api/sportsbook/aggregated-odds/${sport}${league ? `/${league}` : ""}`,
       );
@@ -178,17 +173,15 @@ export class SportsbookDataService {
         return backendData;
       }
     } catch (error) {
-      console.warn(
-        "Backend aggregated odds unavailable, using individual sources",
-      );
+      // console statement removed
     }
 
-    // Fall back to individual sportsbook data aggregation
+    // Fall back to individual sportsbook data aggregation;
     return await this.aggregateIndividualSportsbooks(sport, league);
   }
 
   /**
-   * Aggregate data from individual sportsbook APIs
+   * Aggregate data from individual sportsbook APIs;
    */
   private async aggregateIndividualSportsbooks(
     sport: string,
@@ -196,9 +189,8 @@ export class SportsbookDataService {
   ): Promise<SportsbookEvent[]> {
     const sportsbookData: Record<string, any[]> = {};
 
-    // This would integrate with real sportsbook APIs
-    // For now, we'll use mock data that represents the structure
-    const mockSportsbooks = ["draftkings", "fanduel", "betmgm", "caesars"];
+    // This would integrate with real sportsbook APIs;
+    // For now, we'll use mock data that represents the structure;
 
     for (const sportsbook of mockSportsbooks) {
       try {
@@ -208,25 +200,25 @@ export class SportsbookDataService {
           league,
         );
       } catch (error) {
-        console.warn(`Failed to get ${sportsbook} data:`, error);
+        // console statement removed
         sportsbookData[sportsbook] = [];
       }
     }
 
-    // Aggregate the data
+    // Aggregate the data;
     return this.mergeSportsbookData(sportsbookData);
   }
 
   /**
-   * Get odds from a specific sportsbook
+   * Get odds from a specific sportsbook;
    */
   private async getSportsbookOdds(
     sportsbook: string,
     sport: string,
     league?: string,
   ): Promise<any[]> {
-    // In a real implementation, this would call the specific sportsbook's API
-    // For now, return mock data that represents the expected structure
+    // In a real implementation, this would call the specific sportsbook's API;
+    // For now, return mock data that represents the expected structure;
 
     return [
       {
@@ -254,7 +246,7 @@ export class SportsbookDataService {
   }
 
   /**
-   * Merge sportsbook data into unified format
+   * Merge sportsbook data into unified format;
    */
   private mergeSportsbookData(
     sportsbookData: Record<string, any[]>,
@@ -263,7 +255,6 @@ export class SportsbookDataService {
 
     for (const [sportsbook, events] of Object.entries(sportsbookData)) {
       for (const event of events) {
-        const eventKey = `${event.home_team}_vs_${event.away_team}_${event.commence_time}`;
 
         if (!eventsMap.has(eventKey)) {
           eventsMap.set(eventKey, {
@@ -313,9 +304,7 @@ export class SportsbookDataService {
           });
         }
 
-        const aggregatedEvent = eventsMap.get(eventKey)!;
-
-        // Add sportsbook odds
+        // Add sportsbook odds;
         const sportsbookOdds: SportsbookOdds = {
           sportsbook,
           moneyline_home: event.odds.moneyline_home,
@@ -331,7 +320,7 @@ export class SportsbookDataService {
 
         aggregatedEvent.sportsbooks.push(sportsbookOdds);
 
-        // Update best odds
+        // Update best odds;
         this.updateBestOdds(aggregatedEvent, sportsbookOdds);
       }
     }
@@ -340,13 +329,13 @@ export class SportsbookDataService {
   }
 
   /**
-   * Update best odds for an event
+   * Update best odds for an event;
    */
   private updateBestOdds(
     event: SportsbookEvent,
     newOdds: SportsbookOdds,
   ): void {
-    // Moneyline - higher positive odds or lower negative odds are better
+    // Moneyline - higher positive odds or lower negative odds are better;
     if (newOdds.moneyline_home !== undefined) {
       if (
         this.isBetterOdds(
@@ -369,7 +358,7 @@ export class SportsbookDataService {
       }
     }
 
-    // Spreads
+    // Spreads;
     if (newOdds.spread_home !== undefined) {
       if (
         this.isBetterOdds(
@@ -392,7 +381,7 @@ export class SportsbookDataService {
       }
     }
 
-    // Totals
+    // Totals;
     if (newOdds.total_over !== undefined) {
       if (
         this.isBetterOdds(newOdds.total_over, event.best_odds.over.total_over)
@@ -414,7 +403,7 @@ export class SportsbookDataService {
   }
 
   /**
-   * Determine if new odds are better than existing odds
+   * Determine if new odds are better than existing odds;
    */
   private isBetterOdds(
     newOdds: number | undefined,
@@ -423,20 +412,20 @@ export class SportsbookDataService {
     if (newOdds === undefined) return false;
     if (currentBest === undefined || currentBest === 0) return true;
 
-    // For American odds: positive odds - higher is better, negative odds - closer to 0 is better
+    // For American odds: positive odds - higher is better, negative odds - closer to 0 is better;
     if (newOdds > 0 && currentBest > 0) {
       return newOdds > currentBest;
     } else if (newOdds < 0 && currentBest < 0) {
-      return newOdds > currentBest; // -105 is better than -110
+      return newOdds > currentBest; // -105 is better than -110;
     } else if (newOdds > 0 && currentBest < 0) {
-      return true; // Positive odds are always better than negative
+      return true; // Positive odds are always better than negative;
     } else {
-      return false; // Negative odds are worse than positive
+      return false; // Negative odds are worse than positive;
     }
   }
 
   /**
-   * Get real-time line movements
+   * Get real-time line movements;
    */
   async getLineMovements(
     eventId: string,
@@ -450,9 +439,9 @@ export class SportsbookDataService {
         this.longCacheTTL,
       );
     } catch (error) {
-      console.error("Error getting line movements:", error);
+      // console statement removed
 
-      // Return mock line movement data
+      // Return mock line movement data;
       return [
         {
           event_id: eventId,
@@ -478,7 +467,7 @@ export class SportsbookDataService {
   }
 
   /**
-   * Check sportsbook availability
+   * Check sportsbook availability;
    */
   async checkSportsbookAvailability(): Promise<SportsbookAvailability> {
     const availability: SportsbookAvailability = {
@@ -492,12 +481,12 @@ export class SportsbookDataService {
       last_checked: new Date().toISOString(),
     };
 
-    // Test each sportsbook API
+    // Test each sportsbook API;
     const testPromises = Object.keys(availability).map(async (sportsbook) => {
       if (sportsbook === "last_checked") return;
 
       try {
-        // In a real implementation, this would ping each sportsbook's health endpoint
+        // In a real implementation, this would ping each sportsbook's health endpoint;
         await this.makeRequest(
           `/api/sportsbook/health/${sportsbook}`,
           {},
@@ -505,7 +494,7 @@ export class SportsbookDataService {
         );
         (availability as any)[sportsbook] = true;
       } catch (error) {
-        console.warn(`${sportsbook} unavailable:`, error);
+        // console statement removed
         (availability as any)[sportsbook] = false;
       }
     });
@@ -515,7 +504,7 @@ export class SportsbookDataService {
   }
 
   /**
-   * Subscribe to real-time odds updates
+   * Subscribe to real-time odds updates;
    */
   subscribeToLiveOdds(
     eventId: string,
@@ -527,12 +516,12 @@ export class SportsbookDataService {
 
     this.eventListeners.get(eventId)!.add(callback);
 
-    // Setup WebSocket connection if not exists
+    // Setup WebSocket connection if not exists;
     this.setupWebSocketConnection(eventId);
 
-    // Return unsubscribe function
+    // Return unsubscribe function;
     return () => {
-      const listeners = this.eventListeners.get(eventId);
+
       if (listeners) {
         listeners.delete(callback);
         if (listeners.size === 0) {
@@ -543,51 +532,50 @@ export class SportsbookDataService {
   }
 
   /**
-   * Setup WebSocket connection for real-time updates
+   * Setup WebSocket connection for real-time updates;
    */
   private setupWebSocketConnection(eventId: string): void {
     if (this.wsConnections.has(eventId)) return;
 
     try {
-      const wsUrl = `${this.baseUrl.replace("http", "ws")}/ws/sportsbook/${eventId}`;
-      const ws = new WebSocket(wsUrl);
+
 
       ws.onopen = () => {
-        console.log(`WebSocket connected for event ${eventId}`);
+        // console statement removed
       };
 
       ws.onmessage = (event) => {
         try {
           const update: LiveUpdate = JSON.parse(event.data);
-          const listeners = this.eventListeners.get(eventId);
+
           if (listeners) {
             listeners.forEach((callback) => callback(update));
           }
         } catch (error) {
-          console.error("Error parsing WebSocket message:", error);
+          // console statement removed
         }
       };
 
       ws.onerror = (error) => {
-        console.error(`WebSocket error for event ${eventId}:`, error);
+        // console statement removed
       };
 
       ws.onclose = () => {
-        console.log(`WebSocket closed for event ${eventId}`);
+        // console statement removed
         this.wsConnections.delete(eventId);
       };
 
       this.wsConnections.set(eventId, ws);
     } catch (error) {
-      console.error("Failed to setup WebSocket connection:", error);
+      // console statement removed
     }
   }
 
   /**
-   * Cleanup WebSocket connection
+   * Cleanup WebSocket connection;
    */
   private cleanupWebSocketConnection(eventId: string): void {
-    const ws = this.wsConnections.get(eventId);
+
     if (ws) {
       ws.close();
       this.wsConnections.delete(eventId);
@@ -596,7 +584,7 @@ export class SportsbookDataService {
   }
 
   /**
-   * Get arbitrage opportunities across sportsbooks
+   * Get arbitrage opportunities across sportsbooks;
    */
   async getArbitrageOpportunities(sport: string): Promise<
     Array<{
@@ -612,22 +600,19 @@ export class SportsbookDataService {
     }>
   > {
     try {
-      const events = await this.getAggregatedOdds(sport);
+
       const arbitrageOpps: any[] = [];
 
       for (const event of events) {
-        // Check moneyline arbitrage
-        const homeOdds = event.best_odds.moneyline_home.moneyline_home;
-        const awayOdds = event.best_odds.moneyline_away.moneyline_away;
+        // Check moneyline arbitrage;
+
 
         if (homeOdds && awayOdds) {
-          const homeImplied = this.americanToImpliedProbability(homeOdds);
-          const awayImplied = this.americanToImpliedProbability(awayOdds);
-          const totalImplied = homeImplied + awayImplied;
+
+
 
           if (totalImplied < 1) {
-            const profitMargin = (1 - totalImplied) * 100;
-            const totalStake = 1000;
+
 
             arbitrageOpps.push({
               event: `${event.home_team} vs ${event.away_team}`,
@@ -654,13 +639,13 @@ export class SportsbookDataService {
 
       return arbitrageOpps;
     } catch (error) {
-      console.error("Error finding arbitrage opportunities:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Convert American odds to implied probability
+   * Convert American odds to implied probability;
    */
   private americanToImpliedProbability(odds: number): number {
     if (odds > 0) {
@@ -671,7 +656,7 @@ export class SportsbookDataService {
   }
 
   /**
-   * Health check for sportsbook services
+   * Health check for sportsbook services;
    */
   async healthCheck(): Promise<{
     overall: string;
@@ -686,7 +671,7 @@ export class SportsbookDataService {
 
       const sportsbookAvailability =
         availability.status === "fulfilled"
-          ? availability.value
+          ? availability.value;
           : {
               draftkings: false,
               fanduel: false,
@@ -703,9 +688,7 @@ export class SportsbookDataService {
 
       const availableCount = Object.values(sportsbookAvailability).filter(
         (val, index) => index < 7 && val === true,
-      ).length; // Exclude last_checked
-
-      const overall = availableCount >= 2 ? "healthy" : "degraded";
+      ).length; // Exclude last_checked;
 
       return {
         overall,
@@ -713,7 +696,7 @@ export class SportsbookDataService {
         backend_status: backendStatus,
       };
     } catch (error) {
-      console.error("Health check error:", error);
+      // console statement removed
       return {
         overall: "degraded",
         sportsbooks: {
@@ -732,14 +715,14 @@ export class SportsbookDataService {
   }
 
   /**
-   * Clear all caches
+   * Clear all caches;
    */
   clearCache(): void {
     this.cache.clear();
   }
 
   /**
-   * Cleanup all WebSocket connections
+   * Cleanup all WebSocket connections;
    */
   cleanup(): void {
     this.wsConnections.forEach((ws) => ws.close());
@@ -748,6 +731,6 @@ export class SportsbookDataService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const sportsbookDataService = new SportsbookDataService();
 export default sportsbookDataService;

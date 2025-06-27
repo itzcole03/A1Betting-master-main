@@ -4,22 +4,22 @@ import { ErrorHandler } from '../core/ErrorHandler';
 import { PerformanceMonitor } from '../unified/PerformanceMonitor';
 import { ModelVersioning } from '../unified/ModelVersioning';
 export const usePredictionService = () => {
-    const eventBus = EventBus.getInstance();
-    const errorHandler = ErrorHandler.getInstance();
-    const performanceMonitor = PerformanceMonitor.getInstance();
-    const modelVersioning = ModelVersioning.getInstance();
+
+
+
+
     const getPredictions = useCallback(async (riskProfile) => {
-        const startTime = performance.now();
+
         try {
-            // Get current model version
-            const currentModel = modelVersioning.getCurrentVersion();
-            // Emit event to request predictions
+            // Get current model version;
+
+            // Emit event to request predictions;
             eventBus.emit('prediction:request', {
                 riskProfile,
                 modelVersion: currentModel.version,
                 timestamp: Date.now(),
             });
-            // Wait for predictions response
+            // Wait for predictions response;
             const response = await new Promise((resolve, reject) => {
                 const timeout = setTimeout(() => {
                     reject(new Error('Prediction request timed out'));
@@ -41,7 +41,7 @@ export const usePredictionService = () => {
             return response;
         }
         catch (error) {
-            const err = error;
+
             errorHandler.handleError(err, {
                 code: 'PREDICTION_REQUEST_ERROR',
                 category: 'BUSINESS',
@@ -65,7 +65,7 @@ export const usePredictionService = () => {
         }
     }, []);
     const subscribeToUpdates = useCallback((onUpdate, onError) => {
-        const startTime = performance.now();
+
         const handleUpdate = (prediction) => {
             try {
                 onUpdate(prediction);
@@ -78,7 +78,7 @@ export const usePredictionService = () => {
                 });
             }
             catch (error) {
-                const err = error;
+
                 onError(err);
                 errorHandler.handleError(err, {
                     code: 'PREDICTION_UPDATE_ERROR',

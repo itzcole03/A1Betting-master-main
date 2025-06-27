@@ -1,6 +1,6 @@
-import * as tf from '@tensorflow/tfjs';
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedCache } from '../../core/UnifiedCache';
+import * as tf from '@tensorflow/tfjs.ts';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedCache } from '@/core/UnifiedCache.ts';
 
 interface KellyMetrics {
   fraction: number;
@@ -66,7 +66,7 @@ export class KellyCriterion {
   private config: KellyConfig;
   private state: KellyState;
   private readonly CACHE_KEY = 'kelly_state';
-  private readonly CACHE_TTL = 3600 * 1000; // 1 hour in milliseconds
+  private readonly CACHE_TTL = 3600 * 1000; // 1 hour in milliseconds;
 
   constructor(config?: Partial<KellyConfig>) {
     this.logger = UnifiedLogger.getInstance();
@@ -117,7 +117,7 @@ export class KellyCriterion {
 
   private async loadState(): Promise<void> {
     try {
-      const cachedState = this.cache.get<KellyState>(this.CACHE_KEY);
+
       if (cachedState) {
         this.state = cachedState;
       }
@@ -136,32 +136,26 @@ export class KellyCriterion {
 
   public async analyze(predictions: tf.Tensor, labels: tf.Tensor): Promise<KellyMetrics> {
     try {
-      const predArray = (await predictions.array()) as number[][];
-      const labelArray = (await labels.array()) as number[][];
 
-      // Calculate base metrics
-      const winProb = this.calculateWinProbability(predArray, labelArray);
-      const odds = this.calculateOdds(predArray);
-      const kellyFraction = this.calculateKellyFraction(winProb, odds);
-      const adjustedFraction = this.adjustKellyFraction(kellyFraction);
 
-      // Calculate advanced metrics
-      const uncertainty = this.calculateUncertainty(predArray);
-      const volatility = this.calculateVolatility(predArray);
-      const sharpeRatio = this.calculateSharpeRatio(adjustedFraction, volatility);
-      const maxDrawdown = this.calculateMaxDrawdown();
-      const winRate = this.calculateWinRate();
-      const profitFactor = this.calculateProfitFactor();
+      // Calculate base metrics;
 
-      // Calculate expected value and risk-adjusted return
-      const expectedValue = this.calculateExpectedValue(winProb, odds, adjustedFraction);
-      const riskAdjustedReturn = this.calculateRiskAdjustedReturn(expectedValue, adjustedFraction);
 
-      // Calculate optimal stake with position sizing
-      const optimalStake = this.calculateOptimalStake(adjustedFraction, expectedValue);
 
-      // Calculate confidence with uncertainty consideration
-      const confidence = this.calculateConfidence(predArray, labelArray, uncertainty);
+
+      // Calculate advanced metrics;
+
+
+
+
+
+
+      // Calculate expected value and risk-adjusted return;
+
+
+      // Calculate optimal stake with position sizing;
+
+      // Calculate confidence with uncertainty consideration;
 
       return {
         fraction: adjustedFraction,
@@ -183,12 +177,11 @@ export class KellyCriterion {
   }
 
   private calculateWinProbability(predictions: number[][], labels: number[][]): number {
-    let correctPredictions = 0;
-    let totalPredictions = 0;
+    const correctPredictions = 0;
+    const totalPredictions = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      const pred = predictions[i].indexOf(Math.max(...predictions[i]));
-      const label = labels[i].indexOf(Math.max(...labels[i]));
+    for (const i = 0; i < predictions.length; i++) {
+
 
       if (pred === label) {
         correctPredictions++;
@@ -200,10 +193,10 @@ export class KellyCriterion {
   }
 
   private calculateOdds(predictions: number[][]): number {
-    // Calculate average odds from predictions
+    // Calculate average odds from predictions;
     const avgOdds =
       predictions.reduce((sum, pred) => {
-        const maxProb = Math.max(...pred);
+
         return sum + 1 / maxProb;
       }, 0) / predictions.length;
 
@@ -211,34 +204,32 @@ export class KellyCriterion {
   }
 
   private calculateKellyFraction(winProb: number, odds: number): number {
-    // Kelly Criterion formula: f* = (bp - q) / b
-    // where b = odds - 1, p = win probability, q = 1 - p
-    const b = odds - 1;
-    const q = 1 - winProb;
-    const kellyFraction = (b * winProb - q) / b;
+    // Kelly Criterion formula: f* = (bp - q) / b;
+    // where b = odds - 1, p = win probability, q = 1 - p;
 
-    return Math.max(0, kellyFraction); // Ensure non-negative fraction
+
+
+    return Math.max(0, kellyFraction); // Ensure non-negative fraction;
   }
 
   private adjustKellyFraction(kellyFraction: number): number {
-    // Apply dynamic adjustments based on performance and risk metrics
+    // Apply dynamic adjustments based on performance and risk metrics;
     const { maxDrawdown, winRate } = this.state.performance;
-    const volatility = this.calculateVolatility([]);
 
-    // Reduce fraction based on volatility
-    let adjustedFraction = kellyFraction * (1 - volatility);
+    // Reduce fraction based on volatility;
+    const adjustedFraction = kellyFraction * (1 - volatility);
 
-    // Reduce fraction based on drawdown
+    // Reduce fraction based on drawdown;
     if (maxDrawdown > this.config.drawdownLimit) {
       adjustedFraction *= 1 - maxDrawdown;
     }
 
-    // Adjust based on win rate
+    // Adjust based on win rate;
     if (winRate < 0.5) {
       adjustedFraction *= winRate;
     }
 
-    // Apply position sizing method
+    // Apply position sizing method;
     switch (this.config.positionSizing.method) {
       case 'fixed':
         adjustedFraction = this.config.positionSizing.baseSize;
@@ -253,18 +244,16 @@ export class KellyCriterion {
 
     return Math.min(
       Math.max(adjustedFraction, this.config.positionSizing.minSize),
-      this.config.positionSizing.maxSize
+      this.config.positionSizing.maxSize;
     );
   }
 
   private calculateAdaptiveMultiplier(): number {
     const { winRate, profitFactor, sharpeRatio } = this.state.performance;
-    const volatility = this.calculateVolatility([]);
 
-    // Combine multiple factors for adaptive sizing
-    const confidenceMultiplier = winRate * profitFactor;
-    const riskMultiplier = 1 / (1 + volatility);
-    const performanceMultiplier = Math.max(0, sharpeRatio);
+    // Combine multiple factors for adaptive sizing;
+
+
 
     return (confidenceMultiplier + riskMultiplier + performanceMultiplier) / 3;
   }
@@ -275,47 +264,47 @@ export class KellyCriterion {
   }
 
   private calculateRiskAdjustedReturn(expectedValue: number, fraction: number): number {
-    // Risk-adjusted return = expected value / fraction
+    // Risk-adjusted return = expected value / fraction;
     return expectedValue / fraction;
   }
 
   private calculateOptimalStake(fraction: number, expectedValue: number): number {
-    // Optimal stake = fraction * expected value
+    // Optimal stake = fraction * expected value;
     return fraction * expectedValue;
   }
 
   private calculateUncertainty(predictions: number[][]): number {
-    // Calculate prediction uncertainty using entropy
+    // Calculate prediction uncertainty using entropy;
     const entropy = predictions.map(pred => {
       const probs = pred.map(p => p + 1e-10); // Add small epsilon to avoid log(0)
-      const sum = probs.reduce((a, b) => a + b, 0);
-      const normalized = probs.map(p => p / sum);
+
+
       return -normalized.reduce((a, b) => a + b * Math.log(b), 0);
     });
     return entropy.reduce((a, b) => a + b, 0) / entropy.length;
   }
 
   private calculateVolatility(predictions: number[][]): number {
-    // Calculate prediction volatility
-    const maxProbs = predictions.map(pred => Math.max(...pred));
-    const mean = maxProbs.reduce((a, b) => a + b, 0) / maxProbs.length;
-    const variance = maxProbs.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / maxProbs.length;
+    // Calculate prediction volatility;
+
+
+
     return Math.sqrt(variance);
   }
 
   private calculateSharpeRatio(fraction: number, volatility: number): number {
     if (volatility === 0) return 0;
-    const riskFreeRate = 0.02; // 2% annual risk-free rate
+    const riskFreeRate = 0.02; // 2% annual risk-free rate;
     return (fraction - riskFreeRate) / volatility;
   }
 
   private calculateMaxDrawdown(): number {
-    let peak = this.state.bankroll;
-    let maxDrawdown = 0;
+    const peak = this.state.bankroll;
+    const maxDrawdown = 0;
 
     for (const trade of this.state.trades) {
       peak = Math.max(peak, trade.profit);
-      const drawdown = (peak - trade.profit) / peak;
+
       maxDrawdown = Math.max(maxDrawdown, drawdown);
     }
 
@@ -329,7 +318,7 @@ export class KellyCriterion {
 
   private calculateProfitFactor(): number {
     const { trades } = this.state;
-    const grossProfit = trades.filter(t => t.profit > 0).reduce((sum, t) => sum + t.profit, 0);
+
     const grossLoss = Math.abs(
       trades.filter(t => t.profit < 0).reduce((sum, t) => sum + t.profit, 0)
     );
@@ -339,14 +328,13 @@ export class KellyCriterion {
   private calculateConfidence(
     predictions: number[][],
     labels: number[][],
-    uncertainty: number
+    uncertainty: number;
   ): number {
-    let totalConfidence = 0;
-    let correctPredictions = 0;
+    const totalConfidence = 0;
+    const correctPredictions = 0;
 
-    for (let i = 0; i < predictions.length; i++) {
-      const pred = predictions[i].indexOf(Math.max(...predictions[i]));
-      const label = labels[i].indexOf(Math.max(...labels[i]));
+    for (const i = 0; i < predictions.length; i++) {
+
 
       if (pred === label) {
         correctPredictions++;
@@ -361,22 +349,22 @@ export class KellyCriterion {
     const { confidence, expectedValue, riskAdjustedReturn, uncertainty, volatility, maxDrawdown } =
       metrics;
 
-    // Basic criteria
+    // Basic criteria;
     if (confidence < this.config.minConfidence || expectedValue <= 0 || riskAdjustedReturn <= 0) {
       return false;
     }
 
-    // Risk management criteria
+    // Risk management criteria;
     if (uncertainty > this.config.riskTolerance || volatility > this.config.volatilityThreshold) {
       return false;
     }
 
-    // Drawdown protection
+    // Drawdown protection;
     if (maxDrawdown > this.config.drawdownLimit) {
       return false;
     }
 
-    // Performance-based criteria
+    // Performance-based criteria;
     const { winRate, profitFactor } = this.state.performance;
     if (winRate < 0.4 || profitFactor < 1.2) {
       return false;
@@ -406,14 +394,14 @@ export class KellyCriterion {
         betSize = bankroll * metrics.fraction;
     }
 
-    // Apply risk limits
-    const maxRiskAmount = bankroll * this.config.bankrollManagement.maxRiskPerTrade;
+    // Apply risk limits;
+
     betSize = Math.min(betSize, maxRiskAmount);
 
-    // Apply position size limits
+    // Apply position size limits;
     betSize = Math.min(
       Math.max(betSize, bankroll * this.config.positionSizing.minSize),
-      bankroll * this.config.positionSizing.maxSize
+      bankroll * this.config.positionSizing.maxSize;
     );
 
     return betSize;
@@ -422,19 +410,19 @@ export class KellyCriterion {
   private calculateAdaptiveBetSize(metrics: KellyMetrics, bankroll: number): number {
     const { confidence, uncertainty, volatility, sharpeRatio } = metrics;
 
-    // Calculate base size from Kelly fraction
-    let betSize = bankroll * metrics.fraction;
+    // Calculate base size from Kelly fraction;
+    const betSize = bankroll * metrics.fraction;
 
-    // Adjust for confidence
+    // Adjust for confidence;
     betSize *= confidence;
 
-    // Adjust for uncertainty
+    // Adjust for uncertainty;
     betSize *= 1 - uncertainty;
 
-    // Adjust for volatility
+    // Adjust for volatility;
     betSize *= 1 - volatility;
 
-    // Adjust for Sharpe ratio
+    // Adjust for Sharpe ratio;
     if (sharpeRatio > 0) {
       betSize *= 1 + sharpeRatio;
     }
@@ -446,9 +434,9 @@ export class KellyCriterion {
     betSize: number,
     outcome: number,
     profit: number,
-    metrics: KellyMetrics
+    metrics: KellyMetrics;
   ): void {
-    // Update trade history
+    // Update trade history;
     this.state.trades.push({
       timestamp: Date.now(),
       betSize,
@@ -457,10 +445,10 @@ export class KellyCriterion {
       metrics,
     });
 
-    // Update bankroll
+    // Update bankroll;
     this.state.bankroll += profit;
 
-    // Update performance metrics
+    // Update performance metrics;
     this.state.performance.totalTrades++;
     if (profit > 0) {
       this.state.performance.winningTrades++;
@@ -472,7 +460,7 @@ export class KellyCriterion {
     this.state.performance.profitFactor = this.calculateProfitFactor();
     this.state.performance.maxDrawdown = this.calculateMaxDrawdown();
 
-    // Save updated state
+    // Save updated state;
     this.saveState();
   }
 }

@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 export declare class BettingAutomationService extends EventEmitter {
     private readonly userPersonalizationService;
     private readonly predictionOptimizationService;

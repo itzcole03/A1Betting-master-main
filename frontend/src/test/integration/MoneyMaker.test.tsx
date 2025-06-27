@@ -1,11 +1,11 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import MoneyMaker from '../../components/MoneyMaker';
-import { useFilteredPredictions } from '../../hooks/useFilteredPredictions';
-import { useAppStore } from '@/store/useAppStore';
+import React from 'react.ts';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react.ts';
+import { BrowserRouter } from 'react-router-dom.ts';
+import MoneyMaker from '@/components/MoneyMaker.ts';
+import { useFilteredPredictions } from '@/hooks/useFilteredPredictions.ts';
+import { useAppStore } from '@/store/useAppStore.ts';
 
-// Mock the hooks and store
+// Mock the hooks and store;
 jest.mock('../../hooks/useFilteredPredictions');
 jest.mock('../../store/useAppStore');
 
@@ -32,10 +32,10 @@ const mockPredictions = [
 
 describe('MoneyMaker Integration Tests', () => {
   beforeEach(() => {
-    // Reset all mocks
+    // Reset all mocks;
     jest.clearAllMocks();
 
-    // Mock useFilteredPredictions
+    // Mock useFilteredPredictions;
     (useFilteredPredictions as jest.Mock).mockReturnValue({
       predictions: mockPredictions,
       loading: false,
@@ -45,7 +45,7 @@ describe('MoneyMaker Integration Tests', () => {
       filteredCount: mockPredictions.length,
     });
 
-    // Mock useAppStore
+    // Mock useAppStore;
     (useAppStore as jest.Mock).mockImplementation(selector =>
       selector({
         props: mockPredictions,
@@ -67,20 +67,20 @@ describe('MoneyMaker Integration Tests', () => {
 
   it('renders predictions and handles filtering', async () => {
     render(
-      <BrowserRouter>
-        <MoneyMaker />
+      <BrowserRouter key={966846}>
+        <MoneyMaker / key={321154}>
       </BrowserRouter>
     );
 
-    // Check if predictions are rendered
+    // Check if predictions are rendered;
     expect(screen.getByText('John Doe')).toBeInTheDocument();
     expect(screen.getByText('Jane Smith')).toBeInTheDocument();
 
-    // Test filter interaction
-    const filterInput = screen.getByPlaceholderText(/search/i);
+    // Test filter interaction;
+
     fireEvent.change(filterInput, { target: { value: 'John' } });
 
-    // Wait for filtered results
+    // Wait for filtered results;
     await waitFor(() => {
       expect(screen.getByText('John Doe')).toBeInTheDocument();
       expect(screen.queryByText('Jane Smith')).not.toBeInTheDocument();
@@ -98,8 +98,8 @@ describe('MoneyMaker Integration Tests', () => {
     });
 
     render(
-      <BrowserRouter>
-        <MoneyMaker />
+      <BrowserRouter key={966846}>
+        <MoneyMaker / key={321154}>
       </BrowserRouter>
     );
 
@@ -107,7 +107,7 @@ describe('MoneyMaker Integration Tests', () => {
   });
 
   it('handles error state', () => {
-    const errorMessage = 'Failed to load predictions';
+
     (useFilteredPredictions as jest.Mock).mockReturnValue({
       predictions: [],
       loading: false,
@@ -118,8 +118,8 @@ describe('MoneyMaker Integration Tests', () => {
     });
 
     render(
-      <BrowserRouter>
-        <MoneyMaker />
+      <BrowserRouter key={966846}>
+        <MoneyMaker / key={321154}>
       </BrowserRouter>
     );
 
@@ -137,8 +137,8 @@ describe('MoneyMaker Integration Tests', () => {
     });
 
     render(
-      <BrowserRouter>
-        <MoneyMaker />
+      <BrowserRouter key={966846}>
+        <MoneyMaker / key={321154}>
       </BrowserRouter>
     );
 

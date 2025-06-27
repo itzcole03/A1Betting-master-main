@@ -2,7 +2,7 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import React from "react";
 import { cva } from "class-variance-authority";
 import { cn } from "../../lib/utils";
-// Button Component with CVA variants
+// Button Component with CVA variants;
 const buttonVariants = cva("inline-flex items-center justify-center rounded-xl font-semibold transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none", {
     variants: {
         variant: {
@@ -33,7 +33,7 @@ const Button = React.forwardRef(({ className, variant, size, asChild = false, ..
     return (_jsx("button", { className: cn(buttonVariants({ variant, size, className })), ref: ref, ...props }));
 });
 Button.displayName = "Button";
-// Card Component with variants
+// Card Component with variants;
 const cardVariants = cva("rounded-xl transition-all duration-300 ease-out", {
     variants: {
         variant: {
@@ -67,7 +67,7 @@ const Card = React.forwardRef(({ className, variant, padding, rounded, ...props 
     return (_jsx("div", { ref: ref, className: cn(cardVariants({ variant, padding, rounded, className })), ...props }));
 });
 Card.displayName = "Card";
-// Badge Component
+// Badge Component;
 const badgeVariants = cva("inline-flex items-center font-medium transition-all duration-200", {
     variants: {
         variant: {
@@ -94,7 +94,7 @@ const Badge = React.forwardRef(({ className, variant, size, ...props }, ref) => 
     return (_jsx("div", { ref: ref, className: cn(badgeVariants({ variant, size, className })), ...props }));
 });
 Badge.displayName = "Badge";
-// Input Component
+// Input Component;
 const inputVariants = cva("flex w-full transition-all duration-300 ease-out focus:outline-none disabled:cursor-not-allowed disabled:opacity-50", {
     variants: {
         variant: {
@@ -125,7 +125,7 @@ const Input = React.forwardRef(({ className, variant, inputSize, rounded, ...pro
     return (_jsx("input", { className: cn(inputVariants({ variant, inputSize, rounded, className })), ref: ref, ...props }));
 });
 Input.displayName = "Input";
-// Progress Component
+// Progress Component;
 const progressVariants = cva("w-full overflow-hidden transition-all duration-500", {
     variants: {
         variant: {
@@ -172,11 +172,11 @@ const progressFillVariants = cva("h-full transition-all duration-500 ease-out", 
     },
 });
 const Progress = React.forwardRef(({ className, variant, size, rounded, value = 0, max = 100, fillVariant = "default", ...props }, ref) => {
-    const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
+
     return (_jsx("div", { ref: ref, className: cn(progressVariants({ variant, size, rounded, className })), ...props, children: _jsx("div", { className: cn(progressFillVariants({ variant: fillVariant, rounded })), style: { width: `${percentage}%` } }) }));
 });
 Progress.displayName = "Progress";
-// Loading Spinner Component
+// Loading Spinner Component;
 const spinnerVariants = cva("animate-spin rounded-full border-solid", {
     variants: {
         variant: {
@@ -202,7 +202,7 @@ const Spinner = React.forwardRef(({ className, variant, size, ...props }, ref) =
     return (_jsx("div", { ref: ref, className: cn(spinnerVariants({ variant, size, className })), ...props }));
 });
 Spinner.displayName = "Spinner";
-// Skeleton Component for loading states
+// Skeleton Component for loading states;
 const skeletonVariants = cva("animate-pulse bg-gray-200 dark:bg-gray-700", {
     variants: {
         variant: {
@@ -221,5 +221,5 @@ const Skeleton = React.forwardRef(({ className, variant, ...props }, ref) => {
     return (_jsx("div", { ref: ref, className: cn(skeletonVariants({ variant, className })), ...props }));
 });
 Skeleton.displayName = "Skeleton";
-// Export all components
+// Export all components;
 export { Button, buttonVariants, Card, cardVariants, Badge, badgeVariants, Input, inputVariants, Progress, progressVariants, Spinner, spinnerVariants, Skeleton, skeletonVariants, };

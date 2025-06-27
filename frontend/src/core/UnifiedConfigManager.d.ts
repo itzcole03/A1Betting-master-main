@@ -13,7 +13,7 @@ export interface StrategyConfig {
     hedgingEnabled: boolean;
     stopLoss: number;
 }
-import type { Feature, Experiment } from '../utils/FeatureFlags-MyPC.js';
+import type { Feature, Experiment } from '@/utils/FeatureFlags-MyPC.js';
 export interface Config {
     system: SystemConfig;
     strategy: StrategyConfig;

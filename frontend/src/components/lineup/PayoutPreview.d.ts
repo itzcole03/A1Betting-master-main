@@ -1,4 +1,4 @@
-// Type definition
+// Type definition;
 interface Player {
   id: string;
   name: string;

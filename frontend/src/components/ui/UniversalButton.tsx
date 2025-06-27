@@ -1,10 +1,10 @@
-import React, { forwardRef } from "react";
-import { motion, HTMLMotionProps } from "framer-motion";
-import { twMerge } from "tailwind-merge";
-import { Loader2 } from "lucide-react";
+import React, { forwardRef  } from 'react.ts';
+import { motion, HTMLMotionProps } from 'framer-motion.ts';
+import { twMerge } from 'tailwind-merge.ts';
+import { Loader2 } from 'lucide-react.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export type ButtonVariant =
@@ -23,24 +23,24 @@ export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 export type ButtonTheme = "standard" | "cyber" | "premium" | "minimal";
 
-export interface UniversalButtonProps
-  extends Omit<HTMLMotionProps<"button">, "size"> {
-  // Appearance
+export interface UniversalButtonProps;
+  extends Omit<HTMLMotionProps<"button" key={45282}>, "size"> {
+  // Appearance;
   variant?: ButtonVariant;
   size?: ButtonSize;
   theme?: ButtonTheme;
   fullWidth?: boolean;
 
-  // State
+  // State;
   loading?: boolean;
   disabled?: boolean;
   active?: boolean;
 
-  // Icons
+  // Icons;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 
-  // Animation
+  // Animation;
   animate?: boolean;
   pulse?: boolean;
   glow?: boolean;
@@ -53,13 +53,13 @@ export interface UniversalButtonProps
   isPlacing?: boolean;
   isConfirmed?: boolean;
 
-  // Accessibility
+  // Accessibility;
   ariaLabel?: string;
   tooltip?: string;
 }
 
 // ============================================================================
-// STYLE CONFIGURATIONS
+// STYLE CONFIGURATIONS;
 // ============================================================================
 
 const getVariantStyles = (
@@ -165,12 +165,12 @@ const getSizeStyles = (size: ButtonSize): string => {
 };
 
 // ============================================================================
-// MAIN COMPONENT
+// MAIN COMPONENT;
 // ============================================================================
 
 export const UniversalButton = forwardRef<
   HTMLButtonElement,
-  UniversalButtonProps
+  UniversalButtonProps;
 >(
   (
     {
@@ -197,41 +197,40 @@ export const UniversalButton = forwardRef<
       tooltip,
       className,
       onClick,
-      ...props
+      ...props;
     },
     ref,
   ) => {
-    // Handle betting-specific states
-    const effectiveLoading = loading || isPlacing;
-    const effectiveVariant = isConfirmed ? "success" : variant;
+    // Handle betting-specific states;
 
-    // Construct classes
+
+    // Construct classes;
     const baseClasses = twMerge(
-      // Base styles
+      // Base styles;
       "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background relative overflow-hidden",
 
-      // Size styles
+      // Size styles;
       getSizeStyles(size),
 
-      // Variant styles
+      // Variant styles;
       getVariantStyles(effectiveVariant, theme),
 
-      // State styles
+      // State styles;
       fullWidth && "w-full",
       (disabled || effectiveLoading) && "opacity-50 cursor-not-allowed",
       active && "ring-2 ring-offset-2",
 
-      // Animation styles
+      // Animation styles;
       animate && "transform hover:scale-105 active:scale-95",
       pulse && "animate-pulse",
       glow && "animate-pulse",
 
-      // Custom classes
+      // Custom classes;
       className,
     );
 
-    // Handle click with loading protection
-    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    // Handle click with loading protection;
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement key={390513}>) => {
       if (effectiveLoading || disabled) {
         e.preventDefault();
         return;
@@ -239,28 +238,28 @@ export const UniversalButton = forwardRef<
       onClick?.(e);
     };
 
-    // Render betting details
+    // Render betting details;
     const renderBettingDetails = () => {
       if (!betType && !odds && !stake) return null;
 
       return (
-        <div className="absolute inset-x-0 bottom-0 bg-black/20 px-2 py-1 text-xs">
+        <div className="absolute inset-x-0 bottom-0 bg-black/20 px-2 py-1 text-xs" key={933124}>
           {odds && (
-            <span>
+            <span key={595076}>
               Odds: {odds > 0 ? "+" : ""}
               {odds}
             </span>
           )}
-          {stake && <span className="ml-2">Stake: ${stake}</span>}
+          {stake && <span className="ml-2" key={654787}>Stake: ${stake}</span>}
           {potentialReturn && (
-            <span className="ml-2">Win: ${potentialReturn}</span>
+            <span className="ml-2" key={654787}>Win: ${potentialReturn}</span>
           )}
         </div>
       );
     };
 
-    // Animation variants
-    const motionVariants = animate
+    // Animation variants;
+    const motionVariants = animate;
       ? {
           hover: {
             scale: 1.02,
@@ -275,7 +274,7 @@ export const UniversalButton = forwardRef<
       : {};
 
     return (
-      <motion.button
+      <motion.button;
         ref={ref}
         className={baseClasses}
         onClick={handleClick}
@@ -286,27 +285,27 @@ export const UniversalButton = forwardRef<
         whileHover="hover"
         whileTap="tap"
         {...props}
-      >
+       key={199710}>
         {/* Loading spinner */}
-        {effectiveLoading && <Loader2 className="w-4 h-4 animate-spin" />}
+        {effectiveLoading && <Loader2 className="w-4 h-4 animate-spin" / key={565996}>}
 
         {/* Left icon */}
         {leftIcon && !effectiveLoading && (
-          <span className="flex-shrink-0">{leftIcon}</span>
+          <span className="flex-shrink-0" key={646756}>{leftIcon}</span>
         )}
 
         {/* Button content */}
-        <span className="flex-1">
-          {isConfirmed
+        <span className="flex-1" key={78291}>
+          {isConfirmed;
             ? "Confirmed!"
-            : effectiveLoading
+            : effectiveLoading;
               ? "Loading..."
               : children}
         </span>
 
         {/* Right icon */}
         {rightIcon && !effectiveLoading && (
-          <span className="flex-shrink-0">{rightIcon}</span>
+          <span className="flex-shrink-0" key={646756}>{rightIcon}</span>
         )}
 
         {/* Betting details overlay */}
@@ -314,7 +313,7 @@ export const UniversalButton = forwardRef<
 
         {/* Glow effect */}
         {glow && (
-          <div className="absolute inset-0 -z-10 blur-xl opacity-30 bg-gradient-to-r from-current to-current" />
+          <div className="absolute inset-0 -z-10 blur-xl opacity-30 bg-gradient-to-r from-current to-current" / key={206300}>
         )}
       </motion.button>
     );
@@ -324,27 +323,27 @@ export const UniversalButton = forwardRef<
 UniversalButton.displayName = "UniversalButton";
 
 // ============================================================================
-// CONVENIENCE COMPONENTS
+// CONVENIENCE COMPONENTS;
 // ============================================================================
 
-export const CyberButton: React.FC<UniversalButtonProps> = (props) => (
-  <UniversalButton theme="cyber" {...props} />
+export const CyberButton: React.FC<UniversalButtonProps key={444460}> = (props) => (
+  <UniversalButton theme="cyber" {...props} / key={244469}>
 );
 
-export const BettingButton: React.FC<UniversalButtonProps> = (props) => (
-  <UniversalButton variant="betting" theme="cyber" {...props} />
+export const BettingButton: React.FC<UniversalButtonProps key={444460}> = (props) => (
+  <UniversalButton variant="betting" theme="cyber" {...props} / key={41140}>
 );
 
-export const GlowButton: React.FC<UniversalButtonProps> = (props) => (
-  <UniversalButton variant="glow" glow animate {...props} />
+export const GlowButton: React.FC<UniversalButtonProps key={444460}> = (props) => (
+  <UniversalButton variant="glow" glow animate {...props} / key={287583}>
 );
 
-export const PremiumButton: React.FC<UniversalButtonProps> = (props) => (
-  <UniversalButton theme="premium" {...props} />
+export const PremiumButton: React.FC<UniversalButtonProps key={444460}> = (props) => (
+  <UniversalButton theme="premium" {...props} / key={529148}>
 );
 
 // ============================================================================
-// EXPORTS
+// EXPORTS;
 // ============================================================================
 
 export default UniversalButton;

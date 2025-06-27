@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +10,7 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
-import SafeChart from "../ui/SafeChart";
+import SafeChart from '@/ui/SafeChart.ts';
 
 ChartJS.register(
   CategoryScale,
@@ -40,7 +40,7 @@ interface PerformanceChartProps {
   fill?: boolean;
 }
 
-const PerformanceChart: React.FC<PerformanceChartProps> = ({
+const PerformanceChart: React.FC<PerformanceChartProps key={558672}> = ({
   metrics,
   title,
   yAxisLabel = "Value",
@@ -80,7 +80,7 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({
       tooltip: {
         callbacks: {
           label: (context) => {
-            const value = context.parsed.y;
+
             return `${yAxisLabel}: ${value.toFixed(2)}`;
           },
         },
@@ -115,13 +115,13 @@ const PerformanceChart: React.FC<PerformanceChartProps> = ({
   };
 
   return (
-    <div style={{ height, width }}>
-      <SafeChart
+    <div style={{ height, width }} key={993963}>
+      <SafeChart;
         type="line"
         data={data}
         options={options}
         loadingMessage="Loading performance metrics..."
-      />
+      / key={293240}>
     </div>
   );
 };

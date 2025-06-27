@@ -3,14 +3,14 @@ import type {
   AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
-} from "axios";
-import axios from "axios";
-import { UnifiedLogger } from "../../core/UnifiedLogger";
-import { UnifiedCache } from "../unified/UnifiedCache";
-import { UnifiedConfig } from "../unified/UnifiedConfig";
-import { UnifiedServiceRegistry } from "./UnifiedServiceRegistry";
+} from 'axios.ts';
+import axios from 'axios.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedCache } from '@/unified/UnifiedCache.ts';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
 
-// Browser-compatible EventEmitter
+// Browser-compatible EventEmitter;
 class EventEmitter {
   private events: { [key: string]: Function[] } = {};
 
@@ -53,7 +53,7 @@ export abstract class BaseService extends EventEmitter {
     this.logger = new UnifiedLogger(this.name);
     this.cache = UnifiedCache.getInstance();
 
-    // Initialize API client
+    // Initialize API client;
     this.api = axios.create({
       baseURL: this.config.getApiUrl(),
       timeout: 10000,
@@ -68,7 +68,7 @@ export abstract class BaseService extends EventEmitter {
   private setupInterceptors(): void {
     this.api.interceptors.request.use(
       (config: InternalAxiosRequestConfig) => {
-        const token = this.config.getAuthToken();
+
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
@@ -101,7 +101,7 @@ export abstract class BaseService extends EventEmitter {
       },
     );
 
-    // Emit error event
+    // Emit error event;
     this.serviceRegistry.emit("error", {
       ...serviceError,
       error: error.message,
@@ -115,7 +115,7 @@ export abstract class BaseService extends EventEmitter {
     delay: number = 1000,
   ): Promise<T> {
     let lastError: any;
-    for (let i = 0; i < maxRetries; i++) {
+    for (const i = 0; i < maxRetries; i++) {
       try {
         return await operation();
       } catch (error) {
@@ -137,23 +137,22 @@ export abstract class BaseService extends EventEmitter {
     operation: () => Promise<T>,
     ttl?: number,
   ): Promise<T> {
-    const cached = this.cache.get<T>(key);
+
     if (cached) return cached;
 
-    const result = await operation();
     this.cache.set(key, result, ttl);
     return result;
   }
 
-  // Lifecycle methods
+  // Lifecycle methods;
   async initialize(): Promise<void> {
     this.logger.info(`Initializing ${this.name} service`, this.name);
-    // Override in derived classes if needed
+    // Override in derived classes if needed;
   }
 
   async cleanup(): Promise<void> {
     this.logger.info(`Cleaning up ${this.name} service`, this.name);
-    // Override in derived classes if needed
+    // Override in derived classes if needed;
   }
 
   protected async handleRequest<T>(request: () => Promise<T>): Promise<T> {

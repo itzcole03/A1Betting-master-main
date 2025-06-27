@@ -1,5 +1,5 @@
-import { CacheService } from '@/types';
-import { logger } from './logger';
+import { CacheService } from '@/types.ts';
+import { logger } from './logger.ts';
 
 class CacheServiceImpl implements CacheService {
   private static instance: CacheServiceImpl;
@@ -8,7 +8,7 @@ class CacheServiceImpl implements CacheService {
 
   private constructor() {
     this.cache = new Map();
-    this.defaultTTL = 5 * 60 * 1000; // 5 minutes in milliseconds
+    this.defaultTTL = 5 * 60 * 1000; // 5 minutes in milliseconds;
   }
 
   public static getInstance(): CacheServiceImpl {
@@ -20,7 +20,7 @@ class CacheServiceImpl implements CacheService {
 
   public async get(key: string): Promise<any> {
     try {
-      const item = this.cache.get(key);
+
       if (!item) {
         return null;
       }
@@ -39,7 +39,7 @@ class CacheServiceImpl implements CacheService {
 
   public async set(key: string, value: any, ttl: number = this.defaultTTL): Promise<void> {
     try {
-      const expiry = Date.now() + ttl;
+
       this.cache.set(key, { value, expiry });
     } catch (error) {
       logger.error('Cache set error', { error, key });
@@ -62,9 +62,9 @@ class CacheServiceImpl implements CacheService {
     }
   }
 
-  // Helper method to clean expired items
+  // Helper method to clean expired items;
   private cleanExpired(): void {
-    const now = Date.now();
+
     for (const [key, item] of this.cache.entries()) {
       if (now > item.expiry) {
         this.cache.delete(key);

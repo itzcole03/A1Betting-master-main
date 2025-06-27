@@ -6,13 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../providers/useAuth';
 import { useThemeStore } from '@/stores/themeStore';
 const Navbar = ({ onMenuClick, showMenuButton = true }) => {
-    const navigate = useNavigate();
+
     const { user, logout } = useAuth();
     const { isDarkMode, toggleTheme } = useThemeStore();
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+
+
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };

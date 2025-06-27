@@ -1,5 +1,5 @@
-import React from 'react';
-import { WebSocketService } from '../services/webSocketService';
+import React from 'react.ts';
+import { WebSocketService } from '@/services/webSocketService.ts';
 interface WebSocketAnalyticsProps {
     webSocketService: WebSocketService;
 }

@@ -13,21 +13,21 @@ export class PoeToApiAdapter {
      * @returns An array of PrizePicksProps.
      */
     transformPoeDataToPrizePicksProps(poeDataBlocks) {
-        const trace = unifiedMonitor.startTrace('PoeToApiAdapter.transformPoeData', 'adapter.transform');
-        const transformedProps = [];
+
+
         try {
             for (const block of poeDataBlocks) {
                 if (block.type === 'prop_card' && block.content) {
-                    const content = block.content;
-                    // Basic mapping, assuming PoePropCardContent fields align or can be mapped
+
+                    // Basic mapping, assuming PoePropCardContent fields align or can be mapped;
                     const prop = {
                         playerId: content.playerId || block.id,
-                        id: block.id, // Use PoeDataBlock id as the prop id
+                        id: block.id, // Use PoeDataBlock id as the prop id;
                         league: content.statType.includes('NBA')
                             ? 'NBA'
                             : content.statType.includes('NFL')
                                 ? 'NFL'
-                                : 'Unknown', // Crude league detection
+                                : 'Unknown', // Crude league detection;
                         player_name: content.playerName,
                         stat_type: content.statType,
                         line_score: content.line,
@@ -35,8 +35,8 @@ export class PoeToApiAdapter {
                         image_url: content.playerImage,
                         overOdds: content.overOdds,
                         underOdds: content.underOdds,
-                        // start_time, status would need to come from PoeDataBlock metadata or extended content
-                        // For now, these are example transformations
+                        // start_time, status would need to come from PoeDataBlock metadata or extended content;
+                        // For now, these are example transformations;
                     };
                     transformedProps.push(prop);
                 }
@@ -55,8 +55,8 @@ export class PoeToApiAdapter {
      * @returns A promise that resolves to an array of PrizePicksProps.
      */
     async fetchAndTransformPoeData() {
-        console.warn('[PoeToApiAdapter] Fetching and transforming MOCK Poe data.');
-        // Simulate API response
+        // console statement removed
+        // Simulate API response;
         const mockPoeApiResponse = {
             requestId: `mockReq_${Date.now()}`,
             timestamp: new Date().toISOString(),
@@ -96,7 +96,7 @@ export class PoeToApiAdapter {
                     id: 'poe_news_1',
                     type: 'news_feed',
                     title: 'General Sports News',
-                    content: { articles: [] }, // Placeholder, not transformed by this method
+                    content: { articles: [] }, // Placeholder, not transformed by this method;
                     metadata: { source: 'PoeMockService' },
                 },
             ],
@@ -104,5 +104,5 @@ export class PoeToApiAdapter {
         return this.transformPoeDataToPrizePicksProps(mockPoeApiResponse.dataBlocks);
     }
 }
-// Export a singleton instance if preferred, or allow instantiation
+// Export a singleton instance if preferred, or allow instantiation;
 export const poeToApiAdapter = new PoeToApiAdapter();

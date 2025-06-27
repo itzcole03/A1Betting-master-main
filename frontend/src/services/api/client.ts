@@ -1,6 +1,6 @@
-import { unifiedMonitor } from '../../core/UnifiedMonitor.js';
-import { APIError, AppError } from '../../core/UnifiedError.js';
-import { getInitializedUnifiedConfig } from '../../core/UnifiedConfig.js';
+import { unifiedMonitor } from '@/core/UnifiedMonitor.js';
+import { APIError, AppError } from '@/core/UnifiedError.js';
+import { getInitializedUnifiedConfig } from '@/core/UnifiedConfig.js';
 
 export interface ApiResponse<T> {
   data: T;
@@ -20,12 +20,12 @@ class ApiClient {
 
 
   constructor() {
-    const config = getInitializedUnifiedConfig();
+
     this.baseUrl = (config.get('api.baseUrl') as string || 'http://localhost:8000') + '/api';
     this.defaultHeaders = {
       'Content-Type': 'application/json',
     };
-    this.defaultTimeout = 30000; // 30 seconds
+    this.defaultTimeout = 30000; // 30 seconds;
   }
 
   private async request<T>(
@@ -38,9 +38,8 @@ class ApiClient {
       `api.${method.toLowerCase()}.${endpoint}`,
       'http.client'
     );
-    const url = new URL(endpoint, this.baseUrl);
 
-    // Add query parameters
+    // Add query parameters;
     if (config.params) {
       Object.entries(config.params).forEach(([key, value]) => {
         url.searchParams.append(key, value);
@@ -74,13 +73,11 @@ class ApiClient {
         unifiedMonitor.endTrace(trace);
       }
 
-      const responseData = await response.json();
-
       if (!response.ok) {
         throw new APIError(
           responseData.message || 'API request failed',
           response.status,
-          responseData
+          responseData;
         );
       }
 
@@ -91,8 +88,8 @@ class ApiClient {
       };
     } catch (error: unknown) {
       if (trace) {
-        // error is unknown, so we must check its shape
-        let errStatus = 500;
+        // error is unknown, so we must check its shape;
+        const errStatus = 500;
         if (typeof error === 'object' && error !== null && 'response' in error && typeof (error as Record<string, unknown>).response === 'object' && (error as { response?: { status?: number } }).response?.status) {
           errStatus = (error as { response?: { status?: number } }).response!.status!;
         }
@@ -101,11 +98,11 @@ class ApiClient {
       }
 
       if (error instanceof APIError) throw error;
-      // If error is an AbortError
+      // If error is an AbortError;
       if (typeof error === 'object' && error !== null && 'name' in error && (error as { name: string }).name === 'AbortError') {
         throw new AppError('Request timeout', { status: 408 }, error);
       }
-      // Type guard for error with response.status
+      // Type guard for error with response.status;
       function hasResponseStatus(err: unknown): err is { response: { status: number } } {
         return (
           typeof err === 'object' &&
@@ -116,11 +113,11 @@ class ApiClient {
           typeof (err as { response: { status: unknown } }).response.status === 'number'
         );
       }
-      const status = hasResponseStatus(error) ? error.response.status : 500;
+
       throw new AppError(
         'API request failed',
         { status, endpoint, method },
-        error
+        error;
       );
     }
   }
@@ -146,9 +143,9 @@ class ApiClient {
   }
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const apiClient = new ApiClient();
 
-// Export get and post for compatibility with legacy imports
+// Export get and post for compatibility with legacy imports;
 export const get = apiClient.get.bind(apiClient);
 export const post = apiClient.post.bind(apiClient);

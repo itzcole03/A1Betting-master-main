@@ -1,16 +1,16 @@
-import EventEmitter from "eventemitter3";
-import axios, { AxiosInstance } from "axios";
-import { io, Socket } from "socket.io-client";
-import { z } from "zod";
+import EventEmitter from 'eventemitter3.ts';
+import axios, { AxiosInstance } from 'axios.ts';
+import { io, Socket } from 'socket.io-client.ts';
+import { z } from 'zod.ts';
 
-// Data source types
+// Data source types;
 export enum DataSource {
   PRIZEPICKS = "prizepicks",
   ESPN = "espn",
   ODDS_API = "odds_api",
 }
 
-// Unified response schema
+// Unified response schema;
 const DataResponseSchema = z.object({
   source: z.nativeEnum(DataSource),
   timestamp: z.number(),
@@ -43,7 +43,7 @@ export class UnifiedDataService extends EventEmitter {
   }
 
   private initializeClients() {
-    // Initialize API clients
+    // Initialize API clients;
     Object.values(DataSource).forEach((source) => {
       this.apiClients.set(
         source,
@@ -56,11 +56,10 @@ export class UnifiedDataService extends EventEmitter {
   }
 
   private initializeWebSockets() {
-    // Initialize WebSocket connections for each data source
+    // Initialize WebSocket connections for each data source;
     Object.values(DataSource).forEach((source) => {
-      const wsUrl = this.getWebSocketUrl(source);
 
-      // Safety checks to prevent invalid WebSocket connections
+      // Safety checks to prevent invalid WebSocket connections;
       if (
         !wsUrl ||
         wsUrl === "" ||
@@ -70,18 +69,12 @@ export class UnifiedDataService extends EventEmitter {
         wsUrl.includes("localhost:3001") ||
         import.meta.env.VITE_ENABLE_WEBSOCKET === "false"
       ) {
-        console.log(
-          "WebSocket connection disabled for data source:",
-          source,
-          wsUrl,
-        );
+        // console statement removed
         return;
       }
 
-      const ws = new WebSocket(wsUrl);
-
       ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
+
         this.emit(`ws:${source}:${data.type}`, data);
       };
 
@@ -94,7 +87,7 @@ export class UnifiedDataService extends EventEmitter {
   }
 
   private getBaseUrl(source: DataSource): string {
-    // Configure base URLs for different data sources
+    // Configure base URLs for different data sources;
     const urls = {
       [DataSource.PRIZEPICKS]: import.meta.env.VITE_PRIZEPICKS_API_URL,
       [DataSource.ESPN]: import.meta.env.VITE_ESPN_API_URL,
@@ -116,7 +109,7 @@ export class UnifiedDataService extends EventEmitter {
 
   async fetchData<T>(source: DataSource, endpoint: string): Promise<T> {
     try {
-      const response = await fetch(this.getApiUrl(source, endpoint));
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -128,7 +121,7 @@ export class UnifiedDataService extends EventEmitter {
   }
 
   private getApiUrl(source: DataSource, endpoint: string): string {
-    const baseUrl = this.getBaseUrl(source);
+
     return `${baseUrl}${endpoint}`;
   }
 
@@ -137,10 +130,9 @@ export class UnifiedDataService extends EventEmitter {
     endpoint: string,
     params?: Record<string, unknown>,
   ): Promise<DataResponse> {
-    const cacheKey = `${source}:${endpoint}:${JSON.stringify(params)}`;
-    const cached = this.cache.get(cacheKey);
 
-    // Return cached data if it's less than 30 seconds old
+
+    // Return cached data if it's less than 30 seconds old;
     if (cached && Date.now() - cached.timestamp < 30000) {
       return {
         source,
@@ -151,12 +143,10 @@ export class UnifiedDataService extends EventEmitter {
     }
 
     try {
-      const client = this.apiClients.get(source);
+
       if (!client) throw new Error(`No client found for source: ${source}`);
 
-      const response = await client.get(endpoint, { params });
-
-      // Cache the response
+      // Cache the response;
       this.cache.set(cacheKey, {
         data: response.data,
         timestamp: Date.now(),
@@ -201,7 +191,7 @@ export class UnifiedDataService extends EventEmitter {
   }
 
   disconnectWebSocket(source: DataSource) {
-    const socket = this.wsConnections.get(source);
+
     if (socket) {
       socket.disconnect();
       this.wsConnections.delete(source);

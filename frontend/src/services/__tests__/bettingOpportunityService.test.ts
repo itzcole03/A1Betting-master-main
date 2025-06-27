@@ -1,16 +1,16 @@
-import { BettingOpportunityService } from '../bettingOpportunityService';
-import { ArbitrageService } from '../ArbitrageService';
-import { LineShoppingService } from '../lineShoppingService';
-import { PredictionService } from '../predictionService';
-import { AdvancedPredictionService } from '../advancedPredictionService';
-import { NotificationManager } from '../notification/notificationManager';
+import { BettingOpportunityService } from '@/bettingOpportunityService.ts';
+import { ArbitrageService } from '@/ArbitrageService.ts';
+import { LineShoppingService } from '@/lineShoppingService.ts';
+import { PredictionService } from '@/predictionService.ts';
+import { AdvancedPredictionService } from '@/advancedPredictionService.ts';
+import { NotificationManager } from '@/notification/notificationManager.ts';
 import {
   BettingOdds,
   ArbitrageOpportunity,
   LineShoppingResult,
   Sportsbook,
-} from '../../types/betting';
-import { MarketContext, BettingContext } from '@/types/core';
+} from '@/types/betting.ts';
+import { MarketContext, BettingContext } from '@/types/core.ts';
 
 jest.mock('../ArbitrageService');
 jest.mock('../lineShoppingService');
@@ -92,7 +92,7 @@ describe('BettingOpportunityService', () => {
       mockArbitrageService.emit('newOpportunity', mockOpportunity);
 
       expect(mockNotificationManager.notifyArbitrageOpportunity).toHaveBeenCalledWith(
-        mockOpportunity
+        mockOpportunity;
       );
     });
 
@@ -210,7 +210,7 @@ describe('BettingOpportunityService', () => {
 
       expect(mockNotificationManager.notifyModelUpdate).toHaveBeenCalledWith(
         'New Advanced Prediction',
-        expectedMessage
+        expectedMessage;
       );
     });
 

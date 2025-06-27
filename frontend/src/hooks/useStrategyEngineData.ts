@@ -1,17 +1,17 @@
-import { StrategyRecommendation, UnifiedStrategyEngine } from '@/core/UnifiedStrategyEngine';
-import { useEffect, useState } from 'react';
+import { StrategyRecommendation, UnifiedStrategyEngine } from '@/core/UnifiedStrategyEngine.ts';
+import { useEffect, useState } from 'react.ts';
 
 export function useStrategyEngineData() {
     const [recommendations, setRecommendations] = useState<StrategyRecommendation[]>([]);
 
     useEffect(() => {
-        const engine = UnifiedStrategyEngine.getInstance();
+
         const handler = (rec: StrategyRecommendation) => {
             setRecommendations(prev => {
-                // Replace if strategyId exists, else add
-                const idx = prev.findIndex(r => r.strategyId === rec.strategyId);
+                // Replace if strategyId exists, else add;
+
                 if (idx !== -1) {
-                    const updated = [...prev];
+
                     updated[idx] = rec;
                     return updated;
                 }

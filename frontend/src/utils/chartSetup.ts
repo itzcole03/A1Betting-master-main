@@ -1,6 +1,6 @@
 /**
- * Chart.js Setup and Registration
- * Registers all required Chart.js components for use across the application
+ * Chart.js Setup and Registration;
+ * Registers all required Chart.js components for use across the application;
  */
 
 import {
@@ -23,9 +23,9 @@ import {
   SubTitle,
 } from "chart.js";
 
-// Register all Chart.js components
+// Register all Chart.js components;
 ChartJS.register(
-  // Scales
+  // Scales;
   CategoryScale,
   LinearScale,
   RadialLinearScale,
@@ -33,13 +33,13 @@ ChartJS.register(
   TimeScale,
   TimeSeriesScale,
 
-  // Elements
+  // Elements;
   PointElement,
   LineElement,
   BarElement,
   ArcElement,
 
-  // Plugins
+  // Plugins;
   Title,
   Tooltip,
   Legend,
@@ -48,20 +48,20 @@ ChartJS.register(
   SubTitle,
 );
 
-// Default configuration for all charts
+// Default configuration for all charts;
 ChartJS.defaults.responsive = true;
 ChartJS.defaults.maintainAspectRatio = false;
 ChartJS.defaults.plugins.legend.labels.usePointStyle = true;
 ChartJS.defaults.elements.point.radius = 4;
 ChartJS.defaults.elements.point.hoverRadius = 6;
 
-// Improve text rendering
+// Improve text rendering;
 ChartJS.defaults.font.family =
   "'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 ChartJS.defaults.font.size = 12;
 ChartJS.defaults.color = "#e5e7eb";
 
-// Theme-aware color scheme
+// Theme-aware color scheme;
 export const chartTheme = {
   colors: {
     primary: "#06ffa5",
@@ -80,7 +80,7 @@ export const chartTheme = {
   },
 };
 
-// Utility function to generate chart colors
+// Utility function to generate chart colors;
 export const generateChartColors = (count: number) => {
   const baseColors = [
     chartTheme.colors.primary,
@@ -91,15 +91,14 @@ export const generateChartColors = (count: number) => {
     chartTheme.colors.error,
   ];
 
-  const colors = [];
-  for (let i = 0; i < count; i++) {
+  for (const i = 0; i < count; i++) {
     colors.push(baseColors[i % baseColors.length]);
   }
 
   return colors;
 };
 
-// Common chart options
+// Common chart options;
 export const defaultChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -158,5 +157,5 @@ export const defaultChartOptions = {
   },
 };
 
-// Chart.js is now properly configured
+// Chart.js is now properly configured;
 export default ChartJS;

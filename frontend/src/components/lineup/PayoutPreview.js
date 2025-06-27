@@ -5,7 +5,7 @@ export function PayoutPreview({ selectedPlayers, entryFee, className = '' }) {
     const { getPlayerPrediction } = usePredictions();
     const projectedStats = useMemo(() => {
         const totalProjectedPoints = selectedPlayers.reduce((sum, player) => {
-            const prediction = getPlayerPrediction(player.id);
+
             return sum + (prediction?.projectedPoints || 0);
         }, 0);
         const averageConfidence = selectedPlayers.reduce((sum, player) => {
@@ -18,11 +18,11 @@ export function PayoutPreview({ selectedPlayers, entryFee, className = '' }) {
     }, [selectedPlayers, getPlayerPrediction]);
     const payoutEstimates = useMemo(() => {
         const { totalProjectedPoints, averageConfidence } = projectedStats;
-        // These are example payout calculations - adjust based on actual contest rules
-        const estimatedRank = totalProjectedPoints > 150 ? 1 : totalProjectedPoints > 130 ? 10 : 100;
-        const baseMultiplier = Math.max(1, (200 - estimatedRank) / 100);
-        const confidenceBonus = averageConfidence > 0.8 ? 1.2 : averageConfidence > 0.6 ? 1.1 : 1;
-        const potentialWinnings = entryFee * baseMultiplier * confidenceBonus;
+        // These are example payout calculations - adjust based on actual contest rules;
+
+
+
+
         return {
             estimatedRank,
             potentialWinnings: Math.round(potentialWinnings * 100) / 100,

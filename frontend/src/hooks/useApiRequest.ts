@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react.ts';
 
 
 
@@ -31,22 +31,20 @@ const globalCache: Cache = {};
 export function useApiRequest<T>(
   url: string,
   {
-    cacheTime = 5 * 60 * 1000, // 5 minutes
+    cacheTime = 5 * 60 * 1000, // 5 minutes;
     retries = 3,
     retryDelay = 1000,
     onError,
-    enabled = true
+    enabled = true;
   }: UseApiRequestOptions = {}
 ) {
   const [state, setState] = useState<UseApiRequestState<T>>({
     data: null,
     error: null,
     isLoading: true,
-    isValidating: false
+    isValidating: false;
   });
 
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const retryCountRef = useRef(0);
 
   const fetchData = useCallback(
     async (shouldRetry = true): Promise<T> => {
@@ -65,9 +63,7 @@ export function useApiRequest<T>(
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
-        
-        // Update cache
+        // Update cache;
         globalCache[url] = {
           data,
           timestamp: Date.now()
@@ -98,19 +94,19 @@ export function useApiRequest<T>(
   const mutate = useCallback(async () => {
     setState(prev => ({ ...prev, isValidating: true }));
     try {
-      const data = await fetchData(false);
+
       setState({
         data,
         error: null,
         isLoading: false,
-        isValidating: false
+        isValidating: false;
       });
     } catch (error) {
       if (error instanceof Error) {
         setState(prev => ({
           ...prev,
           error,
-          isValidating: false
+          isValidating: false;
         }));
       }
     }
@@ -122,7 +118,6 @@ export function useApiRequest<T>(
       return;
     }
 
-    const cachedData = globalCache[url];
     const isCacheValid =
       cachedData && Date.now() - cachedData.timestamp < cacheTime;
 
@@ -131,7 +126,7 @@ export function useApiRequest<T>(
         data: cachedData.data,
         error: null,
         isLoading: false,
-        isValidating: false
+        isValidating: false;
       });
       return;
     }
@@ -144,7 +139,7 @@ export function useApiRequest<T>(
           data,
           error: null,
           isLoading: false,
-          isValidating: false
+          isValidating: false;
         });
       })
       .catch(error => {
@@ -153,7 +148,7 @@ export function useApiRequest<T>(
             data: null,
             error,
             isLoading: false,
-            isValidating: false
+            isValidating: false;
           });
         }
       });
@@ -165,7 +160,7 @@ export function useApiRequest<T>(
 
   return {
     ...state,
-    mutate
+    mutate;
   };
 }
 
@@ -175,9 +170,9 @@ function PlayerStats({ playerId }: { playerId: string }) {
   const { data, error, isLoading, mutate } = useApiRequest<PlayerStats>(
     `/api/players/${playerId}/stats`,
     {
-      cacheTime: 60000, // 1 minute
+      cacheTime: 60000, // 1 minute;
       retries: 2,
-      onError: (error) => console.error('Failed to fetch player stats:', error)
+      onError: (error) => // console statement removed
     }
   );
 

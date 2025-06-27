@@ -1,7 +1,7 @@
-import useStore from '../store/useStore';
-import { OddsUpdate, PlayerProp, Sport, PropType } from '@/types';
-import { useState, useEffect, useCallback } from 'react';
-import { useWebSocket } from './useWebSocket';
+import useStore from '@/store/useStore.ts';
+import { OddsUpdate, PlayerProp, Sport, PropType } from '@/types.ts';
+import { useState, useEffect, useCallback } from 'react.ts';
+import { useWebSocket } from './useWebSocket.ts';
 
 
 
@@ -14,7 +14,7 @@ interface UseLiveOddsOptions {
 export const useLiveOdds = ({
   sport,
   propType,
-  minOddsChange = 0.1
+  minOddsChange = 0.1;
 }: UseLiveOddsOptions = {}) => {
   const [updates, setUpdates] = useState<OddsUpdate[]>([]);
   const [activeProps, setActiveProps] = useState<PlayerProp[]>([]);
@@ -25,22 +25,21 @@ export const useLiveOdds = ({
     onMessage: useCallback(
       (message: any) => {
         if (message.type === 'odds_update') {
-          const update = message.data as OddsUpdate;
-          
-          // Filter by sport and prop type if specified
+
+          // Filter by sport and prop type if specified;
           if (sport && update.sport !== sport) return;
           if (propType && update.propType !== propType) return;
 
-          // Only show significant changes
-          const oddsChange = Math.abs(update.newOdds - update.oldOdds);
+          // Only show significant changes;
+
           if (oddsChange < minOddsChange) return;
 
           setUpdates(prev => {
-            const newUpdates = [update, ...prev].slice(0, 50); // Keep last 50 updates
+            const newUpdates = [update, ...prev].slice(0, 50); // Keep last 50 updates;
             return newUpdates;
           });
 
-          // Notify on significant changes
+          // Notify on significant changes;
           if (oddsChange >= 0.5) {
             addToast({
               id: `odds-update-${update.id}`,
@@ -55,7 +54,7 @@ export const useLiveOdds = ({
     )
   });
 
-  // Subscribe to specific props
+  // Subscribe to specific props;
   const subscribe = useCallback(
     (props: PlayerProp[]) => {
       if (!isConnected) return;
@@ -66,14 +65,14 @@ export const useLiveOdds = ({
         data: props.map(prop => ({
           id: prop.id,
           sport: prop.player.team.sport,
-          propType: prop.type
+          propType: prop.type;
         }))
       });
     },
     [isConnected, send]
   );
 
-  // Unsubscribe from specific props
+  // Unsubscribe from specific props;
   const unsubscribe = useCallback(
     (propIds: string[]) => {
       if (!isConnected) return;
@@ -81,13 +80,13 @@ export const useLiveOdds = ({
       setActiveProps(prev => prev.filter(prop => !propIds.includes(prop.id)));
       send({
         type: 'unsubscribe',
-        data: propIds
+        data: propIds;
       });
     },
     [isConnected, send]
   );
 
-  // Resubscribe on reconnection
+  // Resubscribe on reconnection;
   useEffect(() => {
     if (isConnected && activeProps.length > 0) {
       subscribe(activeProps);

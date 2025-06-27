@@ -332,7 +332,7 @@ class AdvancedEnsembleOptimizer:
             }
         )
 
-        logger.info(f"Initialized {len(self.models)} advanced models")
+        logger.info("Initialized {len(self.models)} advanced models")
 
     def initialize_meta_learners(self):
         """Initialize meta-learning models"""
@@ -428,7 +428,7 @@ class AdvancedEnsembleOptimizer:
         max_iterations: int = 100,
     ) -> EnsembleConfiguration:
         """Optimize ensemble for maximum accuracy"""
-        logger.info(f"Optimizing ensemble with strategy: {strategy.value}")
+        logger.info("Optimizing ensemble with strategy: {strategy.value}")
         start_time = datetime.now()
 
         # 1. Train and evaluate individual models
@@ -487,8 +487,8 @@ class AdvancedEnsembleOptimizer:
         config.last_optimized = datetime.now()
         self.ensemble_configurations[strategy.value] = config
 
-        logger.info(f"Ensemble optimization completed in {optimization_time:.2f}s")
-        logger.info(f"Final ensemble R² score: {ensemble_performance['r2_score']:.4f}")
+        logger.info("Ensemble optimization completed in {optimization_time:.2f}s")
+        logger.info("Final ensemble R² score: {ensemble_performance['r2_score']:.4f}")
 
         return config
 
@@ -524,9 +524,9 @@ class AdvancedEnsembleOptimizer:
                 try:
                     performance = future.result(timeout=300)  # 5 minute timeout
                     performances[model_name] = performance
-                    logger.info(f"Model {model_name}: R² = {performance.r2_score:.4f}")
-                except Exception as e:
-                    logger.error(f"Error evaluating model {model_name}: {e}")
+                    logger.info("Model {model_name}: R² = {performance.r2_score:.4f}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.error("Error evaluating model {model_name}: {e}")
 
         return performances
 
@@ -607,8 +607,8 @@ class AdvancedEnsembleOptimizer:
                 last_updated=datetime.now(),
             )
 
-        except Exception as e:
-            logger.error(f"Error training model {model_name}: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Error training model {model_name}: {e}")
             # Return default metrics for failed models
             return ModelPerformanceMetrics(
                 model_name=model_name,
@@ -663,7 +663,7 @@ class AdvancedEnsembleOptimizer:
         }
 
         if len(valid_performances) < min_models:
-            logger.warning(f"Only {len(valid_performances)} valid models, using all")
+            logger.warning("Only {len(valid_performances)} valid models, using all")
             return list(valid_performances.keys())
 
         # Sort by performance
@@ -704,7 +704,7 @@ class AdvancedEnsembleOptimizer:
                     selected.append(model_name)
                     selected_performances.append(performance)
 
-        logger.info(f"Selected {len(selected)} models for ensemble")
+        logger.info("Selected {len(selected)} models for ensemble")
         return selected
 
     async def _optimize_ensemble_weights(
@@ -826,8 +826,8 @@ class AdvancedEnsembleOptimizer:
                     individual_predictions[model_name] = (
                         pred[0] if len(pred) == 1 else pred
                     )
-                except Exception as e:
-                    logger.error(f"Error predicting with model {model_name}: {e}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.error("Error predicting with model {model_name}: {e}")
 
         # Calculate ensemble prediction based on strategy
         if config.strategy == EnsembleStrategy.WEIGHTED_AVERAGE:
@@ -928,7 +928,7 @@ class AdvancedEnsembleOptimizer:
         pairs = 0
 
         for i in range(len(pred_values)):
-            for j in range(i + 1, len(pred_values)):
+            for _ in range(i + 1, len(pred_values)):
                 # Simplified correlation for single predictions
                 diff = abs(pred_values[i] - pred_values[j])
                 max_val = max(abs(pred_values[i]), abs(pred_values[j]))

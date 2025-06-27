@@ -1,7 +1,7 @@
-import React from 'react';
-import { Tab } from '@headlessui/react';
-import { cn } from '@/utils/classNames';
-import { motion, AnimatePresence } from 'framer-motion';
+import React from 'react.ts';
+import { Tab } from '@headlessui/react.ts';
+import { cn } from '@/utils/classNames.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 
 export interface TabItem {
   key: string;
@@ -21,7 +21,7 @@ export interface TabsProps {
   className?: string;
 }
 
-export const Tabs: React.FC<TabsProps> = ({
+export const Tabs: React.FC<TabsProps key={448411}> = ({
   items,
   defaultIndex = 0,
   onChange,
@@ -51,19 +51,19 @@ export const Tabs: React.FC<TabsProps> = ({
   };
 
   return (
-    <Tab.Group defaultIndex={defaultIndex} onChange={onChange}>
-      <Tab.List className={cn(variants[variant].list, fullWidth ? 'w-full' : '', className)}>
+    <Tab.Group defaultIndex={defaultIndex} onChange={onChange} key={403895}>
+      <Tab.List className={cn(variants[variant].list, fullWidth ? 'w-full' : '', className)} key={512391}>
         {items.map(item => (
-          <Tab
+          <Tab;
             key={item.key}
-            className={({ selected }) =>
+            className={({ selected }) = key={215612}>
               cn(
                 variants[variant].tab,
                 'relative flex items-center justify-center gap-2 focus:outline-none transition-all duration-200',
-                selected
-                  ? variants[variant].selected
+                selected;
+                  ? variants[variant].selected;
                   : 'hover:text-gray-700 dark:hover:text-gray-200',
-                item.disabled && variants[variant].disabled
+                item.disabled && variants[variant].disabled;
               )
             }
             disabled={item.disabled}
@@ -73,37 +73,37 @@ export const Tabs: React.FC<TabsProps> = ({
                 {item.icon}
                 {item.label}
                 {item.badge && (
-                  <span
+                  <span;
                     className={cn(
                       'ml-2 rounded-full px-2 py-0.5 text-xs font-medium',
-                      selected
+                      selected;
                         ? 'bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-200'
                         : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300'
                     )}
-                  >
+                   key={316362}>
                     {item.badge}
                   </span>
                 )}
                 {variant === 'underline' && selected && (
-                  <motion.div
+                  <motion.div;
                     className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-500"
                     layoutId="underline"
-                  />
+                  / key={346264}>
                 )}
               </>
             )}
           </Tab>
         ))}
       </Tab.List>
-      <Tab.Panels className="mt-4">
+      <Tab.Panels className="mt-4" key={295365}>
         {items.map(item => (
-          <Tab.Panel
+          <Tab.Panel;
             key={item.key}
             className={cn(
               'rounded-xl focus:outline-none',
               'ring-white/60 ring-offset-2 ring-offset-primary-400 focus:ring-2'
             )}
-          >
+           key={442791}>
             {item.content}
           </Tab.Panel>
         ))}

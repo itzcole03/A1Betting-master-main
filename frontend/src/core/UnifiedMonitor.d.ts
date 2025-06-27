@@ -1,8 +1,8 @@
 /**
- * UnifiedMonitor
+ * UnifiedMonitor;
  *
  * Provides a unified interface for application monitoring, encompassing error reporting,
- * performance tracing, and custom metric collection. It acts as an abstraction layer
+ * performance tracing, and custom metric collection. It acts as an abstraction layer;
  * over Sentry and the performanceTrackingService.
  *
  * Key Responsibilities:

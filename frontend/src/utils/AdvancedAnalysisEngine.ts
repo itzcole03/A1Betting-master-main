@@ -1,7 +1,7 @@
-import { DataIntegrationHub, IntegratedData } from "./DataIntegrationHub";
-import { EventBus } from "../core/EventBus.ts";
-import { FeatureFlags } from "./FeatureFlags";
-import { PerformanceMonitor } from "./PerformanceMonitor";
+import { DataIntegrationHub, IntegratedData } from './DataIntegrationHub.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { FeatureFlags } from './FeatureFlags.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
 
 export interface AnalysisResult {
   playerId: string;
@@ -83,7 +83,7 @@ export class AdvancedAnalysisEngine {
     return {
       confidenceThreshold: 0.7,
       riskTolerance: 0.3,
-      timeHorizon: 24 * 60 * 60 * 1000, // 24 hours
+      timeHorizon: 24 * 60 * 60 * 1000, // 24 hours;
       weightings: {
         historical: 0.3,
         current: 0.4,
@@ -98,11 +98,9 @@ export class AdvancedAnalysisEngine {
   }
 
   public async analyzePlayer(playerId: string): Promise<AnalysisResult> {
-    const traceId = this.performanceMonitor.startTrace("advanced-analysis");
 
     try {
-      const data = this.dataHub.getIntegratedData();
-      const result = await this.performAnalysis(playerId, data);
+
 
       this.eventBus.publish({
         type: "advanced-analysis-completed",
@@ -124,15 +122,14 @@ export class AdvancedAnalysisEngine {
     playerId: string,
     data: IntegratedData,
   ): Promise<AnalysisResult> {
-    const predictions = await this.generatePredictions(playerId, data);
-    const trends = this.analyzeTrends(playerId, data);
-    const risks = this.assessRisks(playerId, data, predictions);
+
+
+
     const opportunities = this.identifyOpportunities(
       playerId,
       data,
       predictions,
     );
-    const metaAnalysis = this.performMetaAnalysis(playerId, data, predictions);
 
     return {
       playerId,
@@ -149,32 +146,31 @@ export class AdvancedAnalysisEngine {
     data: IntegratedData,
   ): Promise<AnalysisResult["predictions"]> {
     const predictions: AnalysisResult["predictions"] = {};
-    const projection = data.projections[playerId];
-    const sentiment = data.sentiment[playerId];
+
 
     if (!projection) return predictions;
 
     for (const [metric, value] of Object.entries(projection.stats)) {
-      const factors = [];
-      let confidence = projection.confidence;
 
-      // Historical performance factor
+      const confidence = projection.confidence;
+
+      // Historical performance factor;
       factors.push({
         type: "historical",
         impact: this.config.weightings.historical,
         description: "Based on historical performance patterns",
       });
 
-      // Current form factor
+      // Current form factor;
       factors.push({
         type: "current",
         impact: this.config.weightings.current,
         description: "Based on current form and recent performance",
       });
 
-      // Sentiment impact
+      // Sentiment impact;
       if (sentiment) {
-        const sentimentImpact = this.calculateSentimentImpact(sentiment);
+
         confidence += sentimentImpact * this.config.weightings.sentiment;
         factors.push({
           type: "sentiment",
@@ -199,11 +195,10 @@ export class AdvancedAnalysisEngine {
   ): AnalysisResult["trends"] {
     const trends: AnalysisResult["trends"] = {};
 
-    // Analyze performance trends
+    // Analyze performance trends;
     Object.entries(data.projections[playerId]?.stats ?? {}).forEach(
       ([metric, value]) => {
-        const trendKey = `${playerId}_${metric}`;
-        const trend = data.trends[trendKey];
+
 
         if (trend) {
           trends[metric] = {
@@ -219,9 +214,9 @@ export class AdvancedAnalysisEngine {
       },
     );
 
-    // Analyze sentiment trends
-    const sentimentTrendKey = `${playerId}_sentiment`;
-    const sentimentTrend = data.trends[sentimentTrendKey];
+    // Analyze sentiment trends;
+
+
     if (sentimentTrend) {
       trends.sentiment = {
         direction: this.getTrendDirection(sentimentTrend.change),
@@ -234,9 +229,9 @@ export class AdvancedAnalysisEngine {
       };
     }
 
-    // Analyze injury impact trends
-    const injuryTrendKey = `${playerId}_injury_impact`;
-    const injuryTrend = data.trends[injuryTrendKey];
+    // Analyze injury impact trends;
+
+
     if (injuryTrend) {
       trends.injury = {
         direction: this.getTrendDirection(injuryTrend.change),
@@ -276,8 +271,8 @@ export class AdvancedAnalysisEngine {
   ): AnalysisResult["risks"] {
     const risks: AnalysisResult["risks"] = {};
 
-    // Check injury risks
-    const injury = data.injuries[playerId];
+    // Check injury risks;
+
     if (injury) {
       risks.injury = {
         level: this.calculateRiskLevel(injury.impact),
@@ -286,11 +281,11 @@ export class AdvancedAnalysisEngine {
       };
     }
 
-    // Check market risks
-    // Implement market risk assessment
+    // Check market risks;
+    // Implement market risk assessment;
 
-    // Check prediction stability risks
-    // Implement prediction stability assessment
+    // Check prediction stability risks;
+    // Implement prediction stability assessment;
 
     return risks;
   }
@@ -302,8 +297,8 @@ export class AdvancedAnalysisEngine {
   ): AnalysisResult["opportunities"] {
     const opportunities: AnalysisResult["opportunities"] = [];
 
-    // Identify value opportunities
-    // Implement opportunity identification
+    // Identify value opportunities;
+    // Implement opportunity identification;
 
     return opportunities;
   }
@@ -336,8 +331,8 @@ export class AdvancedAnalysisEngine {
   private assessDataQuality(playerId: string, data: IntegratedData): number {
     const metrics: Array<{ weight: number; score: number }> = [];
 
-    // Check projection data quality
-    const projection = data.projections[playerId];
+    // Check projection data quality;
+
     if (projection) {
       metrics.push({
         weight: 0.4,
@@ -345,8 +340,8 @@ export class AdvancedAnalysisEngine {
       });
     }
 
-    // Check sentiment data quality
-    const sentiment = data.sentiment[playerId];
+    // Check sentiment data quality;
+
     if (sentiment) {
       metrics.push({
         weight: 0.2,
@@ -354,8 +349,8 @@ export class AdvancedAnalysisEngine {
       });
     }
 
-    // Check market data quality
-    const marketData = this.findPlayerMarketData(playerId, data);
+    // Check market data quality;
+
     if (marketData) {
       metrics.push({
         weight: 0.3,
@@ -363,8 +358,8 @@ export class AdvancedAnalysisEngine {
       });
     }
 
-    // Check injury data quality
-    const injury = data.injuries[playerId];
+    // Check injury data quality;
+
     if (injury) {
       metrics.push({
         weight: 0.1,
@@ -374,7 +369,6 @@ export class AdvancedAnalysisEngine {
 
     if (metrics.length === 0) return 0;
 
-    const totalWeight = metrics.reduce((sum, m) => sum + m.weight, 0);
     const weightedScore = metrics.reduce(
       (sum, m) => sum + m.weight * m.score,
       0,
@@ -386,23 +380,23 @@ export class AdvancedAnalysisEngine {
   private calculateProjectionQuality(
     projection: IntegratedData["projections"][string],
   ): number {
-    const age = Date.now() - projection.lastUpdated;
-    const freshness = Math.max(0, 1 - age / (24 * 60 * 60 * 1000)); // Decay over 24 hours
+
+    const freshness = Math.max(0, 1 - age / (24 * 60 * 60 * 1000)); // Decay over 24 hours;
     return freshness * projection.confidence;
   }
 
   private calculateSentimentQuality(
     sentiment: IntegratedData["sentiment"][string],
   ): number {
-    const volumeScore = Math.min(1, sentiment.sentiment.volume / 1000);
+
     const sourceScore =
       Object.values(sentiment.sentiment.sources).reduce((a, b) => a + b, 0) / 3;
     return (volumeScore + sourceScore) / 2;
   }
 
   private calculateMarketDataQuality(marketData: any): number {
-    // Implement market data quality calculation
-    return 0.85; // Placeholder
+    // Implement market data quality calculation;
+    return 0.85; // Placeholder;
   }
 
   private calculateInjuryDataQuality(
@@ -412,8 +406,8 @@ export class AdvancedAnalysisEngine {
   }
 
   private findPlayerMarketData(playerId: string, data: IntegratedData): any {
-    // TODO: type
-    // Implement player market data lookup
+    // TODO: type;
+    // Implement player market data lookup;
     return null;
   }
 
@@ -421,7 +415,7 @@ export class AdvancedAnalysisEngine {
     predictions: AnalysisResult["predictions"],
   ): number {
     const stabilityScores = Object.values(predictions).map((prediction) => {
-      const factorVariance = this.calculateFactorVariance(prediction.factors);
+
       const confidenceStability =
         prediction.confidence > 0.8 ? 1 : prediction.confidence;
       return (factorVariance + confidenceStability) / 2;
@@ -434,8 +428,7 @@ export class AdvancedAnalysisEngine {
   private calculateFactorVariance(factors: Array<{ impact: number }>): number {
     if (factors.length < 2) return 1;
 
-    const impacts = factors.map((f) => f.impact);
-    const mean = impacts.reduce((a, b) => a + b, 0) / impacts.length;
+
     const variance =
       impacts.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0) /
       impacts.length;
@@ -449,10 +442,10 @@ export class AdvancedAnalysisEngine {
   ): number {
     const marketMetrics: number[] = [];
 
-    // Check price movement consistency
+    // Check price movement consistency;
     Object.values(data.odds).forEach((odds) => {
       if (odds.movement.magnitude > 0) {
-        const efficiency = 1 - Math.min(1, odds.movement.magnitude);
+
         marketMetrics.push(efficiency);
       }
     });
@@ -471,24 +464,21 @@ export class AdvancedAnalysisEngine {
     playerId: string,
     data: IntegratedData,
   ): number {
-    const sentiment = data.sentiment[playerId];
+
     if (!sentiment) return 0.5;
 
-    const projection = data.projections[playerId];
     if (!projection) return 0.5;
 
-    // Calculate sentiment-performance correlation
-    const correlationKey = `${playerId}_sentiment_correlation`;
-    const correlation = data.trends[correlationKey]?.value ?? 0;
+    // Calculate sentiment-performance correlation;
 
-    // Calculate sentiment consistency
-    const sentimentTrend = data.trends[`${playerId}_sentiment`];
-    const consistency = sentimentTrend
+
+    // Calculate sentiment consistency;
+
+    const consistency = sentimentTrend;
       ? 1 - Math.min(1, Math.abs(sentimentTrend.change))
       : 0.5;
 
-    // Calculate volume impact
-    const volumeImpact = Math.min(1, sentiment.sentiment.volume / 1000);
+    // Calculate volume impact;
 
     return Math.abs(correlation) * 0.4 + consistency * 0.3 + volumeImpact * 0.3;
   }

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 import { Loader2 } from "lucide-react";
 // ============================================================================
-// STYLE CONFIGURATIONS
+// STYLE CONFIGURATIONS;
 // ============================================================================
 const getVariantStyles = (variant, theme) => {
     const styles = {
@@ -70,27 +70,27 @@ const getSizeStyles = (size) => {
     return sizes[size];
 };
 // ============================================================================
-// MAIN COMPONENT
+// MAIN COMPONENT;
 // ============================================================================
 export const UniversalButton = forwardRef(({ children, variant = "primary", size = "md", theme = "standard", fullWidth = false, loading = false, disabled = false, active = false, leftIcon, rightIcon, animate = true, pulse = false, glow = false, betType, odds, stake, potentialReturn, isPlacing, isConfirmed, ariaLabel, tooltip, className, onClick, ...props }, ref) => {
-    // Handle betting-specific states
-    const effectiveLoading = loading || isPlacing;
-    const effectiveVariant = isConfirmed ? "success" : variant;
-    // Construct classes
+    // Handle betting-specific states;
+
+
+    // Construct classes;
     const baseClasses = twMerge(
-    // Base styles
+    // Base styles;
     "inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-background relative overflow-hidden", 
-    // Size styles
+    // Size styles;
     getSizeStyles(size), 
-    // Variant styles
+    // Variant styles;
     getVariantStyles(effectiveVariant, theme), 
-    // State styles
+    // State styles;
     fullWidth && "w-full", (disabled || effectiveLoading) && "opacity-50 cursor-not-allowed", active && "ring-2 ring-offset-2", 
-    // Animation styles
+    // Animation styles;
     animate && "transform hover:scale-105 active:scale-95", pulse && "animate-pulse", glow && "animate-pulse", 
-    // Custom classes
+    // Custom classes;
     className);
-    // Handle click with loading protection
+    // Handle click with loading protection;
     const handleClick = (e) => {
         if (effectiveLoading || disabled) {
             e.preventDefault();
@@ -98,14 +98,14 @@ export const UniversalButton = forwardRef(({ children, variant = "primary", size
         }
         onClick?.(e);
     };
-    // Render betting details
+    // Render betting details;
     const renderBettingDetails = () => {
         if (!betType && !odds && !stake)
             return null;
         return (_jsxs("div", { className: "absolute inset-x-0 bottom-0 bg-black/20 px-2 py-1 text-xs", children: [odds && (_jsxs("span", { children: ["Odds: ", odds > 0 ? "+" : "", odds] })), stake && _jsxs("span", { className: "ml-2", children: ["Stake: $", stake] }), potentialReturn && (_jsxs("span", { className: "ml-2", children: ["Win: $", potentialReturn] }))] }));
     };
-    // Animation variants
-    const motionVariants = animate
+    // Animation variants;
+    const motionVariants = animate;
         ? {
             hover: {
                 scale: 1.02,
@@ -118,21 +118,21 @@ export const UniversalButton = forwardRef(({ children, variant = "primary", size
             },
         }
         : {};
-    return (_jsxs(motion.button, { ref: ref, className: baseClasses, onClick: handleClick, disabled: disabled || effectiveLoading, "aria-label": ariaLabel, title: tooltip, variants: motionVariants, whileHover: "hover", whileTap: "tap", ...props, children: [effectiveLoading && _jsx(Loader2, { className: "w-4 h-4 animate-spin" }), leftIcon && !effectiveLoading && (_jsx("span", { className: "flex-shrink-0", children: leftIcon })), _jsx("span", { className: "flex-1", children: isConfirmed
+    return (_jsxs(motion.button, { ref: ref, className: baseClasses, onClick: handleClick, disabled: disabled || effectiveLoading, "aria-label": ariaLabel, title: tooltip, variants: motionVariants, whileHover: "hover", whileTap: "tap", ...props, children: [effectiveLoading && _jsx(Loader2, { className: "w-4 h-4 animate-spin" }), leftIcon && !effectiveLoading && (_jsx("span", { className: "flex-shrink-0", children: leftIcon })), _jsx("span", { className: "flex-1", children: isConfirmed;
                     ? "Confirmed!"
-                    : effectiveLoading
+                    : effectiveLoading;
                         ? "Loading..."
                         : children }), rightIcon && !effectiveLoading && (_jsx("span", { className: "flex-shrink-0", children: rightIcon })), renderBettingDetails(), glow && (_jsx("div", { className: "absolute inset-0 -z-10 blur-xl opacity-30 bg-gradient-to-r from-current to-current" }))] }));
 });
 UniversalButton.displayName = "UniversalButton";
 // ============================================================================
-// CONVENIENCE COMPONENTS
+// CONVENIENCE COMPONENTS;
 // ============================================================================
 export const CyberButton = (props) => (_jsx(UniversalButton, { theme: "cyber", ...props }));
 export const BettingButton = (props) => (_jsx(UniversalButton, { variant: "betting", theme: "cyber", ...props }));
 export const GlowButton = (props) => (_jsx(UniversalButton, { variant: "glow", glow: true, animate: true, ...props }));
 export const PremiumButton = (props) => (_jsx(UniversalButton, { theme: "premium", ...props }));
 // ============================================================================
-// EXPORTS
+// EXPORTS;
 // ============================================================================
 export default UniversalButton;

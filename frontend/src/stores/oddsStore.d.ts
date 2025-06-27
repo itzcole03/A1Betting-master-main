@@ -1,4 +1,4 @@
-import { OddsData, MarketOdds } from '@/types/betting';
+import { OddsData, MarketOdds } from '@/types/betting.ts';
 interface OddsState {
     oddsByEvent: Record<string, OddsData>;
     setOdds: (eventId: string, odds: OddsData) => void;

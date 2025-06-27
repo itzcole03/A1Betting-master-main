@@ -1,10 +1,10 @@
 /**
- * Enhanced SportsRadar API Service
- * Integrates with multiple SportsRadar APIs for comprehensive sports data
+ * Enhanced SportsRadar API Service;
+ * Integrates with multiple SportsRadar APIs for comprehensive sports data;
  */
 
 export interface SportsRadarAPIEndpoints {
-  // Odds Comparison APIs
+  // Odds Comparison APIs;
   oddsComparison: {
     prematch: string;
     playerProps: string;
@@ -12,7 +12,7 @@ export interface SportsRadarAPIEndpoints {
     regular: string;
   };
 
-  // Sports APIs
+  // Sports APIs;
   sports: {
     nba: string;
     wnba: string;
@@ -137,24 +137,22 @@ export class EnhancedSportsRadarService {
   }
 
   /**
-   * Generic API request method with rate limiting and caching
+   * Generic API request method with rate limiting and caching;
    */
   private async makeRequest<T>(
     endpoint: string,
     params: Record<string, string> = {},
   ): Promise<T> {
-    const cacheKey = `${endpoint}:${JSON.stringify(params)}`;
 
-    // Check cache first
-    const cached = this.cache.get(cacheKey);
+    // Check cache first;
+
     if (cached && Date.now() - cached.timestamp < this.config.cacheTTL) {
       return cached.data;
     }
 
-    // Rate limiting - ensure we don't exceed 1 QPS
-    const now = Date.now();
-    const timeSinceLastRequest = now - this.lastRequestTime;
-    const minInterval = 1000 / this.config.rateLimit;
+    // Rate limiting - ensure we don't exceed 1 QPS;
+
+
 
     if (timeSinceLastRequest < minInterval) {
       await new Promise((resolve) =>
@@ -162,21 +160,17 @@ export class EnhancedSportsRadarService {
       );
     }
 
-    const queryParams = new URLSearchParams(params);
-    const queryString = queryParams.toString();
-    const url = `${this.config.baseUrl}${endpoint}${queryString ? `?${queryString}` : ""}`;
+
 
     try {
       this.lastRequestTime = Date.now();
-      const response = await fetch(url);
 
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
 
-        // Handle graceful degradation responses
+        // Handle graceful degradation responses;
         if (response.status === 503 && errorData.suggestion) {
-          console.warn("API temporarily unavailable:", errorData.message);
-          // Return the fallback data if available
+          // console statement removed
+          // Return the fallback data if available;
           if (errorData.games || errorData.odds || errorData.sports) {
             return errorData;
           }
@@ -187,9 +181,7 @@ export class EnhancedSportsRadarService {
         );
       }
 
-      const data = await response.json();
-
-      // Cache the response
+      // Cache the response;
       this.cache.set(cacheKey, {
         data,
         timestamp: Date.now(),
@@ -197,79 +189,79 @@ export class EnhancedSportsRadarService {
 
       return data;
     } catch (error) {
-      console.error("SportsRadar API request failed:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get NBA games and schedule
+   * Get NBA games and schedule;
    */
   async getNBAGames(date?: string): Promise<GameData[]> {
-    const dateParam = date || new Date().toISOString().split("T")[0];
-    const endpoint = `/api/sportsradar/nba/games/${dateParam}`;
+
+
     return await this.makeRequest<GameData[]>(endpoint);
   }
 
   /**
-   * Get player statistics
+   * Get player statistics;
    */
   async getPlayerStats(
     sport: string,
     playerId: string,
     season?: string,
   ): Promise<PlayerStatsData | null> {
-    const endpoint = `/api/sportsradar/${sport}/players/${playerId}/stats`;
-    const params = season ? { season } : {};
+
+
     return await this.makeRequest<PlayerStatsData>(endpoint, params);
   }
 
   /**
-   * Get odds comparison data
+   * Get odds comparison data;
    */
   async getOddsComparison(
     sport: string,
     eventId?: string,
   ): Promise<OddsData[]> {
-    const endpoint = `/api/sportsradar/odds/${sport}`;
-    const params = eventId ? { eventId } : {};
+
+
     return await this.makeRequest<OddsData[]>(endpoint, params);
   }
 
   /**
-   * Get player props odds
+   * Get player props odds;
    */
   async getPlayerPropsOdds(
     sport: string,
     eventId: string,
   ): Promise<OddsData["playerProps"]> {
-    const endpoint = `/api/sportsradar/odds/${sport}/events/${eventId}/player-props`;
+
     return await this.makeRequest<OddsData["playerProps"]>(endpoint);
   }
 
   /**
-   * Health check to verify API access
+   * Health check to verify API access;
    */
   async healthCheck(): Promise<{ status: string; availableAPIs: string[] }> {
-    const endpoint = "/api/sportsradar/health";
+
     return await this.makeRequest<{ status: string; availableAPIs: string[] }>(
       endpoint,
     );
   }
 
   /**
-   * Clear cache
+   * Clear cache;
    */
   clearCache(): void {
     this.cache.clear();
-    // Also clear backend cache
+    // Also clear backend cache;
     fetch(`${this.config.baseUrl}/api/sportsradar/cache`, {
       method: "DELETE",
     }).catch(console.warn);
   }
 
   /**
-   * Get cache statistics
+   * Get cache statistics;
    */
   getCacheStats(): { size: number; totalRequests: number } {
     return {
@@ -279,5 +271,5 @@ export class EnhancedSportsRadarService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const sportsRadarService = new EnhancedSportsRadarService();

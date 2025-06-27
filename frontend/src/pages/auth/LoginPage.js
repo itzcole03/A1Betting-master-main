@@ -5,8 +5,8 @@ import { Box, Button, TextField, Link, Typography, Alert } from "@mui/material";
 import { useStore } from "@/store";
 import { ApiService } from "@/services/api";
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const setUser = useStore((state) => state.setUser);
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,7 +16,7 @@ export default function LoginPage() {
     setError("");
     setIsLoading(true);
     try {
-      const user = await ApiService.login(email, password);
+
       setUser(user);
       navigate("/dashboard");
     } catch (err) {

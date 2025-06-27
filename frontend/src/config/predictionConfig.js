@@ -1,11 +1,11 @@
-// betaTest4/src/config/predictionConfig.ts
+// betaTest4/src/config/predictionConfig.ts;
 const defaultFeatureFlags = {
     enableExperimentalOddsCalculation: false,
     showAdvancedAnalyticsDashboard: true,
     useNewSentimentModel: false,
 };
 const activeExperiments = [
-// Example experiment
+// Example experiment;
 // {
 //   id: 'exp_dashboard_layout_v2',
 //   name: 'Dashboard Layout V2 Test',

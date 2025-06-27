@@ -1,16 +1,16 @@
-import { BaseService } from './BaseService';
-import { UnifiedServiceRegistry } from './UnifiedServiceRegistry';
-import { UnifiedStateService } from './UnifiedStateService';
-import { UnifiedBettingService } from './UnifiedBettingService';
-import { UnifiedPredictionService } from './UnifiedPredictionService';
-import { UnifiedErrorService } from './UnifiedErrorService';
+import { BaseService } from './BaseService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
+import { UnifiedStateService } from './UnifiedStateService.ts';
+import { UnifiedBettingService } from './UnifiedBettingService.ts';
+import { UnifiedPredictionService } from './UnifiedPredictionService.ts';
+import { UnifiedErrorService } from './UnifiedErrorService.ts';
 import {
   PerformanceMetrics,
   TrendDelta,
   RiskProfile,
   ExplainabilityMap,
   ModelMetadata,
-} from '../../types/analytics';
+} from '@/types/analytics.ts';
 
 export interface RecentActivity {
   id: string;
@@ -36,11 +36,11 @@ export class UnifiedAnalyticsService extends BaseService {
     this.errorService = registry.getService<UnifiedErrorService>('error');
   }
 
-  // Renamed to avoid duplicate member error
+  // Renamed to avoid duplicate member error;
   async getPerformanceMetricsApi(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<PerformanceMetrics> {
     const response = await this.api.get(`/analytics/performance`, {
       params: { eventId, marketId, selectionId },
@@ -63,7 +63,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getRiskProfile(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<RiskProfile> {
     const response = await this.api.get(`/analytics/risk`, {
       params: { eventId, marketId, selectionId },
@@ -74,7 +74,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getExplainabilityMap(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<ExplainabilityMap[]> {
     const response = await this.api.get(`/analytics/explainability`, {
       params: { eventId, marketId, selectionId },
@@ -85,7 +85,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getModelMetadata(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<ModelMetadata> {
     const response = await this.api.get(`/analytics/model`, {
       params: { eventId, marketId, selectionId },
@@ -93,12 +93,12 @@ export class UnifiedAnalyticsService extends BaseService {
     return response.data;
   }
 
-  // Renamed to avoid duplicate member error
+  // Renamed to avoid duplicate member error;
   async getRecentActivityApi(
     eventId: string,
     marketId: string,
     selectionId: string,
-    limit: number = 10
+    limit: number = 10;
   ): Promise<
     Array<{
       type: 'prediction' | 'bet' | 'alert';
@@ -115,7 +115,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getFeatureImportance(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<
     Array<{
       feature: string;
@@ -132,7 +132,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getConfidenceInterval(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<{
     lower: number;
     upper: number;
@@ -147,7 +147,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getModelPerformance(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<{
     accuracy: number;
     precision: number;
@@ -164,7 +164,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getBettingStats(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<{
     totalBets: number;
     wonBets: number;
@@ -183,7 +183,7 @@ export class UnifiedAnalyticsService extends BaseService {
   async getMarketEfficiency(
     eventId: string,
     marketId: string,
-    selectionId: string
+    selectionId: string;
   ): Promise<{
     efficiency: number;
     bias: number;
@@ -205,17 +205,15 @@ export class UnifiedAnalyticsService extends BaseService {
         this.predictionService.getPredictions(timeRange),
       ]);
 
-      const totalBets = bets.length;
-      const activeBets = bets.filter(bet => bet.status === 'active').length;
-      const winRate = this.calculateWinRate(bets);
-      const profitLoss = this.calculateProfitLoss(bets);
-      const roi = this.calculateROI(bets);
+
+
+
+
       const { bestStreak, currentStreak } = this.calculateStreaks(bets);
-      const averageOdds = this.calculateAverageOdds(bets);
-      const averageStake = this.calculateAverageStake(bets);
-      const totalPredictions = predictions.length;
-      const predictionAccuracy = this.calculatePredictionAccuracy(predictions);
-      const opportunities = this.calculateOpportunities(predictions);
+
+
+
+
 
       return {
         totalBets,
@@ -289,7 +287,7 @@ export class UnifiedAnalyticsService extends BaseService {
 
   private calculateWinRate(bets: any[]): number {
     if (bets.length === 0) return 0;
-    const wonBets = bets.filter(bet => bet.status === 'won').length;
+
     return (wonBets / bets.length) * 100;
   }
 
@@ -306,15 +304,15 @@ export class UnifiedAnalyticsService extends BaseService {
 
   private calculateROI(bets: any[]): number {
     if (bets.length === 0) return 0;
-    const totalStaked = bets.reduce((sum, bet) => sum + bet.amount, 0);
-    const profitLoss = this.calculateProfitLoss(bets);
+
+
     return (profitLoss / totalStaked) * 100;
   }
 
   private calculateStreaks(bets: any[]): { bestStreak: number; currentStreak: number } {
-    let currentStreak = 0;
-    let bestStreak = 0;
-    let tempStreak = 0;
+    const currentStreak = 0;
+    const bestStreak = 0;
+    const tempStreak = 0;
 
     bets.forEach(bet => {
       if (bet.status === 'won') {
@@ -332,19 +330,19 @@ export class UnifiedAnalyticsService extends BaseService {
 
   private calculateAverageOdds(bets: any[]): number {
     if (bets.length === 0) return 0;
-    const totalOdds = bets.reduce((sum, bet) => sum + bet.odds, 0);
+
     return totalOdds / bets.length;
   }
 
   private calculateAverageStake(bets: any[]): number {
     if (bets.length === 0) return 0;
-    const totalStaked = bets.reduce((sum, bet) => sum + bet.amount, 0);
+
     return totalStaked / bets.length;
   }
 
   private calculatePredictionAccuracy(predictions: any[]): number {
     if (predictions.length === 0) return 0;
-    const correctPredictions = predictions.filter(pred => pred.status === 'correct').length;
+
     return (correctPredictions / predictions.length) * 100;
   }
 

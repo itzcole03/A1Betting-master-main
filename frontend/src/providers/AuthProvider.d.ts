@@ -1,5 +1,5 @@
-import React from 'react';
-import { User } from '../types/core';
+import React from 'react.ts';
+import { User } from '@/types/core.ts';
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;

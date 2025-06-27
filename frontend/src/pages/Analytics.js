@@ -6,7 +6,7 @@ import { MoreVert as MoreVertIcon, TrendingUp as TrendingUpIcon, TrendingDown as
 import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, } from 'recharts';
 import { analyticsService } from '@/services/analytics';
 import { ErrorMessage } from '@/components/common/ErrorMessage';
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+
 const Analytics = () => {
     const [timeRange, setTimeRange] = useState('30');
     const { data: stats, isLoading: statsLoading, error: statsError, } = useQuery({

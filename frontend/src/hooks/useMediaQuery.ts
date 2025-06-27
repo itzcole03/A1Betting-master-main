@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react.ts';
 
 type MediaQuery = {
   isMobile: boolean;
@@ -59,15 +59,15 @@ export const useMediaQuery = (): MediaQuery => {
       });
     };
 
-    // Initial check
+    // Initial check;
     updateMediaQuery();
 
-    // Add event listeners
+    // Add event listeners;
     Object.values(mediaQueryLists).forEach(mediaQueryList => {
       mediaQueryList.addEventListener('change', updateMediaQuery);
     });
 
-    // Cleanup
+    // Cleanup;
     return () => {
       Object.values(mediaQueryLists).forEach(mediaQueryList => {
         mediaQueryList.removeEventListener('change', updateMediaQuery);

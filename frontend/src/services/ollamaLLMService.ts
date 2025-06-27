@@ -1,9 +1,9 @@
 /**
- * Enhanced Ollama LLM Service for PropOllama
- * Directly integrates with your local Ollama models for real AI-powered sports betting analysis
+ * Enhanced Ollama LLM Service for PropOllama;
+ * Directly integrates with your local Ollama models for real AI-powered sports betting analysis;
  */
 
-import { integrationService } from "./integrationService";
+import { integrationService } from './integrationService.ts';
 
 export interface OllamaModel {
   name: string;
@@ -70,24 +70,24 @@ class OllamaLLMService {
   private isConnected: boolean = false;
 
   constructor() {
-    // Try multiple common Ollama endpoints
+    // Try multiple common Ollama endpoints;
     this.baseUrl = this.detectOllamaEndpoint();
     this.initializeConnection();
   }
 
   private detectOllamaEndpoint(): string {
-    // Check environment variables first
-    const envEndpoint = import.meta.env.VITE_OLLAMA_ENDPOINT;
+    // Check environment variables first;
+
     if (envEndpoint) return envEndpoint;
 
-    // Common Ollama endpoints
+    // Common Ollama endpoints;
     const endpoints = [
       "http://localhost:11434",
       "http://127.0.0.1:11434",
       "http://host.docker.internal:11434",
     ];
 
-    // For now, return the default - we'll test connectivity
+    // For now, return the default - we'll test connectivity;
     return endpoints[0];
   }
 
@@ -97,11 +97,9 @@ class OllamaLLMService {
       await this.loadAvailableModels();
       this.selectBestModel();
       this.isConnected = true;
-      console.log("✅ PropOllama connected to Ollama successfully");
+      // console statement removed
     } catch (error) {
-      console.warn(
-        "⚠️ PropOllama: Ollama not available, using fallback responses",
-      );
+      // console statement removed
       this.isConnected = false;
     }
   }
@@ -114,8 +112,8 @@ class OllamaLLMService {
       });
 
       if (response.ok) {
-        const version = await response.json();
-        console.log(`🤖 Ollama version: ${version.version || "unknown"}`);
+
+        // console statement removed
         return true;
       }
       return false;
@@ -132,15 +130,13 @@ class OllamaLLMService {
       });
 
       if (response.ok) {
-        const data = await response.json();
+
         this.availableModels = data.models || [];
-        console.log(
-          `🧠 Found ${this.availableModels.length} Ollama models:`,
-          this.availableModels.map((m) => m.name),
+        // console statement removed => m.name),
         );
       }
     } catch (error) {
-      console.error("Failed to load Ollama models:", error);
+      // console statement removed
       throw error;
     }
   }
@@ -150,42 +146,41 @@ class OllamaLLMService {
       throw new Error("No Ollama models available");
     }
 
-    // Try to find preferred models in order
+    // Try to find preferred models in order;
     for (const preferred of this.preferredModels) {
       const found = this.availableModels.find((model) =>
         model.name.includes(preferred.split(":")[0]),
       );
       if (found) {
         this.defaultModel = found.name;
-        console.log(`���� Selected model for PropOllama: ${this.defaultModel}`);
+        // console statement removed
         return;
       }
     }
 
-    // Fallback to first available model
+    // Fallback to first available model;
     this.defaultModel = this.availableModels[0].name;
-    console.log(`📝 Using fallback model: ${this.defaultModel}`);
+    // console statement removed
   }
 
   public async generateResponse(
     request: PropOllamaRequest,
   ): Promise<PropOllamaResponse> {
-    const startTime = Date.now();
 
-    // Try direct Ollama connection first
+    // Try direct Ollama connection first;
     if (this.isConnected) {
       try {
         return await this.generateDirectOllamaResponse(request, startTime);
       } catch (error) {
-        console.warn("Direct Ollama failed, trying backend endpoint:", error);
+        // console statement removed
       }
     }
 
-    // Fallback to backend endpoint
+    // Fallback to backend endpoint;
     try {
       return await this.generateBackendResponse(request, startTime);
     } catch (error) {
-      console.warn("Backend endpoint failed, using local fallback:", error);
+      // console statement removed
       return this.generateFallbackResponse(request, startTime);
     }
   }
@@ -194,14 +189,13 @@ class OllamaLLMService {
     request: PropOllamaRequest,
     startTime: number,
   ): Promise<PropOllamaResponse> {
-    const enhancedPrompt = this.buildSportsPrompt(request);
 
     const ollamaRequest: OllamaRequest = {
       model: this.defaultModel,
       prompt: enhancedPrompt,
       stream: false,
       options: {
-        temperature: 0.3, // Lower for more consistent sports analysis
+        temperature: 0.3, // Lower for more consistent sports analysis;
         max_tokens: 500,
         top_p: 0.9,
       },
@@ -239,9 +233,8 @@ class OllamaLLMService {
     request: PropOllamaRequest,
     startTime: number,
   ): Promise<PropOllamaResponse> {
-    const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
-    // Try enhanced PropOllama API first
+    // Try enhanced PropOllama API first;
     try {
       const response = await fetch(`${backendUrl}/api/ollama/chat`, {
         method: "POST",
@@ -258,7 +251,7 @@ class OllamaLLMService {
       });
 
       if (response.ok) {
-        const backendResponse = await response.json();
+
         return {
           content: backendResponse.content,
           confidence: backendResponse.confidence,
@@ -269,10 +262,10 @@ class OllamaLLMService {
         };
       }
     } catch (error) {
-      console.warn("Enhanced PropOllama API failed, trying fallback:", error);
+      // console statement removed
     }
 
-    // Fallback to basic ollama endpoint
+    // Fallback to basic ollama endpoint;
     const response = await fetch(`${backendUrl}/api/ollama/chat`, {
       method: "POST",
       headers: {
@@ -290,8 +283,6 @@ class OllamaLLMService {
       throw new Error(`Backend API error: ${response.status}`);
     }
 
-    const backendResponse = await response.json();
-
     return {
       content: backendResponse.content,
       confidence: backendResponse.confidence,
@@ -306,18 +297,18 @@ class OllamaLLMService {
     const basePrompt = `You are PropOllama, an expert AI sports betting analyst. You provide accurate, data-driven insights for sports betting, player props, and value betting opportunities.
 
 IMPORTANT GUIDELINES:
-- Always provide specific reasoning and confidence levels
-- Focus on actionable insights for bettors
-- Include risk assessment in your analysis
-- Use current sports context when available
-- Be concise but comprehensive
+- Always provide specific reasoning and confidence levels;
+- Focus on actionable insights for bettors;
+- Include risk assessment in your analysis;
+- Use current sports context when available;
+- Be concise but comprehensive;
 - Always emphasize responsible gambling`;
 
-    const contextInfo = request.context
+    const contextInfo = request.context;
       ? `\nCurrent Context: ${JSON.stringify(request.context, null, 2)}`
       : "";
-    const sportInfo = request.sport ? `\nSport Focus: ${request.sport}` : "";
-    const analysisType = request.analysisType
+
+    const analysisType = request.analysisType;
       ? `\nAnalysis Type: ${request.analysisType}`
       : "";
 
@@ -326,26 +317,26 @@ IMPORTANT GUIDELINES:
 User Question: ${request.message}
 
 Please provide a detailed analysis that includes:
-1. Key factors to consider
+1. Key factors to consider;
 2. Recommended action (if applicable)
 3. Confidence level (1-10)
-4. Risk assessment
-5. Any relevant warnings or considerations
+4. Risk assessment;
+5. Any relevant warnings or considerations;
 
 Response:`;
   }
 
   private formatResponse(rawResponse: string, analysisType?: string): string {
-    // Clean up the response and add PropOllama branding
-    let formatted = rawResponse.trim();
+    // Clean up the response and add PropOllama branding;
+    const formatted = rawResponse.trim();
 
-    // Add analysis type header if specified
+    // Add analysis type header if specified;
     if (analysisType && analysisType !== "general") {
-      const typeEmoji = this.getAnalysisTypeEmoji(analysisType);
+
       formatted = `${typeEmoji} **${analysisType.toUpperCase()} ANALYSIS**\n\n${formatted}`;
     }
 
-    // Add PropOllama signature
+    // Add PropOllama signature;
     formatted +=
       "\n\n---\n🤖 *Analysis by PropOllama - Always gamble responsibly*";
 
@@ -368,10 +359,10 @@ Response:`;
   }
 
   private calculateConfidence(response: string): number {
-    // Simple heuristic to calculate confidence based on response content
-    let confidence = 75; // Base confidence
+    // Simple heuristic to calculate confidence based on response content;
+    const confidence = 75; // Base confidence;
 
-    // Increase confidence for detailed analysis
+    // Increase confidence for detailed analysis;
     if (response.length > 200) confidence += 10;
     if (response.includes("confidence") || response.includes("certain"))
       confidence += 5;
@@ -380,7 +371,7 @@ Response:`;
     if (response.includes("analysis") || response.includes("factors"))
       confidence += 5;
 
-    // Decrease confidence for uncertainty indicators
+    // Decrease confidence for uncertainty indicators;
     if (response.includes("uncertain") || response.includes("unclear"))
       confidence -= 15;
     if (response.includes("might") || response.includes("possibly"))
@@ -443,22 +434,22 @@ For your question: "${request.message}"
 While I can't provide real-time AI analysis, here are some general guidelines:
 
 📊 **Always Consider:**
-- Historical performance data
-- Recent team/player trends
-- Injury reports and lineup changes
+- Historical performance data;
+- Recent team/player trends;
+- Injury reports and lineup changes;
 - Weather conditions (for outdoor sports)
 - Motivation factors (playoff implications, etc.)
 
 🎯 **Betting Strategy:**
-- Never bet more than 2-5% of your bankroll per play
-- Look for positive expected value (+EV) opportunities
-- Compare odds across multiple sportsbooks
-- Track your results to identify profitable patterns
+- Never bet more than 2-5% of your bankroll per play;
+- Look for positive expected value (+EV) opportunities;
+- Compare odds across multiple sportsbooks;
+- Track your results to identify profitable patterns;
 
 **To enable full AI analysis:**
-1. Make sure Ollama is running locally
-2. Have a model like llama3.2 or mistral installed
-3. Check that Ollama is accessible at localhost:11434
+1. Make sure Ollama is running locally;
+2. Have a model like llama3.2 or mistral installed;
+3. Check that Ollama is accessible at localhost:11434;
 
 🚨 *Always gamble responsibly and within your means*`;
 
@@ -477,7 +468,7 @@ While I can't provide real-time AI analysis, here are some general guidelines:
     };
   }
 
-  // Public methods for component use
+  // Public methods for component use;
   public async isOllamaAvailable(): Promise<boolean> {
     try {
       await this.checkConnection();
@@ -496,10 +487,10 @@ While I can't provide real-time AI analysis, here are some general guidelines:
   }
 
   public async switchModel(modelName: string): Promise<boolean> {
-    const model = this.availableModels.find((m) => m.name === modelName);
+
     if (model) {
       this.defaultModel = modelName;
-      console.log(`🔄 Switched PropOllama to model: ${modelName}`);
+      // console statement removed
       return true;
     }
     return false;
@@ -518,6 +509,6 @@ While I can't provide real-time AI analysis, here are some general guidelines:
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const ollamaLLMService = new OllamaLLMService();
 export default ollamaLLMService;

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Skeleton as MuiSkeleton, Box } from '@mui/material';
+import React from 'react.ts';
+import { Skeleton as MuiSkeleton, Box } from '@mui/material.ts';
 
 interface SkeletonProps {
   variant?: 'text' | 'rectangular' | 'circular';
@@ -8,15 +8,15 @@ interface SkeletonProps {
   animation?: 'pulse' | 'wave' | false;
 }
 
-const Skeleton: React.FC<SkeletonProps> = ({
+const Skeleton: React.FC<SkeletonProps key={572000}> = ({
   variant = 'rectangular',
   width = '100%',
   height = 20,
   animation = 'wave',
 }) => {
   return (
-    <Box sx={{ width, height }}>
-      <MuiSkeleton animation={animation} height={height} variant={variant} width={width} />
+    <Box sx={{ width, height }} key={116982}>
+      <MuiSkeleton animation={animation} height={height} variant={variant} width={width} / key={484342}>
     </Box>
   );
 };

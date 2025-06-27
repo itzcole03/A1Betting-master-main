@@ -1,29 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import CircularProgress from '@mui/material/CircularProgress';
-import Alert from '@mui/material/Alert';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
-import IconButton from '@mui/material/IconButton';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import InfoIcon from '@mui/icons-material/Info';
-import { usePredictionService } from '../../../hooks/usePredictionService';
-import { useRiskProfile } from '../../../hooks/useRiskProfile';
-import { EventBus } from '../../../unified/EventBus';
-import { ErrorHandler } from '../../../unified/ErrorHandler';
-import { PerformanceMonitor } from '../../../unified/PerformanceMonitor';
-import { ModelVersioning } from '../../../unified/ModelVersioning';
-import { Prediction, RiskProfile, ErrorCategory, ErrorSeverity } from '../../../types/core';
-import { BettingOpportunity } from '../../../types/betting';
-import { ShapExplanation } from '../../prediction/ShapExplanation';
-import { ConfidenceIndicator } from '../../common/ConfidenceIndicator';
-import { RiskLevelIndicator } from '../../common/RiskLevelIndicator';
-import { ValidationStatus } from '../../common/ValidationStatus';
-import { useFilterStore } from '../../../stores/filterStore';
+import React, { useEffect, useState  } from 'react.ts';
+import Box from '@mui/material/Box.ts';
+import Paper from '@mui/material/Paper.ts';
+import Typography from '@mui/material/Typography.ts';
+import CircularProgress from '@mui/material/CircularProgress.ts';
+import Alert from '@mui/material/Alert.ts';
+import Chip from '@mui/material/Chip.ts';
+import Stack from '@mui/material/Stack.ts';
+import Tooltip from '@mui/material/Tooltip.ts';
+import IconButton from '@mui/material/IconButton.ts';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp.ts';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown.ts';
+import InfoIcon from '@mui/icons-material/Info.ts';
+import { usePredictionService } from '@/../hooks/usePredictionService.ts';
+import { useRiskProfile } from '@/../hooks/useRiskProfile.ts';
+import { EventBus } from '@/../unified/EventBus.ts';
+import { ErrorHandler } from '@/../unified/ErrorHandler.ts';
+import { PerformanceMonitor } from '@/../unified/PerformanceMonitor.ts';
+import { ModelVersioning } from '@/../unified/ModelVersioning.ts';
+import { Prediction, RiskProfile, ErrorCategory, ErrorSeverity } from '@/../types/core.ts';
+import { BettingOpportunity } from '@/../types/betting.ts';
+import { ShapExplanation } from '@/prediction/ShapExplanation.ts';
+import { ConfidenceIndicator } from '@/common/ConfidenceIndicator.ts';
+import { RiskLevelIndicator } from '@/common/RiskLevelIndicator.ts';
+import { ValidationStatus } from '@/common/ValidationStatus.ts';
+import { useFilterStore } from '@/../stores/filterStore.ts';
 
 interface RealtimePredictionDisplayProps {
   predictionId: string;
@@ -48,19 +48,18 @@ const getRiskLevelColor = (riskLevel: string): string => {
   }
 };
 
-export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps> = ({
+export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps key={21011}> = ({
   predictionId,
 }) => {
-  const [prediction, setPrediction] = useState<Prediction | null>(null);
+  const [prediction, setPrediction] = useState<Prediction | null key={547963}>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
   const { getPredictions } = usePredictionService();
   const { currentProfile } = useRiskProfile();
-  const eventBus = EventBus.getInstance();
-  const errorHandler = ErrorHandler.getInstance();
-  const performanceMonitor = PerformanceMonitor.getInstance();
-  const modelVersioning = ModelVersioning.getInstance();
-  const filterStore = useFilterStore();
+
+
+
+
 
   useEffect(() => {
     const fetchPrediction = async () => {
@@ -74,16 +73,16 @@ export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps>
           minConfidence: filterStore.minConfidence,
           maxConfidence: filterStore.maxConfidence,
           projectedReturn: filterStore.projectedReturn,
-          // add any other filters as needed
+          // add any other filters as needed;
         });
-        const result = results.find(p => p.id === predictionId);
+
         setPrediction(result || null);
         setError(null);
 
-        // Track performance
+        // Track performance;
         performanceMonitor.recordOperation('fetchPrediction', performance.now());
 
-        // Emit event for analytics
+        // Emit event for analytics;
         if (result) {
           eventBus.emit('prediction:fetched', {
             predictionId,
@@ -92,7 +91,7 @@ export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps>
           });
         }
       } catch (err) {
-        const error = err instanceof Error ? err : new Error('Failed to fetch prediction');
+
         errorHandler.handleError(error, 'RealtimePredictionDisplay', 'fetchPrediction', {
           category: ErrorCategory.NETWORK,
           severity: ErrorSeverity.MEDIUM,
@@ -105,7 +104,7 @@ export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps>
 
     fetchPrediction();
 
-    // Subscribe to real-time updates
+    // Subscribe to real-time updates;
     const unsubscribe = eventBus.subscribe(`prediction:${predictionId}`, (data: any) => {
       setPrediction(prev => ({
         ...prev,
@@ -120,15 +119,15 @@ export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps>
 
   if (isLoading) {
     return (
-      <Box alignItems="center" display="flex" justifyContent="center" minHeight={200}>
-        <CircularProgress />
+      <Box alignItems="center" display="flex" justifyContent="center" minHeight={200} key={317353}>
+        <CircularProgress / key={730118}>
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Alert severity="error" sx={{ mb: 2 }}>
+      <Alert severity="error" sx={{ mb: 2 }} key={957932}>
         {error}
       </Alert>
     );
@@ -136,72 +135,70 @@ export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps>
 
   if (!prediction) {
     return (
-      <Alert severity="info" sx={{ mb: 2 }}>
-        No prediction data available
+      <Alert severity="info" sx={{ mb: 2 }} key={672219}>
+        No prediction data available;
       </Alert>
     );
   }
 
-  const validationStatus = validatePrediction(prediction, currentProfile);
-
   return (
-    <Paper elevation={3} sx={{ p: 3 }}>
-      <Box alignItems="center" display="flex" justifyContent="space-between" mb={2}>
-        <Typography variant="h6">Prediction Details</Typography>
-        <Box alignItems="center" display="flex" gap={1}>
-          <ConfidenceIndicator value={prediction.confidence} />
-          <RiskLevelIndicator level={prediction.riskLevel} />
-          <ValidationStatus
+    <Paper elevation={3} sx={{ p: 3 }} key={678742}>
+      <Box alignItems="center" display="flex" justifyContent="space-between" mb={2} key={881353}>
+        <Typography variant="h6" key={93421}>Prediction Details</Typography>
+        <Box alignItems="center" display="flex" gap={1} key={110385}>
+          <ConfidenceIndicator value={prediction.confidence} / key={489670}>
+          <RiskLevelIndicator level={prediction.riskLevel} / key={413313}>
+          <ValidationStatus;
             message={validationStatus.reason || 'Validated'}
             status={validationStatus.isValid ? 'valid' : 'invalid'}
-          />
+          / key={718883}>
         </Box>
       </Box>
 
-      <Box mb={3}>
-        <Typography gutterBottom color="textSecondary" variant="subtitle2">
-          Model Information
+      <Box mb={3} key={330107}>
+        <Typography gutterBottom color="textSecondary" variant="subtitle2" key={854908}>
+          Model Information;
         </Typography>
-        <Stack direction="row" spacing={1}>
-          <Chip label={`Version: ${modelVersioning.getCurrentVersion()}`} size="small" />
-          <Chip
+        <Stack direction="row" spacing={1} key={870213}>
+          <Chip label={`Version: ${modelVersioning.getCurrentVersion()}`} size="small" / key={512023}>
+          <Chip;
             label={`Last Updated: ${new Date(prediction.timestamp).toLocaleString()}`}
             size="small"
-          />
+          / key={342498}>
         </Stack>
       </Box>
 
-      <Box mb={3}>
-        <Typography gutterBottom color="textSecondary" variant="subtitle2">
-          SHAP Values
+      <Box mb={3} key={330107}>
+        <Typography gutterBottom color="textSecondary" variant="subtitle2" key={854908}>
+          SHAP Values;
         </Typography>
-        <ShapExplanation explanation={prediction.explanation} />
+        <ShapExplanation explanation={prediction.explanation} / key={173533}>
       </Box>
 
-      <Box>
-        <Typography gutterBottom color="textSecondary" variant="subtitle2">
-          Risk Profile Validation
+      <Box key={485947}>
+        <Typography gutterBottom color="textSecondary" variant="subtitle2" key={854908}>
+          Risk Profile Validation;
         </Typography>
-        <Stack direction="row" spacing={1}>
-          <Chip
+        <Stack direction="row" spacing={1} key={870213}>
+          <Chip;
             color={prediction.stake <= currentProfile.max_stake_percentage ? 'success' : 'error'}
             label={`Max Stake: ${(currentProfile.max_stake_percentage * 100).toFixed(1)}%`}
             size="small"
-          />
-          <Chip
+          / key={320889}>
+          <Chip;
             color={
-              prediction.confidence >= currentProfile.min_confidence_threshold ? 'success' : 'error'
+              prediction.confidence  key={816908}>= currentProfile.min_confidence_threshold ? 'success' : 'error'
             }
             label={`Min Confidence: ${(currentProfile.min_confidence_threshold * 100).toFixed(1)}%`}
             size="small"
           />
-          <Chip
+          <Chip;
             color={
               prediction.volatility <= currentProfile.volatility_tolerance ? 'success' : 'error'
             }
             label={`Volatility: ${(prediction.volatility * 100).toFixed(1)}%`}
             size="small"
-          />
+          / key={888146}>
         </Stack>
       </Box>
     </Paper>
@@ -210,7 +207,7 @@ export const RealtimePredictionDisplay: React.FC<RealtimePredictionDisplayProps>
 
 const validatePrediction = (
   prediction: Prediction,
-  riskProfile: RiskProfile
+  riskProfile: RiskProfile;
 ): { isValid: boolean; reason?: string } => {
   if (prediction.confidence < riskProfile.min_confidence_threshold) {
     return {

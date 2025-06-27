@@ -1,4 +1,4 @@
-import { z } from '../zod';
+import { z } from '@/zod.ts';
 export declare const betSchema: z.ZodObject<{
     id: z.ZodString;
     userId: z.ZodString;
@@ -103,6 +103,6 @@ export declare const eventSchema: z.ZodObject<{
     league: string;
     startTime: string;
 }>;
-import type { Request, Response, NextFunction } from 'express';
-import type { ZodSchema, ZodTypeAny } from 'zod';
+import type { Request, Response, NextFunction } from 'express.ts';
+import type { ZodSchema, ZodTypeAny } from 'zod.ts';
 export declare const validateRequest: (schema: ZodSchema<unknown> | ZodTypeAny) => (req: Request, res: Response, next: NextFunction) => Promise<any>;

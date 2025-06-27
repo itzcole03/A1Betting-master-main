@@ -1,4 +1,4 @@
-// Placeholder for EnsembleResults component
-import React from 'react';
-const EnsembleResults = () => <div>Ensemble Results</div>;
+// Placeholder for EnsembleResults component;
+import React from 'react.ts';
+
 export { EnsembleResults };

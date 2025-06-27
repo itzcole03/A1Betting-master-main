@@ -1,21 +1,21 @@
-import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import React from 'react.ts';
+import { ToastContainer, toast } from 'react-toastify.ts';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Toaster: React.FC = () => {
   return (
-    <ToastContainer
-      closeOnClick
-      draggable
-      newestOnTop
-      pauseOnFocusLoss
-      pauseOnHover
+    <ToastContainer;
+      closeOnClick;
+      draggable;
+      newestOnTop;
+      pauseOnFocusLoss;
+      pauseOnHover;
       autoClose={5000}
       hideProgressBar={false}
       position="top-right"
       rtl={false}
       theme="light"
-    />
+    / key={566416}>
   );
 };
 

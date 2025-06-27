@@ -1,24 +1,24 @@
 /**
- * Performance optimization utilities for A1Betting
+ * Performance optimization utilities for A1Betting;
  */
 
-import React from "react";
-import { QueryClient } from "@tanstack/react-query";
+import React from 'react.ts';
+import { QueryClient } from '@tanstack/react-query.ts';
 
-// Enhanced query client configuration with intelligent caching
+// Enhanced query client configuration with intelligent caching;
 export const createOptimizedQueryClient = (): QueryClient => {
   return new QueryClient({
     defaultOptions: {
       queries: {
         retry: (failureCount, error: any) => {
-          // Don't retry on 4xx errors
+          // Don't retry on 4xx errors;
           if (error?.status >= 400 && error?.status < 500) {
             return false;
           }
           return failureCount < 3;
         },
-        staleTime: 5 * 60 * 1000, // 5 minutes
-        gcTime: 10 * 60 * 1000, // 10 minutes
+        staleTime: 5 * 60 * 1000, // 5 minutes;
+        gcTime: 10 * 60 * 1000, // 10 minutes;
         refetchOnWindowFocus: false,
         refetchOnMount: false,
         refetchOnReconnect: 'always',
@@ -32,7 +32,7 @@ export const createOptimizedQueryClient = (): QueryClient => {
   });
 };
 
-// Cache keys for consistent query management
+// Cache keys for consistent query management;
 export const CACHE_KEYS = {
   userStats: ['user', 'stats'] as const,
   bettingOpportunities: ['betting', 'opportunities'] as const,
@@ -43,7 +43,7 @@ export const CACHE_KEYS = {
   analytics: ['analytics'] as const,
 } as const;
 
-// Performance monitoring utilities
+// Performance monitoring utilities;
 export class PerformanceMonitor {
   private static measurements = new Map<string, number>();
 
@@ -52,18 +52,17 @@ export class PerformanceMonitor {
   }
 
   static endTiming(label: string): number {
-    const start = this.measurements.get(label);
+
     if (!start) {
-      console.warn(`No timing found for label: ${label}`);
+      // console statement removed
       return 0;
     }
-    
-    const duration = performance.now() - start;
+
     this.measurements.delete(label);
     
     // Log slow operations (> 100ms)
     if (duration > 100) {
-      console.warn(`Slow operation detected: ${label} took ${duration.toFixed(2)}ms`);
+      // console statement removed}ms`);
     }
     
     return duration;
@@ -77,14 +76,14 @@ export class PerformanceMonitor {
   }
 }
 
-// Memory optimization utilities
+// Memory optimization utilities;
 export const memoizedSelectors = {
   selectUserBalance: (userStats: any) => userStats?.balance ?? 0,
   selectWinRate: (userStats: any) => userStats?.winRate ?? 0,
   selectTotalProfit: (userStats: any) => userStats?.totalProfit ?? 0,
 };
 
-// Bundle size optimization - lazy loading utilities
+// Bundle size optimization - lazy loading utilities;
 export const lazyLoad = (importFn: () => Promise<{ default: React.ComponentType<any> }>) => {
   return React.lazy(() => 
     importFn().catch(() => 
@@ -95,16 +94,16 @@ export const lazyLoad = (importFn: () => Promise<{ default: React.ComponentType<
   );
 };
 
-// Resource preloading
+// Resource preloading;
 export const preloadResource = (url: string, type: 'script' | 'style' | 'image' = 'script'): void => {
-  const link = document.createElement('link');
+
   link.rel = 'preload';
   link.href = url;
   link.as = type;
   document.head.appendChild(link);
 };
 
-// Intersection Observer for lazy loading
+// Intersection Observer for lazy loading;
 export const createIntersectionObserver = (
   callback: IntersectionObserverCallback,
   options: IntersectionObserverInit = {}

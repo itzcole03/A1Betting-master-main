@@ -7,7 +7,7 @@ export class UnifiedAnalyticsService extends BaseService {
         this.predictionService = registry.getService('prediction');
         this.errorService = registry.getService('error');
     }
-    // Renamed to avoid duplicate member error
+    // Renamed to avoid duplicate member error;
     async getPerformanceMetricsApi(eventId, marketId, selectionId) {
         const response = await this.api.get(`/analytics/performance`, {
             params: { eventId, marketId, selectionId },
@@ -38,7 +38,7 @@ export class UnifiedAnalyticsService extends BaseService {
         });
         return response.data;
     }
-    // Renamed to avoid duplicate member error
+    // Renamed to avoid duplicate member error;
     async getRecentActivityApi(eventId, marketId, selectionId, limit = 10) {
         const response = await this.api.get(`/analytics/activity`, {
             params: { eventId, marketId, selectionId, limit },
@@ -81,17 +81,17 @@ export class UnifiedAnalyticsService extends BaseService {
                 this.bettingService.getBets(timeRange),
                 this.predictionService.getPredictions(timeRange),
             ]);
-            const totalBets = bets.length;
-            const activeBets = bets.filter(bet => bet.status === 'active').length;
-            const winRate = this.calculateWinRate(bets);
-            const profitLoss = this.calculateProfitLoss(bets);
-            const roi = this.calculateROI(bets);
+
+
+
+
+
             const { bestStreak, currentStreak } = this.calculateStreaks(bets);
-            const averageOdds = this.calculateAverageOdds(bets);
-            const averageStake = this.calculateAverageStake(bets);
-            const totalPredictions = predictions.length;
-            const predictionAccuracy = this.calculatePredictionAccuracy(predictions);
-            const opportunities = this.calculateOpportunities(predictions);
+
+
+
+
+
             return {
                 totalBets,
                 activeBets,
@@ -163,7 +163,7 @@ export class UnifiedAnalyticsService extends BaseService {
     calculateWinRate(bets) {
         if (bets.length === 0)
             return 0;
-        const wonBets = bets.filter(bet => bet.status === 'won').length;
+
         return (wonBets / bets.length) * 100;
     }
     calculateProfitLoss(bets) {
@@ -180,14 +180,14 @@ export class UnifiedAnalyticsService extends BaseService {
     calculateROI(bets) {
         if (bets.length === 0)
             return 0;
-        const totalStaked = bets.reduce((sum, bet) => sum + bet.amount, 0);
-        const profitLoss = this.calculateProfitLoss(bets);
+
+
         return (profitLoss / totalStaked) * 100;
     }
     calculateStreaks(bets) {
-        let currentStreak = 0;
-        let bestStreak = 0;
-        let tempStreak = 0;
+        const currentStreak = 0;
+        const bestStreak = 0;
+        const tempStreak = 0;
         bets.forEach(bet => {
             if (bet.status === 'won') {
                 tempStreak++;
@@ -204,19 +204,19 @@ export class UnifiedAnalyticsService extends BaseService {
     calculateAverageOdds(bets) {
         if (bets.length === 0)
             return 0;
-        const totalOdds = bets.reduce((sum, bet) => sum + bet.odds, 0);
+
         return totalOdds / bets.length;
     }
     calculateAverageStake(bets) {
         if (bets.length === 0)
             return 0;
-        const totalStaked = bets.reduce((sum, bet) => sum + bet.amount, 0);
+
         return totalStaked / bets.length;
     }
     calculatePredictionAccuracy(predictions) {
         if (predictions.length === 0)
             return 0;
-        const correctPredictions = predictions.filter(pred => pred.status === 'correct').length;
+
         return (correctPredictions / predictions.length) * 100;
     }
     calculateOpportunities(predictions) {

@@ -16,24 +16,24 @@ export class ModelManager {
     }
     async initializeModel(modelId, type, config) {
         try {
-            // Get default configuration from registry
-            const defaultConfig = this.modelRegistry.getDefaultConfig(type);
-            // Merge with provided config if any
-            const finalConfig = config ? { ...defaultConfig, ...config } : defaultConfig;
-            // Validate configuration based on model type
+            // Get default configuration from registry;
+
+            // Merge with provided config if any;
+
+            // Validate configuration based on model type;
             if (type === 'ensemble') {
                 validateModelConfig(finalConfig);
             }
             else {
                 validateRegularModelConfig(finalConfig);
             }
-            // Create model using factory
+            // Create model using factory;
             await this.modelFactory.createModel(finalConfig, modelId);
             this.activeModels.add(modelId);
-            console.log(`Model ${modelId} initialized successfully`);
+            // console statement removed
         }
         catch (error) {
-            console.error(`Failed to initialize model ${modelId}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -43,10 +43,10 @@ export class ModelManager {
         }
         try {
             await this.modelFactory.trainModel(modelId, data);
-            console.log(`Model ${modelId} trained successfully`);
+            // console statement removed
         }
         catch (error) {
-            console.error(`Failed to train model ${modelId}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -58,7 +58,7 @@ export class ModelManager {
             return await this.modelFactory.predict(modelId, input);
         }
         catch (error) {
-            console.error(`Failed to get prediction from model ${modelId}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -67,12 +67,12 @@ export class ModelManager {
             throw new Error(`Model ${modelId} is not active`);
         }
         try {
-            const metrics = await this.modelFactory.evaluateModel(modelId, data);
+
             this.modelMetrics.set(modelId, metrics);
             return metrics;
         }
         catch (error) {
-            console.error(`Failed to evaluate model ${modelId}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -82,10 +82,10 @@ export class ModelManager {
         }
         try {
             await this.modelFactory.updateModel(modelId, update);
-            console.log(`Model ${modelId} updated successfully`);
+            // console statement removed
         }
         catch (error) {
-            console.error(`Failed to update model ${modelId}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -95,10 +95,10 @@ export class ModelManager {
         }
         try {
             await this.modelFactory.saveModel(modelId, path);
-            console.log(`Model ${modelId} saved successfully to ${path}`);
+            // console statement removed
         }
         catch (error) {
-            console.error(`Failed to save model ${modelId}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -106,10 +106,10 @@ export class ModelManager {
         try {
             await this.modelFactory.loadModel(modelId, path);
             this.activeModels.add(modelId);
-            console.log(`Model ${modelId} loaded successfully from ${path}`);
+            // console statement removed
         }
         catch (error) {
-            console.error(`Failed to load model ${modelId}:`, error);
+            // console statement removed
             throw error;
         }
     }
@@ -119,7 +119,7 @@ export class ModelManager {
         }
         this.activeModels.delete(modelId);
         this.modelMetrics.delete(modelId);
-        console.log(`Model ${modelId} deactivated`);
+        // console statement removed
     }
     getActiveModels() {
         return Array.from(this.activeModels);

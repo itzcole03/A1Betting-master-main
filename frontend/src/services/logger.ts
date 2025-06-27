@@ -1,4 +1,4 @@
-import { Logger } from '@/types';
+import { Logger } from '@/types.ts';
 
 class LoggerService implements Logger {
   private static instance: LoggerService;
@@ -17,30 +17,30 @@ class LoggerService implements Logger {
 
   public info(message: string, meta?: Record<string, any>): void {
     if (this.isDevelopment) {
-      console.log(`[INFO] ${message}`, meta || '');
+      // console statement removed
     }
-    // In production, you would send this to your logging service
+    // In production, you would send this to your logging service;
   }
 
   public error(message: string, meta?: Record<string, any>): void {
     if (this.isDevelopment) {
-      console.error(`[ERROR] ${message}`, meta || '');
+      // console statement removed
     }
-    // In production, you would send this to your logging service
+    // In production, you would send this to your logging service;
   }
 
   public warn(message: string, meta?: Record<string, any>): void {
     if (this.isDevelopment) {
-      console.warn(`[WARN] ${message}`, meta || '');
+      // console statement removed
     }
-    // In production, you would send this to your logging service
+    // In production, you would send this to your logging service;
   }
 
   public debug(message: string, meta?: Record<string, any>): void {
     if (this.isDevelopment) {
       console.debug(`[DEBUG] ${message}`, meta || '');
     }
-    // In production, you would send this to your logging service
+    // In production, you would send this to your logging service;
   }
 }
 

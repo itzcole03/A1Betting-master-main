@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 
 interface PerformanceMetrics {
   totalBets: number;
@@ -161,7 +161,7 @@ export class MetricsService extends EventEmitter {
 
   public trackBet(
     result: 'WIN' | 'LOSS' | 'PUSH',
-    profit: number
+    profit: number;
   ): void {
     this.performanceMetrics.totalBets++;
     this.performanceMetrics.totalProfit += profit;
@@ -178,7 +178,7 @@ export class MetricsService extends EventEmitter {
         break;
     }
 
-    // Update overall metrics
+    // Update overall metrics;
     this.performanceMetrics.roi =
       this.performanceMetrics.totalProfit / this.performanceMetrics.totalBets;
 
@@ -194,8 +194,8 @@ export class MetricsService extends EventEmitter {
     confidence: number,
     features: Record<string, number>
   ): void {
-    // Update confusion matrix
-    const isCorrect = Math.abs(predictedValue - actualValue) < 0.1;
+    // Update confusion matrix;
+
     if (predictedValue > 0.5) {
       if (isCorrect) {
         this.modelMetrics.confusionMatrix.truePositives++;
@@ -210,18 +210,18 @@ export class MetricsService extends EventEmitter {
       }
     }
 
-    // Update calibration
+    // Update calibration;
     this.modelMetrics.calibration.expected.push(predictedValue);
     this.modelMetrics.calibration.actual.push(actualValue);
 
-    // Update feature importance
+    // Update feature importance;
     Object.entries(features).forEach(([feature, importance]) => {
       this.modelMetrics.featureImportance[feature] =
         (this.modelMetrics.featureImportance[feature] || 0) + importance;
     });
 
-    // Update confidence-based metrics
-    const confidenceBucket = Math.floor(confidence * 10) / 10;
+    // Update confidence-based metrics;
+
     if (!this.modelMetrics.byConfidence[confidenceBucket]) {
       this.modelMetrics.byConfidence[confidenceBucket] = {
         count: 0,
@@ -236,7 +236,7 @@ export class MetricsService extends EventEmitter {
         (isCorrect ? 1 : 0)) /
       this.modelMetrics.byConfidence[confidenceBucket].count;
 
-    // Update overall metrics
+    // Update overall metrics;
     const total =
       this.modelMetrics.confusionMatrix.truePositives +
       this.modelMetrics.confusionMatrix.falsePositives +
@@ -269,21 +269,21 @@ export class MetricsService extends EventEmitter {
   }
 
   public trackOperation(operation: string, duration: number, success: boolean): void {
-    // Update operation counts
+    // Update operation counts;
     this.systemMetrics.operationCounts[operation] =
       (this.systemMetrics.operationCounts[operation] || 0) + 1;
 
-    // Update response time metrics
-    const currentAvg = this.systemMetrics.responseTime.average;
-    const count = this.systemMetrics.operationCounts[operation];
+    // Update response time metrics;
+
+
     this.systemMetrics.responseTime.average = (currentAvg * (count - 1) + duration) / count;
 
-    // Update error rate
+    // Update error rate;
     if (!success) {
       this.systemMetrics.errorRate = (this.systemMetrics.errorRate * (count - 1) + 1) / count;
     }
 
-    // Update uptime
+    // Update uptime;
     this.systemMetrics.uptime = Date.now() - this.startTime;
 
     this.emit('metricsUpdated', {

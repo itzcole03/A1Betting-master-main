@@ -1,13 +1,12 @@
-import React, {
-  createContext,
+import React, { createContext,
   useContext,
   useEffect,
   useState,
   ReactNode,
-} from "react";
+ } from 'react.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export type ThemeVariant = "cyber-light" | "cyber-dark";
@@ -58,7 +57,7 @@ interface ThemeContextType {
 }
 
 // ============================================================================
-// SAFE THEME DEFINITIONS
+// SAFE THEME DEFINITIONS;
 // ============================================================================
 
 const CYBER_LIGHT_THEME: ThemeConfig = {
@@ -138,7 +137,7 @@ const CYBER_DARK_THEME: ThemeConfig = {
 };
 
 // ============================================================================
-// SAFE THEME FUNCTIONS
+// SAFE THEME FUNCTIONS;
 // ============================================================================
 
 const getThemeConfig = (variant: ThemeVariant): ThemeConfig => {
@@ -152,13 +151,11 @@ const getThemeConfig = (variant: ThemeVariant): ThemeConfig => {
 };
 
 // ============================================================================
-// CONTEXT
+// CONTEXT;
 // ============================================================================
 
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
 // ============================================================================
-// PROVIDER COMPONENT
+// PROVIDER COMPONENT;
 // ============================================================================
 
 interface SafeThemeProviderProps {
@@ -167,27 +164,25 @@ interface SafeThemeProviderProps {
   enablePersistence?: boolean;
 }
 
-export const SafeThemeProvider: React.FC<SafeThemeProviderProps> = ({
+export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = ({
   children,
   defaultVariant = "cyber-light",
   enablePersistence = true,
 }) => {
-  const [variant, setVariantState] = useState<ThemeVariant>(() => {
+  const [variant, setVariantState] = useState<ThemeVariant key={921417}>(() => {
     if (enablePersistence && typeof window !== "undefined") {
       try {
-        const saved = localStorage.getItem("theme-variant");
+
         if (saved === "cyber-light" || saved === "cyber-dark") {
           return saved as ThemeVariant;
         }
       } catch (error) {
-        console.warn("Failed to load theme from localStorage:", error);
+        // console statement removed
       }
     }
     return defaultVariant;
   });
 
-  const theme = getThemeConfig(variant);
-  const isDark = variant === "cyber-dark";
 
   const setVariant = (newVariant: ThemeVariant) => {
     setVariantState(newVariant);
@@ -195,25 +190,24 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps> = ({
       try {
         localStorage.setItem("theme-variant", newVariant);
       } catch (error) {
-        console.warn("Failed to save theme to localStorage:", error);
+        // console statement removed
       }
     }
   };
 
   const toggleDarkMode = () => {
-    const newVariant = isDark ? "cyber-light" : "cyber-dark";
+
     setVariant(newVariant);
   };
 
-  // Apply theme to document
+  // Apply theme to document;
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     try {
-      const root = document.documentElement;
-      const body = document.body;
 
-      // Set CSS custom properties
+
+      // Set CSS custom properties;
       root.style.setProperty("--color-primary", theme.colors.primary);
       root.style.setProperty("--color-secondary", theme.colors.secondary);
       root.style.setProperty("--color-accent", theme.colors.accent);
@@ -230,7 +224,7 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps> = ({
       root.style.setProperty("--color-warning", theme.colors.warning);
       root.style.setProperty("--color-error", theme.colors.error);
 
-      // Set gradient variables
+      // Set gradient variables;
       root.style.setProperty("--gradient-primary", theme.gradients.primary);
       root.style.setProperty("--gradient-secondary", theme.gradients.secondary);
       root.style.setProperty(
@@ -238,15 +232,15 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps> = ({
         theme.gradients.background,
       );
 
-      // Clear existing theme classes
+      // Clear existing theme classes;
       body.className = body.className.replace(/theme-[\w-]+/g, "");
       root.classList.remove("dark", "light", "cyber-light", "cyber-dark");
 
-      // Add current theme classes
+      // Add current theme classes;
       body.classList.add(`theme-${variant}`);
       root.classList.add(variant);
 
-      // Set dark/light mode classes
+      // Set dark/light mode classes;
       if (isDark) {
         root.classList.add("dark");
         body.classList.add("dark");
@@ -255,26 +249,26 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps> = ({
         body.classList.add("light");
       }
 
-      // Apply background and text color
+      // Apply background and text color;
       body.style.background = theme.colors.background;
       body.style.color = theme.colors.text.primary;
       body.style.fontFamily = '"Inter", system-ui, sans-serif';
       body.style.minHeight = "100vh";
 
-      // Apply to root as well for consistency
-      const rootElement = document.getElementById("root");
+      // Apply to root as well for consistency;
+
       if (rootElement) {
         rootElement.style.background = theme.colors.background;
         rootElement.style.color = theme.colors.text.primary;
         rootElement.style.minHeight = "100vh";
       }
     } catch (error) {
-      console.error("Failed to apply theme:", error);
+      // console statement removed
     }
   }, [theme, variant, isDark]);
 
   return (
-    <ThemeContext.Provider
+    <ThemeContext.Provider;
       value={{
         theme,
         variant,
@@ -282,23 +276,21 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps> = ({
         isDark,
         toggleDarkMode,
       }}
-    >
+     key={240427}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
 // ============================================================================
-// HOOKS
+// HOOKS;
 // ============================================================================
 
 export const useTheme = (): ThemeContextType => {
-  const context = useContext(ThemeContext);
+
   if (context === undefined) {
-    // Return safe fallback instead of throwing
-    console.warn(
-      "useTheme called outside of SafeThemeProvider, using fallback",
-    );
+    // Return safe fallback instead of throwing;
+    // console statement removed
     return {
       theme: CYBER_LIGHT_THEME,
       variant: "cyber-light",

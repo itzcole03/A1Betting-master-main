@@ -1,10 +1,9 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import axios from 'axios';
-import BankrollPage from './BankrollPage';
+import React from 'react.ts';
+import { render, screen, waitFor } from '@testing-library/react.ts';
+import axios from 'axios.ts';
+import BankrollPage from './BankrollPage.ts';
 
 jest.mock('axios');
-const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 describe('BankrollPage Integration', () => {
   it('renders loading, fetches and displays transactions', async () => {
@@ -20,7 +19,7 @@ describe('BankrollPage Integration', () => {
         },
       ],
     });
-    render(<BankrollPage />);
+    render(<BankrollPage / key={806580}>);
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText(/initial deposit/i)).toBeInTheDocument());
     expect(screen.getByText(/deposit/i)).toBeInTheDocument();
@@ -29,7 +28,7 @@ describe('BankrollPage Integration', () => {
 
   it('shows error on API failure', async () => {
     mockedAxios.get.mockRejectedValueOnce(new Error('API Error'));
-    render(<BankrollPage />);
+    render(<BankrollPage / key={806580}>);
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
     await waitFor(() => expect(screen.getByText(/api error/i)).toBeInTheDocument());
   });

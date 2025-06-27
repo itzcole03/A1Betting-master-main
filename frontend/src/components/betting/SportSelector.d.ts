@@ -1,5 +1,5 @@
-import React from 'react';
-import { Sport } from '../../types/betting';
+import React from 'react.ts';
+import { Sport } from '@/types/betting.ts';
 interface SportSelectorProps {
     sports: Sport[];
 }

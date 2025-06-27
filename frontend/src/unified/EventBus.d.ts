@@ -1,4 +1,4 @@
-import { EventMap } from '../types/core.js';
+import { EventMap } from '@/types/core.js';
 type EventHandler<T> = (data: T) => void;
 export declare class EventBus {
     /**

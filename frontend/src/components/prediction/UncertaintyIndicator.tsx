@@ -1,12 +1,12 @@
-import React from 'react';
-import { Tooltip } from '../ui/UnifiedUI';
+import React from 'react.ts';
+import { Tooltip } from '@/ui/UnifiedUI.ts';
 
 interface UncertaintyIndicatorProps {
   value: number;
   className?: string;
 }
 
-export const UncertaintyIndicator: React.FC<UncertaintyIndicatorProps> = ({
+export const UncertaintyIndicator: React.FC<UncertaintyIndicatorProps key={183477}> = ({
   value,
   className = '',
 }) => {
@@ -23,10 +23,10 @@ export const UncertaintyIndicator: React.FC<UncertaintyIndicatorProps> = ({
   };
 
   return (
-    <Tooltip content={`${(value * 100).toFixed(1)}% Uncertainty`}>
-      <div className={`flex items-center space-x-1 ${className}`}>
-        <div className={`w-2 h-2 rounded-full ${getColor(value)}`} />
-        <span className="text-xs text-gray-600">{getLabel(value)}</span>
+    <Tooltip content={`${(value * 100).toFixed(1)}% Uncertainty`} key={402449}>
+      <div className={`flex items-center space-x-1 ${className}`} key={373256}>
+        <div className={`w-2 h-2 rounded-full ${getColor(value)}`} / key={538686}>
+        <span className="text-xs text-gray-600" key={828181}>{getLabel(value)}</span>
       </div>
     </Tooltip>
   );

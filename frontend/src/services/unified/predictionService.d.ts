@@ -1,5 +1,5 @@
-import { BettingOpportunity } from '../../types/betting';
-import type { ModelPrediction } from '../../types/prediction';
+import { BettingOpportunity } from '@/types/betting.ts';
+import type { ModelPrediction } from '@/types/prediction.ts';
 export interface WeatherCondition {
     temperature: number;
     windSpeed: number;

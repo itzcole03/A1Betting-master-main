@@ -1,9 +1,7 @@
 import { notificationService, NotificationData } from './notification.js';
-import axios from 'axios';
+import axios from 'axios.ts';
 import { wrapWithRateLimit } from './rateLimit/wrapWithRateLimit.js';
-import { API_CONFIG } from '../config/apiConfig.js';
-
-const axiosInstance = axios;
+import { API_CONFIG } from '@/config/apiConfig.js';
 
 export type Sport = 'nfl' | 'nba' | 'mlb' | 'nhl' | 'soccer';
 
@@ -92,7 +90,7 @@ type EventMap = {
 export class SportsAnalyticsService {
   private static instance: SportsAnalyticsService;
   private cache: Map<string, CacheEntry<CacheValue>> = new Map();
-  private readonly CACHE_DURATION = 1000 * 60 * 15; // 15 minutes
+  private readonly CACHE_DURATION = 1000 * 60 * 15; // 15 minutes;
   private subscribers: Map<keyof EventMap, Set<(data: EventMap[keyof EventMap]) => void>> = new Map();
 
   private constructor() {}
@@ -108,8 +106,8 @@ export class SportsAnalyticsService {
    * Fetch player stats from backend API (production-ready)
    */
   getPlayerStats = wrapWithRateLimit(async (sport: Sport, playerId: string): Promise<PlayerStats> => {
-    const cacheKey = `player_${sport}_${playerId}`;
-    const cached = this.getFromCache<PlayerStats>(cacheKey);
+
+
     if (cached) return cached;
 
     try {
@@ -129,8 +127,8 @@ export class SportsAnalyticsService {
    * Fetch team stats from backend API (production-ready)
    */
   getTeamStats = wrapWithRateLimit(async (sport: Sport, teamId: string): Promise<TeamStats> => {
-    const cacheKey = `team_${sport}_${teamId}`;
-    const cached = this.getFromCache<TeamStats>(cacheKey);
+
+
     if (cached) return cached;
 
     try {
@@ -150,8 +148,8 @@ export class SportsAnalyticsService {
    * Analyze a prop using backend ML/analytics API (production-ready)
    */
   analyzeProp = wrapWithRateLimit(async (sport: Sport, propId: string): Promise<PropPrediction> => {
-    const cacheKey = `prop_${sport}_${propId}`;
-    const cached = this.getFromCache<PropPrediction>(cacheKey);
+
+
     if (cached) return cached;
 
     try {
@@ -186,14 +184,14 @@ export class SportsAnalyticsService {
 
   /**
    * Subscribe to analytics events (playerStats, teamStats, propPrediction, recommendations)
-   * @param event Event name
-   * @param callback Callback with event data
+   * @param event Event name;
+   * @param callback Callback with event data;
    */
   subscribe<K extends keyof EventMap>(event: K, callback: (data: EventMap[K]) => void): () => void {
     if (!this.subscribers.has(event)) {
       this.subscribers.set(event, new Set());
     }
-    // Type assertion is safe due to event map
+    // Type assertion is safe due to event map;
     (this.subscribers.get(event) as Set<(data: EventMap[K]) => void>).add(callback);
     return () => {
       (this.subscribers.get(event) as Set<(data: EventMap[K]) => void>)?.delete(callback);
@@ -208,7 +206,7 @@ export class SportsAnalyticsService {
    * Get a value from the cache if valid, otherwise null.
    */
   private getFromCache<T extends CacheValue>(key: string): T | null {
-    const cached = this.cache.get(key) as CacheEntry<T> | undefined;
+
     if (!cached) return null;
     if (Date.now() - cached.timestamp > this.CACHE_DURATION) {
       this.cache.delete(key);
@@ -227,7 +225,7 @@ export class SportsAnalyticsService {
     });
   }
 
-  // Sport-specific analysis methods
+  // Sport-specific analysis methods;
   async analyzeNBAProp(propId: string): Promise<PropPrediction> {
     return this.analyzeProp('nba', propId);
   }

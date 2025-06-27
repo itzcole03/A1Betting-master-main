@@ -3,9 +3,9 @@ import { IconButton, useTheme } from '@mui/material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { useThemeStore } from '@/stores/themeStore';
 import { motion } from 'framer-motion';
-const MotionIconButton = motion.create(IconButton);
+
 const ThemeToggle = () => {
-    const theme = useTheme();
+
     const { toggleTheme } = useThemeStore();
     return (_jsx(MotionIconButton, { "aria-label": "toggle theme", color: "primary", sx: {
             transition: 'transform 0.2s ease-in-out',

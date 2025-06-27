@@ -43,7 +43,7 @@ export const LineupComparisonTable = ({ lineups, onSelect, }) => {
         return sortDirection === 'asc' ? (_jsx(FaSortUp, { className: "w-4 h-4 text-primary-500" })) : (_jsx(FaSortDown, { className: "w-4 h-4 text-primary-500" }));
     };
     const filteredAndSortedLineups = useMemo(() => {
-        let result = [...lineups];
+        const result = [...lineups];
         if (typeFilter !== 'all') {
             result = result.filter(lineup => lineup.type === typeFilter);
         }

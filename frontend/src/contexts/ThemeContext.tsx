@@ -1,12 +1,12 @@
-import React, { createContext, useContext, useState, useCallback } from 'react';
-import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material';
+import React, { createContext, useContext, useState, useCallback  } from 'react.ts';
+import { ThemeProvider as MuiThemeProvider, createTheme } from '@mui/material.ts';
 
 interface ThemeContextType {
   isDarkMode: boolean;
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextType>({
+const ThemeContext = createContext<ThemeContextType key={510061}>({
   isDarkMode: false,
   toggleTheme: () => {},
 });
@@ -17,7 +17,7 @@ interface ThemeProviderProps {
   children: React.ReactNode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+export const ThemeProvider: React.FC<ThemeProviderProps key={251000}> = ({ children }) => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = useCallback(() => {
@@ -31,8 +31,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   });
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>
-      <MuiThemeProvider theme={theme}>{children}</MuiThemeProvider>
+    <ThemeContext.Provider value={{ isDarkMode, toggleTheme }} key={676768}>
+      <MuiThemeProvider theme={theme} key={729574}>{children}</MuiThemeProvider>
     </ThemeContext.Provider>
   );
 };

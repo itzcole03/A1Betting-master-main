@@ -1,11 +1,11 @@
 /**
- * Ultra Accuracy Background Service
- * Automatically enhances Money Maker and PrizePicks predictions using Ultra Accuracy engine
+ * Ultra Accuracy Background Service;
+ * Automatically enhances Money Maker and PrizePicks predictions using Ultra Accuracy engine;
  */
 
-import { backendApi } from "./backendApi";
+import { backendApi } from './backendApi.ts';
 
-// Simple browser-compatible event emitter
+// Simple browser-compatible event emitter;
 class SimpleEventEmitter {
   private events: { [key: string]: Function[] } = {};
 
@@ -61,13 +61,13 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
       enabled: true,
       targetAccuracy: 99.5,
       minConfidenceThreshold: 0.85,
-      maxProcessingTime: 5000, // 5 seconds max
+      maxProcessingTime: 5000, // 5 seconds max;
       enhanceMoneyMaker: true,
       enhancePrizePicks: true,
       enhanceArbitrage: true,
     };
 
-    // Start background processing
+    // Start background processing;
     this.startBackgroundProcessing();
   }
 
@@ -80,38 +80,32 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Enhance predictions with Ultra Accuracy
+   * Enhance predictions with Ultra Accuracy;
    */
   public async enhancePredictions(predictions: any[]): Promise<any[]> {
     if (!this.config.enabled || !predictions.length) {
       return predictions;
     }
 
-    const enhanced = [];
-
     for (const prediction of predictions) {
       try {
-        const cacheKey = this.generateCacheKey(prediction);
-        let enhancement = this.enhancementCache.get(cacheKey);
+
+        const enhancement = this.enhancementCache.get(cacheKey);
 
         if (!enhancement) {
           enhancement = await this.processUltraAccuracyEnhancement(prediction);
           this.enhancementCache.set(cacheKey, enhancement);
         }
 
-        // Apply enhancement to the prediction
+        // Apply enhancement to the prediction;
         const enhancedPrediction = this.applyEnhancement(
           prediction,
           enhancement,
         );
         enhanced.push(enhancedPrediction);
       } catch (error) {
-        console.warn(
-          "[Ultra Accuracy] Enhancement failed for prediction:",
-          prediction.id,
-          error,
-        );
-        // Fallback to original prediction
+        // console statement removed
+        // Fallback to original prediction;
         enhanced.push(prediction);
       }
     }
@@ -120,7 +114,7 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Enhance Money Maker recommendations
+   * Enhance Money Maker recommendations;
    */
   public async enhanceMoneyMakerRecommendations(
     recommendations: any,
@@ -130,7 +124,6 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
     }
 
     try {
-      const ultraAccuracyData = await this.generateUltraAccuracyAnalysis();
 
       return {
         ...recommendations,
@@ -157,13 +150,13 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
         },
       };
     } catch (error) {
-      console.warn("[Ultra Accuracy] Money Maker enhancement failed:", error);
+      // console statement removed
       return recommendations;
     }
   }
 
   /**
-   * Enhance PrizePicks player props
+   * Enhance PrizePicks player props;
    */
   public async enhancePrizePicksProps(props: any[]): Promise<any[]> {
     if (!this.config.enhancePrizePicks || !props.length) {
@@ -171,10 +164,8 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
     }
 
     try {
-      const enhanced = [];
 
       for (const prop of props) {
-        const ultraAccuracyAnalysis = await this.analyzePlayerProp(prop);
 
         enhanced.push({
           ...prop,
@@ -199,28 +190,27 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
 
       return enhanced;
     } catch (error) {
-      console.warn("[Ultra Accuracy] PrizePicks enhancement failed:", error);
+      // console statement removed
       return props;
     }
   }
 
   /**
-   * Generate Ultra Accuracy analysis for general use
+   * Generate Ultra Accuracy analysis for general use;
    */
   private async generateUltraAccuracyAnalysis(): Promise<any> {
-    // Simulate ultra-accuracy processing
-    const processingStart = Date.now();
+    // Simulate ultra-accuracy processing;
 
-    // Simulate advanced AI processing
+    // Simulate advanced AI processing;
     await new Promise((resolve) =>
       setTimeout(resolve, 100 + Math.random() * 200),
     );
 
     return {
       accuracyScore: 0.99 + Math.random() * 0.009, // 99.0% - 99.9%
-      accuracyBoost: 0.08 + Math.random() * 0.04, // 8-12% boost
-      edgeImprovement: 0.15 + Math.random() * 0.1, // 15-25% edge improvement
-      riskReduction: 0.2 + Math.random() * 0.15, // 20-35% risk reduction
+      accuracyBoost: 0.08 + Math.random() * 0.04, // 8-12% boost;
+      edgeImprovement: 0.15 + Math.random() * 0.1, // 15-25% edge improvement;
+      riskReduction: 0.2 + Math.random() * 0.15, // 20-35% risk reduction;
       processingTime: Date.now() - processingStart,
       quantumFeatures: {
         ensembleConsensus: 0.95 + Math.random() * 0.04,
@@ -232,10 +222,10 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Analyze individual player prop for Ultra Accuracy enhancement
+   * Analyze individual player prop for Ultra Accuracy enhancement;
    */
   private async analyzePlayerProp(prop: any): Promise<any> {
-    // Simulate player-specific ultra-accuracy analysis
+    // Simulate player-specific ultra-accuracy analysis;
     await new Promise((resolve) =>
       setTimeout(resolve, 50 + Math.random() * 100),
     );
@@ -245,14 +235,14 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
       matchupAdvantage: -0.1 + Math.random() * 0.2, // -10% to +10%
       venueImpact: -0.05 + Math.random() * 0.1, // -5% to +5%
       weatherFactor: Math.random() * 0.1 - 0.05, // -5% to +5%
-      injuryRisk: Math.random() * 0.15, // 0-15% risk
-      marketInefficiency: Math.random() * 0.2, // 0-20% inefficiency
-      valueAdjustment: 0.05 + Math.random() * 0.15, // 5-20% value boost
+      injuryRisk: Math.random() * 0.15, // 0-15% risk;
+      marketInefficiency: Math.random() * 0.2, // 0-20% inefficiency;
+      valueAdjustment: 0.05 + Math.random() * 0.15, // 5-20% value boost;
     };
   }
 
   /**
-   * Apply enhancement to a prediction
+   * Apply enhancement to a prediction;
    */
   private applyEnhancement(
     prediction: any,
@@ -277,14 +267,13 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Process Ultra Accuracy enhancement for a single prediction
+   * Process Ultra Accuracy enhancement for a single prediction;
    */
   private async processUltraAccuracyEnhancement(
     prediction: any,
   ): Promise<UltraAccuracyEnhancement> {
-    const startTime = Date.now();
 
-    // Simulate ultra-accuracy processing
+    // Simulate ultra-accuracy processing;
     await new Promise((resolve) =>
       setTimeout(
         resolve,
@@ -292,13 +281,13 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
       ),
     );
 
-    const accuracyBoost = 0.08 + Math.random() * 0.07; // 8-15% boost
-    const confidenceAdjustment = 0.1 + Math.random() * 0.08; // 10-18% boost
-    const riskAdjustment = -0.15 + Math.random() * 0.1; // 5-15% risk reduction
+    const accuracyBoost = 0.08 + Math.random() * 0.07; // 8-15% boost;
+    const confidenceAdjustment = 0.1 + Math.random() * 0.08; // 10-18% boost;
+    const riskAdjustment = -0.15 + Math.random() * 0.1; // 5-15% risk reduction;
 
     return {
       originalPrediction: prediction,
-      enhancedPrediction: null, // Will be set when applied
+      enhancedPrediction: null, // Will be set when applied;
       accuracyBoost,
       confidenceAdjustment,
       riskAdjustment,
@@ -307,10 +296,9 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Enhance recommendation text with Ultra Accuracy insights
+   * Enhance recommendation text with Ultra Accuracy insights;
    */
   private enhanceRecommendation(originalRec: string, analysis: any): string {
-    const insights = [];
 
     if (analysis.playerFormScore > 0.9) {
       insights.push("exceptional current form");
@@ -323,7 +311,7 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
     }
 
     const enhancementText =
-      insights.length > 0
+      insights.length > 0;
         ? ` Ultra-Accuracy AI identifies: ${insights.join(", ")}.`
         : " Enhanced with 99%+ accuracy AI analysis.";
 
@@ -331,11 +319,11 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Adjust risk level based on Ultra Accuracy analysis
+   * Adjust risk level based on Ultra Accuracy analysis;
    */
   private adjustRiskLevel(originalRisk: string, riskReduction: number): string {
     if (riskReduction > 0.25) {
-      // Significant risk reduction
+      // Significant risk reduction;
       if (originalRisk === "high") return "medium";
       if (originalRisk === "medium") return "low";
     }
@@ -343,23 +331,23 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Generate cache key for prediction
+   * Generate cache key for prediction;
    */
   private generateCacheKey(prediction: any): string {
     return `${prediction.id || prediction.event}_${prediction.sport}_${Date.now()}`;
   }
 
   /**
-   * Start background processing loop
+   * Start background processing loop;
    */
   private startBackgroundProcessing(): void {
     setInterval(() => {
       if (!this.isProcessing && this.processingQueue.length > 0) {
         this.processQueue();
       }
-    }, 1000); // Check every second
+    }, 1000); // Check every second;
 
-    // Clean cache every 5 minutes
+    // Clean cache every 5 minutes;
     setInterval(
       () => {
         this.cleanCache();
@@ -369,7 +357,7 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Process queued predictions
+   * Process queued predictions;
    */
   private async processQueue(): Promise<void> {
     if (this.isProcessing) return;
@@ -378,27 +366,27 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
 
     try {
       while (this.processingQueue.length > 0) {
-        const item = this.processingQueue.shift();
+
         if (item) {
           await this.processUltraAccuracyEnhancement(item);
         }
       }
     } catch (error) {
-      console.error("[Ultra Accuracy] Background processing error:", error);
+      // console statement removed
     } finally {
       this.isProcessing = false;
     }
   }
 
   /**
-   * Clean old cache entries
+   * Clean old cache entries;
    */
   private cleanCache(): void {
-    const now = Date.now();
-    const maxAge = 10 * 60 * 1000; // 10 minutes
+
+    const maxAge = 10 * 60 * 1000; // 10 minutes;
 
     for (const [key, enhancement] of this.enhancementCache.entries()) {
-      const enhancementAge = now - new Date(enhancement.timestamp).getTime();
+
       if (enhancementAge > maxAge) {
         this.enhancementCache.delete(key);
       }
@@ -406,7 +394,7 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Update configuration
+   * Update configuration;
    */
   public updateConfig(newConfig: Partial<UltraAccuracyConfig>): void {
     this.config = { ...this.config, ...newConfig };
@@ -414,14 +402,14 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
   }
 
   /**
-   * Get current configuration
+   * Get current configuration;
    */
   public getConfig(): UltraAccuracyConfig {
     return { ...this.config };
   }
 
   /**
-   * Get enhancement statistics
+   * Get enhancement statistics;
    */
   public getStats(): any {
     return {
@@ -429,12 +417,12 @@ class UltraAccuracyBackgroundService extends SimpleEventEmitter {
       queueSize: this.processingQueue.length,
       isProcessing: this.isProcessing,
       config: this.config,
-      uptime: Date.now() / 1000, // Browser-compatible uptime simulation
+      uptime: Date.now() / 1000, // Browser-compatible uptime simulation;
     };
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const ultraAccuracyBackgroundService =
   UltraAccuracyBackgroundService.getInstance();
 export default ultraAccuracyBackgroundService;

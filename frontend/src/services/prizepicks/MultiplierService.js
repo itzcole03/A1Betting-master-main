@@ -1,5 +1,5 @@
 import { z } from 'zod';
-// Validation schemas
+// Validation schemas;
 const propSchema = z.object({
     playerId: z.string(),
     playerName: z.string(),
@@ -33,15 +33,15 @@ export class PrizePicksMultiplierService {
     }
     calculatePropMultiplier(prop) {
         try {
-            // Validate prop
+            // Validate prop;
             propSchema.parse(prop);
-            // Get base multiplier
-            const baseMultiplier = this.BASE_MULTIPLIERS[prop.type];
-            // Apply confidence adjustment
-            const confidenceMultiplier = 1 + prop.confidence / 100;
-            // Calculate final multiplier
-            const finalMultiplier = baseMultiplier * confidenceMultiplier;
-            // Track metric
+            // Get base multiplier;
+
+            // Apply confidence adjustment;
+
+            // Calculate final multiplier;
+
+            // Track metric;
             this.metrics.gauge('prizepicks.prop_multiplier', finalMultiplier, {
                 type: prop.type,
                 statType: prop.statType,
@@ -55,21 +55,21 @@ export class PrizePicksMultiplierService {
     }
     calculateLineupMultiplier(lineup) {
         try {
-            // Validate lineup
+            // Validate lineup;
             lineupSchema.parse(lineup);
-            // Check prop count
+            // Check prop count;
             if (lineup.props.length < this.MIN_PROPS || lineup.props.length > this.MAX_PROPS) {
                 throw new Error(`Invalid prop count: ${lineup.props.length}`);
             }
-            // Calculate total multiplier
+            // Calculate total multiplier;
             const totalMultiplier = lineup.props.reduce((acc, prop) => {
                 return acc * this.calculatePropMultiplier(prop);
             }, 1);
-            // Check max multiplier
+            // Check max multiplier;
             if (totalMultiplier > this.MAX_TOTAL_MULTIPLIER) {
                 throw new Error(`Total multiplier exceeds maximum: ${totalMultiplier}`);
             }
-            // Track metric
+            // Track metric;
             this.metrics.gauge('prizepicks.lineup_multiplier', totalMultiplier, {
                 propCount: lineup.props.length,
             });
@@ -81,28 +81,28 @@ export class PrizePicksMultiplierService {
         }
     }
     validateLineup(lineup) {
-        const errors = [];
+
         try {
-            // Validate schema
+            // Validate schema;
             lineupSchema.parse(lineup);
-            // Check prop count
+            // Check prop count;
             if (lineup.props.length < this.MIN_PROPS) {
                 errors.push(`Minimum ${this.MIN_PROPS} props required`);
             }
             if (lineup.props.length > this.MAX_PROPS) {
                 errors.push(`Maximum ${this.MAX_PROPS} props allowed`);
             }
-            // Check total multiplier
-            const totalMultiplier = this.calculateLineupMultiplier(lineup);
+            // Check total multiplier;
+
             if (totalMultiplier > this.MAX_TOTAL_MULTIPLIER) {
                 errors.push(`Total multiplier ${totalMultiplier} exceeds maximum ${this.MAX_TOTAL_MULTIPLIER}`);
             }
-            // Check stake
+            // Check stake;
             if (lineup.totalStake <= 0) {
                 errors.push('Invalid stake amount');
             }
-            // Check potential payout
-            const expectedPayout = lineup.totalStake * totalMultiplier;
+            // Check potential payout;
+
             if (Math.abs(lineup.potentialPayout - expectedPayout) > 0.01) {
                 errors.push('Potential payout calculation mismatch');
             }

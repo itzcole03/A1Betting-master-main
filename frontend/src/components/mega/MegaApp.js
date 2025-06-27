@@ -7,7 +7,7 @@ import { MegaSidebar, MegaHeader, MegaAppShell } from "./MegaLayout";
 import { MegaCard } from "./MegaUI";
 import { MegaArbitrageEngine, MegaPredictionEngine, MegaRevolutionaryInterface, } from "./MegaFeatures";
 import { Brain, BarChart3, DollarSign, Shield, Activity, Home, Wifi, WifiOff, Trophy, UserCog, } from "lucide-react";
-// MASTER MEGA APP - Consolidates all functionality with cyber theme
+// MASTER MEGA APP - Consolidates all functionality with cyber theme;
 const MegaApp = () => {
     const [currentPage, setCurrentPage] = useState("dashboard");
     const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -24,7 +24,7 @@ const MegaApp = () => {
         winRate: 89.4,
         totalProfit: 47230,
     });
-    // Auto-update system metrics
+    // Auto-update system metrics;
     useEffect(() => {
         const interval = setInterval(() => {
             setConnectedSources(Math.floor(Math.random() * 5) + 10);
@@ -96,29 +96,29 @@ const MegaApp = () => {
         }
         return { icon: Wifi, text: "Connected", color: CYBER_COLORS.primary };
     };
-    const status = getConnectionStatus();
-    const StatusIcon = status.icon;
+
+
     const renderCurrentPage = () => {
-        const currentItem = navigationItems.find((item) => item.id === currentPage);
-        // Handle components with direct implementations
+
+        // Handle components with direct implementations;
         if (currentItem?.component) {
-            const Component = currentItem.component;
+
             return (_jsx(Component, { connectedSources: connectedSources, dataQuality: dataQuality, userBalance: user.balance, userStats: user, autoMode: true, autoRefresh: true, showAdvanced: true }));
         }
-        // Use MegaFeatures for enhanced functionality
+        // Use MegaFeatures for enhanced functionality;
         switch (currentPage) {
             case "arbitrage":
-                return (_jsx("div", { style: { padding: "24px" }, children: _jsx(MegaArbitrageEngine, { isScanning: true, onToggleScanning: (scanning) => console.log("Arbitrage scanning:", scanning) }) }));
+                return (_jsx("div", { style: { padding: "24px" }, children: _jsx(MegaArbitrageEngine, { isScanning: true, onToggleScanning: (scanning) => // console statement removed }) }));
             case "predictions":
                 return (_jsx("div", { style: { padding: "24px" }, children: _jsx(MegaPredictionEngine, { isRealTime: true }) }));
             case "real-time":
                 return (_jsx("div", { style: { padding: "24px" }, children: _jsx(MegaRevolutionaryInterface, {}) }));
             default:
-                // Fallback for any remaining placeholder pages
+                // Fallback for any remaining placeholder pages;
                 if (currentItem && !currentItem.component) {
                     return (_jsx("div", { style: { padding: "24px" }, children: _jsxs(MegaCard, { variant: "glass", padding: "lg", style: { textAlign: "center" }, children: [_jsx("div", { style: { marginBottom: "16px" }, children: _jsx(Activity, { size: 48, color: CYBER_COLORS.primary }) }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px", fontSize: "24px" }, children: currentItem.label }), _jsxs(CyberText, { variant: "body", color: "muted", children: [currentItem.description, " - Coming Soon"] })] }) }));
                 }
-                // Default to dashboard
+                // Default to dashboard;
                 return (_jsx(MegaDashboard, { connectedSources: connectedSources, dataQuality: dataQuality, userStats: user }));
         }
     };
@@ -127,6 +127,6 @@ const MegaApp = () => {
                 dataQuality,
                 isOnline: true,
             } }), header: _jsx(MegaHeader, { title: navigationItems.find((item) => item.id === currentPage)?.label ||
-                "Dashboard", subtitle: navigationItems.find((item) => item.id === currentPage)?.description, notifications: notifications, onNotificationsClick: () => console.log("Notifications clicked"), user: user, darkMode: darkMode, onDarkModeToggle: () => setDarkMode(!darkMode) }), children: renderCurrentPage() }));
+                "Dashboard", subtitle: navigationItems.find((item) => item.id === currentPage)?.description, notifications: notifications, onNotificationsClick: () => // console statement removed, user: user, darkMode: darkMode, onDarkModeToggle: () => setDarkMode(!darkMode) }), children: renderCurrentPage() }));
 };
 export default MegaApp;

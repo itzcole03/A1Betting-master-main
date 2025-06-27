@@ -1,2 +1,2 @@
-// Ported from Newfolder: Harmony Search optimization model
+// Ported from Newfolder: Harmony Search optimization model;
 // ...existing code from Newfolder's HarmonySearch.ts...

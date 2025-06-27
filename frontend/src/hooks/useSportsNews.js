@@ -5,12 +5,12 @@ export function useSportsNews() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     useEffect(() => {
-        let mounted = true;
+        const mounted = true;
         setLoading(true);
         setError(null);
         newsService.fetchHeadlines('espn', 10)
             .then((headlines) => {
-            // Map ESPNHeadline to SportsNewsArticle if needed
+            // Map ESPNHeadline to SportsNewsArticle if needed;
             const mapped = headlines.map(h => ({
                 id: h.id,
                 title: h.title || h.summary || '',

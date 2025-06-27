@@ -1,19 +1,19 @@
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import axios from 'axios.ts'
+import { useNavigate } from 'react-router-dom.ts'
+import { useState, useEffect } from 'react.ts'
 
 
 interface User {
-  id: string
-  username: string
-  email: string
+  id: string;
+  username: string;
+  email: string;
 }
 
 interface AuthState {
-  user: User | null
-  token: string | null
-  loading: boolean
-  error: string | null
+  user: User | null;
+  token: string | null;
+  loading: boolean;
+  error: string | null;
 }
 
 export const useAuth = () => {
@@ -29,7 +29,7 @@ export const useAuth = () => {
   useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
-      // Verify token and get user data
+      // Verify token and get user data;
       axios.get('/api/v1/auth/me', {
         headers: { Authorization: `Bearer ${token}` }
       })
@@ -37,7 +37,7 @@ export const useAuth = () => {
         setState(prev => ({
           ...prev,
           user: response.data,
-          loading: false
+          loading: false;
         }))
       })
       .catch(() => {
@@ -46,7 +46,7 @@ export const useAuth = () => {
           ...prev,
           token: null,
           user: null,
-          loading: false
+          loading: false;
         }))
       })
     } else {
@@ -58,16 +58,16 @@ export const useAuth = () => {
     try {
       const response = await axios.post('/api/v1/auth/token', {
         username,
-        password
+        password;
       })
       
-      const { token, user } = response.data
+      const { token, user } = response.data;
       localStorage.setItem('token', token)
       setState(prev => ({
         ...prev,
         token,
         user,
-        error: null
+        error: null;
       }))
       
       navigate('/')
@@ -85,7 +85,7 @@ export const useAuth = () => {
       user: null,
       token: null,
       loading: false,
-      error: null
+      error: null;
     })
     navigate('/login')
   }
@@ -93,6 +93,6 @@ export const useAuth = () => {
   return {
     ...state,
     login,
-    logout
+    logout;
   }
 }

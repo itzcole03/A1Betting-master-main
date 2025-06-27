@@ -1,13 +1,13 @@
-import axios from 'axios';
-import type { InjuryData } from '../types/core.js';
-import { UnifiedConfig } from '../unified/UnifiedConfig.js';
-import { EventBus } from '../unified/EventBus.js';
-// import type { InjuryRecord } from '../types/core'; // Unused import removed
+import axios from 'axios.ts';
+import type { InjuryData } from '@/types/core.js';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.js';
+import { EventBus } from '@/unified/EventBus.js';
+// import type { InjuryRecord } from '@/types/core.ts'; // Unused import removed;
 
 /**
  * Strictly typed injury data interface.
  */
-// Modernized InjuryData interface for strict typing
+// Modernized InjuryData interface for strict typing;
 export interface InjuryData {
   playerId: string;
   playerName: string;
@@ -31,7 +31,7 @@ class InjuryService {
   private readonly eventBus: EventBus;
 
   constructor() {
-    const configManager = UnifiedConfig.getInstance();
+
     this.config = configManager.get('injury');
     this.client = axios.create({
       baseURL: this.config.baseUrl,
@@ -50,8 +50,8 @@ class InjuryService {
     if (!this.config.enableFeatureFlag) {
       throw new Error('Injury feature is disabled by config.');
     }
-    const response = await this.client.get<InjuryData[]>('/injuries', { params });
-    const injuries = response.data;
+
+
     this.eventBus.emit('injury:update', {
           injuries,
       timestamp: Date.now(),
@@ -60,9 +60,9 @@ class InjuryService {
   }
 
   /**
-   * Type guard for InjuryData
-   * @param data unknown
-   * @returns data is InjuryData
+   * Type guard for InjuryData;
+   * @param data unknown;
+   * @returns data is InjuryData;
    */
   private isInjuryData(data: unknown): data is InjuryData {
     return (
@@ -76,7 +76,7 @@ class InjuryService {
       'injuryType' in data &&
       'description' in data &&
       'expectedReturn' in data &&
-      'updated' in data
+      'updated' in data;
     );
   }
 }

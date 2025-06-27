@@ -1,4 +1,4 @@
-import { BettingOpportunity, BetRecord } from '../types/core';
+import { BettingOpportunity, BetRecord } from '@/types/core.ts';
 export interface RiskConfig {
     maxExposure: number;
     maxExposurePerBet: number;

@@ -1,7 +1,7 @@
-// EnhancedPropCard.test.tsx
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { EnhancedPropCard } from './EnhancedPropCard';
+// EnhancedPropCard.test.tsx;
+import React from 'react.ts';
+import { render, screen, fireEvent } from '@testing-library/react.ts';
+import { EnhancedPropCard } from './EnhancedPropCard.ts';
 
 describe('EnhancedPropCard', () => {
   const baseProps = {
@@ -19,20 +19,20 @@ describe('EnhancedPropCard', () => {
   };
 
   it('renders player name and stat type', () => {
-    render(<EnhancedPropCard {...baseProps} />);
+    render(<EnhancedPropCard {...baseProps} / key={499195}>);
     expect(screen.getByText(/LeBron James/)).toBeInTheDocument();
     expect(screen.getByText(/Points/)).toBeInTheDocument();
   });
 
   it('calls onSelect when over/under is clicked', () => {
-    const onSelect = jest.fn();
-    render(<EnhancedPropCard {...baseProps} onSelect={onSelect} />);
+
+    render(<EnhancedPropCard {...baseProps} onSelect={onSelect} / key={541275}>);
     fireEvent.click(screen.getByText(/Over/i));
     expect(onSelect).toHaveBeenCalled();
   });
 
   it('matches snapshot', () => {
-    const { asFragment } = render(<EnhancedPropCard {...baseProps} />);
+    const { asFragment } = render(<EnhancedPropCard {...baseProps} / key={499195}>);
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -4,14 +4,14 @@ export const useKeyboardShortcut = (shortcuts, options = {}) => {
     const handleKeyDown = useCallback((event) => {
         if (!enabled)
             return;
-        const shortcutArray = Array.isArray(shortcuts) ? shortcuts : [shortcuts];
+
         for (const shortcut of shortcutArray) {
             const { key, ctrlKey = false, altKey = false, shiftKey = false, metaKey = false, preventDefault = true, handler } = shortcut;
-            const matchesKey = event.key.toLowerCase() === key.toLowerCase();
-            const matchesCtrl = event.ctrlKey === ctrlKey;
-            const matchesAlt = event.altKey === altKey;
-            const matchesShift = event.shiftKey === shiftKey;
-            const matchesMeta = event.metaKey === metaKey;
+
+
+
+
+
             if (matchesKey && matchesCtrl && matchesAlt && matchesShift && matchesMeta) {
                 if (preventDefault) {
                     event.preventDefault();
@@ -26,7 +26,7 @@ export const useKeyboardShortcut = (shortcuts, options = {}) => {
         return () => document.removeEventListener('keydown', handleKeyDown);
     }, [handleKeyDown]);
 };
-// Predefined shortcuts for common actions
+// Predefined shortcuts for common actions;
 export const useEscapeKey = (handler, enabled = true) => {
     useKeyboardShortcut({ key: 'Escape', handler }, { enabled });
 };

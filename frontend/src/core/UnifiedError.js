@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/react';
 /**
- * UnifiedError
+ * UnifiedError;
  *
  * Centralized error handling, logging, and reporting utilities.
  * Can extend base Error class for custom error types specific to the application.
@@ -19,7 +19,7 @@ export var ErrorSeverity;
     ErrorSeverity["Error"] = "error";
     ErrorSeverity["Critical"] = "critical";
 })(ErrorSeverity || (ErrorSeverity = {}));
-// Base custom error class
+// Base custom error class;
 export class AppError extends Error {
     constructor(message, context, originalError) {
         super(message);
@@ -29,7 +29,7 @@ export class AppError extends Error {
         Object.setPrototypeOf(this, new.target.prototype);
     }
 }
-// Specific error types
+// Specific error types;
 export class APIError extends Error {
     constructor(message, status, response) {
         super(message);
@@ -51,7 +51,7 @@ export class SystemError extends AppError {
         this.name = 'SystemError';
     }
 }
-// Centralized error handler function
+// Centralized error handler function;
 export const handleAppError = (error, customContext) => {
     let appError;
     if (error instanceof AppError) {
@@ -63,13 +63,8 @@ export const handleAppError = (error, customContext) => {
     else {
         appError = new AppError('An unknown error occurred', customContext, error);
     }
-    // 1. Log to console
-    console.error(`[UnifiedError] ${appError.name}: ${appError.message}`, {
-        severity: ErrorSeverity.Error,
-        context: { ...appError.context, ...customContext },
-        stack: appError.stack,
-        originalError: appError.originalError,
-    });
+    // 1. Log to console;
+    // console statement removed
     // 2. Report to Sentry (or other error tracking service)
     Sentry.captureException(appError.originalError || appError, {
         extra: {

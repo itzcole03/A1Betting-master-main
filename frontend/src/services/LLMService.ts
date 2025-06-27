@@ -1,9 +1,9 @@
 /**
- * LLM Service for PropOllama Chat Interface
- * Provides real AI-powered sports betting analysis and insights
+ * LLM Service for PropOllama Chat Interface;
+ * Provides real AI-powered sports betting analysis and insights;
  */
 
-import { api } from "./api";
+import { api } from './api.ts';
 
 export interface LLMRequest {
   prompt: string;
@@ -24,12 +24,12 @@ class LLMService {
 
   async chat(request: LLMRequest): Promise<LLMResponse> {
     try {
-      // For now, we'll generate contextual responses based on the prompt
-      // In production, this would integrate with a real LLM API
-      const response = await this.generateContextualResponse(request.prompt);
+      // For now, we'll generate contextual responses based on the prompt;
+      // In production, this would integrate with a real LLM API;
+
       return response;
     } catch (error) {
-      console.error("LLM Service Error:", error);
+      // console statement removed
       return {
         content:
           "I'm having trouble processing your request right now. Please try again in a moment.",
@@ -48,12 +48,12 @@ class LLMService {
     context?: any,
   ): Promise<LLMResponse> {
     try {
-      // Process the chat message with context
-      console.log("Processing chat message:", message);
-      const response = await this.generateContextualResponse(message);
+      // Process the chat message with context;
+      // console statement removed
+
       return response;
     } catch (error) {
-      console.error("Chat processing error:", error);
+      // console statement removed
       return {
         content:
           "I'm having trouble processing your message right now. Please try again in a moment.",
@@ -70,9 +70,8 @@ class LLMService {
   private async generateContextualResponse(
     prompt: string,
   ): Promise<LLMResponse> {
-    const lowerPrompt = prompt.toLowerCase();
 
-    // Analyze what the user is asking about
+    // Analyze what the user is asking about;
     if (lowerPrompt.includes("prop") || lowerPrompt.includes("player")) {
       return await this.generatePlayerPropAnalysis();
     } else if (lowerPrompt.includes("value") || lowerPrompt.includes("bet")) {
@@ -101,12 +100,11 @@ class LLMService {
 
   private async generatePlayerPropAnalysis(): Promise<LLMResponse> {
     try {
-      // Get real value bets from API
-      const valueBets = await api.getValueBets();
+      // Get real value bets from API;
 
       if (valueBets && valueBets.length > 0) {
-        const topProps = valueBets.slice(0, 3);
-        const analysis = topProps
+
+        const analysis = topProps;
           .map((bet) => {
             return (
               `🎯 **${bet.event}**: ${bet.outcome} @ ${bet.odds}\n` +
@@ -181,8 +179,7 @@ class LLMService {
 
   private async generateLineMovementAnalysis(): Promise<LLMResponse> {
     try {
-      const healthData = await api.getHealthStatus();
-      const currentTime = new Date().toLocaleTimeString();
+
 
       return {
         content:
@@ -233,8 +230,8 @@ class LLMService {
 
   private async generateHighConfidencePicks(): Promise<LLMResponse> {
     try {
-      const accuracyMetrics = await api.getAccuracyMetrics();
-      const currentAccuracy = accuracyMetrics?.overall_accuracy
+
+      const currentAccuracy = accuracyMetrics?.overall_accuracy;
         ? (accuracyMetrics.overall_accuracy * 100).toFixed(1)
         : "95+";
 
@@ -264,8 +261,7 @@ class LLMService {
 
   private async generateLiveAlerts(): Promise<LLMResponse> {
     try {
-      const healthData = await api.getHealthStatus();
-      const activeGames = healthData?.metrics?.active_predictions || 0;
+
 
       return {
         content:

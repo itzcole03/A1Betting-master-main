@@ -1,10 +1,10 @@
 /**
- * Offline Detection Test Utility
- * Tests and validates that offline detection is working correctly across all components
+ * Offline Detection Test Utility;
+ * Tests and validates that offline detection is working correctly across all components;
  */
 
-import { api } from "../services/api";
-import { BackendStarter } from "./backendStarter";
+import { api } from '@/services/api.ts';
+import { BackendStarter } from './backendStarter.ts';
 
 export interface OfflineTestResult {
   testName: string;
@@ -15,21 +15,21 @@ export interface OfflineTestResult {
 
 export class OfflineDetectionTest {
   /**
-   * Run comprehensive offline detection tests
+   * Run comprehensive offline detection tests;
    */
   static async runTests(): Promise<OfflineTestResult[]> {
     const results: OfflineTestResult[] = [];
 
-    // Test 1: Backend Status Check
+    // Test 1: Backend Status Check;
     results.push(await this.testBackendStatusCheck());
 
-    // Test 2: API Default Values Detection
+    // Test 2: API Default Values Detection;
     results.push(await this.testDefaultValuesDetection());
 
-    // Test 3: Error Handling
+    // Test 3: Error Handling;
     results.push(await this.testErrorHandling());
 
-    // Test 4: Component Integration
+    // Test 4: Component Integration;
     results.push(await this.testComponentIntegration());
 
     return results;
@@ -37,7 +37,6 @@ export class OfflineDetectionTest {
 
   private static async testBackendStatusCheck(): Promise<OfflineTestResult> {
     try {
-      const status = await BackendStarter.checkBackendStatus();
 
       const passed =
         typeof status.isOnline === "boolean" &&
@@ -46,7 +45,7 @@ export class OfflineDetectionTest {
       return {
         testName: "Backend Status Check",
         passed,
-        details: passed
+        details: passed;
           ? `Status: ${status.isOnline ? "Online" : "Offline"}, Timestamp: ${status.timestamp}`
           : "Failed to get valid status response",
         timestamp: new Date(),
@@ -54,7 +53,7 @@ export class OfflineDetectionTest {
     } catch (error) {
       return {
         testName: "Backend Status Check",
-        passed: true, // Errors are expected when offline
+        passed: true, // Errors are expected when offline;
         details: `Expected error when offline: ${error instanceof Error ? error.message : "Unknown"}`,
         timestamp: new Date(),
       };
@@ -63,7 +62,7 @@ export class OfflineDetectionTest {
 
   private static async testDefaultValuesDetection(): Promise<OfflineTestResult> {
     try {
-      // Test multiple API endpoints
+      // Test multiple API endpoints;
       const [health, accuracy, userProfile] = await Promise.all([
         api.getHealthStatus(),
         api.getAccuracyMetrics(),
@@ -71,11 +70,8 @@ export class OfflineDetectionTest {
       ]);
 
       // Check if we're getting default values (indicating offline)
-      const healthOffline = health.status === "offline";
-      const accuracyDefault = accuracy.overall_accuracy === 0;
-      const userDefault = userProfile.name === "User";
 
-      const offline = healthOffline || accuracyDefault || userDefault;
+
 
       return {
         testName: "Default Values Detection",
@@ -95,7 +91,7 @@ export class OfflineDetectionTest {
 
   private static async testErrorHandling(): Promise<OfflineTestResult> {
     try {
-      // Test that our API methods don't throw errors even when backend is offline
+      // Test that our API methods don't throw errors even when backend is offline;
       const results = await Promise.allSettled([
         api.getValueBets(),
         api.getArbitrageOpportunities(),
@@ -103,7 +99,7 @@ export class OfflineDetectionTest {
         api.getEnsembleDiversityMetrics(),
       ]);
 
-      // All promises should resolve (not reject) due to our error handling
+      // All promises should resolve (not reject) due to our error handling;
       const allResolved = results.every(
         (result) => result.status === "fulfilled",
       );
@@ -111,7 +107,7 @@ export class OfflineDetectionTest {
       return {
         testName: "Error Handling",
         passed: allResolved,
-        details: allResolved
+        details: allResolved;
           ? "All API calls returned gracefully with default values"
           : `Some API calls rejected: ${results.filter((r) => r.status === "rejected").length}`,
         timestamp: new Date(),
@@ -128,11 +124,10 @@ export class OfflineDetectionTest {
 
   private static async testComponentIntegration(): Promise<OfflineTestResult> {
     try {
-      // Test that offline detection logic works as expected
-      const health = await api.getHealthStatus();
-      const accuracy = await api.getAccuracyMetrics();
+      // Test that offline detection logic works as expected;
 
-      // Simulate the offline detection logic from components
+
+      // Simulate the offline detection logic from components;
       const isOffline =
         health.status === "offline" || accuracy.overall_accuracy === 0;
 
@@ -153,17 +148,16 @@ export class OfflineDetectionTest {
   }
 
   /**
-   * Generate a test report
+   * Generate a test report;
    */
   static generateReport(results: OfflineTestResult[]): string {
-    const passed = results.filter((r) => r.passed).length;
-    const total = results.length;
 
-    let report = `🧪 Offline Detection Test Report\n`;
+
+    const report = `🧪 Offline Detection Test Report\n`;
     report += `📊 Results: ${passed}/${total} tests passed\n\n`;
 
     results.forEach((result) => {
-      const status = result.passed ? "✅" : "❌";
+
       report += `${status} ${result.testName}\n`;
       report += `   ${result.details}\n`;
       report += `   Time: ${result.timestamp.toLocaleTimeString()}\n\n`;
@@ -179,13 +173,13 @@ export class OfflineDetectionTest {
   }
 
   /**
-   * Run tests and log results to console
+   * Run tests and log results to console;
    */
   static async runAndLog(): Promise<void> {
-    console.log("🚀 Running offline detection tests...");
-    const results = await this.runTests();
-    const report = this.generateReport(results);
-    console.log(report);
+    // console statement removed
+
+
+    // console statement removed
   }
 }
 

@@ -1,12 +1,11 @@
-import React, {
-  useState,
+import React, { useState,
   useEffect,
   useCallback,
   useMemo,
   useRef,
-} from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { motion, AnimatePresence } from "framer-motion";
+ } from 'react.ts';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 import {
   Brain,
   Activity,
@@ -34,26 +33,26 @@ import {
   Clock,
   Send,
   Layers,
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { api } from "../../services/api";
-import OfflineIndicator from "../ui/OfflineIndicator";
-import toast from "react-hot-toast";
+} from 'lucide-react.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.ts';
+import { Button } from '@/components/ui/button.ts';
+import { Badge } from '@/components/ui/badge.ts';
+import { Progress } from '@/components/ui/progress.ts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.ts';
+import { api } from '@/services/api.ts';
+import OfflineIndicator from '@/ui/OfflineIndicator.ts';
+import toast from 'react-hot-toast.ts';
 
-// Import brain monitoring modules
+// Import brain monitoring modules;
 import {
   intelligenceOrchestrator,
   type EnsemblePrediction,
   type AutomationSettings,
-} from "../../services/IntelligenceOrchestrator";
-import { PropOllama } from "../user-friendly/PropOllama";
+} from '@/services/IntelligenceOrchestrator.ts';
+import { PropOllama } from '@/user-friendly/PropOllama.ts';
 
 // ============================================================================
-// BRAIN MONITORING INTERFACES
+// BRAIN MONITORING INTERFACES;
 // ============================================================================
 
 interface BrainMetrics {
@@ -85,8 +84,8 @@ interface BrainMonitoringState {
 interface AutomatedBrainConfig {
   enableContinuousOptimization: boolean;
   enableAutoPredictionDelivery: boolean;
-  optimizationInterval: number; // milliseconds
-  deliveryThreshold: number; // confidence threshold
+  optimizationInterval: number; // milliseconds;
+  deliveryThreshold: number; // confidence threshold;
   userInterfaceEndpoint: string;
   brainHealthThreshold: number;
   autoHealingEnabled: boolean;
@@ -100,13 +99,13 @@ interface OptimizedPrediction extends EnsemblePrediction {
 }
 
 // ============================================================================
-// BRAIN MONITORING HUB COMPONENT
+// BRAIN MONITORING HUB COMPONENT;
 // ============================================================================
 
 export const BrainMonitoringHub: React.FC = () => {
   // ========== BRAIN STATE MANAGEMENT ==========
   const [selectedView, setSelectedView] = useState("brain-monitor");
-  const [brainState, setBrainState] = useState<BrainMonitoringState>({
+  const [brainState, setBrainState] = useState<BrainMonitoringState key={904920}>({
     isMonitoring: true,
     lastOptimization: Date.now(),
     predictionsDelivered: 0,
@@ -117,11 +116,11 @@ export const BrainMonitoringHub: React.FC = () => {
     optimizationCount: 0,
   });
 
-  const [brainConfig, setBrainConfig] = useState<AutomatedBrainConfig>({
+  const [brainConfig, setBrainConfig] = useState<AutomatedBrainConfig key={364001}>({
     enableContinuousOptimization: true,
     enableAutoPredictionDelivery: true,
-    optimizationInterval: 30000, // 30 seconds
-    deliveryThreshold: 0.85, // 85% confidence
+    optimizationInterval: 30000, // 30 seconds;
+    deliveryThreshold: 0.85, // 85% confidence;
     userInterfaceEndpoint: "/api/predictions/deliver",
     brainHealthThreshold: 0.9,
     autoHealingEnabled: true,
@@ -132,9 +131,7 @@ export const BrainMonitoringHub: React.FC = () => {
   >([]);
   const [showPropOllama, setShowPropOllama] = useState(false);
 
-  const queryClient = useQueryClient();
-  const brainOptimizationRef = useRef<NodeJS.Timeout | null>(null);
-  const deliverySystemRef = useRef<NodeJS.Timeout | null>(null);
+
 
   // ========== BRAIN METRICS MONITORING ==========
   const { data: brainMetrics, isLoading: metricsLoading } = useQuery({
@@ -150,23 +147,23 @@ export const BrainMonitoringHub: React.FC = () => {
       return {
         overallHealth:
           health.status === "fulfilled"
-            ? health.value?.overallHealth * 100 || 95
+            ? health.value?.overallHealth * 100 || 95;
             : 95,
         ensembleAccuracy:
           accuracy.status === "fulfilled"
-            ? accuracy.value?.overall_accuracy * 100 || 96.8
+            ? accuracy.value?.overall_accuracy * 100 || 96.8;
             : 96.8,
         predictionLatency:
           accuracy.status === "fulfilled"
-            ? accuracy.value?.prediction_latency || 125
+            ? accuracy.value?.prediction_latency || 125;
             : 125,
         activeModels:
           models.status === "fulfilled"
-            ? models.value?.active_models || 15
+            ? models.value?.active_models || 15;
             : 15,
         dataQuality:
           health.status === "fulfilled"
-            ? health.value?.dataQuality * 100 || 97.2
+            ? health.value?.dataQuality * 100 || 97.2;
             : 97.2,
         systemLoad:
           system.status === "fulfilled" ? system.value?.cpu_usage || 58 : 58,
@@ -189,17 +186,17 @@ export const BrainMonitoringHub: React.FC = () => {
         await intelligenceOrchestrator.initialize();
         toast.success("🧠 Brain monitoring system initialized");
 
-        // Start continuous brain optimization
+        // Start continuous brain optimization;
         if (brainConfig.enableContinuousOptimization) {
           startBrainOptimization();
         }
 
-        // Start automated prediction delivery
+        // Start automated prediction delivery;
         if (brainConfig.enableAutoPredictionDelivery) {
           startAutomatedDelivery();
         }
       } catch (error) {
-        console.error("Brain initialization failed:", error);
+        // console statement removed
         toast.error(
           "⚠️ Brain monitoring system error - engaging fallback mode",
         );
@@ -226,11 +223,11 @@ export const BrainMonitoringHub: React.FC = () => {
 
     brainOptimizationRef.current = setInterval(async () => {
       try {
-        // Generate and optimize ensemble predictions
+        // Generate and optimize ensemble predictions;
         const rawPredictions =
           await intelligenceOrchestrator.generateEnsemblePredictions();
 
-        // Apply brain optimization algorithms
+        // Apply brain optimization algorithms;
         const optimized = rawPredictions.map((prediction) => ({
           ...prediction,
           optimizationScore: calculateOptimizationScore(prediction),
@@ -240,12 +237,11 @@ export const BrainMonitoringHub: React.FC = () => {
           brainConfidence: enhanceBrainConfidence(prediction),
         }));
 
-        // Filter for delivery-ready predictions
-        const deliveryReady = optimized.filter((p) => p.deliveryReady);
+        // Filter for delivery-ready predictions;
 
         setOptimizedPredictions(optimized);
 
-        // Update brain state
+        // Update brain state;
         setBrainState((prev) => ({
           ...prev,
           lastOptimization: Date.now(),
@@ -253,16 +249,14 @@ export const BrainMonitoringHub: React.FC = () => {
           brainEfficiency: calculateBrainEfficiency(optimized),
         }));
 
-        // Auto-healing check
+        // Auto-healing check;
         if (brainConfig.autoHealingEnabled && brainMetrics) {
           performAutoHealing(brainMetrics);
         }
 
-        console.log(
-          `🧠 Brain optimization completed: ${deliveryReady.length} predictions ready for delivery`,
-        );
+        // console statement removed
       } catch (error) {
-        console.error("Brain optimization failed:", error);
+        // console statement removed
         toast.error("🧠 Brain optimization error - retrying...");
       }
     }, brainConfig.optimizationInterval);
@@ -281,7 +275,7 @@ export const BrainMonitoringHub: React.FC = () => {
         );
 
         if (deliveryReadyPredictions.length > 0) {
-          // Deliver to user interface
+          // Deliver to user interface;
           await deliverPredictionsToUserInterface(deliveryReadyPredictions);
 
           setBrainState((prev) => ({
@@ -291,24 +285,22 @@ export const BrainMonitoringHub: React.FC = () => {
             lastDeliveryTime: Date.now(),
           }));
 
-          console.log(
-            `📤 Delivered ${deliveryReadyPredictions.length} optimized predictions to user interface`,
-          );
+          // console statement removed
         }
       } catch (error) {
-        console.error("Automated delivery failed:", error);
+        // console statement removed
         setBrainState((prev) => ({ ...prev, userInterfaceConnected: false }));
       }
-    }, 10000); // Check every 10 seconds
+    }, 10000); // Check every 10 seconds;
   }, [optimizedPredictions, brainConfig]);
 
   // ========== BRAIN OPTIMIZATION ALGORITHMS ==========
   const calculateOptimizationScore = (
     prediction: EnsemblePrediction,
   ): number => {
-    const confidenceWeight = prediction.confidence * 0.4;
-    const diversityWeight = prediction.metadata.diversityScore * 100 * 0.3;
-    const consensusWeight = prediction.metadata.consensusLevel * 100 * 0.2;
+
+
+
     const modelCountWeight =
       (prediction.contributingModels.length / 10) * 100 * 0.1;
 
@@ -319,10 +311,10 @@ export const BrainMonitoringHub: React.FC = () => {
   };
 
   const enhanceBrainConfidence = (prediction: EnsemblePrediction): number => {
-    // Apply brain-specific confidence enhancement
-    const baseConfidence = prediction.confidence;
-    const diversityBonus = prediction.metadata.diversityScore * 5;
-    const consensusBonus = prediction.metadata.consensusLevel * 3;
+    // Apply brain-specific confidence enhancement;
+
+
+
     const modelCountBonus = Math.min(
       10,
       prediction.contributingModels.length * 2,
@@ -342,12 +334,12 @@ export const BrainMonitoringHub: React.FC = () => {
       confidence: Math.round(prediction.confidence),
       expectedValue: `+${(prediction.expectedValue * 100).toFixed(1)}%`,
       recommendation:
-        prediction.confidence > 90
+        prediction.confidence > 90;
           ? "Strong Buy"
-          : prediction.confidence > 80
+          : prediction.confidence > 80;
             ? "Buy"
             : "Consider",
-      reasoning: prediction.reasoning.slice(0, 3), // Top 3 reasons
+      reasoning: prediction.reasoning.slice(0, 3), // Top 3 reasons;
       timestamp: prediction.timestamp,
       brainOptimized: true,
     };
@@ -368,7 +360,6 @@ export const BrainMonitoringHub: React.FC = () => {
   };
 
   const performAutoHealing = (metrics: BrainMetrics) => {
-    const issues = [];
 
     if (metrics.overallHealth < brainConfig.brainHealthThreshold * 100) {
       issues.push("Low brain health detected");
@@ -381,10 +372,10 @@ export const BrainMonitoringHub: React.FC = () => {
     }
 
     if (issues.length > 0) {
-      console.log("🔧 Auto-healing triggered:", issues);
+      // console statement removed
       toast.warning(`🔧 Brain auto-healing: ${issues.length} issues detected`);
 
-      // Trigger system optimization
+      // Trigger system optimization;
       queryClient.invalidateQueries();
     }
   };
@@ -393,7 +384,7 @@ export const BrainMonitoringHub: React.FC = () => {
     predictions: OptimizedPrediction[],
   ) => {
     try {
-      // Send optimized predictions to the simple user interface
+      // Send optimized predictions to the simple user interface;
       const response = await fetch(brainConfig.userInterfaceEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -411,184 +402,184 @@ export const BrainMonitoringHub: React.FC = () => {
         throw new Error("Delivery failed");
       }
     } catch (error) {
-      console.error("User interface delivery failed:", error);
+      // console statement removed
       setBrainState((prev) => ({ ...prev, userInterfaceConnected: false }));
     }
   };
 
   // ========== BRAIN MONITORING VIEW ==========
   const BrainMonitorView = () => (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Brain Status Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-green-500/30 relative overflow-hidden">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-green-300">Brain Health</p>
-                <p className="text-2xl font-bold text-green-400">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" key={653876}>
+        <Card className="bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-green-500/30 relative overflow-hidden" key={634535}>
+          <CardContent className="p-4" key={706827}>
+            <div className="flex items-center justify-between" key={96335}>
+              <div key={241917}>
+                <p className="text-sm text-green-300" key={840313}>Brain Health</p>
+                <p className="text-2xl font-bold text-green-400" key={176412}>
                   {brainMetrics?.overallHealth.toFixed(1) || "95.0"}%
                 </p>
               </div>
-              <Brain className="w-8 h-8 text-green-400" />
+              <Brain className="w-8 h-8 text-green-400" / key={965546}>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-transparent animate-pulse" / key={481559}>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border-blue-500/30 relative overflow-hidden">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-blue-300">Brain Efficiency</p>
-                <p className="text-2xl font-bold text-blue-400">
+        <Card className="bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border-blue-500/30 relative overflow-hidden" key={208593}>
+          <CardContent className="p-4" key={706827}>
+            <div className="flex items-center justify-between" key={96335}>
+              <div key={241917}>
+                <p className="text-sm text-blue-300" key={440128}>Brain Efficiency</p>
+                <p className="text-2xl font-bold text-blue-400" key={641115}>
                   {brainState.brainEfficiency.toFixed(1)}%
                 </p>
               </div>
-              <Cpu className="w-8 h-8 text-blue-400" />
+              <Cpu className="w-8 h-8 text-blue-400" / key={378311}>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-transparent animate-pulse" / key={865430}>
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-to-br from-purple-500/20 to-violet-500/20 border-purple-500/30 relative overflow-hidden">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-purple-300">Predictions Delivered</p>
-                <p className="text-2xl font-bold text-purple-400">
+        <Card className="bg-gradient-to-br from-purple-500/20 to-violet-500/20 border-purple-500/30 relative overflow-hidden" key={346664}>
+          <CardContent className="p-4" key={706827}>
+            <div className="flex items-center justify-between" key={96335}>
+              <div key={241917}>
+                <p className="text-sm text-purple-300" key={4522}>Predictions Delivered</p>
+                <p className="text-2xl font-bold text-purple-400" key={603662}>
                   {brainState.predictionsDelivered}
                 </p>
               </div>
-              <Send className="w-8 h-8 text-purple-400" />
+              <Send className="w-8 h-8 text-purple-400" / key={907587}>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-transparent animate-pulse" />
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-transparent animate-pulse" / key={145727}>
           </CardContent>
         </Card>
 
-        <Card
+        <Card;
           className={`relative overflow-hidden transition-all duration-1000 ${
-            brainState.userInterfaceConnected
+            brainState.userInterfaceConnected;
               ? "bg-gradient-to-br from-green-500/20 to-emerald-500/20 border-green-500/30"
               : "bg-gradient-to-br from-red-500/20 to-orange-500/20 border-red-500/30"
           }`}
-        >
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-orange-300">User Interface</p>
-                <p className="text-2xl font-bold text-orange-400">
+         key={972719}>
+          <CardContent className="p-4" key={706827}>
+            <div className="flex items-center justify-between" key={96335}>
+              <div key={241917}>
+                <p className="text-sm text-orange-300" key={451103}>User Interface</p>
+                <p className="text-2xl font-bold text-orange-400" key={726442}>
                   {brainState.userInterfaceConnected ? "Connected" : "Offline"}
                 </p>
               </div>
               {brainState.userInterfaceConnected ? (
-                <CheckCircle className="w-8 h-8 text-green-400" />
+                <CheckCircle className="w-8 h-8 text-green-400" / key={762010}>
               ) : (
-                <AlertCircle className="w-8 h-8 text-red-400" />
+                <AlertCircle className="w-8 h-8 text-red-400" / key={783925}>
               )}
             </div>
-            <div
+            <div;
               className={`absolute inset-0 bg-gradient-to-r ${
-                brainState.userInterfaceConnected
+                brainState.userInterfaceConnected;
                   ? "from-green-500/10"
                   : "from-red-500/10"
               } to-transparent animate-pulse`}
-            />
+            / key={674043}>
           </CardContent>
         </Card>
       </div>
 
       {/* Brain Optimization Status */}
-      <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-yellow-400" />
-            Automated Brain Optimization System
-            <Badge variant="outline" className="ml-auto">
+      <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50" key={256225}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center gap-2" key={587456}>
+            <Sparkles className="w-5 h-5 text-yellow-400" / key={831674}>
+            Automated Brain Optimization System;
+            <Badge variant="outline" className="ml-auto" key={956515}>
               {brainState.isMonitoring ? "Active" : "Inactive"}
             </Badge>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <CardContent key={452065}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6" key={852085}>
             {/* Optimization Metrics */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-cyan-400">
-                Optimization Metrics
+            <div className="space-y-4" key={160407}>
+              <h3 className="font-semibold text-cyan-400" key={386763}>
+                Optimization Metrics;
               </h3>
-              <div className="space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-slate-300">
-                    Neural Sync Level
+              <div className="space-y-3" key={186520}>
+                <div className="flex justify-between items-center" key={795957}>
+                  <span className="text-sm text-slate-300" key={92452}>
+                    Neural Sync Level;
                   </span>
-                  <span className="text-cyan-400 font-semibold">
+                  <span className="text-cyan-400 font-semibold" key={350846}>
                     {brainMetrics?.neuralSyncLevel.toFixed(1) || "96.7"}%
                   </span>
                 </div>
-                <Progress
+                <Progress;
                   value={brainMetrics?.neuralSyncLevel || 96.7}
                   className="h-2"
-                />
+                / key={646489}>
 
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-slate-300">
-                    Brain Coherence
+                <div className="flex justify-between items-center" key={795957}>
+                  <span className="text-sm text-slate-300" key={92452}>
+                    Brain Coherence;
                   </span>
-                  <span className="text-green-400 font-semibold">
+                  <span className="text-green-400 font-semibold" key={426839}>
                     {brainMetrics?.brainCoherence.toFixed(1) || "98.1"}%
                   </span>
                 </div>
-                <Progress
+                <Progress;
                   value={brainMetrics?.brainCoherence || 98.1}
                   className="h-2"
-                />
+                / key={724869}>
 
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-slate-300">
-                    Prediction Optimization
+                <div className="flex justify-between items-center" key={795957}>
+                  <span className="text-sm text-slate-300" key={92452}>
+                    Prediction Optimization;
                   </span>
-                  <span className="text-purple-400 font-semibold">
+                  <span className="text-purple-400 font-semibold" key={11277}>
                     {brainMetrics?.predictionOptimization.toFixed(1) || "94.3"}%
                   </span>
                 </div>
-                <Progress
+                <Progress;
                   value={brainMetrics?.predictionOptimization || 94.3}
                   className="h-2"
-                />
+                / key={560520}>
               </div>
             </div>
 
             {/* Delivery System Status */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-green-400">
-                Automated Delivery
+            <div className="space-y-4" key={160407}>
+              <h3 className="font-semibold text-green-400" key={151310}>
+                Automated Delivery;
               </h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-300">
-                    Delivery Status
+              <div className="space-y-3" key={186520}>
+                <div className="flex items-center justify-between" key={96335}>
+                  <span className="text-sm text-slate-300" key={92452}>
+                    Delivery Status;
                   </span>
-                  <Badge
+                  <Badge;
                     variant={
-                      brainState.automatedDeliveryActive
+                      brainState.automatedDeliveryActive;
                         ? "default"
                         : "secondary"
                     }
-                  >
+                   key={793846}>
                     {brainState.automatedDeliveryActive ? "Active" : "Inactive"}
                   </Badge>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-slate-300">Last Delivery</span>
-                  <span className="text-blue-400 text-sm">
+                <div className="flex justify-between items-center" key={795957}>
+                  <span className="text-sm text-slate-300" key={92452}>Last Delivery</span>
+                  <span className="text-blue-400 text-sm" key={503478}>
                     {new Date(brainState.lastDeliveryTime).toLocaleTimeString()}
                   </span>
                 </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-slate-300">
-                    Ready Predictions
+                <div className="flex justify-between items-center" key={795957}>
+                  <span className="text-sm text-slate-300" key={92452}>
+                    Ready Predictions;
                   </span>
-                  <span className="text-yellow-400 font-semibold">
+                  <span className="text-yellow-400 font-semibold" key={633761}>
                     {optimizedPredictions.filter((p) => p.deliveryReady).length}
                   </span>
                 </div>
@@ -596,11 +587,11 @@ export const BrainMonitoringHub: React.FC = () => {
             </div>
 
             {/* Brain Controls */}
-            <div className="space-y-4">
-              <h3 className="font-semibold text-orange-400">Brain Controls</h3>
-              <div className="space-y-2">
-                <Button
-                  onClick={() => {
+            <div className="space-y-4" key={160407}>
+              <h3 className="font-semibold text-orange-400" key={458568}>Brain Controls</h3>
+              <div className="space-y-2" key={725977}>
+                <Button;
+                  onClick={() = key={870359}> {
                     if (brainState.isMonitoring) {
                       if (brainOptimizationRef.current)
                         clearInterval(brainOptimizationRef.current);
@@ -627,27 +618,27 @@ export const BrainMonitoringHub: React.FC = () => {
                 >
                   {brainState.isMonitoring ? (
                     <>
-                      <Pause className="w-4 h-4 mr-2" />
-                      Pause Brain
+                      <Pause className="w-4 h-4 mr-2" / key={772621}>
+                      Pause Brain;
                     </>
                   ) : (
                     <>
-                      <Play className="w-4 h-4 mr-2" />
-                      Resume Brain
+                      <Play className="w-4 h-4 mr-2" / key={998132}>
+                      Resume Brain;
                     </>
                   )}
                 </Button>
 
-                <Button
+                <Button;
                   variant="outline"
-                  onClick={() => {
+                  onClick={() = key={388638}> {
                     queryClient.invalidateQueries();
                     toast.success("🔄 Brain systems refreshed");
                   }}
                   className="w-full"
                 >
-                  <RefreshCw className="w-4 h-4 mr-2" />
-                  Refresh Brain
+                  <RefreshCw className="w-4 h-4 mr-2" / key={480811}>
+                  Refresh Brain;
                 </Button>
               </div>
             </div>
@@ -656,75 +647,75 @@ export const BrainMonitoringHub: React.FC = () => {
       </Card>
 
       {/* Optimized Predictions for User Interface */}
-      <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Target className="w-5 h-5 text-green-400" />
-            Brain-Optimized Predictions Ready for User Interface
-            <Badge variant="outline" className="ml-auto">
-              {optimizedPredictions.filter((p) => p.deliveryReady).length} Ready
+      <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50" key={256225}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center gap-2" key={587456}>
+            <Target className="w-5 h-5 text-green-400" / key={640178}>
+            Brain-Optimized Predictions Ready for User Interface;
+            <Badge variant="outline" className="ml-auto" key={956515}>
+              {optimizedPredictions.filter((p) => p.deliveryReady).length} Ready;
             </Badge>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {optimizedPredictions
+        <CardContent key={452065}>
+          <div className="space-y-4" key={160407}>
+            {optimizedPredictions;
               .filter((p) => p.deliveryReady)
               .slice(0, 3)
               .map((prediction, index) => (
-                <motion.div
+                <motion.div;
                   key={prediction.id}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   className="p-4 bg-gradient-to-r from-green-500/10 to-blue-500/10 rounded-lg border border-green-500/30"
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div>
-                      <h4 className="font-semibold text-white">
+                 key={636784}>
+                  <div className="flex items-start justify-between mb-3" key={310936}>
+                    <div key={241917}>
+                      <h4 className="font-semibold text-white" key={684150}>
                         {prediction.prediction}
                       </h4>
-                      <p className="text-sm text-slate-300">
-                        {prediction.sport} • Brain Optimized
+                      <p className="text-sm text-slate-300" key={678258}>
+                        {prediction.sport} • Brain Optimized;
                       </p>
                     </div>
-                    <div className="text-right">
-                      <div className="text-lg font-bold text-green-400">
+                    <div className="text-right" key={144468}>
+                      <div className="text-lg font-bold text-green-400" key={499793}>
                         {prediction.brainConfidence.toFixed(1)}%
                       </div>
-                      <div className="text-sm text-slate-400">
-                        Brain Confidence
+                      <div className="text-sm text-slate-400" key={858171}>
+                        Brain Confidence;
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4 mb-3">
-                    <div>
-                      <span className="text-sm text-slate-400">
+                  <div className="grid grid-cols-3 gap-4 mb-3" key={119163}>
+                    <div key={241917}>
+                      <span className="text-sm text-slate-400" key={42043}>
                         Optimization Score:
                       </span>
-                      <span className="ml-2 text-blue-400 font-semibold">
+                      <span className="ml-2 text-blue-400 font-semibold" key={944094}>
                         {prediction.optimizationScore.toFixed(1)}
                       </span>
                     </div>
-                    <div>
-                      <span className="text-sm text-slate-400">
+                    <div key={241917}>
+                      <span className="text-sm text-slate-400" key={42043}>
                         Expected Value:
                       </span>
-                      <span className="ml-2 text-green-400 font-semibold">
+                      <span className="ml-2 text-green-400 font-semibold" key={72695}>
                         +{(prediction.expectedValue * 100).toFixed(1)}%
                       </span>
                     </div>
-                    <div>
-                      <span className="text-sm text-slate-400">Status:</span>
-                      <Badge variant="default" className="ml-2 bg-green-600">
-                        Ready for UI
+                    <div key={241917}>
+                      <span className="text-sm text-slate-400" key={42043}>Status:</span>
+                      <Badge variant="default" className="ml-2 bg-green-600" key={429468}>
+                        Ready for UI;
                       </Badge>
                     </div>
                   </div>
 
-                  <div className="text-xs text-slate-500">
-                    Formatted for user interface • Auto-delivery active
+                  <div className="text-xs text-slate-500" key={313591}>
+                    Formatted for user interface • Auto-delivery active;
                   </div>
                 </motion.div>
               ))}
@@ -736,97 +727,97 @@ export const BrainMonitoringHub: React.FC = () => {
 
   // ========== MAIN RENDER ==========
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-6" key={339386}>
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-green-400 rounded-xl blur-xl opacity-60" />
-              <div className="relative w-12 h-12 bg-gradient-to-br from-purple-400 to-green-400 rounded-xl flex items-center justify-center">
-                <Brain className="w-7 h-7 text-white" />
+      <div className="mb-8" key={286587}>
+        <div className="flex items-center justify-between" key={96335}>
+          <div className="flex items-center gap-4" key={782146}>
+            <div className="relative" key={579431}>
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-400 to-green-400 rounded-xl blur-xl opacity-60" / key={259526}>
+              <div className="relative w-12 h-12 bg-gradient-to-br from-purple-400 to-green-400 rounded-xl flex items-center justify-center" key={658661}>
+                <Brain className="w-7 h-7 text-white" / key={530652}>
               </div>
             </div>
-            <div>
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-green-400 bg-clip-text text-transparent">
-                Brain Monitoring Hub
+            <div key={241917}>
+              <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-400 to-green-400 bg-clip-text text-transparent" key={404077}>
+                Brain Monitoring Hub;
               </h1>
-              <p className="text-slate-400">
-                Automated AI Brain • Continuous Optimization • Auto-Delivery to
-                User Interface
+              <p className="text-slate-400" key={760800}>
+                Automated AI Brain • Continuous Optimization • Auto-Delivery to;
+                User Interface;
               </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Button
+          <div className="flex items-center gap-3" key={443099}>
+            <Button;
               variant="outline"
-              onClick={() => setShowPropOllama(true)}
+              onClick={() = key={945762}> setShowPropOllama(true)}
               className="gap-2"
             >
-              <Eye className="w-4 h-4" />
-              Brain Analysis
+              <Eye className="w-4 h-4" / key={800383}>
+              Brain Analysis;
             </Button>
-            <Badge variant="outline" className="px-3 py-1">
-              {brainState.brainEfficiency.toFixed(1)}% Brain Efficiency
+            <Badge variant="outline" className="px-3 py-1" key={133259}>
+              {brainState.brainEfficiency.toFixed(1)}% Brain Efficiency;
             </Badge>
           </div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <Tabs
+      <Tabs;
         value={selectedView}
         onValueChange={setSelectedView}
         className="space-y-6"
-      >
-        <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 backdrop-blur-sm">
-          <TabsTrigger
+       key={852043}>
+        <TabsList className="grid w-full grid-cols-3 bg-slate-800/50 backdrop-blur-sm" key={178023}>
+          <TabsTrigger;
             value="brain-monitor"
             className="flex items-center gap-2"
-          >
-            <Brain className="w-4 h-4" />
-            Brain Monitor
+           key={846367}>
+            <Brain className="w-4 h-4" / key={370311}>
+            Brain Monitor;
           </TabsTrigger>
-          <TabsTrigger value="optimization" className="flex items-center gap-2">
-            <Zap className="w-4 h-4" />
-            Optimization
+          <TabsTrigger value="optimization" className="flex items-center gap-2" key={265532}>
+            <Zap className="w-4 h-4" / key={768470}>
+            Optimization;
           </TabsTrigger>
-          <TabsTrigger value="delivery" className="flex items-center gap-2">
-            <Send className="w-4 h-4" />
-            Auto-Delivery
+          <TabsTrigger value="delivery" className="flex items-center gap-2" key={940243}>
+            <Send className="w-4 h-4" / key={751862}>
+            Auto-Delivery;
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="brain-monitor">
-          <BrainMonitorView />
+        <TabsContent value="brain-monitor" key={794047}>
+          <BrainMonitorView / key={48481}>
         </TabsContent>
 
-        <TabsContent value="optimization">
-          <div className="space-y-6">
-            <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50">
-              <CardHeader>
-                <CardTitle>Brain Optimization Configuration</CardTitle>
+        <TabsContent value="optimization" key={627511}>
+          <div className="space-y-6" key={501869}>
+            <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50" key={256225}>
+              <CardHeader key={236869}>
+                <CardTitle key={202979}>Brain Optimization Configuration</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
-                    <div>
-                      <h4 className="font-medium text-white">
-                        Continuous Optimization
+              <CardContent key={452065}>
+                <div className="space-y-4" key={160407}>
+                  <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg" key={836234}>
+                    <div key={241917}>
+                      <h4 className="font-medium text-white" key={935545}>
+                        Continuous Optimization;
                       </h4>
-                      <p className="text-sm text-slate-400">
-                        Automatically optimize prediction models
+                      <p className="text-sm text-slate-400" key={48368}>
+                        Automatically optimize prediction models;
                       </p>
                     </div>
-                    <Button
+                    <Button;
                       variant={
-                        brainConfig.enableContinuousOptimization
+                        brainConfig.enableContinuousOptimization;
                           ? "default"
                           : "outline"
                       }
                       size="sm"
-                      onClick={() =>
+                      onClick={() = key={284983}>
                         setBrainConfig((prev) => ({
                           ...prev,
                           enableContinuousOptimization:
@@ -834,27 +825,27 @@ export const BrainMonitoringHub: React.FC = () => {
                         }))
                       }
                     >
-                      {brainConfig.enableContinuousOptimization
+                      {brainConfig.enableContinuousOptimization;
                         ? "Enabled"
                         : "Disabled"}
                     </Button>
                   </div>
 
-                  <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
-                    <div>
-                      <h4 className="font-medium text-white">
-                        Auto-Healing Brain
+                  <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg" key={836234}>
+                    <div key={241917}>
+                      <h4 className="font-medium text-white" key={935545}>
+                        Auto-Healing Brain;
                       </h4>
-                      <p className="text-sm text-slate-400">
-                        Automatically fix performance issues
+                      <p className="text-sm text-slate-400" key={48368}>
+                        Automatically fix performance issues;
                       </p>
                     </div>
-                    <Button
+                    <Button;
                       variant={
                         brainConfig.autoHealingEnabled ? "default" : "outline"
                       }
                       size="sm"
-                      onClick={() =>
+                      onClick={() = key={453800}>
                         setBrainConfig((prev) => ({
                           ...prev,
                           autoHealingEnabled: !prev.autoHealingEnabled,
@@ -865,16 +856,16 @@ export const BrainMonitoringHub: React.FC = () => {
                     </Button>
                   </div>
 
-                  <div className="p-4 bg-slate-700/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2">
-                      Optimization Interval
+                  <div className="p-4 bg-slate-700/30 rounded-lg" key={139199}>
+                    <h4 className="font-medium text-white mb-2" key={553079}>
+                      Optimization Interval;
                     </h4>
-                    <p className="text-sm text-slate-400 mb-3">
+                    <p className="text-sm text-slate-400 mb-3" key={3150}>
                       How often the brain optimizes (seconds)
                     </p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-blue-400 font-semibold">
-                        {brainConfig.optimizationInterval / 1000}s
+                    <div className="flex items-center gap-2" key={100294}>
+                      <span className="text-blue-400 font-semibold" key={278924}>
+                        {brainConfig.optimizationInterval / 1000}s;
                       </span>
                     </div>
                   </div>
@@ -884,31 +875,31 @@ export const BrainMonitoringHub: React.FC = () => {
           </div>
         </TabsContent>
 
-        <TabsContent value="delivery">
-          <div className="space-y-6">
-            <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50">
-              <CardHeader>
-                <CardTitle>Automated Delivery to User Interface</CardTitle>
+        <TabsContent value="delivery" key={337604}>
+          <div className="space-y-6" key={501869}>
+            <Card className="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50" key={256225}>
+              <CardHeader key={236869}>
+                <CardTitle key={202979}>Automated Delivery to User Interface</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg">
-                    <div>
-                      <h4 className="font-medium text-white">
-                        Auto-Delivery System
+              <CardContent key={452065}>
+                <div className="space-y-4" key={160407}>
+                  <div className="flex items-center justify-between p-4 bg-slate-700/30 rounded-lg" key={836234}>
+                    <div key={241917}>
+                      <h4 className="font-medium text-white" key={935545}>
+                        Auto-Delivery System;
                       </h4>
-                      <p className="text-sm text-slate-400">
-                        Automatically deliver optimized predictions
+                      <p className="text-sm text-slate-400" key={48368}>
+                        Automatically deliver optimized predictions;
                       </p>
                     </div>
-                    <Button
+                    <Button;
                       variant={
-                        brainConfig.enableAutoPredictionDelivery
+                        brainConfig.enableAutoPredictionDelivery;
                           ? "default"
                           : "outline"
                       }
                       size="sm"
-                      onClick={() =>
+                      onClick={() = key={381867}>
                         setBrainConfig((prev) => ({
                           ...prev,
                           enableAutoPredictionDelivery:
@@ -916,34 +907,34 @@ export const BrainMonitoringHub: React.FC = () => {
                         }))
                       }
                     >
-                      {brainConfig.enableAutoPredictionDelivery
+                      {brainConfig.enableAutoPredictionDelivery;
                         ? "Enabled"
                         : "Disabled"}
                     </Button>
                   </div>
 
-                  <div className="p-4 bg-slate-700/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2">
-                      Delivery Threshold
+                  <div className="p-4 bg-slate-700/30 rounded-lg" key={139199}>
+                    <h4 className="font-medium text-white mb-2" key={553079}>
+                      Delivery Threshold;
                     </h4>
-                    <p className="text-sm text-slate-400 mb-3">
-                      Minimum confidence for delivery
+                    <p className="text-sm text-slate-400 mb-3" key={3150}>
+                      Minimum confidence for delivery;
                     </p>
-                    <div className="flex items-center gap-2">
-                      <span className="text-green-400 font-semibold">
+                    <div className="flex items-center gap-2" key={100294}>
+                      <span className="text-green-400 font-semibold" key={426839}>
                         {(brainConfig.deliveryThreshold * 100).toFixed(0)}%
                       </span>
                     </div>
                   </div>
 
-                  <div className="p-4 bg-slate-700/30 rounded-lg">
-                    <h4 className="font-medium text-white mb-2">
-                      User Interface Endpoint
+                  <div className="p-4 bg-slate-700/30 rounded-lg" key={139199}>
+                    <h4 className="font-medium text-white mb-2" key={553079}>
+                      User Interface Endpoint;
                     </h4>
-                    <p className="text-sm text-slate-400 mb-3">
-                      Where optimized predictions are sent
+                    <p className="text-sm text-slate-400 mb-3" key={3150}>
+                      Where optimized predictions are sent;
                     </p>
-                    <code className="text-xs text-cyan-400 bg-slate-800 px-2 py-1 rounded">
+                    <code className="text-xs text-cyan-400 bg-slate-800 px-2 py-1 rounded" key={942568}>
                       {brainConfig.userInterfaceEndpoint}
                     </code>
                   </div>
@@ -955,36 +946,36 @@ export const BrainMonitoringHub: React.FC = () => {
       </Tabs>
 
       {/* PropOllama Modal */}
-      <AnimatePresence>
+      <AnimatePresence key={359944}>
         {showPropOllama && (
-          <motion.div
+          <motion.div;
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-            onClick={() => setShowPropOllama(false)}
+            onClick={() = key={742373}> setShowPropOllama(false)}
           >
-            <motion.div
+            <motion.div;
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               className="w-full max-w-4xl max-h-[80vh] bg-slate-900 rounded-xl border border-slate-700 overflow-hidden"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) = key={848434}> e.stopPropagation()}
             >
-              <div className="p-4 border-b border-slate-700 flex items-center justify-between">
-                <h3 className="text-lg font-semibold">
-                  Brain Analysis - PropOllama
+              <div className="p-4 border-b border-slate-700 flex items-center justify-between" key={32779}>
+                <h3 className="text-lg font-semibold" key={304656}>
+                  Brain Analysis - PropOllama;
                 </h3>
-                <Button
+                <Button;
                   variant="ghost"
                   size="sm"
-                  onClick={() => setShowPropOllama(false)}
+                  onClick={() = key={111456}> setShowPropOllama(false)}
                 >
                   ×
                 </Button>
               </div>
-              <div className="h-96 overflow-hidden">
-                <PropOllama />
+              <div className="h-96 overflow-hidden" key={62837}>
+                <PropOllama / key={693292}>
               </div>
             </motion.div>
           </motion.div>

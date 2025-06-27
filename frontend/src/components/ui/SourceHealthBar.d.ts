@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface SourceHealthBarProps {
     sources: {
         name: string;

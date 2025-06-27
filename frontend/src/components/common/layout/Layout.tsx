@@ -1,20 +1,20 @@
-import React from 'react';
-import Navbar from './Navbar'
-import Sidebar from './Sidebar'
-import { Box, Container } from '@mui/material'
-import { ReactNode } from 'react'
+import React from 'react.ts';
+import Navbar from './Navbar.ts'
+import Sidebar from './Sidebar.ts'
+import { Box, Container } from '@mui/material.ts'
+import { ReactNode } from 'react.ts'
 
 
 interface LayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <Box sx={{ display: 'flex' }}>
-      <Navbar />
-      <Sidebar />
-      <Box
+    <Box sx={{ display: 'flex' }} key={680838}>
+      <Navbar / key={593897}>
+      <Sidebar / key={403360}>
+      <Box;
         component="main"
         sx={{
           flexGrow: 1,
@@ -23,8 +23,8 @@ const Layout = ({ children }: LayoutProps) => {
           pt: 8,
           px: 3,
         }}
-      >
-        <Container maxWidth="lg">
+       key={666200}>
+        <Container maxWidth="lg" key={108807}>
           {children}
         </Container>
       </Box>
@@ -32,4 +32,4 @@ const Layout = ({ children }: LayoutProps) => {
   )
 }
 
-export default Layout
+export default Layout;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface SkeletonProps {
     variant?: 'text' | 'rectangular' | 'circular';
     width?: number | string;

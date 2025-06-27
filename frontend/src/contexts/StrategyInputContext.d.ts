@@ -1,5 +1,5 @@
-import React from 'react';
-import { Sport, PropType } from '@/types';
+import React from 'react.ts';
+import { Sport, PropType } from '@/types.ts';
 interface StrategyInput {
     stake: number;
     minConfidence: number;

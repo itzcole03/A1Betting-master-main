@@ -12,7 +12,7 @@ export const AuthProvider = ({ children }) => {
                 },
             });
             if (response.ok) {
-                const userData = await response.json();
+
                 setUser(userData);
             }
             else {
@@ -20,7 +20,7 @@ export const AuthProvider = ({ children }) => {
             }
         }
         catch (error) {
-            console.error('Token validation failed:', error);
+            // console statement removed
             localStorage.removeItem('auth_token');
         }
         finally {
@@ -28,7 +28,7 @@ export const AuthProvider = ({ children }) => {
         }
     }, []);
     useEffect(() => {
-        const token = localStorage.getItem('auth_token');
+
         if (token) {
             validateToken(token);
         }
@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
             setUser(userData);
         }
         catch (error) {
-            console.error('Login error:', error);
+            // console statement removed
             throw error;
         }
         finally {
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
             setUser(userData);
         }
         catch (error) {
-            console.error('Registration error:', error);
+            // console statement removed
             throw error;
         }
         finally {
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
         setUser(null);
     };
     const updateProfile = async (data) => {
-        const token = localStorage.getItem('auth_token');
+
         if (!token)
             throw new Error('Not authenticated');
         try {
@@ -102,11 +102,11 @@ export const AuthProvider = ({ children }) => {
             if (!response.ok) {
                 throw new Error('Profile update failed');
             }
-            const updatedUser = await response.json();
+
             setUser(updatedUser);
         }
         catch (error) {
-            console.error('Profile update error:', error);
+            // console statement removed
             throw error;
         }
     };
@@ -120,7 +120,7 @@ export const AuthProvider = ({ children }) => {
         }, children: children }));
 };
 export const useAuth = () => {
-    const context = useContext(AuthContext);
+
     if (context === undefined) {
         throw new Error('useAuth must be used within an AuthProvider');
     }

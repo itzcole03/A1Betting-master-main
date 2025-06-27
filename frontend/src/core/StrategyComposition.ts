@@ -1,7 +1,7 @@
-import { AnalysisResult } from './AnalysisFramework';
-import { EventBus } from '@/core/EventBus';
-import { IntegratedData } from './DataIntegrationHub';
-import { PerformanceMonitor } from './PerformanceMonitor';
+import { AnalysisResult } from './AnalysisFramework.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { IntegratedData } from './DataIntegrationHub.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
 
 export interface StrategyContext {
   timestamp: number;
@@ -64,7 +64,7 @@ export class StrategyRegistry {
       throw new Error(`Strategy with ID ${strategy.id} is already registered`);
     }
 
-    // Validate dependencies
+    // Validate dependencies;
     for (const depId of strategy.dependencies) {
       if (!this.strategies.has(depId)) {
         throw new Error(`Dependency ${depId} not found for strategy ${strategy.id}`);
@@ -86,9 +86,9 @@ export class StrategyRegistry {
   async evaluate<T, U>(
     strategyId: string,
     input: T,
-    context: StrategyContext
+    context: StrategyContext;
   ): Promise<StrategyResult<U>> {
-    const strategy = this.strategies.get(strategyId) as StrategyComponent<T, U>;
+
     if (!strategy) {
       throw new Error(`Strategy ${strategyId} not found`);
     }
@@ -107,11 +107,8 @@ export class StrategyRegistry {
         throw new Error(`Input validation failed for strategy ${strategy.id}`);
       }
 
-      const startTime = Date.now();
-      const result = await strategy.evaluate(input, context);
-      const duration = Date.now() - startTime;
 
-      const metrics = this.calculateMetrics(result);
+
       const strategyResult: StrategyResult<U> = {
         id: `${strategy.id}-${startTime}`,
         timestamp: startTime,
@@ -148,9 +145,9 @@ export class StrategyRegistry {
   async evaluateWithPipeline<T, U>(
     strategies: string[],
     input: T,
-    context: StrategyContext
+    context: StrategyContext;
   ): Promise<StrategyResult<U>> {
-    const sortedStrategies = this.sortStrategiesByDependencies(strategies);
+
     let currentInput: any = input;
     let lastResult: StrategyResult<any> | null = null;
 
@@ -169,24 +166,23 @@ export class StrategyRegistry {
   }
 
   private sortStrategiesByDependencies(strategyIds: string[]): string[] {
-    const graph = new Map<string, Set<string>>();
-    const visited = new Set<string>();
+
+
     const sorted: string[] = [];
 
-    // Build dependency graph
+    // Build dependency graph;
     for (const id of strategyIds) {
-      const strategy = this.strategies.get(id);
+
       if (!strategy) continue;
 
       graph.set(id, new Set(strategy.dependencies));
     }
 
-    // Topological sort
+    // Topological sort;
     const visit = (id: string) => {
       if (visited.has(id)) return;
       visited.add(id);
 
-      const deps = graph.get(id) || new Set();
       for (const dep of deps) {
         visit(dep);
       }
@@ -264,7 +260,7 @@ export class ComposableStrategy<T, U> implements StrategyComponent<T, U> {
     public readonly dependencies: string[],
     private readonly evaluator: (input: T, context: StrategyContext) => Promise<U>,
     private readonly validator?: (input: T) => Promise<boolean>,
-    private readonly handler?: (input: T) => boolean
+    private readonly handler?: (input: T) => boolean;
   ) {}
 
   async evaluate(input: T, context: StrategyContext): Promise<U> {
@@ -293,7 +289,7 @@ export class ComposableStrategy<T, U> implements StrategyComponent<T, U> {
       Math.max(this.priority, next.priority),
       [...this.dependencies, ...next.dependencies],
       async (input: T, context: StrategyContext) => {
-        const intermediate = await this.evaluate(input, context);
+
         return next.evaluate(intermediate, context);
       }
     );

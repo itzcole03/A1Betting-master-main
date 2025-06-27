@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 declare const ShapExplanation: React.FC<{
     eventId: string;
 }>;

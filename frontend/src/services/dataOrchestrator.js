@@ -7,43 +7,43 @@ import { PatternRecognitionService } from './analytics/PatternRecognitionService
 import { RiskAssessmentService } from './analytics/RiskAssessmentService.js';
 import { ModelPerformanceTracker } from './analytics/ModelPerformanceTracker.js';
 import { logLiveData } from './integrations/liveDataLogger.js';
-const rtu = new RealTimeUpdateService();
-const predictionService = UnifiedPredictionService.getInstance();
-const personalizationService = UserPersonalizationService.getInstance();
-// Listen for real-time game, odds, and sentiment updates
+
+
+
+// Listen for real-time game, odds, and sentiment updates;
 rtu.on('games', () => {
-    // Optionally update game state in a Zustand store or trigger prediction recalculation
+    // Optionally update game state in a Zustand store or trigger prediction recalculation;
     // ...
 });
 rtu.on('odds', (odds) => {
-    // For each odds update, trigger prediction recalculation and update store
+    // For each odds update, trigger prediction recalculation and update store;
     odds.forEach((oddsUpdate) => {
-        // Example: recalculate prediction
+        // Example: recalculate prediction;
         // predictionService.recalculatePredictionForOdds(oddsUpdate);
-        // Optionally update prediction store here if needed
+        // Optionally update prediction store here if needed;
         // (No setOpportunities in event-based prediction store)
     });
 });
 rtu.on('sentiment', () => {
-    // Optionally update personalization or analytics
+    // Optionally update personalization or analytics;
     // personalizationService.updateSentiment(sentiment);
 });
-// Add more listeners as needed for other data types
-// Listen for real-time prediction updates
+// Add more listeners as needed for other data types;
+// Listen for real-time prediction updates;
 predictionService.subscribeToPredictions(async (prediction) => {
     try {
-        // 1. SHAP Explainability
-        const shap = await ShapExplainerService.explainPrediction(prediction.metadata?.modelVersion || {}, prediction.metadata?.features || {});
-        // 2. Pattern Recognition
+        // 1. SHAP Explainability;
+
+        // 2. Pattern Recognition;
         const patterns = PatternRecognitionService.analyzeMarketPatterns([
-            prediction
+            prediction;
         ]);
-        // 3. Risk Assessment
-        const risk = RiskAssessmentService.assessRisk(prediction);
-        // 4. Model Performance Tracking
+        // 3. Risk Assessment;
+
+        // 4. Model Performance Tracking;
         ModelPerformanceTracker.logPrediction(prediction.metadata?.modelVersion || 'unknown', prediction);
-        const perf = ModelPerformanceTracker.getStats(prediction.metadata?.modelVersion || 'unknown');
-        // Compose analytics payload
+
+        // Compose analytics payload;
         const analytics = {
             shap,
             patterns,
@@ -58,7 +58,7 @@ predictionService.subscribeToPredictions(async (prediction) => {
             analytics,
             timestamp: new Date().toISOString(),
         });
-        // Update user personalization
+        // Update user personalization;
         personalizationService.emit('analytics', {
             predictionId: prediction.id,
             analytics,
@@ -69,5 +69,5 @@ predictionService.subscribeToPredictions(async (prediction) => {
         logLiveData(`Analytics pipeline error: ${err}`);
     }
 });
-// Fallback/error handling is built into RealTimeUpdateService
+// Fallback/error handling is built into RealTimeUpdateService;
 export default rtu;

@@ -1,6 +1,6 @@
 /**
- * Complete Frontend-Backend Integration Test
- * Tests all enhanced mathematical services end-to-end
+ * Complete Frontend-Backend Integration Test;
+ * Tests all enhanced mathematical services end-to-end;
  */
 declare const mockPredictionRequest: {
     event_id: string;

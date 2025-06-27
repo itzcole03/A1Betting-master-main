@@ -4,7 +4,7 @@ jest.mock('../../core/EventBus');
 describe('Cache Utility', () => {
     let cache;
     let mockEventBus;
-    const config = { ttl: 100, maxSize: 3 };
+
     beforeEach(() => {
         jest.clearAllMocks();
         mockEventBus = {
@@ -68,11 +68,11 @@ describe('Cache Utility', () => {
     });
     it('should track metrics correctly', () => {
         cache.set('a', 1);
-        cache.get('a'); // hit
-        cache.get('b'); // miss
+        cache.get('a'); // hit;
+        cache.get('b'); // miss;
         cache.delete('a');
         cache.clear();
-        // Skipping metrics test: CacheMetrics not implemented in class
+        // Skipping metrics test: CacheMetrics not implemented in class;
     });
     it('should not error on deleting non-existent keys', () => {
         expect(() => cache.delete('notfound')).not.toThrow();

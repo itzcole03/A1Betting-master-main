@@ -1,20 +1,20 @@
 /**
- * Enhanced Backend API Integration Service
- * Complete integration with enhanced mathematical backend services
+ * Enhanced Backend API Integration Service;
+ * Complete integration with enhanced mathematical backend services;
  */
 
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { UnifiedLogger } from "./UnifiedLogger";
-import { UnifiedCache } from "./UnifiedCache";
-import { UnifiedErrorService } from "./UnifiedErrorService";
+import axios, { AxiosInstance, AxiosResponse } from 'axios.ts';
+import { UnifiedLogger } from './UnifiedLogger.ts';
+import { UnifiedCache } from './UnifiedCache.ts';
+import { UnifiedErrorService } from './UnifiedErrorService.ts';
 
-// Enhanced prediction request/response types
+// Enhanced prediction request/response types;
 export interface EnhancedPredictionRequest {
   event_id: string;
   sport: string;
   features: Record<string, number>;
 
-  // Mathematical rigor settings
+  // Mathematical rigor settings;
   enable_neuromorphic: boolean;
   neuromorphic_timesteps: number;
   enable_mamba: boolean;
@@ -26,7 +26,7 @@ export interface EnhancedPredictionRequest {
   enable_riemannian: boolean;
   riemannian_manifold_dim: number;
 
-  // Advanced computation settings
+  // Advanced computation settings;
   use_gpu: boolean;
   numerical_precision: string;
   convergence_tolerance: number;
@@ -37,7 +37,7 @@ export interface EnhancedPredictionResponse {
   event_id: string;
   strategy_used: string;
 
-  // Core predictions with enhanced accuracy
+  // Core predictions with enhanced accuracy;
   base_prediction: number;
   neuromorphic_enhancement: number;
   mamba_temporal_refinement: number;
@@ -46,14 +46,14 @@ export interface EnhancedPredictionResponse {
   riemannian_projection: number;
   final_prediction: number;
 
-  // Mathematical rigor metrics
+  // Mathematical rigor metrics;
   neuromorphic_metrics: Record<string, any>;
   mamba_metrics: Record<string, any>;
   causal_metrics: Record<string, any>;
   topological_metrics: Record<string, any>;
   riemannian_metrics: Record<string, any>;
 
-  // Advanced mathematical properties
+  // Advanced mathematical properties;
   riemannian_curvature: number;
   persistent_betti_numbers: Record<string, number>;
   causal_graph_structure: Record<string, string[]>;
@@ -61,28 +61,28 @@ export interface EnhancedPredictionResponse {
   neuromorphic_spike_statistics: Record<string, number>;
   topological_persistence_barcode: number[][];
 
-  // Convergence and stability analysis
+  // Convergence and stability analysis;
   convergence_rate: number;
   stability_margin: number;
   lyapunov_exponent: number;
   mathematical_guarantees: Record<string, boolean>;
 
-  // Computational complexity analysis
+  // Computational complexity analysis;
   actual_complexity: Record<string, any>;
   runtime_analysis: Record<string, number>;
   memory_usage: Record<string, number>;
 
-  // Uncertainty quantification
+  // Uncertainty quantification;
   prediction_confidence: number;
   uncertainty_bounds: number[];
   confidence_intervals: Record<string, number[]>;
 
-  // Performance metrics
+  // Performance metrics;
   total_processing_time: number;
   component_processing_times: Record<string, number>;
   timestamp: string;
 
-  // Mathematical validation
+  // Mathematical validation;
   numerical_stability: Record<string, boolean>;
   convergence_diagnostics: Record<string, any>;
   theoretical_bounds_satisfied: boolean;
@@ -229,7 +229,7 @@ class EnhancedBackendApiService {
 
     this.client = axios.create({
       baseURL: this.baseURL,
-      timeout: 30000, // Increased for mathematical computations
+      timeout: 30000, // Increased for mathematical computations;
       headers: {
         "Content-Type": "application/json",
       },
@@ -246,7 +246,7 @@ class EnhancedBackendApiService {
   }
 
   private setupInterceptors(): void {
-    // Request interceptor
+    // Request interceptor;
     this.client.interceptors.request.use(
       (config) => {
         this.logger.info("Enhanced Backend API Request", {
@@ -262,7 +262,7 @@ class EnhancedBackendApiService {
       },
     );
 
-    // Response interceptor
+    // Response interceptor;
     this.client.interceptors.response.use(
       (response: AxiosResponse) => {
         this.logger.info("Enhanced Backend API Response", {
@@ -280,15 +280,14 @@ class EnhancedBackendApiService {
     );
   }
 
-  // Enhanced Revolutionary Prediction
+  // Enhanced Revolutionary Prediction;
   async getEnhancedRevolutionaryPrediction(
     request: EnhancedPredictionRequest,
   ): Promise<EnhancedPredictionResponse> {
-    const cacheKey = `enhanced_revolutionary:${request.event_id}:${JSON.stringify(request)}`;
 
     try {
-      // Check cache first
-      const cached = await this.cache.get(cacheKey);
+      // Check cache first;
+
       if (cached) {
         this.logger.info("Returning cached enhanced revolutionary prediction", {
           eventId: request.event_id,
@@ -300,8 +299,6 @@ class EnhancedBackendApiService {
         "/api/enhanced-revolutionary/predict/enhanced",
         request,
       );
-
-      const result = response.data;
 
       // Cache for 2 minutes (mathematical computations are expensive)
       await this.cache.set(cacheKey, result, 120);
@@ -326,7 +323,7 @@ class EnhancedBackendApiService {
     }
   }
 
-  // Enhanced Feature Engineering
+  // Enhanced Feature Engineering;
   async getEnhancedFeatureEngineering(
     request: FeatureEngineeringRequest,
   ): Promise<FeatureEngineeringResponse> {
@@ -354,7 +351,7 @@ class EnhancedBackendApiService {
     }
   }
 
-  // Enhanced Risk Assessment
+  // Enhanced Risk Assessment;
   async getEnhancedRiskAssessment(
     request: RiskAssessmentRequest,
   ): Promise<RiskAssessmentResponse> {
@@ -381,7 +378,7 @@ class EnhancedBackendApiService {
     }
   }
 
-  // Mathematical Analysis and Validation
+  // Mathematical Analysis and Validation;
   async getMathematicalAnalysis(
     request: MathematicalAnalysisRequest,
   ): Promise<MathematicalAnalysisResponse> {
@@ -408,12 +405,11 @@ class EnhancedBackendApiService {
     }
   }
 
-  // Get Mathematical Foundations
+  // Get Mathematical Foundations;
   async getMathematicalFoundations(): Promise<Record<string, any>> {
-    const cacheKey = "mathematical_foundations";
 
     try {
-      const cached = await this.cache.get(cacheKey);
+
       if (cached) {
         return cached;
       }
@@ -421,7 +417,6 @@ class EnhancedBackendApiService {
       const response = await this.client.get(
         "/api/enhanced-revolutionary/research/mathematical-foundations",
       );
-      const result = response.data;
 
       // Cache for 1 hour (foundations don't change often)
       await this.cache.set(cacheKey, result, 3600);
@@ -436,7 +431,7 @@ class EnhancedBackendApiService {
     }
   }
 
-  // Enhanced Model Status
+  // Enhanced Model Status;
   async getEnhancedModelStatus(): Promise<ModelStatusResponse> {
     try {
       const response = await this.client.get<ModelStatusResponse>(
@@ -477,12 +472,11 @@ class EnhancedBackendApiService {
     processing_summary: Record<string, any>;
   }> {
     try {
-      const startTime = Date.now();
 
-      // Parallel processing for efficiency
+      // Parallel processing for efficiency;
       const [enhancedPrediction, featureEngineering, riskAssessment] =
         await Promise.all([
-          // Enhanced revolutionary prediction
+          // Enhanced revolutionary prediction;
           this.getEnhancedRevolutionaryPrediction({
             event_id: request.event_id,
             sport: request.sport,
@@ -517,7 +511,7 @@ class EnhancedBackendApiService {
             },
           }),
 
-          // Feature engineering
+          // Feature engineering;
           this.getEnhancedFeatureEngineering({
             data: { features: Object.values(request.features) },
             feature_types: ["numerical", "temporal", "categorical"],
@@ -534,7 +528,7 @@ class EnhancedBackendApiService {
               request.processing_level === "revolutionary" ? 32 : 16,
           }),
 
-          // Risk assessment
+          // Risk assessment;
           this.getEnhancedRiskAssessment({
             portfolio: { prediction: 1.0 },
             market_data: { features: Object.values(request.features) },
@@ -567,7 +561,7 @@ class EnhancedBackendApiService {
         check_mathematical_consistency: true,
       });
 
-      // Calculate unified confidence
+      // Calculate unified confidence;
       const confidenceComponents = [
         enhancedPrediction.prediction_confidence,
         featureEngineering.dimensionality_reduction.explained_variance,
@@ -577,8 +571,6 @@ class EnhancedBackendApiService {
       const unifiedConfidence =
         confidenceComponents.reduce((a, b) => a + b, 0) /
         confidenceComponents.length;
-
-      const totalTime = Date.now() - startTime;
 
       const result = {
         predictions: {
@@ -603,7 +595,7 @@ class EnhancedBackendApiService {
           ).filter(Boolean).length,
           rigor_score: mathematicalAnalysis.mathematical_rigor_score,
           stability_verified:
-            mathematicalAnalysis.mathematical_analysis.theoretical_guarantees
+            mathematicalAnalysis.mathematical_analysis.theoretical_guarantees;
               ?.asymptotic_stability || false,
           convergence_achieved: enhancedPrediction.convergence_rate > 0.8,
           numerical_stability: Object.values(
@@ -630,18 +622,16 @@ class EnhancedBackendApiService {
     }
   }
 
-  // Health check
+  // Health check;
   async healthCheck(): Promise<{
     status: string;
     services: Record<string, boolean>;
     mathematical_engines: Record<string, boolean>;
     response_time: number;
   }> {
-    const startTime = Date.now();
 
     try {
-      const response = await this.client.get("/health");
-      const responseTime = Date.now() - startTime;
+
 
       return {
         status: "healthy",
@@ -650,7 +640,6 @@ class EnhancedBackendApiService {
         response_time: responseTime,
       };
     } catch (error) {
-      const responseTime = Date.now() - startTime;
 
       this.logger.error("Backend health check failed", {
         error: error.message,

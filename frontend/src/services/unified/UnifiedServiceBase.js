@@ -14,7 +14,7 @@ export class UnifiedServiceBase {
     async handleServiceOperation(operation, operationName, serviceName, successMessage, errorMessage) {
         try {
             this.loggingService.debug(`Starting ${operationName}`, serviceName);
-            const result = await operation();
+
             if (successMessage) {
                 this.notificationService.notify('success', successMessage);
             }
@@ -22,7 +22,7 @@ export class UnifiedServiceBase {
             return result;
         }
         catch (error) {
-            const errorMsg = errorMessage || `Failed to ${operationName}`;
+
             this.errorService.handleError(error instanceof Error ? error : new Error(errorMsg), serviceName, 'high', { operation: operationName });
             this.notificationService.notify('error', errorMsg);
             throw error;
@@ -34,18 +34,18 @@ export class UnifiedServiceBase {
     logOperation(level, message, serviceName, data) {
         this.loggingService.log(level, message, serviceName, data);
     }
-    // Lifecycle methods
+    // Lifecycle methods;
     async initialize() {
         this.loggingService.info(`Initializing service`, this.constructor.name);
     }
     async cleanup() {
         this.loggingService.info(`Cleaning up service`, this.constructor.name);
     }
-    // Cache management
+    // Cache management;
     getCacheKey(...parts) {
         return `${this.constructor.name}:${parts.join(':')}`;
     }
-    // Service registry helpers
+    // Service registry helpers;
     getService(name) {
         return this.serviceRegistry.getService(name);
     }

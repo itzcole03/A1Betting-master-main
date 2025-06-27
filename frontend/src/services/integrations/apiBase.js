@@ -1,4 +1,4 @@
-// Base class for all API connectors
+// Base class for all API connectors;
 import axios from 'axios';
 export class ApiBase {
     constructor(baseUrl, apiKey) {
@@ -22,8 +22,8 @@ export class ApiBase {
         }
     }
     logError(error, config) {
-        // Log to console and optionally to /logs/liveData.log
-        console.error(`[API ERROR] ${config.url}:`, error.message);
-        // TODO: Append to /logs/liveData.log if running in Node
+        // Log to console and optionally to /logs/liveData.log;
+        // console statement removed
+        // TODO: Append to /logs/liveData.log if running in Node;
     }
 }

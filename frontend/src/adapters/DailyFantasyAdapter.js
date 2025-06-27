@@ -1,5 +1,5 @@
-import { EventBus } from '../unified/EventBus.js'; // TODO: ensure correct implementation after QA
-import { PerformanceMonitor } from '../unified/PerformanceMonitor.js'; // TODO: ensure correct implementation after QA
+import { EventBus } from '../unified/EventBus.js'; // TODO: ensure correct implementation after QA;
+import { PerformanceMonitor } from '../unified/PerformanceMonitor.js'; // TODO: ensure correct implementation after QA;
 export class DailyFantasyAdapter {
     /**
      * Fetches real daily fantasy projections from the configured API.
@@ -15,11 +15,11 @@ export class DailyFantasyAdapter {
             });
             if (!response.ok)
                 throw new Error('Failed to fetch projections');
-            const data = await response.json();
+
             return { projections: data.projections };
         }
         catch (error) {
-            // Optionally log error or send to PerformanceMonitor
+            // Optionally log error or send to PerformanceMonitor;
             return { projections: [] };
         }
     }
@@ -43,7 +43,7 @@ export class DailyFantasyAdapter {
             type: this.type,
         });
         try {
-            // Check cache first
+            // Check cache first;
             if (this.isCacheValid()) {
                 return this.cache.data;
             }
@@ -59,14 +59,14 @@ export class DailyFantasyAdapter {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = (await response.json());
+
             this.performanceMonitor.endSpan(spanId);
-            // Update cache
+            // Update cache;
             this.cache = {
                 data,
                 timestamp: Date.now(),
             };
-            // Publish event
+            // Publish event;
             await this.eventBus.publish({
                 type: 'daily-fantasy:data-updated',
                 payload: {
@@ -85,7 +85,7 @@ export class DailyFantasyAdapter {
     isCacheValid() {
         if (!this.cache.data)
             return false;
-        const age = Date.now() - this.cache.timestamp;
+
         return age < this.config.cacheTimeout;
     }
     clearCache() {

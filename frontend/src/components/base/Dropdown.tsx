@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react';
-import { Menu, Transition } from '@headlessui/react';
-import { cn } from '@/utils/classNames';
+import React, { Fragment  } from 'react.ts';
+import { Menu, Transition } from '@headlessui/react.ts';
+import { cn } from '@/utils/classNames.ts';
 
 export interface DropdownItem {
   key: string;
@@ -20,7 +20,7 @@ export interface DropdownProps {
   className?: string;
 }
 
-export const Dropdown: React.FC<DropdownProps> = ({
+export const Dropdown: React.FC<DropdownProps key={710914}> = ({
   trigger,
   items,
   position = 'right',
@@ -28,9 +28,9 @@ export const Dropdown: React.FC<DropdownProps> = ({
   className,
 }) => {
   return (
-    <Menu as="div" className="relative inline-block text-left">
-      <Menu.Button as={Fragment}>{trigger}</Menu.Button>
-      <Transition
+    <Menu as="div" className="relative inline-block text-left" key={29814}>
+      <Menu.Button as={Fragment} key={659832}>{trigger}</Menu.Button>
+      <Transition;
         as={Fragment}
         enter="transition ease-out duration-100"
         enterFrom="transform opacity-0 scale-95"
@@ -38,27 +38,27 @@ export const Dropdown: React.FC<DropdownProps> = ({
         leave="transition ease-in duration-75"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items
+       key={521635}>
+        <Menu.Items;
           className={cn(
             'absolute z-50 mt-2 rounded-lg bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none',
             position === 'right' ? 'origin-top-right right-0' : 'origin-top-left left-0',
-            className
+            className;
           )}
           style={{ width }}
-        >
-          <div className="py-1">
+         key={424799}>
+          <div className="py-1" key={734638}>
             {items.map((item, index) => (
-              <Fragment key={item.key}>
+              <Fragment key={item.key} key={114566}>
                 {item.divider ? (
-                  <div className="my-1 border-t border-gray-200 dark:border-gray-700" />
+                  <div className="my-1 border-t border-gray-200 dark:border-gray-700" / key={445365}>
                 ) : (
-                  <Menu.Item disabled={item.disabled}>
+                  <Menu.Item disabled={item.disabled} key={263041}>
                     {({ active }) => (
-                      <button
+                      <button;
                         className={cn(
                           'group flex w-full items-center px-4 py-2 text-sm',
-                          active
+                          active;
                             ? 'bg-gray-100 dark:bg-gray-700'
                             : 'text-gray-700 dark:text-gray-200',
                           item.danger && 'text-red-600 dark:text-red-500',
@@ -66,16 +66,16 @@ export const Dropdown: React.FC<DropdownProps> = ({
                         )}
                         disabled={item.disabled}
                         onClick={item.onClick}
-                      >
+                       key={902099}>
                         {item.icon && (
-                          <span
+                          <span;
                             className={cn(
                               'mr-3 h-5 w-5',
-                              item.danger
+                              item.danger;
                                 ? 'text-red-600 dark:text-red-500'
                                 : 'text-gray-400 dark:text-gray-500 group-hover:text-gray-500 dark:group-hover:text-gray-400'
                             )}
-                          >
+                           key={61859}>
                             {item.icon}
                           </span>
                         )}

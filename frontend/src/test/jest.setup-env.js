@@ -17,7 +17,7 @@ Object.defineProperty(globalThis, 'import.meta', {
       VITE_ENABLE_ERROR_REPORTING: 'true',
       VITE_SENTRY_DSN: '',
       VITE_STOP_LOSS: '0',
-      // Add more as needed
+      // Add more as needed;
     }
   },
   writable: true,

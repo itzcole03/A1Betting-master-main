@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Target, TrendingUp, AlertTriangle, Clock, BarChart3, Gauge, Brain, Eye, } from "lucide-react";
 import { Line, Bar, Scatter, Radar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, RadialLinearScale, Title, Tooltip, Legend, Filler, } from "chart.js";
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, RadialLinearScale, Title, Tooltip, Legend, Filler);
 export const AdvancedConfidenceVisualizer = () => {
     const [predictions, setPredictions] = useState([]);
@@ -18,7 +18,7 @@ export const AdvancedConfidenceVisualizer = () => {
     const [timeRange, setTimeRange] = useState("1h");
     const [confidenceThreshold, setConfidenceThreshold] = useState(0.8);
     const [isLoading, setIsLoading] = useState(true);
-    // Fetch prediction data with confidence metrics
+    // Fetch prediction data with confidence metrics;
     const fetchPredictionData = useCallback(async () => {
         try {
             setIsLoading(true);
@@ -28,20 +28,20 @@ export const AdvancedConfidenceVisualizer = () => {
                 fetch("/api/v3/predictions/confidence-distribution"),
             ]);
             if (predictionsRes.ok) {
-                const predictionsData = await predictionsRes.json();
+
                 setPredictions(predictionsData);
             }
             if (metricsRes.ok) {
-                const metricsData = await metricsRes.json();
+
                 setConfidenceMetrics(metricsData);
             }
             if (distributionRes.ok) {
-                const distributionData = await distributionRes.json();
+
                 setConfidenceDistribution(distributionData);
             }
         }
         catch (error) {
-            console.error("Error fetching prediction data:", error);
+            // console statement removed
         }
         finally {
             setIsLoading(false);
@@ -49,10 +49,10 @@ export const AdvancedConfidenceVisualizer = () => {
     }, [timeRange]);
     useEffect(() => {
         fetchPredictionData();
-        const interval = setInterval(fetchPredictionData, 30000); // Update every 30 seconds
+        const interval = setInterval(fetchPredictionData, 30000); // Update every 30 seconds;
         return () => clearInterval(interval);
     }, [fetchPredictionData]);
-    // Get confidence level styling
+    // Get confidence level styling;
     const getConfidenceLevel = (confidence) => {
         if (confidence >= 0.95)
             return {
@@ -96,15 +96,15 @@ export const AdvancedConfidenceVisualizer = () => {
             border: "border-red-200",
         };
     };
-    // High confidence predictions
+    // High confidence predictions;
     const highConfidencePredictions = useMemo(() => {
         return predictions.filter((p) => p.confidence_score >= confidenceThreshold);
     }, [predictions, confidenceThreshold]);
-    // Confidence trend chart data
+    // Confidence trend chart data;
     const confidenceTrendData = useMemo(() => {
         if (!predictions.length)
             return null;
-        const sortedPredictions = [...predictions].sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
+
         return {
             labels: sortedPredictions.map((p) => new Date(p.timestamp).toLocaleTimeString()),
             datasets: [
@@ -135,7 +135,7 @@ export const AdvancedConfidenceVisualizer = () => {
             ],
         };
     }, [predictions]);
-    // Confidence distribution chart
+    // Confidence distribution chart;
     const confidenceDistributionData = useMemo(() => {
         if (!confidenceDistribution)
             return null;
@@ -159,7 +159,7 @@ export const AdvancedConfidenceVisualizer = () => {
             ],
         };
     }, [confidenceDistribution]);
-    // Uncertainty visualization data
+    // Uncertainty visualization data;
     const uncertaintyScatterData = useMemo(() => {
         if (!predictions.length)
             return null;
@@ -167,7 +167,7 @@ export const AdvancedConfidenceVisualizer = () => {
             datasets: [
                 {
                     label: "High Confidence",
-                    data: predictions
+                    data: predictions;
                         .filter((p) => p.confidence_score >= 0.8)
                         .map((p) => ({
                         x: p.confidence_score * 100,
@@ -178,7 +178,7 @@ export const AdvancedConfidenceVisualizer = () => {
                 },
                 {
                     label: "Medium Confidence",
-                    data: predictions
+                    data: predictions;
                         .filter((p) => p.confidence_score >= 0.6 && p.confidence_score < 0.8)
                         .map((p) => ({
                         x: p.confidence_score * 100,
@@ -189,7 +189,7 @@ export const AdvancedConfidenceVisualizer = () => {
                 },
                 {
                     label: "Low Confidence",
-                    data: predictions
+                    data: predictions;
                         .filter((p) => p.confidence_score < 0.6)
                         .map((p) => ({
                         x: p.confidence_score * 100,
@@ -201,12 +201,12 @@ export const AdvancedConfidenceVisualizer = () => {
             ],
         };
     }, [predictions]);
-    // Model contribution radar chart
+    // Model contribution radar chart;
     const modelContributionData = useMemo(() => {
         if (!selectedPrediction?.model_weights)
             return null;
-        const models = Object.keys(selectedPrediction.model_weights);
-        const weights = Object.values(selectedPrediction.model_weights);
+
+
         return {
             labels: models.map((name) => name.replace("_", " ").toUpperCase()),
             datasets: [
@@ -323,7 +323,7 @@ export const AdvancedConfidenceVisualizer = () => {
                                                     },
                                                 },
                                             } }) })) })] }) }), _jsx(TabsContent, { value: "predictions", children: _jsxs("div", { className: "space-y-4", children: [_jsxs("div", { className: "flex items-center justify-between", children: [_jsx("h3", { className: "text-lg font-semibold", children: "High Confidence Predictions" }), _jsxs("div", { className: "flex items-center gap-2", children: [_jsx("span", { className: "text-sm text-gray-600", children: "Threshold:" }), _jsxs("select", { value: confidenceThreshold, onChange: (e) => setConfidenceThreshold(Number(e.target.value)), className: "px-3 py-1 border rounded", children: [_jsx("option", { value: 0.95, children: "95%" }), _jsx("option", { value: 0.9, children: "90%" }), _jsx("option", { value: 0.85, children: "85%" }), _jsx("option", { value: 0.8, children: "80%" }), _jsx("option", { value: 0.75, children: "75%" })] })] })] }), _jsx("div", { className: "grid gap-4", children: highConfidencePredictions.map((prediction) => {
-                                        const confidenceLevel = getConfidenceLevel(prediction.confidence_score);
+
                                         return (_jsx(Card, { className: `${confidenceLevel.border} ${confidenceLevel.bg} cursor-pointer hover:shadow-md transition-all`, onClick: () => setSelectedPrediction(prediction), children: _jsxs(CardContent, { className: "p-4", children: [_jsxs("div", { className: "flex items-center justify-between mb-3", children: [_jsxs("div", { className: "flex items-center gap-3", children: [_jsx(Badge, { className: `${confidenceLevel.color} ${confidenceLevel.bg}`, children: confidenceLevel.level }), _jsxs("span", { className: "font-medium", children: [prediction.context.sport, " -", " ", prediction.context.event_type] })] }), _jsxs("div", { className: "flex items-center gap-2", children: [_jsx(Clock, { className: "w-4 h-4 text-gray-400" }), _jsx("span", { className: "text-sm text-gray-500", children: new Date(prediction.timestamp).toLocaleTimeString() })] })] }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Prediction" }), _jsx("p", { className: "text-lg font-bold text-gray-900", children: prediction.final_prediction.toFixed(2) })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Confidence" }), _jsxs("p", { className: "text-lg font-bold text-gray-900", children: [(prediction.confidence_score * 100).toFixed(1), "%"] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Model Agreement" }), _jsxs("p", { className: "text-lg font-bold text-gray-900", children: [(prediction.model_agreement * 100).toFixed(1), "%"] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Uncertainty Range" }), _jsxs("p", { className: "text-lg font-bold text-gray-900", children: ["[", prediction.uncertainty_bounds[0].toFixed(2), ",", " ", prediction.uncertainty_bounds[1].toFixed(2), "]"] })] })] }), _jsx("div", { className: "mt-3", children: _jsx(Progress, { value: prediction.confidence_score * 100, className: "h-2" }) })] }) }, prediction.prediction_id));
                                     }) })] }) }), _jsx(TabsContent, { value: "analysis", children: selectedPrediction ? (_jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: [_jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Gauge, { className: "w-5 h-5 mr-2 text-purple-600" }), "Model Contributions"] }) }), _jsx(CardContent, { children: modelContributionData && (_jsx("div", { className: "h-64", children: _jsx(Radar, { data: modelContributionData, options: {
                                                         responsive: true,

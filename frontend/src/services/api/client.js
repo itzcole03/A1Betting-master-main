@@ -3,17 +3,17 @@ import { APIError, AppError } from '../../core/UnifiedError.js';
 import { getInitializedUnifiedConfig } from '../../core/UnifiedConfig.js';
 class ApiClient {
     constructor() {
-        const config = getInitializedUnifiedConfig();
+
         this.baseUrl = (config.get('api.baseUrl') || 'http://localhost:8000') + '/api';
         this.defaultHeaders = {
             'Content-Type': 'application/json',
         };
-        this.defaultTimeout = 30000; // 30 seconds
+        this.defaultTimeout = 30000; // 30 seconds;
     }
     async request(method, endpoint, data, config = {}) {
-        const trace = unifiedMonitor.startTrace(`api.${method.toLowerCase()}.${endpoint}`, 'http.client');
-        const url = new URL(endpoint, this.baseUrl);
-        // Add query parameters
+
+
+        // Add query parameters;
         if (config.params) {
             Object.entries(config.params).forEach(([key, value]) => {
                 url.searchParams.append(key, value);
@@ -32,7 +32,7 @@ class ApiClient {
             });
             // Utility to safely convert Headers to Record<string, string>
             const headersToObject = (headers) => {
-                const result = {};
+
                 headers.forEach((value, key) => {
                     result[key] = value;
                 });
@@ -42,7 +42,7 @@ class ApiClient {
                 trace.setHttpStatus(response.status);
                 unifiedMonitor.endTrace(trace);
             }
-            const responseData = await response.json();
+
             if (!response.ok) {
                 throw new APIError(responseData.message || 'API request failed', response.status, responseData);
             }
@@ -54,8 +54,8 @@ class ApiClient {
         }
         catch (error) {
             if (trace) {
-                // error is unknown, so we must check its shape
-                let errStatus = 500;
+                // error is unknown, so we must check its shape;
+                const errStatus = 500;
                 if (typeof error === 'object' && error !== null && 'response' in error && typeof error.response === 'object' && error.response?.status) {
                     errStatus = error.response.status;
                 }
@@ -64,11 +64,11 @@ class ApiClient {
             }
             if (error instanceof APIError)
                 throw error;
-            // If error is an AbortError
+            // If error is an AbortError;
             if (typeof error === 'object' && error !== null && 'name' in error && error.name === 'AbortError') {
                 throw new AppError('Request timeout', { status: 408 }, error);
             }
-            // Type guard for error with response.status
+            // Type guard for error with response.status;
             function hasResponseStatus(err) {
                 return (typeof err === 'object' &&
                     err !== null &&
@@ -77,7 +77,7 @@ class ApiClient {
                     err.response?.status !== undefined &&
                     typeof err.response.status === 'number');
             }
-            const status = hasResponseStatus(error) ? error.response.status : 500;
+
             throw new AppError('API request failed', { status, endpoint, method }, error);
         }
     }
@@ -97,8 +97,8 @@ class ApiClient {
         return this.request('DELETE', endpoint, undefined, config);
     }
 }
-// Export a singleton instance
+// Export a singleton instance;
 export const apiClient = new ApiClient();
-// Export get and post for compatibility with legacy imports
+// Export get and post for compatibility with legacy imports;
 export const get = apiClient.get.bind(apiClient);
 export const post = apiClient.post.bind(apiClient);

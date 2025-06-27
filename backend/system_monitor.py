@@ -8,7 +8,7 @@ import statistics
 import time
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from enum import Enum, IntEnum
 from typing import Any, Callable, Dict, List, Optional
 
@@ -144,8 +144,8 @@ class MetricsCollector:
                 await self._collect_system_metrics()
                 await self._collect_application_metrics()
                 await asyncio.sleep(self.collection_interval)
-            except Exception as e:
-                logger.error(f"Metrics collection error: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Metrics collection error: {e!s}")
                 await asyncio.sleep(5)
 
     async def stop_collection(self):
@@ -155,7 +155,7 @@ class MetricsCollector:
 
     async def _collect_system_metrics(self):
         """Collect system-level metrics"""
-        timestamp = datetime.utcnow()
+        timestamp = datetime.now(timezone.utc)
 
         # CPU metrics
         cpu_percent = psutil.cpu_percent(interval=1)
@@ -220,7 +220,7 @@ class MetricsCollector:
 
     async def _collect_application_metrics(self):
         """Collect application-specific metrics"""
-        timestamp = datetime.utcnow()
+        timestamp = datetime.now(timezone.utc)
 
         try:
             # Database metrics
@@ -284,14 +284,14 @@ class MetricsCollector:
             except ImportError:
                 pass
 
-        except Exception as e:
-            logger.warning(f"Application metrics collection error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Application metrics collection error: {e!s}")
 
     def get_recent_metrics(
         self, metric_type: MetricType, duration_minutes: int = 10
     ) -> List[SystemMetric]:
         """Get recent metrics of specific type"""
-        cutoff_time = datetime.utcnow() - timedelta(minutes=duration_minutes)
+        cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=duration_minutes)
         return [
             metric
             for metric in self.metrics_buffer
@@ -340,7 +340,7 @@ class AlertManager:
             "severity_filter": severity_filter,
             "enabled": True,
         }
-        logger.info(f"Added notification channel: {name}")
+        logger.info("Added notification channel: {name}")
 
     async def create_alert(
         self,
@@ -370,7 +370,7 @@ class AlertManager:
             metric_type=metric_type,
             threshold_value=threshold_value,
             actual_value=actual_value,
-            created_at=datetime.utcnow(),
+            created_at=datetime.now(timezone.utc),
             metadata=metadata or {},
         )
 
@@ -389,7 +389,7 @@ class AlertManager:
         """Resolve an active alert"""
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
-            alert.resolved_at = datetime.utcnow()
+            alert.resolved_at = datetime.now(timezone.utc)
             alert.metadata["resolved_by"] = resolved_by
 
             del self.active_alerts[alert_id]
@@ -397,7 +397,7 @@ class AlertManager:
             # Send resolution notification
             await self._send_resolution_notification(alert)
 
-            logger.info(f"Alert resolved: {alert.title}")
+            logger.info("Alert resolved: {alert.title}")
             return True
 
         return False
@@ -406,10 +406,10 @@ class AlertManager:
         """Acknowledge an alert"""
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
-            alert.acknowledged_at = datetime.utcnow()
+            alert.acknowledged_at = datetime.now(timezone.utc)
             alert.acknowledged_by = acknowledged_by
 
-            logger.info(f"Alert acknowledged by {acknowledged_by}: {alert.title}")
+            logger.info("Alert acknowledged by {acknowledged_by}: {alert.title}")
             return True
 
         return False
@@ -425,7 +425,7 @@ class AlertManager:
                     await self._send_webhook_notification(
                         channel_config["webhook_url"], alert
                     )
-                except Exception as e:
+                except Exception as e:  # pylint: disable=broad-exception-caught
                     logger.error(
                         f"Failed to send notification to {channel_name}: {e!s}"
                     )
@@ -449,7 +449,7 @@ class AlertManager:
                 webhook_url, json=payload, timeout=aiohttp.ClientTimeout(total=10)
             ) as response:
                 if response.status >= 400:
-                    logger.error(f"Webhook notification failed: {response.status}")
+                    logger.error("Webhook notification failed: {response.status}")
 
     async def _send_resolution_notification(self, alert: Alert):
         """Send alert resolution notification"""
@@ -471,14 +471,14 @@ class AlertManager:
                     await self._send_webhook_notification(
                         channel_config["webhook_url"], alert
                     )
-                except Exception as e:
+                except Exception as e:  # pylint: disable=broad-exception-caught
                     logger.error(
                         f"Failed to send resolution notification to {channel_name}: {e!s}"
                     )
 
     def get_alert_statistics(self, duration_hours: int = 24) -> Dict[str, Any]:
         """Get alert statistics"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=duration_hours)
+        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=duration_hours)
         recent_alerts = [
             alert for alert in self.alert_history if alert.created_at >= cutoff_time
         ]
@@ -541,7 +541,7 @@ class HealthChecker:
     def register_health_check(self, health_check: HealthCheck):
         """Register a health check"""
         self.health_checks[health_check.name] = health_check
-        logger.info(f"Registered health check: {health_check.name}")
+        logger.info("Registered health check: {health_check.name}")
 
     async def start_health_monitoring(self):
         """Start health monitoring"""
@@ -561,8 +561,8 @@ class HealthChecker:
 
         try:
             await asyncio.gather(*tasks)
-        except Exception as e:
-            logger.error(f"Health monitoring error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Health monitoring error: {e!s}")
         finally:
             self.is_running = False
 
@@ -590,7 +590,7 @@ class HealthChecker:
                         "status": HealthStatus.HEALTHY,
                         "result": result,
                         "execution_time": execution_time,
-                        "last_check": datetime.utcnow(),
+                        "last_check": datetime.now(timezone.utc),
                         "error": None,
                     }
 
@@ -599,11 +599,11 @@ class HealthChecker:
                         "status": HealthStatus.CRITICAL,
                         "result": None,
                         "execution_time": health_check.timeout_seconds,
-                        "last_check": datetime.utcnow(),
+                        "last_check": datetime.now(timezone.utc),
                         "error": f"Health check timed out after {health_check.timeout_seconds}s",
                     }
 
-                except Exception as e:
+                except Exception as e:  # pylint: disable=broad-exception-caught
                     status = (
                         HealthStatus.CRITICAL
                         if health_check.critical
@@ -613,14 +613,14 @@ class HealthChecker:
                         "status": status,
                         "result": None,
                         "execution_time": time.time() - start_time,
-                        "last_check": datetime.utcnow(),
+                        "last_check": datetime.now(timezone.utc),
                         "error": str(e),
                     }
 
                 await asyncio.sleep(health_check.interval_seconds)
 
-            except Exception as e:
-                logger.error(f"Health check loop error for {check_name}: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Health check loop error for {check_name}: {e!s}")
                 await asyncio.sleep(5)
 
     def get_overall_health(self) -> Dict[str, Any]:
@@ -696,8 +696,8 @@ class UltraSystemMonitor:
 
         try:
             await asyncio.gather(*monitoring_tasks)
-        except Exception as e:
-            logger.error(f"System monitoring error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("System monitoring error: {e!s}")
         finally:
             self.is_monitoring = False
 
@@ -720,7 +720,7 @@ class UltraSystemMonitor:
                         result.fetchone()
                         return {"status": "connected", "query_time": "< 1ms"}
                 return {"status": "no_connection"}
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 raise Exception(f"Database health check failed: {e!s}")
 
         async def cache_health_check():
@@ -742,7 +742,7 @@ class UltraSystemMonitor:
                     )
             except ImportError:
                 return {"status": "not_available"}
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-exception-caught
                 raise Exception(f"Cache health check failed: {e!s}")
 
         async def disk_space_check():
@@ -897,8 +897,8 @@ class UltraSystemMonitor:
                                     f"{metric_type.value}_warning"
                                 )
 
-            except Exception as e:
-                logger.error(f"Alert processing error: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Alert processing error: {e!s}")
 
     def _threshold_exceeded(
         self, metric_type: MetricType, value: float, threshold: float
@@ -939,8 +939,8 @@ class UltraSystemMonitor:
                             metadata=anomaly,
                         )
 
-            except Exception as e:
-                logger.error(f"Anomaly detection error: {e!s}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("Anomaly detection error: {e!s}")
 
     async def get_comprehensive_status(self) -> Dict[str, Any]:
         """Get comprehensive system status"""
@@ -976,7 +976,7 @@ class UltraSystemMonitor:
             "alert_statistics": alert_stats,
             "metrics_summary": metrics_summary,
             "system_resources": system_resources,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
         }
 
 
@@ -1020,8 +1020,8 @@ class AnomalyDetector:
                         }
                     )
 
-        except Exception as e:
-            logger.warning(f"Anomaly detection failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Anomaly detection failed: {e!s}")
 
         return anomalies
 

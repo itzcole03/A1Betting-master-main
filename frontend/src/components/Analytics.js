@@ -6,19 +6,19 @@ import { Line } from 'react-chartjs-2';
 import { calculateKellyCriterion, americanToDecimal } from '../utils/odds';
 import { motion } from 'framer-motion';
 import { useApiRequest } from '../hooks/useApiRequest';
-// Register ChartJS components
+// Register ChartJS components;
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 const Analytics = () => {
-    // State for Kelly calculator
+    // State for Kelly calculator;
     const [kellyBankroll, setKellyBankroll] = useState(1000);
     const [kellyProb, setKellyProb] = useState(0.5);
     const [kellyOdds, setKellyOdds] = useState(-110);
     const [kellyFraction, setKellyFraction] = useState(1);
-    // Fetch user performance data
+    // Fetch user performance data;
     const { data: perf, isLoading: perfLoading, error: perfError, } = useApiRequest('/api/user/performance');
-    // Fetch arbitrage opportunities
+    // Fetch arbitrage opportunities;
     const { data: arbs, isLoading: arbsLoading, error: arbsError, } = useApiRequest('/api/arbitrage/opportunities');
-    // Chart data for recent history
+    // Chart data for recent history;
     const chartData = useMemo(() => {
         if (!perf) {
             return {
@@ -37,9 +37,9 @@ const Analytics = () => {
             })),
         };
     }, [perf]);
-    // Kelly calculation
+    // Kelly calculation;
     const kellyStake = useMemo(() => {
-        const decOdds = americanToDecimal(Number(kellyOdds));
+
         return calculateKellyCriterion(Number(kellyProb), decOdds, Number(kellyBankroll), Number(kellyFraction));
     }, [kellyBankroll, kellyProb, kellyOdds, kellyFraction]);
     return (_jsxs("div", { className: "space-y-6", children: [_jsxs(motion.div, { animate: { opacity: 1, y: 0 }, className: "glass-morphism p-6 rounded-xl", initial: { opacity: 0, y: 20 }, children: [_jsxs("h3", { className: "text-lg font-semibold mb-4 flex items-center", children: [_jsx(FaChartLine, { className: "w-5 h-5 mr-2 text-primary-500" }), "My Performance"] }), perfLoading ? (_jsx("div", { className: "text-gray-500 animate-pulse-soft", children: "Loading performance..." })) : perfError ? (_jsx("div", { className: "text-red-500", children: perfError.message })) : perf ? (_jsxs("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4 mb-4", children: [_jsxs("div", { children: [_jsx("div", { className: "text-xs text-gray-500", children: "Total Bets" }), _jsx("div", { className: "text-2xl font-bold", children: perf.totalBets })] }), _jsxs("div", { children: [_jsx("div", { className: "text-xs text-gray-500", children: "Win Rate" }), _jsxs("div", { className: "text-2xl font-bold text-green-600", children: [(perf.winRate * 100).toFixed(1), "%"] })] }), _jsxs("div", { children: [_jsx("div", { className: "text-xs text-gray-500", children: "Profit" }), _jsxs("div", { className: "text-2xl font-bold text-blue-600", children: ["$", perf.profit.toLocaleString()] })] }), _jsxs("div", { children: [_jsx("div", { className: "text-xs text-gray-500", children: "ROI" }), _jsxs("div", { className: "text-2xl font-bold text-purple-600", children: [(perf.roi * 100).toFixed(1), "%"] })] })] })) : null, _jsx("div", { className: "h-64", children: _jsx(Line, { data: chartData, options: {

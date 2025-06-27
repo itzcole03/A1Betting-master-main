@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import {
   List,
   ListItem,
@@ -8,10 +8,10 @@ import {
   CircularProgress,
   Box,
   Chip,
-} from '@mui/material';
-import { Event } from '../../types/betting';
-import { useBettingStore } from '../../stores/bettingStore';
-import { format } from 'date-fns';
+} from '@mui/material.ts';
+import { Event } from '@/types/betting.ts';
+import { useBettingStore } from '@/stores/bettingStore.ts';
+import { format } from 'date-fns.ts';
 
 interface EventListProps {
   events: Event[];
@@ -19,22 +19,22 @@ interface EventListProps {
   selectedSport: Sport | null;
 }
 
-const EventList: React.FC<EventListProps> = ({ events, isLoading, selectedSport }) => {
+const EventList: React.FC<EventListProps key={326065}> = ({ events, isLoading, selectedSport }) => {
   const { selectedEvent, selectEvent } = useBettingStore();
 
   if (isLoading) {
     return (
-      <Box display="flex" justifyContent="center" p={3}>
-        <CircularProgress />
+      <Box display="flex" justifyContent="center" p={3} key={1673}>
+        <CircularProgress / key={730118}>
       </Box>
     );
   }
 
   if (!selectedSport) {
     return (
-      <Box p={3}>
-        <Typography align="center" color="text.secondary">
-          Please select a sport to view events
+      <Box p={3} key={235922}>
+        <Typography align="center" color="text.secondary" key={237263}>
+          Please select a sport to view events;
         </Typography>
       </Box>
     );
@@ -42,8 +42,8 @@ const EventList: React.FC<EventListProps> = ({ events, isLoading, selectedSport 
 
   if (events.length === 0) {
     return (
-      <Box p={3}>
-        <Typography align="center" color="text.secondary">
+      <Box p={3} key={235922}>
+        <Typography align="center" color="text.secondary" key={237263}>
           No events available for {selectedSport.name}
         </Typography>
       </Box>
@@ -51,29 +51,29 @@ const EventList: React.FC<EventListProps> = ({ events, isLoading, selectedSport 
   }
 
   return (
-    <List>
+    <List key={733302}>
       {events.map(event => (
-        <ListItem
+        <ListItem;
           key={event.id}
-          disablePadding
-          divider
+          disablePadding;
+          divider;
           sx={{
             '&:hover': {
               backgroundColor: 'action.hover',
             },
           }}
-        >
-          <ListItemButton
+         key={410385}>
+          <ListItemButton;
             selected={selectedEvent?.id === event.id}
-            onClick={() => selectEvent(event)}
+            onClick={() = key={494826}> selectEvent(event)}
           >
-            <ListItemText
+            <ListItemText;
               primary={
-                <Box alignItems="center" display="flex" gap={1}>
-                  <Typography variant="subtitle1">
+                <Box alignItems="center" display="flex" gap={1} key={844462}>
+                  <Typography variant="subtitle1" key={265838}>
                     {event.homeTeam} vs {event.awayTeam}
                   </Typography>
-                  <Chip
+                  <Chip;
                     color={
                       event.status === 'live'
                         ? 'error'
@@ -83,16 +83,16 @@ const EventList: React.FC<EventListProps> = ({ events, isLoading, selectedSport 
                     }
                     label={event.status}
                     size="small"
-                  />
+                  / key={468431}>
                 </Box>
               }
               secondary={
-                <Box alignItems="center" display="flex" gap={2}>
-                  <Typography color="text.secondary" variant="body2">
+                <Box alignItems="center" display="flex" gap={2} key={526387}>
+                  <Typography color="text.secondary" variant="body2" key={497604}>
                     {format(new Date(event.startTime), 'MMM d, h:mm a')}
                   </Typography>
                   {event.score && (
-                    <Typography color="text.secondary" variant="body2">
+                    <Typography color="text.secondary" variant="body2" key={497604}>
                       Score: {event.score.home} - {event.score.away}
                     </Typography>
                   )}

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState  } from 'react.ts';
+import { useQuery } from '@tanstack/react-query.ts';
 import {
   Box,
   Typography,
@@ -14,12 +14,12 @@ import {
   InputLabel,
   CircularProgress,
   SelectChangeEvent,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   MoreVert as MoreVertIcon,
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
-} from '@mui/icons-material';
+} from '@mui/icons-material.ts';
 import {
   LineChart,
   Line,
@@ -34,11 +34,9 @@ import {
   PieChart,
   Pie,
   Cell,
-} from 'recharts';
-import { analyticsService } from '@/services/AnalyticsService';
-import { ErrorMessage } from '@/components/common/ErrorMessage';
-
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
+} from 'recharts.ts';
+import { analyticsService } from '@/services/AnalyticsService.ts';
+import { ErrorMessage } from '@/components/common/ErrorMessage.ts';
 
 interface AnalyticsStat {
   title: string;
@@ -64,7 +62,7 @@ const Analytics: React.FC = () => {
     data: stats,
     isLoading: statsLoading,
     error: statsError,
-  } = useQuery<AnalyticsStat[]>({
+  } = useQuery<AnalyticsStat[] key={832156}>({
     queryKey: ['analytics-stats', timeRange],
     queryFn: () => analyticsService.getAnalyticsStats(timeRange),
   });
@@ -73,7 +71,7 @@ const Analytics: React.FC = () => {
     data: performanceData,
     isLoading: performanceLoading,
     error: performanceError,
-  } = useQuery<PerformanceDataPoint[]>({
+  } = useQuery<PerformanceDataPoint[] key={653203}>({
     queryKey: ['analytics-performance', timeRange],
     queryFn: () => analyticsService.getPerformanceData(timeRange),
   });
@@ -82,7 +80,7 @@ const Analytics: React.FC = () => {
     data: sportDistribution,
     isLoading: distributionLoading,
     error: distributionError,
-  } = useQuery<SportDistribution[]>({
+  } = useQuery<SportDistribution[] key={317513}>({
     queryKey: ['analytics-distribution', timeRange],
     queryFn: () => analyticsService.getSportDistribution(timeRange),
   });
@@ -92,53 +90,53 @@ const Analytics: React.FC = () => {
   };
 
   if (statsError || performanceError || distributionError) {
-    return <ErrorMessage error={statsError || performanceError || distributionError} />;
+    return <ErrorMessage error={statsError || performanceError || distributionError} / key={398609}>;
   }
 
   return (
-    <Box sx={{ flexGrow: 1, p: 3 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-        <Typography variant="h4">Analytics</Typography>
-        <FormControl sx={{ minWidth: 200 }}>
-          <InputLabel>Time Period</InputLabel>
-          <Select label="Time Period" value={timeRange} onChange={handleTimeRangeChange}>
-            <MenuItem value="7">Last 7 days</MenuItem>
-            <MenuItem value="30">Last 30 days</MenuItem>
-            <MenuItem value="90">Last 90 days</MenuItem>
-            <MenuItem value="365">Last year</MenuItem>
+    <Box sx={{ flexGrow: 1, p: 3 }} key={213158}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }} key={244704}>
+        <Typography variant="h4" key={720252}>Analytics</Typography>
+        <FormControl sx={{ minWidth: 200 }} key={806932}>
+          <InputLabel key={405232}>Time Period</InputLabel>
+          <Select label="Time Period" value={timeRange} onChange={handleTimeRangeChange} key={812834}>
+            <MenuItem value="7" key={576146}>Last 7 days</MenuItem>
+            <MenuItem value="30" key={609102}>Last 30 days</MenuItem>
+            <MenuItem value="90" key={298157}>Last 90 days</MenuItem>
+            <MenuItem value="365" key={268231}>Last year</MenuItem>
           </Select>
         </FormControl>
       </Box>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} key={459826}>
         {statsLoading ? (
-          <Grid item xs={12}>
-            <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
-              <CircularProgress />
+          <Grid item xs={12} key={689816}>
+            <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }} key={143990}>
+              <CircularProgress / key={730118}>
             </Box>
           </Grid>
         ) : (
           stats?.map((stat: AnalyticsStat) => (
-            <Grid key={stat.title} item md={3} sm={6} xs={12}>
-              <Card>
-                <CardContent>
-                  <Typography gutterBottom color="textSecondary">
+            <Grid key={stat.title} item md={3} sm={6} xs={12} key={963575}>
+              <Card key={650115}>
+                <CardContent key={452065}>
+                  <Typography gutterBottom color="textSecondary" key={231442}>
                     {stat.title}
                   </Typography>
-                  <Typography component="div" variant="h5">
+                  <Typography component="div" variant="h5" key={734751}>
                     {stat.value}
                   </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }} key={407994}>
                     {stat.trend === 'up' ? (
-                      <TrendingUpIcon color="success" />
+                      <TrendingUpIcon color="success" / key={63688}>
                     ) : (
-                      <TrendingDownIcon color="error" />
+                      <TrendingDownIcon color="error" / key={588136}>
                     )}
-                    <Typography
+                    <Typography;
                       color={stat.trend === 'up' ? 'success.main' : 'error.main'}
                       sx={{ ml: 0.5 }}
                       variant="body2"
-                    >
+                     key={836299}>
                       {stat.change}
                     </Typography>
                   </Box>
@@ -148,25 +146,25 @@ const Analytics: React.FC = () => {
           ))
         )}
 
-        <Grid item xs={12}>
-          <Card>
-            <CardHeader
+        <Grid item xs={12} key={689816}>
+          <Card key={650115}>
+            <CardHeader;
               action={
-                <IconButton>
-                  <MoreVertIcon />
+                <IconButton key={601147}>
+                  <MoreVertIcon / key={870847}>
                 </IconButton>
               }
               title="Performance Over Time"
             />
-            <CardContent>
+            <CardContent key={452065}>
               {performanceLoading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
-                  <CircularProgress />
+                <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }} key={143990}>
+                  <CircularProgress / key={730118}>
                 </Box>
               ) : (
-                <Box sx={{ height: 400 }}>
-                  <ResponsiveContainer height="100%" width="100%">
-                    <LineChart
+                <Box sx={{ height: 400 }} key={870747}>
+                  <ResponsiveContainer height="100%" width="100%" key={191291}>
+                    <LineChart;
                       data={performanceData}
                       margin={{
                         top: 20,
@@ -174,13 +172,13 @@ const Analytics: React.FC = () => {
                         left: 20,
                         bottom: 5,
                       }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="timestamp" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Line activeDot={{ r: 8 }} dataKey="value" stroke="#8884d8" type="monotone" />
+                     key={696483}>
+                      <CartesianGrid strokeDasharray="3 3" / key={580708}>
+                      <XAxis dataKey="timestamp" / key={223901}>
+                      <YAxis / key={190086}>
+                      <Tooltip / key={554254}>
+                      <Legend / key={913243}>
+                      <Line activeDot={{ r: 8 }} dataKey="value" stroke="#8884d8" type="monotone" / key={719812}>
                     </LineChart>
                   </ResponsiveContainer>
                 </Box>
@@ -189,25 +187,25 @@ const Analytics: React.FC = () => {
           </Card>
         </Grid>
 
-        <Grid item xs={12}>
-          <Card>
-            <CardHeader
+        <Grid item xs={12} key={689816}>
+          <Card key={650115}>
+            <CardHeader;
               action={
-                <IconButton>
-                  <MoreVertIcon />
+                <IconButton key={601147}>
+                  <MoreVertIcon / key={870847}>
                 </IconButton>
               }
               title="Prediction Success by Sport"
             />
-            <CardContent>
+            <CardContent key={452065}>
               {distributionLoading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }}>
-                  <CircularProgress />
+                <Box sx={{ display: 'flex', justifyContent: 'center', p: 3 }} key={143990}>
+                  <CircularProgress / key={730118}>
                 </Box>
               ) : (
-                <Box sx={{ height: 400 }}>
-                  <ResponsiveContainer height="100%" width="100%">
-                    <BarChart
+                <Box sx={{ height: 400 }} key={870747}>
+                  <ResponsiveContainer height="100%" width="100%" key={191291}>
+                    <BarChart;
                       data={sportDistribution}
                       margin={{
                         top: 20,
@@ -215,13 +213,13 @@ const Analytics: React.FC = () => {
                         left: 20,
                         bottom: 5,
                       }}
-                    >
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="name" />
-                      <YAxis />
-                      <Tooltip />
-                      <Legend />
-                      <Bar dataKey="value" fill="#8884d8" />
+                     key={721292}>
+                      <CartesianGrid strokeDasharray="3 3" / key={580708}>
+                      <XAxis dataKey="name" / key={113992}>
+                      <YAxis / key={190086}>
+                      <Tooltip / key={554254}>
+                      <Legend / key={913243}>
+                      <Bar dataKey="value" fill="#8884d8" / key={519476}>
                     </BarChart>
                   </ResponsiveContainer>
                 </Box>

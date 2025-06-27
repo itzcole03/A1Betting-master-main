@@ -57,19 +57,19 @@ describe("ProjectionBettingStrategy", () => {
         timestamp: Date.now(),
     };
     it("should produce a valid decision and recommendations", async () => {
-        const strat = new ProjectionBettingStrategy(baseConfig);
-        const decision = await strat.analyze(sampleData);
+
+
         expect(decision).toHaveProperty("recommendations");
         expect(Array.isArray(decision.recommendations)).toBe(true);
         expect(decision.recommendations.length).toBeGreaterThan(0);
-        // @ts-expect-error: risk_reasoning is an extension for future-proofing
+        // @ts-expect-error: risk_reasoning is an extension for future-proofing;
         expect(decision.analysis).toHaveProperty("risk_reasoning");
-        // @ts-expect-error: risk_reasoning is an extension for future-proofing
+        // @ts-expect-error: risk_reasoning is an extension for future-proofing;
         expect(Array.isArray(decision.analysis.risk_reasoning)).toBe(true);
     });
     it("should filter out low-confidence projections", async () => {
-        const strat = new ProjectionBettingStrategy({ ...baseConfig, minConfidence: 0.8 });
-        const decision = await strat.analyze(sampleData);
+
+
         expect(decision.recommendations.length).toBe(0);
     });
     it("should allow plugin extension for new stat types (type-safe)", async () => {
@@ -88,12 +88,12 @@ describe("ProjectionBettingStrategy", () => {
                 return [];
             },
         };
-        const strat = new ProjectionBettingStrategy(baseConfig, [customPlugin]);
-        const decision = await strat.analyze(sampleData);
+
+
         expect(decision.recommendations.some(r => r.id === "custom-1")).toBe(true);
     });
     it("should memoize edge calculations for identical recommendations", () => {
-        const strat = new ProjectionBettingStrategy(baseConfig);
+
         const rec = {
             id: "rec-1",
             type: "OVER",
@@ -101,8 +101,8 @@ describe("ProjectionBettingStrategy", () => {
             reasoning: ["Test"],
             supporting_data: { historical_data: [], market_data: [], correlation_data: [] },
         };
-        const edge1 = strat["calculateEdge"](rec);
-        const edge2 = strat["calculateEdge"](rec);
+
+
         expect(edge1).toBe(edge2);
     });
 });

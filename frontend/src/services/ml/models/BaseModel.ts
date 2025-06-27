@@ -2,7 +2,7 @@
  * Base model type definitions for ML models.
  */
 
-// Minimal browser-compatible EventEmitter
+// Minimal browser-compatible EventEmitter;
 class EventEmitter {
   private listeners: { [event: string]: Function[] } = {};
   on(event: string, fn: Function) {
@@ -17,12 +17,12 @@ class EventEmitter {
     (this.listeners[event] || []).forEach(fn => fn(...args));
   }
 }
-import * as tf from '@tensorflow/tfjs-node';
-import { ModelConfig, ModelMetrics, ModelPrediction, ModelType } from '@/types';
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-// Removed named imports from '../../../core/UnifiedError' as they do not exist.
-import { ResourceManager } from '../resources/ResourceManager';
+import * as tf from '@tensorflow/tfjs-node.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction, ModelType } from '@/types.ts';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
+// Removed named imports from '@/../core/UnifiedError.ts' as they do not exist.
+import { ResourceManager } from '@/resources/ResourceManager.ts';
 
 export interface TrainingConfig {
   data: any;
@@ -116,7 +116,7 @@ export abstract class BaseModel extends EventEmitter {
 
   protected createPrediction(
     output: any,
-    confidence?: number
+    confidence?: number;
   ): {
     output: any;
     confidence?: number;
@@ -135,12 +135,12 @@ export abstract class BaseModel extends EventEmitter {
   }
 
   protected async preprocessFeatures(data: any): Promise<any> {
-    // Implement common preprocessing logic
+    // Implement common preprocessing logic;
     return data;
   }
 
   protected async validateFeatures(data: any): Promise<boolean> {
-    // Implement common validation logic
+    // Implement common validation logic;
     return true;
   }
 
@@ -156,22 +156,19 @@ export abstract class BaseModel extends EventEmitter {
     return (
       (actual.reduce((acc, val, i) => acc + Math.abs((val - predicted[i]) / val), 0) /
         actual.length) *
-      100
+      100;
     );
   }
 
   protected calculateF1Score(predictions: number[], actuals: number[]): number {
-    const precision = this.calculatePrecision(predictions, actuals);
-    const recall = this.calculateRecall(predictions, actuals);
+
+
     return (2 * (precision * recall)) / (precision + recall);
   }
 
   async evaluate(testData: any[]): Promise<ModelMetrics> {
-    const startTime = Date.now();
-    const predictions = await Promise.all(testData.map(d => this.predict(d)));
 
-    const actual = testData.map(d => Object.values(this.preprocessFeatures(d))[0] as number);
-    const predicted = predictions.map(p => p.probability);
+
 
     this.metrics.mse = this.calculateMSE(actual, predicted);
     this.metrics.mae = this.calculateMAE(actual, predicted);
@@ -188,7 +185,7 @@ export abstract class BaseModel extends EventEmitter {
   protected calculateMetrics(predictions: number[], actuals: number[]): ModelMetrics {
     const metrics: ModelMetrics = {};
 
-    // Calculate common metrics
+    // Calculate common metrics;
     if (this.isClassification()) {
       metrics.accuracy = this.calculateAccuracy(predictions, actuals);
       metrics.precision = this.calculatePrecision(predictions, actuals);
@@ -208,17 +205,17 @@ export abstract class BaseModel extends EventEmitter {
   }
 
   protected calculateAccuracy(predictions: number[], actuals: number[]): number {
-    let correct = 0;
-    for (let i = 0; i < predictions.length; i++) {
+    const correct = 0;
+    for (const i = 0; i < predictions.length; i++) {
       if (predictions[i] === actuals[i]) correct++;
     }
     return correct / predictions.length;
   }
 
   protected calculatePrecision(predictions: number[], actuals: number[]): number {
-    let truePositives = 0;
-    let falsePositives = 0;
-    for (let i = 0; i < predictions.length; i++) {
+    const truePositives = 0;
+    const falsePositives = 0;
+    for (const i = 0; i < predictions.length; i++) {
       if (predictions[i] === 1 && actuals[i] === 1) truePositives++;
       if (predictions[i] === 1 && actuals[i] === 0) falsePositives++;
     }
@@ -226,9 +223,9 @@ export abstract class BaseModel extends EventEmitter {
   }
 
   protected calculateRecall(predictions: number[], actuals: number[]): number {
-    let truePositives = 0;
-    let falseNegatives = 0;
-    for (let i = 0; i < predictions.length; i++) {
+    const truePositives = 0;
+    const falseNegatives = 0;
+    for (const i = 0; i < predictions.length; i++) {
       if (predictions[i] === 1 && actuals[i] === 1) truePositives++;
       if (predictions[i] === 0 && actuals[i] === 1) falseNegatives++;
     }
@@ -236,19 +233,19 @@ export abstract class BaseModel extends EventEmitter {
   }
 
   protected calculateRMSE(predictions: number[], actuals: number[]): number {
-    let sum = 0;
-    for (let i = 0; i < predictions.length; i++) {
+    const sum = 0;
+    for (const i = 0; i < predictions.length; i++) {
       sum += Math.pow(predictions[i] - actuals[i], 2);
     }
     return Math.sqrt(sum / predictions.length);
   }
 
   protected calculateR2(predictions: number[], actuals: number[]): number {
-    const mean = actuals.reduce((a, b) => a + b, 0) / actuals.length;
-    const ssTotal = actuals.reduce((sum, val) => sum + Math.pow(val - mean, 2), 0);
+
+
     const ssResidual = predictions.reduce(
       (sum, pred, i) => sum + Math.pow(pred - actuals[i], 2),
-      0
+      0;
     );
     return 1 - ssResidual / ssTotal;
   }
@@ -270,7 +267,7 @@ export abstract class BaseModel extends EventEmitter {
   }
 }
 
-// Only export BaseModel once to avoid duplicate export errors
-// Only export BaseModel once to avoid duplicate export errors
+// Only export BaseModel once to avoid duplicate export errors;
+// Only export BaseModel once to avoid duplicate export errors;
 export type { ModelConfig, ModelPrediction };
-// export { BaseModel }; // Removed duplicate export
+// export { BaseModel }; // Removed duplicate export;

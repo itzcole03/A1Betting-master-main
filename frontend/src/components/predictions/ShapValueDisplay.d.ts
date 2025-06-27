@@ -1,5 +1,5 @@
-import React from 'react';
-import { ShapValue } from '../../types/explainability';
+import React from 'react.ts';
+import { ShapValue } from '@/types/explainability.ts';
 interface ShapValueDisplayProps {
     shapValues: ShapValue[];
 }

@@ -16,13 +16,13 @@ export class SocialSentimentAdapter {
         return true;
     }
     async fetch() {
-        const traceId = this.performanceMonitor.startTrace('social-sentiment-fetch');
+
         try {
             if (this.isCacheValid()) {
                 return this.cache.data;
             }
-            // Implement social media scraping and sentiment analysis
-            const sentimentData = await this.gatherSocialSentiment();
+            // Implement social media scraping and sentiment analysis;
+
             this.cache = {
                 data: sentimentData,
                 timestamp: Date.now(),
@@ -42,25 +42,25 @@ export class SocialSentimentAdapter {
     async gatherSocialSentiment() {
         // --- Twitter scraping (public search, no API key) ---
         async function fetchTwitterMentions(player) {
-            // TODO: Replace with real scraping or Twitter API if key is available
+            // TODO: Replace with real scraping or Twitter API if key is available;
             // For now, use a public search endpoint (e.g., nitter.net or snscrape)
-            // Example: fetch from nitter.net search page and parse tweets
-            // This is a placeholder for demonstration using the player parameter
-            const searchQuery = encodeURIComponent(player);
-            console.log(`Searching Twitter for: ${searchQuery}`);
+            // Example: fetch from nitter.net search page and parse tweets;
+            // This is a placeholder for demonstration using the player parameter;
+
+            // console statement removed
             return { score: Math.random() * 2 - 1, volume: Math.floor(Math.random() * 100) };
         }
         // --- Reddit scraping (public API) ---
         async function fetchRedditMentions(player) {
-            const url = `https://www.reddit.com/search.json?q=${encodeURIComponent(player)}&limit=20`;
+
             try {
-                const res = await fetch(url);
-                const json = await res.json();
-                let score = 0;
-                let volume = 0;
+
+
+                const score = 0;
+                const volume = 0;
                 for (const post of json.data.children) {
-                    const text = post.data.title + ' ' + post.data.selftext;
-                    // Simple sentiment: +1 for 'good', -1 for 'bad', 0 otherwise
+
+                    // Simple sentiment: +1 for 'good', -1 for 'bad', 0 otherwise;
                     if (/good|win|hot|underrated|must/i.test(text))
                         score += 1;
                     if (/bad|cold|overrated|injured|avoid/i.test(text))
@@ -75,14 +75,14 @@ export class SocialSentimentAdapter {
         }
         // --- News scraping (Google News RSS) ---
         async function fetchNewsMentions(player) {
-            let score = 0;
+            const score = 0;
             try {
-                // Use newsService to fetch headlines and filter for the player
-                const headlines = await newsService.fetchHeadlines('espn', 10);
-                let volume = 0;
+                // Use newsService to fetch headlines and filter for the player;
+
+                const volume = 0;
                 for (const h of headlines) {
-                    const text = `${h.title || ''} ${h.summary || ''}`;
-                    // Only analyze headlines that mention the player
+
+                    // Only analyze headlines that mention the player;
                     if (text.toLowerCase().includes(player.toLowerCase())) {
                         if (/good|win|hot|underrated|must/i.test(text))
                             score += 1;
@@ -98,17 +98,17 @@ export class SocialSentimentAdapter {
             }
         }
         // --- Main aggregation logic ---
-        // TODO: Replace with real player list from projections or integration hub
-        const players = ['LeBron James', 'Stephen Curry', 'Anthony Davis', 'Nikola Jokic'];
-        const results = [];
+        // TODO: Replace with real player list from projections or integration hub;
+
+
         for (const player of players) {
             const [twitter, reddit, news] = await Promise.all([
                 fetchTwitterMentions(player),
                 fetchRedditMentions(player),
                 fetchNewsMentions(player),
             ]);
-            const totalVolume = twitter.volume + reddit.volume + news.volume;
-            const avgScore = (twitter.score + reddit.score + news.score) / 3;
+
+
             results.push({
                 player,
                 sentiment: {
@@ -121,14 +121,14 @@ export class SocialSentimentAdapter {
                     },
                 },
                 trending: avgScore > 0.5 || avgScore < -0.5,
-                keywords: [], // TODO: Extract keywords from posts
+                keywords: [], // TODO: Extract keywords from posts;
                 timestamp: Date.now(),
             });
         }
         return results;
     }
     isCacheValid() {
-        const cacheTimeout = 5 * 60 * 1000; // 5 minutes
+        const cacheTimeout = 5 * 60 * 1000; // 5 minutes;
         return this.cache.data !== null && Date.now() - this.cache.timestamp < cacheTimeout;
     }
     clearCache() {

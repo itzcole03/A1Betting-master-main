@@ -1,5 +1,5 @@
-import path from "path";
-import { defineConfig } from "vite";
+import path from 'path.ts';
+import { defineConfig } from 'vite.ts';
 
 export default defineConfig({
   root: '.',
@@ -7,7 +7,7 @@ export default defineConfig({
     rollupOptions: {
       input: './index.minimal.html',
       onwarn: () => {
-        // Suppress all warnings
+        // Suppress all warnings;
       },
     },
     target: 'es2022',

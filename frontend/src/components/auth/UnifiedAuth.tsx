@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { UnifiedServiceRegistry } from '../../services/unified/UnifiedServiceRegistry';
-import { UnifiedStateService } from '../../services/unified/UnifiedStateService';
-import { UnifiedNotificationService } from '../../services/unified/UnifiedNotificationService';
-import { UnifiedErrorService } from '../../services/unified/UnifiedErrorService';
-import { UnifiedSettingsService } from '../../services/unified/UnifiedSettingsService';
-import { Card, Button, Input, Spinner, Toast, Modal } from '../ui/UnifiedUI';
+import React, { useState, useEffect  } from 'react.ts';
+import { useNavigate, useLocation } from 'react-router-dom.ts';
+import { UnifiedServiceRegistry } from '@/services/unified/UnifiedServiceRegistry.ts';
+import { UnifiedStateService } from '@/services/unified/UnifiedStateService.ts';
+import { UnifiedNotificationService } from '@/services/unified/UnifiedNotificationService.ts';
+import { UnifiedErrorService } from '@/services/unified/UnifiedErrorService.ts';
+import { UnifiedSettingsService } from '@/services/unified/UnifiedSettingsService.ts';
+import { Card, Button, Input, Spinner, Toast, Modal } from '@/ui/UnifiedUI.ts';
 
 interface AuthForm {
   email: string;
@@ -20,29 +20,27 @@ interface ValidationError {
 }
 
 export const UnifiedAuth: React.FC = () => {
-  // Initialize services
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const stateService = serviceRegistry.getService<UnifiedStateService>('state');
+  // Initialize services;
+
+
   const notificationService =
-    serviceRegistry.getService<UnifiedNotificationService>('notification');
-  const errorService = serviceRegistry.getService<UnifiedErrorService>('error');
-  const settingsService = serviceRegistry.getService<UnifiedSettingsService>('settings');
+    serviceRegistry.getService<UnifiedNotificationService key={460301}>('notification');
 
-  // Router hooks
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  // State
+  // Router hooks;
+
+
+  // State;
   const [isLogin, setIsLogin] = useState(true);
-  const [form, setForm] = useState<AuthForm>({
+  const [form, setForm] = useState<AuthForm key={518101}>({
     email: '',
     password: '',
     confirmPassword: '',
     rememberMe: false,
   });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [validationErrors, setValidationErrors] = useState<ValidationError[]>([]);
+  const [error, setError] = useState<string | null key={121216}>(null);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[] key={210289}>([]);
   const [toast, setToast] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning' | 'info';
@@ -50,14 +48,14 @@ export const UnifiedAuth: React.FC = () => {
   const [showPasswordReset, setShowPasswordReset] = useState(false);
   const [showVerificationModal, setShowVerificationModal] = useState(false);
 
-  // Check for existing session
+  // Check for existing session;
   useEffect(() => {
     checkSession();
   }, []);
 
   const checkSession = async () => {
     try {
-      const session = await stateService.getState('session');
+
       if (session?.isValid) {
         navigate('/dashboard');
       }
@@ -69,21 +67,21 @@ export const UnifiedAuth: React.FC = () => {
   const validateForm = (): boolean => {
     const errors: ValidationError[] = [];
 
-    // Email validation
+    // Email validation;
     if (!form.email) {
       errors.push({ field: 'email', message: 'Email is required' });
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
       errors.push({ field: 'email', message: 'Invalid email format' });
     }
 
-    // Password validation
+    // Password validation;
     if (!form.password) {
       errors.push({ field: 'password', message: 'Password is required' });
     } else if (form.password.length < 8) {
       errors.push({ field: 'password', message: 'Password must be at least 8 characters' });
     }
 
-    // Confirm password validation for registration
+    // Confirm password validation for registration;
     if (!isLogin && form.password !== form.confirmPassword) {
       errors.push({ field: 'confirmPassword', message: 'Passwords do not match' });
     }
@@ -130,7 +128,6 @@ export const UnifiedAuth: React.FC = () => {
       throw new Error('Login failed');
     }
 
-    const data = await response.json();
     await stateService.setState('session', {
       token: data.token,
       user: data.user,
@@ -203,31 +200,31 @@ export const UnifiedAuth: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
-      <Card className="max-w-md w-full space-y-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8" key={117216}>
+      <Card className="max-w-md w-full space-y-8" key={942774}>
+        <div className="text-center" key={120206}>
+          <h2 className="text-3xl font-bold" key={635399}>
             {isLogin ? 'Sign in to your account' : 'Create a new account'}
           </h2>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            {isLogin
+          <p className="mt-2 text-gray-600 dark:text-gray-400" key={248779}>
+            {isLogin;
               ? 'Welcome back! Please enter your details.'
               : 'Join us today and start betting smarter.'}
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <label
+        <form className="mt-8 space-y-6" onSubmit={handleSubmit} key={198109}>
+          <div className="space-y-4" key={160407}>
+            <div key={241917}>
+              <label;
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                 htmlFor="email"
-              >
-                Email address
+               key={298308}>
+                Email address;
               </label>
-              <Input
-                required
-                error={validationErrors.find(e => e.field === 'email')?.message}
+              <Input;
+                required;
+                error={validationErrors.find(e = key={326140}> e.field === 'email')?.message}
                 id="email"
                 type="email"
                 value={form.email}
@@ -235,16 +232,16 @@ export const UnifiedAuth: React.FC = () => {
               />
             </div>
 
-            <div>
-              <label
+            <div key={241917}>
+              <label;
                 className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                 htmlFor="password"
-              >
-                Password
+               key={731509}>
+                Password;
               </label>
-              <Input
-                required
-                error={validationErrors.find(e => e.field === 'password')?.message}
+              <Input;
+                required;
+                error={validationErrors.find(e = key={326140}> e.field === 'password')?.message}
                 id="password"
                 type="password"
                 value={form.password}
@@ -253,16 +250,16 @@ export const UnifiedAuth: React.FC = () => {
             </div>
 
             {!isLogin && (
-              <div>
-                <label
+              <div key={241917}>
+                <label;
                   className="block text-sm font-medium text-gray-700 dark:text-gray-300"
                   htmlFor="confirmPassword"
-                >
-                  Confirm Password
+                 key={961666}>
+                  Confirm Password;
                 </label>
-                <Input
-                  required
-                  error={validationErrors.find(e => e.field === 'confirmPassword')?.message}
+                <Input;
+                  required;
+                  error={validationErrors.find(e = key={31300}> e.field === 'confirmPassword')?.message}
                   id="confirmPassword"
                   type="password"
                   value={form.confirmPassword}
@@ -272,26 +269,26 @@ export const UnifiedAuth: React.FC = () => {
             )}
 
             {isLogin && (
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
+              <div className="flex items-center justify-between" key={96335}>
+                <div className="flex items-center" key={520222}>
+                  <input;
                     checked={form.rememberMe}
                     className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                     id="remember-me"
                     type="checkbox"
-                    onChange={e => setForm({ ...form, rememberMe: e.target.checked })}
+                    onChange={e = key={92337}> setForm({ ...form, rememberMe: e.target.checked })}
                   />
-                  <label
+                  <label;
                     className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
                     htmlFor="remember-me"
-                  >
-                    Remember me
+                   key={974583}>
+                    Remember me;
                   </label>
                 </div>
-                <button
+                <button;
                   className="text-sm font-medium text-primary-600 hover:text-primary-500"
                   type="button"
-                  onClick={() => setShowPasswordReset(true)}
+                  onClick={() = key={995603}> setShowPasswordReset(true)}
                 >
                   Forgot password?
                 </button>
@@ -299,17 +296,17 @@ export const UnifiedAuth: React.FC = () => {
             )}
           </div>
 
-          <div>
-            <Button className="w-full" disabled={loading} type="submit" variant="primary">
-              {loading ? <Spinner size="small" /> : isLogin ? 'Sign in' : 'Create account'}
+          <div key={241917}>
+            <Button className="w-full" disabled={loading} type="submit" variant="primary" key={509450}>
+              {loading ? <Spinner size="small" / key={64504}> : isLogin ? 'Sign in' : 'Create account'}
             </Button>
           </div>
 
-          <div className="text-center">
-            <button
+          <div className="text-center" key={120206}>
+            <button;
               className="text-sm font-medium text-primary-600 hover:text-primary-500"
               type="button"
-              onClick={() => setIsLogin(!isLogin)}
+              onClick={() = key={167772}> setIsLogin(!isLogin)}
             >
               {isLogin ? "Don't have an account? Sign up" : 'Already have an account? Sign in'}
             </button>
@@ -318,57 +315,57 @@ export const UnifiedAuth: React.FC = () => {
       </Card>
 
       {/* Password Reset Modal */}
-      <Modal
+      <Modal;
         isOpen={showPasswordReset}
         title="Reset Password"
-        onClose={() => setShowPasswordReset(false)}
+        onClose={() = key={364837}> setShowPasswordReset(false)}
       >
-        <div className="space-y-4">
-          <p className="text-gray-600">
+        <div className="space-y-4" key={160407}>
+          <p className="text-gray-600" key={486863}>
             Enter your email address and we'll send you instructions to reset your password.
           </p>
-          <Input
+          <Input;
             placeholder="Enter your email"
             type="email"
             value={form.email}
-            onChange={e => setForm({ ...form, email: e.target.value })}
+            onChange={e = key={554023}> setForm({ ...form, email: e.target.value })}
           />
-          <div className="flex justify-end space-x-4">
-            <Button variant="secondary" onClick={() => setShowPasswordReset(false)}>
-              Cancel
+          <div className="flex justify-end space-x-4" key={910332}>
+            <Button variant="secondary" onClick={() = key={416583}> setShowPasswordReset(false)}>
+              Cancel;
             </Button>
-            <Button disabled={loading} variant="primary" onClick={handlePasswordReset}>
-              {loading ? <Spinner size="small" /> : 'Send Instructions'}
+            <Button disabled={loading} variant="primary" onClick={handlePasswordReset} key={965052}>
+              {loading ? <Spinner size="small" / key={64504}> : 'Send Instructions'}
             </Button>
           </div>
         </div>
       </Modal>
 
       {/* Email Verification Modal */}
-      <Modal
+      <Modal;
         isOpen={showVerificationModal}
         title="Verify Your Email"
-        onClose={() => setShowVerificationModal(false)}
+        onClose={() = key={616994}> setShowVerificationModal(false)}
       >
-        <div className="text-center">
-          <p className="text-gray-600 mb-6">
-            We've sent a verification link to your email address. Please check your inbox and click
+        <div className="text-center" key={120206}>
+          <p className="text-gray-600 mb-6" key={624610}>
+            We've sent a verification link to your email address. Please check your inbox and click;
             the link to verify your account.
           </p>
-          <Button
+          <Button;
             variant="primary"
-            onClick={() => {
+            onClick={() = key={779583}> {
               setShowVerificationModal(false);
               setIsLogin(true);
             }}
           >
-            Return to Login
+            Return to Login;
           </Button>
         </div>
       </Modal>
 
       {/* Toast Notifications */}
-      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() = key={337979}> setToast(null)} />}
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { APIError, AppError } from "../core/UnifiedError";
 import axios from "axios";
 import { unifiedMonitor } from "../core/UnifiedMonitor";
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-const BETTING_BACKEND_PREFIX = `${API_BASE_URL}/api/betting`;
+
+
 // --- End Backend Type Definitions ---
 /**
  * Calculates a betting strategy based on selected props, bankroll, and risk level.
@@ -36,14 +36,14 @@ export const calculateBettingStrategy = async (request) => {
     "http.client",
   );
   try {
-    const endpoint = `${BETTING_BACKEND_PREFIX}/calculate-strategy`;
+
     const backendRequestPayload = {
       available_propositions: request.propositions,
       bankroll: request.bankroll,
       risk_level: request.riskLevel,
     };
     // Backend returns List[BackendStrategyBet]
-    const response = await axios.post(endpoint, backendRequestPayload);
+
     if (trace) {
       trace.setHttpStatus(response.status);
       unifiedMonitor.endTrace(trace);
@@ -54,7 +54,7 @@ export const calculateBettingStrategy = async (request) => {
       // Construct description based on available data or set a default.
       description: `Strategy bet for ${Array.isArray(bet.legs) ? bet.legs.length : 0} leg(s)`,
       expectedValue: bet.potential_payout - bet.stake,
-      confidence: 0.75, // Mock confidence, backend doesn't provide this for now
+      confidence: 0.75, // Mock confidence, backend doesn't provide this for now;
       type:
         bet.type ||
         (Array.isArray(bet.legs) && bet.legs.length > 1 ? "parlay" : "single"),
@@ -110,8 +110,8 @@ export const placeBets = async (request) => {
     "http.client",
   );
   try {
-    const endpoint = `${BETTING_BACKEND_PREFIX}/place-bet`;
-    // Backend expects List[BackendStrategyBet] as BetPlacementRequest
+
+    // Backend expects List[BackendStrategyBet] as BetPlacementRequest;
     const backendPayload = request.bets.map((opp) => ({
       bet_id: opp.id,
       legs: opp.legs.map((leg) => ({
@@ -123,13 +123,13 @@ export const placeBets = async (request) => {
         game_id: leg.gameId,
         description: leg.description,
       })),
-      stake: opp.stakeSuggestion || 0, // Ensure stake is a number
-      potential_payout: opp.potentialPayout || 0, // Ensure potential_payout is a number
-      status: opp.status || "pending_placement", // Pass current status or a default
-      created_at: new Date().toISOString(), // Backend will likely overwrite this
+      stake: opp.stakeSuggestion || 0, // Ensure stake is a number;
+      potential_payout: opp.potentialPayout || 0, // Ensure potential_payout is a number;
+      status: opp.status || "pending_placement", // Pass current status or a default;
+      created_at: new Date().toISOString(), // Backend will likely overwrite this;
       type: opp.type,
     }));
-    const response = await axios.post(endpoint, backendPayload);
+
     if (trace) {
       trace.setHttpStatus(response.status);
       unifiedMonitor.endTrace(trace);
@@ -142,7 +142,7 @@ export const placeBets = async (request) => {
     }));
     return mappedResponse;
   } catch (error) {
-    const errContext = { service: "bettingStrategy", operation: "placeBets" };
+
     unifiedMonitor.reportError(error, errContext);
     if (trace) {
       trace.setHttpStatus(error.response?.status || 500);

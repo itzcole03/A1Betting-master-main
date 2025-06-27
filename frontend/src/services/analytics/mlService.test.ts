@@ -1,4 +1,4 @@
-import { mlService } from './mlService';
+import { mlService } from './mlService.ts';
 
 describe('mlService', () => {
   it('should initialize without errors', () => {

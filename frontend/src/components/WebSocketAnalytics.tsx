@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import SafeChart from "./ui/SafeChart";
+import React, { useEffect, useState  } from 'react.ts';
+import SafeChart from './ui/SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,9 +10,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { WebSocketService } from "../services/webSocketService";
-import { WebSocketMetrics } from "../types/websocket";
-import { WebSocketConnection } from "../types/websocket";
+import { WebSocketService } from '@/services/webSocketService.ts';
+import { WebSocketMetrics } from '@/types/websocket.ts';
+import { WebSocketConnection } from '@/types/websocket.ts';
 
 ChartJS.register(
   CategoryScale,
@@ -28,22 +28,21 @@ interface WebSocketAnalyticsProps {
   webSocketService: WebSocketService;
 }
 
-export const WebSocketAnalytics: React.FC<WebSocketAnalyticsProps> = ({
+export const WebSocketAnalytics: React.FC<WebSocketAnalyticsProps key={934637}> = ({
   webSocketService,
 }) => {
-  const [metrics, setMetrics] = useState<WebSocketMetrics[]>([]);
-  const [selectedMetric, setSelectedMetric] = useState<string>("latency");
+  const [metrics, setMetrics] = useState<WebSocketMetrics[] key={438455}>([]);
+  const [selectedMetric, setSelectedMetric] = useState<string key={278855}>("latency");
 
   useEffect(() => {
     const updateMetrics = () => {
-      const connections = webSocketService.getConnections();
+
       const currentMetrics = connections.map(
         (conn: WebSocketConnection) => conn.metrics,
       );
       setMetrics(currentMetrics);
     };
 
-    const interval = setInterval(updateMetrics, 1000);
     return () => clearInterval(interval);
   }, [webSocketService]);
 
@@ -90,59 +89,59 @@ export const WebSocketAnalytics: React.FC<WebSocketAnalyticsProps> = ({
   };
 
   return (
-    <div className="p-4">
-      <h2 className="text-2xl font-bold mb-4">WebSocket Analytics</h2>
+    <div className="p-4" key={916123}>
+      <h2 className="text-2xl font-bold mb-4" key={946196}>WebSocket Analytics</h2>
 
-      <div className="grid grid-cols-3 gap-4 mb-4">
-        <div className="bg-white p-4 rounded shadow">
-          <h3 className="font-semibold">Total Connections</h3>
-          <p className="text-2xl">{metrics.length}</p>
+      <div className="grid grid-cols-3 gap-4 mb-4" key={585800}>
+        <div className="bg-white p-4 rounded shadow" key={206166}>
+          <h3 className="font-semibold" key={204068}>Total Connections</h3>
+          <p className="text-2xl" key={448714}>{metrics.length}</p>
         </div>
-        <div className="bg-white p-4 rounded shadow">
-          <h3 className="font-semibold">Average Latency</h3>
-          <p className="text-2xl">
-            {metrics.length > 0
+        <div className="bg-white p-4 rounded shadow" key={206166}>
+          <h3 className="font-semibold" key={204068}>Average Latency</h3>
+          <p className="text-2xl" key={448714}>
+            {metrics.length > 0;
               ? Math.round(
                   metrics.reduce((acc, m) => acc + m.latency, 0) /
                     metrics.length,
                 )
               : 0}{" "}
-            ms
+            ms;
           </p>
         </div>
-        <div className="bg-white p-4 rounded shadow">
-          <h3 className="font-semibold">Message Rate</h3>
-          <p className="text-2xl">
-            {metrics.length > 0
+        <div className="bg-white p-4 rounded shadow" key={206166}>
+          <h3 className="font-semibold" key={204068}>Message Rate</h3>
+          <p className="text-2xl" key={448714}>
+            {metrics.length > 0;
               ? Math.round(
                   metrics.reduce((acc, m) => acc + m.messageCount, 0) /
                     metrics.length,
                 )
               : 0}{" "}
-            /s
+            /s;
           </p>
         </div>
       </div>
 
-      <div className="bg-white p-4 rounded shadow">
-        <SafeChart
+      <div className="bg-white p-4 rounded shadow" key={206166}>
+        <SafeChart;
           type="line"
           data={chartData}
           options={chartOptions}
           loadingMessage="Loading WebSocket metrics..."
-        />
+        / key={390925}>
       </div>
 
-      <div className="mt-4">
-        <h3 className="font-semibold mb-2">Connection Status</h3>
-        <div className="grid grid-cols-2 gap-4">
+      <div className="mt-4" key={139982}>
+        <h3 className="font-semibold mb-2" key={737521}>Connection Status</h3>
+        <div className="grid grid-cols-2 gap-4" key={354810}>
           {metrics.map((metric, index) => (
-            <div key={index} className="bg-white p-4 rounded shadow">
-              <h4 className="font-semibold">Connection {index + 1}</h4>
-              <p>Status: {metric.isConnected ? "Connected" : "Disconnected"}</p>
-              <p>Messages: {metric.messageCount}</p>
-              <p>Errors: {metric.errorCount}</p>
-              <p>Last Error: {metric.lastError || "None"}</p>
+            <div key={index} className="bg-white p-4 rounded shadow" key={913008}>
+              <h4 className="font-semibold" key={784993}>Connection {index + 1}</h4>
+              <p key={161203}>Status: {metric.isConnected ? "Connected" : "Disconnected"}</p>
+              <p key={161203}>Messages: {metric.messageCount}</p>
+              <p key={161203}>Errors: {metric.errorCount}</p>
+              <p key={161203}>Last Error: {metric.lastError || "None"}</p>
             </div>
           ))}
         </div>

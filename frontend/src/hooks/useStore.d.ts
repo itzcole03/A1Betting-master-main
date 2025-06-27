@@ -1,5 +1,5 @@
-import { Entry, PerformanceMetrics, BettingOpportunity, Alert, BetRecord } from '../types/core';
-import { ProcessedPrizePicksProp } from '../types/prizePicks';
+import { Entry, PerformanceMetrics, BettingOpportunity, Alert, BetRecord } from '@/types/core.ts';
+import { ProcessedPrizePicksProp } from '@/types/prizePicks.ts';
 interface User {
     id: string;
     name: string;

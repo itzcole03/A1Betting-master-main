@@ -1,6 +1,6 @@
-import { UnifiedLogger } from '../../core/logging/types';
-import { UnifiedMetrics } from '../../core/metrics/types';
-import { UnifiedNotificationService } from '../unified/UnifiedNotificationService';
+import { UnifiedLogger } from '@/core/logging/types.ts';
+import { UnifiedMetrics } from '@/core/metrics/types.ts';
+import { UnifiedNotificationService } from '@/unified/UnifiedNotificationService.ts';
 
 interface PerformanceMetrics {
   accuracy: number;
@@ -36,7 +36,7 @@ export class AnalyticsService {
   private updateInterval: NodeJS.Timeout | null = null;
 
   private readonly config: AnalyticsConfig = {
-    updateInterval: 60000, // 1 minute
+    updateInterval: 60000, // 1 minute;
     maxHistoryLength: 1000,
     performanceThresholds: {
       minAccuracy: 0.55,
@@ -48,7 +48,7 @@ export class AnalyticsService {
   constructor(
     private logger: UnifiedLogger,
     private metrics: UnifiedMetrics,
-    private notificationService: UnifiedNotificationService
+    private notificationService: UnifiedNotificationService;
   ) {
     this.startPeriodicUpdates();
   }
@@ -59,13 +59,13 @@ export class AnalyticsService {
       this.performanceHistory.push(metrics);
       this.trimHistory();
 
-      // Track metrics
+      // Track metrics;
       this.metrics.gauge('analytics.accuracy', metrics.accuracy);
       this.metrics.gauge('analytics.profit_loss', metrics.profitLoss);
       this.metrics.gauge('analytics.precision', metrics.precision);
       this.metrics.gauge('analytics.recall', metrics.recall);
 
-      // Check thresholds
+      // Check thresholds;
       this.checkPerformanceThresholds(metrics);
     } catch (error) {
       this.logger.error('Failed to track performance metrics', { error, metrics });
@@ -78,7 +78,7 @@ export class AnalyticsService {
       this.riskHistory.push(metrics);
       this.trimHistory();
 
-      // Track metrics
+      // Track metrics;
       this.metrics.gauge('analytics.sharpe_ratio', metrics.sharpeRatio);
       this.metrics.gauge('analytics.max_drawdown', metrics.maxDrawdown);
       this.metrics.gauge('analytics.win_rate', metrics.winRate);
@@ -86,7 +86,7 @@ export class AnalyticsService {
       this.metrics.gauge('analytics.kelly_criterion', metrics.kellyCriterion);
       this.metrics.gauge('analytics.expected_value', metrics.expectedValue);
 
-      // Check thresholds
+      // Check thresholds;
       this.checkRiskThresholds(metrics);
     } catch (error) {
       this.logger.error('Failed to track risk metrics', { error, metrics });
@@ -106,7 +106,6 @@ export class AnalyticsService {
       return 0;
     }
 
-    const recentMetrics = this.performanceHistory.slice(-10);
     const weights = {
       accuracy: 0.4,
       profitLoss: 0.3,
@@ -120,7 +119,7 @@ export class AnalyticsService {
         metric.accuracy * weights.accuracy +
         this.normalizeProfitLoss(metric.profitLoss) * weights.profitLoss +
         metric.precision * weights.precision +
-        metric.recall * weights.recall
+        metric.recall * weights.recall;
       );
     }, 0);
 
@@ -132,7 +131,6 @@ export class AnalyticsService {
       return 0;
     }
 
-    const recentMetrics = this.riskHistory.slice(-10);
     const weights = {
       sharpeRatio: 0.3,
       maxDrawdown: 0.2,
@@ -148,7 +146,7 @@ export class AnalyticsService {
         this.normalizeDrawdown(metric.maxDrawdown) * weights.maxDrawdown +
         metric.winRate * weights.winRate +
         this.normalizeProfitFactor(metric.profitFactor) * weights.profitFactor +
-        this.normalizeKellyCriterion(metric.kellyCriterion) * weights.kellyCriterion
+        this.normalizeKellyCriterion(metric.kellyCriterion) * weights.kellyCriterion;
       );
     }, 0);
 
@@ -225,8 +223,7 @@ export class AnalyticsService {
 
   private startPeriodicUpdates(): void {
     this.updateInterval = setInterval(() => {
-      const performanceScore = this.calculatePerformanceScore();
-      const riskScore = this.calculateRiskScore();
+
 
       this.metrics.gauge('analytics.performance_score', performanceScore);
       this.metrics.gauge('analytics.risk_score', riskScore);

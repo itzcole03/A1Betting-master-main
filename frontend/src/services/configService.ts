@@ -1,14 +1,12 @@
-import axios from "axios";
-import { FeatureFlags } from "../types";
+import axios from 'axios.ts';
+import { FeatureFlags } from '@/types.ts';
 import {
   UnifiedApplicationConfig,
   getInitializedUnifiedConfig,
-} from "../core/UnifiedConfig";
-import { unifiedMonitor } from "../core/UnifiedMonitor";
+} from '@/core/UnifiedConfig.ts';
+import { unifiedMonitor } from '@/core/UnifiedMonitor.ts';
 
-// import { get } from './api';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL;
+// import { get } from './api.ts';
 
 /**
  * Fetches the main application configuration from the backend.
@@ -32,7 +30,7 @@ export const fetchAppConfig = async (): Promise<UnifiedApplicationConfig> => {
     "http.client",
   );
   try {
-    // Use plain Axios for the initial config fetch to avoid UnifiedConfig dependency
+    // Use plain Axios for the initial config fetch to avoid UnifiedConfig dependency;
     const response = await axios.get<UnifiedApplicationConfig>(
       `${API_BASE_URL}/api/config/app`,
     );
@@ -62,12 +60,11 @@ export const isFeatureEnabled = async (
   flagName: keyof FeatureFlags,
 ): Promise<boolean> => {
   try {
-    const config = getInitializedUnifiedConfig();
 
-    // Get feature flags from the config
-    const features = config.get<any>("features");
+    // Get feature flags from the config;
+
     if (!features) {
-      // Default feature flags if not configured
+      // Default feature flags if not configured;
       const defaultFlags: Record<string, boolean> = {
         INJURIES: true,
         NEWS: true,
@@ -85,8 +82,8 @@ export const isFeatureEnabled = async (
       return defaultFlags[flagName as string] || false;
     }
 
-    // Check if the feature is enabled
-    const feature = features[flagName] || features[`enable${flagName}`];
+    // Check if the feature is enabled;
+
     if (typeof feature === "boolean") {
       return feature;
     }
@@ -94,11 +91,11 @@ export const isFeatureEnabled = async (
       return feature.enabled;
     }
 
-    // Default to false if not found
+    // Default to false if not found;
     return false;
   } catch (error) {
-    console.warn(`Feature flag check failed for ${flagName}:`, error);
-    // Default fallback for common features
+    // console statement removed
+    // Default fallback for common features;
     const commonFeatures: Record<string, boolean> = {
       INJURIES: true,
       NEWS: true,
@@ -117,12 +114,11 @@ export const isFeatureEnabled = async (
  */
 export const fetchAllFeatureFlags = async (): Promise<FeatureFlags> => {
   try {
-    const config = getInitializedUnifiedConfig();
 
-    // Get feature flags from the config
-    const features = config.get<any>("features");
+    // Get feature flags from the config;
+
     if (!features) {
-      // Return default feature flags
+      // Return default feature flags;
       return {
         INJURIES: true,
         NEWS: true,
@@ -139,7 +135,7 @@ export const fetchAllFeatureFlags = async (): Promise<FeatureFlags> => {
       } as FeatureFlags;
     }
 
-    // Convert feature object to flat flags
+    // Convert feature object to flat flags;
     const flags: any = {};
     Object.entries(features).forEach(([key, value]) => {
       if (typeof value === "boolean") {
@@ -147,7 +143,7 @@ export const fetchAllFeatureFlags = async (): Promise<FeatureFlags> => {
       } else if (
         typeof value === "object" &&
         value !== null &&
-        "enabled" in value
+        "enabled" in value;
       ) {
         flags[key] = value.enabled;
       }
@@ -155,8 +151,8 @@ export const fetchAllFeatureFlags = async (): Promise<FeatureFlags> => {
 
     return flags as FeatureFlags;
   } catch (error) {
-    console.warn("Failed to fetch feature flags:", error);
-    // Return safe defaults
+    // console statement removed
+    // Return safe defaults;
     return {
       INJURIES: true,
       NEWS: true,

@@ -146,7 +146,7 @@ class WaveletTransformFeatures:
                 if i < len(patterns) - 1:
                     template_m1 = data[i : i + m + 1]
                     patterns_m1 = np.array(
-                        [data[j : j + m + 1] for j in range(N - m) if j != i]
+                        [data[j : j + m + 1] for _ in range(N - m) if j != i]
                     )
                     if len(patterns_m1) > 0:
                         distances_m1 = np.max(np.abs(patterns_m1 - template_m1), axis=1)
@@ -222,7 +222,7 @@ class ManifoldLearningFeatures:
         # Diffusion distance matrix
         diffusion_distance = np.zeros((len(X), len(X)))
         for i in range(len(X)):
-            for j in range(len(X)):
+            for _ in range(len(X)):
                 diff = embedding[i] - embedding[j]
                 diffusion_distance[i, j] = np.sqrt(np.sum(diff**2))
 
@@ -603,7 +603,7 @@ class GraphBasedFeatures:
 
         # Add edges based on correlation threshold
         for i in range(n_features):
-            for j in range(i + 1, n_features):
+            for _ in range(i + 1, n_features):
                 if abs(corr_matrix[i, j]) > threshold:
                     G.add_edge(i, j, weight=abs(corr_matrix[i, j]))
 
@@ -710,7 +710,7 @@ class GraphBasedFeatures:
             for node in G.nodes():
                 neighbors = list(G.neighbors(node))
                 for i in range(len(neighbors)):
-                    for j in range(i + 1, len(neighbors)):
+                    for _ in range(i + 1, len(neighbors)):
                         if not G.has_edge(neighbors[i], neighbors[j]):
                             path_count += 1
             motif_counts["3_paths"] = path_count
@@ -846,7 +846,7 @@ class EnhancedMathematicalFeatureEngineering:
         if X.shape[1] <= 20:  # Limit combinatorial explosion
             pairwise_products = []
             for i in range(X.shape[1]):
-                for j in range(i + 1, X.shape[1]):
+                for _ in range(i + 1, X.shape[1]):
                     product = X[:, i] * X[:, j]
                     pairwise_products.append(product)
 
@@ -856,7 +856,7 @@ class EnhancedMathematicalFeatureEngineering:
         # Ratio features
         ratio_features = []
         for i in range(min(5, X.shape[1])):
-            for j in range(i + 1, min(5, X.shape[1])):
+            for _ in range(i + 1, min(5, X.shape[1])):
                 ratio = X[:, i] / (X[:, j] + 1e-8)
                 ratio_features.append(ratio)
 

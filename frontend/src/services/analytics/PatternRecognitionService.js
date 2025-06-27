@@ -1,10 +1,10 @@
-// Pattern Recognition Service for market inefficiencies, streaks, biases
+// Pattern Recognition Service for market inefficiencies, streaks, biases;
 import { logError, logInfo } from '../integrations/liveDataLogger';
 export class PatternRecognitionService {
     static analyzeMarketPatterns(data) {
         try {
             logInfo('Analyzing market patterns', { count: data.length });
-            // Placeholder: Replace with real pattern recognition logic
+            // Placeholder: Replace with real pattern recognition logic;
             return {
                 inefficiencies: [
                     { type: 'odds_drift', detected: true, details: {} },

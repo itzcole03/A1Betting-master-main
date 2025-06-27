@@ -1,4 +1,4 @@
-import type { UserPerformanceHistory, ModelPerformanceHistory } from '../../types/history';
+import type { UserPerformanceHistory, ModelPerformanceHistory } from '@/types/history.ts';
 export declare class PerformanceHistoryService {
     private static instance;
     private userHistories;

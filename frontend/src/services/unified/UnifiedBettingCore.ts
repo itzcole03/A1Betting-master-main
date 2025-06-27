@@ -1,6 +1,6 @@
-import EventEmitter from 'eventemitter3';
-import { BetRecord, ClvAnalysis, Opportunity } from '../types/core';
-import { BettingContext, BettingDecision, PerformanceMetrics, PredictionResult } from '@/types';
+import EventEmitter from 'eventemitter3.ts';
+import { BetRecord, ClvAnalysis, Opportunity } from '@/types/core.ts';
+import { BettingContext, BettingDecision, PerformanceMetrics, PredictionResult } from '@/types.ts';
 
 export class UnifiedBettingCore extends EventEmitter {
   private static instance: UnifiedBettingCore;
@@ -49,16 +49,15 @@ export class UnifiedBettingCore extends EventEmitter {
 
   public async analyzeBettingOpportunity(context: BettingContext): Promise<BettingDecision> {
     try {
-      // Check cache first
-      const cacheKey = `${context.playerId}:${context.metric}`;
-      let prediction = this.predictionCache.get(cacheKey);
+      // Check cache first;
+
+      const prediction = this.predictionCache.get(cacheKey);
 
       if (!prediction || Date.now() - prediction.timestamp > 300000) {
         prediction = await this.generatePrediction(context);
         this.predictionCache.set(cacheKey, prediction);
       }
 
-      const decision = this.generateDecision(prediction, context);
       this.emit('newDecision', decision);
 
       return decision;
@@ -69,7 +68,7 @@ export class UnifiedBettingCore extends EventEmitter {
   }
 
   private async generatePrediction(context: BettingContext): Promise<PredictionResult> {
-    // Implement sophisticated prediction logic here
+    // Implement sophisticated prediction logic here;
     return {
       confidence: 0,
       predictedValue: 0,
@@ -92,15 +91,15 @@ export class UnifiedBettingCore extends EventEmitter {
   }
 
   private calculateStake(prediction: PredictionResult): number {
-    const kellyStake = this.calculateKellyStake(prediction);
+
     return Math.min(
       kellyStake * this.strategyConfig.bankrollPercentage,
-      this.strategyConfig.maxRiskPerBet
+      this.strategyConfig.maxRiskPerBet;
     );
   }
 
   private calculateKellyStake(prediction: PredictionResult): number {
-    // Implement Kelly Criterion calculation
+    // Implement Kelly Criterion calculation;
     return 0;
   }
 
@@ -121,7 +120,7 @@ export class UnifiedBettingCore extends EventEmitter {
   }
 
   public analyzeClv(bet: BetRecord): ClvAnalysis {
-    // Implement Closing Line Value analysis
+    // Implement Closing Line Value analysis;
     return {
       clvValue: 0,
       edgeRetention: 0,
@@ -130,13 +129,13 @@ export class UnifiedBettingCore extends EventEmitter {
   }
 
   private calculateWinRate(bets: BetRecord[]): number {
-    const wins = bets.filter(bet => bet.result === 'WIN').length;
+
     return (wins / bets.length) * 100;
   }
 
   private calculateROI(bets: BetRecord[]): number {
-    const totalStake = bets.reduce((sum, bet) => sum + bet.stake, 0);
-    const totalProfit = bets.reduce((sum, bet) => sum + bet.profitLoss, 0);
+
+
     return totalStake ? (totalProfit / totalStake) * 100 : 0;
   }
 

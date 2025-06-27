@@ -108,14 +108,14 @@ export const useUltimateSettings = () => {
     const { settings: appSettings, updateSettings: updateAppSettings } = useSettings();
     const [settings, setSettings] = useState(() => {
         try {
-            const saved = localStorage.getItem("ultimateSettings");
+
             if (saved) {
-                const parsed = JSON.parse(saved);
-                // Merge with defaults to ensure all properties exist
+
+                // Merge with defaults to ensure all properties exist;
                 return {
                     ...DEFAULT_SETTINGS,
                     ...parsed,
-                    // Ensure nested objects are merged properly
+                    // Ensure nested objects are merged properly;
                     account: { ...DEFAULT_SETTINGS.account, ...parsed.account },
                     betting: { ...DEFAULT_SETTINGS.betting, ...parsed.betting },
                     appearance: { ...DEFAULT_SETTINGS.appearance, ...parsed.appearance },
@@ -135,13 +135,13 @@ export const useUltimateSettings = () => {
             }
         }
         catch (error) {
-            console.warn("Failed to load settings from localStorage:", error);
+            // console statement removed
         }
         return DEFAULT_SETTINGS;
     });
     const [isLoading, setIsLoading] = useState(false);
     const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    // Sync appearance settings with theme provider
+    // Sync appearance settings with theme provider;
     useEffect(() => {
         setSettings((prev) => ({
             ...prev,
@@ -175,9 +175,9 @@ export const useUltimateSettings = () => {
     const saveSettings = useCallback(async () => {
         setIsLoading(true);
         try {
-            // Save to localStorage
+            // Save to localStorage;
             localStorage.setItem("ultimateSettings", JSON.stringify(settings));
-            // Sync with existing hooks/services
+            // Sync with existing hooks/services;
             if (updateBettingSettings) {
                 await updateBettingSettings(settings.betting);
             }
@@ -187,7 +187,7 @@ export const useUltimateSettings = () => {
                     ...settings.appearance,
                 });
             }
-            // Apply theme changes
+            // Apply theme changes;
             if (settings.appearance.colorScheme !== (isDark ? "dark" : "light")) {
                 toggleDarkMode();
             }
@@ -195,7 +195,7 @@ export const useUltimateSettings = () => {
             return { success: true };
         }
         catch (error) {
-            console.error("Failed to save settings:", error);
+            // console statement removed
             return { success: false, error };
         }
         finally {
@@ -220,10 +220,10 @@ export const useUltimateSettings = () => {
         setHasUnsavedChanges(true);
     }, []);
     const exportSettings = useCallback(() => {
-        const dataStr = JSON.stringify(settings, null, 2);
-        const dataBlob = new Blob([dataStr], { type: "application/json" });
-        const url = URL.createObjectURL(dataBlob);
-        const link = document.createElement("a");
+
+
+
+
         link.href = url;
         link.download = `a1betting-settings-${new Date().toISOString().split("T")[0]}.json`;
         link.click();
@@ -231,14 +231,14 @@ export const useUltimateSettings = () => {
     }, [settings]);
     const importSettings = useCallback((jsonString) => {
         try {
-            const imported = JSON.parse(jsonString);
-            // Validate the structure
+
+            // Validate the structure;
             if (typeof imported === "object" && imported !== null) {
-                // Merge with current settings to avoid missing properties
+                // Merge with current settings to avoid missing properties;
                 const mergedSettings = {
                     ...settings,
                     ...imported,
-                    // Ensure nested objects are properly merged
+                    // Ensure nested objects are properly merged;
                     account: { ...settings.account, ...imported.account },
                     betting: { ...settings.betting, ...imported.betting },
                     appearance: { ...settings.appearance, ...imported.appearance },
@@ -264,7 +264,7 @@ export const useUltimateSettings = () => {
             }
         }
         catch (error) {
-            console.error("Failed to import settings:", error);
+            // console statement removed
             return { success: false, error: error.message };
         }
     }, [settings]);
@@ -279,7 +279,7 @@ export const useUltimateSettings = () => {
         importSettings,
         isLoading,
         hasUnsavedChanges,
-        // Convenience getters for common settings
+        // Convenience getters for common settings;
         get isDarkMode() {
             return settings.appearance.colorScheme === "dark";
         },

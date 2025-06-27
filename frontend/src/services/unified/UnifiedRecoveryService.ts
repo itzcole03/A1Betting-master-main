@@ -1,14 +1,12 @@
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { UnifiedSettingsService } from './UnifiedSettingsService';
-import { UnifiedErrorService } from './UnifiedErrorService';
-import { UnifiedBackupService } from './UnifiedBackupService';
-import { UnifiedServiceRegistry } from '../unified/UnifiedServiceRegistry';
-import { promises as fs } from 'fs';
-import path from 'path';
-import { exec } from 'child_process';
-import { promisify } from 'util';
-
-const execAsync = promisify(exec);
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedSettingsService } from './UnifiedSettingsService.ts';
+import { UnifiedErrorService } from './UnifiedErrorService.ts';
+import { UnifiedBackupService } from './UnifiedBackupService.ts';
+import { UnifiedServiceRegistry } from '@/unified/UnifiedServiceRegistry.ts';
+import { promises as fs } from 'fs.ts';
+import path from 'path.ts';
+import { exec } from 'child_process.ts';
+import { promisify } from 'util.ts';
 
 interface DatabaseConfig {
   postgres?: {
@@ -90,8 +88,7 @@ export class UnifiedRecoveryService {
       };
     }
 
-    const attemptKey = `${component}:${action}`;
-    const attempts = (this.recoveryAttempts.get(attemptKey) || 0) + 1;
+
     this.recoveryAttempts.set(attemptKey, attempts);
 
     if (attempts > this.config.maxRetries) {
@@ -107,32 +104,31 @@ export class UnifiedRecoveryService {
     try {
       this.logger.info(`Starting recovery for ${component} (attempt ${attempts})`, 'recovery');
 
-      // Verify latest backup
+      // Verify latest backup;
       if (this.config.backupVerification) {
-        const backupPath = await this.getLatestBackup();
+
         if (backupPath) {
-          const isValid = await this.backupService.verifyBackup(backupPath);
+
           if (!isValid) {
             throw new Error('Backup verification failed');
           }
         }
       }
 
-      // Perform component-specific recovery
-      const result = await this.recoverComponent(component, action);
+      // Perform component-specific recovery;
 
-      // Reset recovery attempts on success
+      // Reset recovery attempts on success;
       if (result.success) {
         this.recoveryAttempts.delete(attemptKey);
       }
 
       return result;
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
       this.logger.error(`Recovery failed: ${errorMessage}`, 'recovery');
       this.errorService.handleError(error, 'recovery', `${component}:${action}`);
 
-      // Schedule retry if auto-recovery is enabled
+      // Schedule retry if auto-recovery is enabled;
       if (this.config.autoRecovery && attempts < this.config.maxRetries) {
         setTimeout(() => {
           this.performRecovery(component, action);
@@ -151,9 +147,9 @@ export class UnifiedRecoveryService {
 
   private async getLatestBackup(): Promise<string | null> {
     try {
-      const backupDir = this.settings.get<string>('backup.path', './backups');
-      const entries = await fs.readdir(backupDir);
-      const backups = entries
+
+
+      const backups = entries;
         .filter(entry => entry.startsWith('backup_'))
         .sort()
         .reverse();
@@ -182,21 +178,20 @@ export class UnifiedRecoveryService {
 
   private async recoverDatabase(): Promise<RecoveryResult> {
     try {
-      const dbConfig = this.settings.get<DatabaseConfig>('database', {});
 
-      // Recover PostgreSQL
+      // Recover PostgreSQL;
       if (dbConfig.postgres) {
         const { host, port, database, username, password } = dbConfig.postgres;
-        const env = { ...process.env, PGPASSWORD: password };
+
         await execAsync(`pg_restore -h ${host} -p ${port} -U ${username} -d ${database} -c -v`, {
           env,
         });
       }
 
-      // Recover Redis
+      // Recover Redis;
       if (dbConfig.redis) {
         const { host, port, password } = dbConfig.redis;
-        const env = { ...process.env, REDISCLI_AUTH: password };
+
         await execAsync(`redis-cli -h ${host} -p ${port} FLUSHALL`, { env });
       }
 
@@ -215,7 +210,7 @@ export class UnifiedRecoveryService {
 
   private async recoverWebSocket(): Promise<RecoveryResult> {
     try {
-      // Implement WebSocket recovery logic
+      // Implement WebSocket recovery logic;
       return {
         success: true,
         timestamp: Date.now(),
@@ -231,7 +226,7 @@ export class UnifiedRecoveryService {
 
   private async recoverAPI(): Promise<RecoveryResult> {
     try {
-      // Implement API recovery logic
+      // Implement API recovery logic;
       return {
         success: true,
         timestamp: Date.now(),
@@ -247,7 +242,7 @@ export class UnifiedRecoveryService {
 
   private async recoverML(): Promise<RecoveryResult> {
     try {
-      // Implement ML model recovery logic
+      // Implement ML model recovery logic;
       return {
         success: true,
         timestamp: Date.now(),

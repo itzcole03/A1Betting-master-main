@@ -1,4 +1,4 @@
-import { ShapValue } from '../types/explainability';
+import { ShapValue } from '@/types/explainability.ts';
 interface ShapValueDisplayProps {
     feature: ShapValue;
 }

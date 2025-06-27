@@ -37,8 +37,8 @@ export const FilterBar = () => {
         return activeFilters.has(filterId);
     };
     const FilterButton = ({ id, label, icon: Icon }) => (_jsxs(motion.button, { className: `
-        inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium
-        transition-colors duration-200
+        inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium;
+        transition-colors duration-200;
         ${isFilterActive(id)
             ? 'bg-primary-500 text-white'
             : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}

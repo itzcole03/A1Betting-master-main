@@ -1,9 +1,7 @@
-import { app } from '../index';
-
-const port = process.env.PORT || 3000;
+import { app } from '@/index.ts';
 
 app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-  console.log(`Health check available at http://localhost:${port}/health`);
-  console.log(`API endpoints available at http://localhost:${port}/api/predictions`);
+  // console statement removed
+  // console statement removed
+  // console statement removed
 });

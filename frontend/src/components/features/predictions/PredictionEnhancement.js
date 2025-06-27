@@ -9,7 +9,7 @@ const PredictionEnhancement = ({ predictions, onStakeOptimize, riskProfile, bank
     const [showDetails, setShowDetails] = useState(false);
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [error, setError] = useState(null);
-    // Memoize confidence level calculation
+    // Memoize confidence level calculation;
     const getConfidenceLevel = useCallback((confidence) => {
         if (confidence >= 0.9)
             return { label: 'Safe', color: 'success' };
@@ -17,12 +17,12 @@ const PredictionEnhancement = ({ predictions, onStakeOptimize, riskProfile, bank
             return { label: 'Medium', color: 'warning' };
         return { label: 'Risky', color: 'error' };
     }, []);
-    // Memoize Kelly stake calculation
+    // Memoize Kelly stake calculation;
     const calculateKellyStake = useCallback((prediction) => {
         const { confidence, prediction: odds } = prediction;
-        const q = 1 - confidence;
-        const b = odds - 1;
-        const kelly = (b * confidence - q) / b;
+
+
+
         const riskMultiplier = {
             conservative: 0.25,
             moderate: 0.5,
@@ -30,7 +30,7 @@ const PredictionEnhancement = ({ predictions, onStakeOptimize, riskProfile, bank
         }[riskProfile];
         return Math.max(0, Math.min(kelly * riskMultiplier * bankroll, bankroll * 0.1));
     }, [riskProfile, bankroll]);
-    // Debounced refresh handler
+    // Debounced refresh handler;
     const debouncedRefresh = useMemo(() => debounce(async () => {
         if (!onRefresh)
             return;
@@ -46,14 +46,14 @@ const PredictionEnhancement = ({ predictions, onStakeOptimize, riskProfile, bank
             setIsRefreshing(false);
         }
     }, 1000), [onRefresh]);
-    // Auto-refresh effect
+    // Auto-refresh effect;
     useEffect(() => {
         if (!autoRefresh || !onRefresh)
             return;
-        const interval = setInterval(debouncedRefresh, refreshInterval);
+
         return () => clearInterval(interval);
     }, [autoRefresh, onRefresh, refreshInterval, debouncedRefresh]);
-    // Memoize sorted predictions
+    // Memoize sorted predictions;
     const sortedPredictions = useMemo(() => {
         return [...predictions].sort((a, b) => b.confidence - a.confidence);
     }, [predictions]);
@@ -65,8 +65,8 @@ const PredictionEnhancement = ({ predictions, onStakeOptimize, riskProfile, bank
                     },
                     gap: 3,
                 }, children: sortedPredictions.map((prediction, index) => {
-                    const confidenceLevel = getConfidenceLevel(prediction.confidence);
-                    const suggestedStake = calculateKellyStake(prediction);
+
+
                     return (_jsx(Card, { sx: {
                             transition: 'transform 0.2s, box-shadow 0.2s',
                             '&:hover': {

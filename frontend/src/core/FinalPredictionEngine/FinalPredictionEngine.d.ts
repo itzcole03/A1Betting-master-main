@@ -1,4 +1,4 @@
-import { FinalPredictionEngine, FinalPredictionEngineDependencies, FinalPredictionEngineConfig, ModelOutput, ModelWeight, RiskProfile, FinalPrediction, RiskLevel, PredictionWithExplanation } from '@/types';
+import { FinalPredictionEngine, FinalPredictionEngineDependencies, FinalPredictionEngineConfig, ModelOutput, ModelWeight, RiskProfile, FinalPrediction, RiskLevel, PredictionWithExplanation } from '@/types.ts';
 export declare class FinalPredictionEngineImpl implements FinalPredictionEngine {
     private dependencies;
     private config;

@@ -42,8 +42,8 @@ function splitMotionProps(props) {
         'transformTemplate',
         'transformValues',
     ];
-    const motionProps = {};
-    const rest = {};
+
+
     Object.entries(props).forEach(([key, value]) => {
         if (motionKeys.includes(key)) {
             motionProps[key] = value;
@@ -56,11 +56,11 @@ function splitMotionProps(props) {
 }
 export const Card = React.forwardRef((allProps, ref) => {
     const { variant = 'default', hover = false, glow = false, loading = false, className, children, ...props } = allProps;
-    const baseClasses = 'rounded-xl p-6 transition-all duration-200';
-    const variantClasses = variants[variant];
-    const hoverClasses = hover ? 'hover:-translate-y-1 hover:shadow-lg' : '';
-    const glowClasses = glow ? `shadow-lg ${glowColors[variant]}` : '';
-    const content = loading ? (_jsxs("div", { className: "space-y-4", children: [_jsx("div", { className: "h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" }), _jsx("div", { className: "h-4 w-1/2 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" }), _jsx("div", { className: "h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" })] })) : (children);
+
+
+
+
+
     const [motionProps, divProps] = splitMotionProps(props);
     return (_jsx(motion.div, { ref: ref, className: cn(baseClasses, variantClasses, hoverClasses, glowClasses, className), initial: hover ? { y: 0 } : undefined, whileHover: hover ? { y: -4 } : undefined, ...motionProps, ...divProps, children: content }));
 });

@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Atom, Zap, Target, Brain, BarChart3, Settings, RefreshCw, CheckCircle, Layers, Network, Activity, } from "lucide-react";
 import { Radar, Scatter } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, RadialLinearScale, Title, Tooltip, Legend, Filler, } from "chart.js";
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, RadialLinearScale, Title, Tooltip, Legend, Filler);
 export const QuantumPredictionsInterface = () => {
     const [predictionRequest, setPredictionRequest] = useState({
@@ -30,7 +30,7 @@ export const QuantumPredictionsInterface = () => {
         coherence: 0,
         decoherence: 0,
     });
-    // Simulate quantum state evolution
+    // Simulate quantum state evolution;
     useEffect(() => {
         const interval = setInterval(() => {
             setQuantumState((prev) => ({
@@ -42,7 +42,7 @@ export const QuantumPredictionsInterface = () => {
         }, 1000);
         return () => clearInterval(interval);
     }, []);
-    // Generate quantum prediction
+    // Generate quantum prediction;
     const generateQuantumPrediction = useCallback(async () => {
         if (!predictionRequest.event_id) {
             alert("Please provide an event ID");
@@ -51,7 +51,7 @@ export const QuantumPredictionsInterface = () => {
         setIsProcessing(true);
         setProcessingStage("Initializing quantum states...");
         try {
-            // Simulate processing stages
+            // Simulate processing stages;
             const stages = [
                 "Initializing quantum states...",
                 "Applying quantum superposition...",
@@ -61,22 +61,22 @@ export const QuantumPredictionsInterface = () => {
                 "Measuring quantum advantage...",
                 "Finalizing prediction...",
             ];
-            for (let i = 0; i < stages.length; i++) {
+            for (const i = 0; i < stages.length; i++) {
                 setProcessingStage(stages[i]);
                 await new Promise((resolve) => setTimeout(resolve, 1000));
             }
-            // Make actual API call
+            // Make actual API call;
             const response = await fetch("/api/v4/predict/ultra-accuracy", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(predictionRequest),
             });
             if (response.ok) {
-                const result = await response.json();
+
                 setPredictionResult(result);
             }
             else {
-                // Fallback with simulated data
+                // Fallback with simulated data;
                 const simulatedResult = {
                     event_id: predictionRequest.event_id,
                     prediction: {
@@ -107,14 +107,14 @@ export const QuantumPredictionsInterface = () => {
             }
         }
         catch (error) {
-            console.error("Quantum prediction failed:", error);
+            // console statement removed
         }
         finally {
             setIsProcessing(false);
             setProcessingStage("");
         }
     }, [predictionRequest]);
-    // Add sample features
+    // Add sample features;
     const addSampleFeatures = useCallback(() => {
         const sampleFeatures = {
             player_efficiency: Math.random() * 30 + 10,
@@ -131,7 +131,7 @@ export const QuantumPredictionsInterface = () => {
             features: sampleFeatures,
         }));
     }, []);
-    // Quantum state visualization
+    // Quantum state visualization;
     const quantumStateData = useMemo(() => ({
         labels: ["Superposition", "Entanglement", "Coherence", "Stability"],
         datasets: [
@@ -152,7 +152,7 @@ export const QuantumPredictionsInterface = () => {
             },
         ],
     }), [quantumState]);
-    // Quantum advantage chart
+    // Quantum advantage chart;
     const quantumAdvantageData = useMemo(() => {
         if (!predictionResult)
             return null;
@@ -213,7 +213,7 @@ export const QuantumPredictionsInterface = () => {
                                                         },
                                                     },
                                                 },
-                                            } }) }) })] }) }), _jsx(TabsContent, { value: "results", children: predictionResult ? (_jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: [_jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Target, { className: "w-5 h-5 mr-2 text-green-600" }), "Prediction Output"] }) }), _jsx(CardContent, { children: _jsxs("div", { className: "space-y-4", children: [_jsxs("div", { className: "grid grid-cols-2 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Base Prediction" }), _jsx("p", { className: "text-2xl font-bold text-gray-900", children: predictionResult.prediction.base_prediction.toFixed(2) })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Quantum Correction" }), _jsxs("p", { className: "text-2xl font-bold text-purple-600", children: [predictionResult.prediction.quantum_correction > 0
+                                            } }) }) })] }) }), _jsx(TabsContent, { value: "results", children: predictionResult ? (_jsxs("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6", children: [_jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Target, { className: "w-5 h-5 mr-2 text-green-600" }), "Prediction Output"] }) }), _jsx(CardContent, { children: _jsxs("div", { className: "space-y-4", children: [_jsxs("div", { className: "grid grid-cols-2 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Base Prediction" }), _jsx("p", { className: "text-2xl font-bold text-gray-900", children: predictionResult.prediction.base_prediction.toFixed(2) })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm font-medium text-gray-600", children: "Quantum Correction" }), _jsxs("p", { className: "text-2xl font-bold text-purple-600", children: [predictionResult.prediction.quantum_correction > 0;
                                                                                 ? "+"
                                                                                 : "", predictionResult.prediction.quantum_correction.toFixed(2)] })] })] }), _jsxs("div", { className: "bg-gradient-to-r from-purple-100 to-blue-100 p-4 rounded-lg", children: [_jsx("p", { className: "text-sm font-medium text-purple-800", children: "Final Quantum Prediction" }), _jsx("p", { className: "text-3xl font-bold text-purple-900", children: predictionResult.prediction.final_prediction.toFixed(2) }), _jsxs("p", { className: "text-sm text-purple-700 mt-1", children: ["Uncertainty: [", predictionResult.prediction.uncertainty_bounds[0].toFixed(1), ",", " ", predictionResult.prediction.uncertainty_bounds[1].toFixed(1), "]"] })] })] }) })] }), _jsxs(Card, { children: [_jsx(CardHeader, { children: _jsxs(CardTitle, { className: "flex items-center", children: [_jsx(Brain, { className: "w-5 h-5 mr-2 text-purple-600" }), "Quantum Metrics"] }) }), _jsxs(CardContent, { children: [_jsxs("div", { className: "space-y-3", children: [_jsxs("div", { className: "flex justify-between items-center", children: [_jsx("span", { className: "text-sm font-medium", children: "Entanglement Score" }), _jsxs(Badge, { variant: "outline", children: [(predictionResult.quantum_metrics.entanglement_score *
                                                                             100).toFixed(1), "%"] })] }), _jsxs("div", { className: "flex justify-between items-center", children: [_jsx("span", { className: "text-sm font-medium", children: "Coherence Measure" }), _jsxs(Badge, { variant: "outline", children: [(predictionResult.quantum_metrics.coherence_measure *

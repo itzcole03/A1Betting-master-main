@@ -1,4 +1,4 @@
-import { ProcessedGame } from '../../services/dataProcessor';
+import { ProcessedGame } from '@/services/dataProcessor.ts';
 interface LiveGamesDisplayProps {
     games: ProcessedGame[];
 }

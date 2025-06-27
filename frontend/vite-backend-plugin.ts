@@ -1,14 +1,14 @@
 /**
- * Vite Plugin to embed backend routes directly in development server
+ * Vite Plugin to embed backend routes directly in development server;
  */
 
 export function backendPlugin() {
   return {
     name: "backend-plugin",
     configureServer(server: any) {
-      console.log("🚀 Configuring embedded backend for cloud preview...");
+      // console statement removed
 
-      // Mock data
+      // Mock data;
       const mockData = {
         health: {
           status: "healthy",
@@ -116,72 +116,71 @@ export function backendPlugin() {
         },
       };
 
-      // Add API middleware that handles all API routes
+      // Add API middleware that handles all API routes;
       server.middlewares.use((req: any, res: any, next: any) => {
-        const url = req.url;
 
-        // Handle /health endpoint
+        // Handle /health endpoint;
         if (url === "/health" && req.method === "GET") {
-          console.log("[Backend Plugin] Health check requested");
+          // console statement removed
           res.setHeader("Content-Type", "application/json");
           res.setHeader("Access-Control-Allow-Origin", "*");
           res.end(JSON.stringify(mockData.health));
           return;
         }
 
-        // Handle /api/analytics/advanced endpoint
+        // Handle /api/analytics/advanced endpoint;
         if (url === "/api/analytics/advanced" && req.method === "GET") {
-          console.log("[Backend Plugin] Analytics requested");
+          // console statement removed
           res.setHeader("Content-Type", "application/json");
           res.setHeader("Access-Control-Allow-Origin", "*");
           res.end(JSON.stringify(mockData.analytics));
           return;
         }
 
-        // Handle /api/active-bets endpoint
+        // Handle /api/active-bets endpoint;
         if (url === "/api/active-bets" && req.method === "GET") {
-          console.log("[Backend Plugin] Active bets requested");
+          // console statement removed
           res.setHeader("Content-Type", "application/json");
           res.setHeader("Access-Control-Allow-Origin", "*");
           res.end(JSON.stringify(mockData.activeBets));
           return;
         }
 
-        // Handle /api/transactions endpoint
+        // Handle /api/transactions endpoint;
         if (url === "/api/transactions" && req.method === "GET") {
-          console.log("[Backend Plugin] Transactions requested");
+          // console statement removed
           res.setHeader("Content-Type", "application/json");
           res.setHeader("Access-Control-Allow-Origin", "*");
           res.end(JSON.stringify(mockData.transactions));
           return;
         }
 
-        // Handle /api/health/all endpoint
+        // Handle /api/health/all endpoint;
         if (url === "/api/health/all" && req.method === "GET") {
-          console.log("[Backend Plugin] Health all requested");
+          // console statement removed
           res.setHeader("Content-Type", "application/json");
           res.setHeader("Access-Control-Allow-Origin", "*");
           res.end(JSON.stringify(mockData.healthAll));
           return;
         }
 
-        // Handle /api/ultra-accuracy/model-performance endpoint
+        // Handle /api/ultra-accuracy/model-performance endpoint;
         if (
           url === "/api/ultra-accuracy/model-performance" &&
           req.method === "GET"
         ) {
-          console.log("[Backend Plugin] Model performance requested");
+          // console statement removed
           res.setHeader("Content-Type", "application/json");
           res.setHeader("Access-Control-Allow-Origin", "*");
           res.end(JSON.stringify(mockData.modelPerformance));
           return;
         }
 
-        // Continue to next middleware
+        // Continue to next middleware;
         next();
       });
 
-      console.log("✅ Backend API endpoints embedded in Vite server");
+      // console statement removed
     },
   };
 }

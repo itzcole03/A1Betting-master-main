@@ -1,18 +1,18 @@
 /**
- * Enhanced API Service for A1Betting Platform
+ * Enhanced API Service for A1Betting Platform;
  *
  * This service provides comprehensive API integration with:
- * - Advanced prediction endpoints
- * - Real-time betting opportunities
- * - Risk management and portfolio optimization
- * - Arbitrage detection and market analysis
- * - Comprehensive error handling and retry logic
+ * - Advanced prediction endpoints;
+ * - Real-time betting opportunities;
+ * - Risk management and portfolio optimization;
+ * - Arbitrage detection and market analysis;
+ * - Comprehensive error handling and retry logic;
  */
 
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios.ts';
 
 // ============================================================================
-// TYPES AND INTERFACES
+// TYPES AND INTERFACES;
 // ============================================================================
 
 export interface PredictionRequest {
@@ -148,7 +148,7 @@ export interface ActiveBet {
 }
 
 // ============================================================================
-// API SERVICE CLASS
+// API SERVICE CLASS;
 // ============================================================================
 
 class EnhancedApiService {
@@ -158,47 +158,47 @@ class EnhancedApiService {
     private retryDelay: number = 1000;
 
     constructor() {
-        // Get API base URL from environment or use default
+        // Get API base URL from environment or use default;
         this.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-        // Create axios instance with enhanced configuration
+        // Create axios instance with enhanced configuration;
         this.api = axios.create({
             baseURL: this.baseURL,
-            timeout: 30000, // 30 second timeout
+            timeout: 30000, // 30 second timeout;
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
             },
         });
 
-        // Setup request interceptor
+        // Setup request interceptor;
         this.api.interceptors.request.use(
             (config) => {
-                console.log(`🚀 API Request: ${config.method?.toUpperCase()} ${config.url}`);
+                // console statement removed} ${config.url}`);
                 return config;
             },
             (error) => {
-                console.error('❌ API Request Error:', error);
+                // console statement removed
                 return Promise.reject(error);
             }
         );
 
-        // Setup response interceptor with retry logic
+        // Setup response interceptor with retry logic;
         this.api.interceptors.response.use(
             (response) => {
-                console.log(`✅ API Response: ${response.status} ${response.config.url}`);
+                // console statement removed
                 return response;
             },
             async (error) => {
-                console.error('❌ API Response Error:', error.response?.status, error.message);
+                // console statement removed
 
-                // Implement retry logic for certain errors
+                // Implement retry logic for certain errors;
                 if (this.shouldRetry(error) && error.config && !error.config._retry) {
                     error.config._retry = true;
                     error.config._retryCount = (error.config._retryCount || 0) + 1;
 
                     if (error.config._retryCount <= this.retryAttempts) {
-                        console.log(`🔄 Retrying request (${error.config._retryCount}/${this.retryAttempts})`);
+                        // console statement removed`);
                         await this.delay(this.retryDelay * error.config._retryCount);
                         return this.api.request(error.config);
                     }
@@ -210,11 +210,11 @@ class EnhancedApiService {
     }
 
     // ============================================================================
-    // UTILITY METHODS
+    // UTILITY METHODS;
     // ============================================================================
 
     private shouldRetry(error: any): boolean {
-        // Retry on network errors, timeouts, and 5xx server errors
+        // Retry on network errors, timeouts, and 5xx server errors;
         return (
             !error.response ||
             error.code === 'NETWORK_ERROR' ||
@@ -228,16 +228,15 @@ class EnhancedApiService {
     }
 
     private handleApiError(error: any, context: string): never {
-        const message = error.response?.data?.detail || error.message || 'Unknown error occurred';
-        const status = error.response?.status || 0;
 
-        console.error(`❌ ${context} failed:`, { status, message, error });
+
+        // console statement removed
 
         throw new Error(`${context} failed: ${message} (Status: ${status})`);
     }
 
     // ============================================================================
-    // PREDICTION ENDPOINTS
+    // PREDICTION ENDPOINTS;
     // ============================================================================
 
     async getPrediction(request: PredictionRequest): Promise<PredictionResponse> {
@@ -251,7 +250,7 @@ class EnhancedApiService {
 
     async getModelStatus(): Promise<any> {
         try {
-            const response = await this.api.get('/api/v2/models/status');
+
             return response.data;
         } catch (error) {
             this.handleApiError(error, 'Model status request');
@@ -259,12 +258,12 @@ class EnhancedApiService {
     }
 
     // ============================================================================
-    // BETTING OPPORTUNITIES
+    // BETTING OPPORTUNITIES;
     // ============================================================================
 
     async getBettingOpportunities(sport?: string, limit: number = 10): Promise<BettingOpportunity[]> {
         try {
-            const params = new URLSearchParams();
+
             if (sport) params.append('sport', sport);
             params.append('limit', limit.toString());
 
@@ -289,12 +288,12 @@ class EnhancedApiService {
     }
 
     // ============================================================================
-    // BANKROLL MANAGEMENT
+    // BANKROLL MANAGEMENT;
     // ============================================================================
 
     async getTransactions(): Promise<{ transactions: Transaction[]; total_count: number }> {
         try {
-            const response = await this.api.get('/api/transactions');
+
             return response.data;
         } catch (error) {
             this.handleApiError(error, 'Transactions request');
@@ -303,7 +302,7 @@ class EnhancedApiService {
 
     async getRiskProfiles(): Promise<{ profiles: RiskProfile[] }> {
         try {
-            const response = await this.api.get('/api/risk-profiles');
+
             return response.data;
         } catch (error) {
             this.handleApiError(error, 'Risk profiles request');
@@ -312,7 +311,7 @@ class EnhancedApiService {
 
     async getActiveBets(): Promise<{ active_bets: ActiveBet[]; total_count: number }> {
         try {
-            const response = await this.api.get('/api/active-bets');
+
             return response.data;
         } catch (error) {
             this.handleApiError(error, 'Active bets request');
@@ -320,12 +319,12 @@ class EnhancedApiService {
     }
 
     // ============================================================================
-    // SYSTEM HEALTH
+    // SYSTEM HEALTH;
     // ============================================================================
 
     async getHealthStatus(): Promise<any> {
         try {
-            const response = await this.api.get('/health');
+
             return response.data;
         } catch (error) {
             this.handleApiError(error, 'Health check request');
@@ -334,7 +333,7 @@ class EnhancedApiService {
 
     async getPredictionEngineHealth(): Promise<any> {
         try {
-            const response = await this.api.get('/api/v2/health');
+
             return response.data;
         } catch (error) {
             this.handleApiError(error, 'Prediction engine health check');
@@ -342,52 +341,50 @@ class EnhancedApiService {
     }
 
     // ============================================================================
-    // REAL-TIME FEATURES
+    // REAL-TIME FEATURES;
     // ============================================================================
 
     async subscribeToUpdates(callback: (data: any) => void): Promise<WebSocket | null> {
         try {
-            const wsUrl = this.baseURL.replace('http', 'ws') + '/ws';
-            const ws = new WebSocket(wsUrl);
+
 
             ws.onopen = () => {
-                console.log('🔗 WebSocket connected for real-time updates');
+                // console statement removed
             };
 
             ws.onmessage = (event) => {
                 try {
-                    const data = JSON.parse(event.data);
+
                     callback(data);
                 } catch (error) {
-                    console.error('❌ WebSocket message parsing error:', error);
+                    // console statement removed
                 }
             };
 
             ws.onerror = (error) => {
-                console.error('❌ WebSocket error:', error);
+                // console statement removed
             };
 
             ws.onclose = () => {
-                console.log('🔌 WebSocket connection closed');
+                // console statement removed
             };
 
             return ws;
         } catch (error) {
-            console.error('❌ WebSocket connection failed:', error);
+            // console statement removed
             return null;
         }
     }
 
     // ============================================================================
-    // BATCH OPERATIONS
+    // BATCH OPERATIONS;
     // ============================================================================
 
     async getBatchPredictions(requests: PredictionRequest[]): Promise<PredictionResponse[]> {
         try {
-            const promises = requests.map(request => this.getPrediction(request));
-            const results = await Promise.allSettled(promises);
 
-            return results
+
+            return results;
                 .filter((result): result is PromiseFulfilledResult<PredictionResponse> =>
                     result.status === 'fulfilled'
                 )
@@ -398,35 +395,35 @@ class EnhancedApiService {
     }
 
     // ============================================================================
-    // ANALYTICS AND REPORTING
+    // ANALYTICS AND REPORTING;
     // ============================================================================
 
     async getPerformanceMetrics(timeframe: string = '7d'): Promise<any> {
         try {
-            const response = await this.api.get(`/api/analytics/performance?timeframe=${timeframe}`);
+
             return response.data;
         } catch (error) {
-            // Production error handling - no mock data fallbacks
-            console.error('Failed to fetch performance metrics:', error);
+            // Production error handling - no mock data fallbacks;
+            // console statement removed
             throw new Error('Performance metrics unavailable. Please try again later.');
         }
     }
 
     async getMarketAnalytics(sport?: string): Promise<any> {
         try {
-            const params = sport ? `?sport=${sport}` : '';
-            const response = await this.api.get(`/api/analytics/market${params}`);
+
+
             return response.data;
         } catch (error) {
-            // Production error handling - no mock data fallbacks
-            console.error('Failed to fetch market analytics:', error);
+            // Production error handling - no mock data fallbacks;
+            // console statement removed
             throw new Error('Market analytics unavailable. Please try again later.');
         }
     }
 }
 
 // ============================================================================
-// SINGLETON EXPORT
+// SINGLETON EXPORT;
 // ============================================================================
 
 export const apiService = new EnhancedApiService();

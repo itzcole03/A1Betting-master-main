@@ -1,6 +1,6 @@
-import { UnifiedConfig } from './UnifiedConfig';
-import { unifiedMonitor } from './UnifiedMonitor';
-import { unifiedState } from './UnifiedState';
+import { UnifiedConfig } from './UnifiedConfig.ts';
+import { unifiedMonitor } from './UnifiedMonitor.ts';
+import { unifiedState } from './UnifiedState.ts';
 /**
  * Defines the structure for a plugin.
  * Each plugin should have a unique name, version, and methods for initialization and potentially teardown.
@@ -25,7 +25,7 @@ export interface Plugin {
     exports?: Record<string, any>;
 }
 /**
- * Provides context to plugins during initialization, such as access to core services
+ * Provides context to plugins during initialization, such as access to core services;
  * or the main application store.
  */
 export interface PluginContext {

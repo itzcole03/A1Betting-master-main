@@ -1,9 +1,9 @@
 /**
- * Enhanced TheOdds Service - Production Ready
- * Integrates with multiple real odds providers and sportsbook data feeds
+ * Enhanced TheOdds Service - Production Ready;
+ * Integrates with multiple real odds providers and sportsbook data feeds;
  */
 
-// The-Odds-API types
+// The-Odds-API types;
 interface TheOddsAPISport {
   key: string;
   group: string;
@@ -42,7 +42,7 @@ interface TheOddsAPIOutcome {
   point?: number;
 }
 
-// OddsJam API types
+// OddsJam API types;
 interface OddsJamEvent {
   event_id: string;
   sport: string;
@@ -62,7 +62,7 @@ interface OddsJamEvent {
   }>;
 }
 
-// SportsDataIO Odds types
+// SportsDataIO Odds types;
 interface SportsDataIOOdds {
   GameID: number;
   DateTime: string;
@@ -82,7 +82,7 @@ interface SportsDataIOOdds {
   }>;
 }
 
-// Aggregated odds interface
+// Aggregated odds interface;
 interface AggregatedOdds {
   event_id: string;
   sport: string;
@@ -120,16 +120,16 @@ interface AggregatedOdds {
 export class EnhancedTheOddsService {
   private readonly baseUrl: string;
   private readonly cache: Map<string, { data: any; timestamp: number }>;
-  private readonly cacheTTL: number = 30000; // 30 seconds for odds data
+  private readonly cacheTTL: number = 30000; // 30 seconds for odds data;
 
-  // API Keys
+  // API Keys;
   private readonly theOddsAPIKey: string;
   private readonly oddsJamKey: string;
   private readonly sportsDataIOKey: string;
 
-  // Rate limiting
+  // Rate limiting;
   private lastRequestTime: number = 0;
-  private readonly rateLimitMs: number = 1100; // Slightly over 1 second
+  private readonly rateLimitMs: number = 1100; // Slightly over 1 second;
 
   constructor() {
     this.baseUrl =
@@ -141,19 +141,17 @@ export class EnhancedTheOddsService {
     this.sportsDataIOKey = import.meta.env.VITE_SPORTSDATA_API_KEY || "";
     this.cache = new Map();
 
-    // Production validation
+    // Production validation;
     if (this.theOddsAPIKey) {
-      console.log("✓ The-Odds-API key configured for production");
+      // console statement removed
     } else {
-      console.warn(
-        "⚠ The-Odds-API key not found - some features will use mock data",
-      );
+      // console statement removed
     }
   }
 
   private async enforceRateLimit(): Promise<void> {
-    const now = Date.now();
-    const timeSinceLastRequest = now - this.lastRequestTime;
+
+
     if (timeSinceLastRequest < this.rateLimitMs) {
       await new Promise((resolve) =>
         setTimeout(resolve, this.rateLimitMs - timeSinceLastRequest),
@@ -167,11 +165,10 @@ export class EnhancedTheOddsService {
     options: RequestInit = {},
     useCache: boolean = true,
   ): Promise<T> {
-    const cacheKey = `${endpoint}:${JSON.stringify(options)}`;
 
-    // Check cache first
+    // Check cache first;
     if (useCache) {
-      const cached = this.cache.get(cacheKey);
+
       if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
         return cached.data;
       }
@@ -180,7 +177,7 @@ export class EnhancedTheOddsService {
     await this.enforceRateLimit();
 
     const url = endpoint.startsWith("http")
-      ? endpoint
+      ? endpoint;
       : `${this.baseUrl}${endpoint}`;
 
     try {
@@ -193,11 +190,11 @@ export class EnhancedTheOddsService {
       });
 
       if (!response.ok) {
-        // Handle graceful degradation from backend
+        // Handle graceful degradation from backend;
         if (response.status === 503) {
-          const errorData = await response.json().catch(() => ({}));
+
           if (errorData.suggestion && (errorData.sports || errorData.odds)) {
-            console.warn("API temporarily unavailable, using fallback data");
+            // console statement removed
             return errorData;
           }
         }
@@ -205,9 +202,7 @@ export class EnhancedTheOddsService {
         throw new Error(`API error: ${response.status} ${response.statusText}`);
       }
 
-      const data = await response.json();
-
-      // Cache the response
+      // Cache the response;
       if (useCache) {
         this.cache.set(cacheKey, {
           data,
@@ -217,31 +212,31 @@ export class EnhancedTheOddsService {
 
       return data;
     } catch (error) {
-      console.error("Odds API request failed:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get sports from The-Odds-API
+   * Get sports from The-Odds-API;
    */
   async getSportsFromTheOddsAPI(): Promise<TheOddsAPISport[]> {
     if (!this.theOddsAPIKey) {
-      console.warn("The-Odds-API key not configured");
+      // console statement removed
       return [];
     }
 
     try {
-      const endpoint = `https://api.the-odds-api.com/v4/sports/?apiKey=${this.theOddsAPIKey}`;
+
       return await this.makeRequest<TheOddsAPISport[]>(endpoint);
     } catch (error) {
-      console.error("The-Odds-API sports error:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get odds from The-Odds-API
+   * Get odds from The-Odds-API;
    */
   async getOddsFromTheOddsAPI(
     sport: string,
@@ -250,7 +245,7 @@ export class EnhancedTheOddsService {
     oddsFormat: string = "decimal",
   ): Promise<TheOddsAPIEvent[]> {
     if (!this.theOddsAPIKey) {
-      console.warn("The-Odds-API key not configured");
+      // console statement removed
       return [];
     }
 
@@ -262,25 +257,24 @@ export class EnhancedTheOddsService {
         oddsFormat,
       });
 
-      const endpoint = `https://api.the-odds-api.com/v4/sports/${sport}/odds?${params}`;
       return await this.makeRequest<TheOddsAPIEvent[]>(endpoint);
     } catch (error) {
-      console.error("The-Odds-API odds error:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get odds from OddsJam API
+   * Get odds from OddsJam API;
    */
   async getOddsFromOddsJam(sport: string): Promise<OddsJamEvent[]> {
     if (!this.oddsJamKey) {
-      console.warn("OddsJam API key not configured");
+      // console statement removed
       return [];
     }
 
     try {
-      const endpoint = `https://api.oddsjam.com/api/v2/game-odds`;
+
       const response = await this.makeRequest<{ data: OddsJamEvent[] }>(
         endpoint,
         {
@@ -292,20 +286,20 @@ export class EnhancedTheOddsService {
 
       return response.data || [];
     } catch (error) {
-      console.error("OddsJam API error:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get odds from SportsDataIO
+   * Get odds from SportsDataIO;
    */
   async getOddsFromSportsDataIO(
     sport: string,
     date?: string,
   ): Promise<SportsDataIOOdds[]> {
     if (!this.sportsDataIOKey) {
-      console.warn("SportsDataIO API key not configured");
+      // console statement removed
       return [];
     }
 
@@ -317,10 +311,6 @@ export class EnhancedTheOddsService {
         icehockey_nhl: "nhl",
       };
 
-      const mappedSport = sportMap[sport] || sport;
-      const currentDate = date || new Date().toISOString().split("T")[0];
-
-      const endpoint = `https://api.sportsdata.io/v3/${mappedSport}/odds/json/GameOddsByDate/${currentDate}`;
 
       return await this.makeRequest<SportsDataIOOdds[]>(endpoint, {
         headers: {
@@ -328,13 +318,13 @@ export class EnhancedTheOddsService {
         },
       });
     } catch (error) {
-      console.error("SportsDataIO API error:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Aggregate odds from multiple sources and find best lines
+   * Aggregate odds from multiple sources and find best lines;
    */
   async getAggregatedOdds(sport: string): Promise<AggregatedOdds[]> {
     try {
@@ -345,7 +335,7 @@ export class EnhancedTheOddsService {
 
       const aggregatedEvents: AggregatedOdds[] = [];
 
-      // Process The-Odds-API data
+      // Process The-Odds-API data;
       if (theOddsData.status === "fulfilled") {
         for (const event of theOddsData.value) {
           const aggregated: AggregatedOdds = {
@@ -364,15 +354,15 @@ export class EnhancedTheOddsService {
             },
           };
 
-          // Find best odds across all bookmakers
+          // Find best odds across all bookmakers;
           for (const bookmaker of event.bookmakers) {
             for (const market of bookmaker.markets) {
               if (market.key === "h2h") {
-                // Moneyline
+                // Moneyline;
                 for (const outcome of market.outcomes) {
                   if (
                     outcome.name === event.home_team &&
-                    outcome.price > aggregated.best_odds.home_ml.odds
+                    outcome.price > aggregated.best_odds.home_ml.odds;
                   ) {
                     aggregated.best_odds.home_ml = {
                       odds: outcome.price,
@@ -381,7 +371,7 @@ export class EnhancedTheOddsService {
                   }
                   if (
                     outcome.name === event.away_team &&
-                    outcome.price > aggregated.best_odds.away_ml.odds
+                    outcome.price > aggregated.best_odds.away_ml.odds;
                   ) {
                     aggregated.best_odds.away_ml = {
                       odds: outcome.price,
@@ -390,11 +380,11 @@ export class EnhancedTheOddsService {
                   }
                 }
               } else if (market.key === "spreads") {
-                // Point spreads
+                // Point spreads;
                 for (const outcome of market.outcomes) {
                   if (
                     outcome.name === event.home_team &&
-                    outcome.price > aggregated.best_odds.home_spread.odds
+                    outcome.price > aggregated.best_odds.home_spread.odds;
                   ) {
                     aggregated.best_odds.home_spread = {
                       odds: outcome.price,
@@ -404,7 +394,7 @@ export class EnhancedTheOddsService {
                   }
                   if (
                     outcome.name === event.away_team &&
-                    outcome.price > aggregated.best_odds.away_spread.odds
+                    outcome.price > aggregated.best_odds.away_spread.odds;
                   ) {
                     aggregated.best_odds.away_spread = {
                       odds: outcome.price,
@@ -414,11 +404,11 @@ export class EnhancedTheOddsService {
                   }
                 }
               } else if (market.key === "totals") {
-                // Over/Under
+                // Over/Under;
                 for (const outcome of market.outcomes) {
                   if (
                     outcome.name === "Over" &&
-                    outcome.price > aggregated.best_odds.over.odds
+                    outcome.price > aggregated.best_odds.over.odds;
                   ) {
                     aggregated.best_odds.over = {
                       odds: outcome.price,
@@ -428,7 +418,7 @@ export class EnhancedTheOddsService {
                   }
                   if (
                     outcome.name === "Under" &&
-                    outcome.price > aggregated.best_odds.under.odds
+                    outcome.price > aggregated.best_odds.under.odds;
                   ) {
                     aggregated.best_odds.under = {
                       odds: outcome.price,
@@ -447,13 +437,13 @@ export class EnhancedTheOddsService {
 
       return aggregatedEvents;
     } catch (error) {
-      console.error("Error aggregating odds:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Find arbitrage opportunities
+   * Find arbitrage opportunities;
    */
   async findArbitrageOpportunities(sport: string): Promise<
     Array<{
@@ -470,22 +460,20 @@ export class EnhancedTheOddsService {
     }>
   > {
     try {
-      const aggregatedOdds = await this.getAggregatedOdds(sport);
+
       const arbitrageOpportunities: any[] = [];
 
       for (const event of aggregatedOdds) {
-        // Check moneyline arbitrage
-        const homeOdds = event.best_odds.home_ml.odds;
-        const awayOdds = event.best_odds.away_ml.odds;
+        // Check moneyline arbitrage;
+
 
         if (homeOdds > 0 && awayOdds > 0) {
-          const impliedProbHome = 1 / homeOdds;
-          const impliedProbAway = 1 / awayOdds;
-          const totalImplied = impliedProbHome + impliedProbAway;
+
+
 
           if (totalImplied < 1) {
-            const profitMargin = (1 - totalImplied) * 100;
-            const totalStake = 1000; // Example stake
+
+            const totalStake = 1000; // Example stake;
 
             arbitrageOpportunities.push({
               event: `${event.home_team} vs ${event.away_team}`,
@@ -513,13 +501,13 @@ export class EnhancedTheOddsService {
 
       return arbitrageOpportunities;
     } catch (error) {
-      console.error("Error finding arbitrage opportunities:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get live odds for multiple sports
+   * Get live odds for multiple sports;
    */
   async getLiveOdds(
     sports: string[] = ["americanfootball_nfl", "basketball_nba"],
@@ -530,7 +518,7 @@ export class EnhancedTheOddsService {
       try {
         results[sport] = await this.getAggregatedOdds(sport);
       } catch (error) {
-        console.warn(`Failed to get odds for ${sport}:`, error);
+        // console statement removed
         results[sport] = [];
       }
     }
@@ -539,7 +527,7 @@ export class EnhancedTheOddsService {
   }
 
   /**
-   * Get sharp money indicators
+   * Get sharp money indicators;
    */
   async getSharpMoneyIndicators(sport: string): Promise<
     Array<{
@@ -552,28 +540,27 @@ export class EnhancedTheOddsService {
       sharp_percentage: number;
     }>
   > {
-    // This would require historical odds data and betting percentages
-    // For now, return mock indicators based on line movements
+    // This would require historical odds data and betting percentages;
+    // For now, return mock indicators based on line movements;
     try {
-      const currentOdds = await this.getAggregatedOdds(sport);
 
       return currentOdds.map((event) => ({
         event: `${event.home_team} vs ${event.away_team}`,
         market: "Moneyline",
         sharp_side: Math.random() > 0.5 ? event.home_team : event.away_team,
-        line_movement: (Math.random() - 0.5) * 10, // Mock line movement
+        line_movement: (Math.random() - 0.5) * 10, // Mock line movement;
         reverse_line_movement: Math.random() > 0.7,
         steam_move: Math.random() > 0.8,
-        sharp_percentage: Math.random() * 30 + 5, // 5-35% sharp money
+        sharp_percentage: Math.random() * 30 + 5, // 5-35% sharp money;
       }));
     } catch (error) {
-      console.error("Error getting sharp money indicators:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Health check for all odds services
+   * Health check for all odds services;
    */
   async healthCheck(): Promise<{
     overall: string;
@@ -586,7 +573,7 @@ export class EnhancedTheOddsService {
       sportsDataIO: { status: "unknown", message: "" },
     };
 
-    // Test backend
+    // Test backend;
     try {
       await this.makeRequest("/api/theodds/sports");
       results.backend = { status: "healthy", message: "Backend responsive" };
@@ -594,7 +581,7 @@ export class EnhancedTheOddsService {
       results.backend = { status: "degraded", message: "Backend unavailable" };
     }
 
-    // Test The-Odds-API
+    // Test The-Odds-API;
     if (this.theOddsAPIKey) {
       try {
         await this.getSportsFromTheOddsAPI();
@@ -609,7 +596,7 @@ export class EnhancedTheOddsService {
       };
     }
 
-    // Test OddsJam
+    // Test OddsJam;
     if (this.oddsJamKey) {
       try {
         await this.getOddsFromOddsJam("nba");
@@ -624,7 +611,7 @@ export class EnhancedTheOddsService {
       };
     }
 
-    // Test SportsDataIO
+    // Test SportsDataIO;
     if (this.sportsDataIOKey) {
       try {
         await this.getOddsFromSportsDataIO("basketball_nba");
@@ -642,30 +629,29 @@ export class EnhancedTheOddsService {
     const healthyCount = Object.values(results).filter(
       (r) => r.status === "healthy",
     ).length;
-    const overall = healthyCount >= 1 ? "healthy" : "degraded";
 
     return { overall, services: results };
   }
 
   /**
-   * Clear all caches
+   * Clear all caches;
    */
   clearCache(): void {
     this.cache.clear();
   }
 
   /**
-   * Get cache statistics
+   * Get cache statistics;
    */
   getCacheStats(): { size: number; totalRequests: number; hitRate: number } {
     return {
       size: this.cache.size,
-      totalRequests: this.cache.size, // Simplified
-      hitRate: 0.85, // Estimated
+      totalRequests: this.cache.size, // Simplified;
+      hitRate: 0.85, // Estimated;
     };
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const enhancedTheOddsService = new EnhancedTheOddsService();
 export default enhancedTheOddsService;

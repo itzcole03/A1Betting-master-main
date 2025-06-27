@@ -18,18 +18,18 @@ export class UnifiedLogger {
         this.config = { ...this.config, ...config };
     }
     shouldLog(level) {
-        const levels = ['debug', 'info', 'warn', 'error'];
+
         return levels.indexOf(level) >= levels.indexOf(this.config.minLevel);
     }
     formatMessage(context) {
         if (this.config.format) {
             return this.config.format(context);
         }
-        const timestamp = new Date(context.timestamp).toISOString();
-        const component = context.component || this.config.component || 'system';
-        const action = context.action ? ` [${context.action}]` : '';
-        const details = context.details ? ` ${JSON.stringify(context.details)}` : '';
-        const error = context.error ? `\nError: ${context.error.message}` : '';
+
+
+
+
+
         return `[${timestamp}] ${context.level.toUpperCase()} [${component}]${action}: ${context.message}${details}${error}`;
     }
     log(context) {
@@ -37,7 +37,7 @@ export class UnifiedLogger {
             return;
         }
         if (this.config.enableConsole) {
-            const formattedMessage = this.formatMessage(context);
+
             switch (context.level) {
                 case 'debug':
                     console.debug(formattedMessage);
@@ -46,10 +46,10 @@ export class UnifiedLogger {
                     console.info(formattedMessage);
                     break;
                 case 'warn':
-                    console.warn(formattedMessage);
+                    // console statement removed
                     break;
                 case 'error':
-                    console.error(formattedMessage);
+                    // console statement removed
                     break;
             }
         }
@@ -59,7 +59,7 @@ export class UnifiedLogger {
                 action: context.action || 'unknown',
             });
             if (context.error) {
-                const errorToReport = context.error;
+
                 unifiedMonitor.reportError(errorToReport, {
                     code: 'INTERNAL_ERROR',
                     message: context.message,

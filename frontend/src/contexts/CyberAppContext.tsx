@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode  } from 'react.ts';
 
 interface User {
   name: string;
@@ -18,17 +18,15 @@ interface CyberAppContextType {
   setTheme: (theme: string) => void;
 }
 
-const CyberAppContext = createContext<CyberAppContextType | null>(null);
-
 interface CyberAppContextProviderProps {
   children: ReactNode;
 }
 
 export const CyberAppContextProvider: React.FC<
-  CyberAppContextProviderProps
+  CyberAppContextProviderProps;
 > = ({ children }) => {
   const [currentPage, setCurrentPage] = useState("dashboard");
-  const [user] = useState<User>({
+  const [user] = useState<User key={43469}>({
     name: "Alex Chen",
     email: "alex@a1betting.com",
     balance: 127430.5,
@@ -48,14 +46,14 @@ export const CyberAppContextProvider: React.FC<
   };
 
   return (
-    <CyberAppContext.Provider value={value}>
+    <CyberAppContext.Provider value={value} key={582792}>
       {children}
     </CyberAppContext.Provider>
   );
 };
 
 export const useCyberApp = () => {
-  const context = useContext(CyberAppContext);
+
   if (!context) {
     throw new Error(
       "useCyberApp must be used within a CyberAppContextProvider",

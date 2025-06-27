@@ -1,5 +1,5 @@
-import React from 'react';
-import { BetRecommendation, BettingAlert, BettingOpportunity } from '../../types/betting';
+import React from 'react.ts';
+import { BetRecommendation, BettingAlert, BettingOpportunity } from '@/types/betting.ts';
 interface BettingOpportunitiesProps {
     opportunities: (BetRecommendation | BettingOpportunity)[];
     onBetPlacement: (opportunity: BetRecommendation | BettingOpportunity) => void;

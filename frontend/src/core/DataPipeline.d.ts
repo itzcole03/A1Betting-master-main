@@ -1,4 +1,4 @@
-import { DataSource } from './PredictionEngine';
+import { DataSource } from './PredictionEngine.ts';
 export interface PipelineMetrics {
     processedCount: number;
     errorCount: number;

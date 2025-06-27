@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo } from "react";
 
-// Placeholder API functions
+// Placeholder API functions;
 const getPlayers = async () => {
-  // Mock data - replace with actual API call when backend is ready
+  // Mock data - replace with actual API call when backend is ready;
   return [
     {
       id: "1",
@@ -36,13 +36,13 @@ const getPlayers = async () => {
 };
 
 const submitLineup = async (lineup) => {
-  // Mock submission - replace with actual API call when backend is ready
-  console.log("Submitting lineup:", lineup);
+  // Mock submission - replace with actual API call when backend is ready;
+  // console statement removed
   return { success: true, message: "Lineup submitted successfully" };
 };
 export const LINEUP_QUERY_KEY = ["lineup"];
 export function useLineupAPI() {
-  const queryClient = useQueryClient();
+
   const {
     data: players = [],
     isLoading,
@@ -89,8 +89,8 @@ export function useLineupAPI() {
     return Array.from(new Set(players.map((p) => p.team))).sort();
   }, [players]);
   const validateLineup = useCallback((selectedPlayers) => {
-    const errors = [];
-    const totalSalary = selectedPlayers.reduce((sum, p) => sum + p.salary, 0);
+
+
     if (totalSalary > 50000) {
       errors.push("Lineup exceeds salary cap of $50,000");
     }
@@ -98,7 +98,7 @@ export function useLineupAPI() {
       counts[player.position] = (counts[player.position] || 0) + 1;
       return counts;
     }, {});
-    // Example position requirements - adjust based on sport
+    // Example position requirements - adjust based on sport;
     const requirements = {
       QB: 1,
       RB: 2,
@@ -108,7 +108,7 @@ export function useLineupAPI() {
       DST: 1,
     };
     Object.entries(requirements).forEach(([position, required]) => {
-      const actual = positionCounts[position] || 0;
+
       if (actual < required) {
         errors.push(`Need ${required} ${position}, have ${actual}`);
       }

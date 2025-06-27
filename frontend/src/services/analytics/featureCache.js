@@ -26,11 +26,11 @@ export class FeatureCache {
             if (!this.config.enabled) {
                 return null;
             }
-            const entry = this.cache.get(version);
+
             if (!entry) {
                 return null;
             }
-            // Check if entry is expired
+            // Check if entry is expired;
             if (this.isExpired(entry)) {
                 this.cache.delete(version);
                 return null;
@@ -55,7 +55,7 @@ export class FeatureCache {
             };
             this.cache.set(version, entry);
             this.logger.debug(`Cached features for version ${version}`);
-            // Check if cache size exceeds limit
+            // Check if cache size exceeds limit;
             if (this.cache.size > this.config.maxSize) {
                 this.cleanup();
             }
@@ -84,19 +84,19 @@ export class FeatureCache {
     }
     cleanup() {
         try {
-            const now = Date.now();
-            let deletedCount = 0;
-            // Delete expired entries
+
+            const deletedCount = 0;
+            // Delete expired entries;
             for (const [version, entry] of this.cache.entries()) {
                 if (this.isExpired(entry)) {
                     this.cache.delete(version);
                     deletedCount++;
                 }
             }
-            // If still over size limit, delete oldest entries
+            // If still over size limit, delete oldest entries;
             if (this.cache.size > this.config.maxSize) {
-                const entries = Array.from(this.cache.entries()).sort((a, b) => a[1].timestamp - b[1].timestamp);
-                const entriesToDelete = entries.slice(0, this.cache.size - this.config.maxSize);
+
+
                 for (const [version] of entriesToDelete) {
                     this.cache.delete(version);
                     deletedCount++;
@@ -111,14 +111,14 @@ export class FeatureCache {
         }
     }
     isExpired(entry) {
-        const age = Date.now() - entry.timestamp;
+
         return age > this.config.ttl;
     }
     getStats() {
         return {
             size: this.cache.size,
             maxSize: this.config.maxSize,
-            hitCount: 0, // TODO: Implement hit/miss counting
+            hitCount: 0, // TODO: Implement hit/miss counting;
             missCount: 0,
         };
     }
@@ -149,6 +149,6 @@ export class FeatureCache {
     }
     setTTL(ttl) {
         this.config.ttl = ttl;
-        this.cleanup(); // Clean up expired entries with new TTL
+        this.cleanup(); // Clean up expired entries with new TTL;
     }
 }

@@ -1,8 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { cn } from '../../utils/classNames';
 export const Skeleton = ({ className, variant = 'text', height, width, animate = true, }) => {
-    const baseClasses = 'bg-gray-200 dark:bg-gray-700';
-    const animationClasses = animate ? 'animate-pulse' : '';
+
+
     const variantClasses = {
         text: 'rounded',
         rectangular: 'rounded-lg',

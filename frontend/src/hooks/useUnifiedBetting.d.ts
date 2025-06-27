@@ -1,4 +1,4 @@
-import { BettingDecision } from '../core/UnifiedBettingSystem';
+import { BettingDecision } from '@/core/UnifiedBettingSystem.ts';
 interface UseUnifiedBettingOptions {
     playerId?: string;
     metric?: string;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   TrendingUp,
   DollarSign,
@@ -27,10 +27,10 @@ import {
   CheckCircle,
   Users,
   Globe,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
 // ============================================================================
-// MOCK DATA
+// MOCK DATA;
 // ============================================================================
 
 const mockMetrics = [
@@ -129,7 +129,7 @@ const mockRecentActivity = [
 ];
 
 // ============================================================================
-// COMPONENTS
+// COMPONENTS;
 // ============================================================================
 
 const MetricCard: React.FC<{
@@ -197,7 +197,7 @@ const MetricCard: React.FC<{
   };
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
@@ -207,59 +207,59 @@ const MetricCard: React.FC<{
         boxShadow: `0 20px 40px ${getGlowColor(metric.color)}`,
       }}
       className={`p-6 rounded-xl border-2 ${getColorClasses(metric.color)} hover:shadow-2xl transition-all duration-300 cursor-pointer relative overflow-hidden`}
-    >
+     key={756559}>
       {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-br from-white/60 to-transparent pointer-events-none" / key={741805}>
 
-      <div className="relative z-10">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide">
+      <div className="relative z-10" key={407833}>
+        <div className="flex items-center justify-between mb-4" key={810034}>
+          <h3 className="text-sm font-semibold text-gray-700 uppercase tracking-wide" key={265715}>
             {metric.title}
           </h3>
-          <motion.div
+          <motion.div;
             whileHover={{ rotate: 180, scale: 1.2 }}
             transition={{ duration: 0.3 }}
             className={`p-2 rounded-lg ${getColorClasses(metric.color)} shadow-sm`}
-          >
+           key={383166}>
             {metric.trend === "up" ? (
-              <TrendingUp className={`w-4 h-4 ${getIconColor(metric.color)}`} />
+              <TrendingUp className={`w-4 h-4 ${getIconColor(metric.color)}`} / key={386806}>
             ) : (
-              <ArrowDownRight
+              <ArrowDownRight;
                 className={`w-4 h-4 ${getIconColor(metric.color)}`}
-              />
+              / key={730633}>
             )}
           </motion.div>
         </div>
 
-        <div className="mb-3">
-          <motion.p
+        <div className="mb-3" key={6076}>
+          <motion.p;
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
             transition={{ delay: index * 0.1 + 0.2 }}
             className={`text-3xl font-bold ${getTextColor(metric.color)} tracking-tight`}
-          >
+           key={852275}>
             {metric.value}
           </motion.p>
         </div>
 
-        <div className="flex items-center justify-between">
-          <p
+        <div className="flex items-center justify-between" key={96335}>
+          <p;
             className={`text-sm font-medium ${getTextColor(metric.color)} flex items-center gap-1`}
-          >
-            <span className="w-2 h-2 rounded-full bg-green-400"></span>
-            {metric.change} from last period
+           key={616167}>
+            <span className="w-2 h-2 rounded-full bg-green-400" key={358650}></span>
+            {metric.change} from last period;
           </p>
-          <motion.div
+          <motion.div;
             whileHover={{ scale: 1.1 }}
             className="text-xs text-gray-500 bg-white/70 px-2 py-1 rounded-full"
-          >
-            24h
+           key={390086}>
+            24h;
           </motion.div>
         </div>
       </div>
 
       {/* Animated border */}
-      <div className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-r from-transparent via-white/20 to-transparent bg-[length:200%_100%] animate-pulse" />
+      <div className="absolute inset-0 rounded-xl border-2 border-transparent bg-gradient-to-r from-transparent via-white/20 to-transparent bg-[length:200%_100%] animate-pulse" / key={63076}>
     </motion.div>
   );
 };
@@ -268,46 +268,46 @@ const OpportunityCard: React.FC<{
   opportunity: (typeof mockOpportunities)[0];
 }> = ({ opportunity }) => {
   return (
-    <div className="p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2">
-          <div
+    <div className="p-4 bg-white rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-200" key={831504}>
+      <div className="flex items-center justify-between mb-3" key={56204}>
+        <div className="flex items-center gap-2" key={100294}>
+          <div;
             className={`w-2 h-2 rounded-full ${
               opportunity.status === "live"
                 ? "bg-green-500 animate-pulse"
                 : "bg-orange-500"
             }`}
-          ></div>
-          <h3 className="font-semibold text-gray-900">{opportunity.game}</h3>
+           key={691854}></div>
+          <h3 className="font-semibold text-gray-900" key={702224}>{opportunity.game}</h3>
         </div>
-        <span className="text-green-600 font-bold text-sm">
+        <span className="text-green-600 font-bold text-sm" key={558357}>
           {opportunity.value}
         </span>
       </div>
 
-      <div className="space-y-2">
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">Prediction</span>
-          <span className="text-sm font-medium text-gray-900">
+      <div className="space-y-2" key={725977}>
+        <div className="flex justify-between" key={588832}>
+          <span className="text-sm text-gray-600" key={279234}>Prediction</span>
+          <span className="text-sm font-medium text-gray-900" key={412874}>
             {opportunity.prediction}
           </span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">Confidence</span>
-          <span className="text-sm font-bold text-blue-600">
+        <div className="flex justify-between" key={588832}>
+          <span className="text-sm text-gray-600" key={279234}>Confidence</span>
+          <span className="text-sm font-bold text-blue-600" key={158279}>
             {opportunity.confidence}%
           </span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-sm text-gray-600">Time Left</span>
-          <span className="text-sm font-medium text-orange-600">
+        <div className="flex justify-between" key={588832}>
+          <span className="text-sm text-gray-600" key={279234}>Time Left</span>
+          <span className="text-sm font-medium text-orange-600" key={845348}>
             {opportunity.timeLeft}
           </span>
         </div>
       </div>
 
-      <button className="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
-        View Details
+      <button className="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors" key={380041}>
+        View Details;
       </button>
     </div>
   );
@@ -319,219 +319,219 @@ const ActivityItem: React.FC<{ activity: (typeof mockRecentActivity)[0] }> = ({
   const getIcon = () => {
     switch (activity.type) {
       case "win":
-        return <CheckCircle className="w-4 h-4 text-green-600" />;
+        return <CheckCircle className="w-4 h-4 text-green-600" / key={227144}>;
       case "prediction":
-        return <Brain className="w-4 h-4 text-blue-600" />;
+        return <Brain className="w-4 h-4 text-blue-600" / key={587488}>;
       case "alert":
-        return <AlertTriangle className="w-4 h-4 text-orange-600" />;
+        return <AlertTriangle className="w-4 h-4 text-orange-600" / key={887574}>;
       default:
-        return <Activity className="w-4 h-4 text-gray-600" />;
+        return <Activity className="w-4 h-4 text-gray-600" / key={697010}>;
     }
   };
 
   return (
-    <div className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors">
-      <div className="flex-shrink-0">{getIcon()}</div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-medium text-gray-900 truncate">
+    <div className="flex items-center gap-3 p-3 hover:bg-gray-50 rounded-lg transition-colors" key={896444}>
+      <div className="flex-shrink-0" key={11962}>{getIcon()}</div>
+      <div className="flex-1 min-w-0" key={704093}>
+        <p className="text-sm font-medium text-gray-900 truncate" key={736214}>
           {activity.message}
         </p>
         {activity.confidence && (
-          <p className="text-xs text-blue-600">
+          <p className="text-xs text-blue-600" key={857120}>
             Confidence: {activity.confidence}
           </p>
         )}
       </div>
-      <div className="text-right flex-shrink-0">
+      <div className="text-right flex-shrink-0" key={47512}>
         {activity.amount && (
-          <p className="text-sm font-bold text-green-600">{activity.amount}</p>
+          <p className="text-sm font-bold text-green-600" key={818485}>{activity.amount}</p>
         )}
-        <p className="text-xs text-gray-500">{activity.time}</p>
+        <p className="text-xs text-gray-500" key={596425}>{activity.time}</p>
       </div>
     </div>
   );
 };
 
 // ============================================================================
-// MAIN DASHBOARD COMPONENT
+// MAIN DASHBOARD COMPONENT;
 // ============================================================================
 
 const ConsolidatedUniversalDashboard: React.FC = () => {
   const [isLive, setIsLive] = useState(true);
 
   return (
-    <div className="min-h-full bg-gray-50">
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+    <div className="min-h-full bg-gray-50" key={356886}>
+      <div className="max-w-7xl mx-auto p-6 space-y-6" key={432184}>
         {/* Header Section */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                Welcome back, Alex
+        <div className="bg-white rounded-xl border border-gray-200 p-6" key={195079}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div key={241917}>
+              <h1 className="text-2xl font-bold text-gray-900 mb-2" key={249521}>
+                Welcome back, Alex;
               </h1>
-              <p className="text-gray-600">
-                Here's what's happening with your betting strategy today
+              <p className="text-gray-600" key={486863}>
+                Here's what's happening with your betting strategy today;
               </p>
             </div>
 
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <div
+            <div className="flex items-center gap-4" key={782146}>
+              <div className="flex items-center gap-2" key={100294}>
+                <div;
                   className={`w-2 h-2 rounded-full ${isLive ? "bg-green-500 animate-pulse" : "bg-gray-400"}`}
-                ></div>
-                <span className="text-sm font-medium text-gray-700">
+                 key={400218}></div>
+                <span className="text-sm font-medium text-gray-700" key={436322}>
                   {isLive ? "Live Data" : "Offline"}
                 </span>
               </div>
 
-              <button
-                onClick={() => setIsLive(!isLive)}
+              <button;
+                onClick={() = key={206350}> setIsLive(!isLive)}
                 className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
               >
                 {isLive ? (
-                  <Pause className="w-5 h-5 text-gray-600" />
+                  <Pause className="w-5 h-5 text-gray-600" / key={682741}>
                 ) : (
-                  <Play className="w-5 h-5 text-gray-600" />
+                  <Play className="w-5 h-5 text-gray-600" / key={664706}>
                 )}
               </button>
 
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <RefreshCw className="w-5 h-5 text-gray-600" />
+              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" key={44036}>
+                <RefreshCw className="w-5 h-5 text-gray-600" / key={897682}>
               </button>
 
-              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors">
-                New Prediction
+              <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors" key={802868}>
+                New Prediction;
               </button>
             </div>
           </div>
         </div>
 
         {/* Metrics Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" key={765662}>
           {mockMetrics.map((metric, index) => (
-            <MetricCard key={metric.id} metric={metric} index={index} />
+            <MetricCard key={metric.id} metric={metric} index={index} / key={752729}>
           ))}
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6" key={793741}>
           {/* Live Opportunities */}
-          <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-3">
-                <div className="p-2 bg-green-50 rounded-lg">
-                  <Target className="w-5 h-5 text-green-600" />
+          <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-6" key={143636}>
+            <div className="flex items-center justify-between mb-6" key={530716}>
+              <div className="flex items-center gap-3" key={443099}>
+                <div className="p-2 bg-green-50 rounded-lg" key={992448}>
+                  <Target className="w-5 h-5 text-green-600" / key={657326}>
                 </div>
-                <div>
-                  <h2 className="text-lg font-semibold text-gray-900">
-                    Live Opportunities
+                <div key={241917}>
+                  <h2 className="text-lg font-semibold text-gray-900" key={507398}>
+                    Live Opportunities;
                   </h2>
-                  <p className="text-sm text-gray-600">
-                    AI-detected high-value bets
+                  <p className="text-sm text-gray-600" key={656535}>
+                    AI-detected high-value bets;
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
-                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                  <Filter className="w-4 h-4 text-gray-600" />
+              <div className="flex items-center gap-2" key={100294}>
+                <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" key={44036}>
+                  <Filter className="w-4 h-4 text-gray-600" / key={948388}>
                 </button>
-                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1">
-                  View All <ChevronRight className="w-4 h-4" />
+                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center gap-1" key={407367}>
+                  View All <ChevronRight className="w-4 h-4" / key={749664}>
                 </button>
               </div>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-4" key={160407}>
               {mockOpportunities.map((opportunity) => (
-                <OpportunityCard
+                <OpportunityCard;
                   key={opportunity.id}
                   opportunity={opportunity}
-                />
+                / key={841370}>
               ))}
             </div>
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-6" key={501869}>
             {/* Quick Stats */}
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                Quick Stats
+            <div className="bg-white rounded-xl border border-gray-200 p-6" key={195079}>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4" key={939281}>
+                Quick Stats;
               </h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Today's Bets</span>
-                  <span className="text-sm font-bold text-gray-900">3</span>
+              <div className="space-y-4" key={160407}>
+                <div className="flex items-center justify-between" key={96335}>
+                  <span className="text-sm text-gray-600" key={279234}>Today's Bets</span>
+                  <span className="text-sm font-bold text-gray-900" key={322450}>3</span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">This Week</span>
-                  <span className="text-sm font-bold text-green-600">
-                    +$1,247
+                <div className="flex items-center justify-between" key={96335}>
+                  <span className="text-sm text-gray-600" key={279234}>This Week</span>
+                  <span className="text-sm font-bold text-green-600" key={709091}>
+                    +$1,247;
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">Pending</span>
-                  <span className="text-sm font-bold text-orange-600">
-                    5 bets
+                <div className="flex items-center justify-between" key={96335}>
+                  <span className="text-sm text-gray-600" key={279234}>Pending</span>
+                  <span className="text-sm font-bold text-orange-600" key={973888}>
+                    5 bets;
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600">AI Confidence</span>
-                  <span className="text-sm font-bold text-blue-600">94.2%</span>
+                <div className="flex items-center justify-between" key={96335}>
+                  <span className="text-sm text-gray-600" key={279234}>AI Confidence</span>
+                  <span className="text-sm font-bold text-blue-600" key={158279}>94.2%</span>
                 </div>
               </div>
             </div>
 
             {/* Recent Activity */}
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Recent Activity
+            <div className="bg-white rounded-xl border border-gray-200 p-6" key={195079}>
+              <div className="flex items-center justify-between mb-4" key={810034}>
+                <h3 className="text-lg font-semibold text-gray-900" key={841723}>
+                  Recent Activity;
                 </h3>
-                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium">
-                  View All
+                <button className="text-blue-600 hover:text-blue-700 text-sm font-medium" key={864485}>
+                  View All;
                 </button>
               </div>
 
-              <div className="space-y-2">
+              <div className="space-y-2" key={725977}>
                 {mockRecentActivity.map((activity) => (
-                  <ActivityItem key={activity.id} activity={activity} />
+                  <ActivityItem key={activity.id} activity={activity} / key={728702}>
                 ))}
               </div>
             </div>
 
             {/* System Status */}
-            <div className="bg-white rounded-xl border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">
-                System Status
+            <div className="bg-white rounded-xl border border-gray-200 p-6" key={195079}>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4" key={939281}>
+                System Status;
               </h3>
-              <div className="space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-sm text-gray-700">Data Feed</span>
+              <div className="space-y-3" key={186520}>
+                <div className="flex items-center justify-between" key={96335}>
+                  <div className="flex items-center gap-2" key={100294}>
+                    <div className="w-2 h-2 bg-green-500 rounded-full" key={500238}></div>
+                    <span className="text-sm text-gray-700" key={995798}>Data Feed</span>
                   </div>
-                  <span className="text-xs text-green-600 font-medium">
-                    Operational
+                  <span className="text-xs text-green-600 font-medium" key={978662}>
+                    Operational;
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-sm text-gray-700">ML Models</span>
+                <div className="flex items-center justify-between" key={96335}>
+                  <div className="flex items-center gap-2" key={100294}>
+                    <div className="w-2 h-2 bg-green-500 rounded-full" key={500238}></div>
+                    <span className="text-sm text-gray-700" key={995798}>ML Models</span>
                   </div>
-                  <span className="text-xs text-green-600 font-medium">
-                    Operational
+                  <span className="text-xs text-green-600 font-medium" key={978662}>
+                    Operational;
                   </span>
                 </div>
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span className="text-sm text-gray-700">Predictions</span>
+                <div className="flex items-center justify-between" key={96335}>
+                  <div className="flex items-center gap-2" key={100294}>
+                    <div className="w-2 h-2 bg-green-500 rounded-full" key={500238}></div>
+                    <span className="text-sm text-gray-700" key={995798}>Predictions</span>
                   </div>
-                  <span className="text-xs text-green-600 font-medium">
-                    Operational
+                  <span className="text-xs text-green-600 font-medium" key={978662}>
+                    Operational;
                   </span>
                 </div>
               </div>
@@ -540,50 +540,50 @@ const ConsolidatedUniversalDashboard: React.FC = () => {
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
           {/* Performance Chart */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Performance Trend
+          <div className="bg-white rounded-xl border border-gray-200 p-6" key={195079}>
+            <div className="flex items-center justify-between mb-6" key={530716}>
+              <div key={241917}>
+                <h3 className="text-lg font-semibold text-gray-900" key={841723}>
+                  Performance Trend;
                 </h3>
-                <p className="text-sm text-gray-600">Profit over time</p>
+                <p className="text-sm text-gray-600" key={656535}>Profit over time</p>
               </div>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <MoreHorizontal className="w-5 h-5 text-gray-600" />
+              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" key={44036}>
+                <MoreHorizontal className="w-5 h-5 text-gray-600" / key={583631}>
               </button>
             </div>
 
-            <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-              <div className="text-center">
-                <LineChart className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">
-                  Chart visualization would go here
+            <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg" key={363556}>
+              <div className="text-center" key={120206}>
+                <LineChart className="w-12 h-12 text-gray-400 mx-auto mb-2" / key={999408}>
+                <p className="text-sm text-gray-500" key={212051}>
+                  Chart visualization would go here;
                 </p>
               </div>
             </div>
           </div>
 
           {/* Betting Distribution */}
-          <div className="bg-white rounded-xl border border-gray-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  Bet Distribution
+          <div className="bg-white rounded-xl border border-gray-200 p-6" key={195079}>
+            <div className="flex items-center justify-between mb-6" key={530716}>
+              <div key={241917}>
+                <h3 className="text-lg font-semibold text-gray-900" key={841723}>
+                  Bet Distribution;
                 </h3>
-                <p className="text-sm text-gray-600">By sport and type</p>
+                <p className="text-sm text-gray-600" key={656535}>By sport and type</p>
               </div>
-              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
-                <MoreHorizontal className="w-5 h-5 text-gray-600" />
+              <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" key={44036}>
+                <MoreHorizontal className="w-5 h-5 text-gray-600" / key={583631}>
               </button>
             </div>
 
-            <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-              <div className="text-center">
-                <PieChart className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-500">
-                  Distribution chart would go here
+            <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg" key={363556}>
+              <div className="text-center" key={120206}>
+                <PieChart className="w-12 h-12 text-gray-400 mx-auto mb-2" / key={10386}>
+                <p className="text-sm text-gray-500" key={212051}>
+                  Distribution chart would go here;
                 </p>
               </div>
             </div>

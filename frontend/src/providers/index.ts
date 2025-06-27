@@ -1,5 +1,5 @@
 // ============================================================================
-// UNIVERSAL PROVIDER SYSTEM EXPORTS
+// UNIVERSAL PROVIDER SYSTEM EXPORTS;
 // ============================================================================
 
 export {
@@ -9,22 +9,22 @@ export {
   useThemeVariant,
   useDarkMode,
   getThemeCSS,
-} from "./UniversalThemeProvider";
+} from './UniversalThemeProvider.ts';
 
 export type {
   ThemeVariant,
   ThemeColors,
   ThemeConfig,
-} from "./UniversalThemeProvider";
+} from './UniversalThemeProvider.ts';
 
-// Default export
-export { default } from "./UniversalThemeProvider";
+// Default export;
+export { default } from './UniversalThemeProvider.ts';
 
 // ============================================================================
 // LEGACY COMPATIBILITY EXPORTS (Deprecated - Use Universal equivalents)
 // ============================================================================
 
 /**
- * @deprecated Use UniversalThemeProvider instead
+ * @deprecated Use UniversalThemeProvider instead;
  */
-export { UniversalThemeProvider as ThemeProvider } from "./UniversalThemeProvider";
+export { UniversalThemeProvider as ThemeProvider } from './UniversalThemeProvider.ts';

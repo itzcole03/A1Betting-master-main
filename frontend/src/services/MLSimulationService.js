@@ -13,7 +13,7 @@ export class MLSimulationService extends EventEmitter {
         this.initializeGames();
     }
     initializeTeams() {
-        // Initialize NBA teams with realistic stats
+        // Initialize NBA teams with realistic stats;
         const teams = [
             {
                 id: 'LAL',
@@ -37,7 +37,7 @@ export class MLSimulationService extends EventEmitter {
         });
     }
     initializePlayers() {
-        // Initialize players with realistic stats
+        // Initialize players with realistic stats;
         const players = [
             {
                 id: 'LBJ',
@@ -66,7 +66,7 @@ export class MLSimulationService extends EventEmitter {
         });
     }
     initializeGames() {
-        // Initialize upcoming games
+        // Initialize upcoming games;
         const games = [
             {
                 id: 'LAL-BOS-2024-03-15',
@@ -86,19 +86,19 @@ export class MLSimulationService extends EventEmitter {
         });
     }
     generatePrediction(gameId, playerId, metric) {
-        const game = this.games.get(gameId);
-        const player = this.players.get(playerId);
+
+
         if (!game || !player) {
             throw new Error('Game or player not found');
         }
-        // Generate realistic prediction based on player stats and game context
-        const baseValue = player.stats[metric];
-        const variance = baseValue * 0.2; // 20% variance
-        const prediction = baseValue + (Math.random() * variance * 2 - variance);
-        const confidence = 0.7 + Math.random() * 0.2; // 70-90% confidence
-        // Get the most recent form data for the metric
-        const recentFormValue = player.recentForm.length > 0
-            ? player.recentForm[player.recentForm.length - 1][metric] || baseValue
+        // Generate realistic prediction based on player stats and game context;
+
+        const variance = baseValue * 0.2; // 20% variance;
+
+        const confidence = 0.7 + Math.random() * 0.2; // 70-90% confidence;
+        // Get the most recent form data for the metric;
+        const recentFormValue = player.recentForm.length > 0;
+            ? player.recentForm[player.recentForm.length - 1][metric] || baseValue;
             : baseValue;
         const predictionObj = {
             modelId: 'ml-simulation-v1',
@@ -112,8 +112,8 @@ export class MLSimulationService extends EventEmitter {
             },
             timestamp: new Date().toISOString(),
         };
-        // Store prediction
-        const gamePredictions = this.predictions.get(gameId) || [];
+        // Store prediction;
+
         gamePredictions.push(predictionObj);
         this.predictions.set(gameId, gamePredictions);
         return predictionObj;
@@ -128,30 +128,30 @@ export class MLSimulationService extends EventEmitter {
         return this.predictions.get(gameId) || [];
     }
     updatePlayerForm(playerId, form) {
-        const player = this.players.get(playerId);
+
         if (player) {
             player.recentForm.push(form);
-            // Keep only last 10 games
+            // Keep only last 10 games;
             if (player.recentForm.length > 10) {
                 player.recentForm.shift();
             }
         }
     }
     updateInjuryStatus(playerId, status) {
-        const player = this.players.get(playerId);
+
         if (player) {
             player.injuryStatus = status;
         }
     }
     /**
-     * Simulate a bet outcome, expected return, and risk profile
+     * Simulate a bet outcome, expected return, and risk profile;
      */
     simulateBet(input) {
-        const winProb = input.winProbability.probability;
-        const payout = input.stake * input.odds;
-        const expectedReturn = winProb * payout - (1 - winProb) * input.stake;
-        const variance = winProb * Math.pow(payout - expectedReturn, 2) + (1 - winProb) * Math.pow(-input.stake - expectedReturn, 2);
-        const breakEvenStake = input.stake * (1 / winProb);
+
+
+
+
+
         return {
             expectedReturn,
             variance,
@@ -162,12 +162,12 @@ export class MLSimulationService extends EventEmitter {
         };
     }
     /**
-     * Generate a prediction with confidence band and win probability
+     * Generate a prediction with confidence band and win probability;
      */
     getPredictionWithConfidence(gameId, playerId, metric) {
-        const prediction = this.generatePrediction(gameId, playerId, metric);
-        const confidenceLevel = 0.95;
-        const stdDev = prediction.prediction * 0.15; // 15% std dev for band
+
+
+        const stdDev = prediction.prediction * 0.15; // 15% std dev for band;
         const confidenceBand = {
             lower: prediction.prediction - 1.96 * stdDev,
             upper: prediction.prediction + 1.96 * stdDev,
@@ -194,10 +194,10 @@ export class MLSimulationService extends EventEmitter {
         };
     }
     /**
-     * Aggregate historical prediction and actual performance for a given event
+     * Aggregate historical prediction and actual performance for a given event;
      */
     getHistoricalPerformance(eventId) {
-        const predictions = this.getGamePredictions(eventId);
+
         const history = predictions.map((p) => {
             const confidenceBand = {
                 lower: p.prediction - 1.96 * (p.prediction * 0.15),
@@ -214,9 +214,9 @@ export class MLSimulationService extends EventEmitter {
             return {
                 date: p.timestamp,
                 prediction: p.prediction,
-                actual: p.prediction, // Placeholder: replace with actual outcome if available
-                won: true, // Placeholder
-                payout: 0, // Placeholder
+                actual: p.prediction, // Placeholder: replace with actual outcome if available;
+                won: true, // Placeholder;
+                payout: 0, // Placeholder;
                 confidenceBand,
                 winProbability,
             };

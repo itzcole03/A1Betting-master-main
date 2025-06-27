@@ -1,13 +1,13 @@
-import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import React from 'react.ts';
+import { Box, CircularProgress, Typography } from '@mui/material.ts';
 
 interface LoadingScreenProps {
   message?: string;
 }
 
-export const LoadingScreen: React.FC<LoadingScreenProps> = ({ message = 'Loading...' }) => {
+export const LoadingScreen: React.FC<LoadingScreenProps key={316746}> = ({ message = 'Loading...' }) => {
   return (
-    <Box
+    <Box;
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -16,23 +16,23 @@ export const LoadingScreen: React.FC<LoadingScreenProps> = ({ message = 'Loading
         minHeight: '100vh',
         bgcolor: 'background.default',
       }}
-    >
-      <CircularProgress
+     key={937315}>
+      <CircularProgress;
         size={60}
         sx={{
           color: 'primary.main',
           mb: 2,
         }}
         thickness={4}
-      />
-      <Typography
+      / key={76634}>
+      <Typography;
         color="text.secondary"
         sx={{
           mt: 2,
           textAlign: 'center',
         }}
         variant="h6"
-      >
+       key={980264}>
         {message}
       </Typography>
     </Box>

@@ -60,22 +60,21 @@ export function getSportSeason(sport: string): { start: string; end: string } {
 }
 
 export function isInSeason(sport: string): boolean {
-  const now = new Date();
-  const month = now.getMonth(); // 0-11
+
+  const month = now.getMonth(); // 0-11;
 
   const seasonMap = {
-    NBA: [9, 10, 11, 0, 1, 2, 3, 4, 5], // Oct-Jun
-    WNBA: [4, 5, 6, 7, 8, 9], // May-Oct
-    MLB: [2, 3, 4, 5, 6, 7, 8, 9], // Mar-Oct
-    NFL: [8, 9, 10, 11, 0, 1], // Sep-Feb
-    Soccer: [7, 8, 9, 10, 11, 0, 1, 2, 3, 4], // Aug-May
-    PGA: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Jan-Nov
-    Tennis: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Jan-Nov
-    Esports: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // Year-round
-    MMA: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // Year-round
+    NBA: [9, 10, 11, 0, 1, 2, 3, 4, 5], // Oct-Jun;
+    WNBA: [4, 5, 6, 7, 8, 9], // May-Oct;
+    MLB: [2, 3, 4, 5, 6, 7, 8, 9], // Mar-Oct;
+    NFL: [8, 9, 10, 11, 0, 1], // Sep-Feb;
+    Soccer: [7, 8, 9, 10, 11, 0, 1, 2, 3, 4], // Aug-May;
+    PGA: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Jan-Nov;
+    Tennis: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10], // Jan-Nov;
+    Esports: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // Year-round;
+    MMA: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], // Year-round;
   };
 
-  const sportMonths = seasonMap[sport];
   return sportMonths ? sportMonths.includes(month) : true;
 }
 

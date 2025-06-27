@@ -1,13 +1,13 @@
 /**
- * Custom hooks for betting-related functionality
- * Provides data fetching, caching, and state management for betting features
+ * Custom hooks for betting-related functionality;
+ * Provides data fetching, caching, and state management for betting features;
  */
 
-import { useState, useEffect, useCallback, useMemo } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { api } from "../services/integrationService";
+import { useState, useEffect, useCallback, useMemo } from 'react.ts';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query.ts';
+import { api } from '@/services/integrationService.ts';
 
-// Define types locally since they're not exported from integrationService
+// Define types locally since they're not exported from integrationService;
 interface ValueBet {
   id: string;
   sport: string;
@@ -36,9 +36,9 @@ interface ArbitrageOpportunity {
   stakes?: { [key: string]: number };
   required_stake?: number;
 }
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast.ts';
 
-// Hook for value bets
+// Hook for value bets;
 export const useValueBets = (filters?: {
   sport?: string;
   minEdge?: number;
@@ -56,7 +56,7 @@ export const useValueBets = (filters?: {
         filters?.sport,
         filters?.limit || 10,
       );
-      // Map betting opportunities to ValueBet format
+      // Map betting opportunities to ValueBet format;
       return opportunities.map((opp: any) => ({
         id: opp.id,
         sport: opp.sport,
@@ -69,15 +69,14 @@ export const useValueBets = (filters?: {
         recommendation: opp.recommendation,
       })) as ValueBet[];
     },
-    refetchInterval: 30000, // Refetch every 30 seconds
-    staleTime: 10000, // Data is fresh for 10 seconds
-    retry: false, // Don't retry on error
+    refetchInterval: 30000, // Refetch every 30 seconds;
+    staleTime: 10000, // Data is fresh for 10 seconds;
+    retry: false, // Don't retry on error;
   });
 
-  // Ensure we always have an array
-  const valueBets = Array.isArray(valueBetsData) ? valueBetsData : [];
+  // Ensure we always have an array;
 
-  // Filter value bets based on criteria
+  // Filter value bets based on criteria;
   const filteredValueBets = useMemo(() => {
     if (!Array.isArray(valueBets)) return [];
     if (!filters) return valueBets;
@@ -91,9 +90,9 @@ export const useValueBets = (filters?: {
     });
   }, [valueBets, filters]);
 
-  // Calculate statistics
+  // Calculate statistics;
   const stats = useMemo(() => {
-    // Ensure filteredValueBets is an array before using reduce
+    // Ensure filteredValueBets is an array before using reduce;
     if (!Array.isArray(filteredValueBets) || filteredValueBets.length === 0) {
       return {
         count: 0,
@@ -107,7 +106,7 @@ export const useValueBets = (filters?: {
       (sum: number, bet: ValueBet) => sum + (bet.edge || 0),
       0,
     );
-    const avgEdge = totalEdge / filteredValueBets.length;
+
     const maxEdge = filteredValueBets.reduce(
       (max: number, bet: ValueBet) => Math.max(max, bet.edge || 0),
       0,
@@ -130,7 +129,7 @@ export const useValueBets = (filters?: {
   };
 };
 
-// Hook for arbitrage opportunities
+// Hook for arbitrage opportunities;
 export const useArbitrageOpportunities = (filters?: {
   sport?: string;
   minProfit?: number;
@@ -145,18 +144,18 @@ export const useArbitrageOpportunities = (filters?: {
     queryKey: ["arbitrageOpportunities", filters],
     queryFn: () => api.getArbitrageOpportunities(),
     refetchInterval: 15000, // Refetch every 15 seconds (arbitrage is time-sensitive)
-    staleTime: 5000, // Data is fresh for 5 seconds
-    retry: false, // Don't retry on error
+    staleTime: 5000, // Data is fresh for 5 seconds;
+    retry: false, // Don't retry on error;
   });
 
-  // Ensure we always have an array
+  // Ensure we always have an array;
   const arbitrageOpportunities = Array.isArray(arbitrageData)
-    ? arbitrageData
+    ? arbitrageData;
     : [];
 
-  // Filter arbitrage opportunities
+  // Filter arbitrage opportunities;
   const filteredOpportunities = useMemo(() => {
-    // Ensure we always have an array to work with
+    // Ensure we always have an array to work with;
     if (!Array.isArray(arbitrageOpportunities)) return [];
     if (!filters) return arbitrageOpportunities;
 
@@ -165,7 +164,7 @@ export const useArbitrageOpportunities = (filters?: {
       if (filters.minProfit && opp.profit_percent < filters.minProfit)
         return false;
       if (filters.maxStake && opp.stakes) {
-        const stakes = Object.values(opp.stakes);
+
         const totalStake = Array.isArray(stakes)
           ? stakes.reduce((sum, stake) => sum + (stake || 0), 0)
           : 0;
@@ -175,12 +174,12 @@ export const useArbitrageOpportunities = (filters?: {
     });
   }, [arbitrageOpportunities, filters]);
 
-  // Calculate statistics
+  // Calculate statistics;
   const stats = useMemo(() => {
-    // Ensure filteredOpportunities is an array before using reduce
+    // Ensure filteredOpportunities is an array before using reduce;
     if (
       !Array.isArray(filteredOpportunities) ||
-      filteredOpportunities.length === 0
+      filteredOpportunities.length === 0;
     ) {
       return {
         totalProfit: 0,
@@ -217,9 +216,8 @@ export const useArbitrageOpportunities = (filters?: {
   };
 };
 
-// Hook for placing bets
+// Hook for placing bets;
 export const usePlaceBet = () => {
-  const queryClient = useQueryClient();
 
   const placeBetMutation = useMutation({
     mutationFn: (betData: {
@@ -228,10 +226,10 @@ export const usePlaceBet = () => {
       bookmaker: string;
       odds: number;
       stake: number;
-    }) => Promise.reject(new Error("Bet placement not implemented yet")), // TODO: Implement placeBet in integration service
+    }) => Promise.reject(new Error("Bet placement not implemented yet")), // TODO: Implement placeBet in integration service;
     onSuccess: (data) => {
       toast.success("Bet placed successfully!");
-      // Invalidate relevant queries to refresh data
+      // Invalidate relevant queries to refresh data;
       queryClient.invalidateQueries({ queryKey: ["valueBets"] });
       queryClient.invalidateQueries({ queryKey: ["userAnalytics"] });
     },
@@ -247,7 +245,7 @@ export const usePlaceBet = () => {
   };
 };
 
-// Hook for user analytics
+// Hook for user analytics;
 export const useUserAnalytics = (userId: string) => {
   const {
     data: analytics,
@@ -258,7 +256,7 @@ export const useUserAnalytics = (userId: string) => {
     queryKey: ["userAnalytics", userId],
     queryFn: () => api.getUserAnalytics(userId),
     enabled: !!userId,
-    staleTime: 60000, // Data is fresh for 1 minute
+    staleTime: 60000, // Data is fresh for 1 minute;
   });
 
   return {
@@ -269,7 +267,7 @@ export const useUserAnalytics = (userId: string) => {
   };
 };
 
-// Hook for bankroll management
+// Hook for bankroll management;
 export const useBankroll = (userId: string) => {
   const [bankrollSettings, setBankrollSettings] = useState({
     totalBankroll: 1000,
@@ -277,29 +275,26 @@ export const useBankroll = (userId: string) => {
     riskTolerance: "medium" as "low" | "medium" | "high",
   });
 
-  // Calculate recommended bet sizes using Kelly Criterion
+  // Calculate recommended bet sizes using Kelly Criterion;
   const calculateKellyBetSize = useCallback(
     (edge: number, odds: number) => {
       const { totalBankroll, maxBetPercentage } = bankrollSettings;
-      const kellyFraction = edge / (odds - 1);
 
-      // Apply risk tolerance modifier
+      // Apply risk tolerance modifier;
       const riskModifier = {
         low: 0.25,
         medium: 0.5,
         high: 1.0,
       }[bankrollSettings.riskTolerance];
 
-      const adjustedKelly = kellyFraction * riskModifier;
-      const maxBetAmount = (totalBankroll * maxBetPercentage) / 100;
 
-      // Use smaller of Kelly calculation or max bet amount
+      // Use smaller of Kelly calculation or max bet amount;
       const recommendedBet = Math.min(
         totalBankroll * Math.max(0, adjustedKelly),
         maxBetAmount,
       );
 
-      return Math.round(recommendedBet * 100) / 100; // Round to 2 decimal places
+      return Math.round(recommendedBet * 100) / 100; // Round to 2 decimal places;
     },
     [bankrollSettings],
   );
@@ -311,7 +306,7 @@ export const useBankroll = (userId: string) => {
   };
 };
 
-// Hook for bet tracking and history
+// Hook for bet tracking and history;
 export const useBetHistory = (userId: string) => {
   const [betHistory, setBetHistory] = useState<any[]>([]);
   const [filters, setFilters] = useState({
@@ -320,9 +315,9 @@ export const useBetHistory = (userId: string) => {
     dateRange: { start: "", end: "" },
   });
 
-  // This would typically fetch from an API
+  // This would typically fetch from an API;
   useEffect(() => {
-    // Simulate bet history data
+    // Simulate bet history data;
     const mockHistory = [
       {
         id: "1",
@@ -334,7 +329,7 @@ export const useBetHistory = (userId: string) => {
         profit: 75,
         date: new Date().toISOString(),
       },
-      // Add more mock data as needed
+      // Add more mock data as needed;
     ];
     setBetHistory(mockHistory);
   }, [userId]);
@@ -350,13 +345,13 @@ export const useBetHistory = (userId: string) => {
       if (filters.outcome && bet.outcome !== filters.outcome) {
         return false;
       }
-      // Add date filtering logic here
+      // Add date filtering logic here;
       return true;
     });
   }, [betHistory, filters]);
 
   const stats = useMemo(() => {
-    // Ensure filteredHistory is an array before calculations
+    // Ensure filteredHistory is an array before calculations;
     if (!Array.isArray(filteredHistory) || filteredHistory.length === 0) {
       return {
         totalBets: 0,
@@ -368,7 +363,6 @@ export const useBetHistory = (userId: string) => {
       };
     }
 
-    const totalBets = filteredHistory.length;
     const wonBets = filteredHistory.filter(
       (bet) => bet.result === "won",
     ).length;
@@ -380,7 +374,6 @@ export const useBetHistory = (userId: string) => {
       (sum, bet) => sum + (bet.stake || 0),
       0,
     );
-    const roi = totalStaked > 0 ? (totalProfit / totalStaked) * 100 : 0;
 
     return {
       totalBets,
@@ -400,7 +393,7 @@ export const useBetHistory = (userId: string) => {
   };
 };
 
-// Export all hooks
+// Export all hooks;
 export default {
   useValueBets,
   useArbitrageOpportunities,

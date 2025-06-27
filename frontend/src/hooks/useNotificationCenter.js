@@ -1,5 +1,5 @@
-// useNotificationCenter: React hook for managing notifications
-// TODO: Add tests
+// useNotificationCenter: React hook for managing notifications;
+// TODO: Add tests;
 import { useState, useCallback } from 'react';
 export function useNotificationCenter() {
     const [notifications, setNotifications] = useState([]);

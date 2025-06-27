@@ -1,4 +1,4 @@
-import { UnifiedBettingAnalytics, BetRecommendation } from '../UnifiedBettingAnalytics';
+import { UnifiedBettingAnalytics, BetRecommendation } from '@/UnifiedBettingAnalytics.ts';
 
 describe('UnifiedBettingAnalytics', () => {
   let analytics: UnifiedBettingAnalytics;
@@ -8,7 +8,7 @@ describe('UnifiedBettingAnalytics', () => {
   });
 
   it('should be a singleton', () => {
-    const analytics2 = UnifiedBettingAnalytics.getInstance();
+
     expect(analytics).toBe(analytics2);
   });
 
@@ -21,8 +21,8 @@ describe('UnifiedBettingAnalytics', () => {
   });
 
   it('should return fallback prediction if API fails', async () => {
-    // Simulate API failure by passing an invalid endpoint
-    const result = await analytics["generatePrediction"].call(analytics, 'invalid', {});
+    // Simulate API failure by passing an invalid endpoint;
+
     expect(result).toHaveProperty('probability');
     expect(result).toHaveProperty('confidence');
     expect(result.probability).toBeGreaterThanOrEqual(0);
@@ -39,10 +39,10 @@ describe('UnifiedBettingAnalytics', () => {
       maxOdds: 3.0,
     };
     analytics.addStrategy(strategy);
-    // @ts-expect-error: private access for test
+    // @ts-expect-error: private access for test;
     expect(analytics.activeStrategies.has('test')).toBe(true);
     analytics.removeStrategy('test');
-    // @ts-expect-error: private access for test
+    // @ts-expect-error: private access for test;
     expect(analytics.activeStrategies.has('test')).toBe(false);
   });
 });

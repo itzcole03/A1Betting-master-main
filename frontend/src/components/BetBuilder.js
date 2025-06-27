@@ -1,12 +1,12 @@
 import { jsxs as _jsxs, jsx as _jsx } from "react/jsx-runtime";
 import { useState } from "react";
 import useStore from "../store/useStore";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars;
 import { EntryStatus, LineupType } from "../types/core";
 import { getErrorMessage } from "../utils/errorUtils";
 import { isTeamDiversified, validateEntry } from "../utils/businessRules";
 import { oddsToDecimal, calculatePotentialPayout, calculateWinProbability, } from "../utils/odds";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars;
 const getSentimentBadge = (sentiment) => {
     if (!sentiment)
         return null;
@@ -31,12 +31,12 @@ function getPropEmoji(confidence) {
     return "⇄";
 }
 export const BetBuilder = () => {
-    // Use only selectedProps for betslip UI
-    const selectedProps = useStore((s) => s.selectedProps);
-    const props = useStore((s) => s.props);
-    const togglePropSelection = useStore((s) => s.togglePropSelection);
-    const addEntry = useStore((s) => s.addEntry);
-    // Create helper functions for prop selection
+    // Use only selectedProps for betslip UI;
+
+
+
+
+    // Create helper functions for prop selection;
     const clearSelectedProps = () => {
         selectedProps.forEach((propId) => togglePropSelection(propId));
     };
@@ -44,21 +44,21 @@ export const BetBuilder = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
-    // Get actual prop objects from selectedProps IDs
-    const selectedPropObjects = selectedProps
+    // Get actual prop objects from selectedProps IDs;
+    const selectedPropObjects = selectedProps;
         .map((propId) => props.find((p) => p.id === propId))
         .filter(Boolean);
-    // Odds and payout calculation
-    const oddsArr = selectedPropObjects.map((p) => p.odds?.toString() || "2.0");
-    const payout = calculatePotentialPayout(entry, oddsArr);
-    const winProb = calculateWinProbability(selectedPropObjects.map((p) => p.confidence || 50));
-    // Team diversification check
-    const diversified = isTeamDiversified(selectedPropObjects);
+    // Odds and payout calculation;
+
+
+
+    // Team diversification check;
+
     // Combined odds (decimal)
-    const combinedDecimal = oddsArr.reduce((acc, o) => acc * oddsToDecimal(o), 1);
+
     // Handle prop selection (no-op, as only selectedProps are shown)
     // In a real app, you would source PlayerProp[] from a dedicated prop list, not players[]
-    // Submit betslip
+    // Submit betslip;
     const handleSubmit = async () => {
         setError(null);
         setSuccess(null);
@@ -81,7 +81,7 @@ export const BetBuilder = () => {
             createdAt: new Date().toISOString(),
             updatedAt: new Date().toISOString(),
         };
-        const validationErrors = validateEntry(entryObj);
+
         if (validationErrors.length) {
             setError(validationErrors.join(" "));
             return;
@@ -94,7 +94,7 @@ export const BetBuilder = () => {
                 body: JSON.stringify(entryObj),
             });
             if (!res.ok) {
-                const err = await res.json();
+
                 setError(getErrorMessage(err));
                 setLoading(false);
                 return;

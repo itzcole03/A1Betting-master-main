@@ -1,9 +1,9 @@
-// betaTest4/src/test/stateSync/storeConsistency.test.ts
+// betaTest4/src/test/stateSync/storeConsistency.test.ts;
 // This is a placeholder for state synchronization tests.
-// These tests would verify that Zustand store state remains consistent
-// after various sequences of actions, especially those involving async operations
+// These tests would verify that Zustand store state remains consistent;
+// after various sequences of actions, especially those involving async operations;
 // or interactions between different store slices.
-// Mock Sentry to suppress errors in test
+// Mock Sentry to suppress errors in test;
 jest.mock('@sentry/react', () => ({
     captureException: jest.fn(),
     captureMessage: jest.fn(),
@@ -12,7 +12,7 @@ jest.mock('@sentry/react', () => ({
     setExtra: jest.fn(),
     withScope: (cb) => cb({ setLevel: jest.fn(), setExtra: jest.fn() }),
 }));
-// Mock UnifiedConfig to always provide a config object
+// Mock UnifiedConfig to always provide a config object;
 jest.mock('../../core/UnifiedConfig', () => {
     const apiEndpoints = {
         users: '/api/users',
@@ -42,17 +42,17 @@ jest.mock('../../core/UnifiedConfig', () => {
     };
 });
 import { useAppStore } from '@/store/useAppStore';
-import { act } from '@testing-library/react'; // if testing hooks or effects that update store
+import { act } from '@testing-library/react'; // if testing hooks or effects that update store;
 import * as predictionService from '../../services/predictionService';
-const realAuthServiceModule = jest.requireActual('../../services/authService');
-const realPrizePicksServiceModule = jest.requireActual('../../services/prizePicksService');
+
+
 beforeAll(() => {
     jest.spyOn(realAuthServiceModule.authService, 'login').mockResolvedValue({
         user: { id: 'u1', email: 'test@example.com', username: 'testuser' },
         token: 'mock-token',
     });
     jest.spyOn(realAuthServiceModule.authService, 'logout').mockResolvedValue(undefined);
-    jest
+    jest;
         .spyOn(realPrizePicksServiceModule.prizePicksService, 'fetchPrizePicksProps')
         .mockResolvedValue([
         {
@@ -73,14 +73,14 @@ describe('AppStore State Consistency', () => {
         // This is a manual reset of top-level state slices.
         // A more robust solution would be an explicit reset action in the store itself.
         useAppStore.setState({
-            // AuthState initial values
+            // AuthState initial values;
             user: null,
             token: null,
             isAuthenticated: false,
             isLoading: false,
             error: null,
             webSocketAuthStatus: null,
-            // PrizePicksDataState initial values
+            // PrizePicksDataState initial values;
             props: [],
             currentPrizePicksPlayer: null,
             currentPrizePicksLines: null,
@@ -91,15 +91,15 @@ describe('AppStore State Consistency', () => {
             isLoadingLines: false,
             // Note: `error` is potentially shared across slices in current AppStore type, ensure it's reset or handled.
             // For this reset, we assume `error: null` covers the general case.
-            // BetSlipState initial values
+            // BetSlipState initial values;
             legs: [],
             stake: 0,
             potentialPayout: 0,
             isSubmitting: false,
             // `error` from BetSlipState also needs to be considered if distinct.
-            // NotificationState initial values
+            // NotificationState initial values;
             toasts: [],
-            // DynamicDataState initial values
+            // DynamicDataState initial values;
             sentiments: {},
             headlines: [],
             dailyFantasyProjections: [],
@@ -109,14 +109,14 @@ describe('AppStore State Consistency', () => {
             isLoadingHeadlines: false,
             isLoadingFantasyProjections: false,
             // `error` from DynamicDataState also needs to be considered.
-        }); // Remove the true argument so methods are preserved
+        }); // Remove the true argument so methods are preserved;
     });
     it('should correctly update user state after login and logout actions', () => {
         expect(true).toBe(true);
     });
     test('should correctly update user state after login and logout actions', async () => {
         const { login, logout } = useAppStore.getState();
-        // Initial state
+        // Initial state;
         expect(useAppStore.getState().user).toBeNull();
         // Simulate login (mocked service returns user)
         await act(async () => {
@@ -124,7 +124,7 @@ describe('AppStore State Consistency', () => {
         });
         expect(useAppStore.getState().user).not.toBeNull();
         expect(useAppStore.getState().isAuthenticated).toBe(true);
-        // Simulate logout
+        // Simulate logout;
         await act(async () => {
             await logout();
         });
@@ -133,7 +133,7 @@ describe('AppStore State Consistency', () => {
     });
     test('should add and remove legs from the bet slip correctly', () => {
         const { addLeg, removeLeg } = useAppStore.getState();
-        const initialLegs = useAppStore.getState().legs;
+
         expect(initialLegs).toHaveLength(0);
         const mockLeg1 = {
             propId: 'prop123',
@@ -154,7 +154,7 @@ describe('AppStore State Consistency', () => {
         act(() => {
             addLeg(mockLeg1);
         });
-        let currentLegs = useAppStore.getState().legs;
+        const currentLegs = useAppStore.getState().legs;
         expect(currentLegs).toHaveLength(1);
         expect(currentLegs[0].propId).toBe('prop123');
         act(() => {
@@ -167,7 +167,7 @@ describe('AppStore State Consistency', () => {
             addLeg(mockLeg1);
         });
         currentLegs = useAppStore.getState().legs;
-        expect(currentLegs).toHaveLength(2); // Length should not change
+        expect(currentLegs).toHaveLength(2); // Length should not change;
         act(() => {
             removeLeg('prop123', 'over');
         });
@@ -185,7 +185,7 @@ describe('AppStore State Consistency', () => {
     });
     test('should ensure prop data is consistent after fetching and updating', async () => {
         const { fetchProps, setProps } = useAppStore.getState();
-        // Start with empty props
+        // Start with empty props;
         expect(Array.isArray(useAppStore.getState().props)).toBe(true);
         expect(useAppStore.getState().props).toHaveLength(0);
         // Simulate fetchProps (mocked to resolve)
@@ -194,7 +194,7 @@ describe('AppStore State Consistency', () => {
         });
         // After fetch, props should be an array (mocked store returns at least one)
         expect(Array.isArray(useAppStore.getState().props)).toBe(true);
-        // Simulate update
+        // Simulate update;
         act(() => {
             setProps([
                 {
@@ -215,7 +215,7 @@ describe('AppStore State Consistency', () => {
     });
     test('should test consistency of WebSocket updates on relevant store slices', () => {
         const { updateEntry } = useAppStore.getState();
-        // Add an entry first
+        // Add an entry first;
         const entry = {
             id: 'entry1',
             user_id: 'user1',
@@ -227,8 +227,8 @@ describe('AppStore State Consistency', () => {
             updated_at: '2023-01-01T00:00:00Z',
         };
         act(() => {
-            useAppStore.getState().setProps([]); // Ensure props slice is initialized
-            useAppStore.getState().entries = [entry]; // Add entry directly for test
+            useAppStore.getState().setProps([]); // Ensure props slice is initialized;
+            useAppStore.getState().entries = [entry]; // Add entry directly for test;
             updateEntry({ ...entry, status: 'won' });
         });
         expect(useAppStore.getState().entries.find(e => e.id === 'entry1')?.status).toBe('won');
@@ -242,9 +242,9 @@ describe('AppStore State Consistency', () => {
             addToast({ message: 'Toast 1', type: 'info' });
             addToast({ message: 'Toast 2', type: 'success' });
         });
-        const toasts = useAppStore.getState().toasts;
+
         expect(toasts.length).toBeGreaterThanOrEqual(2);
-        const firstId = toasts[0].id;
+
         act(() => {
             removeToast(firstId);
         });

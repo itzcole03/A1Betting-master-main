@@ -2,8 +2,8 @@
  * Model for analyzing quantum probability patterns and generating predictions.
  */
 
-import { BaseModel } from './BaseModel';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types';
+import { BaseModel } from './BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
 
 interface QuantumProbabilityConfig extends ModelConfig {
   features: string[];
@@ -30,7 +30,7 @@ export class QuantumProbabilityModel extends BaseModel {
   }
 
   async predict(data: unknown): Promise<ModelPrediction> {
-    // Implement quantum probability prediction logic
+    // Implement quantum probability prediction logic;
     return {
       timestamp: new Date().toISOString(),
       input: data,
@@ -45,7 +45,7 @@ export class QuantumProbabilityModel extends BaseModel {
   }
 
   async update(data: unknown): Promise<void> {
-    // Implement model update logic
+    // Implement model update logic;
     this.lastUpdate = new Date().toISOString();
     this.metadata = {
       ...this.metadata,
@@ -55,7 +55,7 @@ export class QuantumProbabilityModel extends BaseModel {
   }
 
   async train(data: any[]): Promise<void> {
-    // Implement training logic
+    // Implement training logic;
     this.isTrained = true;
   }
 
@@ -73,43 +73,38 @@ export class QuantumProbabilityModel extends BaseModel {
   }
 
   async save(path: string): Promise<void> {
-    // Implement save logic
+    // Implement save logic;
   }
 
   async load(path: string): Promise<void> {
-    // Implement load logic
+    // Implement load logic;
     this.isTrained = true;
   }
 
   private analyzeQuantumState(features: Record<string, any>): number {
-    const quantumData = features.quantumData || {};
-    const stateVector = quantumData.stateVector || [];
-    const probabilityAmplitude = quantumData.probabilityAmplitude || 0;
-    const phase = quantumData.phase || 0;
 
-    // Calculate quantum state
-    const stateMagnitude = this.calculateStateMagnitude(stateVector);
-    const amplitudeFactor = this.calculateAmplitudeFactor(probabilityAmplitude);
-    const phaseFactor = this.calculatePhaseFactor(phase);
 
-    // Combine quantum factors
-    const quantumState = stateMagnitude * 0.4 + amplitudeFactor * 0.3 + phaseFactor * 0.3;
+
+
+    // Calculate quantum state;
+
+
+
+    // Combine quantum factors;
 
     return Math.min(1, Math.max(0, quantumState));
   }
 
   private analyzeSuperposition(features: Record<string, any>): number {
-    const superpositionData = features.superpositionData || {};
-    const basisStates = superpositionData.basisStates || [];
-    const coefficients = superpositionData.coefficients || [];
-    const interference = superpositionData.interference || 0;
 
-    // Calculate superposition
-    const stateDiversity = this.calculateStateDiversity(basisStates);
-    const coefficientBalance = this.calculateCoefficientBalance(coefficients);
-    const interferenceFactor = this.calculateInterferenceFactor(interference);
 
-    // Combine superposition factors
+
+
+    // Calculate superposition;
+
+
+
+    // Combine superposition factors;
     const superposition =
       stateDiversity * 0.3 + coefficientBalance * 0.4 + interferenceFactor * 0.3;
 
@@ -117,17 +112,15 @@ export class QuantumProbabilityModel extends BaseModel {
   }
 
   private analyzeEntanglement(features: Record<string, any>): number {
-    const entanglementData = features.entanglementData || {};
-    const correlationMatrix = entanglementData.correlationMatrix || [];
-    const mutualInformation = entanglementData.mutualInformation || 0;
-    const bellState = entanglementData.bellState || 0;
 
-    // Calculate entanglement
-    const correlationStrength = this.calculateCorrelationStrength(correlationMatrix);
-    const informationContent = this.calculateInformationContent(mutualInformation);
-    const bellStateFactor = this.calculateBellStateFactor(bellState);
 
-    // Combine entanglement factors
+
+
+    // Calculate entanglement;
+
+
+
+    // Combine entanglement factors;
     const entanglement =
       correlationStrength * 0.4 + informationContent * 0.3 + bellStateFactor * 0.3;
 
@@ -135,25 +128,22 @@ export class QuantumProbabilityModel extends BaseModel {
   }
 
   private analyzeDecoherence(features: Record<string, any>): number {
-    const decoherenceData = features.decoherenceData || {};
-    const environmentInteraction = decoherenceData.environmentInteraction || 0;
-    const phaseDamping = decoherenceData.phaseDamping || 0;
-    const amplitudeDamping = decoherenceData.amplitudeDamping || 0;
 
-    // Calculate decoherence
-    const interactionFactor = this.calculateInteractionFactor(environmentInteraction);
-    const phaseFactor = this.calculatePhaseDampingFactor(phaseDamping);
-    const amplitudeFactor = this.calculateAmplitudeDampingFactor(amplitudeDamping);
 
-    // Combine decoherence factors
-    const decoherence = interactionFactor * 0.3 + phaseFactor * 0.4 + amplitudeFactor * 0.3;
+
+
+    // Calculate decoherence;
+
+
+
+    // Combine decoherence factors;
 
     return Math.min(1, Math.max(0, decoherence));
   }
 
   private calculateStateMagnitude(stateVector: number[]): number {
     if (stateVector.length === 0) return 0;
-    const magnitude = Math.sqrt(stateVector.reduce((sum, val) => sum + val * val, 0));
+
     return Math.min(1, magnitude);
   }
 
@@ -167,14 +157,14 @@ export class QuantumProbabilityModel extends BaseModel {
 
   private calculateStateDiversity(basisStates: number[]): number {
     if (basisStates.length === 0) return 0;
-    const uniqueStates = new Set(basisStates).size;
+
     return Math.min(1, uniqueStates / basisStates.length);
   }
 
   private calculateCoefficientBalance(coefficients: number[]): number {
     if (coefficients.length === 0) return 0;
-    const sum = coefficients.reduce((a, b) => a + b, 0);
-    const mean = sum / coefficients.length;
+
+
     const variance =
       coefficients.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / coefficients.length;
     return Math.min(1, 1 - Math.sqrt(variance));
@@ -186,8 +176,8 @@ export class QuantumProbabilityModel extends BaseModel {
 
   private calculateCorrelationStrength(matrix: number[][]): number {
     if (matrix.length === 0 || matrix[0].length === 0) return 0;
-    const correlations = matrix.flat();
-    const maxCorrelation = Math.max(...correlations.map(Math.abs));
+
+
     return Math.min(1, maxCorrelation);
   }
 

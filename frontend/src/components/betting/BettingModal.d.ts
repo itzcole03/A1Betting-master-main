@@ -1,6 +1,6 @@
-import React from 'react';
-import { BettingStrategy, RiskProfile } from '../../types/betting';
-import { Event, Market, Odds, Selection } from '../../types/sports';
+import React from 'react.ts';
+import { BettingStrategy, RiskProfile } from '@/types/betting.ts';
+import { Event, Market, Odds, Selection } from '@/types/sports.ts';
 interface BettingModalProps {
     isOpen: boolean;
     onClose: () => void;

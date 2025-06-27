@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export declare const WebSocketMessageTypes: {
     readonly PING: "ping";
     readonly PONG: "pong";

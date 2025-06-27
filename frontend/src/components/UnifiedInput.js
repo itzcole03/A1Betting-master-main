@@ -21,17 +21,17 @@ const sizeClasses = {
     lg: 'h-12 text-lg',
 };
 export const UnifiedInput = React.forwardRef(({ 
-// Appearance props
+// Appearance props;
 variant = 'default', size = 'md', leftIcon, rightIcon, className, 
-// Labels and messages
+// Labels and messages;
 label, error, info, 
-// Validation
+// Validation;
 validation, 
-// Animation
+// Animation;
 animate = true, 
-// Callbacks
+// Callbacks;
 onValidationChange, onChange, onBlur, 
-// Rest
+// Rest;
 ...props }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
@@ -49,7 +49,7 @@ onValidationChange, onChange, onBlur,
             return false;
         }
         if (validation.pattern && value) {
-            const regex = new RegExp(validation.pattern);
+
             if (!regex.test(value)) {
                 setLocalError('Invalid format');
                 setIsValid(false);
@@ -57,7 +57,7 @@ onValidationChange, onChange, onBlur,
             }
         }
         if (props.type === 'number' && value) {
-            const num = parseFloat(value);
+
             if (validation.min !== undefined && num < validation.min) {
                 setLocalError(`Value must be at least ${validation.min}`);
                 setIsValid(false);
@@ -76,7 +76,7 @@ onValidationChange, onChange, onBlur,
     const handleChange = (e) => {
         setIsDirty(true);
         if (validation && !validation.validateOnBlur) {
-            const isValid = validate(e.target.value);
+
             onValidationChange?.(isValid);
         }
         onChange?.(e);
@@ -84,7 +84,7 @@ onValidationChange, onChange, onBlur,
     const handleBlur = (e) => {
         setIsFocused(false);
         if (validation?.validateOnBlur && isDirty) {
-            const isValid = validate(e.target.value);
+
             onValidationChange?.(isValid);
         }
         onBlur?.(e);

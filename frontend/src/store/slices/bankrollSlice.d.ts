@@ -1,4 +1,4 @@
-import type { Transaction, BankrollSettings, BankrollStats } from '../../types/bankroll';
+import type { Transaction, BankrollSettings, BankrollStats } from '@/types/bankroll.ts';
 interface BankrollState {
     transactions: Transaction[];
     addTransaction: (tx: Transaction) => void;

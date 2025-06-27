@@ -4,29 +4,29 @@ export class RealTimeDataAggregator {
         this.wsConnections = new Map();
         this.dataCache = new Map();
         this.updateCallbacks = new Map();
-        // Additional real-time data sources
+        // Additional real-time data sources;
         this.additionalSources = {
-            // Odds comparison sites
+            // Odds comparison sites;
             ODDS_API: "https://api.the-odds-api.com/v4/sports",
             ODDS_SHARK: "https://www.oddsshark.com/api",
-            // Live scores and stats
+            // Live scores and stats;
             LIVE_SCORES: "https://api.sportradar.com/nba/trial/v7/en/games",
             ESPN_LIVE: "https://site.api.espn.com/apis/site/v2/sports",
-            // Social media and sentiment
+            // Social media and sentiment;
             TWITTER_API: "https://api.twitter.com/2/tweets/search/recent",
             REDDIT_LIVE: "https://www.reddit.com/r/sportsbook/new.json",
-            // Weather and conditions
+            // Weather and conditions;
             WEATHER_LIVE: "https://api.openweathermap.org/data/2.5/weather",
-            // Injury and news
+            // Injury and news;
             ROTOWORLD: "https://www.rotoworld.com/api",
             FANTASY_LABS: "https://api.fantasylabs.com",
-            // Advanced stats
+            // Advanced stats;
             NBA_STATS: "https://stats.nba.com/stats",
             BASKETBALL_REF: "https://www.basketball-reference.com/api",
-            // Betting market data
+            // Betting market data;
             PINNACLE: "https://api.pinnacle.com/v1",
             BETFAIR: "https://api.betfair.com/exchange/betting/rest/v1.0",
-            // Cryptocurrency for market patterns
+            // Cryptocurrency for market patterns;
             BINANCE: "https://api.binance.com/api/v3/ticker/24hr",
             COINBASE: "https://api.coinbase.com/v2/exchange-rates",
         };
@@ -44,7 +44,7 @@ export class RealTimeDataAggregator {
     }
     async connectToOddsFeeds() {
         try {
-            // Connect to multiple odds providers
+            // Connect to multiple odds providers;
             const oddsProviders = [
                 "draftkings",
                 "fanduel",
@@ -56,7 +56,7 @@ export class RealTimeDataAggregator {
             ];
             for (const provider of oddsProviders) {
                 try {
-                    const response = await this.makeSecureRequest(`${this.additionalSources.ODDS_API}/${provider}/odds`);
+
                     this.dataCache.set(`odds_${provider}`, {
                         data: response,
                         timestamp: new Date(),
@@ -64,34 +64,34 @@ export class RealTimeDataAggregator {
                     });
                 }
                 catch (error) {
-                    console.warn(`Failed to connect to ${provider} odds feed`);
+                    // console statement removed
                 }
             }
         }
         catch (error) {
-            console.error("Error connecting to odds feeds:", error);
+            // console statement removed
         }
     }
     async connectToLiveScores() {
-        const sports = ["nba", "nfl", "mlb", "nhl"];
+
         for (const sport of sports) {
             try {
-                const liveGames = await this.fetchLiveGames(sport);
+
                 this.dataCache.set(`live_${sport}`, {
                     games: liveGames,
                     timestamp: new Date(),
                 });
-                // Set up real-time updates
+                // Set up real-time updates;
                 this.setupLiveGameUpdates(sport);
             }
             catch (error) {
-                console.warn(`Failed to connect to ${sport} live scores`);
+                // console statement removed
             }
         }
     }
     async connectToSocialFeeds() {
         try {
-            // Reddit live feeds
+            // Reddit live feeds;
             const subreddits = [
                 "sportsbook",
                 "nba",
@@ -102,7 +102,7 @@ export class RealTimeDataAggregator {
             ];
             for (const subreddit of subreddits) {
                 try {
-                    const posts = await this.fetchRedditPosts(subreddit);
+
                     this.dataCache.set(`reddit_${subreddit}`, {
                         posts,
                         sentiment: this.analyzeSentiment(posts),
@@ -110,14 +110,14 @@ export class RealTimeDataAggregator {
                     });
                 }
                 catch (error) {
-                    console.warn(`Failed to fetch ${subreddit} posts`);
+                    // console statement removed
                 }
             }
             // Twitter sentiment (if available)
             await this.fetchTwitterSentiment();
         }
         catch (error) {
-            console.error("Error connecting to social feeds:", error);
+            // console statement removed
         }
     }
     async connectToWeatherFeeds() {
@@ -129,7 +129,7 @@ export class RealTimeDataAggregator {
         ];
         for (const stadium of stadiumLocations) {
             try {
-                const weather = await this.fetchWeatherData(stadium.lat, stadium.lon);
+
                 this.dataCache.set(`weather_${stadium.name}`, {
                     weather,
                     impact: this.calculateWeatherImpact(weather),
@@ -137,7 +137,7 @@ export class RealTimeDataAggregator {
                 });
             }
             catch (error) {
-                console.warn(`Failed to fetch weather for ${stadium.name}`);
+                // console statement removed
             }
         }
     }
@@ -152,7 +152,7 @@ export class RealTimeDataAggregator {
         ];
         for (const source of newsSources) {
             try {
-                const news = await this.fetchNewsData(source);
+
                 this.dataCache.set(`news_${source}`, {
                     articles: news,
                     sentiment: this.analyzeNewsSentiment(news),
@@ -160,21 +160,21 @@ export class RealTimeDataAggregator {
                 });
             }
             catch (error) {
-                console.warn(`Failed to fetch news from ${source}`);
+                // console statement removed
             }
         }
     }
     async connectToMarketFeeds() {
         try {
-            // Fetch cryptocurrency data for market pattern analysis
-            const cryptoData = await this.fetchCryptoData();
+            // Fetch cryptocurrency data for market pattern analysis;
+
             this.dataCache.set("crypto_patterns", {
                 data: cryptoData,
                 volatility: this.calculateCryptoVolatility(cryptoData),
                 timestamp: new Date(),
             });
-            // Fetch forex data for economic indicators
-            const forexData = await this.fetchForexData();
+            // Fetch forex data for economic indicators;
+
             this.dataCache.set("forex_indicators", {
                 data: forexData,
                 trends: this.analyzeForexTrends(forexData),
@@ -182,14 +182,14 @@ export class RealTimeDataAggregator {
             });
         }
         catch (error) {
-            console.error("Error connecting to market feeds:", error);
+            // console statement removed
         }
     }
     async connectToCryptoFeeds() {
         try {
-            const cryptoSymbols = ["BTCUSDT", "ETHUSDT", "ADAUSDT", "DOTUSDT"];
+
             for (const symbol of cryptoSymbols) {
-                const data = await this.fetchCryptoSymbolData(symbol);
+
                 this.dataCache.set(`crypto_${symbol}`, {
                     price: data.price,
                     volume: data.volume,
@@ -199,7 +199,7 @@ export class RealTimeDataAggregator {
             }
         }
         catch (error) {
-            console.error("Error connecting to crypto feeds:", error);
+            // console statement removed
         }
     }
     async makeSecureRequest(url, options = {}) {
@@ -221,8 +221,8 @@ export class RealTimeDataAggregator {
     }
     async fetchLiveGames(sport) {
         try {
-            const url = `https://site.api.espn.com/apis/site/v2/sports/${this.getSportPath(sport)}/scoreboard`;
-            const data = await this.makeSecureRequest(url);
+
+
             return (data.events?.map((event) => ({
                 gameId: event.id,
                 sport: sport.toUpperCase(),
@@ -254,8 +254,8 @@ export class RealTimeDataAggregator {
     }
     async fetchRedditPosts(subreddit) {
         try {
-            const url = `https://www.reddit.com/r/${subreddit}/hot.json?limit=50`;
-            const data = await this.makeSecureRequest(url);
+
+
             return data.data?.children?.map((post) => post.data) || [];
         }
         catch (error) {
@@ -263,7 +263,7 @@ export class RealTimeDataAggregator {
         }
     }
     async fetchTwitterSentiment() {
-        // Twitter API requires authentication, so we'll simulate this
+        // Twitter API requires authentication, so we'll simulate this;
         const simulatedTweets = [
             { text: "LeBron looking great tonight!", sentiment: 0.8 },
             { text: "This game is going over for sure", sentiment: 0.6 },
@@ -278,7 +278,7 @@ export class RealTimeDataAggregator {
     }
     async fetchWeatherData(lat, lon) {
         try {
-            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,precipitation,windspeed_10m,visibility`;
+
             return await this.makeSecureRequest(url);
         }
         catch (error) {
@@ -287,8 +287,8 @@ export class RealTimeDataAggregator {
     }
     async fetchNewsData(source) {
         try {
-            const url = `https://api.rss2json.com/v1/api.json?rss_url=https://${source}`;
-            const data = await this.makeSecureRequest(url);
+
+
             return data.items || [];
         }
         catch (error) {
@@ -297,7 +297,7 @@ export class RealTimeDataAggregator {
     }
     async fetchCryptoData() {
         try {
-            const url = "https://api.coindesk.com/v1/bpi/currentprice.json";
+
             return await this.makeSecureRequest(url);
         }
         catch (error) {
@@ -306,7 +306,7 @@ export class RealTimeDataAggregator {
     }
     async fetchForexData() {
         try {
-            const url = "https://api.exchangerate-api.com/v4/latest/USD";
+
             return await this.makeSecureRequest(url);
         }
         catch (error) {
@@ -315,7 +315,7 @@ export class RealTimeDataAggregator {
     }
     async fetchCryptoSymbolData(symbol) {
         try {
-            const url = `https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`;
+
             return await this.makeSecureRequest(url);
         }
         catch (error) {
@@ -325,28 +325,28 @@ export class RealTimeDataAggregator {
     setupLiveGameUpdates(sport) {
         setInterval(async () => {
             try {
-                const liveGames = await this.fetchLiveGames(sport);
+
                 this.dataCache.set(`live_${sport}`, {
                     games: liveGames,
                     timestamp: new Date(),
                 });
-                // Notify subscribers
+                // Notify subscribers;
                 this.notifySubscribers(`live_${sport}`, liveGames);
             }
             catch (error) {
-                console.warn(`Failed to update live ${sport} games`);
+                // console statement removed
             }
-        }, 30000); // Update every 30 seconds
+        }, 30000); // Update every 30 seconds;
     }
     analyzeSentiment(posts) {
         if (!posts.length)
             return 0;
-        let totalSentiment = 0;
-        let count = 0;
+        const totalSentiment = 0;
+        const count = 0;
         posts.forEach((post) => {
-            const title = post.title?.toLowerCase() || "";
-            let sentiment = 0;
-            // Positive keywords
+
+            const sentiment = 0;
+            // Positive keywords;
             const positiveWords = [
                 "win",
                 "great",
@@ -383,12 +383,12 @@ export class RealTimeDataAggregator {
     analyzeNewsSentiment(articles) {
         if (!articles.length)
             return 0;
-        let totalSentiment = 0;
-        let count = 0;
+        const totalSentiment = 0;
+        const count = 0;
         articles.forEach((article) => {
-            const text = `${article.title} ${article.description}`.toLowerCase();
-            let sentiment = 0;
-            // Advanced sentiment analysis
+
+            const sentiment = 0;
+            // Advanced sentiment analysis;
             const positivePatterns = [
                 /\b(win|victory|success|record|best|great|excellent|outstanding|dominant)\b/g,
                 /\b(comeback|clutch|amazing|spectacular|brilliant)\b/g,
@@ -398,12 +398,12 @@ export class RealTimeDataAggregator {
                 /\b(struggle|concern|doubt|question|problem)\b/g,
             ];
             positivePatterns.forEach((pattern) => {
-                const matches = text.match(pattern);
+
                 if (matches)
                     sentiment += matches.length * 0.2;
             });
             negativePatterns.forEach((pattern) => {
-                const matches = text.match(pattern);
+
                 if (matches)
                     sentiment -= matches.length * 0.2;
             });
@@ -415,31 +415,31 @@ export class RealTimeDataAggregator {
     calculateWeatherImpact(weather) {
         if (!weather?.current_weather)
             return 0;
-        const temp = weather.current_weather.temperature;
-        const wind = weather.current_weather.windspeed;
-        const precipitation = weather.hourly?.precipitation?.[0] || 0;
-        let impact = 0;
-        // Temperature impact
+
+
+
+        const impact = 0;
+        // Temperature impact;
         if (temp < 32 || temp > 90)
             impact += 0.1;
         if (temp < 20 || temp > 100)
             impact += 0.2;
-        // Wind impact
+        // Wind impact;
         if (wind > 15)
             impact += 0.1;
         if (wind > 25)
             impact += 0.2;
-        // Precipitation impact
+        // Precipitation impact;
         if (precipitation > 0.1)
             impact += 0.15;
         if (precipitation > 0.5)
             impact += 0.25;
-        return Math.min(impact, 0.5); // Cap at 50% impact
+        return Math.min(impact, 0.5); // Cap at 50% impact;
     }
     calculateCryptoVolatility(cryptoData) {
         if (!cryptoData?.bpi?.USD?.rate_float)
             return 0;
-        // Simulate volatility calculation
+        // Simulate volatility calculation;
         return Math.random() * 0.1;
     }
     analyzeForexTrends(forexData) {
@@ -452,21 +452,21 @@ export class RealTimeDataAggregator {
         };
     }
     notifySubscribers(dataType, data) {
-        const callbacks = this.updateCallbacks.get(dataType) || [];
+
         callbacks.forEach((callback) => {
             try {
                 callback(data);
             }
             catch (error) {
-                console.error("Error in subscriber callback:", error);
+                // console statement removed
             }
         });
     }
-    // Public methods for accessing real-time data
+    // Public methods for accessing real-time data;
     getLiveOdds(gameId) {
-        const odds = [];
+
         ["draftkings", "fanduel", "betmgm", "caesars"].forEach((provider) => {
-            const data = this.dataCache.get(`odds_${provider}`);
+
             if (data) {
                 odds.push({
                     sportsbook: provider,
@@ -483,12 +483,12 @@ export class RealTimeDataAggregator {
         return odds;
     }
     getLiveGameData(sport) {
-        const data = this.dataCache.get(`live_${sport}`);
+
         return data?.games || [];
     }
     getSentimentData(topic) {
-        const redditData = this.dataCache.get(`reddit_${topic}`);
-        const twitterData = this.dataCache.get("twitter_sentiment");
+
+
         return {
             reddit: redditData?.sentiment || 0,
             twitter: twitterData?.overallSentiment || 0,
@@ -500,8 +500,8 @@ export class RealTimeDataAggregator {
         return this.dataCache.get(`weather_${location}`);
     }
     getMarketIndicators() {
-        const crypto = this.dataCache.get("crypto_patterns");
-        const forex = this.dataCache.get("forex_indicators");
+
+
         return {
             cryptoVolatility: crypto?.volatility || 0,
             forexTrends: forex?.trends || {},
@@ -515,8 +515,8 @@ export class RealTimeDataAggregator {
         this.updateCallbacks.get(dataType).push(callback);
     }
     unsubscribe(dataType, callback) {
-        const callbacks = this.updateCallbacks.get(dataType) || [];
-        const index = callbacks.indexOf(callback);
+
+
         if (index > -1) {
             callbacks.splice(index, 1);
         }

@@ -1,10 +1,8 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import axios from 'axios';
-import RiskManagerPage from './RiskManagerPage';
-import MockAdapter from 'axios-mock-adapter';
-
-const mock = new MockAdapter(axios);
+import React from 'react.ts';
+import { render, screen, waitFor } from '@testing-library/react.ts';
+import axios from 'axios.ts';
+import RiskManagerPage from './RiskManagerPage.ts';
+import MockAdapter from 'axios-mock-adapter.ts';
 
 describe('RiskManagerPage Integration', () => {
   afterEach(() => {
@@ -36,7 +34,7 @@ describe('RiskManagerPage Integration', () => {
       },
     ]);
 
-    render(<RiskManagerPage />);
+    render(<RiskManagerPage / key={790932}>);
     expect(screen.getByText(/loading/i)).toBeInTheDocument();
     await waitFor(() => {
       expect(screen.getByText('Conservative')).toBeInTheDocument();
@@ -47,7 +45,7 @@ describe('RiskManagerPage Integration', () => {
   it('shows error on API failure', async () => {
     mock.onGet('/api/risk-profiles').reply(500);
     mock.onGet('/api/active-bets').reply(500);
-    render(<RiskManagerPage />);
+    render(<RiskManagerPage / key={790932}>);
     await waitFor(() => {
       expect(screen.getByText(/failed to load data/i)).toBeInTheDocument();
     });

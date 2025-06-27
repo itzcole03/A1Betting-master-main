@@ -1,5 +1,5 @@
 import { keyframes } from '@mui/system';
-// Fade in animation
+// Fade in animation;
 export const fadeIn = keyframes `
   from {
     opacity: 0;
@@ -8,7 +8,7 @@ export const fadeIn = keyframes `
     opacity: 1;
   }
 `;
-// Slide in animation
+// Slide in animation;
 export const slideIn = keyframes `
   from {
     transform: translateY(10px);
@@ -19,7 +19,7 @@ export const slideIn = keyframes `
     opacity: 1;
   }
 `;
-// Flash animation for value changes
+// Flash animation for value changes;
 export const flash = keyframes `
   0% {
     background-color: transparent;
@@ -31,7 +31,7 @@ export const flash = keyframes `
     background-color: transparent;
   }
 `;
-// Scale animation for important updates
+// Scale animation for important updates;
 export const scale = keyframes `
   0% {
     transform: scale(1);
@@ -43,13 +43,13 @@ export const scale = keyframes `
     transform: scale(1);
   }
 `;
-// Common animation durations
+// Common animation durations;
 export const durations = {
     fast: '0.2s',
     normal: '0.3s',
     slow: '0.5s',
 };
-// Common animation timing functions
+// Common animation timing functions;
 export const timingFunctions = {
     easeInOut: 'cubic-bezier(0.4, 0, 0.2, 1)',
     easeOut: 'cubic-bezier(0.0, 0, 0.2, 1)',

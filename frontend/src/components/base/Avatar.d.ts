@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     src?: string;
     alt?: string;

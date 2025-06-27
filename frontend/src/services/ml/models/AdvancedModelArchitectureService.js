@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { UnifiedLogger } from '../../../core/UnifiedLogger';
 import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-// Model schemas
+// Model schemas;
 export const ModelConfigSchema = z.object({
     name: z.string(),
     type: z.enum(['xgboost', 'lstm', 'transformer', 'ensemble']),
@@ -37,7 +37,7 @@ export class AdvancedModelArchitectureService {
     }
     async initialize() {
         try {
-            // Initialize models
+            // Initialize models;
             await Promise.all(this.config.modelTypes.map(type => this.initializeModel(type)));
             this.logger.info('AdvancedModelArchitectureService initialized successfully');
         }
@@ -73,24 +73,24 @@ export class AdvancedModelArchitectureService {
         }
     }
     async initializeXGBoostModel() {
-        // Implement XGBoost model initialization
+        // Implement XGBoost model initialization;
         this.logger.info('XGBoost model initialized');
     }
     async initializeLSTMModel() {
-        // Implement LSTM model initialization
+        // Implement LSTM model initialization;
         this.logger.info('LSTM model initialized');
     }
     async initializeTransformerModel() {
-        // Implement Transformer model initialization
+        // Implement Transformer model initialization;
         this.logger.info('Transformer model initialized');
     }
     async initializeEnsembleModel() {
-        // Implement Ensemble model initialization
+        // Implement Ensemble model initialization;
         this.logger.info('Ensemble model initialized');
     }
     async trainModel(modelConfig, features, options = {}) {
         try {
-            const model = this.getModel(modelConfig.type);
+
             if (!model) {
                 throw new Error(`Model not found: ${modelConfig.type}`);
             }
@@ -111,7 +111,7 @@ export class AdvancedModelArchitectureService {
     }
     async predict(modelConfig, features, options = {}) {
         try {
-            const model = this.getModel(modelConfig.type);
+
             if (!model) {
                 throw new Error(`Model not found: ${modelConfig.type}`);
             }
@@ -132,7 +132,7 @@ export class AdvancedModelArchitectureService {
     }
     async evaluateModel(modelConfig, features, options = {}) {
         try {
-            const model = this.getModel(modelConfig.type);
+
             if (!model) {
                 throw new Error(`Model not found: ${modelConfig.type}`);
             }
@@ -153,7 +153,7 @@ export class AdvancedModelArchitectureService {
     }
     async saveModel(modelConfig, path) {
         try {
-            const model = this.getModel(modelConfig.type);
+
             if (!model) {
                 throw new Error(`Model not found: ${modelConfig.type}`);
             }
@@ -170,7 +170,7 @@ export class AdvancedModelArchitectureService {
     }
     async loadModel(modelConfig, path) {
         try {
-            const model = this.getModel(modelConfig.type);
+
             if (!model) {
                 throw new Error(`Model not found: ${modelConfig.type}`);
             }

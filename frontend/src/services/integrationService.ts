@@ -1,14 +1,14 @@
 /**
- * Comprehensive Integration Service
- * Provides unified backend integration for all frontend components
+ * Comprehensive Integration Service;
+ * Provides unified backend integration for all frontend components;
  */
 
-import { backendApi } from "./backendApi";
+import { backendApi } from './backendApi.ts';
 
-// Re-export types for easier consumption
-export * from "./backendApi";
+// Re-export types for easier consumption;
+export * from './backendApi.ts';
 
-// Enhanced service class that provides additional integration methods
+// Enhanced service class that provides additional integration methods;
 export class IntegrationService {
   private static instance: IntegrationService;
 
@@ -21,10 +21,10 @@ export class IntegrationService {
     return IntegrationService.instance;
   }
 
-  // Health and Status Methods
+  // Health and Status Methods;
   public async checkSystemHealth() {
     try {
-      const health = await backendApi.getHealth();
+
       return {
         status: "online",
         data: health,
@@ -39,9 +39,8 @@ export class IntegrationService {
     }
   }
 
-  // User Profile Methods - get real data from backend
+  // User Profile Methods - get real data from backend;
   public async getUserProfile(userId: string) {
-    const analytics = await backendApi.getAdvancedAnalytics();
 
     return {
       id: userId,
@@ -63,9 +62,8 @@ export class IntegrationService {
     };
   }
 
-  // User Analytics Methods
+  // User Analytics Methods;
   public async getUserAnalytics(userId: string) {
-    const analytics = await backendApi.getAdvancedAnalytics();
 
     return {
       overview: {
@@ -87,7 +85,7 @@ export class IntegrationService {
     };
   }
 
-  // Predictions Methods
+  // Predictions Methods;
   public async getPredictions(options: any = {}) {
     try {
       const predictions = await backendApi.getPredictions({
@@ -98,7 +96,7 @@ export class IntegrationService {
 
       return predictions;
     } catch (error) {
-      console.warn("Failed to fetch predictions, using fallback data");
+      // console statement removed
       return {
         predictions: [],
         summary: {
@@ -110,10 +108,10 @@ export class IntegrationService {
     }
   }
 
-  // Betting Opportunities
+  // Betting Opportunities;
   public async getBettingOpportunities(sport?: string, limit: number = 20) {
     try {
-      const opportunities = await backendApi.getBettingOpportunities();
+
       return {
         opportunities: opportunities.slice(0, limit),
         summary: {
@@ -123,7 +121,7 @@ export class IntegrationService {
         },
       };
     } catch (error) {
-      console.warn("Failed to fetch betting opportunities");
+      // console statement removed
       return {
         opportunities: [],
         summary: {
@@ -135,10 +133,10 @@ export class IntegrationService {
     }
   }
 
-  // Arbitrage Opportunities
+  // Arbitrage Opportunities;
   public async getArbitrageOpportunities(limit: number = 10) {
     try {
-      const opportunities = await backendApi.getArbitrageOpportunities();
+
       return {
         opportunities: opportunities.slice(0, limit),
         summary: {
@@ -151,7 +149,7 @@ export class IntegrationService {
         },
       };
     } catch (error) {
-      console.warn("Failed to fetch arbitrage opportunities");
+      // console statement removed
       return {
         opportunities: [],
         summary: {
@@ -163,7 +161,7 @@ export class IntegrationService {
     }
   }
 
-  // Portfolio and Account Management
+  // Portfolio and Account Management;
   public async getActiveBets() {
     try {
       return await backendApi.getActiveBets();
@@ -192,10 +190,10 @@ export class IntegrationService {
     }
   }
 
-  // System Monitoring
+  // System Monitoring;
   public async getHealthStatus() {
     try {
-      const health = await backendApi.getHealth();
+
       return {
         status: "operational",
         uptime: "99.9%",
@@ -228,7 +226,7 @@ export class IntegrationService {
 
   public async getAccuracyMetrics() {
     try {
-      const analytics = await backendApi.getAdvancedAnalytics();
+
       return {
         overall: analytics.summary?.accuracy || 0.847,
         bySport: {
@@ -259,10 +257,10 @@ export class IntegrationService {
   }
 }
 
-// Create singleton instance
+// Create singleton instance;
 export const integrationService = IntegrationService.getInstance();
 
-// Export for backward compatibility with existing API service usage
+// Export for backward compatibility with existing API service usage;
 export const api = {
   getUser: () => integrationService.getUserProfile("default-user"),
   getUserProfile: (userId: string) => integrationService.getUserProfile(userId),
@@ -280,7 +278,7 @@ export const api = {
   getTransactions: () => integrationService.getTransactions(),
   getRiskProfiles: () => integrationService.getRiskProfiles(),
 
-  // Generic methods
+  // Generic methods;
   get: (endpoint: string, params?: any) => backendApi.get(endpoint, params),
   post: (endpoint: string, data?: any) => backendApi.post(endpoint, data),
   put: (endpoint: string, data?: any) => backendApi.put(endpoint, data),

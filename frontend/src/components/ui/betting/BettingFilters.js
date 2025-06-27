@@ -3,14 +3,14 @@ import { memo, useState } from 'react';
 import { useFilterStore } from '../../../stores/filterStore';
 import { ConfidenceIndicator } from '../../../components/ConfidenceIndicator';
 export const BettingFilters = memo(({ selectedSport, minConfidence, sortBy, onFilterChange }) => {
-    // Preset management state/hooks
+    // Preset management state/hooks;
     const [presetName, setPresetName] = useState('');
     const [selectedPreset, setSelectedPreset] = useState('');
-    const savePreset = useFilterStore(s => s.savePreset);
-    const loadPreset = useFilterStore(s => s.loadPreset);
-    const removePreset = useFilterStore(s => s.removePreset);
-    const listPresets = useFilterStore(s => s.listPresets);
-    const presets = listPresets();
+
+
+
+
+
     const handleSportChange = (sport) => {
         onFilterChange({ selectedSport: sport, minConfidence, sortBy });
     };
@@ -20,7 +20,7 @@ export const BettingFilters = memo(({ selectedSport, minConfidence, sortBy, onFi
     const handleSortChange = (sort) => {
         onFilterChange({ selectedSport, minConfidence, sortBy: sort });
     };
-    // Preset handlers
+    // Preset handlers;
     const handleSavePreset = () => {
         if (presetName.trim()) {
             savePreset(presetName.trim());

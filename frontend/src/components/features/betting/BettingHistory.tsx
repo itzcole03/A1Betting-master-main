@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react.ts';
 import {
   Box,
   Card,
@@ -20,15 +20,15 @@ import {
   Paper,
   Tooltip,
   CircularProgress,
-} from '@mui/material';
-import { styled } from '@mui/material/styles';
+} from '@mui/material.ts';
+import { styled } from '@mui/material/styles.ts';
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
   FilterList as FilterListIcon,
   Info as InfoIcon,
-} from '@mui/icons-material';
-import { riskManagement } from '@/services/riskManagement';
+} from '@mui/icons-material.ts';
+import { riskManagement } from '@/services/riskManagement.ts';
 
 const HistoryCard = styled(Card)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.9)',
@@ -76,10 +76,10 @@ const filterOptions = {
 };
 
 export const BettingHistory: React.FC = () => {
-  const [bets, setBets] = useState<Bet[]>([]);
+  const [bets, setBets] = useState<Bet[] key={848729}>([]);
   const [loading, setLoading] = useState(true);
-  const [order, setOrder] = useState<Order>('desc');
-  const [orderBy, setOrderBy] = useState<keyof Bet>('timestamp');
+  const [order, setOrder] = useState<Order key={437301}>('desc');
+  const [orderBy, setOrderBy] = useState<keyof Bet key={471958}>('timestamp');
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filters, setFilters] = useState({
@@ -91,10 +91,10 @@ export const BettingHistory: React.FC = () => {
     const loadBets = async () => {
       setLoading(true);
       try {
-        const userBets = riskManagement.getBets();
+
         setBets(userBets);
       } catch (error) {
-        console.error('Error loading bets:', error);
+        // console statement removed
       } finally {
         setLoading(false);
       }
@@ -104,7 +104,7 @@ export const BettingHistory: React.FC = () => {
   }, []);
 
   const handleRequestSort = (property: keyof Bet) => {
-    const isAsc = orderBy === property && order === 'asc';
+
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
@@ -113,7 +113,7 @@ export const BettingHistory: React.FC = () => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement key={553350}>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -155,71 +155,69 @@ export const BettingHistory: React.FC = () => {
   });
 
   const sortedBets = filteredBets.sort((a, b) => {
-    const isAsc = order === 'asc';
+
     if (orderBy === 'timestamp') {
-      return isAsc
-        ? a.timestamp - b.timestamp
+      return isAsc;
+        ? a.timestamp - b.timestamp;
         : b.timestamp - a.timestamp;
     }
     if (orderBy === 'odds' || orderBy === 'amount' || orderBy === 'payout') {
-      return isAsc
+      return isAsc;
         ? (a[orderBy] || 0) - (b[orderBy] || 0)
         : (b[orderBy] || 0) - (a[orderBy] || 0);
     }
-    return isAsc
+    return isAsc;
       ? String(a[orderBy]).localeCompare(String(b[orderBy]))
       : String(b[orderBy]).localeCompare(String(a[orderBy]));
   });
 
   const paginatedBets = sortedBets.slice(
     page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
+    page * rowsPerPage + rowsPerPage;
   );
 
-  const winRate = filteredBets.length > 0
-    ? (filteredBets.filter(bet => bet.status === 'won').length / filteredBets.length) * 100
+  const winRate = filteredBets.length > 0;
+    ? (filteredBets.filter(bet => bet.status === 'won').length / filteredBets.length) * 100;
     : 0;
 
-  const totalAmount = filteredBets.reduce((sum, bet) => sum + bet.amount, 0);
-  const totalPayout = filteredBets.reduce((sum, bet) => sum + (bet.payout || 0), 0);
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <HistoryCard>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Betting History
+    <Box sx={{ width: '100%' }} key={100658}>
+      <HistoryCard key={503245}>
+        <CardContent key={452065}>
+          <Typography variant="h6" gutterBottom key={90207}>
+            Betting History;
           </Typography>
 
           {/* Filters */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
-              <TextField
-                select
-                fullWidth
+          <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <TextField;
+                select;
+                fullWidth;
                 label="Bet Type"
                 value={filters.type}
-                onChange={(e) => handleFilterChange('type', e.target.value)}
+                onChange={(e) = key={666365}> handleFilterChange('type', e.target.value)}
               >
-                <MenuItem value="">All</MenuItem>
+                <MenuItem value="" key={56650}>All</MenuItem>
                 {filterOptions.type.map((type) => (
-                  <MenuItem key={type} value={type}>
+                  <MenuItem key={type} value={type} key={272222}>
                     {type}
                   </MenuItem>
                 ))}
               </TextField>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <TextField
-                select
-                fullWidth
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <TextField;
+                select;
+                fullWidth;
                 label="Status"
                 value={filters.status}
-                onChange={(e) => handleFilterChange('status', e.target.value)}
+                onChange={(e) = key={236663}> handleFilterChange('status', e.target.value)}
               >
-                <MenuItem value="">All</MenuItem>
+                <MenuItem value="" key={56650}>All</MenuItem>
                 {filterOptions.status.map((status) => (
-                  <MenuItem key={status} value={status}>
+                  <MenuItem key={status} value={status} key={878480}>
                     {status.charAt(0).toUpperCase() + status.slice(1)}
                   </MenuItem>
                 ))}
@@ -228,43 +226,43 @@ export const BettingHistory: React.FC = () => {
           </Grid>
 
           {/* Summary Stats */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }}>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Total Bets
+          <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }} key={584946}>
+                <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                  Total Bets;
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" key={93421}>
                   {filteredBets.length}
                 </Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }}>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Win Rate
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }} key={584946}>
+                <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                  Win Rate;
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" key={93421}>
                   {winRate.toFixed(1)}%
                 </Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }}>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Total Amount
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }} key={584946}>
+                <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                  Total Amount;
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" key={93421}>
                   {formatCurrency(totalAmount)}
                 </Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }}>
-                <Typography variant="subtitle2" color="textSecondary">
-                  Total Payout
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper elevation={0} sx={{ p: 2, bgcolor: 'background.default' }} key={584946}>
+                <Typography variant="subtitle2" color="textSecondary" key={270974}>
+                  Total Payout;
                 </Typography>
-                <Typography variant="h6">
+                <Typography variant="h6" key={93421}>
                   {formatCurrency(totalPayout)}
                 </Typography>
               </Paper>
@@ -272,20 +270,20 @@ export const BettingHistory: React.FC = () => {
           </Grid>
 
           {/* Betting History Table */}
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
+          <TableContainer key={611233}>
+            <Table key={889668}>
+              <TableHead key={813147}>
+                <TableRow key={300096}>
                   {headCells.map((headCell) => (
-                    <TableCell
+                    <TableCell;
                       key={headCell.id}
                       align={headCell.numeric ? 'right' : 'left'}
                       sortDirection={orderBy === headCell.id ? order : false}
-                    >
-                      <TableSortLabel
+                     key={33666}>
+                      <TableSortLabel;
                         active={orderBy === headCell.id}
                         direction={orderBy === headCell.id ? order : 'asc'}
-                        onClick={() => handleRequestSort(headCell.id)}
+                        onClick={() = key={226188}> handleRequestSort(headCell.id)}
                       >
                         {headCell.label}
                       </TableSortLabel>
@@ -293,36 +291,36 @@ export const BettingHistory: React.FC = () => {
                   ))}
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody key={923191}>
                 {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={headCells.length} align="center">
-                      <CircularProgress />
+                  <TableRow key={300096}>
+                    <TableCell colSpan={headCells.length} align="center" key={457293}>
+                      <CircularProgress / key={730118}>
                     </TableCell>
                   </TableRow>
                 ) : paginatedBets.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={headCells.length} align="center">
-                      No bets found
+                  <TableRow key={300096}>
+                    <TableCell colSpan={headCells.length} align="center" key={457293}>
+                      No bets found;
                     </TableCell>
                   </TableRow>
                 ) : (
                   paginatedBets.map((bet) => (
-                    <TableRow key={bet.id}>
-                      <TableCell>{formatDate(bet.timestamp)}</TableCell>
-                      <TableCell>{bet.type}</TableCell>
-                      <TableCell>{bet.recommendationId}</TableCell>
-                      <TableCell align="right">{bet.odds}</TableCell>
-                      <TableCell align="right">{formatCurrency(bet.amount)}</TableCell>
-                      <TableCell align="right">
+                    <TableRow key={bet.id} key={143269}>
+                      <TableCell key={942983}>{formatDate(bet.timestamp)}</TableCell>
+                      <TableCell key={942983}>{bet.type}</TableCell>
+                      <TableCell key={942983}>{bet.recommendationId}</TableCell>
+                      <TableCell align="right" key={741903}>{bet.odds}</TableCell>
+                      <TableCell align="right" key={741903}>{formatCurrency(bet.amount)}</TableCell>
+                      <TableCell align="right" key={741903}>
                         {bet.payout ? formatCurrency(bet.payout) : '-'}
                       </TableCell>
-                      <TableCell>
-                        <Chip
+                      <TableCell key={942983}>
+                        <Chip;
                           label={bet.status.charAt(0).toUpperCase() + bet.status.slice(1)}
                           color={getStatusColor(bet.status)}
                           size="small"
-                        />
+                        / key={589899}>
                       </TableCell>
                     </TableRow>
                   ))
@@ -331,7 +329,7 @@ export const BettingHistory: React.FC = () => {
             </Table>
           </TableContainer>
 
-          <TablePagination
+          <TablePagination;
             rowsPerPageOptions={[5, 10, 25]}
             component="div"
             count={filteredBets.length}
@@ -339,7 +337,7 @@ export const BettingHistory: React.FC = () => {
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          / key={442735}>
         </CardContent>
       </HistoryCard>
     </Box>

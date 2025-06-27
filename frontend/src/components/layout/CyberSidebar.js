@@ -1,8 +1,8 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useNavigate, useLocation } from "react-router-dom";
 const CyberSidebar = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
+
+
     const navigation = [
         {
             name: "Dashboard",

@@ -6,8 +6,8 @@ const UserStats = () => {
         entries: state.entries,
         user: state.user,
     }));
-    const stats = calculateUserStats(entries, user?.id);
-    // Placeholder data removed
+
+    // Placeholder data removed;
     // const stats = {
     //   totalBets: entries.length || 0,
     //   winRate: 0,

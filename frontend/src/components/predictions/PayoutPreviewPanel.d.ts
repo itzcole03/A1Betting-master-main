@@ -1,5 +1,5 @@
-import React from 'react';
-import { Prediction } from '../../types/prediction';
+import React from 'react.ts';
+import { Prediction } from '@/types/prediction.ts';
 interface PayoutPreviewPanelProps {
     prediction: Prediction;
     stake: number;

@@ -1,4 +1,4 @@
-import { StrategyRecommendation, BettingDecision, BetRecord } from '@/types/core';
+import { StrategyRecommendation, BettingDecision, BetRecord } from '@/types/core.ts';
 declare class StrategyService {
     private static instance;
     private activeStrategies;

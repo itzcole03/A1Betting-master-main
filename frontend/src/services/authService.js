@@ -1,8 +1,8 @@
 import { AppError, APIError } from '../core/UnifiedError';
 import { unifiedMonitor } from '../core/UnifiedMonitor';
-// src/services/authService.ts
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-const AUTH_API_PREFIX = `${API_BASE_URL}/api/auth`;
+// src/services/authService.ts;
+
+
 /**
  * Logs in a user.
  * Expected backend response (from /api/auth/login):
@@ -13,22 +13,22 @@ const AUTH_API_PREFIX = `${API_BASE_URL}/api/auth`;
  * }
  */
 export const login = async (credentials) => {
-    const trace = unifiedMonitor.startTrace('authService.login', 'http.client');
+
     try {
         const { post } = await import('./api');
-        const response = await post(`${AUTH_API_PREFIX}/login`, credentials);
+
         if (trace) {
             trace.setHttpStatus(response.status);
             unifiedMonitor.endTrace(trace);
         }
-        // Adapt backend response to the structure AuthSlice expects
+        // Adapt backend response to the structure AuthSlice expects;
         return {
             user: response.data.user,
             token: response.data.access_token,
         };
     }
     catch (error) {
-        const errContext = { service: 'authService', operation: 'login', email: credentials.email };
+
         unifiedMonitor.reportError(error, errContext);
         if (trace) {
             trace.setHttpStatus(error.response?.status || 500);
@@ -43,12 +43,12 @@ export const login = async (credentials) => {
 // Logout is typically a client-side token removal. 
 // The backend /auth/logout is a placeholder but can be called for completeness.
 export const logout = async () => {
-    const trace = unifiedMonitor.startTrace('authService.logout', 'http.client');
+
     try {
         const { post } = await import('./api');
         await post(`${AUTH_API_PREFIX}/logout`);
         if (trace) {
-            trace.setHttpStatus(200); // Assuming logout call is fire and forget or returns 200
+            trace.setHttpStatus(200); // Assuming logout call is fire and forget or returns 200;
             unifiedMonitor.endTrace(trace);
         }
     }
@@ -70,14 +70,14 @@ export const logout = async () => {
  *   "id": "string",
  *   "username": "string",
  *   "email": "string",
- *   // ... other user fields as defined in the User type
+ *   // ... other user fields as defined in the User type;
  * }
  */
 export const fetchCurrentUser = async () => {
-    const trace = unifiedMonitor.startTrace('authService.fetchCurrentUser', 'http.client');
+
     try {
         const { get } = await import('./api');
-        const response = await get(`${API_BASE_URL}/api/users/me`);
+
         if (trace) {
             trace.setHttpStatus(response.status);
             unifiedMonitor.endTrace(trace);
@@ -85,7 +85,7 @@ export const fetchCurrentUser = async () => {
         return response.data;
     }
     catch (error) {
-        const errContext = { service: 'authService', operation: 'fetchCurrentUser' };
+
         unifiedMonitor.reportError(error, errContext);
         if (trace) {
             trace.setHttpStatus(error.response?.status || 500);
@@ -97,7 +97,7 @@ export const fetchCurrentUser = async () => {
         throw new AppError('Failed to fetch user profile.', undefined, errContext, error);
     }
 };
-// Combining into a service object as per original structure
+// Combining into a service object as per original structure;
 export const authService = {
     login,
     logout,

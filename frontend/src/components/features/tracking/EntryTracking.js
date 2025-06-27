@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useEffect } from 'react';
-import SkeletonLoader from '../base/SkeletonLoader'; // Import SkeletonLoader
+import SkeletonLoader from '../base/SkeletonLoader'; // Import SkeletonLoader;
 import webSocketService from '../../services/webSocketService';
 import { ListChecks, AlertTriangle } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -30,34 +30,34 @@ const getStatusClasses = (status) => {
         default: return 'bg-gray-500/20 text-gray-400';
     }
 };
-const EntryItemSkeleton = () => (_jsxs("div", { className: "p-3 bg-surface/70 rounded-lg shadow", children: [_jsxs("div", { className: "flex justify-between items-center mb-1", children: [_jsx(SkeletonLoader, { height: "1em", width: "60%" }), _jsx(SkeletonLoader, { height: "1.2em", width: "20%" })] }), _jsx(SkeletonLoader, { height: "0.6em", width: "100%", className: "mt-1" }), _jsx(SkeletonLoader, { height: "0.8em", width: "40%", className: "mt-1" })] }));
+
 const EntryTracking = () => {
-    const { entries, isLoadingEntries, error, fetchEntries, updateEntry, // Action to update an entry from WebSocket message
+    const { entries, isLoadingEntries, error, fetchEntries, updateEntry, // Action to update an entry from WebSocket message;
     addToast, } = useAppStore((state) => ({
         entries: state.entries,
         isLoadingEntries: state.isLoadingEntries,
-        error: state.error, // Assuming a general error for entry fetching
+        error: state.error, // Assuming a general error for entry fetching;
         fetchEntries: state.fetchEntries,
         updateEntry: state.updateEntry,
         addToast: state.addToast,
     }));
     useEffect(() => {
-        fetchEntries(); // Fetch initial entries
+        fetchEntries(); // Fetch initial entries;
         const handleMessage = (type, payload) => {
-            // Assuming WebSocket message contains updated entry data
+            // Assuming WebSocket message contains updated entry data;
             if (type === WebSocketMessageTypes.ENTRY_UPDATE) {
-                const updatedEntry = payload;
+
                 updateEntry(updatedEntry);
                 addToast({ message: `Entry #${updatedEntry.id.substring(0, 6)} updated!`, type: 'info' });
             }
             else if (type === WebSocketMessageTypes.LIVE_ODD_UPDATE) {
-                // Example: Handle live odd updates if this component needs them
+                // Example: Handle live odd updates if this component needs them;
                 // useAppStore.getState().updateLiveOdd(payload as OddsData);
                 // addToast({ message: `Live odds updated for ${payload.propId}!`, type: 'info' });
             }
-            // Add more specific handling based on WebSocket message structure
+            // Add more specific handling based on WebSocket message structure;
         };
-        webSocketService.connect(handleMessage, // Corrected: use the new handler
+        webSocketService.connect(handleMessage, // Corrected: use the new handler;
         () => addToast({ message: 'WebSocket connection error for entry updates.', type: 'error' }), () => addToast({ message: 'WebSocket for entry updates disconnected. Attempting to reconnect...', type: 'warning' }));
         return () => {
             webSocketService.disconnect();

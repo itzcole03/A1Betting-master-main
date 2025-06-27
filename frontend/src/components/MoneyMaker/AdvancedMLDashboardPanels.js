@@ -4,9 +4,9 @@ import { useShapData } from '../../hooks/useShapData';
 import { useSportsNews } from '../../hooks/useSportsNews';
 import { ShapValueDisplay } from '../features/analytics/ShapValueDisplay';
 export const AdvancedMLDashboardPanels = ({ eventId, modelId, modelPerformanceHistory }) => {
-    // SHAP Feature Importance
+    // SHAP Feature Importance;
     const { features: shapFeatures, loading: shapLoading, error: shapError } = useShapData({ eventId, modelType: modelId });
-    // Model Performance Chart
+    // Model Performance Chart;
     const perfChartData = {
         labels: modelPerformanceHistory.map(d => d.date),
         datasets: [
@@ -26,7 +26,7 @@ export const AdvancedMLDashboardPanels = ({ eventId, modelId, modelPerformanceHi
             },
         ],
     };
-    // Sports News
+    // Sports News;
     const { articles, loading: newsLoading, error: newsError } = useSportsNews();
     return (_jsxs("div", { className: "space-y-8", children: [_jsxs("div", { className: "glass-premium p-4 rounded-xl", children: [_jsx("h3", { className: "text-lg font-semibold mb-2", children: "Model Performance Over Time" }), _jsx("div", { className: "h-64", children: _jsx(Chart, { type: "line", data: perfChartData, options: {
                                 responsive: true,

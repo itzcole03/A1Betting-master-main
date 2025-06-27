@@ -1,31 +1,31 @@
 /**
- * Comprehensive tests for UserFriendlyApp component
- * Tests main functionality, admin toggle, navigation, and responsive behavior
+ * Comprehensive tests for UserFriendlyApp component;
+ * Tests main functionality, admin toggle, navigation, and responsive behavior;
  */
 
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import userEvent from "@testing-library/user-event";
-import { BrowserRouter } from "react-router-dom";
-import UserFriendlyApp from "../UserFriendlyApp";
+import React from 'react.ts';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react.ts';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query.ts';
+import userEvent from '@testing-library/user-event.ts';
+import { BrowserRouter } from 'react-router-dom.ts';
+import UserFriendlyApp from '@/UserFriendlyApp.ts';
 
-// Mock components that might not be available in test environment
+// Mock components that might not be available in test environment;
 jest.mock("../MoneyMakerPro", () => {
   return function MockMoneyMakerPro() {
-    return <div data-testid="money-maker-pro">MoneyMaker Pro Component</div>;
+    return <div data-testid="money-maker-pro" key={413754}>MoneyMaker Pro Component</div>;
   };
 });
 
 jest.mock("../PrizePicksPro", () => {
   return function MockPrizePicksPro() {
-    return <div data-testid="prizepicks-pro">PrizePicks Pro Component</div>;
+    return <div data-testid="prizepicks-pro" key={43784}>PrizePicks Pro Component</div>;
   };
 });
 
 jest.mock("../PropOllama", () => {
   return function MockPropOllama() {
-    return <div data-testid="prop-ollama">PropOllama Component</div>;
+    return <div data-testid="prop-ollama" key={722872}>PropOllama Component</div>;
   };
 });
 
@@ -36,11 +36,11 @@ jest.mock("../UserFriendlyDashboard", () => {
     onNavigate?: (page: string) => void;
   }) {
     return (
-      <div data-testid="user-friendly-dashboard">
-        <button onClick={() => onNavigate?.("test-navigation")}>
-          Test Navigation
+      <div data-testid="user-friendly-dashboard" key={800582}>
+        <button onClick={() = key={965186}> onNavigate?.("test-navigation")}>
+          Test Navigation;
         </button>
-        User Friendly Dashboard Component
+        User Friendly Dashboard Component;
       </div>
     );
   };
@@ -49,8 +49,8 @@ jest.mock("../UserFriendlyDashboard", () => {
 jest.mock("../../ml/UltraAdvancedMLDashboard", () => {
   return function MockUltraAdvancedMLDashboard() {
     return (
-      <div data-testid="ultra-advanced-ml-dashboard">
-        Ultra Advanced ML Dashboard
+      <div data-testid="ultra-advanced-ml-dashboard" key={328833}>
+        Ultra Advanced ML Dashboard;
       </div>
     );
   };
@@ -59,12 +59,12 @@ jest.mock("../../ml/UltraAdvancedMLDashboard", () => {
 jest.mock("../../prediction/UltraAccuracyDashboard", () => {
   return function MockUltraAccuracyDashboard() {
     return (
-      <div data-testid="ultra-accuracy-dashboard">Ultra Accuracy Dashboard</div>
+      <div data-testid="ultra-accuracy-dashboard" key={420367}>Ultra Accuracy Dashboard</div>
     );
   };
 });
 
-// Test wrapper component
+// Test wrapper component;
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -76,18 +76,18 @@ const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   });
 
   return (
-    <BrowserRouter>
-      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <BrowserRouter key={966846}>
+      <QueryClientProvider client={queryClient} key={826303}>{children}</QueryClientProvider>
     </BrowserRouter>
   );
 };
 
 describe("UserFriendlyApp", () => {
-  let user: ReturnType<typeof userEvent.setup>;
+  let user: ReturnType<typeof userEvent.setup key={900912}>;
 
   beforeEach(() => {
     user = userEvent.setup();
-    // Mock console.log to avoid cluttering test output
+    // Mock console.log to avoid cluttering test output;
     jest.spyOn(console, "log").mockImplementation(() => {});
   });
 
@@ -98,12 +98,12 @@ describe("UserFriendlyApp", () => {
   describe("Component Rendering", () => {
     it("renders the main application layout", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Check for main brand elements
+      // Check for main brand elements;
       expect(screen.getByText("A1BETTING")).toBeInTheDocument();
       expect(
         screen.getByText("Quantum Intelligence Platform"),
@@ -112,36 +112,36 @@ describe("UserFriendlyApp", () => {
 
     it("displays user information in header", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Check for user info
+      // Check for user info;
       expect(screen.getByText("Alex Chen")).toBeInTheDocument();
       expect(screen.getByText("alex@a1betting.com")).toBeInTheDocument();
     });
 
     it("shows live stats in header", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Check for live stats elements
+      // Check for live stats elements;
       expect(screen.getByText(/Live Games/)).toBeInTheDocument();
       expect(screen.getByText(/AI Accuracy/)).toBeInTheDocument();
     });
 
     it("renders navigation sidebar with all menu items", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Check for all navigation items
+      // Check for all navigation items;
       expect(screen.getByText("Dashboard")).toBeInTheDocument();
       expect(screen.getByText("Money Maker Pro")).toBeInTheDocument();
       expect(screen.getByText("PrizePicks Pro")).toBeInTheDocument();
@@ -154,8 +154,8 @@ describe("UserFriendlyApp", () => {
   describe("Navigation Functionality", () => {
     it("starts with dashboard as default page", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
@@ -164,24 +164,24 @@ describe("UserFriendlyApp", () => {
 
     it("navigates to different pages when menu items are clicked", async () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Navigate to Money Maker Pro
+      // Navigate to Money Maker Pro;
       await user.click(screen.getByText("Money Maker Pro"));
       await waitFor(() => {
         expect(screen.getByTestId("money-maker-pro")).toBeInTheDocument();
       });
 
-      // Navigate to PrizePicks Pro
+      // Navigate to PrizePicks Pro;
       await user.click(screen.getByText("PrizePicks Pro"));
       await waitFor(() => {
         expect(screen.getByTestId("prizepicks-pro")).toBeInTheDocument();
       });
 
-      // Navigate to Ultra Accuracy
+      // Navigate to Ultra Accuracy;
       await user.click(screen.getByText("Ultra Accuracy"));
       await waitFor(() => {
         expect(
@@ -192,12 +192,12 @@ describe("UserFriendlyApp", () => {
 
     it("handles programmatic navigation through onNavigate prop", async () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Click the test navigation button in the mock dashboard
+      // Click the test navigation button in the mock dashboard;
       await user.click(screen.getByText("Test Navigation"));
 
       // Should navigate to the test page (which would default to dashboard)
@@ -208,26 +208,23 @@ describe("UserFriendlyApp", () => {
   describe("Admin Mode Toggle", () => {
     it("renders admin mode toggle button", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      const toggleButton = screen.getByTitle(/Switch to Advanced Mode/);
       expect(toggleButton).toBeInTheDocument();
       expect(toggleButton).toHaveTextContent("🔄");
     });
 
     it("switches to advanced mode when toggle is clicked", async () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      const toggleButton = screen.getByTitle(/Switch to Advanced Mode/);
-
-      // Click to switch to advanced mode
+      // Click to switch to advanced mode;
       await user.click(toggleButton);
 
       await waitFor(() => {
@@ -236,7 +233,7 @@ describe("UserFriendlyApp", () => {
         ).toBeInTheDocument();
       });
 
-      // Button title should change
+      // Button title should change;
       expect(
         screen.getByTitle(/Switch to User-Friendly Mode/),
       ).toBeInTheDocument();
@@ -244,14 +241,12 @@ describe("UserFriendlyApp", () => {
 
     it("switches back to user-friendly mode from advanced mode", async () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      const toggleButton = screen.getByTitle(/Switch to Advanced Mode/);
-
-      // Switch to advanced mode
+      // Switch to advanced mode;
       await user.click(toggleButton);
       await waitFor(() => {
         expect(
@@ -259,7 +254,7 @@ describe("UserFriendlyApp", () => {
         ).toBeInTheDocument();
       });
 
-      // Switch back to user-friendly mode
+      // Switch back to user-friendly mode;
       const backToggleButton = screen.getByTitle(
         /Switch to User-Friendly Mode/,
       );
@@ -275,7 +270,7 @@ describe("UserFriendlyApp", () => {
 
   describe("Mobile Navigation", () => {
     it("shows mobile menu button on mobile screens", () => {
-      // Mock mobile viewport
+      // Mock mobile viewport;
       Object.defineProperty(window, "innerWidth", {
         writable: true,
         configurable: true,
@@ -283,29 +278,28 @@ describe("UserFriendlyApp", () => {
       });
 
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
       // Mobile menu button should be present (though hidden by CSS)
-      const mobileMenuButton = screen.getByRole("button", { name: /menu/i });
+
       expect(mobileMenuButton).toBeInTheDocument();
     });
 
     it("opens mobile menu when mobile menu button is clicked", async () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      const mobileMenuButton = screen.getByRole("button", { name: /menu/i });
       await user.click(mobileMenuButton);
 
-      // Check if mobile menu overlay is rendered
-      // Note: This is a simplified test as the actual mobile menu rendering
-      // depends on CSS classes and responsive design
+      // Check if mobile menu overlay is rendered;
+      // Note: This is a simplified test as the actual mobile menu rendering;
+      // depends on CSS classes and responsive design;
       expect(mobileMenuButton).toBeInTheDocument();
     });
   });
@@ -313,12 +307,12 @@ describe("UserFriendlyApp", () => {
   describe("AI Status Display", () => {
     it("shows AI status information in sidebar", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Check for AI status elements
+      // Check for AI status elements;
       expect(screen.getByText("AI Status")).toBeInTheDocument();
       expect(screen.getByText(/Neural Networks/)).toBeInTheDocument();
       expect(screen.getByText(/Processing Speed/)).toBeInTheDocument();
@@ -329,16 +323,15 @@ describe("UserFriendlyApp", () => {
   describe("Real-time Updates", () => {
     it("displays live statistics that update", async () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      const initialLiveGames = screen.getByText(/Live Games/);
       expect(initialLiveGames).toBeInTheDocument();
 
-      // The component has a 5-second interval for updates
-      // In a real test, you might want to mock timers
+      // The component has a 5-second interval for updates;
+      // In a real test, you might want to mock timers;
       expect(screen.getByText(/AI Accuracy/)).toBeInTheDocument();
     });
   });
@@ -346,8 +339,8 @@ describe("UserFriendlyApp", () => {
   describe("Footer", () => {
     it("renders footer with brand information", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
@@ -363,52 +356,52 @@ describe("UserFriendlyApp", () => {
   describe("Accessibility", () => {
     it("has proper heading structure", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Check for proper heading hierarchy
-      const mainHeading = screen.getByRole("heading", { level: 1 });
+      // Check for proper heading hierarchy;
+
       expect(mainHeading).toHaveTextContent("A1BETTING");
     });
 
     it("provides button labels and titles", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Check that toggle button has proper title
+      // Check that toggle button has proper title;
       expect(screen.getByTitle(/Switch to Advanced Mode/)).toBeInTheDocument();
     });
 
     it("has proper ARIA labels for interactive elements", () => {
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // Navigation buttons should be accessible
-      const navigationButtons = screen.getAllByRole("button");
+      // Navigation buttons should be accessible;
+
       expect(navigationButtons.length).toBeGreaterThan(0);
     });
   });
 
   describe("Error Handling", () => {
     it("handles component errors gracefully", () => {
-      // Mock console.error to prevent error output in tests
+      // Mock console.error to prevent error output in tests;
       jest.spyOn(console, "error").mockImplementation(() => {});
 
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      // The component should render without throwing
+      // The component should render without throwing;
       expect(screen.getByText("A1BETTING")).toBeInTheDocument();
 
       jest.restoreAllMocks();
@@ -417,16 +410,13 @@ describe("UserFriendlyApp", () => {
 
   describe("Performance", () => {
     it("renders within reasonable time", () => {
-      const startTime = performance.now();
 
       render(
-        <TestWrapper>
-          <UserFriendlyApp />
+        <TestWrapper key={681370}>
+          <UserFriendlyApp / key={406081}>
         </TestWrapper>,
       );
 
-      const endTime = performance.now();
-      const renderTime = endTime - startTime;
 
       // Should render within 100ms (adjust threshold as needed)
       expect(renderTime).toBeLessThan(100);

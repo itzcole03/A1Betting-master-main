@@ -1,6 +1,6 @@
-import { DataSource } from './PredictionEngine';
-import { EventBus } from '@/core/EventBus';
-import { PerformanceMonitor } from './PerformanceMonitor';
+import { DataSource } from './PredictionEngine.ts';
+import { EventBus } from '@/core/EventBus.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
 
 
 
@@ -36,12 +36,12 @@ export class DataCache<T> {
     this.cache.set(key, {
       data,
       timestamp: Date.now(),
-      ttl: ttl ?? this.defaultTtl
+      ttl: ttl ?? this.defaultTtl;
     });
   }
 
   get(key: string): T | undefined {
-    const entry = this.cache.get(key);
+
     if (!entry) return undefined;
 
     if (Date.now() - entry.timestamp > entry.ttl) {
@@ -80,7 +80,7 @@ export class StreamingDataPipeline<T, U> {
       cacheTtl: 5 * 60 * 1000,
       processingInterval: 1000,
       retryAttempts: 3,
-      batchSize: 100
+      batchSize: 100;
     }
   ) {
     this.metrics = {
@@ -88,7 +88,7 @@ export class StreamingDataPipeline<T, U> {
       errorCount: 0,
       averageLatency: 0,
       lastProcessed: 0,
-      throughput: 0
+      throughput: 0;
     };
     this.cache = new DataCache<T>(options.cacheTtl);
     this.eventBus = EventBus.getInstance();
@@ -101,7 +101,7 @@ export class StreamingDataPipeline<T, U> {
 
     this.processInterval = setInterval(
       () => this.process(),
-      this.options.processingInterval
+      this.options.processingInterval;
     );
 
     this.eventBus.publish({
@@ -133,7 +133,7 @@ export class StreamingDataPipeline<T, U> {
         sourceId: this.source.id,
         sinkId: this.sink.id,
         timestamp: Date.now(),
-        metrics: this.metrics
+        metrics: this.metrics;
       }
     });
   }
@@ -141,16 +141,15 @@ export class StreamingDataPipeline<T, U> {
   private async process(): Promise<void> {
     const traceId = this.performanceMonitor.startTrace('pipeline-processing', {
       sourceId: this.source.id,
-      sinkId: this.sink.id
+      sinkId: this.sink.id;
     });
 
     try {
-      const startTime = Date.now();
-      const data = await this.source.fetch();
+
 
       if (this.options.cacheEnabled) {
-        const cacheKey = this.generateCacheKey(data as T);
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached) {
           this.performanceMonitor.endTrace(traceId);
           return;
@@ -158,13 +157,12 @@ export class StreamingDataPipeline<T, U> {
         this.cache.set(cacheKey, data as T);
       }
 
-      let transformed = data;
+      const transformed = data;
       for (const stage of this.stages) {
-        const stageTraceId = this.performanceMonitor.startTrace(`pipeline-stage-${stage.id}`);
-        
+
         try {
           if (stage.validate) {
-            const isValid = await stage.validate(transformed);
+
             if (!isValid) {
               throw new Error(`Validation failed at stage ${stage.id}`);
             }
@@ -180,7 +178,6 @@ export class StreamingDataPipeline<T, U> {
 
       await this.sink.write(transformed as U);
 
-      const duration = Date.now() - startTime;
       this.updateMetrics(duration);
 
       this.eventBus.publish({

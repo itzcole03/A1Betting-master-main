@@ -17,7 +17,7 @@ export class UnifiedSettingsService extends BaseService {
     }
     updateSettings(updates) {
         try {
-            const previousSettings = { ...this.settings };
+
             this.settings = { ...this.settings, ...updates };
             this.saveSettings();
             this.serviceRegistry.emit('settings:updated', {
@@ -37,7 +37,7 @@ export class UnifiedSettingsService extends BaseService {
     }
     resetSettings() {
         try {
-            const previousSettings = { ...this.settings };
+
             this.settings = this.getDefaultSettings();
             this.saveSettings();
             this.serviceRegistry.emit('settings:reset', {
@@ -63,7 +63,7 @@ export class UnifiedSettingsService extends BaseService {
     }
     loadSettings() {
         try {
-            const savedSettings = localStorage.getItem('app_settings');
+
             if (savedSettings) {
                 return JSON.parse(savedSettings);
             }
@@ -124,7 +124,7 @@ export class UnifiedSettingsService extends BaseService {
     }
     setSettingValue(key, value) {
         try {
-            const previousValue = this.getNestedValue(this.settings, key);
+
             this.setNestedValue(this.settings, key, value);
             this.saveSettings();
             this.serviceRegistry.emit('settings:updated', {
@@ -152,9 +152,9 @@ export class UnifiedSettingsService extends BaseService {
      * Safely set a nested value in an object using a dot-separated path.
      */
     setNestedValue(obj, path, value) {
-        const keys = path.split('.');
-        const lastKey = keys.pop();
-        let target = obj;
+
+
+        const target = obj;
         for (const key of keys) {
             if (!(key in target) || typeof target[key] !== 'object' || target[key] === null) {
                 target[key] = {};

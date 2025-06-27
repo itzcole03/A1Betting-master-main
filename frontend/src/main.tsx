@@ -1,10 +1,10 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App_UserFriendly";
+import React from 'react.ts';
+import ReactDOM from 'react-dom/client.ts';
+import App from './App_UserFriendly.ts';
 import ViteErrorBoundary from "./components/ViteErrorBoundary.tsx";
-import { logger } from "./utils/logger";
+import { logger } from './utils/logger.ts';
 
-// Import styles exactly like the prototype
+// Import styles exactly like the prototype;
 import "./index.css";
 import "./styles/global-cyber-theme.css";
 import "./styles/prototype-override.css";
@@ -21,9 +21,9 @@ logger.info(
   "Bootstrap",
 );
 
-// Handle production error reporting
+// Handle production error reporting;
 window.addEventListener("error", (event) => {
-  // Suppress known Vite development issues in production
+  // Suppress known Vite development issues in production;
   if (
     event.error?.message?.includes(
       "Cannot read properties of undefined (reading 'frame')",
@@ -38,7 +38,7 @@ window.addEventListener("error", (event) => {
     return;
   }
 
-  // Log all other errors for production monitoring
+  // Log all other errors for production monitoring;
   logger.error(
     "Global error caught",
     {
@@ -52,9 +52,9 @@ window.addEventListener("error", (event) => {
   );
 });
 
-// Handle unhandled promise rejections
+// Handle unhandled promise rejections;
 window.addEventListener("unhandledrejection", (event) => {
-  // Suppress known Vite WebSocket errors
+  // Suppress known Vite WebSocket errors;
   if (
     event.reason?.message?.includes("WebSocket closed without opened") ||
     event.reason?.message?.includes("WebSocket connection") ||
@@ -70,7 +70,7 @@ window.addEventListener("unhandledrejection", (event) => {
     return;
   }
 
-  // Properly serialize the error reason
+  // Properly serialize the error reason;
   const errorDetails = {
     reasonType: typeof event.reason,
     reasonString: String(event.reason),
@@ -81,7 +81,7 @@ window.addEventListener("unhandledrejection", (event) => {
     cause: event.reason?.cause,
   };
 
-  // Try to extract more details if it's an Error object
+  // Try to extract more details if it's an Error object;
   if (event.reason instanceof Error) {
     errorDetails.message = event.reason.message;
     errorDetails.stack = event.reason.stack || "No stack trace";
@@ -90,21 +90,19 @@ window.addEventListener("unhandledrejection", (event) => {
 
   logger.error("Unhandled promise rejection detected", errorDetails, "Global");
 
-  // Also log to console for immediate debugging
-  console.error("Unhandled promise rejection:", event.reason);
+  // Also log to console for immediate debugging;
+  // console statement removed
 
-  // Prevent the default browser handling to avoid "Uncaught (in promise)" errors
+  // Prevent the default browser handling to avoid "Uncaught (in promise)" errors;
   event.preventDefault();
 });
 
-const rootElement = document.getElementById("root");
 if (!rootElement) throw new Error("Failed to find the root element");
-const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
-    <ViteErrorBoundary>
-      <App />
+  <React.StrictMode key={143543}>
+    <ViteErrorBoundary key={50375}>
+      <App / key={103343}>
     </ViteErrorBoundary>
   </React.StrictMode>,
 );

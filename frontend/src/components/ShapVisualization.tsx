@@ -1,4 +1,4 @@
-import React, { useMemo, useCallback } from 'react';
+import React, { useMemo, useCallback  } from 'react.ts';
 import {
   Box,
   Card,
@@ -10,14 +10,14 @@ import {
   Collapse,
   Fade,
   Skeleton,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   Info as InfoIcon,
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
-} from '@mui/icons-material';
-import { formatPercentage } from '@/utils/formatters';
-import type { Feature } from '../types/prediction';
+} from '@mui/icons-material.ts';
+import { formatPercentage } from '@/utils/formatters.ts';
+import type { Feature } from '@/types/prediction.ts';
 
 interface ShapFeature {
   name: string;
@@ -32,7 +32,7 @@ interface ShapVisualizationProps {
   isLoading?: boolean;
 }
 
-const ShapVisualization: React.FC<ShapVisualizationProps> = ({
+const ShapVisualization: React.FC<ShapVisualizationProps key={351760}> = ({
   features,
   title,
   maxFeatures = 8,
@@ -40,12 +40,12 @@ const ShapVisualization: React.FC<ShapVisualizationProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <Box>
-        <Skeleton variant="text" width="60%" />
+      <Box key={485947}>
+        <Skeleton variant="text" width="60%" / key={884479}>
         {[...Array(3)].map((_, index) => (
-          <Box key={index} sx={{ mt: 2 }}>
-            <Skeleton variant="text" width="40%" />
-            <Skeleton height={24} sx={{ mt: 1 }} variant="rectangular" />
+          <Box key={index} sx={{ mt: 2 }} key={321062}>
+            <Skeleton variant="text" width="40%" / key={868871}>
+            <Skeleton height={24} sx={{ mt: 1 }} variant="rectangular" / key={581066}>
           </Box>
         ))}
       </Box>
@@ -56,26 +56,24 @@ const ShapVisualization: React.FC<ShapVisualizationProps> = ({
     .sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact))
     .slice(0, maxFeatures);
 
-  const maxImpact = Math.max(...sortedFeatures.map(f => Math.abs(f.impact)));
-
   return (
-    <Box>
-      <Typography gutterBottom variant="h6">
+    <Box key={485947}>
+      <Typography gutterBottom variant="h6" key={368112}>
         {title}
       </Typography>
       {sortedFeatures.map((feature, index) => (
-        <Box key={index} sx={{ mb: 2 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
-            <Typography color="text.secondary" variant="body2">
+        <Box key={index} sx={{ mb: 2 }} key={233396}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }} key={792765}>
+            <Typography color="text.secondary" variant="body2" key={497604}>
               {feature.name}
             </Typography>
-            <Typography color={feature.impact > 0 ? 'success.main' : 'error.main'} variant="body2">
+            <Typography color={feature.impact  key={491100}> 0 ? 'success.main' : 'error.main'} variant="body2">
               {feature.impact > 0 ? '+' : ''}
               {feature.impact.toFixed(3)}
             </Typography>
           </Box>
-          <LinearProgress
-            color={feature.impact > 0 ? 'success' : 'error'}
+          <LinearProgress;
+            color={feature.impact  key={66956}> 0 ? 'success' : 'error'}
             sx={{
               height: 8,
               borderRadius: 4,

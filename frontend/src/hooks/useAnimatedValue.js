@@ -3,17 +3,17 @@ const defaultSpringConfig = {
     stiffness: 170,
     damping: 26,
     mass: 1,
-    precision: 0.01
+    precision: 0.01;
 };
 export function useAnimatedValue(initialValue, config = {}) {
     const [value, setValue] = useState(initialValue);
     const [isAnimating, setIsAnimating] = useState(false);
-    const frameRef = useRef();
-    const startTimeRef = useRef();
-    const startValueRef = useRef(initialValue);
-    const targetValueRef = useRef(initialValue);
-    const velocityRef = useRef(0);
-    const springConfigRef = useRef(config.spring || defaultSpringConfig);
+
+
+
+
+
+
     const cancelAnimation = useCallback(() => {
         if (frameRef.current) {
             cancelAnimationFrame(frameRef.current);
@@ -23,11 +23,11 @@ export function useAnimatedValue(initialValue, config = {}) {
     }, []);
     const animateSpring = useCallback(() => {
         const animate = () => {
-            const spring = springConfigRef.current;
-            const dx = targetValueRef.current - value;
-            const acceleration = spring.stiffness * dx - spring.damping * velocityRef.current;
-            const newVelocity = velocityRef.current + (acceleration / spring.mass) * (1 / 60);
-            const newValue = value + newVelocity * (1 / 60);
+
+
+
+
+
             velocityRef.current = newVelocity;
             if (Math.abs(dx) < (spring.precision || 0.01) &&
                 Math.abs(newVelocity) < (spring.precision || 0.01)) {
@@ -43,13 +43,13 @@ export function useAnimatedValue(initialValue, config = {}) {
         frameRef.current = requestAnimationFrame(animate);
     }, [value, config, cancelAnimation]);
     const animateLinear = useCallback((target, duration) => {
-        const startTime = performance.now();
+
         startTimeRef.current = startTime;
         startValueRef.current = value;
         targetValueRef.current = target;
         const animate = (currentTime) => {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
+
+
             if (progress === 1) {
                 setValue(target);
                 cancelAnimation();
@@ -66,7 +66,7 @@ export function useAnimatedValue(initialValue, config = {}) {
         cancelAnimation();
         const mergedConfig = {
             ...config,
-            ...newConfig
+            ...newConfig;
         };
         targetValueRef.current = target;
         if (mergedConfig.duration) {
@@ -93,7 +93,7 @@ export function useAnimatedValue(initialValue, config = {}) {
         isAnimating,
         animateTo,
         jumpTo,
-        cancel: cancelAnimation
+        cancel: cancelAnimation;
     };
 }
 // Example usage:
@@ -103,7 +103,7 @@ function AnimatedCounter({ value }: { value: number }) {
     spring: {
       stiffness: 150,
       damping: 15,
-      mass: 1
+      mass: 1;
     }
   });
 
@@ -117,7 +117,7 @@ function AnimatedCounter({ value }: { value: number }) {
 function AnimatedProgress({ progress }: { progress: number }) {
   const { value: width, animateTo } = useAnimatedValue(0, {
     duration: 1000,
-    onComplete: () => console.log('Animation complete!')
+    onComplete: () => // console statement removed
   });
 
   useEffect(() => {
@@ -126,7 +126,7 @@ function AnimatedProgress({ progress }: { progress: number }) {
 
   return (
     <div className="w-full h-2 bg-gray-200 rounded">
-      <div
+      <div;
         className="h-full bg-blue-500 rounded"
         style={{ width: `${width}%` }}
       />

@@ -1,10 +1,10 @@
-// src/core/UnifiedState.ts
+// src/core/UnifiedState.ts;
 
 /**
- * UnifiedState
+ * UnifiedState;
  *
- * Manages critical, low-level, cross-cutting global application state that may not fit
- * directly into Zustand stores, or is more tightly coupled with the operational state
+ * Manages critical, low-level, cross-cutting global application state that may not fit;
+ * directly into Zustand stores, or is more tightly coupled with the operational state;
  * of the core engines.
  *
  * ⚠️ Use with caution. Most UI-related and data-cache state should reside in Zustand stores (`useAppStore`).
@@ -13,7 +13,7 @@
  * Examples of potential use (if not handled elsewhere):
  * - System-wide flags (e.g., 'MAINTENANCE_MODE', 'INITIAL_LOAD_COMPLETE')
  * - Core engine operational status (e.g., 'PredictionEngine_STATUS: ready | degraded')
- * - Singleton service readiness flags
+ * - Singleton service readiness flags;
  */
 
 interface CriticalStateStore {
@@ -24,7 +24,7 @@ class UnifiedStateSingleton {
   private state: CriticalStateStore = {};
 
   constructor() {
-    // Initialize with any default critical states if necessary
+    // Initialize with any default critical states if necessary;
     // this.state.INITIAL_LOAD_COMPLETE = false;
   }
 
@@ -36,7 +36,7 @@ class UnifiedStateSingleton {
   }
 
   public get<T>(key: string, defaultValue?: T): T | undefined {
-    const value = this.state[key] as T | undefined;
+
     return value !== undefined ? value : defaultValue;
   }
 
@@ -54,12 +54,12 @@ class UnifiedStateSingleton {
   }
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const unifiedState = new UnifiedStateSingleton();
 
 // // Example Usage:
 // unifiedState.set('SYSTEM_MAINTENANCE_MODE', true);
 // const isInMaintenance = unifiedState.get<boolean>('SYSTEM_MAINTENANCE_MODE', false);
 // if (isInMaintenance) {
-//   console.warn('Application is currently in maintenance mode.');
+//   // console statement removed
 // }

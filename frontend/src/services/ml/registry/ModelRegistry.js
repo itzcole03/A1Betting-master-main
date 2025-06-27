@@ -13,7 +13,7 @@ export class ModelRegistry extends EventEmitter {
         return ModelRegistry.instance;
     }
     registerModel(model) {
-        const config = model.getConfig();
+
         this.models.set(config.name, model);
         this.modelMetrics.set(config.name, {});
         this.modelWeights.set(config.name, 1.0);
@@ -42,9 +42,9 @@ export class ModelRegistry extends EventEmitter {
         return this.modelMetrics.get(modelName);
     }
     updateModelWeights() {
-        let totalAccuracy = 0;
-        let modelCount = 0;
-        // Calculate total accuracy
+        const totalAccuracy = 0;
+        const modelCount = 0;
+        // Calculate total accuracy;
         for (const [name, metrics] of this.modelMetrics.entries()) {
             if (metrics.accuracy !== undefined) {
                 totalAccuracy += metrics.accuracy;
@@ -53,11 +53,11 @@ export class ModelRegistry extends EventEmitter {
         }
         if (modelCount === 0)
             return;
-        const averageAccuracy = totalAccuracy / modelCount;
-        // Update weights based on relative accuracy
+
+        // Update weights based on relative accuracy;
         for (const [name, metrics] of this.modelMetrics.entries()) {
             if (metrics.accuracy !== undefined) {
-                const weight = metrics.accuracy / averageAccuracy;
+
                 this.modelWeights.set(name, weight);
             }
         }
@@ -67,13 +67,13 @@ export class ModelRegistry extends EventEmitter {
         return this.modelWeights.get(modelName) || 1.0;
     }
     async trainAllModels(data) {
-        const trainingPromises = Array.from(this.models.values()).map(model => model.train(data));
+
         await Promise.all(trainingPromises);
         this.emit('allModelsTrained');
     }
     async evaluateAllModels(data) {
         const evaluationPromises = Array.from(this.models.values()).map(async (model) => {
-            const metrics = await model.evaluate(data);
+
             this.updateModelMetrics(model.getName(), metrics);
         });
         await Promise.all(evaluationPromises);
@@ -81,12 +81,12 @@ export class ModelRegistry extends EventEmitter {
         this.emit('allModelsEvaluated');
     }
     async saveAllModels(basePath) {
-        const savePromises = Array.from(this.models.values()).map(model => model.save(`${basePath}/${model.getName()}`));
+
         await Promise.all(savePromises);
         this.emit('allModelsSaved');
     }
     async loadAllModels(basePath) {
-        const loadPromises = Array.from(this.models.values()).map(model => model.load(`${basePath}/${model.getName()}`));
+
         await Promise.all(loadPromises);
         this.emit('allModelsLoaded');
     }

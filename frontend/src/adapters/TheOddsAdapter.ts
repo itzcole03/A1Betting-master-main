@@ -1,6 +1,6 @@
-import { DataSource } from '../unified/DataSource';
-import { EventBus } from '../unified/EventBus';
-import { PerformanceMonitor } from '../unified/PerformanceMonitor';
+import { DataSource } from '@/unified/DataSource.ts';
+import { EventBus } from '@/unified/EventBus.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
 
 interface TheOddsConfig {
   apiKey: string;
@@ -54,7 +54,7 @@ export class TheOddsAdapter implements DataSource<TheOddsData> {
 
   public async isAvailable(): Promise<boolean> {
     try {
-      const response = await fetch(`${this.config.baseUrl}/sports?apiKey=${this.config.apiKey}`);
+
       return response.ok;
     } catch {
       return false;
@@ -66,14 +66,11 @@ export class TheOddsAdapter implements DataSource<TheOddsData> {
   }
 
   public async fetch(): Promise<TheOddsData> {
-    const traceId = this.performanceMonitor.startTrace('the-odds-fetch');
 
     try {
       if (this.isCacheValid()) {
         return this.cache.data!;
       }
-
-      const data = await this.fetchOddsData();
 
       this.cache = {
         data,

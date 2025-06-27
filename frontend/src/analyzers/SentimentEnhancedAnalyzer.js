@@ -19,13 +19,13 @@ export class SentimentEnhancedAnalyzer {
         return { accuracy: 1, latency: 0, errorRate: 0 };
     }
     async analyze(input) {
-        const traceId = this.performanceMonitor.startTrace('enhanced-analysis');
+
         try {
             const enhancedAnalyses = input.projectionAnalysis.map(projection => {
-                const sentiment = this.findPlayerSentiment(projection.player, input.sentimentData);
-                const injuries = this.findPlayerInjuries(projection.player, input.sportsRadarData);
-                const odds = this.findPlayerOdds(projection.player, input.oddsData);
-                const enhancedConfidence = this.calculateEnhancedConfidence(projection.confidence, sentiment, odds, injuries);
+
+
+
+
                 return {
                     ...projection,
                     confidence: enhancedConfidence,
@@ -66,14 +66,14 @@ export class SentimentEnhancedAnalyzer {
         }
     }
     async confidence(input) {
-        const analyses = await this.analyze(input);
+
         return analyses.reduce((acc, analysis) => acc + analysis.confidence, 0) / analyses.length;
     }
     findPlayerSentiment(player, sentimentData) {
         return sentimentData.find(data => data.player === player);
     }
     findPlayerInjuries(player, sportsData) {
-        const injuries = [];
+
         sportsData.games.forEach(game => {
             game.players.forEach(p => {
                 if (p.name === player) {
@@ -90,8 +90,8 @@ export class SentimentEnhancedAnalyzer {
         return injuries;
     }
     findPlayerOdds(player, oddsData) {
-        // Find odds for the specific player from the odds data
-        const playerOdds = oddsData.odds?.find((odd) => odd.player === player || odd.description?.includes(player));
+        // Find odds for the specific player from the odds data;
+
         if (!playerOdds) {
             return null;
         }
@@ -106,25 +106,25 @@ export class SentimentEnhancedAnalyzer {
         };
     }
     calculateEnhancedConfidence(baseConfidence, sentiment, odds, injuries = []) {
-        let confidence = baseConfidence;
-        // Apply sentiment adjustment
+        const confidence = baseConfidence;
+        // Apply sentiment adjustment;
         if (sentiment) {
             confidence += this.sentimentWeight * sentiment.sentiment.score;
         }
-        // Apply odds adjustment
+        // Apply odds adjustment;
         if (odds) {
-            // Implement odds-based confidence adjustment
+            // Implement odds-based confidence adjustment;
         }
-        // Apply injury adjustment
+        // Apply injury adjustment;
         if (injuries.length > 0) {
-            const injuryImpact = injuries.reduce((acc, injury) => acc + this.calculateInjuryImpact(injury), 0);
+
             confidence -= this.injuryWeight * injuryImpact;
         }
-        // Ensure confidence stays within 0-1 range
+        // Ensure confidence stays within 0-1 range;
         return Math.max(0, Math.min(1, confidence));
     }
     calculateInjuryImpact(injury) {
-        // Implement injury impact calculation
+        // Implement injury impact calculation;
         switch (injury.status.toLowerCase()) {
             case 'out':
                 return 1;

@@ -1,5 +1,5 @@
-// bankrollService.ts
-// Singleton service for bankroll tracking, stats, and settings
+// bankrollService.ts;
+// Singleton service for bankroll tracking, stats, and settings;
 class BankrollService {
     constructor() {
         this.transactions = [];
@@ -45,18 +45,18 @@ class BankrollService {
         return { ...this.stats };
     }
     recalculateStats() {
-        const wins = this.transactions.filter(t => t.type === 'win');
-        const losses = this.transactions.filter(t => t.type === 'loss');
-        const bets = this.transactions.filter(t => t.type === 'bet');
-        const totalWins = wins.reduce((acc, t) => acc + t.amount, 0);
-        const totalLosses = losses.reduce((acc, t) => acc + t.amount, 0);
-        const netProfit = totalWins - totalLosses;
-        const currentBalance = this.stats.startingBalance + netProfit;
-        const winRate = bets.length ? wins.length / bets.length : 0;
-        const averageBetSize = bets.length ? bets.reduce((acc, t) => acc + t.amount, 0) / bets.length : 0;
-        const largestWin = wins.length ? Math.max(...wins.map(t => t.amount)) : 0;
-        const largestLoss = losses.length ? Math.max(...losses.map(t => t.amount)) : 0;
-        const roi = bets.length ? netProfit / bets.reduce((acc, t) => acc + t.amount, 0) : 0;
+
+
+
+
+
+
+
+
+
+
+
+
         this.stats = {
             ...this.stats,
             currentBalance,

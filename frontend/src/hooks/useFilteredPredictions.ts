@@ -1,8 +1,8 @@
-import { useMemo } from 'react';
-import { useFilterStore } from '../stores/filterStore';
-import { useStrategyInput } from '../contexts/StrategyInputContext';
-import { useBettingAnalytics } from './useBettingAnalytics';
-import { Sport, PropType } from '@/types';
+import { useMemo } from 'react.ts';
+import { useFilterStore } from '@/stores/filterStore.ts';
+import { useStrategyInput } from '@/contexts/StrategyInputContext.ts';
+import { useBettingAnalytics } from './useBettingAnalytics.ts';
+import { Sport, PropType } from '@/types.ts';
 
 export function useFilteredPredictions() {
   const { activeFilters } = useFilterStore();
@@ -13,7 +13,7 @@ export function useFilteredPredictions() {
     if (!predictions) return [];
 
     return predictions.filter(prediction => {
-      // Filter by sport
+      // Filter by sport;
       if (
         strategyInput.selectedSports.length > 0 &&
         !strategyInput.selectedSports.includes(prediction.sport as Sport)
@@ -21,7 +21,7 @@ export function useFilteredPredictions() {
         return false;
       }
 
-      // Filter by prop type
+      // Filter by prop type;
       if (
         strategyInput.selectedPropTypes.length > 0 &&
         !strategyInput.selectedPropTypes.includes(prediction.propType as PropType)
@@ -29,21 +29,20 @@ export function useFilteredPredictions() {
         return false;
       }
 
-      // Filter by confidence
+      // Filter by confidence;
       if (prediction.confidence < strategyInput.minConfidence) {
         return false;
       }
 
-      // Filter by payout range
-      const payout = prediction.odds;
+      // Filter by payout range;
+
       if (payout < strategyInput.minPayout || payout > strategyInput.maxPayout) {
         return false;
       }
 
-      // Filter by active filters
+      // Filter by active filters;
       const confidenceLevel =
         prediction.confidence >= 0.65 ? 'high' : prediction.confidence >= 0.55 ? 'medium' : 'low';
-      const payoutLevel = payout >= 5 ? 'high' : payout >= 2 ? 'medium' : 'low';
 
       const relevantFilters = [
         prediction.sport,
@@ -55,8 +54,6 @@ export function useFilteredPredictions() {
       return relevantFilters.some(filter => activeFilters.has(filter));
     });
   }, [predictions, activeFilters, strategyInput]);
-
-  const hasResults = filteredPredictions.length > 0;
 
   return {
     predictions: filteredPredictions,

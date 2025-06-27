@@ -25,8 +25,8 @@ export const useDeviceOrientation = () => {
         };
         if (window.DeviceOrientationEvent) {
             if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-                // iOS 13+ requires permission
-                DeviceOrientationEvent
+                // iOS 13+ requires permission;
+                DeviceOrientationEvent;
                     .requestPermission()
                     .then((permissionState) => {
                     if (permissionState === 'granted') {
@@ -39,7 +39,7 @@ export const useDeviceOrientation = () => {
                     .catch(handleError);
             }
             else {
-                // Non-iOS devices
+                // Non-iOS devices;
                 window.addEventListener('deviceorientation', handleOrientation);
             }
         }

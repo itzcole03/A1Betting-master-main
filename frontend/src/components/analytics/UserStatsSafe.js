@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useMemo } from "react";
-// Safe calculation function
+// Safe calculation function;
 const calculateUserStatsSafe = (entries = [], userId) => {
     try {
         if (!userId || !Array.isArray(entries)) {
@@ -12,26 +12,26 @@ const calculateUserStatsSafe = (entries = [], userId) => {
                 roi: 0,
             };
         }
-        const userEntries = entries.filter((entry) => entry?.user_id === userId);
-        const totalBets = userEntries.length;
-        const settledEntries = userEntries.filter((entry) => entry?.status === "won" || entry?.status === "lost");
-        const settledBetsCount = settledEntries.length;
-        let wins = 0;
-        let totalStakeOnSettled = 0;
-        let totalGrossReturnFromWon = 0;
+
+
+
+
+        const wins = 0;
+        const totalStakeOnSettled = 0;
+        const totalGrossReturnFromWon = 0;
         settledEntries.forEach((entry) => {
-            const stake = Number(entry?.stake) || 0;
-            const payout = Number(entry?.payout) || 0;
+
+
             totalStakeOnSettled += stake;
             if (entry?.status === "won") {
                 wins++;
                 totalGrossReturnFromWon += payout;
             }
         });
-        const winRate = settledBetsCount > 0 ? (wins / settledBetsCount) * 100 : 0;
-        const totalProfitLoss = totalGrossReturnFromWon - totalStakeOnSettled;
-        const roi = totalStakeOnSettled > 0
-            ? (totalProfitLoss / totalStakeOnSettled) * 100
+
+
+        const roi = totalStakeOnSettled > 0;
+            ? (totalProfitLoss / totalStakeOnSettled) * 100;
             : 0;
         return {
             totalBets,
@@ -42,7 +42,7 @@ const calculateUserStatsSafe = (entries = [], userId) => {
         };
     }
     catch (error) {
-        console.error("Error calculating user stats:", error);
+        // console statement removed
         return {
             totalBets: 0,
             settledBets: 0,
@@ -53,15 +53,15 @@ const calculateUserStatsSafe = (entries = [], userId) => {
     }
 };
 const UserStatsSafe = ({ entries = [], user = null, }) => {
-    // Safely calculate stats with memoization
+    // Safely calculate stats with memoization;
     const stats = useMemo(() => {
         return calculateUserStatsSafe(entries, user?.id);
     }, [entries, user?.id]);
-    // Show fallback if no user
+    // Show fallback if no user;
     if (!user?.id) {
         return (_jsx("div", { className: "p-4 text-center text-gray-500", children: _jsx("p", { children: "Please log in to see your betting statistics." }) }));
     }
-    // Show message if no data
+    // Show message if no data;
     if (stats.totalBets === 0) {
         return (_jsx("div", { className: "p-4 text-center text-gray-500", children: _jsx("p", { children: "No betting history available yet." }) }));
     }

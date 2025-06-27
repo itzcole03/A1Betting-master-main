@@ -12,12 +12,12 @@ import { formatDate } from '../../utils/formatters.js';
 import { adminService } from '../../services/adminService.js';
 import { useAuth } from '../../hooks/useAuth.js';
 import { motion } from 'framer-motion';
-// Temporary fallback for formatNumber if not exported from formatters.js
-const formatNumber = (value) => (typeof value === 'number' ? value.toLocaleString() : '');
+// Temporary fallback for formatNumber if not exported from formatters.js;
+
 /**
  * AdminPanel component provides an administrative interface for managing users, viewing system logs, and monitoring system statistics.
  *
- * Props: None
+ * Props: None;
  *
  * State:
  * - activeTab: Controls which admin tab is active ('users', 'logs', or 'stats').
@@ -30,20 +30,20 @@ const formatNumber = (value) => (typeof value === 'number' ? value.toLocaleStrin
  */
 const AdminPanel = () => {
     useAuth();
-    const queryClient = useQueryClient();
+
     const [activeTab, setActiveTab] = useState('users');
     const [searchQuery, setSearchQuery] = useState('');
-    // Fetch users
+    // Fetch users;
     const { data: users, isLoading: usersLoading } = useQuery({
         queryKey: ['admin-users'],
         queryFn: () => adminService.getUsers(),
     });
-    // Fetch logs
+    // Fetch logs;
     const { data: logs, isLoading: logsLoading } = useQuery({
         queryKey: ['admin-logs'],
         queryFn: () => adminService.getLogs(),
     });
-    // Fetch system metrics
+    // Fetch system metrics;
     const { data: metrics, isLoading: metricsLoading } = useQuery({
         queryKey: ['admin-metrics'],
         queryFn: () => adminService.getMetrics(),
@@ -67,7 +67,7 @@ const AdminPanel = () => {
     };
     const filteredUsers = useMemo(() => users?.filter((user) => user.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
         user.name.toLowerCase().includes(searchQuery.toLowerCase())), [users, searchQuery]);
-    return (_jsxs(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, className: "p-6 space-y-6", children: [_jsxs("div", { className: "flex justify-between items-center", children: [_jsx("h1", { className: "text-3xl font-bold bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent", children: "Admin Panel" }), _jsx("div", { className: "flex space-x-4", children: _jsx("input", { type: "text", placeholder: "Search users...", value: searchQuery, onChange: (e) => setSearchQuery(e.target.value), className: "form-input" }) })] }), _jsx("div", { className: "border-b border-gray-200 dark:border-gray-700", children: _jsx("nav", { className: "flex space-x-8", children: ['users', 'logs', 'stats'].map((tab) => (_jsx("button", { onClick: () => setActiveTab(tab), className: `py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab
+    return (_jsxs(motion.div, { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 }, className: "p-6 space-y-6", children: [_jsxs("div", { className: "flex justify-between items-center", children: [_jsx("h1", { className: "text-3xl font-bold bg-gradient-to-r from-primary-500 to-primary-700 bg-clip-text text-transparent", children: "Admin Panel" }), _jsx("div", { className: "flex space-x-4", children: _jsx("input", { type: "text", placeholder: "Search users...", value: searchQuery, onChange: (e) => setSearchQuery(e.target.value), className: "form-input" }) })] }), _jsx("div", { className: "border-b border-gray-200 dark:border-gray-700", children: _jsx("nav", { className: "flex space-x-8", children: ['users', 'logs', 'stats'].map((tab) => (_jsx("button", { onClick: () => setActiveTab(tab), className: `py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab;
                             ? 'border-primary-500 text-primary-600'
                             : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'}`, children: tab.charAt(0).toUpperCase() + tab.slice(1) }, tab))) }) }), _jsxs("div", { className: "mt-6", children: [activeTab === 'users' && (_jsx("div", { className: "bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden", children: _jsxs("table", { className: "min-w-full divide-y divide-gray-200 dark:divide-gray-700", children: [_jsx("thead", { className: "bg-gray-50 dark:bg-gray-700", children: _jsxs("tr", { children: [_jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider", children: "User" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider", children: "Status" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider", children: "Role" }), _jsx("th", { className: "px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider", children: "Last Login" }), _jsx("th", { className: "px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider", children: "Actions" })] }) }), _jsx("tbody", { className: "bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700", children: usersLoading ? (_jsx("tr", { children: _jsx("td", { colSpan: 5, className: "px-6 py-4 text-center", children: "Loading..." }) })) : (filteredUsers?.map((user) => (_jsxs("tr", { children: [_jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("div", { className: "flex items-center", children: _jsxs("div", { children: [_jsx("div", { className: "text-sm font-medium text-gray-900 dark:text-white", children: user.name }), _jsx("div", { className: "text-sm text-gray-500 dark:text-gray-400", children: user.email })] }) }) }), _jsx("td", { className: "px-6 py-4 whitespace-nowrap", children: _jsx("span", { className: `px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.status === 'active'
                                                         ? 'bg-green-100 text-green-800'

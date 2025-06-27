@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react.ts';
 
 interface ModelPerformanceMetrics {
     accuracy: number;
@@ -12,7 +12,7 @@ interface ModelPerformanceMetrics {
     profitLoss: number;
     winRate: number;
     lastUpdated: Date;
-    // Add missing properties that ModelPerformanceDashboard expects
+    // Add missing properties that ModelPerformanceDashboard expects;
     profitFactor: number;
     sharpeRatio: number;
     maxDrawdown: number;
@@ -43,7 +43,7 @@ interface UseModelPerformanceReturn {
     setTimeframe: (timeframe: string) => void;
 }
 
-// Simplified function signature
+// Simplified function signature;
 
 export function useModelPerformance(modelName?: string, timeframe?: string): any {
     const [metrics, setMetrics] = useState<ModelPerformanceMetrics | null>(null);
@@ -55,7 +55,7 @@ export function useModelPerformance(modelName?: string, timeframe?: string): any
     const [currentTimeframe, setCurrentTimeframe] = useState<'day' | 'week' | 'month' | 'all'>('all');
     const fetchModels = useCallback(async () => {
         try {
-            // Placeholder for API call
+            // Placeholder for API call;
             const mockModels: ModelInfo[] = [
                 { name: 'ensemble-v1', version: '1.0.0', status: 'active', description: 'Main ensemble model' },
                 { name: 'ml-boost-v2', version: '2.1.0', status: 'active', description: 'XGBoost model' },
@@ -77,20 +77,20 @@ export function useModelPerformance(modelName?: string, timeframe?: string): any
         setError(null);
 
         try {
-            // Placeholder for API call
+            // Placeholder for API call;
             const mockMetrics: ModelPerformanceMetrics = {
                 accuracy: 0.72,
                 precision: 0.68,
                 recall: 0.74,
                 f1Score: 0.71,
-                roi: 0.125, // Convert to decimal
+                roi: 0.125, // Convert to decimal;
                 totalPredictions: 1420,
                 correctPredictions: 1022,
                 averageOdds: 1.85,
                 profitLoss: 2847.32,
                 winRate: 0.719,
                 lastUpdated: new Date(),
-                // Add missing properties
+                // Add missing properties;
                 profitFactor: 1.35,
                 sharpeRatio: 0.82,
                 maxDrawdown: 0.15,
@@ -102,7 +102,7 @@ export function useModelPerformance(modelName?: string, timeframe?: string): any
             };
             setMetrics(mockMetrics);
 
-            // Mock history data
+            // Mock history data;
             const mockHistory = Array.from({ length: 30 }, (_, i) => ({
                 timestamp: new Date(Date.now() - (29 - i) * 24 * 60 * 60 * 1000).toISOString(),
                 metrics: {
@@ -131,10 +131,10 @@ export function useModelPerformance(modelName?: string, timeframe?: string): any
     };
     useEffect(() => {
         if (modelName) {
-            // If called with a specific modelName, fetch its metrics directly
+            // If called with a specific modelName, fetch its metrics directly;
             fetchMetrics(modelName);
         } else {
-            // Otherwise fetch all models
+            // Otherwise fetch all models;
             fetchModels();
         }
     }, [modelName, fetchModels]);
@@ -145,7 +145,7 @@ export function useModelPerformance(modelName?: string, timeframe?: string): any
         }
     }, [selectedModel, modelName]);
 
-    // If called with modelName, return the expected interface for ModelPerformanceDashboard
+    // If called with modelName, return the expected interface for ModelPerformanceDashboard;
     if (modelName) {
         return {
             performance: metrics,
@@ -157,7 +157,7 @@ export function useModelPerformance(modelName?: string, timeframe?: string): any
         };
     }
 
-    // Otherwise return the full interface
+    // Otherwise return the full interface;
     return {
         performance: metrics,
         models,

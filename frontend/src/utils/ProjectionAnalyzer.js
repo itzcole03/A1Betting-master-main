@@ -13,17 +13,17 @@ export class ProjectionAnalyzer {
     async analyze(data) {
         const traceId = this.performanceMonitor.startTrace('projection-analysis', {
             analyzer: this.id,
-            projectionCount: data.projections.length
+            projectionCount: data.projections.length;
         });
         try {
-            const analyses = [];
+
             for (const projection of data.projections) {
                 const spanId = this.performanceMonitor.startSpan(traceId, 'player-analysis', {
                     player: projection.name,
-                    team: projection.team
+                    team: projection.team;
                 });
                 try {
-                    const analysis = this.analyzePlayerProjection(projection);
+
                     if (analysis.confidence >= this.confidenceThreshold) {
                         analyses.push(analysis);
                     }
@@ -31,7 +31,7 @@ export class ProjectionAnalyzer {
                 }
                 catch (error) {
                     this.performanceMonitor.endSpan(spanId, error);
-                    console.error(`Error analyzing projection for ${projection.name}:`, error);
+                    // console statement removed
                 }
             }
             this.performanceMonitor.endTrace(traceId);
@@ -45,11 +45,11 @@ export class ProjectionAnalyzer {
     async confidence(data) {
         if (!data.projections.length)
             return 0;
-        const validProjections = data.projections.filter(p => this.isValidProjection(p));
+
         return validProjections.length / data.projections.length;
     }
     analyzePlayerProjection(projection) {
-        const baseConfidence = this.calculateBaseConfidence(projection);
+
         const analysis = {
             player: projection.name,
             predictions: {
@@ -66,10 +66,10 @@ export class ProjectionAnalyzer {
                 team: projection.team,
                 position: projection.position,
                 opponent: projection.opp_team,
-                isHome: projection.is_home
+                isHome: projection.is_home;
             }
         };
-        // Publish detailed analysis event
+        // Publish detailed analysis event;
         this.eventBus.publish({
             type: 'projection:analyzed',
             payload: {
@@ -78,41 +78,41 @@ export class ProjectionAnalyzer {
                 predictions: Object.entries(analysis.predictions).map(([stat, metrics]) => ({
                     stat,
                     predicted: metrics.predicted,
-                    confidence: metrics.confidence
+                    confidence: metrics.confidence;
                 }))
             }
         });
         return analysis;
     }
     calculateBaseConfidence(projection) {
-        let confidence = 1.0;
-        // Reduce confidence for missing or invalid data
+        const confidence = 1.0;
+        // Reduce confidence for missing or invalid data;
         if (!this.isValidProjection(projection)) {
             confidence *= 0.5;
         }
-        // Reduce confidence for extreme minute projections
+        // Reduce confidence for extreme minute projections;
         if (projection.min < 10 || projection.min > 48) {
             confidence *= 0.7;
         }
-        // Reduce confidence for unrealistic stat projections
+        // Reduce confidence for unrealistic stat projections;
         if (projection.pts > 60 || projection.reb > 30 || projection.ast > 20) {
             confidence *= 0.8;
         }
         return confidence;
     }
     calculateMetrics(value, baseConfidence, statType) {
-        const variance = this.calculateVariance(value, statType);
+
         return {
             predicted: value,
             confidence: baseConfidence * this.getStatTypeConfidence(statType),
             range: {
                 min: Math.max(0, value - variance),
-                max: value + variance
+                max: value + variance;
             }
         };
     }
     calculateVariance(value, statType) {
-        // Different stats have different natural variances
+        // Different stats have different natural variances;
         const varianceFactors = {
             points: 0.2,
             rebounds: 0.25,
@@ -120,12 +120,12 @@ export class ProjectionAnalyzer {
             steals: 0.4,
             blocks: 0.4,
             threes: 0.35,
-            minutes: 0.15
+            minutes: 0.15;
         };
         return value * (varianceFactors[statType] || 0.25);
     }
     getStatTypeConfidence(statType) {
-        // Some stats are more predictable than others
+        // Some stats are more predictable than others;
         const confidenceFactors = {
             points: 0.9,
             rebounds: 0.85,
@@ -133,7 +133,7 @@ export class ProjectionAnalyzer {
             steals: 0.7,
             blocks: 0.7,
             threes: 0.75,
-            minutes: 0.95
+            minutes: 0.95;
         };
         return confidenceFactors[statType] || 0.8;
     }

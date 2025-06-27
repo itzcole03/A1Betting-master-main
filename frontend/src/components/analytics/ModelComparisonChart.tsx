@@ -1,21 +1,21 @@
-import React from 'react';
-import { usePredictionStore } from '../../stores/predictionStore';
+import React from 'react.ts';
+import { usePredictionStore } from '@/stores/predictionStore.ts';
 
 const ModelComparisonChart: React.FC = () => {
-  const predictions = usePredictionStore(state => state.getLatestPredictions());
-  // Group by modelId
+
+  // Group by modelId;
   const byModel = predictions.reduce((acc, p) => {
-    const model = p.analytics?.modelId || 'unknown';
+
     if (!acc[model]) acc[model] = [];
     acc[model].push(p);
     return acc;
-  }, {} as Record<string, any[]>);
+  }, {} as Record<string, any[] key={536834}>);
   return (
-    <div>
-      <h3>Model Comparison</h3>
-      <ul>
+    <div key={241917}>
+      <h3 key={661229}>Model Comparison</h3>
+      <ul key={249713}>
         {Object.entries(byModel).map(([model, preds]) => (
-          <li key={model}>{model}: {preds.length} predictions</li>
+          <li key={model} key={673611}>{model}: {preds.length} predictions</li>
         ))}
       </ul>
     </div>

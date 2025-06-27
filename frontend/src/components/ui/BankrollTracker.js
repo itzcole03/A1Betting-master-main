@@ -1,11 +1,11 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-// BankrollTracker.tsx
-// Visualizes the user's current bankroll, profit/loss, and stats
+// BankrollTracker.tsx;
+// Visualizes the user's current bankroll, profit/loss, and stats;
 import React from 'react';
 import { useBankrollStore } from '../../store/slices/bankrollSlice';
 export const BankrollTracker = () => {
-    const stats = useBankrollStore((s) => s.stats);
-    const refreshStats = useBankrollStore((s) => s.refreshStats);
+
+
     React.useEffect(() => {
         refreshStats();
     }, [refreshStats]);

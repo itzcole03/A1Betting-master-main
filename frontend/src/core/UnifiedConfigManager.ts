@@ -1,5 +1,5 @@
 import { EventBus } from './EventBus.js';
-import type { EventMap } from '../types/core.js';
+import type { EventMap } from '@/types/core.js';
 
 export interface SystemConfig {
   errorHandling: {
@@ -18,7 +18,7 @@ export interface StrategyConfig {
   stopLoss: number;
 }
 
-import type { Feature, Experiment } from '../utils/FeatureFlags-MyPC.js';
+import type { Feature, Experiment } from '@/utils/FeatureFlags-MyPC.js';
 
 export interface Config {
   system: SystemConfig;
@@ -104,7 +104,7 @@ export class UnifiedConfigManager {
       ...updates,
     };
 
-    // Emit config update event
+    // Emit config update event;
     this.eventBus.emit('config:updated', {
       section: 'system',
       timestamp: Date.now(),

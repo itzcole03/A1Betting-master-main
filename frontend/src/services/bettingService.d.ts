@@ -1,4 +1,4 @@
-import type { Bet, Event, Sport, Odds } from "../types/betting";
+import type { Bet, Event, Sport, Odds } from '@/types/betting.ts';
 export declare const useSports: () => import("@tanstack/react-query").UseQueryResult<Sport[], Error>;
 export declare const useEvents: (sportId: string) => import("@tanstack/react-query").UseQueryResult<Event[], Error>;
 export declare const useOdds: (eventId: string) => import("@tanstack/react-query").UseQueryResult<Odds, Error>;

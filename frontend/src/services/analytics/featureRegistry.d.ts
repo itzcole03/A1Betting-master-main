@@ -1,4 +1,4 @@
-import { EngineeredFeatures, FeatureRegistryConfig } from '@/types';
+import { EngineeredFeatures, FeatureRegistryConfig } from '@/types.ts';
 export declare class FeatureRegistry {
     private readonly config;
     private readonly logger;

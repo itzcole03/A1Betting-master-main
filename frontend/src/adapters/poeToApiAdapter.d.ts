@@ -1,5 +1,5 @@
-import { PoeDataBlock } from '@/types';
-import { PrizePicksProps } from '../../shared/prizePicks';
+import { PoeDataBlock } from '@/types.ts';
+import { PrizePicksProps } from '@/shared/prizePicks.ts';
 /**
  * Adapts data from a "Poe-like" source (structured as PoeDataBlock)
  * into a more usable format, such as PrizePicksProps for prop card display.

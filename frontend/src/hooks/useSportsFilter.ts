@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from 'zustand.ts';
 
 interface Sport {
   id: string;
@@ -52,7 +52,7 @@ export const useSportsFilter = create<SportsFilterState>(set => ({
   toggleSport: sportId =>
     set(state => ({
       sports: state.sports.map(sport =>
-        sport.id === sportId ? { ...sport, isActive: !sport.isActive } : sport
+        sport.id === sportId ? { ...sport, isActive: !sport.isActive } : sport;
       ),
     })),
 

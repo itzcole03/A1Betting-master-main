@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs.ts';
 export interface BookmakerTag {
     type: 'demon' | 'goblin' | 'normal';
     timestamp: number;

@@ -6,7 +6,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 import { exec } from 'child_process';
 import { promisify } from 'util';
-const execAsync = promisify(exec);
+
 export class UnifiedRecoveryService {
     constructor(registry) {
         this.logger = UnifiedLogger.getInstance();
@@ -42,8 +42,8 @@ export class UnifiedRecoveryService {
                 error: 'Recovery service is disabled',
             };
         }
-        const attemptKey = `${component}:${action}`;
-        const attempts = (this.recoveryAttempts.get(attemptKey) || 0) + 1;
+
+
         this.recoveryAttempts.set(attemptKey, attempts);
         if (attempts > this.config.maxRetries) {
             return {
@@ -56,29 +56,29 @@ export class UnifiedRecoveryService {
         }
         try {
             this.logger.info(`Starting recovery for ${component} (attempt ${attempts})`, 'recovery');
-            // Verify latest backup
+            // Verify latest backup;
             if (this.config.backupVerification) {
-                const backupPath = await this.getLatestBackup();
+
                 if (backupPath) {
-                    const isValid = await this.backupService.verifyBackup(backupPath);
+
                     if (!isValid) {
                         throw new Error('Backup verification failed');
                     }
                 }
             }
-            // Perform component-specific recovery
-            const result = await this.recoverComponent(component, action);
-            // Reset recovery attempts on success
+            // Perform component-specific recovery;
+
+            // Reset recovery attempts on success;
             if (result.success) {
                 this.recoveryAttempts.delete(attemptKey);
             }
             return result;
         }
         catch (error) {
-            const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
             this.logger.error(`Recovery failed: ${errorMessage}`, 'recovery');
             this.errorService.handleError(error, 'recovery', `${component}:${action}`);
-            // Schedule retry if auto-recovery is enabled
+            // Schedule retry if auto-recovery is enabled;
             if (this.config.autoRecovery && attempts < this.config.maxRetries) {
                 setTimeout(() => {
                     this.performRecovery(component, action);
@@ -95,9 +95,9 @@ export class UnifiedRecoveryService {
     }
     async getLatestBackup() {
         try {
-            const backupDir = this.settings.get('backup.path', './backups');
-            const entries = await fs.readdir(backupDir);
-            const backups = entries
+
+
+            const backups = entries;
                 .filter(entry => entry.startsWith('backup_'))
                 .sort()
                 .reverse();
@@ -124,19 +124,19 @@ export class UnifiedRecoveryService {
     }
     async recoverDatabase() {
         try {
-            const dbConfig = this.settings.get('database', {});
-            // Recover PostgreSQL
+
+            // Recover PostgreSQL;
             if (dbConfig.postgres) {
                 const { host, port, database, username, password } = dbConfig.postgres;
-                const env = { ...process.env, PGPASSWORD: password };
+
                 await execAsync(`pg_restore -h ${host} -p ${port} -U ${username} -d ${database} -c -v`, {
                     env,
                 });
             }
-            // Recover Redis
+            // Recover Redis;
             if (dbConfig.redis) {
                 const { host, port, password } = dbConfig.redis;
-                const env = { ...process.env, REDISCLI_AUTH: password };
+
                 await execAsync(`redis-cli -h ${host} -p ${port} FLUSHALL`, { env });
             }
             return {
@@ -152,7 +152,7 @@ export class UnifiedRecoveryService {
     }
     async recoverWebSocket() {
         try {
-            // Implement WebSocket recovery logic
+            // Implement WebSocket recovery logic;
             return {
                 success: true,
                 timestamp: Date.now(),
@@ -166,7 +166,7 @@ export class UnifiedRecoveryService {
     }
     async recoverAPI() {
         try {
-            // Implement API recovery logic
+            // Implement API recovery logic;
             return {
                 success: true,
                 timestamp: Date.now(),
@@ -180,7 +180,7 @@ export class UnifiedRecoveryService {
     }
     async recoverML() {
         try {
-            // Implement ML model recovery logic
+            // Implement ML model recovery logic;
             return {
                 success: true,
                 timestamp: Date.now(),

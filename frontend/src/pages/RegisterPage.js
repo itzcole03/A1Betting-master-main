@@ -5,7 +5,7 @@ import { Box, Card, CardContent, Typography, TextField, Button, Link, Alert, Cir
 import { useStore } from '@/store';
 import { authService } from '@/services/auth';
 export default function RegisterPage() {
-    const navigate = useNavigate();
+
     const { setUser } = useStore();
     const [formData, setFormData] = useState({
         username: '',
@@ -41,7 +41,7 @@ export default function RegisterPage() {
         }
         setLoading(true);
         try {
-            const response = await authService.register(formData.username, formData.email, formData.password);
+
             setUser(response.user);
             navigate('/');
         }

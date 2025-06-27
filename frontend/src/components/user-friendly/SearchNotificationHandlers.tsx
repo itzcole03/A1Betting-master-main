@@ -1,7 +1,7 @@
-import toast from "react-hot-toast";
+import toast from 'react-hot-toast.ts';
 
 export const handleSearchClick = () => {
-  // Show immediate search results with real betting opportunities
+  // Show immediate search results with real betting opportunities;
   toast.success("🔍 Quick Search Results:", {
     duration: 1000,
     icon: "🎯",
@@ -30,7 +30,7 @@ export const handleSearchClick = () => {
 };
 
 export const handleNotificationClick = () => {
-  // Show live system notifications
+  // Show live system notifications;
   toast.success("🔔 Live Notifications:", {
     duration: 1000,
     icon: "📢",

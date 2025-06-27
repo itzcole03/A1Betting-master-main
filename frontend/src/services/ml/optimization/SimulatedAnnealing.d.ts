@@ -1,4 +1,4 @@
-import { OptimizationStrategy, OptimizationConfig, OptimizationResult } from './OptimizationStrategy';
+import { OptimizationStrategy, OptimizationConfig, OptimizationResult } from './OptimizationStrategy.ts';
 export declare class SimulatedAnnealing extends OptimizationStrategy {
     private currentSolution;
     private currentValue;

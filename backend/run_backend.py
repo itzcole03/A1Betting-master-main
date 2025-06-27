@@ -26,7 +26,7 @@ print(f"🐍 Python path configured")
 try:
     # Import and run the main enhanced backend
     print("📦 Loading enhanced backend modules...")
-    
+
     # Test critical imports first
     try:
         from config import config_manager
@@ -34,22 +34,22 @@ try:
     except ImportError as e:
         print(f"❌ Config import failed: {e}")
         sys.exit(1)
-    
+
     try:
         from ensemble_engine import ultra_ensemble_engine
         print("✅ Ensemble engine loaded successfully")
     except ImportError as e:
         print(f"⚠️ Ensemble engine import failed: {e}")
         print("🔄 Continuing without ensemble engine...")
-    
+
     # Import and run main enhanced
     print("🎯 Starting main enhanced backend...")
     import main_enhanced
-    
+
 except ImportError as e:
     print(f"❌ Failed to import main_enhanced: {e}")
     print("\n🔍 Trying alternative backend startup...")
-    
+
     try:
         # Fallback to basic main.py
         print("🔄 Attempting to run basic backend...")
@@ -60,7 +60,7 @@ except ImportError as e:
         print("   Run from frontend directory: npm run dev:backend")
         sys.exit(1)
 
-except Exception as e:
+except Exception as e:  # pylint: disable=broad-exception-caught
     print(f"❌ Unexpected error: {e}")
     print("\n🔧 Troubleshooting:")
     print("1. Make sure you're in the backend directory")

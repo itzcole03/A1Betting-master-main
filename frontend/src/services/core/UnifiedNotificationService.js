@@ -22,18 +22,18 @@ export class UnifiedNotificationService {
         });
     }
     sendNotification(notification) {
-        // Add to queue
+        // Add to queue;
         this.notificationQueue.push(notification);
         if (this.notificationQueue.length > this.MAX_QUEUE_SIZE) {
-            this.notificationQueue.shift(); // Remove oldest notification
+            this.notificationQueue.shift(); // Remove oldest notification;
         }
-        // Log notification
+        // Log notification;
         this.logger.info(`Notification: ${notification.title} - ${notification.message}`, 'notification', notification);
-        // Broadcast to WebSocket clients
+        // Broadcast to WebSocket clients;
         this.broadcastNotification(notification);
     }
     broadcastNotification(notification) {
-        const message = JSON.stringify(notification);
+
         this.wsClients.forEach(client => {
             if (client.readyState === WebSocket.OPEN) {
                 client.send(message);

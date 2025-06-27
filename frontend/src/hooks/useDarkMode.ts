@@ -1,14 +1,13 @@
-import useStore from '../store/useStore';
-import { useEffect } from 'react';
+import useStore from '@/store/useStore.ts';
+import { useEffect } from 'react.ts';
 
 
 
 export const useDarkMode = () => {
-  const isDarkMode = useStore((state) => state.isDarkMode);
-  const toggleDarkMode = useStore((state) => state.toggleDarkMode);
+
 
   useEffect(() => {
-    const root = window.document.documentElement;
+
     if (isDarkMode) {
       root.classList.add('dark');
       localStorage.setItem('theme', 'dark');
@@ -19,7 +18,7 @@ export const useDarkMode = () => {
   }, [isDarkMode]);
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
     const handleChange = (e: MediaQueryListEvent) => {
       if (!localStorage.getItem('theme')) {
         toggleDarkMode();
@@ -32,6 +31,6 @@ export const useDarkMode = () => {
 
   return {
     isDarkMode,
-    toggleDarkMode
+    toggleDarkMode;
   };
 }; 

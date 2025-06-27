@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from 'express.ts';
 export declare const loginLimiter: any;
 export declare const registerLimiter: any;
 export declare const verifyToken: (req: Request, res: Response, next: NextFunction) => any;

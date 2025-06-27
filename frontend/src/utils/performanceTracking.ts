@@ -6,7 +6,7 @@
  * Utility functions for custom performance and metric tracking using Sentry.
  * Provides tracing, custom metrics, and tagging for frontend observability.
  */
-import * as Sentry from "@sentry/react";
+import * as Sentry from '@sentry/react.ts';
 
 /**
  * Type for Sentry Span (compatible with Sentry v7+).
@@ -14,10 +14,10 @@ import * as Sentry from "@sentry/react";
 type Span = ReturnType<typeof Sentry.startTransaction> | Sentry.Span | undefined;
 
 /**
- * PerformanceTrackingService
+ * PerformanceTrackingService;
  *
- * Provides utility functions to instrument custom performance monitoring
- * using Sentry. This allows for detailed tracing of application-specific
+ * Provides utility functions to instrument custom performance monitoring;
+ * using Sentry. This allows for detailed tracing of application-specific;
  * operations and collection of custom metrics.
  */
 class PerformanceTrackingService {
@@ -52,7 +52,7 @@ class PerformanceTrackingService {
 
       return transaction;
     } catch (error) {
-      console.warn('[PerformanceTrackingService] Could not start trace:', error);
+      // console statement removed
       return undefined;
     }
   }
@@ -73,7 +73,7 @@ class PerformanceTrackingService {
     data?: Record<string, unknown>
   ): Sentry.Span | undefined {
     if (!parentSpan) {
-      console.warn('[PerformanceTrackingService] No parent span provided. Cannot add child span.');
+      // console statement removed
       return undefined;
     }
 
@@ -86,7 +86,7 @@ class PerformanceTrackingService {
 
       return childSpan;
     } catch (error) {
-      console.warn('[PerformanceTrackingService] Could not add child span:', error);
+      // console statement removed
       return undefined;
     }
   }
@@ -99,7 +99,7 @@ class PerformanceTrackingService {
     if (span) {
       try {
         span.finish();
-        // Remove from active map if it was stored by name
+        // Remove from active map if it was stored by name;
         for (const [name, storedSpan] of this.activeSpans.entries()) {
           if (storedSpan === span) {
             this.activeSpans.delete(name);
@@ -107,10 +107,10 @@ class PerformanceTrackingService {
           }
         }
       } catch (error) {
-        console.warn('[PerformanceTrackingService] Error ending trace:', error);
+        // console statement removed
       }
     } else {
-      console.warn('[PerformanceTrackingService] Attempted to end an undefined trace.');
+      // console statement removed
     }
   }
 
@@ -146,11 +146,11 @@ class PerformanceTrackingService {
     try {
       // Sentry v7+ does not have a public metrics API in the browser SDK as of 2024.
       // Instead, record as a custom measurement on the current active span/transaction.
-      const activeSpan = Array.from(this.activeSpans.values())[0];
+
       if (activeSpan) {
         if (!activeSpan.data) activeSpan.data = {};
         activeSpan.setMeasurement?.(name, value, unit);
-        // Attach tags as extra data if provided
+        // Attach tags as extra data if provided;
         if (tags) {
           Object.entries(tags).forEach(([tagKey, tagValue]) => {
             activeSpan.setTag?.(tagKey, String(tagValue));
@@ -161,7 +161,7 @@ class PerformanceTrackingService {
         Sentry.setContext('metric', { name, value, unit, tags, type });
       }
     } catch (error) {
-      console.warn('[PerformanceTrackingService] Error recording metric:', error);
+      // console statement removed
     }
   }
 
@@ -174,7 +174,7 @@ class PerformanceTrackingService {
     try {
       Sentry.setTag(key, String(value));
     } catch (error) {
-      console.warn('[PerformanceTrackingService] Error setting tag:', error);
+      // console statement removed
     }
   }
 
@@ -187,7 +187,7 @@ class PerformanceTrackingService {
     try {
       Sentry.setExtra(key, data);
     } catch (error) {
-      console.warn('[PerformanceTrackingService] Error setting extra data:', error);
+      // console statement removed
     }
   }
 }
@@ -203,7 +203,7 @@ export const performanceTrackingService = new PerformanceTrackingService();
  *     // ... await Promise.all([...]) ...
  *     performanceTrackingService.recordMetric({ name: 'dashboard.data.items_loaded', value: 100 });
  *   } catch (e) {
- *     Sentry.captureException(e); // Capture error if something goes wrong
+ *     Sentry.captureException(e); // Capture error if something goes wrong;
  *   } finally {
  *     if(fetchDataSpan) performanceTrackingService.endSpan(fetchDataSpan);
  *     if(trace) performanceTrackingService.endTrace(trace);

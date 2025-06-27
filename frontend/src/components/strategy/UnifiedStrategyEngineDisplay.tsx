@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion } from 'framer-motion.ts';
 import {
   TrendingUp,
   TrendingDown,
@@ -6,13 +6,13 @@ import {
   Target,
   Brain,
   AlertTriangle,
-} from "lucide-react";
-import React from "react";
-import { Badge } from "../ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+} from 'lucide-react.ts';
+import React from 'react.ts';
+import { Badge } from '@/ui/badge.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/ui/card.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export interface StrategyRecommendation {
@@ -41,7 +41,7 @@ interface Props {
 }
 
 // ============================================================================
-// DEMO DATA
+// DEMO DATA;
 // ============================================================================
 
 const DEMO_RECOMMENDATIONS: StrategyRecommendation[] = [
@@ -120,7 +120,7 @@ const DEMO_RECOMMENDATIONS: StrategyRecommendation[] = [
 ];
 
 // ============================================================================
-// HELPER FUNCTIONS
+// HELPER FUNCTIONS;
 // ============================================================================
 
 const getRiskColor = (riskLevel: string) => {
@@ -143,7 +143,7 @@ const getConfidenceColor = (confidence: number) => {
 };
 
 const getSportIcon = (sport: string) => {
-  const icons: Record<string, string> = {
+  const icons: Record<string, string key={248182}> = {
     NBA: "🏀",
     NFL: "🏈",
     MLB: "⚾",
@@ -154,10 +154,9 @@ const getSportIcon = (sport: string) => {
 };
 
 const formatTimeAgo = (timestamp: number) => {
-  const now = Date.now();
-  const diff = now - timestamp;
-  const minutes = Math.floor(diff / 60000);
-  const hours = Math.floor(diff / 3600000);
+
+
+
 
   if (minutes < 60) return `${minutes}m ago`;
   if (hours < 24) return `${hours}h ago`;
@@ -165,7 +164,7 @@ const formatTimeAgo = (timestamp: number) => {
 };
 
 // ============================================================================
-// COMPONENTS
+// COMPONENTS;
 // ============================================================================
 
 const StrategyCard: React.FC<{
@@ -187,48 +186,48 @@ const StrategyCard: React.FC<{
   } = recommendation;
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.1, duration: 0.5 }}
-    >
-      <Card className="glass-card hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-white/80 to-white/60 dark:from-gray-800/80 dark:to-gray-900/60">
-        <CardHeader className="pb-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">{getSportIcon(sport)}</span>
-              <div>
-                <CardTitle className="text-lg font-bold text-gray-800 dark:text-white">
+     key={829941}>
+      <Card className="glass-card hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-white/80 to-white/60 dark:from-gray-800/80 dark:to-gray-900/60" key={518344}>
+        <CardHeader className="pb-3" key={82141}>
+          <div className="flex items-center justify-between" key={96335}>
+            <div className="flex items-center gap-3" key={443099}>
+              <span className="text-2xl" key={18044}>{getSportIcon(sport)}</span>
+              <div key={241917}>
+                <CardTitle className="text-lg font-bold text-gray-800 dark:text-white" key={855443}>
                   {strategyName}
                 </CardTitle>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
+                <div className="text-sm text-gray-500 dark:text-gray-400" key={528105}>
                   {sport} • {timeframe}
                 </div>
               </div>
             </div>
-            <div className="text-right">
-              <div
+            <div className="text-right" key={144468}>
+              <div;
                 className={`text-2xl font-bold ${getConfidenceColor(confidence)}`}
-              >
+               key={477945}>
                 {(confidence * 100).toFixed(0)}%
               </div>
-              <div className="text-xs text-gray-500 dark:text-gray-400">
-                Confidence
+              <div className="text-xs text-gray-500 dark:text-gray-400" key={849702}>
+                Confidence;
               </div>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4" key={796196}>
           {/* Main Recommendation */}
-          <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg border border-blue-200/30">
-            <div className="flex items-start gap-3">
-              <Zap className="w-5 h-5 text-blue-600 mt-0.5" />
-              <div>
-                <div className="font-semibold text-blue-800 dark:text-blue-200 mb-1">
-                  Recommendation
+          <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 rounded-lg border border-blue-200/30" key={709854}>
+            <div className="flex items-start gap-3" key={412732}>
+              <Zap className="w-5 h-5 text-blue-600 mt-0.5" / key={582214}>
+              <div key={241917}>
+                <div className="font-semibold text-blue-800 dark:text-blue-200 mb-1" key={942350}>
+                  Recommendation;
                 </div>
-                <div className="text-sm text-gray-700 dark:text-gray-300">
+                <div className="text-sm text-gray-700 dark:text-gray-300" key={259909}>
                   {rec}
                 </div>
               </div>
@@ -236,62 +235,62 @@ const StrategyCard: React.FC<{
           </div>
 
           {/* Key Metrics */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <TrendingUp className="w-4 h-4 text-green-600" />
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  Expected Return
+          <div className="grid grid-cols-2 gap-4" key={354810}>
+            <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg" key={295588}>
+              <div className="flex items-center justify-center gap-1 mb-1" key={453505}>
+                <TrendingUp className="w-4 h-4 text-green-600" / key={734039}>
+                <span className="text-xs text-gray-500 dark:text-gray-400" key={920878}>
+                  Expected Return;
                 </span>
               </div>
-              <div className="text-lg font-bold text-green-600">
+              <div className="text-lg font-bold text-green-600" key={134873}>
                 +{expectedReturn.toFixed(1)}%
               </div>
             </div>
 
-            <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
-              <div className="flex items-center justify-center gap-1 mb-1">
-                <Target className="w-4 h-4 text-blue-600" />
-                <span className="text-xs text-gray-500 dark:text-gray-400">
-                  Win Probability
+            <div className="text-center p-3 bg-gray-50 dark:bg-gray-800/50 rounded-lg" key={295588}>
+              <div className="flex items-center justify-center gap-1 mb-1" key={453505}>
+                <Target className="w-4 h-4 text-blue-600" / key={693749}>
+                <span className="text-xs text-gray-500 dark:text-gray-400" key={920878}>
+                  Win Probability;
                 </span>
               </div>
-              <div className="text-lg font-bold text-blue-600">
+              <div className="text-lg font-bold text-blue-600" key={585111}>
                 {(data.winProbability * 100).toFixed(0)}%
               </div>
             </div>
           </div>
 
           {/* Risk Level */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-gray-500 dark:text-gray-400" />
-              <span className="text-sm text-gray-600 dark:text-gray-400">
+          <div className="flex items-center justify-between" key={96335}>
+            <div className="flex items-center gap-2" key={100294}>
+              <AlertTriangle className="w-4 h-4 text-gray-500 dark:text-gray-400" / key={493820}>
+              <span className="text-sm text-gray-600 dark:text-gray-400" key={10584}>
                 Risk Level:
               </span>
             </div>
-            <Badge
+            <Badge;
               variant={riskLevel as any}
               className={getRiskColor(riskLevel)}
-            >
+             key={3927}>
               {riskLevel.toUpperCase()}
             </Badge>
           </div>
 
           {/* Reasoning */}
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-              <Brain className="w-4 h-4" />
+          <div className="space-y-2" key={725977}>
+            <div className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300" key={84572}>
+              <Brain className="w-4 h-4" / key={370311}>
               AI Reasoning:
             </div>
-            <ul className="space-y-1">
+            <ul className="space-y-1" key={662051}>
               {reasoning.slice(0, 3).map((reason, idx) => (
-                <li
+                <li;
                   key={idx}
                   className="text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2"
-                >
-                  <span className="text-blue-500 mt-1">•</span>
-                  <span>{reason}</span>
+                 key={242252}>
+                  <span className="text-blue-500 mt-1" key={101936}>•</span>
+                  <span key={595076}>{reason}</span>
                 </li>
               ))}
             </ul>
@@ -299,41 +298,41 @@ const StrategyCard: React.FC<{
 
           {/* Advanced Metrics (Debug Mode) */}
           {showDebug && (
-            <motion.div
+            <motion.div;
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               className="border-t border-gray-200 dark:border-gray-700 pt-3 space-y-2"
-            >
-              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">
+             key={312433}>
+              <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2" key={971805}>
                 Advanced Metrics:
               </div>
-              <div className="grid grid-cols-2 gap-2 text-xs">
-                <div>
+              <div className="grid grid-cols-2 gap-2 text-xs" key={190504}>
+                <div key={241917}>
                   Kelly Fraction:{" "}
-                  <span className="font-mono">
+                  <span className="font-mono" key={294600}>
                     {(data.kellyFraction * 100).toFixed(1)}%
                   </span>
                 </div>
-                <div>
+                <div key={241917}>
                   Sharpe Ratio:{" "}
-                  <span className="font-mono">
+                  <span className="font-mono" key={294600}>
                     {data.sharpeRatio.toFixed(2)}
                   </span>
                 </div>
-                <div>
+                <div key={241917}>
                   Expected Value:{" "}
-                  <span className="font-mono">
+                  <span className="font-mono" key={294600}>
                     {(data.expectedValue * 100).toFixed(1)}%
                   </span>
                 </div>
-                <div>
+                <div key={241917}>
                   Max Drawdown:{" "}
-                  <span className="font-mono">
+                  <span className="font-mono" key={294600}>
                     {(data.maxDrawdown * 100).toFixed(1)}%
                   </span>
                 </div>
               </div>
-              <div className="text-xs text-gray-400 mt-2">
+              <div className="text-xs text-gray-400 mt-2" key={897611}>
                 Last Updated: {formatTimeAgo(lastUpdated)}
               </div>
             </motion.div>
@@ -345,25 +344,25 @@ const StrategyCard: React.FC<{
 };
 
 const EmptyState: React.FC = () => (
-  <div className="text-center py-12">
-    <motion.div
+  <div className="text-center py-12" key={752807}>
+    <motion.div;
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5 }}
-    >
-      <div className="text-6xl mb-4">🧠</div>
-      <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-        Strategy Engine Analyzing
+     key={269130}>
+      <div className="text-6xl mb-4" key={671434}>🧠</div>
+      <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2" key={538448}>
+        Strategy Engine Analyzing;
       </h3>
-      <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-        Our AI is currently processing market data and generating personalized
-        betting strategies. Check back in a few moments for the latest
+      <p className="text-gray-500 dark:text-gray-400 max-w-md mx-auto" key={501018}>
+        Our AI is currently processing market data and generating personalized;
+        betting strategies. Check back in a few moments for the latest;
         recommendations.
       </p>
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/20 rounded-full">
-          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
-          <span className="text-sm text-blue-700 dark:text-blue-300">
+      <div className="mt-6" key={469583}>
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 dark:bg-blue-900/20 rounded-full" key={750293}>
+          <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" key={940421}></div>
+          <span className="text-sm text-blue-700 dark:text-blue-300" key={998820}>
             Processing live data...
           </span>
         </div>
@@ -373,81 +372,81 @@ const EmptyState: React.FC = () => (
 );
 
 // ============================================================================
-// MAIN COMPONENT
+// MAIN COMPONENT;
 // ============================================================================
 
-const UnifiedStrategyEngineDisplay: React.FC<Props> = ({
+const UnifiedStrategyEngineDisplay: React.FC<Props key={757196}> = ({
   recommendations = [],
   showDebug = false,
 }) => {
-  // Use demo data if no recommendations provided
+  // Use demo data if no recommendations provided;
   const displayRecommendations =
     recommendations.length > 0 ? recommendations : DEMO_RECOMMENDATIONS;
 
   if (displayRecommendations.length === 0) {
-    return <EmptyState />;
+    return <EmptyState / key={141903}>;
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Header */}
-      <motion.div
+      <motion.div;
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         className="text-center mb-8"
-      >
-        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          🧠 Strategy Engine Intelligence
+       key={951381}>
+        <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent" key={11526}>
+          🧠 Strategy Engine Intelligence;
         </h2>
-        <p className="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto">
-          AI-powered betting strategies with real-time market analysis, risk
+        <p className="text-gray-600 dark:text-gray-400 mt-2 max-w-2xl mx-auto" key={920050}>
+          AI-powered betting strategies with real-time market analysis, risk;
           assessment, and personalized recommendations.
         </p>
-        <div className="flex items-center justify-center gap-4 mt-4 text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-            <span className="text-green-600">Live Analysis</span>
+        <div className="flex items-center justify-center gap-4 mt-4 text-sm" key={387289}>
+          <div className="flex items-center gap-2" key={100294}>
+            <div className="w-2 h-2 bg-green-500 rounded-full" key={500238}></div>
+            <span className="text-green-600" key={209818}>Live Analysis</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-            <span className="text-blue-600">
-              {displayRecommendations.length} Active Strategies
+          <div className="flex items-center gap-2" key={100294}>
+            <div className="w-2 h-2 bg-blue-500 rounded-full" key={363552}></div>
+            <span className="text-blue-600" key={489125}>
+              {displayRecommendations.length} Active Strategies;
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-            <span className="text-purple-600">Real-time Updates</span>
+          <div className="flex items-center gap-2" key={100294}>
+            <div className="w-2 h-2 bg-purple-500 rounded-full" key={917826}></div>
+            <span className="text-purple-600" key={642192}>Real-time Updates</span>
           </div>
         </div>
       </motion.div>
 
       {/* Recommendations Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
         {displayRecommendations.map((recommendation, index) => (
-          <StrategyCard
+          <StrategyCard;
             key={recommendation.strategyId}
             recommendation={recommendation}
             index={index}
             showDebug={showDebug}
-          />
+          / key={381786}>
         ))}
       </div>
 
       {/* Performance Summary */}
-      <motion.div
+      <motion.div;
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.3, duration: 0.5 }}
         className="mt-8"
-      >
-        <Card className="glass-card bg-gradient-to-r from-blue-50/80 to-purple-50/80 dark:from-blue-900/20 dark:to-purple-900/20 border-0">
-          <CardContent className="p-6">
-            <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white">
-              Strategy Performance Overview
+       key={189381}>
+        <Card className="glass-card bg-gradient-to-r from-blue-50/80 to-purple-50/80 dark:from-blue-900/20 dark:to-purple-900/20 border-0" key={243983}>
+          <CardContent className="p-6" key={184394}>
+            <h3 className="text-lg font-semibold mb-4 text-gray-800 dark:text-white" key={625738}>
+              Strategy Performance Overview;
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-green-600">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4" key={426410}>
+              <div className="text-center" key={120206}>
+                <div className="text-2xl font-bold text-green-600" key={702696}>
                   {Math.round(
                     displayRecommendations.reduce(
                       (acc, r) => acc + r.expectedReturn,
@@ -456,12 +455,12 @@ const UnifiedStrategyEngineDisplay: React.FC<Props> = ({
                   )}
                   %
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Avg Expected Return
+                <div className="text-sm text-gray-500 dark:text-gray-400" key={528105}>
+                  Avg Expected Return;
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-blue-600">
+              <div className="text-center" key={120206}>
+                <div className="text-2xl font-bold text-blue-600" key={634378}>
                   {Math.round(
                     (displayRecommendations.reduce(
                       (acc, r) => acc + r.confidence,
@@ -472,27 +471,27 @@ const UnifiedStrategyEngineDisplay: React.FC<Props> = ({
                   )}
                   %
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Avg Confidence
+                <div className="text-sm text-gray-500 dark:text-gray-400" key={528105}>
+                  Avg Confidence;
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-purple-600">
+              <div className="text-center" key={120206}>
+                <div className="text-2xl font-bold text-purple-600" key={630773}>
                   {
                     displayRecommendations.filter((r) => r.riskLevel === "low")
-                      .length
+                      .length;
                   }
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Low Risk Strategies
+                <div className="text-sm text-gray-500 dark:text-gray-400" key={528105}>
+                  Low Risk Strategies;
                 </div>
               </div>
-              <div className="text-center">
-                <div className="text-2xl font-bold text-orange-600">
+              <div className="text-center" key={120206}>
+                <div className="text-2xl font-bold text-orange-600" key={478722}>
                   {displayRecommendations.length}
                 </div>
-                <div className="text-sm text-gray-500 dark:text-gray-400">
-                  Active Strategies
+                <div className="text-sm text-gray-500 dark:text-gray-400" key={528105}>
+                  Active Strategies;
                 </div>
               </div>
             </div>

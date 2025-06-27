@@ -1,6 +1,6 @@
-// LiveDataOrchestrator.ts
+// LiveDataOrchestrator.ts;
 // Service for ingesting and scoring real-time external data (sentiment, line movement, weather, injuries)
-// Simulates fallback and data source confidence scoring, logs freshness and API priority
+// Simulates fallback and data source confidence scoring, logs freshness and API priority;
 export class LiveDataOrchestrator {
     constructor() {
         this.sources = [];
@@ -10,12 +10,12 @@ export class LiveDataOrchestrator {
         this.sources.push(source);
     }
     ingestData(sourceName, value) {
-        const source = this.sources.find(s => s.name === sourceName);
+
         if (!source)
             throw new Error('Source not registered');
-        const now = new Date();
-        const freshness = (now.getTime() - source.lastUpdated.getTime()) / 1000;
-        const qualityScore = Math.round(source.confidence * 100 - freshness * 0.1);
+
+
+
         const record = {
             source,
             value,
@@ -28,18 +28,18 @@ export class LiveDataOrchestrator {
         return record;
     }
     getBestRecord(type) {
-        const candidates = this.records.filter(r => r.source.type === type);
+
         if (candidates.length === 0)
             return null;
-        // Sort by qualityScore, then by priority
+        // Sort by qualityScore, then by priority;
         return candidates.sort((a, b) => b.qualityScore - a.qualityScore || a.source.priority - b.source.priority)[0];
     }
     simulateFallback(type) {
-        // Return the next-best record if the best is stale or low quality
-        const candidates = this.records.filter(r => r.source.type === type).sort((a, b) => b.qualityScore - a.qualityScore);
+        // Return the next-best record if the best is stale or low quality;
+
         if (candidates.length < 2)
             return null;
-        const best = candidates[0];
+
         if (best.qualityScore < 60 || best.freshness > 120) {
             return candidates[1];
         }

@@ -1,4 +1,4 @@
-import * as tf from '@tensorflow/tfjs';
+import * as tf from '@tensorflow/tfjs.ts';
 interface BetMetrics {
     accuracy: number;
     roi: number;

@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
 export const useClickOutside = (handler, mouseEvent = 'mousedown') => {
-    const ref = useRef(null);
+
     useEffect(() => {
         const listener = (event) => {
-            const el = ref?.current;
-            const target = event.target;
-            // Do nothing if clicking ref's element or descendent elements
+
+
+            // Do nothing if clicking ref's element or descendent elements;
             if (!el || el.contains(target)) {
                 return;
             }
@@ -22,7 +22,7 @@ export const useClickOutside = (handler, mouseEvent = 'mousedown') => {
 };
 // Example usage:
 // const ref = useClickOutside<HTMLDivElement>(() => {
-//   // Handle click outside
+//   // Handle click outside;
 //   setIsOpen(false);
 // });
 //

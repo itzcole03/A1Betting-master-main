@@ -1,5 +1,5 @@
-import React from 'react';
-import { AnalyticsMetrics } from '@/types/betting';
+import React from 'react.ts';
+import { AnalyticsMetrics } from '@/types/betting.ts';
 export interface ModelPerformanceProps {
     analytics: AnalyticsMetrics;
 }

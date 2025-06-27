@@ -167,8 +167,8 @@ async def health_check():
             _ = enhanced_prediction_engine.generate_bayesian_prediction(test_features)
             services_status["prediction_engine"] = True
             mathematical_engines_status["bayesian_neural_network"] = True
-        except Exception as e:
-            logger.error(f"Prediction engine health check failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Prediction engine health check failed: {e}")
             services_status["prediction_engine"] = False
             mathematical_engines_status["bayesian_neural_network"] = False
 
@@ -178,8 +178,8 @@ async def health_check():
             _ = enhanced_feature_engineering.engineer_wavelet_features(test_data)
             services_status["feature_engineering"] = True
             mathematical_engines_status["wavelet_transforms"] = True
-        except Exception as e:
-            logger.error(f"Feature engineering health check failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Feature engineering health check failed: {e}")
             services_status["feature_engineering"] = False
             mathematical_engines_status["wavelet_transforms"] = False
 
@@ -192,8 +192,8 @@ async def health_check():
             )
             services_status["risk_management"] = True
             mathematical_engines_status["extreme_value_theory"] = True
-        except Exception as e:
-            logger.error(f"Risk management health check failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Risk management health check failed: {e}")
             services_status["risk_management"] = False
             mathematical_engines_status["extreme_value_theory"] = False
 
@@ -203,8 +203,8 @@ async def health_check():
             _ = enhanced_data_pipeline.detect_anomalies_multivariate(test_data)
             services_status["data_pipeline"] = True
             mathematical_engines_status["anomaly_detection"] = True
-        except Exception as e:
-            logger.error(f"Data pipeline health check failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Data pipeline health check failed: {e}")
             services_status["data_pipeline"] = False
             mathematical_engines_status["anomaly_detection"] = False
 
@@ -213,8 +213,8 @@ async def health_check():
             _ = await model_service.get_model_status()
             services_status["model_service"] = True
             mathematical_engines_status["unified_orchestration"] = True
-        except Exception as e:
-            logger.error(f"Model service health check failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Model service health check failed: {e}")
             services_status["model_service"] = False
             mathematical_engines_status["unified_orchestration"] = False
 
@@ -229,8 +229,8 @@ async def health_check():
             uptime=uptime,
         )
 
-    except Exception as e:
-        logger.error(f"Health check failed: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Health check failed: {e}")
         raise HTTPException(status_code=500, detail=f"Health check failed: {e!s}")
 
 
@@ -242,7 +242,7 @@ async def unified_prediction(
     try:
         start_time = time.time()
 
-        logger.info(f"Starting unified prediction for event {request.event_id}")
+        logger.info("Starting unified prediction for event {request.event_id}")
 
         # Convert processing level to enhanced settings
         enhanced_settings = {
@@ -310,8 +310,8 @@ async def unified_prediction(
 
         return unified_result
 
-    except Exception as e:
-        logger.error(f"Unified prediction failed for {request.event_id}: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Unified prediction failed for {request.event_id}: {e!s}")
         raise HTTPException(status_code=500, detail=f"Unified prediction failed: {e!s}")
 
 
@@ -372,12 +372,12 @@ async def enhanced_feature_engineering_endpoint(request: FeatureEngineeringReque
             "mathematical_validation": combined_features.get("validation", {}),
         }
 
-        logger.info(f"Enhanced feature engineering completed in {processing_time:.3f}s")
+        logger.info("Enhanced feature engineering completed in {processing_time:.3f}s")
 
         return response
 
-    except Exception as e:
-        logger.error(f"Enhanced feature engineering failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Enhanced feature engineering failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Feature engineering failed: {e!s}"
         )
@@ -430,12 +430,12 @@ async def enhanced_risk_assessment_endpoint(request: RiskAssessmentRequest):
             "model_validation": risk_results["validation"],
         }
 
-        logger.info(f"Enhanced risk assessment completed in {processing_time:.3f}s")
+        logger.info("Enhanced risk assessment completed in {processing_time:.3f}s")
 
         return response
 
-    except Exception as e:
-        logger.error(f"Enhanced risk assessment failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Enhanced risk assessment failed: {e!s}")
         raise HTTPException(status_code=500, detail=f"Risk assessment failed: {e!s}")
 
 
@@ -492,8 +492,8 @@ async def enhanced_model_status():
             mathematical_foundations=model_status.get("mathematical_foundations", {}),
         )
 
-    except Exception as e:
-        logger.error(f"Failed to get enhanced model status: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get enhanced model status: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Model status retrieval failed: {e!s}"
         )
@@ -508,7 +508,7 @@ async def get_performance_metrics(
 ):
     """Get detailed performance metrics for the enhanced mathematical system"""
     try:
-        logger.info(f"Retrieving performance metrics for {time_range}")
+        logger.info("Retrieving performance metrics for {time_range}")
 
         # Calculate time window
         time_windows = {
@@ -527,7 +527,7 @@ async def get_performance_metrics(
             start_time=start_time, metric_type=metric_type
         )
 
-        logger.info(f"Performance metrics retrieved for {time_range}")
+        logger.info("Performance metrics retrieved for {time_range}")
 
         return {
             "time_range": time_range,
@@ -542,8 +542,8 @@ async def get_performance_metrics(
             },
         }
 
-    except Exception as e:
-        logger.error(f"Failed to get performance metrics: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to get performance metrics: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Performance metrics retrieval failed: {e!s}"
         )
@@ -557,7 +557,7 @@ async def batch_predictions(
     try:
         start_time = time.time()
 
-        logger.info(f"Starting batch prediction for {len(requests)} requests")
+        logger.info("Starting batch prediction for {len(requests)} requests")
 
         # Process in parallel batches to avoid overwhelming the system
         batch_size = 5
@@ -621,8 +621,8 @@ async def batch_predictions(
             "results": results,
         }
 
-    except Exception as e:
-        logger.error(f"Batch prediction failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Batch prediction failed: {e!s}")
         raise HTTPException(status_code=500, detail=f"Batch prediction failed: {e!s}")
 
 
@@ -658,8 +658,8 @@ async def real_time_monitoring():
             },
         }
 
-    except Exception as e:
-        logger.error(f"Real-time monitoring failed: {e!s}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Real-time monitoring failed: {e!s}")
         raise HTTPException(
             status_code=500, detail=f"Real-time monitoring failed: {e!s}"
         )
@@ -688,10 +688,10 @@ async def store_prediction_analytics(
         if len(model_performance_history) > 1000:
             model_performance_history.pop(0)
 
-        logger.debug(f"Stored analytics for prediction {event_id}")
+        logger.debug("Stored analytics for prediction {event_id}")
 
-    except Exception as e:
-        logger.error(f"Failed to store prediction analytics: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to store prediction analytics: {e}")
 
 
 async def store_batch_analytics(requests: list, results: list, processing_time: float):
@@ -706,10 +706,10 @@ async def store_batch_analytics(requests: list, results: list, processing_time: 
             "throughput": len(requests) / processing_time if processing_time > 0 else 0,
         }
 
-        logger.info(f"Batch analytics: {batch_analytics}")
+        logger.info("Batch analytics: {batch_analytics}")
 
-    except Exception as e:
-        logger.error(f"Failed to store batch analytics: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to store batch analytics: {e}")
 
 
 # Error handlers
@@ -730,7 +730,7 @@ async def http_exception_handler(request, exc):
 @app.exception_handler(Exception)
 async def general_exception_handler(request, exc):
     """Handle general exceptions"""
-    logger.error(f"Unhandled exception: {exc!s}")
+    logger.error("Unhandled exception: {exc!s}")
     return JSONResponse(
         status_code=500,
         content={

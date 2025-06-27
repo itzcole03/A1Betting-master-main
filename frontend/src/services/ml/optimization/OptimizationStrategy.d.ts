@@ -1,4 +1,4 @@
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 export interface OptimizationConfig {
     name: string;
     type: 'genetic' | 'particleSwarm' | 'simulatedAnnealing' | 'bayesian';

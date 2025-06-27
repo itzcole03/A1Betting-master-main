@@ -1,4 +1,4 @@
-import { PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from '../../types/prizePicks';
+import { PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from '@/types/prizePicks.ts';
 interface Prop {
     id: string;
     playerName: string;

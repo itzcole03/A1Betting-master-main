@@ -17,14 +17,14 @@ export const createDynamicDataSlice = (set, get) => ({
     fetchSentiments: async (topic) => {
         set({ isLoadingSentiments: true, error: null });
         try {
-            const sentimentData = await sentimentService.fetchSocialSentiment(topic);
+
             set((state) => ({
                 sentiments: { ...state.sentiments, [topic.toLowerCase()]: sentimentData },
                 isLoadingSentiments: false,
             }));
         }
         catch (e) {
-            const errorMsg = e instanceof Error ? e.message : 'Failed to fetch sentiments';
+
             set({ error: errorMsg, isLoadingSentiments: false });
             get().addToast({
                 message: `Error fetching sentiment for ${topic}: ${errorMsg}`,
@@ -39,7 +39,7 @@ export const createDynamicDataSlice = (set, get) => ({
             set({ headlines, isLoadingHeadlines: false });
         }
         catch (e) {
-            const errorMsg = e instanceof Error ? e.message : 'Failed to fetch headlines';
+
             set({ error: errorMsg, isLoadingHeadlines: false });
             get().addToast({ message: `Error fetching headlines: ${errorMsg}`, type: 'error' });
         }
@@ -47,11 +47,11 @@ export const createDynamicDataSlice = (set, get) => ({
     fetchDailyFantasyProjections: async (date, league) => {
         set({ isLoadingFantasyProjections: true, error: null });
         try {
-            const projections = await dataScrapingService.fetchDailyFantasyProjections(date, league);
+
             set({ dailyFantasyProjections: projections, isLoadingFantasyProjections: false });
         }
         catch (e) {
-            const errorMsg = e instanceof Error ? e.message : 'Failed to fetch fantasy projections';
+
             set({ error: errorMsg, isLoadingFantasyProjections: false });
             get().addToast({
                 message: `Error fetching Daily Fantasy Projections: ${errorMsg}`,
@@ -63,7 +63,7 @@ export const createDynamicDataSlice = (set, get) => ({
         set((state) => ({
             liveOdds: { ...state.liveOdds, [odd.event_id]: odd },
         }));
-        // Optionally, add a toast or log this update
+        // Optionally, add a toast or log this update;
         // get().addToast({ message: `Live odds updated for event ${odd.event_id}`, type: 'info' });
     },
     addSubscription: subscription => {

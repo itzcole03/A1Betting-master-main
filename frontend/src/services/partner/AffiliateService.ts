@@ -2,8 +2,8 @@
 // AffiliateService: Manages affiliate/partner links, tracking, and offers.
 // Integrates with affiliate APIs and tracking partners.
 
-import { wrapWithRateLimit } from '../rateLimit/wrapWithRateLimit.js';
-import { API_CONFIG } from '../../config/apiConfig.js';
+import { wrapWithRateLimit } from '@/rateLimit/wrapWithRateLimit.js';
+import { API_CONFIG } from '@/config/apiConfig.js';
 
 
 export interface AffiliateLink {
@@ -28,10 +28,10 @@ export interface AffiliateOffer {
 
 export class AffiliateService {
   /**
-   * Fetch all affiliate links for a user from backend/partner API
+   * Fetch all affiliate links for a user from backend/partner API;
    */
   getAffiliateLinks = wrapWithRateLimit(async (userId: string): Promise<AffiliateLink[]> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/users/${userId}/affiliate-links`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }
@@ -41,10 +41,10 @@ export class AffiliateService {
   });
 
   /**
-   * Track a click on an affiliate link
+   * Track a click on an affiliate link;
    */
   trackAffiliateClick = wrapWithRateLimit(async (linkId: string, userId: string): Promise<void> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/affiliate-links/${linkId}/track`;
+
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -57,10 +57,10 @@ export class AffiliateService {
   });
 
   /**
-   * Fetch all active affiliate offers
+   * Fetch all active affiliate offers;
    */
   getAffiliateOffers = wrapWithRateLimit(async (): Promise<AffiliateOffer[]> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/affiliate-offers`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }

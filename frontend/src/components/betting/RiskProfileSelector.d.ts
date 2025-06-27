@@ -1,5 +1,5 @@
-import React from 'react';
-import type { BettingSettings } from '../../services/bettingService';
+import React from 'react.ts';
+import type { BettingSettings } from '@/services/bettingService.ts';
 type RiskProfile = BettingSettings['riskProfile'];
 interface RiskProfileSelectorProps {
     currentProfile: RiskProfile;

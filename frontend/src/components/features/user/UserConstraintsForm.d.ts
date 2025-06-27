@@ -1,5 +1,5 @@
-import React from 'react';
-import { UserConstraints } from '@/types';
+import React from 'react.ts';
+import { UserConstraints } from '@/types.ts';
 interface UserConstraintsFormProps {
     constraints: UserConstraints;
     onConstraintsChange: (field: keyof UserConstraints, value: any) => void;

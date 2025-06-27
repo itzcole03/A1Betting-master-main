@@ -1,9 +1,9 @@
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
-import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
+import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService.ts';
 
-// Enhanced interfaces for TransformerModel
+// Enhanced interfaces for TransformerModel;
 export interface TransformerModelInterface {
   config: TransformerInternalConfig;
   layers: TransformerLayer[];
@@ -50,7 +50,7 @@ export interface TransformerTrainingOptions {
   earlyStopping?: boolean;
   epochs?: number;
   batchSize?: number;
-  [key: string]: unknown; // Index signature for compatibility
+  [key: string]: unknown; // Index signature for compatibility;
 }
 
 export interface TransformerPredictionInput {
@@ -98,7 +98,7 @@ export class TransformerModel {
   }
   async initialize(): Promise<void> {
     try {
-      // Initialize Transformer model
+      // Initialize Transformer model;
       this.model = await this.createModel();
       this.logger.info('Transformer model initialized successfully');
     } catch (error) {
@@ -108,7 +108,7 @@ export class TransformerModel {
   }
 
   private async createModel(): Promise<TransformerModelInterface> {
-    // Implementation for Transformer model using attention mechanisms
+    // Implementation for Transformer model using attention mechanisms;
     const modelConfig: TransformerInternalConfig = {
       inputSize: this.config.inputSize,
       hiddenSize: this.config.hiddenSize,
@@ -117,10 +117,10 @@ export class TransformerModel {
       dropout: this.config.dropout,
       maxSequenceLength: this.config.maxSequenceLength,
       learningRate: this.config.learningRate,
-      warmupSteps: this.config.warmupSteps
+      warmupSteps: this.config.warmupSteps;
     };
 
-    // Create Transformer-style model
+    // Create Transformer-style model;
     const model: TransformerModelInterface = {
       config: modelConfig,
       layers: [],
@@ -128,58 +128,55 @@ export class TransformerModel {
       trained: false,
       
       async predict(input: number[][]): Promise<number[]> {
-        // Placeholder transformer prediction with attention simulation
-        // In a real implementation, this would use actual attention mechanisms
+        // Placeholder transformer prediction with attention simulation;
+        // In a real implementation, this would use actual attention mechanisms;
         return input.map(sequence => {
-          // Simulate self-attention by weighting each position
-          const attentionWeights = this.computeAttentionWeights(sequence);
-          
-          // Apply attention to get context-aware representation
-          let contextualRepresentation = 0;
-          for (let i = 0; i < sequence.length; i++) {
+          // Simulate self-attention by weighting each position;
+
+          // Apply attention to get context-aware representation;
+          const contextualRepresentation = 0;
+          for (const i = 0; i < sequence.length; i++) {
             contextualRepresentation += sequence[i] * attentionWeights[i];
           }
           
-          // Apply feed-forward transformation
-          const output = Math.tanh(contextualRepresentation / Math.sqrt(modelConfig.hiddenSize));
-          
+          // Apply feed-forward transformation;
+
           return output;
         });
       },
 
       computeAttentionWeights(sequence: number[]): number[] {
-        // Simplified attention mechanism
-        const sequenceLength = sequence.length;
-        const weights = new Array(sequenceLength);
-        
+        // Simplified attention mechanism;
+
+
         // Compute attention scores (simplified dot-product attention)
-        let totalScore = 0;
-        for (let i = 0; i < sequenceLength; i++) {
-          const score = Math.exp(sequence[i]); // Simplified scoring
+        const totalScore = 0;
+        for (const i = 0; i < sequenceLength; i++) {
+          const score = Math.exp(sequence[i]); // Simplified scoring;
           weights[i] = score;
           totalScore += score;
         }
         
-        // Normalize to get attention weights
+        // Normalize to get attention weights;
         return weights.map(w => w / totalScore);
       },
 
       async train(_data: TransformerTrainingData, _options: TransformerTrainingOptions): Promise<void> {
-        // Placeholder transformer training
+        // Placeholder transformer training;
         this.layers = Array.from({ length: modelConfig.numLayers }, (_, i) => ({
           id: i,
           attention: {
             heads: modelConfig.numHeads,
-            hiddenSize: modelConfig.hiddenSize
+            hiddenSize: modelConfig.hiddenSize;
           },
           feedForward: {
             hiddenSize: modelConfig.hiddenSize * 4,
-            dropout: modelConfig.dropout
+            dropout: modelConfig.dropout;
           }
         }));
         
         this.trained = true;
-        // Note: logger not available in model scope, would need to be passed in
+        // Note: logger not available in model scope, would need to be passed in;
       }
     };
 
@@ -201,14 +198,13 @@ export class TransformerModel {
 
       const { trainData, validationData } = this.prepareTrainingData(features, options);
 
-      // Train model
+      // Train model;
       await this.model.train(trainData, {
         ...this.config,
         ...options,
       });
 
-      // Evaluate model
-      const metrics = await this.evaluate(validationData);
+      // Evaluate model;
 
       return metrics;
     } catch (error) {
@@ -231,8 +227,6 @@ export class TransformerModel {
         throw new Error('Model not initialized. Call initialize() first.');
       }
 
-      const input = this.preparePredictionInput(features);
-      const output = await this.model.predict(input);
 
       const prediction: ModelPrediction = {
         timestamp: new Date().toISOString(),
@@ -257,7 +251,6 @@ export class TransformerModel {
       }
 
       const { input, target } = this.prepareEvaluationData(features);
-      const predictions = await this.model.predict(input.sequences);
 
       const metrics: ModelMetrics = {
         accuracy: this.calculateAccuracy(predictions, target),
@@ -320,7 +313,7 @@ export class TransformerModel {
     _features: FeatureSet,
     _options: Record<string, unknown>
   ): { trainData: TransformerTrainingData; validationData: FeatureSet } {
-    // Implement training data preparation
+    // Implement training data preparation;
     return {
       trainData: {
         sequences: [],
@@ -331,12 +324,12 @@ export class TransformerModel {
   }
 
   private preparePredictionInput(_features: Feature[]): number[][] {
-    // Implement prediction input preparation
+    // Implement prediction input preparation;
     return [];
   }
 
   private prepareEvaluationData(_features: FeatureSet): TransformerEvaluationData {
-    // Implement evaluation data preparation
+    // Implement evaluation data preparation;
     return {
       input: {
         sequences: []
@@ -346,57 +339,57 @@ export class TransformerModel {
   }
 
   private formatInput(_input: number[][]): Record<string, unknown> {
-    // Implement input formatting
+    // Implement input formatting;
     return {};
   }
 
   private formatOutput(_output: number[]): Record<string, unknown> {
-    // Implement output formatting
+    // Implement output formatting;
     return {};
   }
 
   private calculateConfidence(_output: number[]): number {
-    // Implement confidence calculation
+    // Implement confidence calculation;
     return 0;
   }
 
   private calculateAccuracy(_predictions: number[], _target: number[]): number {
-    // Implement accuracy calculation
+    // Implement accuracy calculation;
     return 0;
   }
 
   private calculatePrecision(_predictions: number[], _target: number[]): number {
-    // Implement precision calculation
+    // Implement precision calculation;
     return 0;
   }
 
   private calculateRecall(_predictions: number[], _target: number[]): number {
-    // Implement recall calculation
+    // Implement recall calculation;
     return 0;
   }
 
   private calculateF1Score(_predictions: number[], _target: number[]): number {
-    // Implement F1 score calculation
+    // Implement F1 score calculation;
     return 0;
   }
 
   private calculateAUC(_predictions: number[], _target: number[]): number {
-    // Implement AUC calculation
+    // Implement AUC calculation;
     return 0;
   }
 
   private calculateRMSE(_predictions: number[], _target: number[]): number {
-    // Implement RMSE calculation
+    // Implement RMSE calculation;
     return 0;
   }
 
   private calculateMAE(_predictions: number[], _target: number[]): number {
-    // Implement MAE calculation
+    // Implement MAE calculation;
     return 0;
   }
 
   private calculateR2(_predictions: number[], _target: number[]): number {
-    // Implement R2 calculation
+    // Implement R2 calculation;
     return 0;
   }
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import {
   Box,
   Typography,
@@ -9,85 +9,85 @@ import {
   TableHead,
   TableRow,
   Paper,
-} from '@mui/material';
-import { OptimalLineup } from '@/types';
+} from '@mui/material.ts';
+import { OptimalLineup } from '@/types.ts';
 
 interface MoneyMakerResultsProps {
   lineup: OptimalLineup;
 }
 
-export const MoneyMakerResults: React.FC<MoneyMakerResultsProps> = ({ lineup }) => {
+export const MoneyMakerResults: React.FC<MoneyMakerResultsProps key={445336}> = ({ lineup }) => {
   const formatNumber = (num: number) => {
     return num.toFixed(1);
   };
 
   return (
-    <Box className="results-section">
-      <Typography className="mb-4" variant="h6">
-        Optimal Lineup Results
+    <Box className="results-section" key={459900}>
+      <Typography className="mb-4" variant="h6" key={416193}>
+        Optimal Lineup Results;
       </Typography>
 
-      <Box className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-          <Typography color="textSecondary" variant="subtitle2">
-            Total Payout
+      <Box className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6" key={607166}>
+        <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" key={173788}>
+          <Typography color="textSecondary" variant="subtitle2" key={88816}>
+            Total Payout;
           </Typography>
-          <Typography className="text-green-500" variant="h4">
+          <Typography className="text-green-500" variant="h4" key={71196}>
             ${formatNumber(lineup.totalPayout)}
           </Typography>
         </Box>
 
-        <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-          <Typography color="textSecondary" variant="subtitle2">
-            Win Probability
+        <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" key={173788}>
+          <Typography color="textSecondary" variant="subtitle2" key={88816}>
+            Win Probability;
           </Typography>
-          <Typography className="text-blue-500" variant="h4">
+          <Typography className="text-blue-500" variant="h4" key={653401}>
             {formatNumber(lineup.winProbability)}%
           </Typography>
         </Box>
 
-        <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-          <Typography color="textSecondary" variant="subtitle2">
-            Kelly Criterion
+        <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" key={173788}>
+          <Typography color="textSecondary" variant="subtitle2" key={88816}>
+            Kelly Criterion;
           </Typography>
-          <Typography className="text-purple-500" variant="h4">
-            {formatNumber(lineup.kellyCriterion)}x
+          <Typography className="text-purple-500" variant="h4" key={281387}>
+            {formatNumber(lineup.kellyCriterion)}x;
           </Typography>
         </Box>
       </Box>
 
-      <TableContainer className="mb-4" component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Player</TableCell>
-              <TableCell>Team</TableCell>
-              <TableCell>Market</TableCell>
-              <TableCell>Line</TableCell>
-              <TableCell>Odds</TableCell>
-              <TableCell>Confidence</TableCell>
+      <TableContainer className="mb-4" component={Paper} key={499744}>
+        <Table key={889668}>
+          <TableHead key={813147}>
+            <TableRow key={300096}>
+              <TableCell key={942983}>Player</TableCell>
+              <TableCell key={942983}>Team</TableCell>
+              <TableCell key={942983}>Market</TableCell>
+              <TableCell key={942983}>Line</TableCell>
+              <TableCell key={942983}>Odds</TableCell>
+              <TableCell key={942983}>Confidence</TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          <TableBody key={923191}>
             {lineup.picks.map((pick, index) => (
-              <TableRow key={index}>
-                <TableCell>{pick.playerName}</TableCell>
-                <TableCell>{pick.team}</TableCell>
-                <TableCell>{pick.market}</TableCell>
-                <TableCell>{pick.line}</TableCell>
-                <TableCell>{pick.odds}</TableCell>
-                <TableCell>{formatNumber(pick.confidence)}%</TableCell>
+              <TableRow key={index} key={177740}>
+                <TableCell key={942983}>{pick.playerName}</TableCell>
+                <TableCell key={942983}>{pick.team}</TableCell>
+                <TableCell key={942983}>{pick.market}</TableCell>
+                <TableCell key={942983}>{pick.line}</TableCell>
+                <TableCell key={942983}>{pick.odds}</TableCell>
+                <TableCell key={942983}>{formatNumber(pick.confidence)}%</TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
 
-      <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-        <Typography className="mb-2" color="textSecondary" variant="subtitle2">
-          Analysis
+      <Box className="p-4 rounded-lg bg-gray-50 dark:bg-gray-800" key={173788}>
+        <Typography className="mb-2" color="textSecondary" variant="subtitle2" key={6733}>
+          Analysis;
         </Typography>
-        <Typography className="text-gray-600 dark:text-gray-300" variant="body2">
+        <Typography className="text-gray-600 dark:text-gray-300" variant="body2" key={221027}>
           {lineup.analysis}
         </Typography>
       </Box>

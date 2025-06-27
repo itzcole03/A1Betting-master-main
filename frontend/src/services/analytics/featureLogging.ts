@@ -1,4 +1,4 @@
-import { FeatureConfig, FeatureLoggerConfig } from '@/types';
+import { FeatureConfig, FeatureLoggerConfig } from '@/types.ts';
 
 export class FeatureLogger {
   private readonly config: FeatureLoggerConfig;
@@ -9,7 +9,7 @@ export class FeatureLogger {
       logFormat: config?.logFormat || 'json',
       logOutput: config?.logOutput || 'console',
       logFile: config?.logFile || 'feature-engineering.log',
-      maxLogSize: config?.maxLogSize || 10 * 1024 * 1024, // 10MB
+      maxLogSize: config?.maxLogSize || 10 * 1024 * 1024, // 10MB;
       maxLogFiles: config?.maxLogFiles || 5,
     };
   }
@@ -35,22 +35,19 @@ export class FeatureLogger {
       return;
     }
 
-    const logEntry = this.createLogEntry(level, message, data);
-    const formattedLog = this.formatLog(logEntry);
 
     this.writeLog(formattedLog);
   }
 
   private shouldLog(level: string): boolean {
-    const levels = ['error', 'warn', 'info', 'debug'];
-    const currentLevelIndex = levels.indexOf(this.config.logLevel);
-    const targetLevelIndex = levels.indexOf(level);
+
+
 
     return targetLevelIndex <= currentLevelIndex;
   }
 
   private createLogEntry(level: string, message: string, data?: any): any {
-    const timestamp = new Date().toISOString();
+
     const entry: any = {
       timestamp,
       level,
@@ -77,11 +74,11 @@ export class FeatureLogger {
       return JSON.stringify(entry);
     }
 
-    // Simple text format
-    const timestamp = entry.timestamp;
-    const level = entry.level.toUpperCase();
-    const message = entry.message;
-    let formatted = `[${timestamp}] ${level}: ${message}`;
+    // Simple text format;
+
+
+
+    const formatted = `[${timestamp}] ${level}: ${message}`;
 
     if (entry.error) {
       formatted += `\nError: ${entry.error.name}: ${entry.error.message}`;
@@ -114,23 +111,23 @@ export class FeatureLogger {
 
     switch (level) {
       case 'error':
-        console.error(formattedLog);
+        // console statement removed
         break;
       case 'warn':
-        console.warn(formattedLog);
+        // console statement removed
         break;
       case 'debug':
         console.debug(formattedLog);
         break;
       default:
-        console.log(formattedLog);
+        // console statement removed
     }
   }
 
   private writeToFile(formattedLog: string): void {
-    // This is a placeholder implementation
-    // In a real application, implement file writing with rotation
-    console.log(`[FILE] ${formattedLog}`);
+    // This is a placeholder implementation;
+    // In a real application, implement file writing with rotation;
+    // console statement removed
   }
 
   public getLogLevel(): string {

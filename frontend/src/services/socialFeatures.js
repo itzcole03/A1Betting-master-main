@@ -4,7 +4,7 @@ class SocialFeaturesService {
         this.posts = new Map();
         this.comments = new Map();
         this.followers = new Map();
-        this.CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
+        this.CACHE_DURATION = 1000 * 60 * 5; // 5 minutes;
         this.cache = new Map();
     }
     static getInstance() {
@@ -13,7 +13,7 @@ class SocialFeaturesService {
         }
         return SocialFeaturesService.instance;
     }
-    // User Management
+    // User Management;
     async createUser(username, avatar, bio) {
         const user = {
             id: `user_${Date.now()}`,
@@ -44,28 +44,28 @@ class SocialFeaturesService {
         return this.users.get(userId) || null;
     }
     async updateUser(userId, updates) {
-        const user = this.users.get(userId);
+
         if (!user)
             return null;
-        const updatedUser = { ...user, ...updates };
+
         this.users.set(userId, updatedUser);
         return updatedUser;
     }
-    // Following System
+    // Following System;
     async followUser(followerId, followingId) {
         if (!this.users.has(followerId) || !this.users.has(followingId)) {
             return false;
         }
-        const followers = this.followers.get(followingId);
+
         if (!followers)
             return false;
         followers.add(followerId);
-        const user = this.users.get(followingId);
+
         if (user) {
             user.stats.followers++;
             this.users.set(followingId, user);
         }
-        const follower = this.users.get(followerId);
+
         if (follower) {
             follower.stats.following++;
             this.users.set(followerId, follower);
@@ -73,17 +73,17 @@ class SocialFeaturesService {
         return true;
     }
     async unfollowUser(followerId, followingId) {
-        const followers = this.followers.get(followingId);
+
         if (!followers)
             return false;
-        const success = followers.delete(followerId);
+
         if (success) {
-            const user = this.users.get(followingId);
+
             if (user) {
                 user.stats.followers--;
                 this.users.set(followingId, user);
             }
-            const follower = this.users.get(followerId);
+
             if (follower) {
                 follower.stats.following--;
                 this.users.set(followerId, follower);
@@ -91,7 +91,7 @@ class SocialFeaturesService {
         }
         return success;
     }
-    // Posts and Comments
+    // Posts and Comments;
     async createPost(userId, content, prediction, visibility = 'public', tags = []) {
         if (!this.users.has(userId))
             return null;
@@ -123,16 +123,16 @@ class SocialFeaturesService {
             replies: 0,
         };
         this.comments.set(comment.id, comment);
-        const post = this.posts.get(postId);
+
         if (post) {
             post.comments++;
             this.posts.set(postId, post);
         }
         return comment;
     }
-    // Engagement
+    // Engagement;
     async likePost(postId, _userId) {
-        const post = this.posts.get(postId);
+
         if (!post)
             return false;
         post.likes++;
@@ -140,17 +140,17 @@ class SocialFeaturesService {
         return true;
     }
     async sharePost(postId, _userId) {
-        const post = this.posts.get(postId);
+
         if (!post)
             return false;
         post.shares++;
         this.posts.set(postId, post);
         return true;
     }
-    // Leaderboards
+    // Leaderboards;
     async getLeaderboard(timeframe) {
-        const cacheKey = `leaderboard_${timeframe}`;
-        const cached = this.getFromCache(cacheKey);
+
+
         if (cached)
             return cached;
         const entries = Array.from(this.users.values())
@@ -171,12 +171,12 @@ class SocialFeaturesService {
         this.setCache(cacheKey, entries);
         return entries;
     }
-    // Feed
+    // Feed;
     async getFeed(userId, page = 1, pageSize = 10) {
-        const user = this.users.get(userId);
+
         if (!user)
             return [];
-        const followers = this.followers.get(userId);
+
         if (!followers)
             return [];
         const allPosts = Array.from(this.posts.values())
@@ -188,11 +188,11 @@ class SocialFeaturesService {
             return post.userId === userId;
         })
             .sort((a, b) => b.timestamp - a.timestamp);
-        const start = (page - 1) * pageSize;
-        const end = start + pageSize;
+
+
         return allPosts.slice(start, end);
     }
-    // Cache Management
+    // Cache Management;
     /**
      * Get a value from the cache, typed.
      */
@@ -200,7 +200,7 @@ class SocialFeaturesService {
      * Get a value from the cache, type-safe.
      */
     getFromCache(key) {
-        const cached = this.cache.get(key);
+
         if (!cached)
             return null;
         if (Date.now() - cached.timestamp > this.CACHE_DURATION) {

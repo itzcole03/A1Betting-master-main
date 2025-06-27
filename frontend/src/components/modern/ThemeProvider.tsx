@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useStore } from '@/store/useStore';
+import React, { useEffect  } from 'react.ts';
+import { useStore } from '@/store/useStore.ts';
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const theme = useStore(s => s.theme);
+
   useEffect(() => {
-    const html = document.documentElement;
+
     if (theme === 'dark') {
       html.classList.add('dark');
     } else {

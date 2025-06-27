@@ -71,8 +71,8 @@ const getTrendIcon = (trend) => {
 };
 export const ModernStatusBar = ({ className = "", items = defaultItems, }) => {
     return (_jsx(motion.div, { initial: { opacity: 0, y: -10 }, animate: { opacity: 1, y: 0 }, className: `
-        fixed top-0 left-0 right-0 z-50
-        backdrop-blur-xl bg-black/10 border-b border-white/5
+        fixed top-0 left-0 right-0 z-50;
+        backdrop-blur-xl bg-black/10 border-b border-white/5;
         ${className}
       `, children: _jsx("div", { className: "max-w-full px-6 py-3", children: _jsxs("div", { className: "flex items-center justify-between", children: [_jsx("div", { className: "flex items-center space-x-6", children: items.map((item) => (_jsxs(motion.div, { initial: { opacity: 0, scale: 0.9 }, animate: { opacity: 1, scale: 1 }, transition: { delay: 0.1 }, className: "flex items-center space-x-2", children: [_jsxs("div", { className: "flex items-center space-x-1", children: [item.icon && (_jsx("div", { className: "text-gray-400", children: item.icon })), getStatusIcon(item.status)] }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsxs("span", { className: "text-xs text-gray-400 font-medium", children: [item.label, ":"] }), _jsx("span", { className: `text-xs font-semibold ${getStatusColor(item.status).split(" ")[0]}`, children: item.value }), getTrendIcon(item.trend)] })] }, item.id))) }), _jsxs("div", { className: "flex items-center space-x-2 text-xs text-gray-500", children: [_jsx(Clock, { size: 12 }), _jsxs("span", { children: ["Last updated: ", new Date().toLocaleTimeString()] })] })] }) }) }));
 };

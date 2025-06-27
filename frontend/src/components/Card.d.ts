@@ -1,5 +1,5 @@
-import React from 'react';
-import { MotionProps } from 'framer-motion';
+import React from 'react.ts';
+import { MotionProps } from 'framer-motion.ts';
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: 'default' | 'glass' | 'premium';
     hover?: boolean;

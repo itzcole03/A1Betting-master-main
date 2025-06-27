@@ -12,7 +12,7 @@ export class SportsRadarAdapter {
         this.config = {
             apiKey: import.meta.env.VITE_SPORTRADAR_API_KEY || "",
             baseUrl: "https://api.sportradar.com/sports/v1",
-            cacheTimeout: 10000, // Assuming a default cache timeout
+            cacheTimeout: 10000, // Assuming a default cache timeout;
         };
         this.cache = {
             data: null,
@@ -23,7 +23,7 @@ export class SportsRadarAdapter {
     }
     async isAvailable() {
         try {
-            const response = await fetch(`${this.config.baseUrl}/status?api_key=${this.config.apiKey}`);
+
             return response.ok;
         }
         catch {
@@ -34,12 +34,12 @@ export class SportsRadarAdapter {
      * Fetches the latest SportsRadar data, using cache if valid.
      */
     async fetch() {
-        const traceId = this.performanceMonitor.startTrace("sports-radar-fetch");
+
         try {
             if (this.isCacheValid()) {
                 return this.cache.data;
             }
-            const data = await this.fetchSportsRadarData();
+
             this.cache = {
                 data,
                 timestamp: Date.now(),
@@ -57,7 +57,7 @@ export class SportsRadarAdapter {
         }
     }
     async fetchSportsRadarData() {
-        const response = await fetch(`${this.config.baseUrl}/games/schedule?api_key=${this.config.apiKey}`);
+
         if (!response.ok) {
             throw new Error(`SportsRadar API error: ${response.statusText}`);
         }
@@ -86,7 +86,7 @@ export class SportsRadarAdapter {
     }
     async getOdds(eventId) {
         if (!this.apiKey) {
-            console.warn("SportsRadar API key not configured. Skipping odds fetch.");
+            // console statement removed
             return null;
         }
         try {
@@ -102,13 +102,13 @@ export class SportsRadarAdapter {
             return await response.json();
         }
         catch (error) {
-            console.error("Error fetching odds from SportsRadar:", error);
+            // console statement removed
             return null;
         }
     }
     async getEventDetails(eventId) {
         if (!this.apiKey) {
-            console.warn("SportsRadar API key not configured. Skipping event details fetch.");
+            // console statement removed
             return null;
         }
         try {
@@ -124,7 +124,7 @@ export class SportsRadarAdapter {
             return await response.json();
         }
         catch (error) {
-            console.error("Error fetching event details from SportsRadar:", error);
+            // console statement removed
             return null;
         }
     }

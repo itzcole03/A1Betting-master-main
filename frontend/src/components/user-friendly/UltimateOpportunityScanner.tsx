@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useMemo  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   Target,
   TrendingUp,
@@ -11,9 +11,9 @@ import {
   Clock,
   Star,
   AlertTriangle,
-} from 'lucide-react';
-import { productionApiService } from '@/services/api/ProductionApiService';
-import { logger } from '@/utils/logger';
+} from 'lucide-react.ts';
+import { productionApiService } from '@/services/api/ProductionApiService.ts';
+import { logger } from '@/utils/logger.ts';
 
 interface Opportunity {
   id: string;
@@ -43,10 +43,10 @@ interface ScannerMetrics {
 }
 
 const UltimateOpportunityScanner: React.FC = () => {
-  const [opportunities, setOpportunities] = useState<Opportunity[]>([]);
+  const [opportunities, setOpportunities] = useState<Opportunity[] key={974691}>([]);
   const [loading, setLoading] = useState(true);
   const [scanning, setScanning] = useState(false);
-  const [metrics, setMetrics] = useState<ScannerMetrics>({
+  const [metrics, setMetrics] = useState<ScannerMetrics key={533841}>({
     totalScanned: 0,
     foundOpportunities: 0,
     avgExpectedValue: 0,
@@ -59,7 +59,7 @@ const UltimateOpportunityScanner: React.FC = () => {
     minExpectedValue: 0,
   });
 
-  // Mock data for demonstration
+  // Mock data for demonstration;
   const mockOpportunities: Opportunity[] = useMemo(() => [
     {
       id: '1',
@@ -118,12 +118,12 @@ const UltimateOpportunityScanner: React.FC = () => {
     },
   ], []);
 
-  // Initialize scanner
+  // Initialize scanner;
   useEffect(() => {
     const initializeScanner = async () => {
       setLoading(true);
       try {
-        // Simulate API call
+        // Simulate API call;
         await new Promise(resolve => setTimeout(resolve, 1000));
         
         setOpportunities(mockOpportunities);
@@ -146,10 +146,10 @@ const UltimateOpportunityScanner: React.FC = () => {
   const handleScan = async () => {
     setScanning(true);
     try {
-      // Simulate scanning process
+      // Simulate scanning process;
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Add some variation to mock new opportunities
+      // Add some variation to mock new opportunities;
       const newOpportunity: Opportunity = {
         id: Date.now().toString(),
         type: 'value_bet',
@@ -203,222 +203,222 @@ const UltimateOpportunityScanner: React.FC = () => {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'prizepicks': return <Trophy className="w-4 h-4" />;
-      case 'arbitrage': return <Zap className="w-4 h-4" />;
-      case 'value_bet': return <TrendingUp className="w-4 h-4" />;
-      case 'parlay': return <BarChart3 className="w-4 h-4" />;
-      default: return <Target className="w-4 h-4" />;
+      case 'prizepicks': return <Trophy className="w-4 h-4" / key={941478}>;
+      case 'arbitrage': return <Zap className="w-4 h-4" / key={768470}>;
+      case 'value_bet': return <TrendingUp className="w-4 h-4" / key={673347}>;
+      case 'parlay': return <BarChart3 className="w-4 h-4" / key={509964}>;
+      default: return <Target className="w-4 h-4" / key={184202}>;
     }
   };
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto"></div>
-          <p className="mt-4 text-gray-400">Initializing Opportunity Scanner...</p>
+      <div className="flex items-center justify-center h-96" key={797634}>
+        <div className="text-center" key={120206}>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-400 mx-auto" key={59899}></div>
+          <p className="mt-4 text-gray-400" key={301158}>Initializing Opportunity Scanner...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
-            Ultimate Opportunity Scanner
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent" key={167446}>
+            Ultimate Opportunity Scanner;
           </h1>
-          <p className="text-gray-400 mt-2">
-            AI-powered detection of profitable betting opportunities across all platforms
+          <p className="text-gray-400 mt-2" key={874357}>
+            AI-powered detection of profitable betting opportunities across all platforms;
           </p>
         </div>
         
-        <motion.button
+        <motion.button;
           onClick={handleScan}
           disabled={scanning}
           className={`px-6 py-3 rounded-lg font-medium transition-all ${
-            scanning 
+            scanning; 
               ? 'bg-gray-600 cursor-not-allowed' 
               : 'bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500'
           }`}
           whileHover={{ scale: scanning ? 1 : 1.05 }}
           whileTap={{ scale: scanning ? 1 : 0.95 }}
-        >
+         key={323699}>
           {scanning ? (
-            <div className="flex items-center gap-2">
-              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+            <div className="flex items-center gap-2" key={100294}>
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" key={412073}></div>
               Scanning...
             </div>
           ) : (
-            <div className="flex items-center gap-2">
-              <Target className="w-4 h-4" />
-              Scan Now
+            <div className="flex items-center gap-2" key={100294}>
+              <Target className="w-4 h-4" / key={184202}>
+              Scan Now;
             </div>
           )}
         </motion.button>
       </div>
 
       {/* Metrics Dashboard */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Activity className="w-5 h-5 text-cyan-400" />
-            <span className="text-sm text-gray-400">Total Scanned</span>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4" key={426410}>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Activity className="w-5 h-5 text-cyan-400" / key={97232}>
+            <span className="text-sm text-gray-400" key={257018}>Total Scanned</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.totalScanned.toLocaleString()}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.totalScanned.toLocaleString()}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Target className="w-5 h-5 text-green-400" />
-            <span className="text-sm text-gray-400">Opportunities Found</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Target className="w-5 h-5 text-green-400" / key={640178}>
+            <span className="text-sm text-gray-400" key={257018}>Opportunities Found</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.foundOpportunities}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.foundOpportunities}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <DollarSign className="w-5 h-5 text-purple-400" />
-            <span className="text-sm text-gray-400">Avg Expected Value</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <DollarSign className="w-5 h-5 text-purple-400" / key={356824}>
+            <span className="text-sm text-gray-400" key={257018}>Avg Expected Value</span>
           </div>
-          <p className="text-2xl font-bold text-white">${metrics.avgExpectedValue.toFixed(2)}</p>
+          <p className="text-2xl font-bold text-white" key={36139}>${metrics.avgExpectedValue.toFixed(2)}</p>
         </div>
 
-        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Star className="w-5 h-5 text-yellow-400" />
-            <span className="text-sm text-gray-400">Success Rate</span>
+        <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+          <div className="flex items-center gap-2 mb-2" key={988706}>
+            <Star className="w-5 h-5 text-yellow-400" / key={976743}>
+            <span className="text-sm text-gray-400" key={257018}>Success Rate</span>
           </div>
-          <p className="text-2xl font-bold text-white">{metrics.successRate}%</p>
+          <p className="text-2xl font-bold text-white" key={36139}>{metrics.successRate}%</p>
         </div>
       </div>
 
       {/* Filters */}
-      <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4">
-        <h3 className="text-lg font-semibold mb-4">Filters</h3>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          <select 
+      <div className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-4" key={959384}>
+        <h3 className="text-lg font-semibold mb-4" key={792268}>Filters</h3>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4" key={426410}>
+          <select; 
             value={selectedFilters.sport}
-            onChange={(e) => setSelectedFilters(prev => ({ ...prev, sport: e.target.value }))}
+            onChange={(e) = key={203768}> setSelectedFilters(prev => ({ ...prev, sport: e.target.value }))}
             className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
           >
-            <option value="all">All Sports</option>
-            <option value="NBA">NBA</option>
-            <option value="NFL">NFL</option>
-            <option value="NHL">NHL</option>
-            <option value="Esports">Esports</option>
+            <option value="all" key={673287}>All Sports</option>
+            <option value="NBA" key={172467}>NBA</option>
+            <option value="NFL" key={613230}>NFL</option>
+            <option value="NHL" key={500575}>NHL</option>
+            <option value="Esports" key={604247}>Esports</option>
           </select>
 
-          <select 
+          <select; 
             value={selectedFilters.type}
-            onChange={(e) => setSelectedFilters(prev => ({ ...prev, type: e.target.value }))}
+            onChange={(e) = key={972278}> setSelectedFilters(prev => ({ ...prev, type: e.target.value }))}
             className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
           >
-            <option value="all">All Types</option>
-            <option value="prizepicks">PrizePicks</option>
-            <option value="arbitrage">Arbitrage</option>
-            <option value="value_bet">Value Bets</option>
-            <option value="parlay">Parlays</option>
+            <option value="all" key={673287}>All Types</option>
+            <option value="prizepicks" key={162928}>PrizePicks</option>
+            <option value="arbitrage" key={407087}>Arbitrage</option>
+            <option value="value_bet" key={67523}>Value Bets</option>
+            <option value="parlay" key={139118}>Parlays</option>
           </select>
 
-          <select 
+          <select; 
             value={selectedFilters.riskLevel}
-            onChange={(e) => setSelectedFilters(prev => ({ ...prev, riskLevel: e.target.value }))}
+            onChange={(e) = key={61185}> setSelectedFilters(prev => ({ ...prev, riskLevel: e.target.value }))}
             className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
           >
-            <option value="all">All Risk Levels</option>
-            <option value="low">Low Risk</option>
-            <option value="medium">Medium Risk</option>
-            <option value="high">High Risk</option>
+            <option value="all" key={673287}>All Risk Levels</option>
+            <option value="low" key={209001}>Low Risk</option>
+            <option value="medium" key={248541}>Medium Risk</option>
+            <option value="high" key={228722}>High Risk</option>
           </select>
 
-          <input
+          <input;
             type="number"
             placeholder="Min Expected Value"
             value={selectedFilters.minExpectedValue}
-            onChange={(e) => setSelectedFilters(prev => ({ ...prev, minExpectedValue: Number(e.target.value) }))}
+            onChange={(e) = key={584515}> setSelectedFilters(prev => ({ ...prev, minExpectedValue: Number(e.target.value) }))}
             className="bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-white"
           />
         </div>
       </div>
 
       {/* Opportunities List */}
-      <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Live Opportunities ({filteredOpportunities.length})</h3>
+      <div className="space-y-4" key={160407}>
+        <h3 className="text-xl font-semibold" key={18928}>Live Opportunities ({filteredOpportunities.length})</h3>
         
         {filteredOpportunities.length === 0 ? (
-          <div className="text-center py-12">
-            <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-400">No opportunities found matching your filters.</p>
+          <div className="text-center py-12" key={752807}>
+            <AlertTriangle className="w-12 h-12 text-gray-400 mx-auto mb-4" / key={43269}>
+            <p className="text-gray-400" key={545335}>No opportunities found matching your filters.</p>
           </div>
         ) : (
-          <div className="grid gap-4">
+          <div className="grid gap-4" key={449070}>
             {filteredOpportunities.map((opportunity) => (
-              <motion.div
+              <motion.div;
                 key={opportunity.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 className="bg-gray-800/40 backdrop-blur border border-gray-700/50 rounded-xl p-6 hover:border-cyan-500/50 transition-all"
-              >
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 bg-cyan-500/20 rounded-lg">
+               key={488478}>
+                <div className="flex items-start justify-between mb-4" key={886571}>
+                  <div className="flex items-center gap-3" key={443099}>
+                    <div className="p-2 bg-cyan-500/20 rounded-lg" key={201886}>
                       {getTypeIcon(opportunity.type)}
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-white">{opportunity.description}</h4>
-                      <p className="text-sm text-gray-400">{opportunity.sport} • {opportunity.game}</p>
+                    <div key={241917}>
+                      <h4 className="font-semibold text-white" key={684150}>{opportunity.description}</h4>
+                      <p className="text-sm text-gray-400" key={965781}>{opportunity.sport} • {opportunity.game}</p>
                     </div>
                   </div>
                   
-                  <div className="flex items-center gap-2">
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRiskColor(opportunity.riskLevel)}`}>
+                  <div className="flex items-center gap-2" key={100294}>
+                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${getRiskColor(opportunity.riskLevel)}`} key={798184}>
                       {opportunity.riskLevel.toUpperCase()}
                     </span>
-                    <div className="flex items-center gap-1 text-yellow-400">
-                      <Star className="w-4 h-4" />
-                      <span className="text-sm">{opportunity.confidence}%</span>
+                    <div className="flex items-center gap-1 text-yellow-400" key={462499}>
+                      <Star className="w-4 h-4" / key={274600}>
+                      <span className="text-sm" key={887361}>{opportunity.confidence}%</span>
                     </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                  <div>
-                    <p className="text-xs text-gray-400">Expected Value</p>
-                    <p className="text-lg font-semibold text-green-400">${opportunity.expectedValue.toFixed(2)}</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4" key={477110}>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Expected Value</p>
+                    <p className="text-lg font-semibold text-green-400" key={101239}>${opportunity.expectedValue.toFixed(2)}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Stake</p>
-                    <p className="text-lg font-semibold text-white">${opportunity.stake}</p>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Stake</p>
+                    <p className="text-lg font-semibold text-white" key={917428}>${opportunity.stake}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Potential Profit</p>
-                    <p className="text-lg font-semibold text-cyan-400">${opportunity.potentialProfit.toFixed(2)}</p>
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Potential Profit</p>
+                    <p className="text-lg font-semibold text-cyan-400" key={615962}>${opportunity.potentialProfit.toFixed(2)}</p>
                   </div>
-                  <div>
-                    <p className="text-xs text-gray-400">Time Remaining</p>
-                    <p className="text-lg font-semibold text-purple-400 flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
+                  <div key={241917}>
+                    <p className="text-xs text-gray-400" key={777449}>Time Remaining</p>
+                    <p className="text-lg font-semibold text-purple-400 flex items-center gap-1" key={675949}>
+                      <Clock className="w-4 h-4" / key={414649}>
                       {opportunity.timeRemaining}
                     </p>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex gap-4 text-sm text-gray-400">
-                    <span>Win Prob: {(opportunity.analytics.winProbability * 100).toFixed(1)}%</span>
-                    <span>Sharpe: {opportunity.analytics.sharpeRatio.toFixed(2)}</span>
-                    <span>Kelly: {(opportunity.analytics.kelly * 100).toFixed(1)}%</span>
+                <div className="flex items-center justify-between" key={96335}>
+                  <div className="flex gap-4 text-sm text-gray-400" key={887129}>
+                    <span key={595076}>Win Prob: {(opportunity.analytics.winProbability * 100).toFixed(1)}%</span>
+                    <span key={595076}>Sharpe: {opportunity.analytics.sharpeRatio.toFixed(2)}</span>
+                    <span key={595076}>Kelly: {(opportunity.analytics.kelly * 100).toFixed(1)}%</span>
                   </div>
                   
-                  <motion.button
+                  <motion.button;
                     className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-lg font-medium hover:from-cyan-400 hover:to-purple-500 transition-all"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                  >
-                    Place Bet
+                   key={854071}>
+                    Place Bet;
                   </motion.button>
                 </div>
               </motion.div>

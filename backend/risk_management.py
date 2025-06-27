@@ -6,7 +6,7 @@ import logging
 import math
 from collections import deque
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -184,8 +184,8 @@ class KellyCriterionEngine:
                 "reasoning": f"Kelly: {basic_kelly:.3f}, Adjusted: {adjusted_kelly:.3f}",
             }
 
-        except Exception as e:
-            logger.error(f"Kelly calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Kelly calculation failed: {e!s}")
             return {
                 "kelly_fraction": 0.0,
                 "adjusted_fraction": 0.0,
@@ -351,11 +351,11 @@ class RiskAssessmentEngine:
                 model_risk=model_risk,
                 confidence_interval=confidence_interval,
                 risk_score=risk_score,
-                last_updated=datetime.utcnow(),
+                last_updated=datetime.now(timezone.utc),
             )
 
-        except Exception as e:
-            logger.error(f"Risk assessment failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Risk assessment failed: {e!s}")
             return self._create_empty_risk_metrics()
 
     def _calculate_var(self, returns: np.ndarray, confidence_level: float) -> float:
@@ -563,8 +563,8 @@ class RiskAssessmentEngine:
 
             return float(risk_score * 100)  # Scale to 0-100
 
-        except Exception as e:
-            logger.warning(f"Risk score calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Risk score calculation failed: {e!s}")
             return 50.0  # Default moderate risk
 
     def _create_empty_risk_metrics(self) -> RiskMetrics:
@@ -585,7 +585,7 @@ class RiskAssessmentEngine:
             model_risk=0.0,
             confidence_interval=(0.0, 0.0),
             risk_score=100.0,
-            last_updated=datetime.utcnow(),
+            last_updated=datetime.now(timezone.utc),
         )
 
 
@@ -671,12 +671,12 @@ class PortfolioOptimizer:
                     "bankroll": bankroll,
                     "risk_tolerance": risk_tolerance.value,
                     "num_opportunities": len(opportunities),
-                    "optimization_timestamp": datetime.utcnow().isoformat(),
+                    "optimization_timestamp": datetime.now(timezone.utc).isoformat(),
                 },
             )
 
-        except Exception as e:
-            logger.error(f"Portfolio optimization failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Portfolio optimization failed: {e!s}")
             return self._create_empty_optimization()
 
     async def _mean_variance_optimization(
@@ -729,8 +729,8 @@ class PortfolioOptimizer:
                 "success": result.success,
             }
 
-        except Exception as e:
-            logger.error(f"Mean-variance optimization failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Mean-variance optimization failed: {e!s}")
             n = len(expected_returns)
             return {"weights": np.ones(n) / n, "objective_value": 0, "success": False}
 
@@ -778,8 +778,8 @@ class PortfolioOptimizer:
                 "success": result.success,
             }
 
-        except Exception as e:
-            logger.error(f"Risk parity optimization failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Risk parity optimization failed: {e!s}")
             n = len(expected_returns)
             return {"weights": np.ones(n) / n, "objective_value": 1e6, "success": False}
 
@@ -843,8 +843,8 @@ class PortfolioOptimizer:
                 "success": result.success,
             }
 
-        except Exception as e:
-            logger.error(f"Kelly optimization failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Kelly optimization failed: {e!s}")
             n = len(expected_returns)
             return {"weights": np.zeros(n), "objective_value": 1e6, "success": False}
 
@@ -857,7 +857,7 @@ class PortfolioOptimizer:
 
         # Estimate correlations based on opportunity characteristics
         for i in range(n):
-            for j in range(i + 1, n):
+            for _ in range(i + 1, n):
                 correlation = self._estimate_pairwise_correlation(
                     opportunities[i], opportunities[j]
                 )
@@ -929,8 +929,8 @@ class PortfolioOptimizer:
                 f"position_{i}": float(risk_contrib[i]) for i in range(len(weights))
             }
 
-        except Exception as e:
-            logger.warning(f"Risk contribution calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Risk contribution calculation failed: {e!s}")
             return {f"position_{i}": 0.0 for i in range(len(weights))}
 
     def _calculate_marginal_risk(
@@ -950,8 +950,8 @@ class PortfolioOptimizer:
                 f"position_{i}": float(marginal_risk[i]) for i in range(len(weights))
             }
 
-        except Exception as e:
-            logger.warning(f"Marginal risk calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Marginal risk calculation failed: {e!s}")
             return {f"position_{i}": 0.0 for i in range(len(weights))}
 
     def _calculate_diversification_ratio(
@@ -969,8 +969,8 @@ class PortfolioOptimizer:
 
             return float(weighted_avg_vol / portfolio_vol)
 
-        except Exception as e:
-            logger.warning(f"Diversification ratio calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Diversification ratio calculation failed: {e!s}")
             return 1.0
 
     def _create_empty_optimization(self) -> PortfolioOptimization:
@@ -1092,8 +1092,8 @@ class UltraRiskManagementEngine:
                 ),
             )
 
-        except Exception as e:
-            logger.error(f"Position sizing failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Position sizing failed: {e!s}")
             return self._create_zero_position_size(f"Calculation error: {e!s}")
 
     async def _apply_risk_controls(
@@ -1183,7 +1183,7 @@ class UltraRiskManagementEngine:
             return False
         try:
             ts = datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
-            return ts.date() == datetime.utcnow().date()
+            return ts.date() == datetime.now(timezone.utc).date()
         except:
             return False
 
@@ -1277,7 +1277,7 @@ class UltraRiskManagementEngine:
             model_risk=1 - opportunity.get("confidence", 0.5),
             confidence_interval=(-stake, stake * opportunity.get("odds", 2.0)),
             risk_score=position_risk * 100,
-            last_updated=datetime.utcnow(),
+            last_updated=datetime.now(timezone.utc),
         )
 
     def _create_zero_position_size(self, reason: str) -> PositionSize:
@@ -1305,7 +1305,7 @@ class UltraRiskManagementEngine:
             "kelly_engine_status": "operational",
             "risk_assessor_status": "operational",
             "portfolio_optimizer_status": "operational",
-            "last_health_check": datetime.utcnow().isoformat(),
+            "last_health_check": datetime.now(timezone.utc).isoformat(),
         }
 
 

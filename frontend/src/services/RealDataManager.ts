@@ -1,9 +1,9 @@
 /**
- * Real Data Integration Manager
- * Provides comprehensive real data integration to replace all mock/static data
+ * Real Data Integration Manager;
+ * Provides comprehensive real data integration to replace all mock/static data;
  */
 
-import { api } from "./api";
+import { api } from './api.ts';
 
 export interface RealSportsData {
   games: RealGame[];
@@ -79,25 +79,23 @@ class RealDataManager {
     { data: any; timestamp: number; ttl: number }
   >();
 
-  // Cache with TTL support
+  // Cache with TTL support;
   private async getCachedOrFetch<T>(
     key: string,
     fetcher: () => Promise<T>,
-    ttlMs = 30000, // 30 seconds default
+    ttlMs = 30000, // 30 seconds default;
   ): Promise<T> {
-    const cached = this.cache.get(key);
-    const now = Date.now();
+
 
     if (cached && now - cached.timestamp < cached.ttl) {
       return cached.data;
     }
 
-    const data = await fetcher();
     this.cache.set(key, { data, timestamp: now, ttl: ttlMs });
     return data;
   }
 
-  // Get real live games
+  // Get real live games;
   async getLiveGames(): Promise<RealGame[]> {
     return this.getCachedOrFetch(
       "liveGames",
@@ -108,14 +106,13 @@ class RealDataManager {
             api.getValueBets(),
           ]);
 
-          // Extract game data from value bets and health status
+          // Extract game data from value bets and health status;
           const games: RealGame[] = [];
-          const processedEvents = new Set<string>();
 
           valueBets?.forEach((bet) => {
             if (!processedEvents.has(bet.event)) {
               processedEvents.add(bet.event);
-              const teams = bet.event.split(" vs ");
+
               if (teams.length === 2) {
                 games.push({
                   id: bet.event.replace(/\s+/g, "_").toLowerCase(),
@@ -134,28 +131,26 @@ class RealDataManager {
 
           return games;
         } catch (error) {
-          console.error("Error fetching live games:", error);
+          // console statement removed
           return [];
         }
       },
       15000,
-    ); // 15 second cache for live data
+    ); // 15 second cache for live data;
   }
 
-  // Get real player props
+  // Get real player props;
   async getPlayerProps(): Promise<RealPlayerProp[]> {
     return this.getCachedOrFetch(
       "playerProps",
       async () => {
         try {
-          const valueBets = await api.getValueBets();
 
           const props: RealPlayerProp[] =
             valueBets?.map((bet) => {
-              const playerId = this.extractPlayerId(bet.outcome);
-              const playerName = this.extractPlayerName(bet.outcome);
-              const stat = this.extractStatType(bet.outcome);
-              const line = this.extractLine(bet.outcome);
+
+
+
 
               return {
                 id: `${bet.event}_${bet.outcome}`.replace(/\s+/g, "_"),
@@ -179,11 +174,11 @@ class RealDataManager {
                 expectedValue: bet.edge,
                 trend:
                   bet.edge > 0.05 ? "up" : bet.edge < -0.02 ? "down" : "stable",
-                volume: Math.floor(Math.random() * 1000) + 500, // Simulated volume for now
+                volume: Math.floor(Math.random() * 1000) + 500, // Simulated volume for now;
                 pickType:
-                  bet.edge > 0.08
+                  bet.edge > 0.08;
                     ? "demon"
-                    : bet.edge > 0.05
+                    : bet.edge > 0.05;
                       ? "goblin"
                       : "normal",
               };
@@ -191,23 +186,22 @@ class RealDataManager {
 
           return props;
         } catch (error) {
-          console.error("Error fetching player props:", error);
+          // console statement removed
           return [];
         }
       },
       20000,
-    ); // 20 second cache
+    ); // 20 second cache;
   }
 
-  // Get real team data
+  // Get real team data;
   async getTeams(): Promise<RealTeam[]> {
     return this.getCachedOrFetch(
       "teams",
       async () => {
         try {
-          const games = await this.getLiveGames();
+
           const teams: RealTeam[] = [];
-          const processedTeams = new Set<string>();
 
           games.forEach((game) => {
             [game.homeTeam, game.awayTeam].forEach((teamName) => {
@@ -230,15 +224,15 @@ class RealDataManager {
 
           return teams;
         } catch (error) {
-          console.error("Error fetching teams:", error);
+          // console statement removed
           return [];
         }
       },
       300000,
-    ); // 5 minute cache for team data
+    ); // 5 minute cache for team data;
   }
 
-  // Get comprehensive sports data
+  // Get comprehensive sports data;
   async getComprehensiveSportsData(): Promise<RealSportsData> {
     const [games, playerProps, teams] = await Promise.all([
       this.getLiveGames(),
@@ -246,8 +240,7 @@ class RealDataManager {
       this.getTeams(),
     ]);
 
-    // Generate players from props and teams
-    const players = this.generatePlayersFromProps(playerProps, teams);
+    // Generate players from props and teams;
 
     return {
       games,
@@ -257,15 +250,15 @@ class RealDataManager {
     };
   }
 
-  // Helper methods for data extraction and processing
+  // Helper methods for data extraction and processing;
   private extractPlayerId(outcome: string): string {
-    // Extract player ID from outcome string
-    const match = outcome.match(/([A-Z][a-z]+ [A-Z][a-z]+)/);
+    // Extract player ID from outcome string;
+
     return match ? match[1].replace(/\s+/g, "_").toLowerCase() : "unknown";
   }
 
   private extractPlayerName(outcome: string): string {
-    const match = outcome.match(/([A-Z][a-z]+ [A-Z][a-z]+)/);
+
     return match ? match[1] : outcome.split(" ")[0];
   }
 
@@ -281,7 +274,6 @@ class RealDataManager {
       runs: ["runs"],
     };
 
-    const lowerOutcome = outcome.toLowerCase();
     for (const [stat, keywords] of Object.entries(statKeywords)) {
       if (keywords.some((keyword) => lowerOutcome.includes(keyword))) {
         return stat;
@@ -291,17 +283,17 @@ class RealDataManager {
   }
 
   private extractLine(outcome: string): number {
-    const match = outcome.match(/(\d+\.?\d*)/);
+
     return match ? parseFloat(match[1]) : 25.5;
   }
 
   private extractTeam(event: string): string {
-    const teams = event.split(" vs ");
+
     return teams[0] || "Unknown";
   }
 
   private extractOpponent(event: string): string {
-    const teams = event.split(" vs ");
+
     return teams[1] || "Unknown";
   }
 
@@ -353,11 +345,10 @@ class RealDataManager {
     props: RealPlayerProp[],
     teams: RealTeam[],
   ): RealPlayer[] {
-    const playersMap = new Map<string, RealPlayer>();
 
     props.forEach((prop) => {
       if (!playersMap.has(prop.playerId)) {
-        const team = teams.find((t) => t.name === prop.team);
+
         playersMap.set(prop.playerId, {
           id: prop.playerId,
           name: prop.playerName,
@@ -385,7 +376,6 @@ class RealDataManager {
       baseball: ["P", "C", "1B", "2B", "3B", "SS", "OF"],
     };
 
-    const sportPositions = positions[sport] || positions.basketball;
     return sportPositions[Math.floor(Math.random() * sportPositions.length)];
   }
 
@@ -415,12 +405,12 @@ class RealDataManager {
     return baseStats[sport] || baseStats.basketball;
   }
 
-  // Clear cache manually if needed
+  // Clear cache manually if needed;
   clearCache(): void {
     this.cache.clear();
   }
 
-  // Get cache statistics
+  // Get cache statistics;
   getCacheStats(): any {
     return {
       size: this.cache.size,

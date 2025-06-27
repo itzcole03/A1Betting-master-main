@@ -11,7 +11,7 @@ This module provides the ultimate AI-powered sports betting prediction system wi
 
 import logging
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
@@ -370,9 +370,9 @@ class UltraEnhancedPredictionEngine:
         for model_name, model in self.models.items():
             try:
                 model.train(X, y, feature_names)
-                logger.info(f"✅ Trained {model_name}")
-            except Exception as e:
-                logger.error(f"❌ Failed to train {model_name}: {e}")
+                logger.info("✅ Trained {model_name}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("❌ Failed to train {model_name}: {e}")
 
     def _calculate_model_weights(self):
         """Calculate dynamic model weights based on performance."""
@@ -484,7 +484,7 @@ class UltraEnhancedPredictionEngine:
             )
 
         start_time = time.time()
-        logger.info(f"Processing enhanced prediction for event {request.event_id}")
+        logger.info("Processing enhanced prediction for event {request.event_id}")
 
         try:
             # 1. Feature Engineering and Validation
@@ -532,8 +532,8 @@ class UltraEnhancedPredictionEngine:
                     total_weighted_probability += pred_result["probability"] * weight
                     total_weight += weight
 
-                except Exception as e:
-                    logger.error(f"Error in model {model_name}: {e}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.error("Error in model {model_name}: {e}")
                     continue
 
             if not model_predictions:
@@ -608,8 +608,8 @@ class UltraEnhancedPredictionEngine:
             )
             return response
 
-        except Exception as e:
-            logger.error(f"❌ Prediction failed for {request.event_id}: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("❌ Prediction failed for {request.event_id}: {e}")
             raise HTTPException(status_code=500, detail=f"Prediction failed: {e!s}")
 
     async def _engineer_features(
@@ -683,8 +683,8 @@ class UltraEnhancedPredictionEngine:
                 shap_values = {k: 0.0 for k in features.keys()}
 
             return shap_values
-        except Exception as e:
-            logger.error(f"SHAP generation failed: {e}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("SHAP generation failed: {e}")
             return {k: 0.0 for k in features.keys()}
 
     def _calculate_ensemble_confidence(
@@ -803,8 +803,8 @@ class UltraEnhancedPredictionEngine:
             try:
                 explanation = await llm_engine.generate_text(prompt)
                 return explanation
-            except Exception as e:
-                logger.error(f"LLM explanation failed: {e}")
+            except Exception as e:  # pylint: disable=broad-exception-caught
+                logger.error("LLM explanation failed: {e}")
 
         # Fallback to rule-based explanation
         top_features = sorted(
@@ -882,8 +882,8 @@ async def enhanced_predict(
 
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"Enhanced prediction failed: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Enhanced prediction failed: {e}")
         raise HTTPException(
             status_code=500, detail=f"Enhanced prediction failed: {e!s}"
         )
@@ -921,7 +921,7 @@ async def prediction_engine_health():
     """Health check for the prediction engine."""
     return {
         "status": "healthy" if prediction_engine.is_initialized else "initializing",
-        "timestamp": datetime.utcnow(),
+        "timestamp": datetime.now(timezone.utc),
         "models_loaded": len(
             [m for m in prediction_engine.models.values() if m.is_trained]
         ),
@@ -942,8 +942,8 @@ async def track_prediction_performance(
         # Here you would typically save to database for model retraining
         # await save_prediction_to_db(request, response)
 
-    except Exception as e:
-        logger.error(f"Failed to track prediction performance: {e}")
+    except Exception as e:  # pylint: disable=broad-exception-caught
+        logger.error("Failed to track prediction performance: {e}")
 
 
 # Export router for main app

@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { webSocketManager } from '../services/unified/WebSocketManager';
-import { errorLogger } from '../utils/errorLogger';
+import React, { createContext, useContext, useEffect, useState  } from 'react.ts';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
+import { errorLogger } from '@/utils/errorLogger.ts';
 
 interface WebSocketContextType {
   isConnected: boolean;
@@ -9,10 +9,8 @@ interface WebSocketContextType {
   unsubscribe: (event: string, callback: (data: any) => void) => void;
 }
 
-const WebSocketContext = createContext<WebSocketContextType | undefined>(undefined);
-
 export const useWebSocket = () => {
-  const context = useContext(WebSocketContext);
+
   if (!context) {
     throw new Error('useWebSocket must be used within a WebSocketProvider');
   }
@@ -21,7 +19,7 @@ export const useWebSocket = () => {
 
 export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
-  const [lastMessage, setLastMessage] = useState<any>(null);
+  const [lastMessage, setLastMessage] = useState<any key={295429}>(null);
 
   useEffect(() => {
     const handleConnect = () => {
@@ -42,13 +40,13 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       setLastMessage(message);
     };
 
-    // Subscribe to WebSocketManager events
+    // Subscribe to WebSocketManager events;
     webSocketManager.on('connect', handleConnect);
     webSocketManager.on('disconnect', handleDisconnect);
     webSocketManager.on('error', handleError);
     webSocketManager.on('message', handleMessage);
 
-    // Cleanup on unmount
+    // Cleanup on unmount;
     return () => {
       webSocketManager.off('connect', handleConnect);
       webSocketManager.off('disconnect', handleDisconnect);
@@ -69,6 +67,6 @@ export const WebSocketProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   };
 
   return (
-    <WebSocketContext.Provider value={value}>{children}</WebSocketContext.Provider>
+    <WebSocketContext.Provider value={value} key={745137}>{children}</WebSocketContext.Provider>
   );
 };

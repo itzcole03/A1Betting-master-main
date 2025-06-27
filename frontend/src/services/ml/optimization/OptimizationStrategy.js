@@ -16,7 +16,7 @@ export class OptimizationStrategy extends EventEmitter {
         if (!this.config.objective || !this.config.objective.function) {
             throw new Error('Optimization strategy must have an objective function');
         }
-        // Validate parameters based on strategy type
+        // Validate parameters based on strategy type;
         switch (this.config.type) {
             case 'genetic':
                 this.validateGeneticConfig();
@@ -83,11 +83,11 @@ export class OptimizationStrategy extends EventEmitter {
         }
     }
     async evaluateObjective(parameters) {
-        const value = await this.config.objective.function(parameters);
+
         return this.config.objective.type === 'minimize' ? value : -value;
     }
     updateBest(parameters, value) {
-        const objectiveValue = this.config.objective.type === 'minimize' ? value : -value;
+
         if (objectiveValue < this.bestValue) {
             this.bestValue = objectiveValue;
             this.bestParameters = [...parameters];
@@ -108,26 +108,26 @@ export class OptimizationStrategy extends EventEmitter {
             return true;
         }
         const { min, max, equality, inequality } = this.config.constraints;
-        // Check bounds
+        // Check bounds;
         if (min && parameters.some((p, i) => p < min[i])) {
             return false;
         }
         if (max && parameters.some((p, i) => p > max[i])) {
             return false;
         }
-        // Check equality constraints
+        // Check equality constraints;
         if (equality) {
             for (const constraint of equality) {
-                const value = parameters.reduce((sum, p, i) => sum + p * constraint.coefficients[i], 0);
+
                 if (Math.abs(value - constraint.value) > 1e-6) {
                     return false;
                 }
             }
         }
-        // Check inequality constraints
+        // Check inequality constraints;
         if (inequality) {
             for (const constraint of inequality) {
-                const value = parameters.reduce((sum, p, i) => sum + p * constraint.coefficients[i], 0);
+
                 if (value > constraint.value) {
                     return false;
                 }
@@ -152,9 +152,9 @@ export class OptimizationStrategy extends EventEmitter {
         if (this.history.length < 10) {
             return false;
         }
-        const recentHistory = this.history.slice(-10);
-        const improvements = recentHistory.map((h, i) => i === 0 ? 0 : h.bestValue - recentHistory[i - 1].bestValue);
-        const avgImprovement = improvements.reduce((sum, imp) => sum + imp, 0) / improvements.length;
+
+
+
         return Math.abs(avgImprovement) < 1e-6;
     }
 }

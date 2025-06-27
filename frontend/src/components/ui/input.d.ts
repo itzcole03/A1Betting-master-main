@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react.ts';
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     className?: string;
 }

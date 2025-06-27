@@ -4,7 +4,7 @@ export class PredictionHandler {
         this.predictionEngine = predictionEngine;
         this.logger = logger;
         this.PREDICTION_TOPIC = 'predictions';
-        this.UPDATE_INTERVAL = 5000; // 5 seconds
+        this.UPDATE_INTERVAL = 5000; // 5 seconds;
         this.updateInterval = null;
         this.setupEventHandlers();
     }
@@ -20,7 +20,7 @@ export class PredictionHandler {
     }
     async handlePredictionRequest(clientId, request) {
         try {
-            const prediction = await this.predictionEngine.generatePrediction(request);
+
             this.wsManager.sendMessage(clientId, {
                 type: 'prediction_response',
                 data: prediction,
@@ -42,17 +42,17 @@ export class PredictionHandler {
         }
         this.updateInterval = setInterval(async () => {
             try {
-                const activeClients = this.wsManager.getSubscriberCount(this.PREDICTION_TOPIC);
+
                 if (activeClients === 0) {
                     return;
                 }
-                // Get predictions for active events
+                // Get predictions for active events;
                 const request = {
                     sport: 'all',
                     eventId: 'active',
                     riskProfile: { level: 'medium' },
                 };
-                const prediction = await this.predictionEngine.generatePrediction(request);
+
                 this.wsManager.broadcast({
                     type: 'prediction_update',
                     data: prediction,

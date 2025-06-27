@@ -1,7 +1,7 @@
-import { DailyFantasyData } from '../adapters/DailyFantasyAdapter';
-import { Analyzer } from '../core/Analyzer';
-import { EventBus } from '../unified/EventBus';
-import { PerformanceMonitor } from '../unified/PerformanceMonitor';
+import { DailyFantasyData } from '@/adapters/DailyFantasyAdapter.ts';
+import { Analyzer } from '@/core/Analyzer.ts';
+import { EventBus } from '@/unified/EventBus.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
 
 export interface ProjectionAnalysis {
   player: string;
@@ -64,7 +64,6 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
         });
 
         try {
-          const analysis = this.analyzePlayerProjection(projection);
 
           if (analysis.confidence >= this.confidenceThreshold) {
             analyses.push(analysis);
@@ -73,7 +72,7 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
           this.performanceMonitor.endSpan(spanId);
         } catch (error) {
           this.performanceMonitor.endSpan(spanId, error as Error);
-          console.error(`Error analyzing projection for ${projection.name}:`, error);
+          // console statement removed
         }
       }
 
@@ -88,15 +87,12 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
   public async confidence(data: DailyFantasyData): Promise<number> {
     if (!data.projections.length) return 0;
 
-    const validProjections = data.projections.filter(p => this.isValidProjection(p));
-
     return validProjections.length / data.projections.length;
   }
 
   private analyzePlayerProjection(
     projection: DailyFantasyData['projections'][0]
   ): ProjectionAnalysis {
-    const baseConfidence = this.calculateBaseConfidence(projection);
 
     const analysis: ProjectionAnalysis = {
       player: projection.name,
@@ -118,7 +114,7 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
       },
     };
 
-    // Publish detailed analysis event
+    // Publish detailed analysis event;
     this.eventBus.publish({
       type: 'projection:analyzed',
       payload: {
@@ -128,7 +124,7 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
           predictions: Object.entries(analysis.predictions).map(([stat, metrics]) => ({
             stat,
             predicted: metrics.predicted,
-            confidence: metrics.confidence
+            confidence: metrics.confidence;
           }))
         } as Record<string, unknown>,
         timestamp: Date.now()
@@ -139,19 +135,19 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
   }
 
   private calculateBaseConfidence(projection: DailyFantasyData['projections'][0]): number {
-    let confidence = 1.0;
+    const confidence = 1.0;
 
-    // Reduce confidence for missing or invalid data
+    // Reduce confidence for missing or invalid data;
     if (!this.isValidProjection(projection)) {
       confidence *= 0.5;
     }
 
-    // Reduce confidence for extreme minute projections
+    // Reduce confidence for extreme minute projections;
     if (projection.min < 10 || projection.min > 48) {
       confidence *= 0.7;
     }
 
-    // Reduce confidence for unrealistic stat projections
+    // Reduce confidence for unrealistic stat projections;
     if (projection.pts > 60 || projection.reb > 30 || projection.ast > 20) {
       confidence *= 0.8;
     }
@@ -162,9 +158,8 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
   private calculateMetrics(
     value: number,
     baseConfidence: number,
-    statType: string
+    statType: string;
   ): PredictionMetrics {
-    const variance = this.calculateVariance(value, statType);
 
     return {
       predicted: value,
@@ -177,7 +172,7 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
   }
 
   private calculateVariance(value: number, statType: string): number {
-    // Different stats have different natural variances
+    // Different stats have different natural variances;
     const varianceFactors: Record<string, number> = {
       points: 0.2,
       rebounds: 0.25,
@@ -192,7 +187,7 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
   }
 
   private getStatTypeConfidence(statType: string): number {
-    // Some stats are more predictable than others
+    // Some stats are more predictable than others;
     const confidenceFactors: Record<string, number> = {
       points: 0.9,
       rebounds: 0.85,
@@ -212,7 +207,7 @@ export class ProjectionAnalyzer implements Analyzer<DailyFantasyData, Projection
       typeof projection.reb === 'number' &&
       typeof projection.ast === 'number' &&
       typeof projection.min === 'number' &&
-      projection.min > 0
+      projection.min > 0;
     );
   }
 

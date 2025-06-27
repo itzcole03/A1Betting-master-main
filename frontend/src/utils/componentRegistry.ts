@@ -1,6 +1,6 @@
 /**
- * Component Enhancement Registry
- * Tracks component status and enhancements across the application
+ * Component Enhancement Registry;
+ * Tracks component status and enhancements across the application;
  */
 
 interface ComponentStatus {
@@ -27,7 +27,7 @@ class ComponentRegistry {
   }
 
   private initializeProductionComponents() {
-    // Register main production components
+    // Register main production components;
     this.registerComponent({
       name: "UserFriendlyApp",
       path: "src/components/user-friendly/UserFriendlyApp.tsx",
@@ -209,7 +209,7 @@ class ComponentRegistry {
   }
 
   updateComponentStatus(name: string, updates: Partial<ComponentStatus>) {
-    const existing = this.components.get(name);
+
     if (existing) {
       this.components.set(name, {
         ...existing,
@@ -220,7 +220,7 @@ class ComponentRegistry {
   }
 
   getConsolidationReport() {
-    const allComponents = this.getAllComponents();
+
     const totalConsolidated = allComponents.reduce(
       (sum, comp) => sum + (comp.consolidatedFrom?.length || 0),
       0,

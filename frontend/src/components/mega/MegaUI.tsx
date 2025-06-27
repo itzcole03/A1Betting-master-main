@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode  } from 'react.ts';
 import {
   CYBER_COLORS,
   CYBER_GRADIENTS,
@@ -6,7 +6,7 @@ import {
   CyberContainer,
   CyberText,
   CyberButton,
-} from "./CyberTheme";
+} from './CyberTheme.ts';
 import {
   X,
   Check,
@@ -27,7 +27,7 @@ import {
   Minus,
   Settings,
   Menu,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
 // MEGA UI SYSTEM - Consolidates all base UI components (35+ components)
 
@@ -116,7 +116,7 @@ export const MegaButton: React.FC<{
   };
 
   return (
-    <button
+    <button;
       onClick={onClick}
       disabled={disabled || loading}
       className={`mega-button ${className}`}
@@ -136,7 +136,7 @@ export const MegaButton: React.FC<{
         ...getVariantStyle(),
         ...getSizeStyle(),
       }}
-      onMouseEnter={(e) => {
+      onMouseEnter={(e) = key={876236}> {
         if (!disabled && !loading) {
           e.currentTarget.style.transform = "translateY(-2px)";
           if (variant === "primary") {
@@ -153,14 +153,14 @@ export const MegaButton: React.FC<{
       onMouseLeave={(e) => {
         if (!disabled && !loading) {
           e.currentTarget.style.transform = "translateY(0)";
-          const originalStyle = getVariantStyle();
+
           e.currentTarget.style.boxShadow = originalStyle.boxShadow || "none";
           e.currentTarget.style.background = originalStyle.background;
         }
       }}
     >
       {loading && (
-        <div
+        <div;
           style={{
             width: "14px",
             height: "14px",
@@ -169,11 +169,11 @@ export const MegaButton: React.FC<{
             borderRadius: "50%",
             animation: "spin 1s linear infinite",
           }}
-        />
+        / key={959143}>
       )}
-      {icon && iconPosition === "left" && <span>{icon}</span>}
-      {children && <span>{children}</span>}
-      {icon && iconPosition === "right" && <span>{icon}</span>}
+      {icon && iconPosition === "left" && <span key={595076}>{icon}</span>}
+      {children && <span key={595076}>{children}</span>}
+      {icon && iconPosition === "right" && <span key={595076}>{icon}</span>}
     </button>
   );
 };
@@ -245,7 +245,7 @@ export const MegaCard: React.FC<{
   };
 
   return (
-    <div
+    <div;
       className={`mega-card ${className}`}
       onClick={onClick}
       style={{
@@ -256,7 +256,7 @@ export const MegaCard: React.FC<{
         overflow: "hidden",
         ...getVariantStyle(),
       }}
-      onMouseEnter={(e) => {
+      onMouseEnter={(e) = key={434582}> {
         if (onClick) {
           e.currentTarget.style.transform = "translateY(-2px)";
           e.currentTarget.style.boxShadow =
@@ -273,63 +273,63 @@ export const MegaCard: React.FC<{
       }}
     >
       {(title || subtitle || headerActions) && (
-        <div
+        <div;
           style={{
             padding: getPaddingStyle(),
             paddingBottom: children ? "16px" : getPaddingStyle(),
-            borderBottom: children
+            borderBottom: children;
               ? "1px solid rgba(255, 255, 255, 0.05)"
               : "none",
           }}
-        >
-          <div
+         key={540837}>
+          <div;
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-start",
             }}
-          >
-            <div>
+           key={362729}>
+            <div key={241917}>
               {title && (
-                <CyberText
+                <CyberText;
                   variant="title"
                   style={{ marginBottom: subtitle ? "4px" : "0" }}
-                >
+                 key={877361}>
                   {title}
                 </CyberText>
               )}
               {subtitle && (
-                <CyberText variant="body" color="muted">
+                <CyberText variant="body" color="muted" key={892775}>
                   {subtitle}
                 </CyberText>
               )}
             </div>
-            {headerActions && <div>{headerActions}</div>}
+            {headerActions && <div key={241917}>{headerActions}</div>}
           </div>
         </div>
       )}
 
       {children && (
-        <div
+        <div;
           style={{
             padding:
-              title || subtitle || headerActions
+              title || subtitle || headerActions;
                 ? `0 ${getPaddingStyle()} ${getPaddingStyle()}`
                 : getPaddingStyle(),
           }}
-        >
+         key={9456}>
           {children}
         </div>
       )}
 
       {footer && (
-        <div
+        <div;
           style={{
             padding: getPaddingStyle(),
             paddingTop: "16px",
             borderTop: "1px solid rgba(255, 255, 255, 0.05)",
           }}
-        >
+         key={671855}>
           {footer}
         </div>
       )}
@@ -372,7 +372,7 @@ export const MegaModal: React.FC<{
   if (!isOpen) return null;
 
   return (
-    <div
+    <div;
       style={{
         position: "fixed",
         inset: 0,
@@ -382,9 +382,9 @@ export const MegaModal: React.FC<{
         justifyContent: "center",
         padding: "20px",
       }}
-    >
+     key={696094}>
       {/* Overlay */}
-      <div
+      <div;
         style={{
           position: "absolute",
           inset: 0,
@@ -392,10 +392,10 @@ export const MegaModal: React.FC<{
           backdropFilter: "blur(4px)",
         }}
         onClick={closeOnOverlay ? onClose : undefined}
-      />
+      / key={954463}>
 
       {/* Modal */}
-      <div
+      <div;
         style={{
           position: "relative",
           ...CYBER_GLASS.panel,
@@ -404,10 +404,10 @@ export const MegaModal: React.FC<{
           maxHeight: "90vh",
           overflow: "auto",
         }}
-      >
+       key={214890}>
         {/* Header */}
         {(title || showCloseButton) && (
-          <div
+          <div;
             style={{
               padding: "20px",
               paddingBottom: "16px",
@@ -416,34 +416,34 @@ export const MegaModal: React.FC<{
               justifyContent: "space-between",
               alignItems: "center",
             }}
-          >
+           key={830280}>
             {title && (
-              <CyberText variant="title" style={{ fontSize: "20px" }}>
+              <CyberText variant="title" style={{ fontSize: "20px" }} key={222936}>
                 {title}
               </CyberText>
             )}
             {showCloseButton && (
-              <MegaButton
+              <MegaButton;
                 variant="ghost"
                 size="sm"
                 onClick={onClose}
-                icon={<X size={16} />}
+                icon={<X size={16} / key={448605}>}
               />
             )}
           </div>
         )}
 
         {/* Content */}
-        <div style={{ padding: "20px" }}>{children}</div>
+        <div style={{ padding: "20px" }} key={59134}>{children}</div>
 
         {/* Footer */}
         {footer && (
-          <div
+          <div;
             style={{
               padding: "16px 20px 20px",
               borderTop: "1px solid rgba(255, 255, 255, 0.05)",
             }}
-          >
+           key={857807}>
             {footer}
           </div>
         )}
@@ -481,22 +481,22 @@ export const MegaInput: React.FC<{
   className = "",
 }) => {
   return (
-    <div
+    <div;
       className={`mega-input-wrapper ${className}`}
       style={{ width: fullWidth ? "100%" : "auto" }}
-    >
+     key={879538}>
       {label && (
-        <CyberText
+        <CyberText;
           variant="body"
           style={{ marginBottom: "8px", fontWeight: "500" }}
-        >
+         key={243409}>
           {label}
         </CyberText>
       )}
 
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative" }} key={981141}>
         {icon && iconPosition === "left" && (
-          <div
+          <div;
             style={{
               position: "absolute",
               left: "12px",
@@ -505,26 +505,26 @@ export const MegaInput: React.FC<{
               color: CYBER_COLORS.text.muted,
               pointerEvents: "none",
             }}
-          >
+           key={370445}>
             {icon}
           </div>
         )}
 
-        <input
+        <input;
           type={type}
           placeholder={placeholder}
           value={value}
-          onChange={(e) => onChange?.(e.target.value)}
+          onChange={(e) = key={865332}> onChange?.(e.target.value)}
           disabled={disabled}
           style={{
             width: "100%",
-            padding: icon
+            padding: icon;
               ? iconPosition === "left"
                 ? "14px 18px 14px 44px"
                 : "14px 44px 14px 18px"
               : "14px 18px",
             borderRadius: "12px",
-            border: error
+            border: error;
               ? "1px solid #ff6b6b"
               : "1px solid rgba(255, 255, 255, 0.08)",
             backgroundColor: "rgba(255, 255, 255, 0.04)",
@@ -543,7 +543,7 @@ export const MegaInput: React.FC<{
             e.target.style.transform = "translateY(-1px)";
           }}
           onBlur={(e) => {
-            e.target.style.border = error
+            e.target.style.border = error;
               ? "1px solid #ff6b6b"
               : "1px solid rgba(255, 255, 255, 0.08)";
             e.target.style.backgroundColor = "rgba(255, 255, 255, 0.04)";
@@ -553,7 +553,7 @@ export const MegaInput: React.FC<{
         />
 
         {icon && iconPosition === "right" && (
-          <div
+          <div;
             style={{
               position: "absolute",
               right: "12px",
@@ -562,17 +562,17 @@ export const MegaInput: React.FC<{
               color: CYBER_COLORS.text.muted,
               pointerEvents: "none",
             }}
-          >
+           key={59120}>
             {icon}
           </div>
         )}
       </div>
 
       {error && (
-        <CyberText
+        <CyberText;
           variant="caption"
           style={{ color: "#ff4757", marginTop: "4px" }}
-        >
+         key={748317}>
           {error}
         </CyberText>
       )}
@@ -626,16 +626,16 @@ export const MegaAlert: React.FC<{
 
   const getIcon = () => {
     const icons = {
-      info: <Info size={16} />,
-      success: <Check size={16} />,
-      warning: <AlertTriangle size={16} />,
-      error: <X size={16} />,
+      info: <Info size={16} / key={685943}>,
+      success: <Check size={16} / key={498722}>,
+      warning: <AlertTriangle size={16} / key={288901}>,
+      error: <X size={16} / key={185282}>,
     };
     return icons[type];
   };
 
   return (
-    <div
+    <div;
       className={`mega-alert ${className}`}
       style={{
         padding: "16px",
@@ -645,23 +645,23 @@ export const MegaAlert: React.FC<{
         gap: "12px",
         ...getAlertStyle(),
       }}
-    >
-      <div style={{ flexShrink: 0, marginTop: "2px" }}>{getIcon()}</div>
+     key={842343}>
+      <div style={{ flexShrink: 0, marginTop: "2px" }} key={145830}>{getIcon()}</div>
 
-      <div style={{ flex: 1 }}>
+      <div style={{ flex: 1 }} key={130883}>
         {title && (
-          <CyberText
+          <CyberText;
             variant="body"
             style={{ fontWeight: "600", marginBottom: "4px" }}
-          >
+           key={361048}>
             {title}
           </CyberText>
         )}
-        <div>{children}</div>
+        <div key={241917}>{children}</div>
       </div>
 
       {dismissible && (
-        <button
+        <button;
           onClick={onDismiss}
           style={{
             background: "none",
@@ -674,8 +674,8 @@ export const MegaAlert: React.FC<{
             alignItems: "center",
             justifyContent: "center",
           }}
-        >
-          <X size={14} />
+         key={830388}>
+          <X size={14} / key={10966}>
         </button>
       )}
     </div>
@@ -723,18 +723,18 @@ export const MegaSkeleton: React.FC<{
   };
 
   return (
-    <div
+    <div;
       className={`mega-skeleton ${className}`}
       style={{
         ...baseStyle,
         ...variantStyle[variant],
         ...animationStyle[animation],
       }}
-    />
+    / key={538061}>
   );
 };
 
-// Default export object for convenience
+// Default export object for convenience;
 export default {
   MegaButton,
   MegaCard,

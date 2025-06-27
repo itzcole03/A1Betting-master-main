@@ -4,7 +4,7 @@ import StatusIndicator from "../ui/StatusIndicator";
 const CyberHeader = () => {
     const { user, theme, setTheme } = useCyberApp();
     const toggleTheme = () => {
-        const newTheme = theme === "light" ? "dark" : "light";
+
         setTheme(newTheme);
         if (newTheme === "dark") {
             document.documentElement.classList.add("dark");

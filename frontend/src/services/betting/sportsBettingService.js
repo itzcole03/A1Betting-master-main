@@ -29,14 +29,14 @@ class SportsBettingService {
     }
     async getMatchPrediction(homeTeam, awayTeam, league, date) {
         try {
-            // Fetch all required data
+            // Fetch all required data;
             const [odds, homeStats, awayStats, historicalMatches] = await Promise.all([
                 this.fetchOdds(homeTeam, awayTeam, league, date),
                 this.fetchTeamStats(homeTeam, league),
                 this.fetchTeamStats(awayTeam, league),
                 this.fetchHistoricalMatches(homeTeam, awayTeam, league),
             ]);
-            // Engineer features from raw data
+            // Engineer features from raw data;
             const features = await featureEngineeringService.engineerFeatures({
                 odds,
                 homeStats,
@@ -45,23 +45,23 @@ class SportsBettingService {
                 league,
                 date,
             });
-            // Get optimized prediction using all ML models
+            // Get optimized prediction using all ML models;
             const optimizedPrediction = await predictionOptimizationService.getOptimizedPrediction({
                 features,
                 eventType: 'match',
                 sport: 'football',
                 league,
             });
-            // Assess risk and calculate optimal stake
+            // Assess risk and calculate optimal stake;
             const riskAssessment = await riskModelingService.assessRisk({
                 prediction: optimizedPrediction.prediction,
                 features,
                 odds,
             });
-            // Calculate probabilities
-            const probabilities = this.calculateProbabilities(optimizedPrediction, odds);
-            // Determine best betting opportunity
-            const recommendedBet = this.determineOptimalBet(probabilities, odds, riskAssessment);
+            // Calculate probabilities;
+
+            // Determine best betting opportunity;
+
             return {
                 homeWinProbability: probabilities.home,
                 awayWinProbability: probabilities.away,
@@ -76,7 +76,7 @@ class SportsBettingService {
             };
         }
         catch (error) {
-            console.error('Failed to generate match prediction:', error);
+            // console statement removed
             throw error;
         }
     }
@@ -100,7 +100,7 @@ class SportsBettingService {
             return await response.json();
         }
         catch (error) {
-            console.error('Error fetching odds:', error);
+            // console statement removed
             throw error;
         }
     }
@@ -122,7 +122,7 @@ class SportsBettingService {
             return await response.json();
         }
         catch (error) {
-            console.error('Error fetching team stats:', error);
+            // console statement removed
             throw error;
         }
     }
@@ -137,7 +137,7 @@ class SportsBettingService {
                     homeTeam,
                     awayTeam,
                     league,
-                    limit: 50, // Last 50 matches
+                    limit: 50, // Last 50 matches;
                 }),
             });
             if (!response.ok) {
@@ -146,31 +146,31 @@ class SportsBettingService {
             return await response.json();
         }
         catch (error) {
-            console.error('Error fetching historical matches:', error);
+            // console statement removed
             throw error;
         }
     }
     calculateProbabilities(prediction, odds) {
-        // Convert model prediction to probabilities
+        // Convert model prediction to probabilities;
         const rawProbabilities = {
             home: prediction.prediction,
             away: 1 - prediction.prediction,
             draw: prediction.drawProbability || 0,
         };
-        // Adjust probabilities based on market odds
+        // Adjust probabilities based on market odds;
         const marketProbabilities = odds.map(odd => ({
             home: 1 / odd.homeOdds,
             away: 1 / odd.awayOdds,
             draw: odd.drawOdds ? 1 / odd.drawOdds : 0,
         }));
-        // Combine model and market probabilities
+        // Combine model and market probabilities;
         const combinedProbabilities = {
             home: (rawProbabilities.home + marketProbabilities[0].home) / 2,
             away: (rawProbabilities.away + marketProbabilities[0].away) / 2,
             draw: (rawProbabilities.draw + marketProbabilities[0].draw) / 2,
         };
-        // Normalize probabilities
-        const total = combinedProbabilities.home + combinedProbabilities.away + combinedProbabilities.draw;
+        // Normalize probabilities;
+
         return {
             home: combinedProbabilities.home / total,
             away: combinedProbabilities.away / total,
@@ -178,19 +178,19 @@ class SportsBettingService {
         };
     }
     determineOptimalBet(probabilities, odds, riskAssessment) {
-        // Calculate expected value for each outcome
+        // Calculate expected value for each outcome;
         const ev = {
             home: probabilities.home * odds[0].homeOdds - (1 - probabilities.home),
             away: probabilities.away * odds[0].awayOdds - (1 - probabilities.away),
-            draw: odds[0].drawOdds
+            draw: odds[0].drawOdds;
                 ? probabilities.draw * odds[0].drawOdds - (1 - probabilities.draw)
                 : -1,
         };
-        // Find best opportunity
+        // Find best opportunity;
         const bestBet = Object.entries(ev).reduce((best, [type, value]) => {
             return value > best.value ? { type, value } : best;
         }, { type: 'none', value: 0 });
-        // Only recommend bet if there's positive expected value
+        // Only recommend bet if there's positive expected value;
         if (bestBet.value <= 0) {
             return {
                 type: 'none',
@@ -200,38 +200,38 @@ class SportsBettingService {
                 confidence: 0,
             };
         }
-        // Calculate optimal stake using Kelly Criterion
+        // Calculate optimal stake using Kelly Criterion;
         const kellyFraction = this.calculateKellyStake(bestBet.type === 'home'
-            ? odds[0].homeOdds
+            ? odds[0].homeOdds;
             : bestBet.type === 'away'
-                ? odds[0].awayOdds
+                ? odds[0].awayOdds;
                 : odds[0].drawOdds || 0, bestBet.type === 'home'
-            ? probabilities.home
+            ? probabilities.home;
             : bestBet.type === 'away'
-                ? probabilities.away
+                ? probabilities.away;
                 : probabilities.draw);
-        // Adjust stake based on risk assessment
-        const adjustedStake = kellyFraction * riskAssessment.riskMetrics.maxStake;
+        // Adjust stake based on risk assessment;
+
         return {
             type: bestBet.type,
             stake: adjustedStake,
             odds: bestBet.type === 'home'
-                ? odds[0].homeOdds
+                ? odds[0].homeOdds;
                 : bestBet.type === 'away'
-                    ? odds[0].awayOdds
+                    ? odds[0].awayOdds;
                     : odds[0].drawOdds || 0,
             expectedValue: bestBet.value,
             confidence: riskAssessment.riskMetrics.confidence,
         };
     }
     calculateKellyStake(odds, probability) {
-        const q = 1 - probability;
-        const b = odds - 1;
-        const f = (b * probability - q) / b;
-        return Math.max(0, Math.min(f, 0.2)); // Cap at 20% of bankroll
+
+
+
+        return Math.max(0, Math.min(f, 0.2)); // Cap at 20% of bankroll;
     }
     determineRiskLevel(riskAssessment) {
-        const riskScore = riskAssessment.riskMetrics.overallRisk;
+
         if (riskScore < 0.3)
             return 'low';
         if (riskScore < 0.7)
@@ -244,7 +244,7 @@ class SportsBettingService {
             away: probabilities.away * odds[0].awayOdds - 1,
             draw: odds[0].drawOdds ? probabilities.draw * odds[0].drawOdds - 1 : -1,
         };
-        const bestValue = Math.max(...Object.values(values));
+
         if (bestValue > 0.2)
             return 'Strong Value';
         if (bestValue > 0.1)

@@ -1,4 +1,4 @@
-import { BettingOpportunity } from './bettingStrategy';
+import { BettingOpportunity } from './bettingStrategy.ts';
 export interface BetRecord {
     id: string;
     sportId: string;

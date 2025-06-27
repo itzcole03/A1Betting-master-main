@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { cn } from '@/utils/classNames';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState  } from 'react.ts';
+import { cn } from '@/utils/classNames.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 
 export interface TooltipProps {
   content: React.ReactNode;
@@ -35,7 +35,7 @@ const positions = {
   },
 };
 
-export const Tooltip: React.FC<TooltipProps> = ({
+export const Tooltip: React.FC<TooltipProps key={457}> = ({
   content,
   children,
   position = 'top',
@@ -63,31 +63,31 @@ export const Tooltip: React.FC<TooltipProps> = ({
   };
 
   return (
-    <div
+    <div;
       className="relative inline-block"
       onBlur={hideTooltip}
       onFocus={showTooltip}
       onMouseEnter={showTooltip}
       onMouseLeave={hideTooltip}
-    >
+     key={296066}>
       {children}
-      <AnimatePresence>
+      <AnimatePresence key={359944}>
         {isVisible && (
-          <motion.div
+          <motion.div;
             animate={{ opacity: 1, scale: 1 }}
             className={cn(
               'absolute z-50 px-2 py-1 text-sm text-white bg-gray-800 dark:bg-gray-200 dark:text-gray-800 rounded shadow-lg',
               positions[position].tooltip,
-              className
+              className;
             )}
             exit={{ opacity: 0, scale: 0.95 }}
             initial={{ opacity: 0, scale: 0.95 }}
             style={{ maxWidth }}
             transition={{ duration: 0.1 }}
-          >
+           key={593954}>
             {content}
             {arrow && (
-              <div className={cn('absolute w-0 h-0 border-4', positions[position].arrow)} />
+              <div className={cn('absolute w-0 h-0 border-4', positions[position].arrow)} / key={229322}>
             )}
           </motion.div>
         )}

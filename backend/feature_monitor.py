@@ -1,5 +1,5 @@
 # Copied and adapted from Newfolder (example structure)
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict
 
 
@@ -9,7 +9,7 @@ class FeatureMonitor:
 
     def record(self, features: Dict[str, Any], processing_time: float):
         metric = {
-            "timestamp": datetime.utcnow(),
+            "timestamp": datetime.now(timezone.utc),
             "feature_count": len(features),
             "processing_time": processing_time,
         }

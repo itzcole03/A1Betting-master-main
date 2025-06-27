@@ -1,6 +1,6 @@
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
-import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService';
-import { XGBoostConfig } from './XGBoostModel';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
+import { ModelMetrics, ModelPrediction } from './AdvancedModelArchitectureService.ts';
+import { XGBoostConfig } from './XGBoostModel.ts';
 export interface MetaModelConfig {
     modelType: string;
     features: string[];

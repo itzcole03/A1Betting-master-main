@@ -1,5 +1,5 @@
-import { AxiosInstance } from 'axios';
-import { BaseApiService, ApiResponse } from './ApiService';
+import { AxiosInstance } from 'axios.ts';
+import { BaseApiService, ApiResponse } from './ApiService.ts';
 export interface PrizePicksProp {
     id: string;
     type: string;

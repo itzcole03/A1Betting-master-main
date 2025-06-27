@@ -1,5 +1,5 @@
-import { ModelMetadata } from './ModelMetadata';
-import { ModelMetrics } from '../types/ModelMetrics';
+import { ModelMetadata } from './ModelMetadata.ts';
+import { ModelMetrics } from '@/types/ModelMetrics.ts';
 
 export class ModelVersion {
   private readonly major: number;
@@ -15,7 +15,7 @@ export class ModelVersion {
     minor: number,
     patch: number,
     metadata: ModelMetadata,
-    metrics: ModelMetrics
+    metrics: ModelMetrics;
   ) {
     this.major = major;
     this.minor = minor;
@@ -84,7 +84,7 @@ export class ModelVersion {
       json.version.split('.')[1],
       json.version.split('.')[2],
       json.metadata,
-      json.metrics
+      json.metrics;
     );
   }
 }

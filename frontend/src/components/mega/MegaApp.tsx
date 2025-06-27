@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from 'react.ts';
 import {
   CYBER_COLORS,
   CYBER_GRADIENTS,
   CyberContainer,
   CyberText,
-} from "./CyberTheme";
+} from './CyberTheme.ts';
 import {
   UniversalDashboard,
   UniversalMoneyMaker,
   UniversalAnalytics,
-} from "../index";
-import MegaAdminPanel from "./MegaAdminPanel";
-import MegaPrizePicks from "./MegaPrizePicks";
-import { MegaSidebar, MegaHeader, MegaAppShell } from "./MegaLayout";
-import { MegaCard, MegaButton } from "./MegaUI";
+} from '@/index.ts';
+import MegaAdminPanel from './MegaAdminPanel.ts';
+import MegaPrizePicks from './MegaPrizePicks.ts';
+import { MegaSidebar, MegaHeader, MegaAppShell } from './MegaLayout.ts';
+import { MegaCard, MegaButton } from './MegaUI.ts';
 import {
   MegaArbitrageEngine,
   MegaPredictionEngine,
   MegaRevolutionaryInterface,
-} from "./MegaFeatures";
+} from './MegaFeatures.ts';
 import {
   Brain,
   Target,
@@ -41,9 +41,9 @@ import {
   Sun,
   Trophy,
   UserCog,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// MASTER MEGA APP - Consolidates all functionality with cyber theme
+// MASTER MEGA APP - Consolidates all functionality with cyber theme;
 const MegaApp: React.FC = () => {
   const [currentPage, setCurrentPage] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -62,7 +62,7 @@ const MegaApp: React.FC = () => {
     totalProfit: 47230,
   });
 
-  // Auto-update system metrics
+  // Auto-update system metrics;
   useEffect(() => {
     const interval = setInterval(() => {
       setConnectedSources(Math.floor(Math.random() * 5) + 10);
@@ -138,17 +138,14 @@ const MegaApp: React.FC = () => {
     return { icon: Wifi, text: "Connected", color: CYBER_COLORS.primary };
   };
 
-  const status = getConnectionStatus();
-  const StatusIcon = status.icon;
 
   const renderCurrentPage = () => {
-    const currentItem = navigationItems.find((item) => item.id === currentPage);
 
-    // Handle components with direct implementations
+    // Handle components with direct implementations;
     if (currentItem?.component) {
-      const Component = currentItem.component;
+
       return (
-        <Component
+        <Component;
           connectedSources={connectedSources}
           dataQuality={dataQuality}
           userBalance={user.balance}
@@ -156,79 +153,79 @@ const MegaApp: React.FC = () => {
           autoMode={true}
           autoRefresh={true}
           showAdvanced={true}
-        />
+        / key={762359}>
       );
     }
 
-    // Use MegaFeatures for enhanced functionality
+    // Use MegaFeatures for enhanced functionality;
     switch (currentPage) {
       case "arbitrage":
         return (
-          <div style={{ padding: "24px" }}>
-            <MegaArbitrageEngine
+          <div style={{ padding: "24px" }} key={71406}>
+            <MegaArbitrageEngine;
               isScanning={true}
-              onToggleScanning={(scanning) =>
-                console.log("Arbitrage scanning:", scanning)
+              onToggleScanning={(scanning) = key={49360}>
+                // console statement removed
               }
             />
           </div>
         );
       case "predictions":
         return (
-          <div style={{ padding: "24px" }}>
-            <MegaPredictionEngine isRealTime={true} />
+          <div style={{ padding: "24px" }} key={71406}>
+            <MegaPredictionEngine isRealTime={true} / key={803739}>
           </div>
         );
       case "real-time":
         return (
-          <div style={{ padding: "24px" }}>
-            <MegaRevolutionaryInterface />
+          <div style={{ padding: "24px" }} key={71406}>
+            <MegaRevolutionaryInterface / key={913485}>
           </div>
         );
       default:
-        // Fallback for any remaining placeholder pages
+        // Fallback for any remaining placeholder pages;
         if (currentItem && !currentItem.component) {
           return (
-            <div style={{ padding: "24px" }}>
-              <MegaCard
+            <div style={{ padding: "24px" }} key={71406}>
+              <MegaCard;
                 variant="glass"
                 padding="lg"
                 style={{ textAlign: "center" }}
-              >
-                <div style={{ marginBottom: "16px" }}>
-                  <Activity size={48} color={CYBER_COLORS.primary} />
+               key={856197}>
+                <div style={{ marginBottom: "16px" }} key={864356}>
+                  <Activity size={48} color={CYBER_COLORS.primary} / key={687758}>
                 </div>
-                <CyberText
+                <CyberText;
                   variant="title"
                   style={{ marginBottom: "8px", fontSize: "24px" }}
-                >
+                 key={351808}>
                   {currentItem.label}
                 </CyberText>
-                <CyberText variant="body" color="muted">
-                  {currentItem.description} - Coming Soon
+                <CyberText variant="body" color="muted" key={892775}>
+                  {currentItem.description} - Coming Soon;
                 </CyberText>
               </MegaCard>
             </div>
           );
         }
 
-        // Default to dashboard
+        // Default to dashboard;
         return (
-          <MegaDashboard
+          <MegaDashboard;
             connectedSources={connectedSources}
             dataQuality={dataQuality}
             userStats={user}
-          />
+          / key={861551}>
         );
     }
   };
 
   return (
-    <MegaAppShell
+    <MegaAppShell;
       sidebar={
-        <MegaSidebar
+        <MegaSidebar;
           isOpen={sidebarOpen}
-          onToggle={() => setSidebarOpen(!sidebarOpen)}
+          onToggle={() = key={632925}> setSidebarOpen(!sidebarOpen)}
           navigationItems={navigationItems}
           currentPage={currentPage}
           onNavigate={setCurrentPage}
@@ -241,16 +238,16 @@ const MegaApp: React.FC = () => {
         />
       }
       header={
-        <MegaHeader
+        <MegaHeader;
           title={
-            navigationItems.find((item) => item.id === currentPage)?.label ||
+            navigationItems.find((item) = key={890690}> item.id === currentPage)?.label ||
             "Dashboard"
           }
           subtitle={
-            navigationItems.find((item) => item.id === currentPage)?.description
+            navigationItems.find((item) => item.id === currentPage)?.description;
           }
           notifications={notifications}
-          onNotificationsClick={() => console.log("Notifications clicked")}
+          onNotificationsClick={() => // console statement removed}
           user={user}
           darkMode={darkMode}
           onDarkModeToggle={() => setDarkMode(!darkMode)}

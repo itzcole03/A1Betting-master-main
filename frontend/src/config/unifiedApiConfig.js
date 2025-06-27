@@ -1,8 +1,8 @@
-// Unified API Configuration for A1Betting Platform
+// Unified API Configuration for A1Betting Platform;
 // Consolidates all external API integrations (Sportradar, TheOdds, PrizePicks, etc.)
-// Environment-based API configuration
+// Environment-based API configuration;
 export const API_ENDPOINTS = {
-    // Sportradar Sports Data API
+    // Sportradar Sports Data API;
     SPORTRADAR: {
         name: "Sportradar",
         baseUrl: import.meta.env.VITE_SPORTRADAR_API_ENDPOINT ||
@@ -12,7 +12,7 @@ export const API_ENDPOINTS = {
         timeout: 15000,
         rateLimit: {
             requests: 1000,
-            period: 60000, // 1000 requests per minute
+            period: 60000, // 1000 requests per minute;
         },
         retryConfig: {
             maxRetries: 3,
@@ -20,7 +20,7 @@ export const API_ENDPOINTS = {
             initialDelay: 1000,
         },
     },
-    // The Odds API for live betting odds
+    // The Odds API for live betting odds;
     THE_ODDS_API: {
         name: "The Odds API",
         baseUrl: import.meta.env.VITE_THEODDS_API_ENDPOINT ||
@@ -30,7 +30,7 @@ export const API_ENDPOINTS = {
         timeout: 10000,
         rateLimit: {
             requests: 500,
-            period: 60000, // 500 requests per minute
+            period: 60000, // 500 requests per minute;
         },
         retryConfig: {
             maxRetries: 2,
@@ -38,7 +38,7 @@ export const API_ENDPOINTS = {
             initialDelay: 500,
         },
     },
-    // PrizePicks for daily fantasy sports
+    // PrizePicks for daily fantasy sports;
     PRIZEPICKS: {
         name: "PrizePicks",
         baseUrl: import.meta.env.VITE_PRIZEPICKS_API_ENDPOINT ||
@@ -56,7 +56,7 @@ export const API_ENDPOINTS = {
             initialDelay: 750,
         },
     },
-    // ESPN for news and additional stats
+    // ESPN for news and additional stats;
     ESPN: {
         name: "ESPN",
         baseUrl: import.meta.env.VITE_ESPN_API_ENDPOINT ||
@@ -73,7 +73,7 @@ export const API_ENDPOINTS = {
             initialDelay: 500,
         },
     },
-    // Daily Fantasy integration
+    // Daily Fantasy integration;
     DAILY_FANTASY: {
         name: "Daily Fantasy",
         baseUrl: import.meta.env.VITE_DAILYFANTASY_API_ENDPOINT ||
@@ -91,7 +91,7 @@ export const API_ENDPOINTS = {
             initialDelay: 1000,
         },
     },
-    // Weather API for outdoor sports
+    // Weather API for outdoor sports;
     WEATHER: {
         name: "Weather API",
         baseUrl: import.meta.env.VITE_WEATHER_API_ENDPOINT || "https://api.weatherapi.com",
@@ -108,7 +108,7 @@ export const API_ENDPOINTS = {
             initialDelay: 500,
         },
     },
-    // News/Sentiment Analysis
+    // News/Sentiment Analysis;
     NEWS_API: {
         name: "News API",
         baseUrl: import.meta.env.VITE_NEWS_API_ENDPOINT || "https://newsapi.org",
@@ -117,7 +117,7 @@ export const API_ENDPOINTS = {
         timeout: 8000,
         rateLimit: {
             requests: 500,
-            period: 86400000, // 500 requests per day for free tier
+            period: 86400000, // 500 requests per day for free tier;
         },
         retryConfig: {
             maxRetries: 2,
@@ -125,7 +125,7 @@ export const API_ENDPOINTS = {
             initialDelay: 1000,
         },
     },
-    // Injury Reports
+    // Injury Reports;
     INJURY_API: {
         name: "Injury API",
         baseUrl: import.meta.env.VITE_INJURY_API_ENDPOINT || "https://api.sportsdata.io",
@@ -143,45 +143,45 @@ export const API_ENDPOINTS = {
         },
     },
 };
-// Cache configuration for different data types
+// Cache configuration for different data types;
 export const CACHE_CONFIG = {
     LIVE_ODDS: {
         enabled: true,
-        ttl: 30000, // 30 seconds for live odds
+        ttl: 30000, // 30 seconds for live odds;
         maxSize: 1000,
     },
     PLAYER_STATS: {
         enabled: true,
-        ttl: 300000, // 5 minutes for player stats
+        ttl: 300000, // 5 minutes for player stats;
         maxSize: 5000,
     },
     GAME_SCHEDULES: {
         enabled: true,
-        ttl: 3600000, // 1 hour for schedules
+        ttl: 3600000, // 1 hour for schedules;
         maxSize: 2000,
     },
     INJURIES: {
         enabled: true,
-        ttl: 1800000, // 30 minutes for injuries
+        ttl: 1800000, // 30 minutes for injuries;
         maxSize: 1000,
     },
     NEWS: {
         enabled: true,
-        ttl: 900000, // 15 minutes for news
+        ttl: 900000, // 15 minutes for news;
         maxSize: 500,
     },
     WEATHER: {
         enabled: true,
-        ttl: 1800000, // 30 minutes for weather
+        ttl: 1800000, // 30 minutes for weather;
         maxSize: 200,
     },
     PREDICTIONS: {
         enabled: true,
-        ttl: 300000, // 5 minutes for predictions
+        ttl: 300000, // 5 minutes for predictions;
         maxSize: 2000,
     },
 };
-// Sports and leagues configuration
+// Sports and leagues configuration;
 export const SPORTS_CONFIG = {
     NBA: {
         id: "basketball_nba",
@@ -232,7 +232,7 @@ export const SPORTS_CONFIG = {
         oddsApiKey: "basketball_ncaab",
     },
 };
-// Market types for betting
+// Market types for betting;
 export const MARKET_TYPES = {
     SPREAD: "spreads",
     TOTALS: "totals",
@@ -242,7 +242,7 @@ export const MARKET_TYPES = {
     ALTERNATE_SPREADS: "alternate_spreads",
     ALTERNATE_TOTALS: "alternate_totals",
 };
-// Bookmakers configuration
+// Bookmakers configuration;
 export const BOOKMAKERS = {
     DRAFTKINGS: {
         id: "draftkings",
@@ -275,7 +275,7 @@ export const BOOKMAKERS = {
         priority: 5,
     },
 };
-// API Response status codes
+// API Response status codes;
 export const API_STATUS = {
     SUCCESS: 200,
     CREATED: 201,
@@ -287,14 +287,14 @@ export const API_STATUS = {
     SERVER_ERROR: 500,
     SERVICE_UNAVAILABLE: 503,
 };
-// Request priorities for queue management
+// Request priorities for queue management;
 export const REQUEST_PRIORITIES = {
-    CRITICAL: 1, // Live odds during games
-    HIGH: 2, // Player props, injury updates
-    MEDIUM: 3, // Schedule updates, historical data
-    LOW: 4, // News, weather, non-urgent updates
+    CRITICAL: 1, // Live odds during games;
+    HIGH: 2, // Player props, injury updates;
+    MEDIUM: 3, // Schedule updates, historical data;
+    LOW: 4, // News, weather, non-urgent updates;
 };
-// Feature flags for API integrations
+// Feature flags for API integrations;
 export const FEATURE_FLAGS = {
     REAL_TIME_ODDS: import.meta.env.VITE_ENABLE_REAL_TIME_ODDS !== "false",
     LIVE_PREDICTIONS: import.meta.env.VITE_ENABLE_LIVE_PREDICTIONS !== "false",
@@ -305,44 +305,44 @@ export const FEATURE_FLAGS = {
     ADVANCED_ANALYTICS: import.meta.env.VITE_ENABLE_ADVANCED_ANALYTICS !== "false",
     DEBUG_MODE: import.meta.env.NODE_ENV === "development",
 };
-// Validation rules for API responses
+// Validation rules for API responses;
 export const VALIDATION_RULES = {
-    MAX_RESPONSE_SIZE: 50 * 1024 * 1024, // 50MB
+    MAX_RESPONSE_SIZE: 50 * 1024 * 1024, // 50MB;
     MIN_CONFIDENCE_THRESHOLD: 0.6,
     MAX_ODDS_VALUE: 50.0,
     MIN_ODDS_VALUE: 1.01,
-    MAX_PREDICTION_AGE: 300000, // 5 minutes
+    MAX_PREDICTION_AGE: 300000, // 5 minutes;
     REQUIRED_FIELDS: {
         ODDS: ["eventId", "market", "odds", "timestamp"],
         PREDICTION: ["confidence", "prediction", "timestamp"],
         PLAYER_STATS: ["playerId", "stats", "gameId", "timestamp"],
     },
 };
-// Export utility function to get endpoint by name
+// Export utility function to get endpoint by name;
 export const getApiEndpoint = (name) => {
-    const endpoint = API_ENDPOINTS[name];
+
     if (!endpoint) {
         throw new Error(`API endpoint '${name}' not found`);
     }
     return endpoint;
 };
-// Export utility function to check if API is available
+// Export utility function to check if API is available;
 export const isApiAvailable = (name) => {
-    const endpoint = API_ENDPOINTS[name];
+
     return !!(endpoint &&
         endpoint.baseUrl &&
         (endpoint.apiKey || name === "ESPN"));
 };
-// Export utility function to build API URL
+// Export utility function to build API URL;
 export const buildApiUrl = (endpointName, path, params) => {
-    const endpoint = getApiEndpoint(endpointName);
-    let url = `${endpoint.baseUrl}`;
+
+    const url = `${endpoint.baseUrl}`;
     if (endpoint.version) {
         url += `/${endpoint.version}`;
     }
     url += path;
     if (params) {
-        const searchParams = new URLSearchParams();
+
         Object.entries(params).forEach(([key, value]) => {
             searchParams.append(key, value.toString());
         });
@@ -350,7 +350,7 @@ export const buildApiUrl = (endpointName, path, params) => {
     }
     return url;
 };
-// Default export with all configurations
+// Default export with all configurations;
 export default {
     API_ENDPOINTS,
     CACHE_CONFIG,

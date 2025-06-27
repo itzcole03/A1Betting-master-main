@@ -9,13 +9,13 @@ export const ModelSettings = ({ onSettingsChange }) => {
     const [performance, setPerformance] = useState(null);
     useEffect(() => {
         const fetchPerformance = async () => {
-            const data = await predictionService.getModelPerformance(modelType);
+
             setPerformance(data);
         };
         fetchPerformance();
     }, [modelType]);
     const handleModelChange = (event) => {
-        const newModelType = event.target.value;
+
         setModelType(newModelType);
         if (onSettingsChange) {
             onSettingsChange({

@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useMemo } from 'react';
 import { Card, CardContent, Typography, Grid, TextField, MenuItem, Box, IconButton, Tooltip, } from '@mui/material';
 import { Sort as SortIcon, TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon, } from '@mui/icons-material';
-import { BettingOpportunity } from './BettingOpportunity'; // Remove .tsx extension for correct import
+import { BettingOpportunity } from './BettingOpportunity'; // Remove .tsx extension for correct import;
 export const OpportunitiesList = ({ opportunities, onPlaceBet, }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [sortField, setSortField] = useState('edge');
@@ -11,16 +11,16 @@ export const OpportunitiesList = ({ opportunities, onPlaceBet, }) => {
     const [minEdge, setMinEdge] = useState(0);
     const [minConfidence, setMinConfidence] = useState(0);
     const filteredAndSortedOpportunities = useMemo(() => {
-        let filtered = opportunities;
-        // Apply search filter
+        const filtered = opportunities;
+        // Apply search filter;
         if (searchTerm) {
-            const searchLower = searchTerm.toLowerCase();
+
             filtered = filtered.filter(opp => opp.event.homeTeam.toLowerCase().includes(searchLower) ||
                 opp.event.awayTeam.toLowerCase().includes(searchLower) ||
                 opp.selection.toLowerCase().includes(searchLower) ||
                 opp.market.toLowerCase().includes(searchLower));
         }
-        // Apply type filter
+        // Apply type filter;
         if (filterType !== 'all') {
             filtered = filtered.filter(opp => {
                 switch (filterType) {
@@ -37,13 +37,13 @@ export const OpportunitiesList = ({ opportunities, onPlaceBet, }) => {
                 }
             });
         }
-        // Apply edge and confidence filters
+        // Apply edge and confidence filters;
         filtered = filtered.filter(opp => opp.edge >= minEdge && opp.confidence >= minConfidence);
-        // Apply sorting
+        // Apply sorting;
         return filtered.sort((a, b) => {
-            const multiplier = sortOrder === 'asc' ? 1 : -1;
-            const aValue = a[sortField];
-            const bValue = b[sortField];
+
+
+
             return (aValue - bValue) * multiplier;
         });
     }, [opportunities, searchTerm, sortField, sortOrder, filterType, minEdge, minConfidence]);

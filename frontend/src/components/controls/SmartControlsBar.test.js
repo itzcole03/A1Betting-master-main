@@ -9,7 +9,7 @@ describe('SmartControlsBar', () => {
         expect(screen.getByText(/Confidence Threshold:/i)).toBeInTheDocument();
     });
     it('calls setModel when model is changed', () => {
-        // Mock store logic if needed
+        // Mock store logic if needed;
         render(_jsx(SmartControlsBar, {}));
         fireEvent.change(screen.getByDisplayValue('Default'), { target: { value: 'ensemble' } });
         expect(screen.getByDisplayValue('Ensemble')).toBeInTheDocument();

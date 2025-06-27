@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface AlertProps {
     type?: 'info' | 'success' | 'warning' | 'error';
     title?: string;

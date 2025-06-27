@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useCallback  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   DollarSign,
   TrendingUp,
@@ -12,20 +12,20 @@ import {
   Cpu,
   Eye,
   RefreshCw,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// Import existing Money Maker component
-import UltimateMoneyMaker from "../MoneyMaker/UltimateMoneyMaker";
+// Import existing Money Maker component;
+import UltimateMoneyMaker from '@/MoneyMaker/UltimateMoneyMaker.ts';
 
-// Cyber UI Components
-import GlassCard from "../ui/GlassCard";
-import CyberButton from "../ui/CyberButton";
-import MetricCard from "../ui/MetricCard";
-import StatusIndicator from "../ui/StatusIndicator";
+// Cyber UI Components;
+import GlassCard from '@/ui/GlassCard.ts';
+import CyberButton from '@/ui/CyberButton.ts';
+import MetricCard from '@/ui/MetricCard.ts';
+import StatusIndicator from '@/ui/StatusIndicator.ts';
 
-// Existing services and types
-import { useBetting, useUser } from "../../store/unified/UnifiedStoreManager";
-import { mlEngine } from "../../services/ml/UnifiedMLEngine";
+// Existing services and types;
+import { useBetting, useUser } from '@/store/unified/UnifiedStoreManager.ts';
+import { mlEngine } from '@/services/ml/UnifiedMLEngine.ts';
 
 interface BettingOpportunity {
   id: string;
@@ -56,11 +56,11 @@ interface CyberMoneyMakerState {
 }
 
 const CyberUltimateMoneyMaker: React.FC = () => {
-  // State management
-  const [state, setState] = useState<CyberMoneyMakerState>({
+  // State management;
+  const [state, setState] = useState<CyberMoneyMakerState key={21473}>({
     isScanning: false,
     autoMode: false,
-    scanInterval: 30000, // 30 seconds
+    scanInterval: 30000, // 30 seconds;
     opportunities: [],
     totalProfit: 0,
     successRate: 0,
@@ -69,18 +69,18 @@ const CyberUltimateMoneyMaker: React.FC = () => {
   });
 
   const [selectedOpportunity, setSelectedOpportunity] =
-    useState<BettingOpportunity | null>(null);
+    useState<BettingOpportunity | null key={641733}>(null);
   const [isPlacingBet, setIsPlacingBet] = useState(false);
 
-  // Existing store integration
+  // Existing store integration;
   const { bankroll, addBet, addOpportunity } = useBetting();
   const { preferences } = useUser();
 
-  // Generate mock opportunities with cyber enhancement
+  // Generate mock opportunities with cyber enhancement;
   const generateOpportunities = useCallback(async (): Promise<
     BettingOpportunity[]
   > => {
-    // Simulate AI scanning process
+    // Simulate AI scanning process;
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
     const mockOpportunities: BettingOpportunity[] = [
@@ -137,12 +137,12 @@ const CyberUltimateMoneyMaker: React.FC = () => {
     return mockOpportunities;
   }, []);
 
-  // Cyber scanning function
+  // Cyber scanning function;
   const performCyberScan = useCallback(async () => {
     setState((prev) => ({ ...prev, isScanning: true }));
 
     try {
-      const opportunities = await generateOpportunities();
+
       const totalProfit = opportunities.reduce(
         (sum, opp) => sum + opp.profit,
         0,
@@ -160,12 +160,12 @@ const CyberUltimateMoneyMaker: React.FC = () => {
         isScanning: false,
       }));
     } catch (error) {
-      console.error("Cyber scan failed:", error);
+      // console statement removed
       setState((prev) => ({ ...prev, isScanning: false }));
     }
   }, [generateOpportunities]);
 
-  // Auto scanning effect
+  // Auto scanning effect;
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
@@ -178,20 +178,20 @@ const CyberUltimateMoneyMaker: React.FC = () => {
     };
   }, [state.autoMode, state.scanInterval, performCyberScan]);
 
-  // Initial scan
+  // Initial scan;
   useEffect(() => {
     performCyberScan();
   }, [performCyberScan]);
 
-  // Handle bet placement with cyber enhancement
+  // Handle bet placement with cyber enhancement;
   const handleCyberBetPlacement = async (opportunity: BettingOpportunity) => {
     setIsPlacingBet(true);
 
     try {
-      // Simulate bet placement process
+      // Simulate bet placement process;
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      // Add to betting store
+      // Add to betting store;
       await addBet({
         id: `bet-${Date.now()}`,
         amount: bankroll * opportunity.kellySize,
@@ -205,10 +205,10 @@ const CyberUltimateMoneyMaker: React.FC = () => {
         expectedValue: opportunity.expectedValue,
       });
 
-      // Success notification would go here
-      console.log(`✅ Cyber bet placed: ${opportunity.description}`);
+      // Success notification would go here;
+      // console statement removed
     } catch (error) {
-      console.error("❌ Cyber bet placement failed:", error);
+      // console statement removed
     } finally {
       setIsPlacingBet(false);
       setSelectedOpportunity(null);
@@ -244,68 +244,68 @@ const CyberUltimateMoneyMaker: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-slide-in-up">
+    <div className="space-y-8 animate-slide-in-up" key={741941}>
       {/* Cyber Header */}
-      <div className="text-center mb-8">
-        <div className="text-6xl mb-6 text-electric-400 float-element">
-          <DollarSign className="w-16 h-16 mx-auto" />
+      <div className="text-center mb-8" key={490373}>
+        <div className="text-6xl mb-6 text-electric-400 float-element" key={181314}>
+          <DollarSign className="w-16 h-16 mx-auto" / key={894236}>
         </div>
-        <h1 className="holographic text-4xl font-black mb-4">
-          CYBER MONEY MAKER
+        <h1 className="holographic text-4xl font-black mb-4" key={25617}>
+          CYBER MONEY MAKER;
         </h1>
-        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-          AI-powered profit maximization with quantum-enhanced opportunity
-          detection
+        <p className="text-xl text-gray-400 max-w-2xl mx-auto" key={760682}>
+          AI-powered profit maximization with quantum-enhanced opportunity;
+          detection;
         </p>
       </div>
 
       {/* Control Panel */}
-      <GlassCard title="Quantum Control Center" glowing={state.isScanning}>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <MetricCard
+      <GlassCard title="Quantum Control Center" glowing={state.isScanning} key={312316}>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6" key={66564}>
+          <MetricCard;
             label="Total Profit"
             value={`$${state.totalProfit.toFixed(2)}`}
             icon="fa-dollar-sign"
             change="+12.4%"
             trend="up"
-          />
-          <MetricCard
+          / key={758933}>
+          <MetricCard;
             label="Success Rate"
             value={`${state.successRate.toFixed(1)}%`}
             icon="fa-target"
             change="+3.2%"
             trend="up"
-          />
-          <MetricCard
+          / key={104045}>
+          <MetricCard;
             label="Active Models"
             value={state.activeModels.toString()}
             icon="fa-brain"
             change="+2"
             trend="up"
-          />
-          <MetricCard
+          / key={51249}>
+          <MetricCard;
             label="Opportunities"
             value={state.opportunities.length.toString()}
             icon="fa-search"
             change="+5"
             trend="up"
-          />
+          / key={966744}>
         </div>
 
         {/* Control Buttons */}
-        <div className="flex flex-wrap gap-4 items-center justify-center">
-          <CyberButton
+        <div className="flex flex-wrap gap-4 items-center justify-center" key={315993}>
+          <CyberButton;
             label={state.isScanning ? "SCANNING..." : "QUANTUM SCAN"}
             onClick={performCyberScan}
             variant="primary"
             size="lg"
             icon="fa-search"
             disabled={state.isScanning}
-          />
+          / key={490811}>
 
-          <CyberButton
+          <CyberButton;
             label={state.autoMode ? "AUTO MODE ON" : "AUTO MODE OFF"}
-            onClick={() =>
+            onClick={() = key={693052}>
               setState((prev) => ({ ...prev, autoMode: !prev.autoMode }))
             }
             variant={state.autoMode ? "secondary" : "ghost"}
@@ -313,27 +313,27 @@ const CyberUltimateMoneyMaker: React.FC = () => {
             icon="fa-robot"
           />
 
-          <div className="flex items-center space-x-4">
-            <StatusIndicator
+          <div className="flex items-center space-x-4" key={787951}>
+            <StatusIndicator;
               status={state.isScanning ? "warning" : "active"}
               label={
-                state.lastScanTime
+                state.lastScanTime;
                   ? `Last scan: ${state.lastScanTime.toLocaleTimeString()}`
                   : "Ready to scan"
               }
-            />
+            / key={845924}>
           </div>
         </div>
       </GlassCard>
 
       {/* Opportunities Display */}
-      <GlassCard
+      <GlassCard;
         title="Quantum Opportunities"
-        glowing={state.opportunities.length > 0}
+        glowing={state.opportunities.length  key={1133}> 0}
       >
-        <div className="space-y-4">
+        <div className="space-y-4" key={160407}>
           {state.opportunities.map((opportunity, index) => (
-            <motion.div
+            <motion.div;
               key={opportunity.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -344,78 +344,78 @@ const CyberUltimateMoneyMaker: React.FC = () => {
                 backdropFilter: "blur(20px) saturate(180%)",
                 border: "1px solid rgba(255, 255, 255, 0.1)",
               }}
-            >
+             key={785612}>
               {/* Opportunity Header */}
-              <div className="flex justify-between items-start mb-4">
-                <div>
-                  <h3 className="text-lg font-bold text-white mb-1">
+              <div className="flex justify-between items-start mb-4" key={413486}>
+                <div key={241917}>
+                  <h3 className="text-lg font-bold text-white mb-1" key={866290}>
                     {opportunity.description}
                   </h3>
-                  <div className="flex items-center space-x-4 text-sm text-gray-400">
-                    <span>{opportunity.sport}</span>
-                    <span>•</span>
-                    <span>{opportunity.market}</span>
-                    <span>•</span>
-                    <span className={getRiskColor(opportunity.riskLevel)}>
-                      {opportunity.riskLevel.toUpperCase()} RISK
+                  <div className="flex items-center space-x-4 text-sm text-gray-400" key={379825}>
+                    <span key={595076}>{opportunity.sport}</span>
+                    <span key={595076}>•</span>
+                    <span key={595076}>{opportunity.market}</span>
+                    <span key={595076}>•</span>
+                    <span className={getRiskColor(opportunity.riskLevel)} key={539069}>
+                      {opportunity.riskLevel.toUpperCase()} RISK;
                     </span>
                   </div>
                 </div>
-                <div className="text-right">
-                  <div
+                <div className="text-right" key={144468}>
+                  <div;
                     className={`px-3 py-1 rounded-lg border text-xs font-bold ${getRecommendationColor(opportunity.recommendation)}`}
-                  >
+                   key={590472}>
                     {opportunity.recommendation}
                   </div>
-                  <div className="text-xs text-gray-400 mt-1">
+                  <div className="text-xs text-gray-400 mt-1" key={416124}>
                     {opportunity.timeRemaining}
                   </div>
                 </div>
               </div>
 
               {/* Metrics Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4">
-                <div className="text-center p-3 glass-card rounded-lg">
-                  <div className="text-xl font-bold text-electric-400">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-4" key={393241}>
+                <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                  <div className="text-xl font-bold text-electric-400" key={723623}>
                     {opportunity.odds.toFixed(2)}
                   </div>
-                  <div className="text-xs text-gray-400">Odds</div>
+                  <div className="text-xs text-gray-400" key={588004}>Odds</div>
                 </div>
-                <div className="text-center p-3 glass-card rounded-lg">
-                  <div className="text-xl font-bold text-green-400">
+                <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                  <div className="text-xl font-bold text-green-400" key={763836}>
                     {(opportunity.confidence * 100).toFixed(1)}%
                   </div>
-                  <div className="text-xs text-gray-400">Confidence</div>
+                  <div className="text-xs text-gray-400" key={588004}>Confidence</div>
                 </div>
-                <div className="text-center p-3 glass-card rounded-lg">
-                  <div className="text-xl font-bold text-blue-400">
+                <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                  <div className="text-xl font-bold text-blue-400" key={175215}>
                     {(opportunity.expectedValue * 100).toFixed(1)}%
                   </div>
-                  <div className="text-xs text-gray-400">Expected Value</div>
+                  <div className="text-xs text-gray-400" key={588004}>Expected Value</div>
                 </div>
-                <div className="text-center p-3 glass-card rounded-lg">
-                  <div className="text-xl font-bold text-purple-400">
+                <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                  <div className="text-xl font-bold text-purple-400" key={515289}>
                     {(opportunity.kellySize * 100).toFixed(1)}%
                   </div>
-                  <div className="text-xs text-gray-400">Kelly Size</div>
+                  <div className="text-xs text-gray-400" key={588004}>Kelly Size</div>
                 </div>
-                <div className="text-center p-3 glass-card rounded-lg">
-                  <div className="text-xl font-bold text-yellow-400">
+                <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                  <div className="text-xl font-bold text-yellow-400" key={490154}>
                     ${opportunity.profit.toFixed(2)}
                   </div>
-                  <div className="text-xs text-gray-400">Est. Profit</div>
+                  <div className="text-xs text-gray-400" key={588004}>Est. Profit</div>
                 </div>
               </div>
 
               {/* AI Models */}
-              <div className="mb-4">
-                <div className="text-sm text-gray-400 mb-2">AI Models:</div>
-                <div className="flex flex-wrap gap-2">
+              <div className="mb-4" key={158827}>
+                <div className="text-sm text-gray-400 mb-2" key={842726}>AI Models:</div>
+                <div className="flex flex-wrap gap-2" key={835928}>
                   {opportunity.models.map((model, idx) => (
-                    <span
+                    <span;
                       key={idx}
                       className="px-2 py-1 bg-electric-400/20 text-electric-400 rounded text-xs font-medium"
-                    >
+                     key={500474}>
                       {model}
                     </span>
                   ))}
@@ -423,13 +423,13 @@ const CyberUltimateMoneyMaker: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <CyberButton
+              <CyberButton;
                 label={
-                  isPlacingBet && selectedOpportunity?.id === opportunity.id
+                  isPlacingBet && selectedOpportunity?.id === opportunity.id;
                     ? "PLACING BET..."
                     : "PLACE QUANTUM BET"
                 }
-                onClick={() => {
+                onClick={() = key={191737}> {
                   setSelectedOpportunity(opportunity);
                   handleCyberBetPlacement(opportunity);
                 }}
@@ -442,29 +442,29 @@ const CyberUltimateMoneyMaker: React.FC = () => {
           ))}
 
           {state.opportunities.length === 0 && !state.isScanning && (
-            <div className="text-center py-12">
-              <div className="text-4xl mb-4 text-gray-500">🔍</div>
-              <div className="text-gray-400 mb-4">
-                No opportunities detected
+            <div className="text-center py-12" key={752807}>
+              <div className="text-4xl mb-4 text-gray-500" key={699415}>🔍</div>
+              <div className="text-gray-400 mb-4" key={587590}>
+                No opportunities detected;
               </div>
-              <CyberButton
+              <CyberButton;
                 label="RUN QUANTUM SCAN"
                 onClick={performCyberScan}
                 variant="ghost"
                 icon="fa-search"
-              />
+              / key={590705}>
             </div>
           )}
 
           {state.isScanning && (
-            <div className="text-center py-12">
-              <div className="text-4xl mb-4 text-electric-400 animate-pulse">
+            <div className="text-center py-12" key={752807}>
+              <div className="text-4xl mb-4 text-electric-400 animate-pulse" key={404642}>
                 ⚡
               </div>
-              <div className="text-electric-400 mb-2">
-                QUANTUM SCANNING IN PROGRESS
+              <div className="text-electric-400 mb-2" key={569036}>
+                QUANTUM SCANNING IN PROGRESS;
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-sm text-gray-400" key={372957}>
                 Analyzing 47 neural networks across multiple markets...
               </div>
             </div>
@@ -473,10 +473,10 @@ const CyberUltimateMoneyMaker: React.FC = () => {
       </GlassCard>
 
       {/* Integration with Original Component */}
-      <GlassCard title="Legacy Money Maker Integration">
-        <div className="p-4 glass-card rounded-lg">
-          <UltimateMoneyMaker
-            opportunities={state.opportunities.map((opp) => ({
+      <GlassCard title="Legacy Money Maker Integration" key={317231}>
+        <div className="p-4 glass-card rounded-lg" key={629818}>
+          <UltimateMoneyMaker;
+            opportunities={state.opportunities.map((opp) = key={965000}> ({
               id: opp.id,
               description: opp.description,
               odds: opp.odds,

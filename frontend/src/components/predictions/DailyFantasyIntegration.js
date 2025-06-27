@@ -9,8 +9,8 @@ export const DailyFantasyIntegration = ({ onDataUpdate, sport, date, }) => {
     const [data, setData] = useState([]);
     const [apiKey, setApiKey] = useState('');
     const [site, setSite] = useState('draftkings');
-    const logger = useLogger();
-    const metrics = useMetrics();
+
+
     useEffect(() => {
         const fetchData = async () => {
             if (!apiKey)
@@ -33,11 +33,11 @@ export const DailyFantasyIntegration = ({ onDataUpdate, sport, date, }) => {
                 if (!response.ok) {
                     throw new Error(`API request failed: ${response.statusText}`);
                 }
-                const fantasyData = await response.json();
-                // Calculate value score based on projected points and salary
+
+                // Calculate value score based on projected points and salary;
                 const processedData = fantasyData.map((player) => ({
                     ...player,
-                    valueScore: player.projectedPoints / (player.salary / 1000), // Points per $1000
+                    valueScore: player.projectedPoints / (player.salary / 1000), // Points per $1000;
                 }));
                 setData(processedData);
                 onDataUpdate(processedData);
@@ -53,7 +53,7 @@ export const DailyFantasyIntegration = ({ onDataUpdate, sport, date, }) => {
                 });
             }
             catch (err) {
-                const errorMessage = err instanceof Error ? err.message : 'Failed to fetch DailyFantasy data';
+
                 setError(errorMessage);
                 logger.error('Error fetching DailyFantasy data', { error: errorMessage });
                 metrics.increment('dailyfantasy_fetch_error');

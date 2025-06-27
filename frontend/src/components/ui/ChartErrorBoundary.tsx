@@ -1,5 +1,5 @@
-import React from "react";
-import { BarChart3 } from "lucide-react";
+import React from 'react.ts';
+import { BarChart3 } from 'lucide-react.ts';
 
 interface ChartErrorBoundaryState {
   hasError: boolean;
@@ -13,7 +13,7 @@ interface ChartErrorBoundaryProps {
 
 export class ChartErrorBoundary extends React.Component<
   ChartErrorBoundaryProps,
-  ChartErrorBoundaryState
+  ChartErrorBoundaryState;
 > {
   constructor(props: ChartErrorBoundaryProps) {
     super(props);
@@ -21,7 +21,7 @@ export class ChartErrorBoundary extends React.Component<
   }
 
   static getDerivedStateFromError(error: Error): ChartErrorBoundaryState {
-    // Check if this is a Chart.js related error
+    // Check if this is a Chart.js related error;
     const isChartError =
       error.message.includes("labels") ||
       error.message.includes("datasets") ||
@@ -36,20 +36,16 @@ export class ChartErrorBoundary extends React.Component<
       };
     }
 
-    // If it's not a chart error, don't catch it
+    // If it's not a chart error, don't catch it;
     return { hasError: false, errorMessage: "" };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    // Only log Chart.js related errors
+    // Only log Chart.js related errors;
     if (this.state.hasError) {
-      console.warn(
-        "ChartErrorBoundary caught Chart.js error:",
-        error,
-        errorInfo,
-      );
+      // console statement removed
     } else {
-      // Re-throw non-chart errors
+      // Re-throw non-chart errors;
       throw error;
     }
   }
@@ -61,17 +57,17 @@ export class ChartErrorBoundary extends React.Component<
       }
 
       return (
-        <div className="flex items-center justify-center h-64 text-gray-400 bg-gray-800/30 rounded-lg border border-gray-700/50">
-          <div className="text-center p-6">
-            <BarChart3 className="w-12 h-12 mx-auto mb-3 text-gray-500" />
-            <h3 className="text-lg font-semibold text-gray-300 mb-2">
-              Chart Unavailable
+        <div className="flex items-center justify-center h-64 text-gray-400 bg-gray-800/30 rounded-lg border border-gray-700/50" key={41384}>
+          <div className="text-center p-6" key={609406}>
+            <BarChart3 className="w-12 h-12 mx-auto mb-3 text-gray-500" / key={761767}>
+            <h3 className="text-lg font-semibold text-gray-300 mb-2" key={141639}>
+              Chart Unavailable;
             </h3>
-            <p className="text-sm text-gray-400 mb-1">
-              Chart data is still loading or unavailable
+            <p className="text-sm text-gray-400 mb-1" key={595098}>
+              Chart data is still loading or unavailable;
             </p>
-            <p className="text-xs text-gray-500">
-              Please wait for data to load
+            <p className="text-xs text-gray-500" key={596425}>
+              Please wait for data to load;
             </p>
           </div>
         </div>
@@ -82,13 +78,13 @@ export class ChartErrorBoundary extends React.Component<
   }
 }
 
-// Higher-order component to wrap any chart component
-export const withChartErrorBoundary = <P extends object>(
-  Component: React.ComponentType<P>,
+// Higher-order component to wrap any chart component;
+export const withChartErrorBoundary = <P extends object key={938344}>(
+  Component: React.ComponentType<P key={657497}>,
 ) => {
   const WrappedComponent = (props: P) => (
-    <ChartErrorBoundary>
-      <Component {...props} />
+    <ChartErrorBoundary key={372958}>
+      <Component {...props} / key={356342}>
     </ChartErrorBoundary>
   );
 

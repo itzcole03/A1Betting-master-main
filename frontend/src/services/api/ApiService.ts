@@ -4,7 +4,7 @@
  * @param params - Query parameters as a key-value object.
  * @returns Parsed response data of type T.
  */
-import { Subject } from "rxjs";
+import { Subject } from 'rxjs.ts';
 
 interface ApiConfig {
   endpoints: {
@@ -92,7 +92,7 @@ export class ApiService {
       this.ws.close();
     }
 
-    // Safety checks to prevent invalid WebSocket connections
+    // Safety checks to prevent invalid WebSocket connections;
     if (
       !this.config.websocket.url ||
       this.config.websocket.url === "" ||
@@ -105,8 +105,7 @@ export class ApiService {
       import.meta.env.VITE_ENABLE_WEBSOCKET === "false" ||
       import.meta.env.NODE_ENV === "development"
     ) {
-      console.log(
-        "WebSocket connection disabled for ApiService (comprehensive safety):",
+      // console statement removed:",
         this.config.websocket.url,
       );
       return;
@@ -115,28 +114,28 @@ export class ApiService {
     this.ws = new WebSocket(this.config.websocket.url);
 
     this.ws.onopen = () => {
-      console.log("WebSocket connection established");
+      // console statement removed
       this.retryCount = 0;
       this.subscribeToDataFeeds();
     };
 
     this.ws.onmessage = (event: MessageEvent) => {
-      const data = event.data;
+
       try {
-        const parsedData = JSON.parse(data.toString());
+
         this.dataStream.next(parsedData);
       } catch (error) {
-        console.error("Error parsing WebSocket message:", error);
+        // console statement removed
       }
     };
 
     this.ws.onclose = () => {
-      console.log("WebSocket connection closed");
+      // console statement removed
       this.handleReconnection();
     };
 
     this.ws.onerror = (event: Event) => {
-      console.error("WebSocket error:", event);
+      // console statement removed
       this.handleReconnection();
     };
   }
@@ -144,21 +143,20 @@ export class ApiService {
   private handleReconnection() {
     if (this.retryCount < this.config.websocket.maxRetries) {
       this.retryCount++;
-      console.log(
-        `Attempting to reconnect (${this.retryCount}/${this.config.websocket.maxRetries})`,
+      // console statement removed`,
       );
       setTimeout(() => {
         this.initializeWebSocket();
       }, this.config.websocket.reconnectInterval);
     } else {
-      console.error("Max WebSocket reconnection attempts reached");
+      // console statement removed
     }
   }
 
   private subscribeToDataFeeds() {
     if (!this.ws) return;
 
-    // Subscribe to relevant data feeds
+    // Subscribe to relevant data feeds;
     const subscriptions = [
       { type: "odds_updates", markets: ["player_props"] },
       { type: "player_stats", updateInterval: 60 },
@@ -195,14 +193,13 @@ export class ApiService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
       return {
         success: true,
         data,
         timestamp: Date.now(),
       };
     } catch (error) {
-      console.error("Error fetching player stats:", error);
+      // console statement removed
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -233,14 +230,13 @@ export class ApiService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
       return {
         success: true,
         data,
         timestamp: Date.now(),
       };
     } catch (error) {
-      console.error("Error fetching game odds:", error);
+      // console statement removed
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -270,14 +266,13 @@ export class ApiService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
       return {
         success: true,
         data,
         timestamp: Date.now(),
       };
     } catch (error) {
-      console.error("Error fetching injury reports:", error);
+      // console statement removed
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -290,7 +285,7 @@ export class ApiService {
     params: Record<string, any> = {},
   ): Promise<ApiResponse<any>> {
     try {
-      const queryParams = new URLSearchParams(params).toString();
+
       const response = await fetch(
         `${this.config.endpoints.social}/news?${queryParams}`,
         {
@@ -303,14 +298,13 @@ export class ApiService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
       return {
         success: true,
         data,
         timestamp: Date.now(),
       };
     } catch (error) {
-      console.error("Error fetching news:", error);
+      // console statement removed
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -326,7 +320,6 @@ export class ApiService {
       "Content-Type": "application/json",
     };
 
-    const apiKey = this.config.apiKeys[service];
     if (apiKey) {
       headers["Authorization"] = `Bearer ${apiKey}`;
     }
@@ -362,14 +355,13 @@ export class ApiService {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
       return {
         success: true,
         data,
         timestamp: Date.now(),
       };
     } catch (error) {
-      console.error("Error fetching historical data:", error);
+      // console statement removed
       return {
         success: false,
         error: error instanceof Error ? error.message : "Unknown error",
@@ -384,8 +376,8 @@ export class ApiService {
    * @returns Parsed response data of type T.
    */
   public async get<T>(url: string, params?: Record<string, any>): Promise<T> {
-    const query = params ? `?${new URLSearchParams(params).toString()}` : "";
-    const fullUrl = url + query;
+
+
     const response = await fetch(fullUrl, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
@@ -397,7 +389,7 @@ export class ApiService {
   }
 }
 
-// Create and export the service instance
+// Create and export the service instance;
 export const apiService = new ApiService({
   endpoints: {
     // Vite: use import.meta.env.VITE_SPORTRADAR_API_ENDPOINT etc.

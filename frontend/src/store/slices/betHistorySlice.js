@@ -1,5 +1,5 @@
-// betHistorySlice.ts
-// Zustand slice for user/model bet history state
+// betHistorySlice.ts;
+// Zustand slice for user/model bet history state;
 import { create } from 'zustand';
 export const useBetHistoryStore = create((set) => ({
     userHistory: null,

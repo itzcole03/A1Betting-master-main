@@ -12,7 +12,7 @@ export class PrizePicksApiService extends BaseApiService {
     }
     handleError(error) {
         this.emit('error', error);
-        console.error('[PrizePicks API Error]:', error);
+        // console statement removed
     }
     handleResponse(response) {
         this.emit('response', response);
@@ -20,7 +20,7 @@ export class PrizePicksApiService extends BaseApiService {
     async get(endpoint, params) {
         try {
             this.emit('request', endpoint);
-            const response = await this.client.get(endpoint, { params });
+
             const apiResponse = {
                 data: response.data,
                 status: response.status,
@@ -37,7 +37,7 @@ export class PrizePicksApiService extends BaseApiService {
     async post(endpoint, data) {
         try {
             this.emit('request', endpoint);
-            const response = await this.client.post(endpoint, data);
+
             const apiResponse = {
                 data: response.data,
                 status: response.status,
@@ -51,7 +51,7 @@ export class PrizePicksApiService extends BaseApiService {
             throw error;
         }
     }
-    // PrizePicks specific methods
+    // PrizePicks specific methods;
     async getAvailableProps() {
         return this.get('/props/available');
     }

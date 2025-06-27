@@ -1,7 +1,7 @@
-// Advanced Theme System for Premium Betting Platform
+// Advanced Theme System for Premium Betting Platform;
 export const premiumTheme = {
   colors: {
-    // Premium Brand Colors
+    // Premium Brand Colors;
     brand: {
       25: "#F2F7FF",
       50: "#E5F0FF",
@@ -9,14 +9,14 @@ export const premiumTheme = {
       200: "#99C2FF",
       300: "#66A3FF",
       400: "#3385FF",
-      500: "#0066FF", // Primary brand
+      500: "#0066FF", // Primary brand;
       600: "#0052CC",
       700: "#003D99",
       800: "#002966",
       900: "#161950",
       950: "#0A0D2B",
     },
-    // Sophisticated Grays
+    // Sophisticated Grays;
     gray: {
       25: "#FEFEFF",
       50: "#F9FAFB",
@@ -31,7 +31,7 @@ export const premiumTheme = {
       900: "#111827",
       950: "#0B0E14",
     },
-    // Success/Win Colors
+    // Success/Win Colors;
     success: {
       25: "#F0FDF4",
       50: "#DCFCE7",
@@ -45,7 +45,7 @@ export const premiumTheme = {
       800: "#14532D",
       900: "#052E16",
     },
-    // Error/Loss Colors
+    // Error/Loss Colors;
     error: {
       25: "#FFFBFA",
       50: "#FEF2F2",
@@ -59,7 +59,7 @@ export const premiumTheme = {
       800: "#991B1B",
       900: "#7F1D1D",
     },
-    // Warning/Neutral Colors
+    // Warning/Neutral Colors;
     warning: {
       25: "#FFFCF5",
       50: "#FFFBEB",
@@ -73,7 +73,7 @@ export const premiumTheme = {
       800: "#92400E",
       900: "#78350F",
     },
-    // Premium Gradients
+    // Premium Gradients;
     gradients: {
       primary: "linear-gradient(135deg, #0066FF 0%, #003D99 100%)",
       success: "linear-gradient(135deg, #22C55E 0%, #16A34A 100%)",
@@ -88,7 +88,7 @@ export const premiumTheme = {
     },
   },
 
-  // Advanced Shadows
+  // Advanced Shadows;
   shadows: {
     xs: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
     sm: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
@@ -98,21 +98,21 @@ export const premiumTheme = {
     "2xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
     inner: "inset 0 2px 4px 0 rgba(0, 0, 0, 0.06)",
 
-    // Premium Colored Shadows
+    // Premium Colored Shadows;
     brandShadow: "0 10px 25px -5px rgba(0, 102, 255, 0.25)",
     successShadow: "0 10px 25px -5px rgba(34, 197, 94, 0.25)",
     errorShadow: "0 10px 25px -5px rgba(239, 68, 68, 0.25)",
 
-    // Glassmorphism Effects
+    // Glassmorphism Effects;
     glass: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
     glassInset: "inset 0 1px 0 0 rgba(255, 255, 255, 0.05)",
 
-    // Neumorphism
+    // Neumorphism;
     neuLight: "20px 20px 60px #d9d9d9, -20px -20px 60px #ffffff",
     neuDark: "20px 20px 60px #1a1a1a, -20px -20px 60px #2e2e2e",
   },
 
-  // Typography System
+  // Typography System;
   typography: {
     fonts: {
       primary:
@@ -121,19 +121,19 @@ export const premiumTheme = {
       display: '"Clash Display", "Inter", sans-serif',
     },
     sizes: {
-      xs: "0.75rem", // 12px
-      sm: "0.875rem", // 14px
-      base: "1rem", // 16px
-      lg: "1.125rem", // 18px
-      xl: "1.25rem", // 20px
-      "2xl": "1.5rem", // 24px
-      "3xl": "1.875rem", // 30px
-      "4xl": "2.25rem", // 36px
-      "5xl": "3rem", // 48px
-      "6xl": "3.75rem", // 60px
-      "7xl": "4.5rem", // 72px
-      "8xl": "6rem", // 96px
-      "9xl": "8rem", // 128px
+      xs: "0.75rem", // 12px;
+      sm: "0.875rem", // 14px;
+      base: "1rem", // 16px;
+      lg: "1.125rem", // 18px;
+      xl: "1.25rem", // 20px;
+      "2xl": "1.5rem", // 24px;
+      "3xl": "1.875rem", // 30px;
+      "4xl": "2.25rem", // 36px;
+      "5xl": "3rem", // 48px;
+      "6xl": "3.75rem", // 60px;
+      "7xl": "4.5rem", // 72px;
+      "8xl": "6rem", // 96px;
+      "9xl": "8rem", // 128px;
     },
     weights: {
       thin: "100",
@@ -148,7 +148,7 @@ export const premiumTheme = {
     },
   },
 
-  // Spacing System
+  // Spacing System;
   spacing: {
     px: "1px",
     0: "0",
@@ -187,7 +187,7 @@ export const premiumTheme = {
     96: "24rem",
   },
 
-  // Border Radius
+  // Border Radius;
   borderRadius: {
     none: "0",
     sm: "0.125rem",
@@ -200,7 +200,7 @@ export const premiumTheme = {
     full: "9999px",
   },
 
-  // Animation & Transitions
+  // Animation & Transitions;
   animations: {
     durations: {
       fast: "150ms",
@@ -218,7 +218,7 @@ export const premiumTheme = {
     },
   },
 
-  // Breakpoints
+  // Breakpoints;
   breakpoints: {
     xs: "475px",
     sm: "640px",
@@ -229,10 +229,10 @@ export const premiumTheme = {
   },
 };
 
-// Theme utility functions
+// Theme utility functions;
 export const getThemeColor = (colorPath: string) => {
-  const keys = colorPath.split(".");
-  let result = premiumTheme.colors as any;
+
+  const result = premiumTheme.colors as any;
 
   for (const key of keys) {
     result = result[key];
@@ -245,27 +245,27 @@ export const getThemeColor = (colorPath: string) => {
 export const createCSSVariables = () => {
   const cssVars: Record<string, string> = {};
 
-  // Brand colors
+  // Brand colors;
   Object.entries(premiumTheme.colors.brand).forEach(([key, value]) => {
     cssVars[`--color-brand-${key}`] = value;
   });
 
-  // Gray colors
+  // Gray colors;
   Object.entries(premiumTheme.colors.gray).forEach(([key, value]) => {
     cssVars[`--color-gray-${key}`] = value;
   });
 
-  // Success colors
+  // Success colors;
   Object.entries(premiumTheme.colors.success).forEach(([key, value]) => {
     cssVars[`--color-success-${key}`] = value;
   });
 
-  // Error colors
+  // Error colors;
   Object.entries(premiumTheme.colors.error).forEach(([key, value]) => {
     cssVars[`--color-error-${key}`] = value;
   });
 
-  // Warning colors
+  // Warning colors;
   Object.entries(premiumTheme.colors.warning).forEach(([key, value]) => {
     cssVars[`--color-warning-${key}`] = value;
   });

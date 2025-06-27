@@ -1,12 +1,12 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { Box, useTheme, useMediaQuery } from '@mui/material';
-import Navbar from '../Navbar/Navbar';
-import Sidebar from '../Sidebar/Sidebar';
+import React from 'react.ts';
+import { Outlet } from 'react-router-dom.ts';
+import { Box, useTheme, useMediaQuery } from '@mui/material.ts';
+import Navbar from '@/Navbar/Navbar.ts';
+import Sidebar from '@/Sidebar/Sidebar.ts';
 
 const Layout: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('lg'));
+
+
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -14,14 +14,14 @@ const Layout: React.FC = () => {
   };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <Navbar showMenuButton={isMobile} onMenuClick={handleDrawerToggle} />
-      <Sidebar
+    <Box sx={{ display: 'flex' }} key={680838}>
+      <Navbar showMenuButton={isMobile} onMenuClick={handleDrawerToggle} / key={441999}>
+      <Sidebar;
         open={mobileOpen}
         variant={isMobile ? 'temporary' : 'permanent'}
         onClose={handleDrawerToggle}
-      />
-      <Box
+      / key={916559}>
+      <Box;
         component="main"
         sx={{
           flexGrow: 1,
@@ -29,8 +29,8 @@ const Layout: React.FC = () => {
           width: { sm: `calc(100% - 240px)` },
           mt: 8,
         }}
-      >
-        <Outlet />
+       key={256541}>
+        <Outlet / key={861082}>
       </Box>
     </Box>
   );

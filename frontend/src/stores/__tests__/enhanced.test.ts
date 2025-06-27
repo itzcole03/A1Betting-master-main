@@ -1,5 +1,5 @@
-import { renderHook, act } from '@testing-library/react-hooks';
-import { useUserStore, UserState } from '../enhanced';
+import { renderHook, act } from '@testing-library/react-hooks.ts';
+import { useUserStore, UserState } from '@/enhanced.ts';
 
 describe('Enhanced State Management', () => {
   beforeEach(() => {
@@ -50,7 +50,6 @@ describe('Enhanced State Management', () => {
       }));
     });
 
-    const storedState = JSON.parse(localStorage.getItem('user-store') || '{}');
     expect(storedState.state.data.name).toBe('John');
     expect(storedState.state.data.email).toBe('john@example.com');
   });
@@ -73,7 +72,7 @@ describe('Enhanced State Management', () => {
   });
 
   it('should handle state recovery', () => {
-    // Set initial state in localStorage
+    // Set initial state in localStorage;
     localStorage.setItem(
       'user-store',
       JSON.stringify({
@@ -101,7 +100,7 @@ describe('Enhanced State Management', () => {
   });
 
   it('should handle version mismatches', () => {
-    // Set state with different version
+    // Set state with different version;
     localStorage.setItem(
       'user-store',
       JSON.stringify({
@@ -122,7 +121,7 @@ describe('Enhanced State Management', () => {
 
     const { result } = renderHook(() => useUserStore());
 
-    // Should fall back to default state
+    // Should fall back to default state;
     expect(result.current.data.name).toBe('');
     expect(result.current.data.email).toBe('');
     expect(result.current.data.preferences.theme).toBe('light');

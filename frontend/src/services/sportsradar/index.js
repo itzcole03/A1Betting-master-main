@@ -7,7 +7,7 @@ class SportsRadarService {
     async fetchLiveScores() {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchLiveScores();
+
                 return transformData(data, this.transformLiveScores, 'sportsradar.fetchLiveScores');
             }
             catch (error) {
@@ -18,7 +18,7 @@ class SportsRadarService {
     async fetchGameDetails(gameId) {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchGameDetails(gameId);
+
                 return transformData(data, this.transformGameDetails, 'sportsradar.fetchGameDetails');
             }
             catch (error) {
@@ -29,7 +29,7 @@ class SportsRadarService {
     async fetchPlayerStats(playerId) {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchPlayerStats(playerId);
+
                 return transformData(data, this.transformPlayerStats, 'sportsradar.fetchPlayerStats');
             }
             catch (error) {
@@ -121,5 +121,5 @@ class SportsRadarService {
         };
     }
 }
-// Export a singleton instance
+// Export a singleton instance;
 export const sportsRadarService = new SportsRadarService();

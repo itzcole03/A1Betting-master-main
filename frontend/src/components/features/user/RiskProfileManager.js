@@ -24,7 +24,7 @@ export const RiskProfileManager = () => {
         updateRiskProfile({ max_daily_loss: newValue });
     };
     const handleMaxConcurrentBetsChange = (event) => {
-        const value = parseInt(event.target.value);
+
         if (!isNaN(value)) {
             updateRiskProfile({ max_concurrent_bets: value });
         }
@@ -36,7 +36,7 @@ export const RiskProfileManager = () => {
         updateRiskProfile({ kelly_fraction: newValue });
     };
     const handleBankrollChange = (event) => {
-        const value = parseFloat(event.target.value);
+
         if (!isNaN(value)) {
             updateBankroll(value);
         }

@@ -9,12 +9,12 @@ export class TheOddsAdapter {
         this.config = config;
         this.cache = {
             data: null,
-            timestamp: 0
+            timestamp: 0;
         };
     }
     async isAvailable() {
         try {
-            const response = await fetch(`${this.config.baseUrl}/sports?apiKey=${this.config.apiKey}`);
+
             return response.ok;
         }
         catch {
@@ -22,12 +22,12 @@ export class TheOddsAdapter {
         }
     }
     async fetch() {
-        const traceId = this.performanceMonitor.startTrace('the-odds-fetch');
+
         try {
             if (this.isCacheValid()) {
                 return this.cache.data;
             }
-            const data = await this.fetchOddsData();
+
             this.cache = {
                 data,
                 timestamp: Date.now()
@@ -45,7 +45,7 @@ export class TheOddsAdapter {
         }
     }
     async fetchOddsData() {
-        const response = await fetch(`${this.config.baseUrl}/odds?apiKey=${this.config.apiKey}&regions=us&markets=h2h,spreads,totals`);
+
         if (!response.ok) {
             throw new Error(`TheOdds API error: ${response.statusText}`);
         }
@@ -58,7 +58,7 @@ export class TheOddsAdapter {
     clearCache() {
         this.cache = {
             data: null,
-            timestamp: 0
+            timestamp: 0;
         };
     }
     async connect() { }

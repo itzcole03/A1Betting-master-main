@@ -1,5 +1,5 @@
-import { PerformanceMetrics, AnalysisResult, RiskTolerance, BettingContext, BettingDecision, BetRecord, ClvAnalysis, BetType, BetResult, BettingStrategy } from '../types/core';
-import { BettingOpportunity } from '../types/core';
+import { PerformanceMetrics, AnalysisResult, RiskTolerance, BettingContext, BettingDecision, BetRecord, ClvAnalysis, BetType, BetResult, BettingStrategy } from '@/types/core.ts';
+import { BettingOpportunity } from '@/types/core.ts';
 export interface BankrollConfig {
     initialAmount: number;
     maxRiskPerBet: number;

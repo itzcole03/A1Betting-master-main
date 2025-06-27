@@ -1,19 +1,19 @@
 /**
- * 🚀 A1BETTING QUANTUM PLATFORM - ULTIMATE SERVICES CONSOLIDATION
+ * 🚀 A1BETTING QUANTUM PLATFORM - ULTIMATE SERVICES CONSOLIDATION;
  *
- * Consolidates 150+ scattered services into 8 intelligent mega-services
- * Preserves all functionality while maintaining cyber theme integration
+ * Consolidates 150+ scattered services into 8 intelligent mega-services;
+ * Preserves all functionality while maintaining cyber theme integration;
  */
 
-import { BehaviorSubject, Subject, Observable } from "rxjs";
+import { BehaviorSubject, Subject, Observable } from 'rxjs.ts';
 import {
   map,
   filter,
   debounceTime,
   distinctUntilChanged,
-} from "rxjs/operators";
+} from 'rxjs/operators.ts';
 
-// Core types for the quantum platform
+// Core types for the quantum platform;
 export interface QuantumUser {
   id: string;
   name: string;
@@ -43,7 +43,7 @@ export interface SystemMetrics {
   isOnline: boolean;
 }
 
-// 🎯 1. UNIFIED DATA SERVICE - Consolidates 25+ data services
+// 🎯 1. UNIFIED DATA SERVICE - Consolidates 25+ data services;
 export class UltimateDataService {
   private dataSources = new BehaviorSubject<string[]>([]);
   private liveData = new BehaviorSubject<any[]>([]);
@@ -55,19 +55,19 @@ export class UltimateDataService {
     isOnline: true,
   });
 
-  // Real-time data streams
+  // Real-time data streams;
   getLiveData(): Observable<any[]> {
     return this.liveData.asObservable();
   }
 
-  // System health monitoring
+  // System health monitoring;
   getSystemMetrics(): Observable<SystemMetrics> {
     return this.connectionStatus.asObservable();
   }
 
-  // Prize picks data integration
+  // Prize picks data integration;
   async fetchPrizePicksData(): Promise<any[]> {
-    // Simulated high-quality data fetch
+    // Simulated high-quality data fetch;
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve([
@@ -94,7 +94,7 @@ export class UltimateDataService {
     });
   }
 
-  // ESPN data integration
+  // ESPN data integration;
   async fetchESPNData(): Promise<any[]> {
     return new Promise((resolve) => {
       setTimeout(() => {
@@ -116,10 +116,10 @@ export class UltimateDataService {
     });
   }
 
-  // Auto-update system metrics
+  // Auto-update system metrics;
   startMetricsUpdater(): void {
     setInterval(() => {
-      const current = this.connectionStatus.value;
+
       this.connectionStatus.next({
         ...current,
         connectedSources: Math.floor(Math.random() * 5) + 10,
@@ -131,14 +131,14 @@ export class UltimateDataService {
   }
 }
 
-// 🧠 2. QUANTUM ML SERVICE - Consolidates 30+ ML services
+// 🧠 2. QUANTUM ML SERVICE - Consolidates 30+ ML services;
 export class QuantumMLService {
   private predictions = new BehaviorSubject<PredictionData[]>([]);
   private modelAccuracy = new BehaviorSubject<number>(97.3);
 
-  // Advanced prediction engine
+  // Advanced prediction engine;
   async generatePredictions(data: any[]): Promise<PredictionData[]> {
-    // Sophisticated ML simulation
+    // Sophisticated ML simulation;
     const predictions = data.map((item, index) => ({
       id: `pred_${Date.now()}_${index}`,
       type: "player_prop" as const,
@@ -153,7 +153,7 @@ export class QuantumMLService {
     return predictions;
   }
 
-  // SHAP analysis for explainable AI
+  // SHAP analysis for explainable AI;
   async getSHAPAnalysis(predictionId: string): Promise<any> {
     return {
       features: [
@@ -168,12 +168,12 @@ export class QuantumMLService {
     };
   }
 
-  // Model performance tracking
+  // Model performance tracking;
   getModelAccuracy(): Observable<number> {
     return this.modelAccuracy.asObservable();
   }
 
-  // Ensemble predictions
+  // Ensemble predictions;
   async getEnsemblePredictions(): Promise<any> {
     return {
       models: ["Random Forest", "Neural Network", "XGBoost", "LSTM"],
@@ -184,12 +184,12 @@ export class QuantumMLService {
   }
 }
 
-// 💰 3. ULTIMATE BETTING SERVICE - Consolidates 20+ betting services
+// 💰 3. ULTIMATE BETTING SERVICE - Consolidates 20+ betting services;
 export class UltimateBettingService {
   private opportunities = new BehaviorSubject<any[]>([]);
   private betHistory = new BehaviorSubject<any[]>([]);
 
-  // Arbitrage detection
+  // Arbitrage detection;
   async findArbitrageOpportunities(): Promise<any[]> {
     const opportunities = [
       {
@@ -220,19 +220,19 @@ export class UltimateBettingService {
     return opportunities;
   }
 
-  // Kelly criterion stake sizing
+  // Kelly criterion stake sizing;
   calculateKellyStake(
     bankroll: number,
     odds: number,
     winProbability: number,
   ): number {
-    const decimalOdds = odds / 100 + 1;
+
     const kellyFraction =
       (winProbability * decimalOdds - 1) / (decimalOdds - 1);
-    return Math.max(0, kellyFraction * bankroll * 0.25); // Conservative 25% Kelly
+    return Math.max(0, kellyFraction * bankroll * 0.25); // Conservative 25% Kelly;
   }
 
-  // Place bet simulation
+  // Place bet simulation;
   async placeBet(bet: any): Promise<any> {
     const betResult = {
       id: `bet_${Date.now()}`,
@@ -242,29 +242,28 @@ export class UltimateBettingService {
       expectedValue: bet.stake * (bet.winProbability - 0.5) * 2,
     };
 
-    const currentHistory = this.betHistory.value;
     this.betHistory.next([betResult, ...currentHistory]);
 
     return betResult;
   }
 
-  // Get live opportunities
+  // Get live opportunities;
   getOpportunities(): Observable<any[]> {
     return this.opportunities.asObservable();
   }
 
-  // Betting history
+  // Betting history;
   getBetHistory(): Observable<any[]> {
     return this.betHistory.asObservable();
   }
 }
 
-// 📊 4. QUANTUM ANALYTICS SERVICE - Consolidates 25+ analytics services
+// 📊 4. QUANTUM ANALYTICS SERVICE - Consolidates 25+ analytics services;
 export class QuantumAnalyticsService {
   private performanceMetrics = new BehaviorSubject<any>({});
   private userStats = new BehaviorSubject<any>({});
 
-  // Generate comprehensive analytics
+  // Generate comprehensive analytics;
   async generateAnalytics(userId: string): Promise<any> {
     const analytics = {
       performance: {
@@ -304,12 +303,12 @@ export class QuantumAnalyticsService {
     return analytics;
   }
 
-  // Real-time performance tracking
+  // Real-time performance tracking;
   getPerformanceMetrics(): Observable<any> {
     return this.performanceMetrics.asObservable();
   }
 
-  // Advanced risk analysis
+  // Advanced risk analysis;
   async getRiskAnalysis(): Promise<any> {
     return {
       currentRisk: "LOW",
@@ -325,14 +324,14 @@ export class QuantumAnalyticsService {
   }
 }
 
-// 🔐 5. QUANTUM AUTH SERVICE - Consolidates 8+ auth services
+// 🔐 5. QUANTUM AUTH SERVICE - Consolidates 8+ auth services;
 export class QuantumAuthService {
   private currentUser = new BehaviorSubject<QuantumUser | null>(null);
   private isAuthenticated = new BehaviorSubject<boolean>(false);
 
-  // Quantum-grade authentication
+  // Quantum-grade authentication;
   async login(email: string, password: string): Promise<QuantumUser> {
-    // Simulated secure login
+    // Simulated secure login;
     const user: QuantumUser = {
       id: "user_quantum_001",
       name: "Alex Chen",
@@ -350,29 +349,29 @@ export class QuantumAuthService {
     return user;
   }
 
-  // Get current user
+  // Get current user;
   getCurrentUser(): Observable<QuantumUser | null> {
     return this.currentUser.asObservable();
   }
 
-  // Authentication status
+  // Authentication status;
   getAuthStatus(): Observable<boolean> {
     return this.isAuthenticated.asObservable();
   }
 
-  // Logout
+  // Logout;
   logout(): void {
     this.currentUser.next(null);
     this.isAuthenticated.next(false);
   }
 }
 
-// 🚨 6. QUANTUM NOTIFICATION SERVICE - Consolidates 12+ notification services
+// 🚨 6. QUANTUM NOTIFICATION SERVICE - Consolidates 12+ notification services;
 export class QuantumNotificationService {
   private notifications = new BehaviorSubject<any[]>([]);
   private alerts = new Subject<any>();
 
-  // Smart alert system
+  // Smart alert system;
   createAlert(
     type: "success" | "warning" | "error" | "info",
     message: string,
@@ -384,27 +383,27 @@ export class QuantumNotificationService {
       message,
       data,
       timestamp: new Date(),
-      cybertheme: true, // Enable cyber styling
+      cybertheme: true, // Enable cyber styling;
     };
 
     this.alerts.next(alert);
 
-    // Add to notifications history
-    const current = this.notifications.value;
-    this.notifications.next([alert, ...current.slice(0, 49)]); // Keep last 50
+    // Add to notifications history;
+
+    this.notifications.next([alert, ...current.slice(0, 49)]); // Keep last 50;
   }
 
-  // Real-time alerts
+  // Real-time alerts;
   getAlerts(): Observable<any> {
     return this.alerts.asObservable();
   }
 
-  // Notification history
+  // Notification history;
   getNotifications(): Observable<any[]> {
     return this.notifications.asObservable();
   }
 
-  // Arbitrage alerts
+  // Arbitrage alerts;
   createArbitrageAlert(opportunity: any): void {
     this.createAlert(
       "success",
@@ -413,7 +412,7 @@ export class QuantumNotificationService {
     );
   }
 
-  // Prediction alerts
+  // Prediction alerts;
   createPredictionAlert(prediction: any): void {
     this.createAlert(
       "info",
@@ -423,7 +422,7 @@ export class QuantumNotificationService {
   }
 }
 
-// 🎛️ 7. QUANTUM SETTINGS SERVICE - Consolidates 15+ settings services
+// 🎛️ 7. QUANTUM SETTINGS SERVICE - Consolidates 15+ settings services;
 export class QuantumSettingsService {
   private settings = new BehaviorSubject<any>({
     theme: "cyber-dark",
@@ -438,56 +437,56 @@ export class QuantumSettingsService {
     refreshInterval: 30000,
   });
 
-  // Get all settings
+  // Get all settings;
   getSettings(): Observable<any> {
     return this.settings.asObservable();
   }
 
-  // Update settings
+  // Update settings;
   updateSetting(key: string, value: any): void {
-    const current = this.settings.value;
+
     this.settings.next({
       ...current,
       [key]: value,
     });
   }
 
-  // Bulk update settings
+  // Bulk update settings;
   updateSettings(newSettings: Partial<any>): void {
-    const current = this.settings.value;
+
     this.settings.next({
       ...current,
       ...newSettings,
     });
   }
 
-  // Export settings
+  // Export settings;
   exportSettings(): string {
     return JSON.stringify(this.settings.value, null, 2);
   }
 
-  // Import settings
+  // Import settings;
   importSettings(settingsJson: string): void {
     try {
-      const imported = JSON.parse(settingsJson);
+
       this.settings.next(imported);
     } catch (error) {
-      console.error("Invalid settings format");
+      // console statement removed
     }
   }
 }
 
-// 🌐 8. QUANTUM WEBSOCKET SERVICE - Consolidates 10+ real-time services
+// 🌐 8. QUANTUM WEBSOCKET SERVICE - Consolidates 10+ real-time services;
 export class QuantumWebSocketService {
   private liveUpdates = new Subject<any>();
   private connectionStatus = new BehaviorSubject<boolean>(false);
   private reconnectAttempts = 0;
   private maxReconnectAttempts = 5;
 
-  // Start live data connection
+  // Start live data connection;
   connect(): void {
-    // Simulated WebSocket connection with cyber theme
-    console.log("🔌 Connecting to Quantum Data Stream...");
+    // Simulated WebSocket connection with cyber theme;
+    // console statement removed
 
     setTimeout(() => {
       this.connectionStatus.next(true);
@@ -496,7 +495,7 @@ export class QuantumWebSocketService {
     }, 1000);
   }
 
-  // Live updates simulation
+  // Live updates simulation;
   private startLiveUpdates(): void {
     setInterval(() => {
       if (this.connectionStatus.value) {
@@ -513,23 +512,23 @@ export class QuantumWebSocketService {
     }, 5000);
   }
 
-  // Get live updates
+  // Get live updates;
   getLiveUpdates(): Observable<any> {
     return this.liveUpdates.asObservable();
   }
 
-  // Connection status
+  // Connection status;
   getConnectionStatus(): Observable<boolean> {
     return this.connectionStatus.asObservable();
   }
 
-  // Disconnect
+  // Disconnect;
   disconnect(): void {
     this.connectionStatus.next(false);
   }
 }
 
-// 🚀 ULTIMATE SERVICES MANAGER - Single point of access
+// 🚀 ULTIMATE SERVICES MANAGER - Single point of access;
 export class UltimateServicesManager {
   public readonly data: UltimateDataService;
   public readonly ml: QuantumMLService;
@@ -541,7 +540,7 @@ export class UltimateServicesManager {
   public readonly websocket: QuantumWebSocketService;
 
   constructor() {
-    // Initialize all services
+    // Initialize all services;
     this.data = new UltimateDataService();
     this.ml = new QuantumMLService();
     this.betting = new UltimateBettingService();
@@ -551,33 +550,18 @@ export class UltimateServicesManager {
     this.settings = new QuantumSettingsService();
     this.websocket = new QuantumWebSocketService();
 
-    // Auto-start core services
+    // Auto-start core services;
     this.initialize();
   }
 
   private initialize(): void {
-    console.log(`
-🚀 QUANTUM SERVICES INITIALIZED 🚀
-===================================
-• Data Service: ✅ Online
-• ML Service: ✅ Ready  
-• Betting Service: ✅ Active
-• Analytics Service: ✅ Computing
-• Auth Service: ✅ Secure
-• Notifications: ✅ Monitoring
-• Settings: ✅ Loaded
-• WebSocket: ✅ Connecting
+    // console statement removed
 
-🎨 Cyber Theme: PRESERVED
-📊 Performance: OPTIMIZED
-⚡ Real-time: ENABLED
-    `);
-
-    // Start core processes
+    // Start core processes;
     this.data.startMetricsUpdater();
     this.websocket.connect();
 
-    // Welcome notification with cyber theme
+    // Welcome notification with cyber theme;
     setTimeout(() => {
       this.notifications.createAlert(
         "success",
@@ -587,7 +571,7 @@ export class UltimateServicesManager {
     }, 2000);
   }
 
-  // Health check for all services
+  // Health check for all services;
   async healthCheck(): Promise<any> {
     return {
       status: "OPTIMAL",
@@ -611,7 +595,7 @@ export class UltimateServicesManager {
   }
 }
 
-// Global services instance - Singleton pattern
+// Global services instance - Singleton pattern;
 export const QuantumServices = new UltimateServicesManager();
 
 export default QuantumServices;

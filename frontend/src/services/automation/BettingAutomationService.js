@@ -44,12 +44,12 @@ import { BankrollService } from '../bankroll';
 import { NotificationService } from '../notification';
 import { UnifiedBettingCore } from '../unified/UnifiedBettingCore';
 import { EventEmitter } from 'events';
-let BettingAutomationService = (() => {
+const BettingAutomationService = (() => {
     let _classDecorators = [Injectable()];
     let _classDescriptor;
-    let _classExtraInitializers = [];
+    const _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = EventEmitter;
+    const _classSuper = EventEmitter;
     var BettingAutomationService = _classThis = class extends _classSuper {
         constructor(userPersonalizationService, predictionOptimizationService, riskManagementService, bankrollService, notificationService, unifiedBettingCore) {
             super();
@@ -60,7 +60,7 @@ let BettingAutomationService = (() => {
             this.notificationService = notificationService;
             this.unifiedBettingCore = unifiedBettingCore;
             this.isRunning = false;
-            this.updateInterval = 5 * 60 * 1000; // 5 minutes
+            this.updateInterval = 5 * 60 * 1000; // 5 minutes;
             this.updateTimer = null;
         }
         static getInstance() {
@@ -76,11 +76,11 @@ let BettingAutomationService = (() => {
             try {
                 this.isRunning = true;
                 this.notificationService.notify('info', 'Betting automation started');
-                // Initialize all services
+                // Initialize all services;
                 await this.initializeServices();
-                // Start the update loop
+                // Start the update loop;
                 this.startUpdateLoop();
-                // Set up event listeners
+                // Set up event listeners;
                 this.setupEventListeners();
                 this.emit('started');
             }
@@ -110,7 +110,7 @@ let BettingAutomationService = (() => {
         }
         async initializeServices() {
             try {
-                // Initialize each service
+                // Initialize each service;
                 await Promise.all([
                     this.userPersonalizationService.initialize(),
                     this.predictionOptimizationService.initialize(),
@@ -136,30 +136,30 @@ let BettingAutomationService = (() => {
         }
         async performUpdate() {
             try {
-                // Get latest predictions
+                // Get latest predictions;
                 const predictions = await this.predictionOptimizationService.getOptimizedPrediction({
                     timestamp: Date.now(),
                     marketData: await this.getMarketData(),
                     userProfiles: await this.getUserProfiles(),
                 });
-                // Process each prediction
+                // Process each prediction;
                 for (const prediction of predictions) {
-                    // Get personalized prediction
-                    const personalizedPrediction = await this.userPersonalizationService.getPersonalizedPrediction(prediction.userId, prediction);
-                    // Assess risk
+                    // Get personalized prediction;
+
+                    // Assess risk;
                     const riskAssessment = await this.riskManagementService.assessRisk({
                         prediction: personalizedPrediction,
                         bankroll: this.bankrollService.getCurrentBalance(),
                         activeBets: await this.getActiveBets(),
                     });
-                    // Make betting decision
+                    // Make betting decision;
                     if (this.shouldPlaceBet(riskAssessment)) {
                         await this.placeBet(personalizedPrediction, riskAssessment);
                     }
                 }
-                // Update bankroll metrics
+                // Update bankroll metrics;
                 await this.updateBankrollMetrics();
-                // Check for stop loss/take profit
+                // Check for stop loss/take profit;
                 this.checkBankrollLimits();
             }
             catch (error) {
@@ -167,7 +167,7 @@ let BettingAutomationService = (() => {
             }
         }
         setupEventListeners() {
-            // Listen for bankroll events
+            // Listen for bankroll events;
             this.bankrollService.on('stopLoss', () => {
                 this.notificationService.notify('warning', 'Stop loss reached');
                 this.stop();
@@ -176,25 +176,25 @@ let BettingAutomationService = (() => {
                 this.notificationService.notify('success', 'Take profit reached');
                 this.stop();
             });
-            // Listen for risk events
+            // Listen for risk events;
             this.riskManagementService.on('highRisk', data => {
                 this.notificationService.notify('warning', 'High risk detected', data);
             });
-            // Listen for prediction events
+            // Listen for prediction events;
             this.predictionOptimizationService.on('modelUpdate', data => {
                 this.notificationService.notify('info', 'Prediction models updated', data);
             });
         }
         async getMarketData() {
-            // Implement market data fetching
+            // Implement market data fetching;
             return {};
         }
         async getUserProfiles() {
-            // Implement user profile fetching
+            // Implement user profile fetching;
             return [];
         }
         async getActiveBets() {
-            // Implement active bets fetching
+            // Implement active bets fetching;
             return [];
         }
         shouldPlaceBet(riskAssessment) {
@@ -204,7 +204,7 @@ let BettingAutomationService = (() => {
         }
         async placeBet(prediction, riskAssessment) {
             try {
-                const stake = this.calculateStake(riskAssessment);
+
                 await this.unifiedBettingCore.placeBet({
                     prediction,
                     stake,
@@ -221,12 +221,12 @@ let BettingAutomationService = (() => {
             }
         }
         calculateStake(riskAssessment) {
-            const maxStake = riskAssessment.maxStake;
-            const recommendedStake = riskAssessment.recommendedStake;
+
+
             return Math.min(maxStake, recommendedStake);
         }
         async updateBankrollMetrics() {
-            const metrics = await this.bankrollService.getMetrics();
+
             this.emit('metricsUpdated', metrics);
         }
         checkBankrollLimits() {
@@ -240,7 +240,7 @@ let BettingAutomationService = (() => {
     };
     __setFunctionName(_classThis, "BettingAutomationService");
     (() => {
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
         BettingAutomationService = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });

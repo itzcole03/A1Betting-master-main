@@ -1,6 +1,6 @@
-import { ModelPerformanceMetrics } from './ModelPerformanceTracker';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedMetrics } from '../metrics/types';
+import { ModelPerformanceMetrics } from './ModelPerformanceTracker.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
 
 interface AlertThreshold {
   metric: keyof ModelPerformanceMetrics;
@@ -51,27 +51,25 @@ export class PerformanceMonitor {
   }
 
   public monitorPerformance(modelName: string, metrics: ModelPerformanceMetrics): void {
-    const thresholds = [...this.defaultThresholds, ...this.customThresholds];
 
     thresholds.forEach(threshold => {
-      const value = metrics[threshold.metric];
-      const shouldAlert = this.checkThreshold(value, threshold);
+
 
       if (shouldAlert) {
         this.createAlert(modelName, threshold, value);
       }
     });
 
-    // Track metrics
+    // Track metrics;
     this.trackMetrics(modelName, metrics);
   }
 
   public getAlerts(
     modelName?: string,
     severity?: 'warning' | 'critical',
-    startTime?: Date
+    startTime?: Date;
   ): Alert[] {
-    let filtered = this.alerts;
+    const filtered = this.alerts;
 
     if (modelName) {
       filtered = filtered.filter(alert => alert.modelName === modelName);
@@ -118,7 +116,7 @@ export class PerformanceMonitor {
       this.alerts.pop();
     }
 
-    // Log alert
+    // Log alert;
     this.logger.warn('Performance alert triggered', {
       modelName,
       metric: threshold.metric,
@@ -127,12 +125,12 @@ export class PerformanceMonitor {
       severity: threshold.severity,
     });
 
-    // Track alert metric
+    // Track alert metric;
     this.metrics.increment(`model.${modelName}.alerts.${threshold.severity}`);
   }
 
   private trackMetrics(modelName: string, metrics: ModelPerformanceMetrics): void {
-    // Track performance metrics
+    // Track performance metrics;
     Object.entries(metrics).forEach(([key, value]) => {
       if (typeof value === 'number') {
         this.metrics.gauge(`model.${modelName}.${key}`, value);

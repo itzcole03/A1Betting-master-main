@@ -18,10 +18,10 @@ export const WebSocketBatchingAnalytics = () => {
     const [timestamps, setTimestamps] = useState([]);
     useEffect(() => {
         const updateMetrics = () => {
-            const currentMetrics = webSocketBatching.getMetrics();
+
             setMetrics(currentMetrics);
         };
-        const interval = setInterval(updateMetrics, 1000);
+
         return () => clearInterval(interval);
     }, []);
     useEffect(() => {
@@ -30,7 +30,7 @@ export const WebSocketBatchingAnalytics = () => {
             setCompressionRatios(prev => [...prev.slice(-20), event.compressionRatio]);
             setTimestamps(prev => [...prev.slice(-20), event.timestamp]);
         };
-        const eventBus = EventBus.getInstance();
+
         eventBus.subscribe('websocket:batch:sent', handleBatchSent);
         return () => {
             eventBus.unsubscribe('websocket:batch:sent', handleBatchSent);

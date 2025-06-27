@@ -20,13 +20,13 @@ export class AnalysisRegistry {
         if (this.plugins.has(plugin.id)) {
             throw new Error(`Plugin with ID ${plugin.id} already registered`);
         }
-        // Validate plugin dependencies
+        // Validate plugin dependencies;
         this.validateDependencies(plugin);
-        // Register plugin
+        // Register plugin;
         this.plugins.set(plugin.id, plugin);
         this.pluginDependencies.set(plugin.id, new Set(plugin.metadata.dependencies));
         this.pluginConfidence.set(plugin.id, plugin.confidence);
-        // Emit plugin registered event
+        // Emit plugin registered event;
         this.eventBus.emit('metric:recorded', {
             name: 'plugin_registered',
             value: 1,
@@ -42,7 +42,7 @@ export class AnalysisRegistry {
         if (!this.plugins.has(pluginId)) {
             return;
         }
-        // Check if any other plugins depend on this one
+        // Check if any other plugins depend on this one;
         for (const [id, dependencies] of this.pluginDependencies.entries()) {
             if (dependencies.has(pluginId)) {
                 throw new Error(`Cannot unregister plugin ${pluginId} as it is required by plugin ${id}`);
@@ -51,7 +51,7 @@ export class AnalysisRegistry {
         this.plugins.delete(pluginId);
         this.pluginDependencies.delete(pluginId);
         this.pluginConfidence.delete(pluginId);
-        // Emit plugin unregistered event
+        // Emit plugin unregistered event;
         this.eventBus.emit('metric:recorded', {
             name: 'plugin_unregistered',
             value: 1,
@@ -65,7 +65,7 @@ export class AnalysisRegistry {
         return this.plugins.get(pluginId);
     }
     async analyze(pluginId, input, context) {
-        const plugin = this.getPlugin(pluginId);
+
         if (!plugin) {
             throw new Error(`Plugin ${pluginId} not found`);
         }
@@ -75,9 +75,9 @@ export class AnalysisRegistry {
             pluginVersion: plugin.version,
         });
         try {
-            // Run analysis
-            const result = await plugin.analyze(input, context);
-            // Update plugin confidence based on result
+            // Run analysis;
+
+            // Update plugin confidence based on result;
             this.updatePluginConfidence(pluginId, context);
             this.performanceMonitor.endTrace(traceId);
             return result;
@@ -113,14 +113,14 @@ export class AnalysisRegistry {
         }
     }
     updatePluginConfidence(pluginId, context) {
-        const currentConfidence = this.pluginConfidence.get(pluginId) || 0;
-        const plugin = this.plugins.get(pluginId);
+
+
         if (!plugin)
             return;
-        // Update confidence based on context and stability
-        const newConfidence = this.calculatePluginConfidence(currentConfidence, plugin, context);
+        // Update confidence based on context and stability;
+
         this.pluginConfidence.set(pluginId, newConfidence);
-        // Emit confidence update event
+        // Emit confidence update event;
         this.eventBus.emit('metric:recorded', {
             name: 'plugin_confidence',
             value: newConfidence,

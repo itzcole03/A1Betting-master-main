@@ -1,9 +1,9 @@
-import { z } from 'zod';
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
+import { z } from 'zod.ts';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
 
-// Model schemas
+// Model schemas;
 export const ModelConfigSchema = z.object({
   name: z.string(),
   type: z.enum(['xgboost', 'lstm', 'transformer', 'ensemble']),
@@ -33,7 +33,7 @@ export const ModelPredictionSchema = z.object({
   metadata: z.record(z.unknown()).optional(),
 });
 
-// Type definitions
+// Type definitions;
 export type ModelConfig = z.infer<typeof ModelConfigSchema>;
 export type ModelMetrics = z.infer<typeof ModelMetricsSchema>;
 export type ModelPrediction = z.infer<typeof ModelPredictionSchema>;
@@ -68,7 +68,7 @@ export class AdvancedModelArchitectureService {
 
   async initialize(): Promise<void> {
     try {
-      // Initialize models
+      // Initialize models;
       await Promise.all(this.config.modelTypes.map(type => this.initializeModel(type)));
       this.logger.info('AdvancedModelArchitectureService initialized successfully');
     } catch (error) {
@@ -108,22 +108,22 @@ export class AdvancedModelArchitectureService {
   }
 
   private async initializeXGBoostModel(): Promise<void> {
-    // Implement XGBoost model initialization
+    // Implement XGBoost model initialization;
     this.logger.info('XGBoost model initialized');
   }
 
   private async initializeLSTMModel(): Promise<void> {
-    // Implement LSTM model initialization
+    // Implement LSTM model initialization;
     this.logger.info('LSTM model initialized');
   }
 
   private async initializeTransformerModel(): Promise<void> {
-    // Implement Transformer model initialization
+    // Implement Transformer model initialization;
     this.logger.info('Transformer model initialized');
   }
 
   private async initializeEnsembleModel(): Promise<void> {
-    // Implement Ensemble model initialization
+    // Implement Ensemble model initialization;
     this.logger.info('Ensemble model initialized');
   }
 
@@ -138,7 +138,7 @@ export class AdvancedModelArchitectureService {
     } = {}
   ): Promise<ModelMetrics> {
     try {
-      const model = this.getModel(modelConfig.type);
+
       if (!model) {
         throw new Error(`Model not found: ${modelConfig.type}`);
       }
@@ -168,7 +168,7 @@ export class AdvancedModelArchitectureService {
     } = {}
   ): Promise<ModelPrediction> {
     try {
-      const model = this.getModel(modelConfig.type);
+
       if (!model) {
         throw new Error(`Model not found: ${modelConfig.type}`);
       }
@@ -198,7 +198,7 @@ export class AdvancedModelArchitectureService {
     } = {}
   ): Promise<ModelMetrics> {
     try {
-      const model = this.getModel(modelConfig.type);
+
       if (!model) {
         throw new Error(`Model not found: ${modelConfig.type}`);
       }
@@ -225,7 +225,7 @@ export class AdvancedModelArchitectureService {
 
   async saveModel(modelConfig: ModelConfig, path: string): Promise<void> {
     try {
-      const model = this.getModel(modelConfig.type);
+
       if (!model) {
         throw new Error(`Model not found: ${modelConfig.type}`);
       }
@@ -243,7 +243,7 @@ export class AdvancedModelArchitectureService {
 
   async loadModel(modelConfig: ModelConfig, path: string): Promise<void> {
     try {
-      const model = this.getModel(modelConfig.type);
+
       if (!model) {
         throw new Error(`Model not found: ${modelConfig.type}`);
       }

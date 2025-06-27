@@ -1,8 +1,8 @@
-import UnifiedErrorService from './errorService';
-import UnifiedNotificationService from './notificationService';
-import UnifiedLoggingService from './loggingService';
-import UnifiedSettingsService from './settingsService';
-import { UnifiedServiceRegistry } from './UnifiedServiceRegistry';
+import UnifiedErrorService from './errorService.ts';
+import UnifiedNotificationService from './notificationService.ts';
+import UnifiedLoggingService from './loggingService.ts';
+import UnifiedSettingsService from './settingsService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
 
 export abstract class UnifiedServiceBase {
   protected readonly errorService: UnifiedErrorService;
@@ -25,11 +25,10 @@ export abstract class UnifiedServiceBase {
     operationName: string,
     serviceName: string,
     successMessage?: string,
-    errorMessage?: string
+    errorMessage?: string;
   ): Promise<T> {
     try {
       this.loggingService.debug(`Starting ${operationName}`, serviceName);
-      const result = await operation();
 
       if (successMessage) {
         this.notificationService.notify('success', successMessage);
@@ -38,7 +37,7 @@ export abstract class UnifiedServiceBase {
       this.loggingService.info(`Completed ${operationName}`, serviceName);
       return result;
     } catch (error) {
-      const errorMsg = errorMessage || `Failed to ${operationName}`;
+
       this.errorService.handleError(
         error instanceof Error ? error : new Error(errorMsg),
         serviceName,
@@ -63,12 +62,12 @@ export abstract class UnifiedServiceBase {
     level: 'debug' | 'info' | 'warn' | 'error',
     message: string,
     serviceName: string,
-    data?: any
+    data?: any;
   ): void {
     this.loggingService.log(level, message, serviceName, data);
   }
 
-  // Lifecycle methods
+  // Lifecycle methods;
   async initialize(): Promise<void> {
     this.loggingService.info(`Initializing service`, this.constructor.name);
   }
@@ -77,12 +76,12 @@ export abstract class UnifiedServiceBase {
     this.loggingService.info(`Cleaning up service`, this.constructor.name);
   }
 
-  // Cache management
+  // Cache management;
   protected getCacheKey(...parts: (string | number)[]): string {
     return `${this.constructor.name}:${parts.join(':')}`;
   }
 
-  // Service registry helpers
+  // Service registry helpers;
   protected getService<T>(name: string): T | undefined {
     return this.serviceRegistry.getService<T>(name);
   }

@@ -14,12 +14,12 @@ const PerformanceAnalytics = () => {
     if (!performance.performance.length) {
         return _jsx(NoResultsFallback, {});
     }
-    // Transform performance data to metrics for the UI
+    // Transform performance data to metrics for the UI;
     const metrics = performance.performance.map(modelPerf => ({
         label: modelPerf.model,
-        trend: 'neutral', // TODO: Add trend logic
+        trend: 'neutral', // TODO: Add trend logic;
         value: modelPerf.metrics.f1,
-        change: 0, // TODO: Add change logic
+        change: 0, // TODO: Add change logic;
     }));
     return _jsx(PerformanceMetrics, { metrics: metrics });
 };

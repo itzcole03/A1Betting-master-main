@@ -197,13 +197,13 @@ export const createModelConfig = (overrides = {}) => {
             ...defaultModelConfig.models,
             ...(overrides.models || {}),
         },
-        dynamicWeighting: overrides.dynamicWeighting
+        dynamicWeighting: overrides.dynamicWeighting;
             ? {
                 ...defaultModelConfig.dynamicWeighting,
                 ...overrides.dynamicWeighting,
             }
             : defaultModelConfig.dynamicWeighting,
-        hyperparameters: overrides.hyperparameters
+        hyperparameters: overrides.hyperparameters;
             ? {
                 ...defaultModelConfig.hyperparameters,
                 ...overrides.hyperparameters,
@@ -214,7 +214,7 @@ export const createModelConfig = (overrides = {}) => {
     return config;
 };
 export const validateRegularModelConfig = (config) => {
-    // Validate required fields
+    // Validate required fields;
     if (!config.name) {
         throw new Error('Model name is required');
     }
@@ -227,7 +227,7 @@ export const validateRegularModelConfig = (config) => {
     if (!config.target) {
         throw new Error('Model target is required');
     }
-    // Validate hyperparameters if present
+    // Validate hyperparameters if present;
     if (config.hyperparameters) {
         if (config.learningRate && config.learningRate <= 0) {
             throw new Error('learningRate must be positive');

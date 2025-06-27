@@ -3,7 +3,7 @@ export const useForm = ({ initialValues, validationRules = {}, onSubmit, validat
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState(() => {
-        const touchedFields = {};
+
         Object.keys(initialValues).forEach((key) => {
             touchedFields[key] = false;
         });
@@ -11,7 +11,7 @@ export const useForm = ({ initialValues, validationRules = {}, onSubmit, validat
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const validateField = useCallback((name, value) => {
-        const fieldRules = validationRules[name];
+
         if (!fieldRules)
             return undefined;
         for (const rule of fieldRules) {
@@ -22,10 +22,10 @@ export const useForm = ({ initialValues, validationRules = {}, onSubmit, validat
         return undefined;
     }, [validationRules]);
     const validateForm = useCallback(() => {
-        const newErrors = {};
-        let hasErrors = false;
+
+        const hasErrors = false;
         Object.keys(values).forEach((key) => {
-            const error = validateField(key, values[key]);
+
             if (error) {
                 newErrors[key] = error;
                 hasErrors = true;
@@ -36,14 +36,14 @@ export const useForm = ({ initialValues, validationRules = {}, onSubmit, validat
     const handleChange = useCallback((name, value) => {
         setValues((prev) => ({ ...prev, [name]: value }));
         if (validateOnChange) {
-            const error = validateField(name, value);
+
             setErrors((prev) => ({ ...prev, [name]: error }));
         }
     }, [validateOnChange, validateField]);
     const handleBlur = useCallback((name) => {
         setTouched((prev) => ({ ...prev, [name]: true }));
         if (validateOnBlur) {
-            const error = validateField(name, values[name]);
+
             setErrors((prev) => ({ ...prev, [name]: error }));
         }
     }, [validateOnBlur, validateField, values]);
@@ -51,7 +51,7 @@ export const useForm = ({ initialValues, validationRules = {}, onSubmit, validat
         if (e) {
             e.preventDefault();
         }
-        const formErrors = validateForm();
+
         setErrors(formErrors);
         if (Object.keys(formErrors).length === 0 && onSubmit) {
             setIsSubmitting(true);
@@ -59,7 +59,7 @@ export const useForm = ({ initialValues, validationRules = {}, onSubmit, validat
                 await onSubmit(values);
             }
             catch (error) {
-                console.error('Form submission error:', error);
+                // console statement removed
             }
             finally {
                 setIsSubmitting(false);
@@ -96,6 +96,6 @@ export const useForm = ({ initialValues, validationRules = {}, onSubmit, validat
         setFieldValue,
         setFieldError,
         validateField,
-        validateForm
+        validateForm;
     };
 };

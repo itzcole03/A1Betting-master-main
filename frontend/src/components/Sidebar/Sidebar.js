@@ -10,9 +10,9 @@ const menuItems = [
     { text: 'Settings', icon: _jsx(SettingsIcon, {}), path: '/settings' },
 ];
 const Sidebar = ({ open, onClose }) => {
-    const theme = useTheme();
-    const navigate = useNavigate();
-    const location = useLocation();
+
+
+
     const handleNavigation = (path) => {
         navigate(path);
         onClose();

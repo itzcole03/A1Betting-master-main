@@ -1,4 +1,4 @@
-import { create } from 'zustand';
+import { create } from 'zustand.ts';
 
 export interface StorePerformanceMetrics {
   updateCount: number;
@@ -24,9 +24,9 @@ export const usePerformanceMetrics = create<StorePerformanceMetrics>(() => ({
 
 export function updatePerformanceMetrics(duration: number) {
   usePerformanceMetrics.setState(state => {
-    const updateCount = state.updateCount + 1;
-    const totalUpdateDuration = state.totalUpdateDuration + duration;
-    const averageUpdateDuration = totalUpdateDuration / updateCount;
+
+
+
     const minUpdateDuration =
       state.minUpdateDuration === null ? duration : Math.min(state.minUpdateDuration, duration);
     const maxUpdateDuration =

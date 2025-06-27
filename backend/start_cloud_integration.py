@@ -48,24 +48,24 @@ def start_backend():
     print("🌐 Local IP: 192.168.1.125:8000")
     print("🔗 CORS: Configured for cloud frontend")
     print("-" * 60)
-    
+
     # Start the enhanced backend
     try:
         cmd = [
             sys.executable, "-m", "uvicorn",
             "main_complete:app",  # Use the complete backend with all features
             "--host", "0.0.0.0",
-            "--port", "8000", 
+            "--port", "8000",
             "--reload",
             "--log-level", "info"
         ]
-        
+
         print(f"💻 Running: {' '.join(cmd)}")
         subprocess.run(cmd, cwd=Path(__file__).parent)
-        
+
     except KeyboardInterrupt:
         print("\n🛑 Backend stopped by user")
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"❌ Error starting backend: {e}")
 
 def test_connection():
@@ -85,18 +85,18 @@ def test_connection():
 if __name__ == "__main__":
     print("🎯 A1Betting Cloud Integration Startup")
     print("=" * 60)
-    
+
     # Check dependencies
     if not check_dependencies():
         sys.exit(1)
-    
+
     # Check port availability
     if not check_port():
         print("💡 Trying to start anyway...")
-    
+
     # Start backend
     start_backend()
-    
+
     # Test connection after startup
     time.sleep(2)
     test_connection()

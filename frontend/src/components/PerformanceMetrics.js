@@ -2,10 +2,10 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
 import { formatCurrency, formatPercentage } from '@/utils/formatters';
 export const PerformanceMetrics = ({ bankroll, profit, riskProfile, recommendations, }) => {
-    const totalBets = recommendations.length;
-    const winningBets = recommendations.filter(rec => rec.result === 'win').length;
-    const winRate = totalBets > 0 ? winningBets / totalBets : 0;
-    const roi = bankroll > 0 ? (profit / bankroll) * 100 : 0;
+
+
+
+
     const metrics = [
         {
             label: 'Total Bankroll',

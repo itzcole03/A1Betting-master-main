@@ -4,12 +4,12 @@ import { Box, Typography } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 export const ESPNHeadlinesTicker = () => {
     const [position, setPosition] = useState(0);
-    const containerRef = React.useRef(null);
-    const contentRef = React.useRef(null);
+
+
     const { data: headlines = [] } = useQuery({
         queryKey: ['headlines'],
         queryFn: async () => {
-            // TODO: Implement API call to fetch headlines
+            // TODO: Implement API call to fetch headlines;
             return [
                 {
                     id: '1',
@@ -35,18 +35,18 @@ export const ESPNHeadlinesTicker = () => {
     useEffect(() => {
         if (!containerRef.current || !contentRef.current)
             return;
-        const containerWidth = containerRef.current.offsetWidth;
-        const contentWidth = contentRef.current.offsetWidth;
+
+
         const animate = () => {
             setPosition(prev => {
-                const newPosition = prev - 1;
+
                 if (newPosition <= -contentWidth) {
                     return containerWidth;
                 }
                 return newPosition;
             });
         };
-        const interval = setInterval(animate, 30);
+
         return () => clearInterval(interval);
     }, []);
     return (_jsx(Box, { ref: containerRef, sx: {

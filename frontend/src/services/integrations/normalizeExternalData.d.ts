@@ -1,4 +1,4 @@
-import type { PlayerProp } from '../../types/core.js';
+import type { PlayerProp } from '@/types/core.js';
 interface GameState {
     id: string;
     homeTeam: string;

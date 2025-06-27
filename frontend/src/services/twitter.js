@@ -13,11 +13,11 @@ class TwitterService {
                 query,
                 ...(options || {}),
             };
-            const response = await apiService.get('/twitter/search', params);
+
             return response;
         }
         catch (error) {
-            console.error('Failed to search tweets:', error);
+            // console statement removed
             throw error;
         }
     }
@@ -28,11 +28,11 @@ class TwitterService {
                 entity,
                 ...(options || {}),
             };
-            const response = await apiService.get('/twitter/sentiment', params);
+
             return response;
         }
         catch (error) {
-            console.error('Failed to get sentiment analysis:', error);
+            // console statement removed
             throw error;
         }
     }
@@ -44,7 +44,7 @@ class TwitterService {
             return response;
         }
         catch (error) {
-            console.error('Failed to get trending topics:', error);
+            // console statement removed
             throw error;
         }
     }
@@ -56,7 +56,7 @@ class TwitterService {
             return response;
         }
         catch (error) {
-            console.error('Failed to get user sentiment:', error);
+            // console statement removed
             throw error;
         }
     }

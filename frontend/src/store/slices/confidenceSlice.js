@@ -1,5 +1,5 @@
-// confidenceSlice.ts
-// Zustand slice for confidence band and win probability state
+// confidenceSlice.ts;
+// Zustand slice for confidence band and win probability state;
 import { create } from 'zustand';
 export const useConfidenceStore = create((set) => ({
     prediction: null,

@@ -1,5 +1,5 @@
-import React from "react";
-import { cn } from "../../lib/utils";
+import React from 'react.ts';
+import { cn } from '@/lib/utils.ts';
 
 interface HolographicTextProps {
   children: React.ReactNode;
@@ -8,7 +8,7 @@ interface HolographicTextProps {
   size?: "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl";
 }
 
-const HolographicText: React.FC<HolographicTextProps> = ({
+const HolographicText: React.FC<HolographicTextProps key={326962}> = ({
   children,
   className = "",
   animated = true,
@@ -25,17 +25,15 @@ const HolographicText: React.FC<HolographicTextProps> = ({
     "5xl": "text-5xl",
   };
 
-  const animatedClass = animated ? "animate-cyber-pulse" : "";
-
   return (
-    <span
+    <span;
       className={cn(
         "holographic font-black tracking-tight cyber-title",
         sizes[size],
         animatedClass,
         className,
       )}
-    >
+     key={365153}>
       {children}
     </span>
   );

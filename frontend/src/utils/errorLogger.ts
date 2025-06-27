@@ -1,4 +1,4 @@
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify.ts';
 
 export interface ErrorLog {
   timestamp: string;
@@ -14,7 +14,7 @@ class ErrorLogger {
   private readonly maxLogs: number = 1000;
 
   private constructor() {
-    // Initialize error handlers
+    // Initialize error handlers;
     this.setupGlobalErrorHandlers();
   }
 
@@ -26,7 +26,7 @@ class ErrorLogger {
   }
 
   private setupGlobalErrorHandlers(): void {
-    // Handle unhandled promise rejections
+    // Handle unhandled promise rejections;
     window.addEventListener('unhandledrejection', event => {
       this.logError(event.reason, {
         type: 'unhandledRejection',
@@ -34,7 +34,7 @@ class ErrorLogger {
       });
     });
 
-    // Handle uncaught errors
+    // Handle uncaught errors;
     window.addEventListener('error', event => {
       this.logError(event.error || new Error(event.message), {
         type: 'uncaughtError',
@@ -82,12 +82,12 @@ class ErrorLogger {
   private addLog(log: ErrorLog): void {
     this.logs.unshift(log);
 
-    // Maintain log size limit
+    // Maintain log size limit;
     if (this.logs.length > this.maxLogs) {
       this.logs = this.logs.slice(0, this.maxLogs);
     }
 
-    // Send to backend if needed
+    // Send to backend if needed;
     this.sendToBackend(log);
   }
 
@@ -115,7 +115,7 @@ class ErrorLogger {
         body: JSON.stringify(log),
       });
     } catch (error) {
-      console.error('Failed to send log to backend:', error);
+      // console statement removed
     }
   }
 

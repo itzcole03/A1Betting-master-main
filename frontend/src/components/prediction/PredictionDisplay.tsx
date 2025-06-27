@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo, useCallback } from 'react';
-import { useUnifiedAnalytics } from '../hooks/useUnifiedAnalytics.js';
-import { UnifiedServiceRegistry } from '../../services/unified/UnifiedServiceRegistry.js';
+import React, { useEffect, useState, useMemo, useCallback  } from 'react.ts';
+import { useUnifiedAnalytics } from '@/hooks/useUnifiedAnalytics.js';
+import { UnifiedServiceRegistry } from '@/services/unified/UnifiedServiceRegistry.js';
 import {
   Box,
   Typography,
@@ -16,9 +16,9 @@ import {
   Card,
   CardContent,
   CardHeader,
-} from '@mui/material';
-import Grid from '@mui/material/Grid';
-import { styled } from '@mui/material/styles';
+} from '@mui/material.ts';
+import Grid from '@mui/material/Grid.ts';
+import { styled } from '@mui/material/styles.ts';
 import {
   BarChart,
   Bar,
@@ -29,22 +29,22 @@ import {
   Cell,
   LineChart,
   Line,
-} from 'recharts';
-import FilterListIcon from '@mui/icons-material/FilterList';
-import SortIcon from '@mui/icons-material/Sort';
-import InfoIcon from '@mui/icons-material/Info';
+} from 'recharts.ts';
+import FilterListIcon from '@mui/icons-material/FilterList.ts';
+import SortIcon from '@mui/icons-material/Sort.ts';
+import InfoIcon from '@mui/icons-material/Info.ts';
 import { NoResultsFallback } from './NoResultsFallback.js';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { PredictionStreamPayload } from '../../types/webSocket.js';
-import { usePredictionService } from '../../hooks/usePredictionService.js';
-import { useRiskProfile } from '../../hooks/useRiskProfile.js';
-import { EventBus } from '../../unified/EventBus.js';
-import { ErrorHandler } from '../../unified/ErrorHandler.js';
-import { PerformanceMonitor } from '../../unified/PerformanceMonitor.js';
-import { ModelVersioning } from '../../unified/ModelVersioning.js';
-import { Prediction, RiskProfile, ErrorCategory, ErrorSeverity } from '../../types/core.js';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import { useFilterStore } from '../stores/filterStore.js';
+import { motion, AnimatePresence } from 'framer-motion.ts';
+import type { PredictionStreamPayload } from '@/types/webSocket.js';
+import { usePredictionService } from '@/hooks/usePredictionService.js';
+import { useRiskProfile } from '@/hooks/useRiskProfile.js';
+import { EventBus } from '@/unified/EventBus.js';
+import { ErrorHandler } from '@/unified/ErrorHandler.js';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.js';
+import { ModelVersioning } from '@/unified/ModelVersioning.js';
+import { Prediction, RiskProfile, ErrorCategory, ErrorSeverity } from '@/types/core.js';
+import MoreVertIcon from '@mui/icons-material/MoreVert.ts';
+import { useFilterStore } from '@/stores/filterStore.js';
 
 const PredictionContainer = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(2),
@@ -105,7 +105,7 @@ interface PredictionDisplayProps {
 type SortOrder = 'asc' | 'desc';
 type FilterType = 'all' | 'high-confidence' | 'recent' | 'profitable';
 
-export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
+export const PredictionDisplay: React.FC<PredictionDisplayProps key={692949}> = ({
   eventId,
   marketId,
   selectionId,
@@ -114,35 +114,32 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
   onPredictionUpdate,
 }) => {
   const { ml } = useUnifiedAnalytics({ ml: { autoUpdate: false } });
-  const predictionService = usePredictionService();
-  const { riskProfile } = useRiskProfile();
-  const eventBus = EventBus.getInstance();
-  const errorHandler = ErrorHandler.getInstance();
-  const performanceMonitor = PerformanceMonitor.getInstance();
-  const modelVersioning = ModelVersioning.getInstance();
-  const filterStore = useFilterStore();
 
-  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
-  const [filterType, setFilterType] = useState<FilterType>('all');
-  const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement>(null);
-  const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement>(null);
-  const [changedValues, setChangedValues] = useState<Set<string>>(new Set());
+  const { riskProfile } = useRiskProfile();
+
+
+
+
+
+  const [sortOrder, setSortOrder] = useState<SortOrder key={82347}>('desc');
+  const [filterType, setFilterType] = useState<FilterType key={720919}>('all');
+  const [filterAnchorEl, setFilterAnchorEl] = useState<null | HTMLElement key={178068}>(null);
+  const [sortAnchorEl, setSortAnchorEl] = useState<null | HTMLElement key={178068}>(null);
+  const [changedValues, setChangedValues] = useState<Set<string key={798680}>>(new Set());
   const [showUncertaintyDetails, setShowUncertaintyDetails] = useState(false);
   const [connectionStatus, setConnectionStatus] = useState<'Connected' | 'Disconnected'>(
     'Disconnected'
   );
-  const [error, setError] = useState<string | null>(null);
-  const [predictionHistory, setPredictionHistory] = useState<any[]>([]);
-  const [optimalStake, setOptimalStake] = useState<number | null>(null);
-  const [predictions, setPredictions] = useState<Prediction[]>([]);
+  const [error, setError] = useState<string | null key={121216}>(null);
+  const [predictionHistory, setPredictionHistory] = useState<any[] key={594112}>([]);
+  const [optimalStake, setOptimalStake] = useState<number | null key={564007}>(null);
+  const [predictions, setPredictions] = useState<Prediction[] key={925811}>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const [selectedPrediction, setSelectedPrediction] = useState<Prediction | null>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement key={178068}>(null);
+  const [selectedPrediction, setSelectedPrediction] = useState<Prediction | null key={547963}>(null);
 
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const webSocketService = serviceRegistry.getService<any>('websocket');
 
-  // Memoize prediction for performance
+  // Memoize prediction for performance;
   const prediction = useMemo(() => {
     if (!ml || !ml.mlResult) return null;
     if (Array.isArray(ml.mlResult.predictions)) {
@@ -151,30 +148,29 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
     return null;
   }, [ml, eventId]);
 
-  // Calculate optimal stake when prediction or risk profile changes
+  // Calculate optimal stake when prediction or risk profile changes;
   useEffect(() => {
     if (prediction && riskProfile) {
-      predictionService
+      predictionService;
         .calculateOptimalStake(prediction, prediction.odds, riskProfile.level)
         .then(setOptimalStake)
         .catch(console.error);
     }
   }, [prediction, riskProfile, predictionService]);
 
-  // WebSocket connection for real-time updates
+  // WebSocket connection for real-time updates;
   useEffect(() => {
     let unsub: (() => void) | undefined;
-    let isMounted = true;
+    const isMounted = true;
     let reconnectTimeout: NodeJS.Timeout | null = null;
-    let reconnectAttempts = 0;
-    const maxReconnectAttempts = 5;
-    const reconnectInterval = 3000;
+    const reconnectAttempts = 0;
+
 
     const handlePredictionUpdate = useCallback(
       (data: PredictionStreamPayload) => {
         if (!isMounted) return;
         if (data.eventId === eventId) {
-          setPredictionHistory(prev => [...prev, data].slice(-10)); // Keep last 10 predictions
+          setPredictionHistory(prev => [...prev, data].slice(-10)); // Keep last 10 predictions;
           onPredictionUpdate?.(data);
           setConnectionStatus('Connected');
         }
@@ -209,21 +205,20 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
     };
   }, [eventId, webSocketService, onPredictionUpdate]);
 
-  // Handle prediction updates
+  // Handle prediction updates;
   useEffect(() => {
     if (prediction) {
-      const newChangedValues = new Set<string>();
+
       if (prediction.confidence) newChangedValues.add('confidence');
       if (prediction.recommended_stake) newChangedValues.add('stake');
       setChangedValues(newChangedValues);
-      const timeout = setTimeout(() => setChangedValues(new Set()), 1000);
+
       return () => clearTimeout(timeout);
     }
   }, [prediction]);
 
   useEffect(() => {
-    const componentId = 'prediction-display';
-    const startTime = performance.now();
+
 
     const loadPredictions = async () => {
       try {
@@ -235,7 +230,7 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
           minConfidence: filterStore.minConfidence,
           maxConfidence: filterStore.maxConfidence,
           projectedReturn: filterStore.projectedReturn,
-          // add any other filters as needed
+          // add any other filters as needed;
         });
         setPredictions(data);
         setError(null);
@@ -248,7 +243,7 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
           lastUpdate: Date.now(),
         });
       } catch (err) {
-        const error = err as Error;
+
         setError(error.message);
 
         errorHandler.handleError(error, {
@@ -278,7 +273,6 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
 
     const handlePredictionUpdate = (update: Prediction) => {
       setPredictions(prev => {
-        const newPredictions = prev.map(p => (p.id === update.id ? { ...p, ...update } : p));
 
         performanceMonitor.updateComponentMetrics(componentId, {
           renderCount: 1,
@@ -310,13 +304,12 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
       });
     };
 
-    // Subscribe to real-time updates
-    const unsubscribe = predictionService.subscribeToUpdates(handlePredictionUpdate, handleError);
+    // Subscribe to real-time updates;
 
-    // Load initial predictions
+    // Load initial predictions;
     loadPredictions();
 
-    // Cleanup
+    // Cleanup;
     return () => {
       unsubscribe();
       performanceMonitor.updateComponentMetrics(componentId, {
@@ -329,7 +322,7 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
     };
   }, [predictionService, filterStore]);
 
-  const handleMenuOpen = (event: React.MouseEvent<HTMLElement>, prediction: Prediction) => {
+  const handleMenuOpen = (event: React.MouseEvent<HTMLElement key={9296}>, prediction: Prediction) => {
     setAnchorEl(event.currentTarget);
     setSelectedPrediction(prediction);
   };
@@ -341,9 +334,9 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
 
   if (ml?.isLoading) {
     return (
-      <PredictionContainer className={className}>
-        <Box alignItems="center" display="flex" justifyContent="center" minHeight={200}>
-          <CircularProgress />
+      <PredictionContainer className={className} key={262990}>
+        <Box alignItems="center" display="flex" justifyContent="center" minHeight={200} key={317353}>
+          <CircularProgress / key={730118}>
         </Box>
       </PredictionContainer>
     );
@@ -351,14 +344,14 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
 
   if (ml?.error) {
     return (
-      <PredictionContainer className={className}>
-        <Alert severity="error">Failed to load prediction data: {ml.error.message}</Alert>
+      <PredictionContainer className={className} key={262990}>
+        <Alert severity="error" key={896627}>Failed to load prediction data: {ml.error.message}</Alert>
       </PredictionContainer>
     );
   }
 
   if (!prediction) {
-    return <NoResultsFallback />;
+    return <NoResultsFallback / key={711153}>;
   }
 
   const {
@@ -373,49 +366,49 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
   } = prediction;
 
   return (
-    <PredictionContainer className={className}>
+    <PredictionContainer className={className} key={262990}>
       {/* Header with Connection Status and Controls */}
-      <Box alignItems="center" display="flex" justifyContent="space-between" mb={2}>
-        <Typography variant="h6">Prediction Details</Typography>
-        <Box alignItems="center" display="flex" gap={1}>
-          <Chip
+      <Box alignItems="center" display="flex" justifyContent="space-between" mb={2} key={881353}>
+        <Typography variant="h6" key={93421}>Prediction Details</Typography>
+        <Box alignItems="center" display="flex" gap={1} key={110385}>
+          <Chip;
             color={connectionStatus === 'Connected' ? 'success' : 'warning'}
             label={connectionStatus}
             size="small"
-          />
-          <ControlsContainer>
-            <IconButton size="small" onClick={e => setFilterAnchorEl(e.currentTarget)}>
-              <FilterListIcon />
+          / key={458007}>
+          <ControlsContainer key={649809}>
+            <IconButton size="small" onClick={e = key={331359}> setFilterAnchorEl(e.currentTarget)}>
+              <FilterListIcon / key={888219}>
             </IconButton>
-            <IconButton size="small" onClick={e => setSortAnchorEl(e.currentTarget)}>
-              <SortIcon />
+            <IconButton size="small" onClick={e = key={331359}> setSortAnchorEl(e.currentTarget)}>
+              <SortIcon / key={219030}>
             </IconButton>
           </ControlsContainer>
         </Box>
       </Box>
 
       {/* Main Prediction Display */}
-      <Grid container spacing={2}>
-        <Grid item md={6} xs={12}>
-          <Box mb={3}>
-            <Box alignItems="center" display="flex" justifyContent="space-between" mb={1}>
-              <Typography variant="subtitle1">Prediction</Typography>
-              <ValueDisplay changed={changedValues.has('value')}>
-                <Typography variant="h5">{value.toFixed(2)}</Typography>
+      <Grid container spacing={2} key={272161}>
+        <Grid item md={6} xs={12} key={967702}>
+          <Box mb={3} key={330107}>
+            <Box alignItems="center" display="flex" justifyContent="space-between" mb={1} key={742420}>
+              <Typography variant="subtitle1" key={265838}>Prediction</Typography>
+              <ValueDisplay changed={changedValues.has('value')} key={336930}>
+                <Typography variant="h5" key={944884}>{value.toFixed(2)}</Typography>
               </ValueDisplay>
             </Box>
-            <Box alignItems="center" display="flex" gap={1}>
-              <Typography color="textSecondary" variant="body2">
+            <Box alignItems="center" display="flex" gap={1} key={110385}>
+              <Typography color="textSecondary" variant="body2" key={603568}>
                 Confidence:
               </Typography>
-              <Box flex={1}>
-                <ConfidenceBar
+              <Box flex={1} key={628219}>
+                <ConfidenceBar;
                   sx={{
                     '& .MuiLinearProgress-bar': {
                       backgroundColor:
-                        confidence > 0.7
+                        confidence  key={114704}> 0.7;
                           ? 'success.main'
-                          : confidence > 0.5
+                          : confidence > 0.5;
                             ? 'warning.main'
                             : 'error.main',
                     },
@@ -424,26 +417,26 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
                   variant="determinate"
                 />
               </Box>
-              <Typography color="textSecondary" variant="body2">
+              <Typography color="textSecondary" variant="body2" key={603568}>
                 {(confidence * 100).toFixed(1)}%
               </Typography>
             </Box>
           </Box>
         </Grid>
 
-        <Grid item md={6} xs={12}>
-          <Box mb={3}>
-            <Typography gutterBottom variant="subtitle1">
-              Risk Profile
+        <Grid item md={6} xs={12} key={967702}>
+          <Box mb={3} key={330107}>
+            <Typography gutterBottom variant="subtitle1" key={521154}>
+              Risk Profile;
             </Typography>
-            <Box alignItems="center" display="flex" gap={1}>
-              <Typography variant="body2">Recommended Stake:</Typography>
-              <Typography color="primary" variant="h6">
+            <Box alignItems="center" display="flex" gap={1} key={110385}>
+              <Typography variant="body2" key={679167}>Recommended Stake:</Typography>
+              <Typography color="primary" variant="h6" key={397198}>
                 {optimalStake ? `${(optimalStake * 100).toFixed(1)}%` : 'Calculating...'}
               </Typography>
             </Box>
-            <Box mt={1}>
-              <Typography color="textSecondary" variant="body2">
+            <Box mt={1} key={51953}>
+              <Typography color="textSecondary" variant="body2" key={603568}>
                 Kelly Fraction: {kelly_fraction.toFixed(3)}
               </Typography>
             </Box>
@@ -453,44 +446,44 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
 
       {/* Advanced Metrics */}
       {showAdvancedMetrics && (
-        <Box mt={3}>
-          <Typography gutterBottom variant="subtitle1">
-            Advanced Metrics
+        <Box mt={3} key={641440}>
+          <Typography gutterBottom variant="subtitle1" key={521154}>
+            Advanced Metrics;
           </Typography>
-          <Grid container spacing={2}>
-            <Grid item md={6} xs={12}>
-              <Box>
-                <Typography gutterBottom color="textSecondary" variant="body2">
-                  Uncertainty Analysis
+          <Grid container spacing={2} key={272161}>
+            <Grid item md={6} xs={12} key={967702}>
+              <Box key={485947}>
+                <Typography gutterBottom color="textSecondary" variant="body2" key={260523}>
+                  Uncertainty Analysis;
                 </Typography>
-                <Box alignItems="center" display="flex" gap={1}>
-                  <Typography variant="body2">
+                <Box alignItems="center" display="flex" gap={1} key={110385}>
+                  <Typography variant="body2" key={679167}>
                     Total: {(uncertainty.total * 100).toFixed(1)}%
                   </Typography>
-                  <Tooltip title="Epistemic: Model uncertainty, Aleatoric: Data uncertainty">
-                    <IconButton size="small">
-                      <InfoIcon fontSize="small" />
+                  <Tooltip title="Epistemic: Model uncertainty, Aleatoric: Data uncertainty" key={16691}>
+                    <IconButton size="small" key={787923}>
+                      <InfoIcon fontSize="small" / key={710641}>
                     </IconButton>
                   </Tooltip>
                 </Box>
               </Box>
             </Grid>
-            <Grid item md={6} xs={12}>
-              <Box>
-                <Typography gutterBottom color="textSecondary" variant="body2">
-                  Model Contributions
+            <Grid item md={6} xs={12} key={967702}>
+              <Box key={485947}>
+                <Typography gutterBottom color="textSecondary" variant="body2" key={260523}>
+                  Model Contributions;
                 </Typography>
-                <ResponsiveContainer height={100} width="100%">
-                  <BarChart
-                    data={Object.entries(model_predictions).map(([model, value]) => ({
+                <ResponsiveContainer height={100} width="100%" key={772622}>
+                  <BarChart;
+                    data={Object.entries(model_predictions).map(([model, value]) = key={910543}> ({
                       model,
                       value: value * 100,
                     }))}
                   >
-                    <XAxis dataKey="model" />
-                    <YAxis />
-                    <RechartsTooltip />
-                    <Bar dataKey="value" fill="#8884d8" />
+                    <XAxis dataKey="model" / key={483844}>
+                    <YAxis / key={190086}>
+                    <RechartsTooltip / key={2217}>
+                    <Bar dataKey="value" fill="#8884d8" / key={519476}>
                   </BarChart>
                 </ResponsiveContainer>
               </Box>
@@ -501,106 +494,106 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
 
       {/* Prediction History */}
       {predictionHistory.length > 0 && (
-        <Box mt={3}>
-          <Typography gutterBottom variant="subtitle1">
-            Prediction History
+        <Box mt={3} key={641440}>
+          <Typography gutterBottom variant="subtitle1" key={521154}>
+            Prediction History;
           </Typography>
-          <ResponsiveContainer height={200} width="100%">
-            <LineChart data={predictionHistory}>
-              <XAxis dataKey="timestamp" />
-              <YAxis />
-              <RechartsTooltip />
-              <Line dataKey="prediction" stroke="#8884d8" type="monotone" />
-              <Line dataKey="confidence" stroke="#82ca9d" type="monotone" />
+          <ResponsiveContainer height={200} width="100%" key={395144}>
+            <LineChart data={predictionHistory} key={980956}>
+              <XAxis dataKey="timestamp" / key={223901}>
+              <YAxis / key={190086}>
+              <RechartsTooltip / key={2217}>
+              <Line dataKey="prediction" stroke="#8884d8" type="monotone" / key={702124}>
+              <Line dataKey="confidence" stroke="#82ca9d" type="monotone" / key={108473}>
             </LineChart>
           </ResponsiveContainer>
         </Box>
       )}
 
       {/* Menus */}
-      <Menu
+      <Menu;
         anchorEl={filterAnchorEl}
         open={Boolean(filterAnchorEl)}
-        onClose={() => setFilterAnchorEl(null)}
+        onClose={() = key={786784}> setFilterAnchorEl(null)}
       >
-        <MenuItem
-          onClick={() => {
+        <MenuItem;
+          onClick={() = key={90983}> {
             setFilterType('all');
             setFilterAnchorEl(null);
           }}
         >
-          All Predictions
+          All Predictions;
         </MenuItem>
-        <MenuItem
-          onClick={() => {
+        <MenuItem;
+          onClick={() = key={90983}> {
             setFilterType('high-confidence');
             setFilterAnchorEl(null);
           }}
         >
-          High Confidence
+          High Confidence;
         </MenuItem>
-        <MenuItem
-          onClick={() => {
+        <MenuItem;
+          onClick={() = key={90983}> {
             setFilterType('recent');
             setFilterAnchorEl(null);
           }}
         >
-          Recent
+          Recent;
         </MenuItem>
-        <MenuItem
-          onClick={() => {
+        <MenuItem;
+          onClick={() = key={90983}> {
             setFilterType('profitable');
             setFilterAnchorEl(null);
           }}
         >
-          Profitable
+          Profitable;
         </MenuItem>
       </Menu>
 
-      <Menu
+      <Menu;
         anchorEl={sortAnchorEl}
         open={Boolean(sortAnchorEl)}
-        onClose={() => setSortAnchorEl(null)}
+        onClose={() = key={870013}> setSortAnchorEl(null)}
       >
-        <MenuItem
-          onClick={() => {
+        <MenuItem;
+          onClick={() = key={90983}> {
             setSortOrder('desc');
             setSortAnchorEl(null);
           }}
         >
-          Highest Confidence
+          Highest Confidence;
         </MenuItem>
-        <MenuItem
-          onClick={() => {
+        <MenuItem;
+          onClick={() = key={90983}> {
             setSortOrder('asc');
             setSortAnchorEl(null);
           }}
         >
-          Lowest Confidence
+          Lowest Confidence;
         </MenuItem>
       </Menu>
 
-      <Grid container spacing={3}>
+      <Grid container spacing={3} key={459826}>
         {predictions.map(prediction => (
-          <Grid key={prediction.id} item md={4} sm={6} xs={12}>
-            <PredictionCard>
-              <CardHeader
+          <Grid key={prediction.id} item md={4} sm={6} xs={12} key={328653}>
+            <PredictionCard key={880489}>
+              <CardHeader;
                 action={
-                  <IconButton onClick={e => handleMenuOpen(e, prediction)}>
-                    <MoreVertIcon />
+                  <IconButton onClick={e = key={357523}> handleMenuOpen(e, prediction)}>
+                    <MoreVertIcon / key={870847}>
                   </IconButton>
                 }
                 subheader={new Date(prediction.timestamp).toLocaleString()}
                 title={prediction.event}
               />
-              <CardContent>
-                <Typography gutterBottom color="text.secondary" variant="body2">
+              <CardContent key={452065}>
+                <Typography gutterBottom color="text.secondary" variant="body2" key={760822}>
                   Confidence: {prediction.confidence}%
                 </Typography>
-                <Typography gutterBottom color="text.secondary" variant="body2">
+                <Typography gutterBottom color="text.secondary" variant="body2" key={760822}>
                   Recommended Bet: {prediction.recommendedBet}
                 </Typography>
-                <Typography color="text.secondary" variant="body2">
+                <Typography color="text.secondary" variant="body2" key={497604}>
                   Expected Value: {prediction.expectedValue}
                 </Typography>
               </CardContent>
@@ -609,10 +602,10 @@ export const PredictionDisplay: React.FC<PredictionDisplayProps> = ({
         ))}
       </Grid>
 
-      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-        <MenuItem onClick={handleMenuClose}>View Details</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Track Performance</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Export Data</MenuItem>
+      <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose} key={114625}>
+        <MenuItem onClick={handleMenuClose} key={370397}>View Details</MenuItem>
+        <MenuItem onClick={handleMenuClose} key={370397}>Track Performance</MenuItem>
+        <MenuItem onClick={handleMenuClose} key={370397}>Export Data</MenuItem>
       </Menu>
     </PredictionContainer>
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface ErrorStateProps {
     message?: string;
     onRetry?: () => void;

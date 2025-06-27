@@ -5,7 +5,7 @@ describe('VenueEffectModel', () => {
         UnifiedConfig.getInstance().set('enableVenueEffectModel', true);
     });
     it('returns valid features and score when enabled', async () => {
-        const result = await getVenueEffectFeatures('venue1', 'soccer', { season: '2023', league: 'EPL' });
+
         expect(result).toHaveProperty('features');
         expect(result).toHaveProperty('shapInsights');
         expect(typeof result.venueScore).toBe('number');

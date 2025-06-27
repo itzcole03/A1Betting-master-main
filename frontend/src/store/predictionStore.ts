@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { LineupBuilderOutput, MoneyMakerOpportunity } from '@/types/predictions';
-import { Lineup, isLineup } from '@/types/lineup';
+import { create } from 'zustand.ts';
+import { LineupBuilderOutput, MoneyMakerOpportunity } from '@/types/predictions.ts';
+import { Lineup, isLineup } from '@/types/lineup.ts';
 
 interface PredictionSettings {
   enableSocialSentiment: boolean;
@@ -23,24 +23,24 @@ interface AnalyticsMetrics {
 }
 
 interface PredictionState {
-  // Lineup Builder State
+  // Lineup Builder State;
   currentLineup: Lineup | null;
   savedLineups: Lineup[];
 
-  // Money Maker State
+  // Money Maker State;
   opportunities: MoneyMakerOpportunity[];
 
-  // Settings
+  // Settings;
   settings: PredictionSettings;
 
-  // Analytics
+  // Analytics;
   analytics: AnalyticsMetrics;
 
-  // UI State
+  // UI State;
   isLoading: boolean;
   error: string | null;
 
-  // Actions
+  // Actions;
   setCurrentLineup: (lineup: Lineup | null) => void;
   addSavedLineup: (lineup: Lineup) => void;
   setOpportunities: (opportunities: MoneyMakerOpportunity[]) => void;
@@ -53,7 +53,7 @@ interface PredictionState {
 }
 
 export const usePredictionStore = create<PredictionState>((set, get) => ({
-  // Initial State
+  // Initial State;
   currentLineup: null,
   savedLineups: [],
   opportunities: [],
@@ -79,12 +79,12 @@ export const usePredictionStore = create<PredictionState>((set, get) => ({
   error: null,
   automatedStrategies: {},
 
-  // Actions
+  // Actions;
   setCurrentLineup: lineup => {
     if (lineup === null || isLineup(lineup)) {
       set({ currentLineup: lineup });
     } else {
-      console.error('Invalid lineup object:', lineup);
+      // console statement removed
     }
   },
 
@@ -94,7 +94,7 @@ export const usePredictionStore = create<PredictionState>((set, get) => ({
         savedLineups: [...state.savedLineups, lineup],
       }));
     } else {
-      console.error('Invalid lineup object:', lineup);
+      // console statement removed
     }
   },
 

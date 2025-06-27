@@ -14,7 +14,7 @@ const glowVariants = {
     animate: { opacity: [0.4, 1, 0.4], transition: { duration: 2, repeat: Infinity } },
 };
 export const ProgressBar = ({ current, target, status, showPercentage = false, className = '', showGlow = true, animated = true, }) => {
-    const percentage = calculateProgressPercentage(current, target);
+
     const getStatusColor = () => {
         switch (status) {
             case EntryStatus.WON:
@@ -39,18 +39,18 @@ export const ProgressBar = ({ current, target, status, showPercentage = false, c
     };
     const { bar, text, glow } = getStatusColor();
     return (_jsxs("div", { className: "relative", children: [_jsxs("div", { className: `
-          relative h-2 rounded-full overflow-hidden
-          glass-morphism
+          relative h-2 rounded-full overflow-hidden;
+          glass-morphism;
           ${className}
         `, children: [_jsx("div", { className: "absolute inset-0 bg-gray-200 dark:bg-gray-700" }), _jsx(motion.div, { animate: "animate", className: `absolute inset-y-0 left-0 ${bar}`, custom: percentage, initial: "initial", variants: progressVariants }), showGlow && (_jsx(motion.div, { animate: "animate", className: `
-              absolute inset-y-0 left-0
-              w-full h-full
-              bg-gradient-to-r from-transparent
+              absolute inset-y-0 left-0;
+              w-full h-full;
+              bg-gradient-to-r from-transparent;
               ${glow}
-              blur-sm
+              blur-sm;
             `, initial: "initial", style: { width: `${percentage}%` }, variants: glowVariants })), animated && percentage < 100 && status === EntryStatus.PENDING && (_jsx("div", { className: `
-              absolute inset-y-0 left-0 
-              bg-gradient-to-r from-transparent via-white/10 to-transparent
+              absolute inset-y-0 left-0; 
+              bg-gradient-to-r from-transparent via-white/10 to-transparent;
               animate-[progress-stripe_1s_linear_infinite]
             `, style: {
                             width: `${percentage}%`,

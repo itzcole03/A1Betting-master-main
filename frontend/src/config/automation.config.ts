@@ -35,13 +35,13 @@ export interface AutomationConfig {
 }
 
 export const defaultConfig: AutomationConfig = {
-  updateInterval: 5 * 60 * 1000, // 5 minutes
+  updateInterval: 5 * 60 * 1000, // 5 minutes;
   riskManagement: {
     maxActiveBets: 5,
     minConfidence: 0.7,
-    maxStakePercentage: 0.05, // 5% of bankroll
-    stopLossPercentage: 0.1, // 10% of bankroll
-    takeProfitPercentage: 0.2, // 20% of bankroll
+    maxStakePercentage: 0.05, // 5% of bankroll;
+    stopLossPercentage: 0.1, // 10% of bankroll;
+    takeProfitPercentage: 0.2, // 20% of bankroll;
   },
   prediction: {
     minSampleSize: 1000,

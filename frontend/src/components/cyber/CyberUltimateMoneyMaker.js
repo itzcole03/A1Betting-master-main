@@ -2,21 +2,21 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect, useCallback } from "react";
 import { motion } from "framer-motion";
 import { DollarSign, } from "lucide-react";
-// Import existing Money Maker component
+// Import existing Money Maker component;
 import UltimateMoneyMaker from "../MoneyMaker/UltimateMoneyMaker";
-// Cyber UI Components
+// Cyber UI Components;
 import GlassCard from "../ui/GlassCard";
 import CyberButton from "../ui/CyberButton";
 import MetricCard from "../ui/MetricCard";
 import StatusIndicator from "../ui/StatusIndicator";
-// Existing services and types
+// Existing services and types;
 import { useBetting, useUser } from "../../store/unified/UnifiedStoreManager";
 const CyberUltimateMoneyMaker = () => {
-    // State management
+    // State management;
     const [state, setState] = useState({
         isScanning: false,
         autoMode: false,
-        scanInterval: 30000, // 30 seconds
+        scanInterval: 30000, // 30 seconds;
         opportunities: [],
         totalProfit: 0,
         successRate: 0,
@@ -25,12 +25,12 @@ const CyberUltimateMoneyMaker = () => {
     });
     const [selectedOpportunity, setSelectedOpportunity] = useState(null);
     const [isPlacingBet, setIsPlacingBet] = useState(false);
-    // Existing store integration
+    // Existing store integration;
     const { bankroll, addBet, addOpportunity } = useBetting();
     const { preferences } = useUser();
-    // Generate mock opportunities with cyber enhancement
+    // Generate mock opportunities with cyber enhancement;
     const generateOpportunities = useCallback(async () => {
-        // Simulate AI scanning process
+        // Simulate AI scanning process;
         await new Promise((resolve) => setTimeout(resolve, 2000));
         const mockOpportunities = [
             {
@@ -84,12 +84,12 @@ const CyberUltimateMoneyMaker = () => {
         ];
         return mockOpportunities;
     }, []);
-    // Cyber scanning function
+    // Cyber scanning function;
     const performCyberScan = useCallback(async () => {
         setState((prev) => ({ ...prev, isScanning: true }));
         try {
-            const opportunities = await generateOpportunities();
-            const totalProfit = opportunities.reduce((sum, opp) => sum + opp.profit, 0);
+
+
             const avgConfidence = opportunities.reduce((sum, opp) => sum + opp.confidence, 0) /
                 opportunities.length;
             setState((prev) => ({
@@ -102,11 +102,11 @@ const CyberUltimateMoneyMaker = () => {
             }));
         }
         catch (error) {
-            console.error("Cyber scan failed:", error);
+            // console statement removed
             setState((prev) => ({ ...prev, isScanning: false }));
         }
     }, [generateOpportunities]);
-    // Auto scanning effect
+    // Auto scanning effect;
     useEffect(() => {
         let intervalId;
         if (state.autoMode) {
@@ -117,17 +117,17 @@ const CyberUltimateMoneyMaker = () => {
                 clearInterval(intervalId);
         };
     }, [state.autoMode, state.scanInterval, performCyberScan]);
-    // Initial scan
+    // Initial scan;
     useEffect(() => {
         performCyberScan();
     }, [performCyberScan]);
-    // Handle bet placement with cyber enhancement
+    // Handle bet placement with cyber enhancement;
     const handleCyberBetPlacement = async (opportunity) => {
         setIsPlacingBet(true);
         try {
-            // Simulate bet placement process
+            // Simulate bet placement process;
             await new Promise((resolve) => setTimeout(resolve, 1500));
-            // Add to betting store
+            // Add to betting store;
             await addBet({
                 id: `bet-${Date.now()}`,
                 amount: bankroll * opportunity.kellySize,
@@ -140,11 +140,11 @@ const CyberUltimateMoneyMaker = () => {
                 confidence: opportunity.confidence,
                 expectedValue: opportunity.expectedValue,
             });
-            // Success notification would go here
-            console.log(`✅ Cyber bet placed: ${opportunity.description}`);
+            // Success notification would go here;
+            // console statement removed
         }
         catch (error) {
-            console.error("❌ Cyber bet placement failed:", error);
+            // console statement removed
         }
         finally {
             setIsPlacingBet(false);
@@ -177,13 +177,13 @@ const CyberUltimateMoneyMaker = () => {
                 return "bg-gray-500/20 text-gray-400 border-gray-500/30";
         }
     };
-    return (_jsxs("div", { className: "space-y-8 animate-slide-in-up", children: [_jsxs("div", { className: "text-center mb-8", children: [_jsx("div", { className: "text-6xl mb-6 text-electric-400 float-element", children: _jsx(DollarSign, { className: "w-16 h-16 mx-auto" }) }), _jsx("h1", { className: "holographic text-4xl font-black mb-4", children: "CYBER MONEY MAKER" }), _jsx("p", { className: "text-xl text-gray-400 max-w-2xl mx-auto", children: "AI-powered profit maximization with quantum-enhanced opportunity detection" })] }), _jsxs(GlassCard, { title: "Quantum Control Center", glowing: state.isScanning, children: [_jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 mb-6", children: [_jsx(MetricCard, { label: "Total Profit", value: `$${state.totalProfit.toFixed(2)}`, icon: "fa-dollar-sign", change: "+12.4%", trend: "up" }), _jsx(MetricCard, { label: "Success Rate", value: `${state.successRate.toFixed(1)}%`, icon: "fa-target", change: "+3.2%", trend: "up" }), _jsx(MetricCard, { label: "Active Models", value: state.activeModels.toString(), icon: "fa-brain", change: "+2", trend: "up" }), _jsx(MetricCard, { label: "Opportunities", value: state.opportunities.length.toString(), icon: "fa-search", change: "+5", trend: "up" })] }), _jsxs("div", { className: "flex flex-wrap gap-4 items-center justify-center", children: [_jsx(CyberButton, { label: state.isScanning ? "SCANNING..." : "QUANTUM SCAN", onClick: performCyberScan, variant: "primary", size: "lg", icon: "fa-search", disabled: state.isScanning }), _jsx(CyberButton, { label: state.autoMode ? "AUTO MODE ON" : "AUTO MODE OFF", onClick: () => setState((prev) => ({ ...prev, autoMode: !prev.autoMode })), variant: state.autoMode ? "secondary" : "ghost", size: "md", icon: "fa-robot" }), _jsx("div", { className: "flex items-center space-x-4", children: _jsx(StatusIndicator, { status: state.isScanning ? "warning" : "active", label: state.lastScanTime
+    return (_jsxs("div", { className: "space-y-8 animate-slide-in-up", children: [_jsxs("div", { className: "text-center mb-8", children: [_jsx("div", { className: "text-6xl mb-6 text-electric-400 float-element", children: _jsx(DollarSign, { className: "w-16 h-16 mx-auto" }) }), _jsx("h1", { className: "holographic text-4xl font-black mb-4", children: "CYBER MONEY MAKER" }), _jsx("p", { className: "text-xl text-gray-400 max-w-2xl mx-auto", children: "AI-powered profit maximization with quantum-enhanced opportunity detection" })] }), _jsxs(GlassCard, { title: "Quantum Control Center", glowing: state.isScanning, children: [_jsxs("div", { className: "grid grid-cols-1 md:grid-cols-4 gap-4 mb-6", children: [_jsx(MetricCard, { label: "Total Profit", value: `$${state.totalProfit.toFixed(2)}`, icon: "fa-dollar-sign", change: "+12.4%", trend: "up" }), _jsx(MetricCard, { label: "Success Rate", value: `${state.successRate.toFixed(1)}%`, icon: "fa-target", change: "+3.2%", trend: "up" }), _jsx(MetricCard, { label: "Active Models", value: state.activeModels.toString(), icon: "fa-brain", change: "+2", trend: "up" }), _jsx(MetricCard, { label: "Opportunities", value: state.opportunities.length.toString(), icon: "fa-search", change: "+5", trend: "up" })] }), _jsxs("div", { className: "flex flex-wrap gap-4 items-center justify-center", children: [_jsx(CyberButton, { label: state.isScanning ? "SCANNING..." : "QUANTUM SCAN", onClick: performCyberScan, variant: "primary", size: "lg", icon: "fa-search", disabled: state.isScanning }), _jsx(CyberButton, { label: state.autoMode ? "AUTO MODE ON" : "AUTO MODE OFF", onClick: () => setState((prev) => ({ ...prev, autoMode: !prev.autoMode })), variant: state.autoMode ? "secondary" : "ghost", size: "md", icon: "fa-robot" }), _jsx("div", { className: "flex items-center space-x-4", children: _jsx(StatusIndicator, { status: state.isScanning ? "warning" : "active", label: state.lastScanTime;
                                         ? `Last scan: ${state.lastScanTime.toLocaleTimeString()}`
                                         : "Ready to scan" }) })] })] }), _jsx(GlassCard, { title: "Quantum Opportunities", glowing: state.opportunities.length > 0, children: _jsxs("div", { className: "space-y-4", children: [state.opportunities.map((opportunity, index) => (_jsxs(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: index * 0.1 }, className: "glass-card rounded-xl p-6 hover:shadow-neon transition-all duration-300", style: {
                                 background: "rgba(255, 255, 255, 0.05)",
                                 backdropFilter: "blur(20px) saturate(180%)",
                                 border: "1px solid rgba(255, 255, 255, 0.1)",
-                            }, children: [_jsxs("div", { className: "flex justify-between items-start mb-4", children: [_jsxs("div", { children: [_jsx("h3", { className: "text-lg font-bold text-white mb-1", children: opportunity.description }), _jsxs("div", { className: "flex items-center space-x-4 text-sm text-gray-400", children: [_jsx("span", { children: opportunity.sport }), _jsx("span", { children: "\u2022" }), _jsx("span", { children: opportunity.market }), _jsx("span", { children: "\u2022" }), _jsxs("span", { className: getRiskColor(opportunity.riskLevel), children: [opportunity.riskLevel.toUpperCase(), " RISK"] })] })] }), _jsxs("div", { className: "text-right", children: [_jsx("div", { className: `px-3 py-1 rounded-lg border text-xs font-bold ${getRecommendationColor(opportunity.recommendation)}`, children: opportunity.recommendation }), _jsx("div", { className: "text-xs text-gray-400 mt-1", children: opportunity.timeRemaining })] })] }), _jsxs("div", { className: "grid grid-cols-2 md:grid-cols-5 gap-4 mb-4", children: [_jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsx("div", { className: "text-xl font-bold text-electric-400", children: opportunity.odds.toFixed(2) }), _jsx("div", { className: "text-xs text-gray-400", children: "Odds" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-green-400", children: [(opportunity.confidence * 100).toFixed(1), "%"] }), _jsx("div", { className: "text-xs text-gray-400", children: "Confidence" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-blue-400", children: [(opportunity.expectedValue * 100).toFixed(1), "%"] }), _jsx("div", { className: "text-xs text-gray-400", children: "Expected Value" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-purple-400", children: [(opportunity.kellySize * 100).toFixed(1), "%"] }), _jsx("div", { className: "text-xs text-gray-400", children: "Kelly Size" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-yellow-400", children: ["$", opportunity.profit.toFixed(2)] }), _jsx("div", { className: "text-xs text-gray-400", children: "Est. Profit" })] })] }), _jsxs("div", { className: "mb-4", children: [_jsx("div", { className: "text-sm text-gray-400 mb-2", children: "AI Models:" }), _jsx("div", { className: "flex flex-wrap gap-2", children: opportunity.models.map((model, idx) => (_jsx("span", { className: "px-2 py-1 bg-electric-400/20 text-electric-400 rounded text-xs font-medium", children: model }, idx))) })] }), _jsx(CyberButton, { label: isPlacingBet && selectedOpportunity?.id === opportunity.id
+                            }, children: [_jsxs("div", { className: "flex justify-between items-start mb-4", children: [_jsxs("div", { children: [_jsx("h3", { className: "text-lg font-bold text-white mb-1", children: opportunity.description }), _jsxs("div", { className: "flex items-center space-x-4 text-sm text-gray-400", children: [_jsx("span", { children: opportunity.sport }), _jsx("span", { children: "\u2022" }), _jsx("span", { children: opportunity.market }), _jsx("span", { children: "\u2022" }), _jsxs("span", { className: getRiskColor(opportunity.riskLevel), children: [opportunity.riskLevel.toUpperCase(), " RISK"] })] })] }), _jsxs("div", { className: "text-right", children: [_jsx("div", { className: `px-3 py-1 rounded-lg border text-xs font-bold ${getRecommendationColor(opportunity.recommendation)}`, children: opportunity.recommendation }), _jsx("div", { className: "text-xs text-gray-400 mt-1", children: opportunity.timeRemaining })] })] }), _jsxs("div", { className: "grid grid-cols-2 md:grid-cols-5 gap-4 mb-4", children: [_jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsx("div", { className: "text-xl font-bold text-electric-400", children: opportunity.odds.toFixed(2) }), _jsx("div", { className: "text-xs text-gray-400", children: "Odds" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-green-400", children: [(opportunity.confidence * 100).toFixed(1), "%"] }), _jsx("div", { className: "text-xs text-gray-400", children: "Confidence" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-blue-400", children: [(opportunity.expectedValue * 100).toFixed(1), "%"] }), _jsx("div", { className: "text-xs text-gray-400", children: "Expected Value" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-purple-400", children: [(opportunity.kellySize * 100).toFixed(1), "%"] }), _jsx("div", { className: "text-xs text-gray-400", children: "Kelly Size" })] }), _jsxs("div", { className: "text-center p-3 glass-card rounded-lg", children: [_jsxs("div", { className: "text-xl font-bold text-yellow-400", children: ["$", opportunity.profit.toFixed(2)] }), _jsx("div", { className: "text-xs text-gray-400", children: "Est. Profit" })] })] }), _jsxs("div", { className: "mb-4", children: [_jsx("div", { className: "text-sm text-gray-400 mb-2", children: "AI Models:" }), _jsx("div", { className: "flex flex-wrap gap-2", children: opportunity.models.map((model, idx) => (_jsx("span", { className: "px-2 py-1 bg-electric-400/20 text-electric-400 rounded text-xs font-medium", children: model }, idx))) })] }), _jsx(CyberButton, { label: isPlacingBet && selectedOpportunity?.id === opportunity.id;
                                         ? "PLACING BET..."
                                         : "PLACE QUANTUM BET", onClick: () => {
                                         setSelectedOpportunity(opportunity);

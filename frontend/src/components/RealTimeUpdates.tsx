@@ -1,36 +1,36 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import Box from '@mui/material/Box';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Chip from '@mui/material/Chip';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import Collapse from '@mui/material/Collapse';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
-import Alert from '@mui/material/Alert';
-import CircularProgress from '@mui/material/CircularProgress';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import TrendingDownIcon from '@mui/icons-material/TrendingDown';
-import LocalHospitalIcon from '@mui/icons-material/LocalHospital';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import WarningIcon from '@mui/icons-material/Warning';
-import InfoIcon from '@mui/icons-material/Info';
-import RefreshIcon from '@mui/icons-material/Refresh';
-import { styled } from '@mui/styles';
-import { realTimeUpdates } from '@/services/realTimeUpdates';
-import { Sport } from '@/services/sportsAnalytics';
-import { useWebSocket } from '@/hooks/useWebSocket';
-import { useErrorBoundary } from '@/hooks/useErrorBoundary';
+import React, { useState, useEffect, useCallback  } from 'react.ts';
+import Box from '@mui/material/Box.ts';
+import Card from '@mui/material/Card.ts';
+import CardContent from '@mui/material/CardContent.ts';
+import Typography from '@mui/material/Typography.ts';
+import Grid from '@mui/material/Grid.ts';
+import Tabs from '@mui/material/Tabs.ts';
+import Tab from '@mui/material/Tab.ts';
+import Chip from '@mui/material/Chip.ts';
+import IconButton from '@mui/material/IconButton.ts';
+import Tooltip from '@mui/material/Tooltip.ts';
+import Collapse from '@mui/material/Collapse.ts';
+import List from '@mui/material/List.ts';
+import ListItem from '@mui/material/ListItem.ts';
+import ListItemIcon from '@mui/material/ListItemIcon.ts';
+import ListItemText from '@mui/material/ListItemText.ts';
+import Divider from '@mui/material/Divider.ts';
+import Alert from '@mui/material/Alert.ts';
+import CircularProgress from '@mui/material/CircularProgress.ts';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp.ts';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown.ts';
+import LocalHospitalIcon from '@mui/icons-material/LocalHospital.ts';
+import NotificationsIcon from '@mui/icons-material/Notifications.ts';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore.ts';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess.ts';
+import WarningIcon from '@mui/icons-material/Warning.ts';
+import InfoIcon from '@mui/icons-material/Info.ts';
+import RefreshIcon from '@mui/icons-material/Refresh.ts';
+import { styled } from '@mui/styles.ts';
+import { realTimeUpdates } from '@/services/realTimeUpdates.ts';
+import { Sport } from '@/services/sportsAnalytics.ts';
+import { useWebSocket } from '@/hooks/useWebSocket.ts';
+import { useErrorBoundary } from '@/hooks/useErrorBoundary.ts';
 
 const UpdatesCard = styled(Card)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.9)',
@@ -53,14 +53,14 @@ const TabPanel = (props: TabPanelProps) => {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <div;
       aria-labelledby={`updates-tab-${index}`}
       hidden={value !== index}
       id={`updates-tabpanel-${index}`}
       role="tabpanel"
       {...other}
-    >
-      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+     key={638896}>
+      {value === index && <Box sx={{ p: 3 }} key={486541}>{children}</Box>}
     </div>
   );
 };
@@ -69,7 +69,7 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
   const [value, setValue] = useState(0);
   const [expanded, setExpanded] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
   const [updates, setUpdates] = useState<{
     odds: any[];
     injuries: any[];
@@ -99,7 +99,7 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
             odds: [data.payload, ...prev.odds].slice(0, 10),
           }));
         } else if (data.type === 'model:metrics') {
-          console.log('Model metrics:', data.payload);
+          // console statement removed
         }
       },
     }
@@ -119,7 +119,7 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
     try {
       setLoading(true);
       setError(null);
-      const sportUpdates = await realTimeUpdates.getSportUpdates(sport);
+
       setUpdates(prev => ({
         ...prev,
         ...sportUpdates,
@@ -140,7 +140,7 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
   };
 
   const formatTimestamp = (timestamp: number) => {
-    const date = new Date(timestamp);
+
     return date.toLocaleTimeString();
   };
 
@@ -150,91 +150,91 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
 
   if (!isConnected) {
     return (
-      <UpdatesCard>
-        <CardContent>
-          <Alert severity="warning">WebSocket connection lost. Attempting to reconnect...</Alert>
+      <UpdatesCard key={361010}>
+        <CardContent key={452065}>
+          <Alert severity="warning" key={656330}>WebSocket connection lost. Attempting to reconnect...</Alert>
         </CardContent>
       </UpdatesCard>
     );
   }
 
   return (
-    <UpdatesCard>
-      <CardContent>
-        <Box alignItems="center" display="flex" justifyContent="space-between" mb={2}>
-          <Typography variant="h6">Real-Time Updates</Typography>
-          <Box>
-            <IconButton disabled={loading} onClick={handleRefresh}>
-              <RefreshIcon />
+    <UpdatesCard key={361010}>
+      <CardContent key={452065}>
+        <Box alignItems="center" display="flex" justifyContent="space-between" mb={2} key={881353}>
+          <Typography variant="h6" key={93421}>Real-Time Updates</Typography>
+          <Box key={485947}>
+            <IconButton disabled={loading} onClick={handleRefresh} key={527115}>
+              <RefreshIcon / key={544473}>
             </IconButton>
-            <IconButton onClick={() => setExpanded(!expanded)}>
-              {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+            <IconButton onClick={() = key={588613}> setExpanded(!expanded)}>
+              {expanded ? <ExpandLessIcon / key={48350}> : <ExpandMoreIcon / key={993381}>}
             </IconButton>
           </Box>
         </Box>
 
         {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
+          <Alert severity="error" sx={{ mb: 2 }} key={957932}>
             {error}
           </Alert>
         )}
 
-        <Collapse in={expanded}>
-          <Tabs
+        <Collapse in={expanded} key={601247}>
+          <Tabs;
             sx={{ borderBottom: 1, borderColor: 'divider' }}
             value={value}
             variant="fullWidth"
             onChange={handleTabChange}
-          >
-            <Tab label="Odds" />
-            <Tab label="Injuries" />
-            <Tab label="Line Movements" />
-            <Tab label="News" />
-            <Tab label="Predictions" />
+           key={696162}>
+            <Tab label="Odds" / key={570107}>
+            <Tab label="Injuries" / key={275498}>
+            <Tab label="Line Movements" / key={714805}>
+            <Tab label="News" / key={545098}>
+            <Tab label="Predictions" / key={344410}>
           </Tabs>
 
           {loading ? (
-            <Box display="flex" justifyContent="center" p={3}>
-              <CircularProgress />
+            <Box display="flex" justifyContent="center" p={3} key={1673}>
+              <CircularProgress / key={730118}>
             </Box>
           ) : (
             <>
-              <TabPanel index={0} value={value}>
-                <List>
+              <TabPanel index={0} value={value} key={916861}>
+                <List key={733302}>
                   {updates.odds.map((odds, index) => (
-                    <React.Fragment key={odds.propId}>
-                      <ListItem>
-                        <ListItemIcon>
+                    <React.Fragment key={odds.propId} key={123872}>
+                      <ListItem key={28603}>
+                        <ListItemIcon key={394934}>
                           {odds.movement.direction === 'up' ? (
-                            <TrendingUpIcon color="success" />
+                            <TrendingUpIcon color="success" / key={63688}>
                           ) : odds.movement.direction === 'down' ? (
-                            <TrendingDownIcon color="error" />
+                            <TrendingDownIcon color="error" / key={588136}>
                           ) : (
-                            <InfoIcon color="action" />
+                            <InfoIcon color="action" / key={99664}>
                           )}
                         </ListItemIcon>
-                        <ListItemText
+                        <ListItemText;
                           primary={`${odds.value} (${odds.movement.direction})`}
                           secondary={`Updated ${formatTimestamp(odds.timestamp)}`}
-                        />
-                        <Box display="flex" gap={1}>
-                          <Chip color="success" label={`O ${odds.overMultiplier}x`} size="small" />
-                          <Chip color="error" label={`U ${odds.underMultiplier}x`} size="small" />
+                        / key={177549}>
+                        <Box display="flex" gap={1} key={999669}>
+                          <Chip color="success" label={`O ${odds.overMultiplier}x`} size="small" / key={331004}>
+                          <Chip color="error" label={`U ${odds.underMultiplier}x`} size="small" / key={876786}>
                         </Box>
                       </ListItem>
-                      {index < updates.odds.length - 1 && <Divider />}
+                      {index < updates.odds.length - 1 && <Divider / key={11977}>}
                     </React.Fragment>
                   ))}
                 </List>
               </TabPanel>
 
-              <TabPanel index={1} value={value}>
-                <List>
+              <TabPanel index={1} value={value} key={813850}>
+                <List key={733302}>
                   {updates.injuries.map((injury, index) => (
-                    <React.Fragment key={injury.playerId}>
-                      <ListItem>
-                        <ListItemIcon>
-                          <LocalHospitalIcon
+                    <React.Fragment key={injury.playerId} key={664658}>
+                      <ListItem key={28603}>
+                        <ListItemIcon key={394934}>
+                          <LocalHospitalIcon;
                             color={
                               injury.status === 'out'
                                 ? 'error'
@@ -242,18 +242,18 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
                                   ? 'warning'
                                   : 'success'
                             }
-                          />
+                          / key={240681}>
                         </ListItemIcon>
-                        <ListItemText
+                        <ListItemText;
                           primary={`${injury.playerName} (${injury.team})`}
                           secondary={
-                            <>
-                              <Typography color="textPrimary" component="span" variant="body2">
+                            < key={336773}>
+                              <Typography color="textPrimary" component="span" variant="body2" key={535595}>
                                 {injury.status.toUpperCase()}
                               </Typography>
                               {` - ${injury.injury}`}
                               {injury.expectedReturn && (
-                                <Typography color="textSecondary" component="span" variant="body2">
+                                <Typography color="textSecondary" component="span" variant="body2" key={864104}>
                                   {` - Expected return: ${injury.expectedReturn}`}
                                 </Typography>
                               )}
@@ -261,47 +261,47 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
                           }
                         />
                       </ListItem>
-                      {index < updates.injuries.length - 1 && <Divider />}
+                      {index < updates.injuries.length - 1 && <Divider / key={11977}>}
                     </React.Fragment>
                   ))}
                 </List>
               </TabPanel>
 
-              <TabPanel index={2} value={value}>
-                <List>
+              <TabPanel index={2} value={value} key={507220}>
+                <List key={733302}>
                   {updates.lineMovements.map((movement, index) => (
-                    <React.Fragment key={`${movement.propId}_${movement.timestamp}`}>
-                      <ListItem>
-                        <ListItemIcon>
+                    <React.Fragment key={`${movement.propId}_${movement.timestamp}`} key={759502}>
+                      <ListItem key={28603}>
+                        <ListItemIcon key={394934}>
                           {movement.direction === 'up' ? (
-                            <TrendingUpIcon color="success" />
+                            <TrendingUpIcon color="success" / key={63688}>
                           ) : (
-                            <TrendingDownIcon color="error" />
+                            <TrendingDownIcon color="error" / key={588136}>
                           )}
                         </ListItemIcon>
-                        <ListItemText
+                        <ListItemText;
                           primary={`${movement.oldValue} → ${movement.newValue}`}
                           secondary={`Updated ${formatTimestamp(movement.timestamp)}`}
-                        />
-                        <Chip
-                          color={movement.confidence >= 80 ? 'success' : 'warning'}
+                        / key={20763}>
+                        <Chip;
+                          color={movement.confidence  key={552716}>= 80 ? 'success' : 'warning'}
                           label={`${movement.confidence}% confidence`}
                           size="small"
                         />
                       </ListItem>
-                      {index < updates.lineMovements.length - 1 && <Divider />}
+                      {index < updates.lineMovements.length - 1 && <Divider / key={11977}>}
                     </React.Fragment>
                   ))}
                 </List>
               </TabPanel>
 
-              <TabPanel index={3} value={value}>
-                <List>
+              <TabPanel index={3} value={value} key={341884}>
+                <List key={733302}>
                   {updates.news.map((news, index) => (
-                    <React.Fragment key={news.id}>
-                      <ListItem>
-                        <ListItemIcon>
-                          <NotificationsIcon
+                    <React.Fragment key={news.id} key={679518}>
+                      <ListItem key={28603}>
+                        <ListItemIcon key={394934}>
+                          <NotificationsIcon;
                             color={
                               news.impact === 'high'
                                 ? 'error'
@@ -309,69 +309,69 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
                                   ? 'warning'
                                   : 'info'
                             }
-                          />
+                          / key={314892}>
                         </ListItemIcon>
-                        <ListItemText
+                        <ListItemText;
                           primary={news.title}
                           secondary={
-                            <>
-                              <Typography color="textPrimary" component="span" variant="body2">
+                            < key={690400}>
+                              <Typography color="textPrimary" component="span" variant="body2" key={535595}>
                                 {news.type.toUpperCase()}
                               </Typography>
                               {` - ${news.content}`}
-                              <Typography color="textSecondary" component="span" variant="body2">
+                              <Typography color="textSecondary" component="span" variant="body2" key={864104}>
                                 {` - ${formatTimestamp(news.timestamp)}`}
                               </Typography>
                             </>
                           }
                         />
                       </ListItem>
-                      {index < updates.news.length - 1 && <Divider />}
+                      {index < updates.news.length - 1 && <Divider / key={11977}>}
                     </React.Fragment>
                   ))}
                 </List>
               </TabPanel>
 
-              <TabPanel index={4} value={value}>
-                <List>
+              <TabPanel index={4} value={value} key={628574}>
+                <List key={733302}>
                   {updates.predictions.map((prediction, index) => (
-                    <React.Fragment key={prediction.id}>
-                      <ListItem>
-                        <ListItemIcon>
-                          <Tooltip
+                    <React.Fragment key={prediction.id} key={557248}>
+                      <ListItem key={28603}>
+                        <ListItemIcon key={394934}>
+                          <Tooltip;
                             title={`Confidence: ${(prediction.confidence * 100).toFixed(1)}%`}
-                          >
-                            <Box>
+                           key={486916}>
+                            <Box key={485947}>
                               {prediction.confidence > 0.8 ? (
-                                <TrendingUpIcon color="success" />
+                                <TrendingUpIcon color="success" / key={63688}>
                               ) : prediction.confidence > 0.6 ? (
-                                <InfoIcon color="info" />
+                                <InfoIcon color="info" / key={622419}>
                               ) : (
-                                <WarningIcon color="warning" />
+                                <WarningIcon color="warning" / key={483638}>
                               )}
                             </Box>
                           </Tooltip>
                         </ListItemIcon>
-                        <ListItemText
+                        <ListItemText;
                           primary={`${prediction.event} - ${prediction.market}`}
                           secondary={
-                            <>
-                              <Typography color="textPrimary" component="span" variant="body2">
+                            < key={529348}>
+                              <Typography color="textPrimary" component="span" variant="body2" key={535595}>
                                 Prediction: {prediction.prediction}
                               </Typography>
-                              <br />
-                              <Typography color="textSecondary" component="span" variant="body2">
+                              <br / key={288049}>
+                              <Typography color="textSecondary" component="span" variant="body2" key={864104}>
                                 Updated {formatTimestamp(prediction.timestamp)}
                               </Typography>
                             </>
                           }
                         />
-                        <Box display="flex" gap={1}>
-                          <Chip
+                        <Box display="flex" gap={1} key={999669}>
+                          <Chip;
                             color={
-                              prediction.confidence > 0.8
+                              prediction.confidence  key={855656}> 0.8;
                                 ? 'success'
-                                : prediction.confidence > 0.6
+                                : prediction.confidence > 0.6;
                                   ? 'info'
                                   : 'warning'
                             }
@@ -380,7 +380,7 @@ export const RealTimeUpdates: React.FC<{ sport: Sport }> = ({ sport }) => {
                           />
                         </Box>
                       </ListItem>
-                      {index < updates.predictions.length - 1 && <Divider />}
+                      {index < updates.predictions.length - 1 && <Divider / key={11977}>}
                     </React.Fragment>
                   ))}
                 </List>

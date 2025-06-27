@@ -1,7 +1,7 @@
-import { EventBus } from '@/core/EventBus';
-import { unifiedMonitor } from './UnifiedMonitor';
-import { SystemError, ErrorCategory, ErrorSeverity, ErrorContext } from './UnifiedError';
-import { EventMap } from '../types/core';
+import { EventBus } from '@/core/EventBus.ts';
+import { unifiedMonitor } from './UnifiedMonitor.ts';
+import { SystemError, ErrorCategory, ErrorSeverity, ErrorContext } from './UnifiedError.ts';
+import { EventMap } from '@/types/core.ts';
 
 export interface PredictionInput {
   features: Record<string, number>;
@@ -74,7 +74,7 @@ export class PredictionValidator {
   private readonly MIN_SIGNAL_QUALITY = 0.6;
   private validationRules: ValidationRule[] = [];
   private validationCache: Map<string, ValidationRuleResult> = new Map();
-  private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+  private readonly CACHE_TTL = 5 * 60 * 1000; // 5 minutes;
 
   private constructor() {
     this.eventBus = EventBus.getInstance();
@@ -156,7 +156,7 @@ export class PredictionValidator {
         if (output.metadata) {
           if (
             output.metadata.dataFreshness !== undefined &&
-            output.metadata.dataFreshness < this.MIN_DATA_FRESHNESS
+            output.metadata.dataFreshness < this.MIN_DATA_FRESHNESS;
           ) {
             warnings.push(
               `Data freshness (${output.metadata.dataFreshness}) is below minimum threshold (${this.MIN_DATA_FRESHNESS})`
@@ -164,7 +164,7 @@ export class PredictionValidator {
           }
           if (
             output.metadata.signalQuality !== undefined &&
-            output.metadata.signalQuality < this.MIN_SIGNAL_QUALITY
+            output.metadata.signalQuality < this.MIN_SIGNAL_QUALITY;
           ) {
             warnings.push(
               `Signal quality (${output.metadata.signalQuality}) is below minimum threshold (${this.MIN_SIGNAL_QUALITY})`
@@ -194,10 +194,10 @@ export class PredictionValidator {
       for (const rule of this.validationRules) {
         let ruleResult: ValidationRuleResult;
 
-        // Check cache if rule has cacheKey
+        // Check cache if rule has cacheKey;
         if (rule.cacheKey) {
-          const cacheKey = rule.cacheKey(input, output);
-          const cachedResult = this.validationCache.get(cacheKey);
+
+
           if (cachedResult) {
             ruleResult = cachedResult;
           } else {
@@ -215,7 +215,7 @@ export class PredictionValidator {
           validationContext[rule.name] = ruleResult.context;
         }
 
-        // Stop validation chain if critical error found
+        // Stop validation chain if critical error found;
         if (!ruleResult.isValid && rule.priority >= 3) {
           break;
         }
@@ -233,10 +233,10 @@ export class PredictionValidator {
         context: validationContext,
       };
 
-      // Record validation result
+      // Record validation result;
       this.recordValidation(input, output, result);
 
-      // Emit validation event with enhanced context
+      // Emit validation event with enhanced context;
       this.eventBus.emit('prediction:validated', {
         predictionId: output.predictionId,
         isValid: result.isValid,
@@ -314,7 +314,7 @@ export class PredictionValidator {
   private recordValidation(
     input: PredictionInput,
     output: PredictionOutput,
-    result: ValidationResult
+    result: ValidationResult;
   ): void {
     this.validationHistory.push({
       timestamp: Date.now(),
@@ -323,7 +323,7 @@ export class PredictionValidator {
       result,
     });
 
-    // Trim history if needed
+    // Trim history if needed;
     if (this.validationHistory.length > this.MAX_HISTORY_SIZE) {
       this.validationHistory = this.validationHistory.slice(-this.MAX_HISTORY_SIZE);
     }
@@ -339,11 +339,10 @@ export class PredictionValidator {
     averageSignalQuality: number;
     ruleStats: Record<string, { total: number; passed: number; failed: number }>;
   } {
-    const total = this.validationHistory.length;
-    const valid = this.validationHistory.filter(v => v.result.isValid).length;
-    const validResults = this.validationHistory.filter(v => v.result.isValid);
 
-    // Calculate rule statistics
+
+
+    // Calculate rule statistics;
     const ruleStats: Record<string, { total: number; passed: number; failed: number }> = {};
     for (const rule of this.validationRules) {
       ruleStats[rule.name] = {
@@ -361,19 +360,19 @@ export class PredictionValidator {
       invalidPredictions: total - valid,
       validationRate: total > 0 ? valid / total : 0,
       averageConfidence:
-        validResults.length > 0
+        validResults.length > 0;
           ? validResults.reduce((sum, v) => sum + v.result.metrics.confidence, 0) /
-            validResults.length
+            validResults.length;
           : 0,
       averageDataFreshness:
-        validResults.length > 0
+        validResults.length > 0;
           ? validResults.reduce((sum, v) => sum + v.result.metrics.dataFreshness, 0) /
-            validResults.length
+            validResults.length;
           : 0,
       averageSignalQuality:
-        validResults.length > 0
+        validResults.length > 0;
           ? validResults.reduce((sum, v) => sum + v.result.metrics.signalQuality, 0) /
-            validResults.length
+            validResults.length;
           : 0,
       ruleStats,
     };

@@ -1,5 +1,5 @@
-import { DataSource, DataSourceMetrics } from './DataSource';
-import { SocialSentimentData } from '../adapters/SocialSentimentAdapter';
+import { DataSource, DataSourceMetrics } from './DataSource.ts';
+import { SocialSentimentData } from '@/adapters/SocialSentimentAdapter.ts';
 export interface IntegratedData {
     timestamp: number;
     projections: {

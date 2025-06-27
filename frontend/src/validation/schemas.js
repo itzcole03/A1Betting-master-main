@@ -1,6 +1,6 @@
-// Real zod-based validation schemas for production
+// Real zod-based validation schemas for production;
 import { z } from '../zod';
-// Bet Validation Schema
+// Bet Validation Schema;
 export const betSchema = z.object({
     id: z.string(),
     userId: z.string(),
@@ -11,7 +11,7 @@ export const betSchema = z.object({
     placedAt: z.string().datetime(),
     status: z.enum(['pending', 'won', 'lost', 'void']),
 });
-// User Validation Schema
+// User Validation Schema;
 export const userSchema = z.object({
     id: z.string(),
     username: z.string().min(3),
@@ -19,7 +19,7 @@ export const userSchema = z.object({
     createdAt: z.string().datetime(),
     isActive: z.boolean(),
 });
-// Prediction Validation Schema
+// Prediction Validation Schema;
 export const predictionSchema = z.object({
     id: z.string(),
     betId: z.string(),
@@ -28,14 +28,14 @@ export const predictionSchema = z.object({
     confidence: z.number().min(0).max(1),
     createdAt: z.string().datetime(),
 });
-// Market Validation Schema
+// Market Validation Schema;
 export const marketSchema = z.object({
     id: z.string(),
     name: z.string(),
     type: z.string(),
     isActive: z.boolean(),
 });
-// Event Validation Schema
+// Event Validation Schema;
 export const eventSchema = z.object({
     id: z.string(),
     name: z.string(),

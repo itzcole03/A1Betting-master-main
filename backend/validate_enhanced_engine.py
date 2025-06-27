@@ -90,7 +90,7 @@ def validate_neuromorphic_network():
 
         return passed == total and hh_passed == len(hh_checks)
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"  ✗ Neuromorphic validation failed: {e}")
         return False
 
@@ -139,7 +139,7 @@ def validate_mamba_state_space():
 
         return passed == total and stability_check
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"  ✗ Mamba validation failed: {e}")
         return False
 
@@ -198,7 +198,7 @@ def validate_causal_inference():
 
         return passed == total
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"  ✗ Causal inference validation failed: {e}")
         return False
 
@@ -247,7 +247,7 @@ def validate_topological_network():
 
         return passed == total
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"  ✗ Topological validation failed: {e}")
         return False
 
@@ -301,7 +301,7 @@ def validate_riemannian_network():
 
         return passed == total and positive_definite
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"  ✗ Riemannian validation failed: {e}")
         return False
 
@@ -371,7 +371,7 @@ def validate_enhanced_engine():
 
         return passed == total
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"  ✗ Enhanced engine validation failed: {e}")
         return False
 
@@ -419,7 +419,7 @@ def run_performance_benchmark():
 
         return scaling_efficient
 
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-exception-caught
         print(f"  ✗ Performance benchmark failed: {e}")
         return False
 

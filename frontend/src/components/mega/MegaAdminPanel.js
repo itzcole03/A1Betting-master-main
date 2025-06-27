@@ -3,7 +3,7 @@ import { useState } from "react";
 import { CYBER_COLORS, CYBER_GRADIENTS, CyberText, CyberButton, } from "./CyberTheme";
 import { MegaCard, MegaInput, MegaButton as MegaBtn, } from "./MegaUI";
 import { Users, Activity, BarChart3, Settings, Shield, CheckCircle, XCircle, Search, UserX, UserCheck, } from "lucide-react";
-// MEGA ADMIN PANEL - Cyber-themed administrative interface
+// MEGA ADMIN PANEL - Cyber-themed administrative interface;
 const MegaAdminPanel = ({ className = "" }) => {
     const [activeTab, setActiveTab] = useState("users");
     const [searchQuery, setSearchQuery] = useState("");
@@ -134,7 +134,7 @@ const MegaAdminPanel = ({ className = "" }) => {
                                                     gap: "4px",
                                                 }, children: [user.status === "active" ? (_jsx(CheckCircle, { size: 16, color: CYBER_COLORS.primary })) : (_jsx(XCircle, { size: 16, color: "#ff4757" })), _jsx(CyberText, { variant: "caption", style: {
                                                             color: user.status === "active"
-                                                                ? CYBER_COLORS.primary
+                                                                ? CYBER_COLORS.primary;
                                                                 : "#ff4757",
                                                         }, children: user.status })] }) }), _jsx("td", { style: { padding: "16px", textAlign: "right" }, children: _jsx(MegaBtn, { variant: user.status === "active" ? "danger" : "success", size: "sm", onClick: () => handleUserStatusUpdate(user.id, user.status === "active" ? "suspended" : "active"), icon: user.status === "active" ? (_jsx(UserX, { size: 14 })) : (_jsx(UserCheck, { size: 14 })), children: user.status === "active" ? "Suspend" : "Activate" }) })] }, user.id))) })] }) }) })] }));
     const renderLogsTab = () => (_jsxs(MegaCard, { variant: "glass", padding: "lg", children: [_jsx(CyberText, { variant: "title", style: { marginBottom: "16px" }, children: "System Logs" }), _jsx("div", { style: { display: "grid", gap: "12px" }, children: systemLogs.map((log) => (_jsxs("div", { style: {
@@ -185,7 +185,7 @@ const MegaAdminPanel = ({ className = "" }) => {
                 color: CYBER_COLORS.purple,
             },
         ].map((metric, index) => {
-            const Icon = metric.icon;
+
             return (_jsx(MegaCard, { variant: "glass", padding: "lg", children: _jsxs("div", { style: { textAlign: "center" }, children: [_jsx(Icon, { size: 32, color: metric.color, style: { marginBottom: "16px" } }), _jsx(CyberText, { variant: "title", style: {
                                 color: metric.color,
                                 fontSize: "24px",
@@ -202,7 +202,7 @@ const MegaAdminPanel = ({ className = "" }) => {
                             alignItems: "center",
                             marginBottom: "16px",
                         }, children: [_jsxs("div", { children: [_jsx(CyberText, { variant: "title", style: { fontSize: "28px", marginBottom: "4px" }, children: "Admin Control Center" }), _jsx(CyberText, { variant: "body", color: "muted", children: "System administration and user management" })] }), _jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [_jsx(Shield, { size: 16, color: CYBER_COLORS.primary }), _jsx(CyberText, { variant: "caption", color: "accent", children: "Administrator Access" })] })] }), _jsx("div", { style: { display: "flex", gap: "8px" }, children: tabs.map((tab) => {
-                            const Icon = tab.icon;
+
                             return (_jsx(CyberButton, { variant: activeTab === tab.key ? "primary" : "secondary", active: activeTab === tab.key, onClick: () => setActiveTab(tab.key), icon: _jsx(Icon, { size: 16 }), style: { marginBottom: 0, width: "auto", padding: "8px 16px" }, children: tab.label }, tab.key));
                         }) })] }), _jsxs("div", { children: [activeTab === "users" && renderUsersTab(), activeTab === "logs" && renderLogsTab(), activeTab === "stats" && renderStatsTab(), activeTab === "settings" && (_jsxs(MegaCard, { variant: "glass", padding: "lg", style: { textAlign: "center" }, children: [_jsx(Settings, { size: 48, color: CYBER_COLORS.accent, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "System Settings" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Advanced configuration options" })] }))] })] }));
 };

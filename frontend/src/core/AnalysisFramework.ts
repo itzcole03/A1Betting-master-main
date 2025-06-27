@@ -1,7 +1,7 @@
-import { EventBus } from '@/core/EventBus';
-import { PerformanceMonitor } from './PerformanceMonitor';
-import { TimestampedData, AnalysisResult } from '../types/core';
-import { UnifiedMonitor } from './UnifiedMonitor';
+import { EventBus } from '@/core/EventBus.ts';
+import { PerformanceMonitor } from './PerformanceMonitor.ts';
+import { TimestampedData, AnalysisResult } from '@/types/core.ts';
+import { UnifiedMonitor } from './UnifiedMonitor.ts';
 
 export interface AnalysisContext {
   timestamp: number;
@@ -55,15 +55,15 @@ export class AnalysisRegistry {
       throw new Error(`Plugin with ID ${plugin.id} already registered`);
     }
 
-    // Validate plugin dependencies
+    // Validate plugin dependencies;
     this.validateDependencies(plugin);
 
-    // Register plugin
+    // Register plugin;
     this.plugins.set(plugin.id, plugin);
     this.pluginDependencies.set(plugin.id, new Set(plugin.metadata.dependencies));
     this.pluginConfidence.set(plugin.id, plugin.confidence);
 
-    // Emit plugin registered event
+    // Emit plugin registered event;
     this.eventBus.emit('metric:recorded', {
       name: 'plugin_registered',
       value: 1,
@@ -81,7 +81,7 @@ export class AnalysisRegistry {
       return;
     }
 
-    // Check if any other plugins depend on this one
+    // Check if any other plugins depend on this one;
     for (const [id, dependencies] of this.pluginDependencies.entries()) {
       if (dependencies.has(pluginId)) {
         throw new Error(`Cannot unregister plugin ${pluginId} as it is required by plugin ${id}`);
@@ -92,7 +92,7 @@ export class AnalysisRegistry {
     this.pluginDependencies.delete(pluginId);
     this.pluginConfidence.delete(pluginId);
 
-    // Emit plugin unregistered event
+    // Emit plugin unregistered event;
     this.eventBus.emit('metric:recorded', {
       name: 'plugin_unregistered',
       value: 1,
@@ -110,9 +110,9 @@ export class AnalysisRegistry {
   public async analyze<TInput, TOutput>(
     pluginId: string,
     input: TInput,
-    context: AnalysisContext
+    context: AnalysisContext;
   ): Promise<TOutput> {
-    const plugin = this.getPlugin<TInput, TOutput>(pluginId);
+
     if (!plugin) {
       throw new Error(`Plugin ${pluginId} not found`);
     }
@@ -124,10 +124,9 @@ export class AnalysisRegistry {
     });
 
     try {
-      // Run analysis
-      const result = await plugin.analyze(input, context);
+      // Run analysis;
 
-      // Update plugin confidence based on result
+      // Update plugin confidence based on result;
       this.updatePluginConfidence(pluginId, context);
 
       this.performanceMonitor.endTrace(traceId);
@@ -142,7 +141,7 @@ export class AnalysisRegistry {
     primaryPluginId: string,
     fallbackPluginId: string,
     input: TInput,
-    context: AnalysisContext
+    context: AnalysisContext;
   ): Promise<TOutput> {
     try {
       return await this.analyze<TInput, TOutput>(primaryPluginId, input, context);
@@ -172,16 +171,15 @@ export class AnalysisRegistry {
   }
 
   private updatePluginConfidence(pluginId: string, context: AnalysisContext): void {
-    const currentConfidence = this.pluginConfidence.get(pluginId) || 0;
-    const plugin = this.plugins.get(pluginId);
+
+
     if (!plugin) return;
 
-    // Update confidence based on context and stability
-    const newConfidence = this.calculatePluginConfidence(currentConfidence, plugin, context);
+    // Update confidence based on context and stability;
 
     this.pluginConfidence.set(pluginId, newConfidence);
 
-    // Emit confidence update event
+    // Emit confidence update event;
     this.eventBus.emit('metric:recorded', {
       name: 'plugin_confidence',
       value: newConfidence,
@@ -196,7 +194,7 @@ export class AnalysisRegistry {
   private calculatePluginConfidence(
     currentConfidence: number,
     plugin: AnalysisPlugin<any, any>,
-    context: AnalysisContext
+    context: AnalysisContext;
   ): number {
     const weights = {
       streamConfidence: 0.3,

@@ -1,21 +1,21 @@
-import { useCallback } from 'react';
+import { useCallback } from 'react.ts';
 
 export const useStorage = () => {
   const clearAllCaches = useCallback(async () => {
     try {
-      // Clear localStorage
+      // Clear localStorage;
       localStorage.clear();
 
-      // Clear sessionStorage
+      // Clear sessionStorage;
       sessionStorage.clear();
 
-      // Clear IndexedDB
-      const databases = await window.indexedDB.databases();
+      // Clear IndexedDB;
+
       await Promise.all(
         databases.map(db => {
           if (db.name) {
             return new Promise(resolve => {
-              const request = window.indexedDB.deleteDatabase(db.name as string);
+
               request.onsuccess = () => resolve(true);
               request.onerror = () => resolve(false);
             });
@@ -24,13 +24,13 @@ export const useStorage = () => {
         })
       );
 
-      // Clear Cache API
-      const cacheNames = await caches.keys();
+      // Clear Cache API;
+
       await Promise.all(cacheNames.map(name => caches.delete(name)));
 
       return true;
     } catch (error) {
-      console.error('Error clearing caches:', error);
+      // console statement removed
       throw error;
     }
   }, []);

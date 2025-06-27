@@ -38,12 +38,12 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
 };
 import { Injectable } from '@nestjs/common';
 import { EventEmitter } from 'events';
-let NotificationService = (() => {
+const NotificationService = (() => {
     let _classDecorators = [Injectable()];
     let _classDescriptor;
-    let _classExtraInitializers = [];
+    const _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = EventEmitter;
+    const _classSuper = EventEmitter;
     var NotificationService = _classThis = class extends _classSuper {
         constructor() {
             super();
@@ -59,7 +59,7 @@ let NotificationService = (() => {
         subscribe(callback) {
             this.subscribers.push(callback);
             return () => {
-                const index = this.subscribers.indexOf(callback);
+
                 if (index > -1) {
                     this.subscribers.splice(index, 1);
                 }
@@ -113,15 +113,15 @@ let NotificationService = (() => {
                 timestamp: new Date(),
                 data,
             };
-            // Emit the notification event
+            // Emit the notification event;
             this.emit('notification', notification);
-            // Log the notification
-            console.log(`[${type.toUpperCase()}] ${message}`, data ? data : '');
+            // Log the notification;
+            // console statement removed}] ${message}`, data ? data : '');
         }
     };
     __setFunctionName(_classThis, "NotificationService");
     (() => {
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
         NotificationService = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });
@@ -130,6 +130,6 @@ let NotificationService = (() => {
     return NotificationService = _classThis;
 })();
 export { NotificationService };
-// Export a singleton instance
+// Export a singleton instance;
 export const notificationService = NotificationService.getInstance();
 export default notificationService;

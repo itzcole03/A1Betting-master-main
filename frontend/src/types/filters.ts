@@ -1,4 +1,4 @@
-// Advanced filtering and contextual input types for betting and prediction
+// Advanced filtering and contextual input types for betting and prediction;
 
 export type FilterOperator = 'equals' | 'not_equals' | 'greater_than' | 'less_than' | 'in' | 'not_in' | 'contains' | 'range';
 
@@ -18,7 +18,7 @@ export interface PredictionFilter {
 
 export interface AdvancedFilterSet {
   filters: PredictionFilter[];
-  appliedAt: string; // ISO timestamp
+  appliedAt: string; // ISO timestamp;
   description?: string;
 }
 
@@ -28,6 +28,6 @@ export interface ContextualInput {
   league?: string;
   market?: string;
   oddsRange?: [number, number];
-  timeFrame?: [string, string]; // ISO date range
+  timeFrame?: [string, string]; // ISO date range;
   customContext?: Record<string, string | number | boolean>;
 }

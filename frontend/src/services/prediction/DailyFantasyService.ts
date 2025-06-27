@@ -2,8 +2,8 @@
  * Service for generating daily fantasy sports recommendations.
  */
 
-import type { DailyFantasyRecommendation } from '@/types';
-import type { ModelPrediction } from '../ml/models/BaseModel';
+import type { DailyFantasyRecommendation } from '@/types.ts';
+import type { ModelPrediction } from '@/ml/models/BaseModel.ts';
 
 export interface FantasyRequest {
   predictions: {
@@ -44,17 +44,16 @@ export class DailyFantasyService {
 
   async generateRecommendations(request: FantasyRequest): Promise<FantasyResponse> {
     try {
-      // Calculate consensus prediction
-      const consensusPrediction = this.calculateConsensusPrediction(request.predictions);
+      // Calculate consensus prediction;
 
-      // Generate player recommendations
+      // Generate player recommendations;
       const recommendations = await this.generatePlayerRecommendations(
         consensusPrediction,
-        request.event
+        request.event;
       );
 
-      // Store recommendations
-      const eventKey = request.event.eventId;
+      // Store recommendations;
+
       this.recommendations.set(eventKey, recommendations);
 
       return {
@@ -94,9 +93,9 @@ export class DailyFantasyService {
     consensusPrediction: number,
     event: FantasyRequest['event']
   ): Promise<DailyFantasyRecommendation[]> {
-    // This is a placeholder implementation
+    // This is a placeholder implementation;
     // In a real system, this would integrate with player data, salary information,
-    // and advanced analytics to generate optimal recommendations
+    // and advanced analytics to generate optimal recommendations;
 
     return [
       {
@@ -137,10 +136,9 @@ export class DailyFantasyService {
   }
 
   async getLatestRecommendations(): Promise<DailyFantasyRecommendation[]> {
-    const eventIds = Array.from(this.recommendations.keys());
+
     if (eventIds.length === 0) return [];
 
-    const latestEventId = eventIds[eventIds.length - 1];
     return this.recommendations.get(latestEventId) || [];
   }
 

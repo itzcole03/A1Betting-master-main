@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 
 interface SkeletonLoaderProps {
   /** Optional additional CSS classes */
@@ -19,7 +19,7 @@ interface SkeletonLoaderProps {
  * A simple, reusable skeleton loader component to indicate loading states.
  * Supports different shapes, sizes, and counts.
  */
-const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
+const SkeletonLoader: React.FC<SkeletonLoaderProps key={346913}> = ({
   className = '',
   count = 1,
   height = '1rem',
@@ -27,11 +27,10 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
   variant = 'text',
   style = {},
 }) => {
-  const elements = [];
 
   const baseStyle =
     'animate-pulse bg-gradient-to-r from-primary-700/10 via-primary-500/10 to-white/10 glass shadow-inner';
-  let variantStyle = '';
+  const variantStyle = '';
 
   switch (variant) {
     case 'circle':
@@ -46,15 +45,15 @@ const SkeletonLoader: React.FC<SkeletonLoaderProps> = ({
       break;
   }
 
-  for (let i = 0; i < count; i++) {
+  for (const i = 0; i < count; i++) {
     elements.push(
-      <div
+      <div;
         key={i}
         className={`${baseStyle} ${variantStyle} ${className}`}
         style={{
           height,
           width,
-          ...(variant === 'text' && i > 0 && { marginTop: '0.5rem' }), // Add margin for multi-line text skeletons
+          ...(variant === 'text' && i  key={439231}> 0 && { marginTop: '0.5rem' }), // Add margin for multi-line text skeletons;
           ...style,
         }}
       />

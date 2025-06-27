@@ -1,18 +1,16 @@
-import React from 'react';
-import { IconButton, useTheme } from '@mui/material';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
-import { useThemeStore } from '@/stores/themeStore';
+import React from 'react.ts';
+import { IconButton, useTheme } from '@mui/material.ts';
+import { Brightness4, Brightness7 } from '@mui/icons-material.ts';
+import { useThemeStore } from '@/stores/themeStore.ts';
 
-import { motion } from 'framer-motion';
-
-const MotionIconButton = motion.create(IconButton);
+import { motion } from 'framer-motion.ts';
 
 const ThemeToggle = () => {
-  const theme = useTheme();
+
   const { toggleTheme } = useThemeStore();
 
   return (
-    <MotionIconButton
+    <MotionIconButton;
       aria-label="toggle theme"
       color="primary"
       sx={{
@@ -24,22 +22,22 @@ const ThemeToggle = () => {
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       onClick={toggleTheme}
-    >
+     key={576503}>
       {theme.palette.mode === 'dark' ? (
-        <motion.div
+        <motion.div;
           animate={{ rotate: 360 }}
           initial={{ rotate: 0 }}
           transition={{ duration: 0.5 }}
-        >
-          <Brightness7 />
+         key={661440}>
+          <Brightness7 / key={835748}>
         </motion.div>
       ) : (
-        <motion.div
+        <motion.div;
           animate={{ rotate: 360 }}
           initial={{ rotate: 0 }}
           transition={{ duration: 0.5 }}
-        >
-          <Brightness4 />
+         key={661440}>
+          <Brightness4 / key={722417}>
         </motion.div>
       )}
     </MotionIconButton>

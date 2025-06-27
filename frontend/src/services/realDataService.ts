@@ -11,7 +11,7 @@ export class RealDataService {
   private sources: Map<string, RealDataSource> = new Map();
 
   async initializeSources(): Promise<void> {
-    // Initialize mock sources
+    // Initialize mock sources;
     this.sources.set("espn", {
       connected: true,
       quality: 0.95,
@@ -42,7 +42,7 @@ export class RealDataService {
   }
 
   async refreshData(): Promise<void> {
-    // Simulate data refresh
+    // Simulate data refresh;
     this.sources.forEach((source) => {
       source.lastUpdate = new Date();
     });

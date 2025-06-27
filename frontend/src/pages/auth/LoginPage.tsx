@@ -1,13 +1,13 @@
-import React from "react";
-import { useState } from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
-import { Box, Button, TextField, Link, Typography, Alert } from "@mui/material";
-import { useStore } from "@/store";
-import { ApiService } from "@/services/api";
+import React from 'react.ts';
+import { useState } from 'react.ts';
+import { useNavigate, Link as RouterLink } from 'react-router-dom.ts';
+import { Box, Button, TextField, Link, Typography, Alert } from '@mui/material.ts';
+import { useStore } from '@/store.ts';
+import { ApiService } from '@/services/api.ts';
 
 export default function LoginPage() {
-  const navigate = useNavigate();
-  const setUser = useStore((state) => state.setUser);
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,7 +19,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const user = await ApiService.login(email, password);
+
       setUser(user);
       navigate("/dashboard");
     } catch (err) {
@@ -30,29 +30,29 @@ export default function LoginPage() {
   };
 
   return (
-    <Box component="form" sx={{ width: "100%" }} onSubmit={handleSubmit}>
+    <Box component="form" sx={{ width: "100%" }} onSubmit={handleSubmit} key={966550}>
       {error && (
-        <Alert severity="error" sx={{ mb: 2 }}>
+        <Alert severity="error" sx={{ mb: 2 }} key={957932}>
           {error}
         </Alert>
       )}
 
-      <TextField
-        autoFocus
-        fullWidth
-        required
+      <TextField;
+        autoFocus;
+        fullWidth;
+        required;
         autoComplete="email"
         id="email"
         label="Email Address"
         margin="normal"
         name="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        onChange={(e) = key={252219}> setEmail(e.target.value)}
       />
 
-      <TextField
-        fullWidth
-        required
+      <TextField;
+        fullWidth;
+        required;
         autoComplete="current-password"
         id="password"
         label="Password"
@@ -60,27 +60,27 @@ export default function LoginPage() {
         name="password"
         type="password"
         value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        onChange={(e) = key={52323}> setPassword(e.target.value)}
       />
 
-      <Button
-        fullWidth
+      <Button;
+        fullWidth;
         disabled={isLoading}
         sx={{ mt: 3, mb: 2 }}
         type="submit"
         variant="contained"
-      >
+       key={11735}>
         {isLoading ? "Signing in..." : "Sign In"}
       </Button>
 
-      <Box sx={{ textAlign: "center" }}>
-        <Typography sx={{ mb: 1 }} variant="body2">
+      <Box sx={{ textAlign: "center" }} key={243046}>
+        <Typography sx={{ mb: 1 }} variant="body2" key={417496}>
           Don't have an account?{" "}
-          <Link component={RouterLink} to="/register" variant="body2">
-            Sign up
+          <Link component={RouterLink} to="/register" variant="body2" key={115503}>
+            Sign up;
           </Link>
         </Typography>
-        <Link component={RouterLink} to="/forgot-password" variant="body2">
+        <Link component={RouterLink} to="/forgot-password" variant="body2" key={233213}>
           Forgot password?
         </Link>
       </Box>

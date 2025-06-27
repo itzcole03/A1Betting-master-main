@@ -298,7 +298,7 @@ class StatisticalMechanicsPredictor:
         beta = 1.0 / self.temperature
 
         for i in range(n_samples):
-            for j in range(n_features):
+            for _ in range(n_features):
                 # Sample weight j conditioned on all others
                 other_weights = current_weights.copy()
 
@@ -545,7 +545,7 @@ class NonparametricBayesianRegressor:
                         + np.sum(
                             [
                                 digamma(gamma_2[j]) - digamma(gamma_1[j] + gamma_2[j])
-                                for j in range(k)
+                                for _ in range(k)
                             ]
                         )
                     )
@@ -725,7 +725,7 @@ class EnhancedMathematicalPredictionEngine:
             losses.append(loss.item())
 
             if epoch % 100 == 0:
-                logger.info(f"Epoch {epoch}, ELBO Loss: {loss.item():.6f}")
+                logger.info("Epoch {epoch}, ELBO Loss: {loss.item():.6f}")
 
         return {
             "training_losses": losses,

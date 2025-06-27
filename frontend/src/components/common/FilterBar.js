@@ -42,8 +42,8 @@ export const FilterBar = () => {
     const FilterButton = ({ id, label, icon: Icon }) => (_jsxs(motion.button, { whileHover: { scale: 1.05 }, whileTap: { scale: 0.95 }, 
         // onClick={() => toggleFilter(id)}
         className: `
-        inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium
-        transition-colors duration-200
+        inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium;
+        transition-colors duration-200;
         ${isFilterActive(id)
             ? 'bg-primary-500 text-white'
             : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'}

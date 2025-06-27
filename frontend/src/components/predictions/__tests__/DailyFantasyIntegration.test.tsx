@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { DailyFantasyIntegration } from '../DailyFantasyIntegration';
-import { useLogger } from '../../../hooks/useLogger';
-import { useMetrics } from '../../../hooks/useMetrics';
+import React from 'react.ts';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react.ts';
+import { DailyFantasyIntegration } from '@/DailyFantasyIntegration.ts';
+import { useLogger } from '@/../hooks/useLogger.ts';
+import { useMetrics } from '@/../hooks/useMetrics.ts';
 
-// Mock the hooks
+// Mock the hooks;
 jest.mock('../../../hooks/useLogger');
 jest.mock('../../../hooks/useMetrics');
 
@@ -26,8 +26,7 @@ const mockMetrics = {
 
 // TODO: Skipped all tests in this file due to incomplete or broken DailyFantasyIntegration logic or outdated mocks. Fix and re-enable.
 describe.skip('DailyFantasyIntegration', () => {
-  const mockOnDataUpdate = jest.fn();
-  const mockFetch = jest.fn();
+
 
   beforeEach(() => {
     (useLogger as jest.Mock).mockReturnValue(mockLogger);
@@ -64,7 +63,7 @@ describe.skip('DailyFantasyIntegration', () => {
 
   it('renders the component with initial state', () => {
     render(
-      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} />
+      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} / key={650139}>
     );
 
     expect(screen.getByText('Daily Fantasy Integration')).toBeInTheDocument();
@@ -79,10 +78,9 @@ describe.skip('DailyFantasyIntegration', () => {
     });
 
     render(
-      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} />
+      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} / key={650139}>
     );
 
-    const apiKeyInput = screen.getByLabelText('API Key');
     fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
 
     await waitFor(() => {
@@ -120,10 +118,9 @@ describe.skip('DailyFantasyIntegration', () => {
     mockFetch.mockRejectedValueOnce(new Error('API Error'));
 
     render(
-      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} />
+      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} / key={650139}>
     );
 
-    const apiKeyInput = screen.getByLabelText('API Key');
     fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
 
     await waitFor(() => {
@@ -144,14 +141,12 @@ describe.skip('DailyFantasyIntegration', () => {
     });
 
     render(
-      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} />
+      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} / key={650139}>
     );
 
-    const siteSelect = screen.getByLabelText('Site');
     fireEvent.mouseDown(siteSelect);
     fireEvent.click(screen.getByText('FanDuel'));
 
-    const apiKeyInput = screen.getByLabelText('API Key');
     fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
 
     await waitFor(() => {
@@ -175,10 +170,9 @@ describe.skip('DailyFantasyIntegration', () => {
     });
 
     render(
-      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} />
+      <DailyFantasyIntegration date="2024-01-01" sport="nfl" onDataUpdate={mockOnDataUpdate} / key={650139}>
     );
 
-    const apiKeyInput = screen.getByLabelText('API Key');
     fireEvent.change(apiKeyInput, { target: { value: 'test-api-key' } });
 
     await waitFor(() => {

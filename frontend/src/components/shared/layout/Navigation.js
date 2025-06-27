@@ -5,7 +5,7 @@ import { AppBar, Box, Drawer, IconButton, List, ListItem, ListItemButton, ListIt
 import { Menu as MenuIcon, Dashboard as DashboardIcon, Analytics as AnalyticsIcon, Casino as CasinoIcon, AccountBalance as AccountBalanceIcon, Settings as SettingsIcon, SportsSoccer as SportsSoccerIcon, Logout as LogoutIcon, } from '@mui/icons-material';
 import { useStore } from '@/store';
 import { authService } from '@/services/auth';
-const drawerWidth = 240;
+
 const menuItems = [
     { text: 'Dashboard', icon: _jsx(DashboardIcon, {}), path: '/' },
     { text: 'Analytics', icon: _jsx(AnalyticsIcon, {}), path: '/analytics' },
@@ -15,12 +15,12 @@ const menuItems = [
     { text: 'Settings', icon: _jsx(SettingsIcon, {}), path: '/settings' },
 ];
 export default function Navigation() {
-    const theme = useTheme();
-    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
-    const navigate = useNavigate();
-    const location = useLocation();
+
+
     const { user, setUser } = useStore();
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
@@ -38,7 +38,7 @@ export default function Navigation() {
             navigate('/login');
         }
         catch (error) {
-            console.error('Logout error:', error);
+            // console statement removed
         }
     };
     const drawer = (_jsxs(Box, { children: [_jsx(Toolbar, { children: _jsx(Typography, { variant: "h6", noWrap: true, component: "div", children: "Betting Analyzer" }) }), _jsx(List, { children: menuItems.map((item) => (_jsx(ListItem, { disablePadding: true, children: _jsxs(ListItemButton, { selected: location.pathname === item.path, onClick: () => {

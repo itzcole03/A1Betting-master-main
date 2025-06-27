@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from './useAuth';
+import { useState, useEffect } from 'react.ts';
+import { useAuth } from './useAuth.ts';
 
 interface CalibrationPoint {
   prob_pred: number;
@@ -41,7 +41,6 @@ export const useModelCalibration = () => {
         throw new Error('Failed to fetch model calibration');
       }
 
-      const calibration = await response.json();
       setState(prev => ({
         ...prev,
         calibration,
@@ -62,13 +61,13 @@ export const useModelCalibration = () => {
   };
 
   const getCalibrationHistory = (model: string) => {
-    return state.calibration
+    return state.calibration;
       .filter(c => c.model === model)
       .sort((a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime());
   };
 
   const getCalibrationTrend = (model: string) => {
-    const history = getCalibrationHistory(model);
+
     return history.map(h => ({
       timestamp: h.timestamp,
       brier_score: h.brier_score,
@@ -76,15 +75,14 @@ export const useModelCalibration = () => {
   };
 
   const getCalibrationError = (model: string) => {
-    const latest = getLatestCalibration();
+
     if (!latest) return null;
 
-    const calibrationCurve = latest.calibration_curve;
-    let totalError = 0;
-    let totalCount = 0;
+    const totalError = 0;
+    const totalCount = 0;
 
     for (const point of calibrationCurve) {
-      const error = Math.abs(point.prob_pred - point.prob_true);
+
       totalError += error * point.count;
       totalCount += point.count;
     }
@@ -93,15 +91,14 @@ export const useModelCalibration = () => {
   };
 
   const getCalibrationReliability = (model: string) => {
-    const latest = getLatestCalibration();
+
     if (!latest) return null;
 
-    const calibrationCurve = latest.calibration_curve;
-    let reliability = 0;
-    let totalCount = 0;
+    const reliability = 0;
+    const totalCount = 0;
 
     for (const point of calibrationCurve) {
-      const reliabilityScore = 1 - Math.abs(point.prob_pred - point.prob_true);
+
       reliability += reliabilityScore * point.count;
       totalCount += point.count;
     }

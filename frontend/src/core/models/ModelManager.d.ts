@@ -1,4 +1,4 @@
-import { ModelMetadata, ModelVersion, ModelEvaluation } from '@/types';
+import { ModelMetadata, ModelVersion, ModelEvaluation } from '@/types.ts';
 export declare class ModelManager {
     private registry;
     private evaluator;

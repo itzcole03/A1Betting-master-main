@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface BettingCardProps {
     title?: string;
     odds?: string;

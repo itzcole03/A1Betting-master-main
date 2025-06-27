@@ -18,7 +18,7 @@ const getSizeClasses = (size) => {
     }
 };
 export const ConfidenceIndicator = ({ value, size = 'medium', }) => {
-    const color = getConfidenceColor(value);
-    const sizeClasses = getSizeClasses(size);
+
+
     return (_jsx(Tooltip, { title: `${Math.round(value * 100)}% Confidence`, children: _jsx("div", { "aria-label": `Confidence level: ${Math.round(value * 100)}%`, className: `${sizeClasses} ${color} rounded-full transition-colors duration-300`, role: "status" }) }));
 };

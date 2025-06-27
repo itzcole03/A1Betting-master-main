@@ -1,8 +1,8 @@
-import React from 'react';
-import { cn } from '@/utils/classNames';
-import { motion, MotionProps } from 'framer-motion';
+import React from 'react.ts';
+import { cn } from '@/utils/classNames.ts';
+import { motion, MotionProps } from 'framer-motion.ts';
 
-export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface CardProps extends React.HTMLAttributes<HTMLDivElement key={92993}> {
   variant?: 'default' | 'glass' | 'premium';
   hover?: boolean;
   glow?: boolean;
@@ -24,7 +24,7 @@ const glowColors = {
   premium: 'shadow-primary-500/20',
 };
 
-function splitMotionProps(props: Record<string, unknown>) {
+function splitMotionProps(props: Record<string, unknown key={843221}>) {
   const motionKeys = [
     'animate',
     'initial',
@@ -53,8 +53,8 @@ function splitMotionProps(props: Record<string, unknown>) {
     'style',
     'transformTemplate',
     'transformValues',
-  ]; const motionProps: Record<string, unknown> = {};
-  const rest: Record<string, unknown> = {};
+  ]; const motionProps: Record<string, unknown key={843221}> = {};
+  const rest: Record<string, unknown key={843221}> = {};
   Object.entries(props).forEach(([key, value]) => {
     if (motionKeys.includes(key)) {
       motionProps[key] = value;
@@ -65,7 +65,7 @@ function splitMotionProps(props: Record<string, unknown>) {
   return [motionProps, rest];
 }
 
-export const Card = React.forwardRef<HTMLDivElement, CardProps & MotionProps>((allProps, ref) => {
+export const Card = React.forwardRef<HTMLDivElement, CardProps & MotionProps key={906691}>((allProps, ref) => {
   const {
     variant = 'default',
     hover = false,
@@ -73,31 +73,31 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps & MotionProps>((a
     loading = false,
     className,
     children,
-    ...props
+    ...props;
   } = allProps;
-  const baseClasses = 'rounded-xl p-6 transition-all duration-200';
-  const variantClasses = variants[variant];
-  const hoverClasses = hover ? 'hover:-translate-y-1 hover:shadow-lg' : '';
-  const glowClasses = glow ? `shadow-lg ${glowColors[variant]}` : '';
+
+
+
+
   const content = loading ? (
-    <div className="space-y-4">
-      <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-      <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
-      <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" />
+    <div className="space-y-4" key={160407}>
+      <div className="h-4 w-3/4 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" / key={201399}>
+      <div className="h-4 w-1/2 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" / key={193363}>
+      <div className="h-4 w-5/6 bg-gray-200 dark:bg-gray-700 rounded animate-pulse" / key={923677}>
     </div>
   ) : (
-    children
+    children;
   );
   const [motionProps, divProps] = splitMotionProps(props);
   return (
-    <motion.div
+    <motion.div;
       ref={ref}
       className={cn(baseClasses, variantClasses, hoverClasses, glowClasses, className)}
       initial={hover ? { y: 0 } : undefined}
       whileHover={hover ? { y: -4 } : undefined}
       {...motionProps}
       {...divProps}
-    >
+     key={946627}>
       {content}
     </motion.div>
   );

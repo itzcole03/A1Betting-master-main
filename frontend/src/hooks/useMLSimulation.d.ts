@@ -1,4 +1,4 @@
-import { Prediction, PlayerStats, PlayerForm, InjuryStatus } from '@/types/betting';
+import { Prediction, PlayerStats, PlayerForm, InjuryStatus } from '@/types/betting.ts';
 export declare const useMLSimulation: () => {
     isInitialized: boolean;
     error: Error | null;

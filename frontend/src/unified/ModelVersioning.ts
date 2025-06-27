@@ -40,13 +40,13 @@ export class ModelVersioning {
   }
 
   public getLatestVersion(modelId: string): ModelVersion | undefined {
-    const versions = this.versions.get(modelId);
+
     if (!versions || versions.length === 0) return undefined;
     return versions[versions.length - 1];
   }
 
   public getVersion(modelId: string, versionId: string): ModelVersion | undefined {
-    const versions = this.versions.get(modelId);
+
     if (!versions) return undefined;
     return versions.find(v => v.id === versionId);
   }
@@ -56,10 +56,9 @@ export class ModelVersioning {
   }
 
   public rollbackToVersion(modelId: string, versionId: string): boolean {
-    const versions = this.versions.get(modelId);
+
     if (!versions) return false;
 
-    const targetIndex = versions.findIndex(v => v.id === versionId);
     if (targetIndex === -1) return false;
 
     this.versions.set(modelId, versions.slice(0, targetIndex + 1));
@@ -69,7 +68,7 @@ export class ModelVersioning {
   public compareVersions(
     modelId: string,
     version1Id: string,
-    version2Id: string
+    version2Id: string;
   ):
     | {
       version1: ModelVersion;
@@ -77,16 +76,15 @@ export class ModelVersioning {
       differences: Record<string, { v1: string | number | boolean | string[] | number[] | null | undefined | Record<string, string | number | boolean | null>; v2: string | number | boolean | string[] | number[] | null | undefined | Record<string, string | number | boolean | null> }>;
     }
     | undefined {
-    const versions = this.versions.get(modelId);
+
     if (!versions) return undefined;
 
-    const v1 = versions.find(v => v.id === version1Id);
-    const v2 = versions.find(v => v.id === version2Id);
+
     if (!v1 || !v2) return undefined;
 
     const differences: Record<string, { v1: string | number | boolean | string[] | number[] | null | undefined | Record<string, string | number | boolean | null>; v2: string | number | boolean | string[] | number[] | null | undefined | Record<string, string | number | boolean | null> }> = {};
 
-    // Compare metrics
+    // Compare metrics;
     Object.keys(v1.metrics).forEach(key => {
       if (
         v1.metrics[key as keyof typeof v1.metrics] !== v2.metrics[key as keyof typeof v2.metrics]
@@ -98,7 +96,7 @@ export class ModelVersioning {
       }
     });
 
-    // Compare features
+    // Compare features;
     if (JSON.stringify(v1.features) !== JSON.stringify(v2.features)) {
       differences.features = {
         v1: v1.features,
@@ -106,7 +104,7 @@ export class ModelVersioning {
       };
     }
 
-    // Compare metadata
+    // Compare metadata;
     Object.keys(v1.metadata).forEach(key => {
       if (
         JSON.stringify(v1.metadata[key as keyof typeof v1.metadata]) !==

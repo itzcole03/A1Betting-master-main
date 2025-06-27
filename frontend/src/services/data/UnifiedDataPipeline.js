@@ -1,17 +1,17 @@
 import { EventEmitter } from "eventemitter3";
 import { API_ENDPOINTS, SPORTS_CONFIG, CACHE_CONFIG, FEATURE_FLAGS, buildApiUrl, isApiAvailable, } from "../../config/unifiedApiConfig";
 import { storeEventBus } from "../../store/unified/UnifiedStoreManager";
-// Rate Limiting and Queue Management
+// Rate Limiting and Queue Management;
 class RateLimiter {
     constructor() {
         this.requestCounts = new Map();
     }
     canMakeRequest(endpoint) {
-        const config = API_ENDPOINTS[endpoint];
+
         if (!config?.rateLimit)
             return true;
-        const now = Date.now();
-        const key = `${endpoint}:${Math.floor(now / config.rateLimit.period)}`;
+
+
         const current = this.requestCounts.get(key) || {
             count: 0,
             resetTime: now + config.rateLimit.period,
@@ -26,11 +26,11 @@ class RateLimiter {
         return current.count < config.rateLimit.requests;
     }
     recordRequest(endpoint) {
-        const config = API_ENDPOINTS[endpoint];
+
         if (!config?.rateLimit)
             return;
-        const now = Date.now();
-        const key = `${endpoint}:${Math.floor(now / config.rateLimit.period)}`;
+
+
         const current = this.requestCounts.get(key) || {
             count: 0,
             resetTime: now + config.rateLimit.period,
@@ -62,21 +62,21 @@ class RequestQueue {
             return;
         this.processing = true;
         while (this.queue.length > 0) {
-            const item = this.queue.shift();
+
             try {
-                const result = await item.execute();
+
                 item.resolve(result);
             }
             catch (error) {
                 item.reject(error);
             }
-            // Small delay between requests
+            // Small delay between requests;
             await new Promise((resolve) => setTimeout(resolve, 100));
         }
         this.processing = false;
     }
 }
-// Cache Implementation
+// Cache Implementation;
 class DataCache {
     constructor(maxSize = 10000) {
         this.cache = new Map();
@@ -93,7 +93,7 @@ class DataCache {
         });
     }
     get(key) {
-        const item = this.cache.get(key);
+
         if (!item)
             return null;
         if (Date.now() - item.timestamp > item.ttl) {
@@ -112,8 +112,8 @@ class DataCache {
         this.cache.clear();
     }
     evictOldest() {
-        let oldestKey = "";
-        let oldestTime = Date.now();
+        const oldestKey = "";
+        const oldestTime = Date.now();
         for (const [key, value] of this.cache.entries()) {
             if (value.timestamp < oldestTime) {
                 oldestTime = value.timestamp;
@@ -125,7 +125,7 @@ class DataCache {
         }
     }
 }
-// Main Data Pipeline
+// Main Data Pipeline;
 export class UnifiedDataPipeline extends EventEmitter {
     constructor() {
         super();
@@ -143,10 +143,10 @@ export class UnifiedDataPipeline extends EventEmitter {
         return UnifiedDataPipeline.instance;
     }
     async initializeConnections() {
-        // Check API availability and establish connections
+        // Check API availability and establish connections;
         for (const [name, endpoint] of Object.entries(API_ENDPOINTS)) {
             try {
-                const available = await isApiAvailable(name);
+
                 this.activeConnections.set(name, available);
                 if (available) {
                     this.emit("connection:established", { source: name });
@@ -163,7 +163,7 @@ export class UnifiedDataPipeline extends EventEmitter {
                 this.emit("connection:failed", { source: name, error });
             }
         }
-        // Start real-time data streams
+        // Start real-time data streams;
         this.startRealTimeStreams();
     }
     startRealTimeStreams() {
@@ -180,7 +180,7 @@ export class UnifiedDataPipeline extends EventEmitter {
     startOddsStream() {
         const interval = setInterval(async () => {
             try {
-                const activeGames = await this.getActiveGames();
+
                 for (const game of activeGames) {
                     await this.fetchLiveOdds(game.id);
                 }
@@ -188,13 +188,13 @@ export class UnifiedDataPipeline extends EventEmitter {
             catch (error) {
                 this.emit("error", { type: "odds_stream", error });
             }
-        }, 30000); // Update every 30 seconds
+        }, 30000); // Update every 30 seconds;
         this.refreshIntervals.set("odds", interval);
     }
     startLiveGamesStream() {
         const interval = setInterval(async () => {
             try {
-                const liveGames = await this.getLiveGames();
+
                 for (const game of liveGames) {
                     await this.fetchLiveGameData(game.id);
                 }
@@ -202,7 +202,7 @@ export class UnifiedDataPipeline extends EventEmitter {
             catch (error) {
                 this.emit("error", { type: "live_games", error });
             }
-        }, 15000); // Update every 15 seconds
+        }, 15000); // Update every 15 seconds;
         this.refreshIntervals.set("live_games", interval);
     }
     startInjuryUpdates() {
@@ -215,22 +215,22 @@ export class UnifiedDataPipeline extends EventEmitter {
             catch (error) {
                 this.emit("error", { type: "injury_updates", error });
             }
-        }, 1800000); // Update every 30 minutes
+        }, 1800000); // Update every 30 minutes;
         this.refreshIntervals.set("injuries", interval);
     }
-    // Public API Methods
+    // Public API Methods;
     async getGameData(gameId) {
-        const cacheKey = `game:${gameId}`;
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached) {
             return cached;
         }
-        return this.requestQueue.enqueue(`game-${gameId}`, 2, // Medium priority
+        return this.requestQueue.enqueue(`game-${gameId}`, 2, // Medium priority;
         async () => {
             if (!this.rateLimiter.canMakeRequest("SPORTRADAR")) {
                 throw new Error("Rate limit exceeded for SportRadar");
             }
-            const gameData = await this.fetchGameFromSportradar(gameId);
+
             this.rateLimiter.recordRequest("SPORTRADAR");
             this.cache.set(cacheKey, gameData, CACHE_CONFIG.GAME_SCHEDULES.ttl);
             this.emit("data:updated", { type: "game", id: gameId, data: gameData });
@@ -238,8 +238,8 @@ export class UnifiedDataPipeline extends EventEmitter {
         });
     }
     async getPlayerData(playerId) {
-        const cacheKey = `player:${playerId}`;
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached) {
             return cached;
         }
@@ -247,7 +247,7 @@ export class UnifiedDataPipeline extends EventEmitter {
             if (!this.rateLimiter.canMakeRequest("SPORTRADAR")) {
                 throw new Error("Rate limit exceeded for SportRadar");
             }
-            const playerData = await this.fetchPlayerFromSportradar(playerId);
+
             this.rateLimiter.recordRequest("SPORTRADAR");
             this.cache.set(cacheKey, playerData, CACHE_CONFIG.PLAYER_STATS.ttl);
             this.emit("data:updated", {
@@ -259,17 +259,17 @@ export class UnifiedDataPipeline extends EventEmitter {
         });
     }
     async getLiveOdds(eventId, market) {
-        const cacheKey = `odds:${eventId}:${market || "all"}`;
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached && FEATURE_FLAGS.REAL_TIME_ODDS) {
             return cached;
         }
-        return this.requestQueue.enqueue(`odds-${eventId}`, 1, // High priority for live odds
+        return this.requestQueue.enqueue(`odds-${eventId}`, 1, // High priority for live odds;
         async () => {
             if (!this.rateLimiter.canMakeRequest("THE_ODDS_API")) {
                 throw new Error("Rate limit exceeded for The Odds API");
             }
-            const oddsData = await this.fetchOddsFromTheOddsApi(eventId, market);
+
             this.rateLimiter.recordRequest("THE_ODDS_API");
             this.cache.set(cacheKey, oddsData, CACHE_CONFIG.LIVE_ODDS.ttl);
             this.emit("data:updated", {
@@ -282,26 +282,26 @@ export class UnifiedDataPipeline extends EventEmitter {
         });
     }
     async getPrizePicksProjections() {
-        const cacheKey = "prizepicks:projections";
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached) {
             return cached;
         }
         return this.requestQueue.enqueue("prizepicks-projections", 2, async () => {
-            const projections = await this.fetchPrizePicksProjections();
-            this.cache.set(cacheKey, projections, 300000); // 5 minutes cache
+
+            this.cache.set(cacheKey, projections, 300000); // 5 minutes cache;
             this.emit("data:updated", { type: "projections", data: projections });
             return projections;
         });
     }
     async getInjuries(sport) {
-        const cacheKey = `injuries:${sport}`;
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached) {
             return cached;
         }
         return this.requestQueue.enqueue(`injuries-${sport}`, 2, async () => {
-            const injuries = await this.fetchInjuries(sport);
+
             this.cache.set(cacheKey, injuries, CACHE_CONFIG.INJURIES.ttl);
             this.emit("data:updated", { type: "injuries", sport, data: injuries });
             return injuries;
@@ -310,40 +310,40 @@ export class UnifiedDataPipeline extends EventEmitter {
     async getWeatherData(venueId) {
         if (!FEATURE_FLAGS.WEATHER_INTEGRATION)
             return null;
-        const cacheKey = `weather:${venueId}`;
-        const cached = this.cache.get(cacheKey);
+
+
         if (cached) {
             return cached;
         }
-        return this.requestQueue.enqueue(`weather-${venueId}`, 4, // Low priority
+        return this.requestQueue.enqueue(`weather-${venueId}`, 4, // Low priority;
         async () => {
-            const weather = await this.fetchWeatherData(venueId);
+
             this.cache.set(cacheKey, weather, CACHE_CONFIG.WEATHER.ttl);
             this.emit("data:updated", { type: "weather", venueId, data: weather });
             return weather;
         });
     }
-    // Private fetch methods
+    // Private fetch methods;
     async fetchGameFromSportradar(gameId) {
         const url = buildApiUrl("SPORTRADAR", `/games/${gameId}`, {
             api_key: API_ENDPOINTS.SPORTRADAR.apiKey,
         });
-        const response = await fetch(url);
+
         if (!response.ok) {
             throw new Error(`SportRadar API error: ${response.statusText}`);
         }
-        const data = await response.json();
+
         return this.transformSportradarGame(data);
     }
     async fetchPlayerFromSportradar(playerId) {
         const url = buildApiUrl("SPORTRADAR", `/players/${playerId}`, {
             api_key: API_ENDPOINTS.SPORTRADAR.apiKey,
         });
-        const response = await fetch(url);
+
         if (!response.ok) {
             throw new Error(`SportRadar API error: ${response.statusText}`);
         }
-        const data = await response.json();
+
         return this.transformSportradarPlayer(data);
     }
     async fetchOddsFromTheOddsApi(eventId, market) {
@@ -355,17 +355,17 @@ export class UnifiedDataPipeline extends EventEmitter {
         if (market) {
             params.markets = market;
         }
-        const url = buildApiUrl("THE_ODDS_API", `/sports/americanfootball_nfl/odds`, params);
-        const response = await fetch(url);
+
+
         if (!response.ok) {
             throw new Error(`The Odds API error: ${response.statusText}`);
         }
-        const data = await response.json();
+
         return this.transformOddsData(data, eventId);
     }
     async fetchPrizePicksProjections() {
-        const url = buildApiUrl("PRIZEPICKS", "/projections");
-        const response = await fetch(url);
+
+
         if (!response.ok) {
             throw new Error(`PrizePicks API error: ${response.statusText}`);
         }
@@ -375,11 +375,11 @@ export class UnifiedDataPipeline extends EventEmitter {
         const url = buildApiUrl("INJURY_API", `/injuries/${sport}`, {
             key: API_ENDPOINTS.INJURY_API.apiKey,
         });
-        const response = await fetch(url);
+
         if (!response.ok) {
             throw new Error(`Injury API error: ${response.statusText}`);
         }
-        const data = await response.json();
+
         return this.transformInjuryData(data);
     }
     async fetchWeatherData(venueId) {
@@ -387,14 +387,14 @@ export class UnifiedDataPipeline extends EventEmitter {
             key: API_ENDPOINTS.WEATHER.apiKey,
             q: venueId,
         });
-        const response = await fetch(url);
+
         if (!response.ok) {
             throw new Error(`Weather API error: ${response.statusText}`);
         }
-        const data = await response.json();
+
         return this.transformWeatherData(data);
     }
-    // Data transformation methods
+    // Data transformation methods;
     transformSportradarGame(data) {
         return {
             id: data.id,
@@ -486,7 +486,7 @@ export class UnifiedDataPipeline extends EventEmitter {
         }));
     }
     transformWeatherData(data) {
-        const current = data.current;
+
         return {
             temperature: current.temp_f,
             humidity: current.humidity,
@@ -497,13 +497,13 @@ export class UnifiedDataPipeline extends EventEmitter {
             conditions: current.condition.text,
         };
     }
-    // Utility methods
+    // Utility methods;
     async getActiveGames() {
-        // Return games that are currently live or starting soon
+        // Return games that are currently live or starting soon;
         return [];
     }
     async getLiveGames() {
-        // Return games that are currently in progress
+        // Return games that are currently in progress;
         return [];
     }
     async fetchLiveOdds(gameId) {
@@ -522,7 +522,7 @@ export class UnifiedDataPipeline extends EventEmitter {
             this.emit("error", { type: "live_game_fetch", gameId, error });
         }
     }
-    // Public management methods
+    // Public management methods;
     clearCache() {
         this.cache.clear();
         this.emit("cache:cleared");
@@ -530,7 +530,7 @@ export class UnifiedDataPipeline extends EventEmitter {
     getCacheStats() {
         return {
             size: this.cache["cache"].size,
-            hitRate: 0.85, // Mock hit rate
+            hitRate: 0.85, // Mock hit rate;
         };
     }
     getConnectionStatus() {
@@ -540,7 +540,7 @@ export class UnifiedDataPipeline extends EventEmitter {
         this.clearCache();
         this.emit("refresh:started");
         try {
-            // Refresh critical data
+            // Refresh critical data;
             await Promise.all([
                 this.refreshGames(),
                 this.refreshOdds(),
@@ -553,26 +553,26 @@ export class UnifiedDataPipeline extends EventEmitter {
         }
     }
     async refreshGames() {
-        // Implementation for refreshing game data
+        // Implementation for refreshing game data;
     }
     async refreshOdds() {
-        // Implementation for refreshing odds data
+        // Implementation for refreshing odds data;
     }
     async refreshInjuries() {
-        // Implementation for refreshing injury data
+        // Implementation for refreshing injury data;
     }
     shutdown() {
-        // Clear all intervals
+        // Clear all intervals;
         for (const interval of this.refreshIntervals.values()) {
             clearInterval(interval);
         }
         this.refreshIntervals.clear();
-        // Clear cache
+        // Clear cache;
         this.clearCache();
-        // Reset connections
+        // Reset connections;
         this.activeConnections.clear();
         this.emit("shutdown");
     }
 }
-// Export singleton instance
+// Export singleton instance;
 export const dataPipeline = UnifiedDataPipeline.getInstance();

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BettingEvent } from '../../types/betting';
+import React from 'react.ts';
+import { BettingEvent } from '@/types/betting.ts';
 interface LiveOddsTickerProps {
     events: BettingEvent[];
     onEventSelect: (event: BettingEvent) => void;

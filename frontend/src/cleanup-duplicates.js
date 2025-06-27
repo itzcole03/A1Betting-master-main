@@ -1,14 +1,14 @@
-#!/usr/bin/env node
+#!/usr/bin/env node;
 
 /**
- * A1BETTING QUANTUM PLATFORM - INTELLIGENT CLEANUP SCRIPT
+ * A1BETTING QUANTUM PLATFORM - INTELLIGENT CLEANUP SCRIPT;
  *
  * This script removes duplicate .d.ts and .js files while preserving:
  * - All .tsx components (your beautiful cyber-themed UI)
- * - All .ts TypeScript source files
- * - CSS files and styling
- * - The exact MEGA architecture you've built
- * - All theme-related files
+ * - All .ts TypeScript source files;
+ * - CSS files and styling;
+ * - The exact MEGA architecture you've built;
+ * - All theme-related files;
  *
  * SAFE REMOVAL TARGETS:
  * - Duplicate .d.ts TypeScript declaration files (auto-generated)
@@ -16,15 +16,8 @@
  * - Analysis markdown files (can be regenerated)
  */
 
-const fs = require("fs");
-const path = require("path");
 
-console.log(`
-🚀 A1BETTING QUANTUM PLATFORM - INTELLIGENT CLEANUP
-==================================================
-Preserving your cyber theme and MEGA architecture
-Removing only duplicate build artifacts and declarations
-`);
+// console statement removed
 
 const SAFE_TO_REMOVE_EXTENSIONS = [
   ".d.ts", // TypeScript declarations (auto-generated)
@@ -82,56 +75,49 @@ const PRESERVE_ALWAYS = [
   "main.tsx",
 ];
 
-let removedCount = 0;
-let preservedCount = 0;
+const removedCount = 0;
+const preservedCount = 0;
 
 function cleanupDirectory(dirPath) {
   try {
-    const items = fs.readdirSync(dirPath);
 
     for (const item of items) {
-      const fullPath = path.join(dirPath, item);
-      const stat = fs.statSync(fullPath);
+
 
       if (stat.isDirectory()) {
         cleanupDirectory(fullPath);
       } else {
-        const ext = path.extname(item);
-        const basename = path.basename(item);
 
-        // Check if it's a core file to preserve
+
+        // Check if it's a core file to preserve;
         if (PRESERVE_ALWAYS.includes(basename)) {
           preservedCount++;
-          console.log(`✅ PRESERVED: ${fullPath.replace("frontend/src/", "")}`);
+          // console statement removed}`);
           continue;
         }
 
-        // Remove analysis files
+        // Remove analysis files;
         if (ANALYSIS_FILES_TO_REMOVE.includes(basename)) {
           fs.unlinkSync(fullPath);
           removedCount++;
-          console.log(
-            `🗑️  REMOVED: ${fullPath.replace("frontend/src/", "")} (analysis file)`,
+          // console statement removed} (analysis file)`,
           );
           continue;
         }
 
-        // Remove duplicate build artifacts
+        // Remove duplicate build artifacts;
         if (SAFE_TO_REMOVE_EXTENSIONS.includes(ext)) {
-          // Check if corresponding .tsx or .ts exists
-          const tsxPath = fullPath.replace(ext, ".tsx");
-          const tsPath = fullPath.replace(ext, ".ts");
+          // Check if corresponding .tsx or .ts exists;
+
 
           if (fs.existsSync(tsxPath) || fs.existsSync(tsPath)) {
             fs.unlinkSync(fullPath);
             removedCount++;
-            console.log(
-              `🗑️  REMOVED: ${fullPath.replace("frontend/src/", "")} (duplicate)`,
+            // console statement removed} (duplicate)`,
             );
           } else {
             preservedCount++;
-            console.log(
-              `✅ PRESERVED: ${fullPath.replace("frontend/src/", "")} (source file)`,
+            // console statement removed} (source file)`,
             );
           }
         } else {
@@ -140,22 +126,12 @@ function cleanupDirectory(dirPath) {
       }
     }
   } catch (error) {
-    console.error(`Error processing ${dirPath}:`, error.message);
+    // console statement removed
   }
 }
 
-// Start cleanup
-console.log("\n🔍 Scanning for duplicates...\n");
+// Start cleanup;
+// console statement removed
 cleanupDirectory("frontend/src");
 
-console.log(`
-✨ CLEANUP COMPLETE ✨
-====================
-📁 Files removed: ${removedCount}
-💎 Files preserved: ${preservedCount}
-🎨 Cyber theme: 100% INTACT
-🏗️  MEGA architecture: 100% PRESERVED
-
-Your beautiful A1Betting Quantum Platform design is untouched!
-All .tsx components, styling, and core functionality preserved.
-`);
+// console statement removed

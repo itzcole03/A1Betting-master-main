@@ -100,16 +100,16 @@ export interface AdvancedPrediction {
   };
 }
 
-// Re-export core types that are commonly used
-// TODO: Fix core type exports
+// Re-export core types that are commonly used;
+// TODO: Fix core type exports;
 
-// Common utility types
+// Common utility types;
 export type Nullable<T> = T | null;
 export type Optional<T> = T | undefined;
 export type AsyncResult<T> = Promise<T>;
 export type Result<T, E = Error> = { success: true; data: T } | { success: false; error: E };
 
-// Common interfaces
+// Common interfaces;
 export interface BaseEntity {
   id: string;
   createdAt: number;
@@ -167,7 +167,7 @@ export interface QueryOptions {
   select?: string[];
 }
 
-// Common enums
+// Common enums;
 export enum ErrorCategory {
   SYSTEM = 'SYSTEM',
   NETWORK = 'NETWORK',
@@ -192,14 +192,14 @@ export enum CacheStrategy {
   LFU = 'LFU',
 }
 
-// Common constants
+// Common constants;
 export const DEFAULT_PAGE_SIZE = 20;
 export const MAX_PAGE_SIZE = 100;
-export const DEFAULT_CACHE_TTL = 3600; // 1 hour in seconds
+export const DEFAULT_CACHE_TTL = 3600; // 1 hour in seconds;
 export const DEFAULT_RETRY_ATTEMPTS = 3;
-export const DEFAULT_RETRY_DELAY = 1000; // 1 second in milliseconds
+export const DEFAULT_RETRY_DELAY = 1000; // 1 second in milliseconds;
 
-// Common utility types
+// Common utility types;
 export type DeepPartial<T> = {
   [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
 };
@@ -212,7 +212,7 @@ export type RequiredFields<T, K extends keyof T> = T & { [P in K]-?: T[P] };
 
 export type OptionalFields<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
-// Common function types
+// Common function types;
 export type AsyncFunction<T, R> = (arg: T) => Promise<R>;
 export type SyncFunction<T, R> = (arg: T) => R;
 export type ErrorHandler = (error: Error) => void;

@@ -25,28 +25,28 @@ export interface ModelConfig {
     optimizer?: string;
     loss?: string;
     metrics?: string[];
-    // Traditional model specific
+    // Traditional model specific;
     maxDepth?: number;
     nEstimators?: number;
     minSamplesSplit?: number;
     minSamplesLeaf?: number;
-    // Deep learning specific
+    // Deep learning specific;
     layers?: Array<{
       type: 'dense' | 'conv' | 'lstm' | 'gru';
       units: number;
       activation?: string;
       dropout?: number;
     }>;
-    // Time series specific
+    // Time series specific;
     windowSize?: number;
     forecastHorizon?: number;
     seasonality?: number;
-    // Optimization specific
+    // Optimization specific;
     populationSize?: number;
     generations?: number;
     mutationRate?: number;
     crossoverRate?: number;
-    // Ensemble specific
+    // Ensemble specific;
     votingStrategy?: 'weighted' | 'majority' | 'confidence';
     minModels?: number;
     consensusThreshold?: number;
@@ -74,24 +74,24 @@ export interface ModelConfig {
 }
 
 export interface ModelMetrics {
-  // Classification metrics
+  // Classification metrics;
   accuracy?: number;
   precision?: number;
   recall?: number;
   f1Score?: number;
   auc?: number;
   confusionMatrix?: number[][];
-  // Regression metrics
+  // Regression metrics;
   rmse?: number;
   mae?: number;
   r2?: number;
   mape?: number;
-  // Time series metrics
+  // Time series metrics;
   mase?: number;
   smape?: number;
-  // Custom metrics
+  // Custom metrics;
   custom?: Record<string, number>;
-  // Performance metrics
+  // Performance metrics;
   trainingTime?: number;
   inferenceTime?: number;
   memoryUsage?: number;

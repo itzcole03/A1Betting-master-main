@@ -1,4 +1,4 @@
-import type { BetSimulationInput, BetSimulationResult } from '../../types/simulation';
+import type { BetSimulationInput, BetSimulationResult } from '@/types/simulation.ts';
 interface SimulationState {
     input: BetSimulationInput | null;
     setInput: (input: BetSimulationInput) => void;

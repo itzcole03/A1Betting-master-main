@@ -1,4 +1,4 @@
-import { BetRecord } from '../types/core.js';
+import { BetRecord } from '@/types/core.js';
 /**
  * Analytics service for tracking performance metrics.
  */

@@ -1,9 +1,9 @@
-import React from "react";
-import ErrorBoundary from "../ErrorBoundary";
-import UniversalMoneyMaker from "./UniversalMoneyMaker";
+import React from 'react.ts';
+import ErrorBoundary from '@/ErrorBoundary.ts';
+import UniversalMoneyMaker from './UniversalMoneyMaker.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export interface ConsolidatedMoneyMakerProps {
@@ -21,11 +21,11 @@ export interface ConsolidatedMoneyMakerProps {
 }
 
 // ============================================================================
-// MAIN CONSOLIDATED MONEY MAKER COMPONENT
+// MAIN CONSOLIDATED MONEY MAKER COMPONENT;
 // ============================================================================
 
 /**
- * ConsolidatedUniversalMoneyMaker - The unified money maker component
+ * ConsolidatedUniversalMoneyMaker - The unified money maker component;
  *
  * This component consolidates ALL MoneyMaker variants into a single, comprehensive component:
  * - UltimateMoneyMaker (ultimate features)
@@ -45,17 +45,17 @@ export interface ConsolidatedMoneyMakerProps {
  * - EliteMoneyMaker (elite features)
  *
  * Features preserved from ALL variants:
- * ✅ Multi-tab interface: scanner, prizepicks, portfolio, analytics, arbitrage, simulation, strategy, risk, settings
- * ✅ AI-powered opportunity scanning with 47+ models
- * ✅ Complete portfolio management and optimization
- * ✅ PrizePicks integration with prop analysis and lineup building
- * ✅ Risk management with Kelly criterion optimization
- * ✅ Strategy simulation and backtesting capabilities
- * ✅ Auto-execution and emergency stop functionality
- * ✅ Comprehensive logging and alert systems
+ * ✅ Multi-tab interface: scanner, prizepicks, portfolio, analytics, arbitrage, simulation, strategy, risk, settings;
+ * ✅ AI-powered opportunity scanning with 47+ models;
+ * ✅ Complete portfolio management and optimization;
+ * ✅ PrizePicks integration with prop analysis and lineup building;
+ * ✅ Risk management with Kelly criterion optimization;
+ * ✅ Strategy simulation and backtesting capabilities;
+ * ✅ Auto-execution and emergency stop functionality;
+ * ✅ Comprehensive logging and alert systems;
  */
 export const ConsolidatedUniversalMoneyMaker: React.FC<
-  ConsolidatedMoneyMakerProps
+  ConsolidatedMoneyMakerProps;
 > = ({
   variant = "advanced",
   features = {
@@ -69,12 +69,12 @@ export const ConsolidatedUniversalMoneyMaker: React.FC<
   },
   className = "",
 }) => {
-  // Return the clean money maker without nested navigation
-  // All features are now integrated into the main app navigation
+  // Return the clean money maker without nested navigation;
+  // All features are now integrated into the main app navigation;
   return (
-    <ErrorBoundary>
-      <div className={className}>
-        <UniversalMoneyMaker />
+    <ErrorBoundary key={390256}>
+      <div className={className} key={684864}>
+        <UniversalMoneyMaker / key={431591}>
       </div>
     </ErrorBoundary>
   );

@@ -7,14 +7,14 @@ import { EventBus } from '../unified/EventBus.js';
  */
 class NewsService {
     constructor() {
-        const configManager = UnifiedConfig.getInstance();
-        let config = configManager.get('news');
+
+        const config = configManager.get('news');
         if (!config) {
             config = {
                 apiBaseUrl: 'https://api.example.com',
                 backendPrefix: '/api/news',
                 timeout: 10000,
-                enableFeatureFlag: true
+                enableFeatureFlag: true;
             };
             configManager.set('news', config);
         }
@@ -30,16 +30,16 @@ class NewsService {
      * Emits 'news:update' event with timestamped payload.
      * @param source - News source (default: 'espn')
      * @param limit - Max number of headlines (default: 10)
-     * @returns Array of ESPNHeadline objects
+     * @returns Array of ESPNHeadline objects;
      */
     async fetchHeadlines(source = 'espn', limit = 10) {
         if (!this.config.enableFeatureFlag) {
             throw new Error('News feature is disabled by config.');
         }
-        const endpoint = `${this.config.backendPrefix}/headlines`;
-        const params = { source, limit };
-        const response = await this.client.get(endpoint, { params });
-        const headlines = response.data;
+
+
+
+
         this.eventBus.emit('news:update', {
             headlines,
             timestamp: Date.now(),
@@ -49,21 +49,21 @@ class NewsService {
     async getBreakingNews() {
         try {
             reportStatus('backend', true, 0.8);
-            // Try backend first
+            // Try backend first;
         }
         catch {
             reportStatus('backend', false, 0.6);
         }
-        // 2. Try public ESPN endpoint
+        // 2. Try public ESPN endpoint;
         try {
-            const url = `${NEWS_PUBLIC_ENDPOINT}limit=10`;
-            const response = await fetch(url);
+
+
             if (response.ok) {
-                const data = await response.json();
+
                 if (Array.isArray(data.articles)) {
                     reportStatus('public', true, 0.7);
                     return data.articles.map((item, i) => {
-                        const article = item;
+
                         return {
                             id: typeof article.id === 'string' ? article.id : `public-${i}`,
                             title: typeof article.title === 'string' ? article.title : (typeof article.headline === 'string' ? article.headline : 'Untitled'),
@@ -81,9 +81,9 @@ class NewsService {
         }
         catch (e) {
             reportStatus('public', false, 0.4);
-            console.error('Error fetching public headlines:', e);
+            // console statement removed
         }
-        // Fallback: Simulated headlines
+        // Fallback: Simulated headlines;
         reportStatus('simulated', true, 0.1);
         return simulatedHeadlines;
     }

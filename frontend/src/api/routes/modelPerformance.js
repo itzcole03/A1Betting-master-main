@@ -2,18 +2,18 @@ import { Router } from 'express';
 import { ModelPerformanceTracker } from './../core/analytics/ModelPerformanceTracker.ts';
 import { UnifiedLogger } from './../core/logging/types.ts';
 import { UnifiedMetrics } from './../core/metrics/types.ts';
-const router = Router();
-// Initialize the performance tracker
-const logger = new UnifiedLogger();
-const metrics = new UnifiedMetrics();
-const performanceTracker = new ModelPerformanceTracker(logger, metrics);
-// Get performance for a specific model
+
+// Initialize the performance tracker;
+
+
+
+// Get performance for a specific model;
 router.get('/:modelName', async (req, res) => {
     try {
         const { modelName } = req.params;
         const { timeframe = 'all' } = req.query;
-        const performance = performanceTracker.getModelPerformance(modelName);
-        const history = performanceTracker.getPerformanceHistory(modelName, timeframe);
+
+
         if (!performance) {
             return res.status(404).json({ error: 'Model performance data not found' });
         }
@@ -27,12 +27,12 @@ router.get('/:modelName', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch model performance data' });
     }
 });
-// Get top performing models
+// Get top performing models;
 router.get('/top/:metric', async (req, res) => {
     try {
         const { metric } = req.params;
         const { limit = '5' } = req.query;
-        const topModels = performanceTracker.getTopPerformingModels(metric, parseInt(limit, 10));
+
         res.json(topModels);
     }
     catch (error) {
@@ -40,7 +40,7 @@ router.get('/top/:metric', async (req, res) => {
         res.status(500).json({ error: 'Failed to fetch top performing models' });
     }
 });
-// Record a prediction outcome
+// Record a prediction outcome;
 router.post('/:modelName/outcome', async (req, res) => {
     try {
         const { modelName } = req.params;

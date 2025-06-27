@@ -13,18 +13,14 @@ class CNNModel extends BaseModel {
   }
 
   async predict(input: unknown): Promise<ModelPrediction> {
-    // Enhanced CNN prediction with feature extraction simulation
-    const features = Array.isArray(input) ? input : [input];
-    
-    // Simulate convolution layers
-    const convolutionOutput = this.simulateConvolution(features);
-    
-    // Simulate pooling
-    const pooledOutput = this.simulatePooling(convolutionOutput);
-    
-    // Final prediction
-    const prediction = this.calculatePrediction(pooledOutput);
-    
+    // Enhanced CNN prediction with feature extraction simulation;
+
+    // Simulate convolution layers;
+
+    // Simulate pooling;
+
+    // Final prediction;
+
     return {
       modelName: this.config.name,
       probability: prediction,
@@ -35,35 +31,35 @@ class CNNModel extends BaseModel {
         filters: this.filters,
         kernelSize: this.kernelSize,
         convolutionLayers: 2,
-        poolingLayers: 1
+        poolingLayers: 1;
       },
     };
   }
 
   private simulateConvolution(features: any[]): number[] {
-    // Simple convolution simulation
+    // Simple convolution simulation;
     return features.map((f, i) => 
       Math.tanh(f * (1 + i * 0.1) * this.filters / 100)
     );
   }
 
   private simulatePooling(features: number[]): number[] {
-    // Max pooling simulation
-    const pooled = [];
-    for (let i = 0; i < features.length; i += this.poolingSize) {
-      const window = features.slice(i, i + this.poolingSize);
+    // Max pooling simulation;
+
+    for (const i = 0; i < features.length; i += this.poolingSize) {
+
       pooled.push(Math.max(...window));
     }
     return pooled;
   }
 
   private calculatePrediction(features: number[]): number {
-    const sum = features.reduce((acc, f) => acc + f, 0);
+
     return Math.abs(Math.tanh(sum / features.length));
   }
 
   async train(): Promise<void> {
-    // Enhanced training simulation
+    // Enhanced training simulation;
     this.filters = Math.max(16, this.filters + Math.floor(Math.random() * 8));
   }
   
@@ -71,7 +67,7 @@ class CNNModel extends BaseModel {
     return {
       accuracy: 0.82,
       loss: 0.15,
-      filters: this.filters
+      filters: this.filters;
     }; 
   }
   
@@ -90,15 +86,12 @@ class LSTMModel extends BaseModel {
   }
 
   async predict(input: unknown): Promise<ModelPrediction> {
-    // Enhanced LSTM prediction with temporal modeling
-    const sequence = Array.isArray(input) ? input : [input];
-    
-    // Simulate LSTM cell computations
-    const hiddenStates = this.simulateLSTMCells(sequence);
-    
-    // Final prediction from last hidden state
-    const prediction = this.calculateTemporalPrediction(hiddenStates);
-    
+    // Enhanced LSTM prediction with temporal modeling;
+
+    // Simulate LSTM cell computations;
+
+    // Final prediction from last hidden state;
+
     return {
       modelName: this.config.name,
       probability: prediction,
@@ -114,20 +107,18 @@ class LSTMModel extends BaseModel {
   }
 
   private simulateLSTMCells(sequence: any[]): number[] {
-    const hiddenStates = [];
-    let prevHidden = 0;
-    let cellState = 0;
 
-    for (let i = 0; i < sequence.length; i++) {
-      // Simplified LSTM cell computation
-      const forgetGate = Math.sigmoid(sequence[i] + prevHidden * 0.5);
-      const inputGate = Math.sigmoid(sequence[i] + prevHidden * 0.3);
-      const candidateValues = Math.tanh(sequence[i] + prevHidden * 0.4);
-      const outputGate = Math.sigmoid(sequence[i] + prevHidden * 0.6);
+    const prevHidden = 0;
+    const cellState = 0;
+
+    for (const i = 0; i < sequence.length; i++) {
+      // Simplified LSTM cell computation;
+
+
+
 
       cellState = forgetGate * cellState + inputGate * candidateValues;
-      const hiddenState = outputGate * Math.tanh(cellState);
-      
+
       hiddenStates.push(hiddenState);
       prevHidden = hiddenState;
     }
@@ -136,10 +127,9 @@ class LSTMModel extends BaseModel {
   }
 
   private calculateTemporalPrediction(hiddenStates: number[]): number {
-    // Use weighted combination of recent hidden states
-    const recentStates = hiddenStates.slice(-Math.min(5, hiddenStates.length));
-    const weights = recentStates.map((_, i) => (i + 1) / recentStates.length);
-    
+    // Use weighted combination of recent hidden states;
+
+
     const weightedSum = recentStates.reduce((sum, state, i) => 
       sum + state * weights[i], 0);
     
@@ -147,7 +137,7 @@ class LSTMModel extends BaseModel {
   }
 
   async train(): Promise<void> {
-    // Enhanced LSTM training simulation
+    // Enhanced LSTM training simulation;
     this.hiddenUnits = Math.max(64, this.hiddenUnits + Math.floor(Math.random() * 16));
   }
   
@@ -155,7 +145,7 @@ class LSTMModel extends BaseModel {
     return {
       accuracy: 0.85,
       sequenceAccuracy: 0.78,
-      hiddenUnits: this.hiddenUnits
+      hiddenUnits: this.hiddenUnits;
     }; 
   }
   
@@ -163,12 +153,12 @@ class LSTMModel extends BaseModel {
   async load(): Promise<void> {}
 }
 
-// Helper function for sigmoid activation
+// Helper function for sigmoid activation;
 function sigmoid(x: number): number {
   return 1 / (1 + Math.exp(-x));
 }
 
-// Add sigmoid to Math for convenience
+// Add sigmoid to Math for convenience;
 declare global {
   interface Math {
     sigmoid(x: number): number;

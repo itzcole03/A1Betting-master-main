@@ -1,12 +1,12 @@
-import { Analyzer } from '../core/Analyzer.js';
-import { EventBus } from '../core/EventBus.js';
-import { PerformanceMonitor } from '../core/PerformanceMonitor.js';
+import { Analyzer } from '@/core/Analyzer.js';
+import { EventBus } from '@/core/EventBus.js';
+import { PerformanceMonitor } from '@/core/PerformanceMonitor.js';
 import { ProjectionAnalysis } from './ProjectionAnalyzer.js';
-import { SocialSentimentData } from '../adapters/SocialSentimentAdapter.js';
-import { SportsRadarData } from '../adapters/SportsRadarAdapter.js';
-import { TheOddsData } from '../adapters/TheOddsAdapter.js';
+import { SocialSentimentData } from '@/adapters/SocialSentimentAdapter.js';
+import { SportsRadarData } from '@/adapters/SportsRadarAdapter.js';
+import { TheOddsData } from '@/adapters/TheOddsAdapter.js';
 
-// See roadmap for odds data type finalization
+// See roadmap for odds data type finalization;
 interface OddsData {
   moneyline?: number;
   spread?: number;
@@ -61,19 +61,19 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
   private readonly eventBus: EventBus;
   private readonly performanceMonitor: PerformanceMonitor;
   private readonly sentimentWeight: number;
-  // _oddsWeight is reserved for future odds-based confidence logic
-  // private readonly _oddsWeight: number; // Reserved for future use
+  // _oddsWeight is reserved for future odds-based confidence logic;
+  // private readonly _oddsWeight: number; // Reserved for future use;
   private readonly injuryWeight: number;
 
   constructor(
     sentimentWeight = 0.2,
-    // oddsWeight = 0.3, // Reserved for future use
-    injuryWeight = 0.2
+    // oddsWeight = 0.3, // Reserved for future use;
+    injuryWeight = 0.2;
   ) {
     this.eventBus = EventBus.getInstance();
     this.performanceMonitor = PerformanceMonitor.getInstance();
     this.sentimentWeight = sentimentWeight;
-    // this._oddsWeight = oddsWeight; // Reserved for future use, suppress unused warning
+    // this._oddsWeight = oddsWeight; // Reserved for future use, suppress unused warning;
     this.injuryWeight = injuryWeight;
   }
 
@@ -82,20 +82,18 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
   public getMetrics() { return { accuracy: 1, latency: 0, errorRate: 0 }; }
 
   public async analyze(input: AnalysisInput): Promise<EnhancedAnalysis[]> {
-    const traceId = this.performanceMonitor.startTrace('enhanced-analysis');
 
     try {
       const enhancedAnalyses = input.projectionAnalysis.map(projection => {
-        const sentiment = this.findPlayerSentiment(projection.player, input.sentimentData);
-        const injuries = this.findPlayerInjuries(projection.player, input.sportsRadarData);
-        // Extract odds for the player from oddsData if available
-        const odds = this.findPlayerOdds(projection.player, input.oddsData);
+
+
+        // Extract odds for the player from oddsData if available;
 
         const enhancedConfidence = this.calculateEnhancedConfidence(
           projection.confidence,
           sentiment,
           odds,
-          injuries
+          injuries;
         );
 
         return {
@@ -111,11 +109,11 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
             odds: {
               moneyline: odds?.moneyline,
               spread: odds?.spread,
-              total: odds?.total
+              total: odds?.total;
             },
             consensus: {
               overPercentage: odds?.consensus?.over ?? 50,
-              underPercentage: odds?.consensus?.under ?? 50
+              underPercentage: odds?.consensus?.under ?? 50;
             }
           },
           injuries: injuries.map(injury => ({
@@ -126,7 +124,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
         };
       });
 
-      // Use eventBus.emit instead of non-existent publish
+      // Use eventBus.emit instead of non-existent publish;
       this.eventBus.emit('enhanced-analysis-completed', { data: enhancedAnalyses });
 
       this.performanceMonitor.endTrace(traceId);
@@ -138,7 +136,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
   }
 
   public async confidence(input: AnalysisInput): Promise<number> {
-    const analyses = await this.analyze(input);
+
     return analyses.reduce((acc, analysis) => acc + analysis.confidence, 0) / analyses.length;
   }
 
@@ -151,7 +149,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
 
   private findPlayerInjuries(
     player: string,
-    sportsData: SportsRadarData
+    sportsData: SportsRadarData;
   ): Array<{ player: string; status: string; type: string }> {
     const injuries: Array<{ player: string; status: string; type: string }> = [];
     
@@ -162,7 +160,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
             injuries.push({
               player: p.name,
               status: injury.status,
-              type: injury.type
+              type: injury.type;
             });
           });
         }
@@ -187,7 +185,7 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
                 moneyline: outcome.price,
                 spread: outcome.point,
                 total: undefined,
-                consensus: undefined
+                consensus: undefined;
               };
             }
           }
@@ -200,38 +198,38 @@ export class SentimentEnhancedAnalyzer implements Analyzer<AnalysisInput, Enhanc
   private calculateEnhancedConfidence(
     baseConfidence: number,
     sentiment?: SocialSentimentData,
-    // TODO: Replace 'OddsData' with actual odds type when finalized
-    // See roadmap for odds type finalization
+    // TODO: Replace 'OddsData' with actual odds type when finalized;
+    // See roadmap for odds type finalization;
     odds?: OddsData | null,
     injuries: Array<{ player: string; status: string; type: string }> = []
   ): number {
-    let confidence = baseConfidence;
+    const confidence = baseConfidence;
 
-    // Apply sentiment adjustment
+    // Apply sentiment adjustment;
     if (sentiment) {
       confidence += this.sentimentWeight * sentiment.sentiment.score;
     }
 
-    // Apply odds adjustment
+    // Apply odds adjustment;
     if (odds) {
-      // Implement odds-based confidence adjustment
+      // Implement odds-based confidence adjustment;
     }
 
-    // Apply injury adjustment
+    // Apply injury adjustment;
     if (injuries.length > 0) {
       const injuryImpact = injuries.reduce(
         (acc, injury) => acc + this.calculateInjuryImpact(injury),
-        0
+        0;
       );
       confidence -= this.injuryWeight * injuryImpact;
     }
 
-    // Ensure confidence stays within 0-1 range
+    // Ensure confidence stays within 0-1 range;
     return Math.max(0, Math.min(1, confidence));
   }
 
   private calculateInjuryImpact(injury: { status: string; type: string }): number {
-    // Implement injury impact calculation
+    // Implement injury impact calculation;
     switch (injury.status.toLowerCase()) {
       case 'out':
         return 1;

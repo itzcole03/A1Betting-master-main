@@ -1,22 +1,22 @@
 /**
- * Complete Frontend-Backend Integration Test
- * Tests all enhanced mathematical services end-to-end
+ * Complete Frontend-Backend Integration Test;
+ * Tests all enhanced mathematical services end-to-end;
  */
 
-import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { describe, it, expect, beforeAll, afterAll, jest } from "@jest/globals";
+import React from 'react.ts';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react.ts';
+import userEvent from '@testing-library/user-event.ts';
+import { describe, it, expect, beforeAll, afterAll, jest } from '@jest/globals.ts';
 
-// Import components to test
-import EnhancedRevolutionaryInterface from "../../components/revolutionary/EnhancedRevolutionaryInterface";
-import UltraAdvancedMLDashboard from "../../components/ml/UltraAdvancedMLDashboard";
+// Import components to test;
+import EnhancedRevolutionaryInterface from '@/components/revolutionary/EnhancedRevolutionaryInterface.ts';
+import UltraAdvancedMLDashboard from '@/components/ml/UltraAdvancedMLDashboard.ts';
 
-// Import services
-import EnhancedBackendApiService from "../../services/unified/EnhancedBackendApiService";
-import UnifiedEnhancedPredictionService from "../../services/unified/UnifiedEnhancedPredictionService";
+// Import services;
+import EnhancedBackendApiService from '@/services/unified/EnhancedBackendApiService.ts';
+import UnifiedEnhancedPredictionService from '@/services/unified/UnifiedEnhancedPredictionService.ts';
 
-// Mock data for testing
+// Mock data for testing;
 const mockPredictionRequest = {
   event_id: "test_integration_001",
   sport: "basketball",
@@ -226,26 +226,26 @@ const mockModelMetrics = [
   },
 ];
 
-// Mock the backend services
+// Mock the backend services;
 jest.mock("../../services/unified/EnhancedBackendApiService");
 jest.mock("../../services/unified/UnifiedEnhancedPredictionService");
 
 const mockBackendService =
   EnhancedBackendApiService.getInstance as jest.MockedFunction<
-    typeof EnhancedBackendApiService.getInstance
+    typeof EnhancedBackendApiService.getInstance;
   >;
 
 const mockPredictionService =
   UnifiedEnhancedPredictionService.getInstance as jest.MockedFunction<
-    typeof UnifiedEnhancedPredictionService.getInstance
+    typeof UnifiedEnhancedPredictionService.getInstance;
   >;
 
 describe("Complete Frontend-Backend Integration", () => {
-  let mockBackendInstance: jest.Mocked<EnhancedBackendApiService>;
-  let mockPredictionInstance: jest.Mocked<UnifiedEnhancedPredictionService>;
+  let mockBackendInstance: jest.Mocked<EnhancedBackendApiService key={768585}>;
+  let mockPredictionInstance: jest.Mocked<UnifiedEnhancedPredictionService key={122729}>;
 
   beforeAll(() => {
-    // Mock backend service instance
+    // Mock backend service instance;
     mockBackendInstance = {
       getEnhancedRevolutionaryPrediction: jest.fn(),
       getMathematicalFoundations: jest.fn(),
@@ -253,7 +253,7 @@ describe("Complete Frontend-Backend Integration", () => {
       healthCheck: jest.fn(),
     } as any;
 
-    // Mock prediction service instance
+    // Mock prediction service instance;
     mockPredictionInstance = {
       getModelPerformance: jest.fn(),
       getSystemHealth: jest.fn(),
@@ -263,7 +263,7 @@ describe("Complete Frontend-Backend Integration", () => {
     mockBackendService.mockReturnValue(mockBackendInstance);
     mockPredictionService.mockReturnValue(mockPredictionInstance);
 
-    // Setup default mock responses
+    // Setup default mock responses;
     mockBackendInstance.getEnhancedRevolutionaryPrediction.mockResolvedValue(
       mockPredictionResponse,
     );
@@ -391,7 +391,7 @@ describe("Complete Frontend-Backend Integration", () => {
 
   describe("Enhanced Revolutionary Interface Integration", () => {
     it("should render the Enhanced Revolutionary Interface", () => {
-      render(<EnhancedRevolutionaryInterface />);
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
 
       expect(
         screen.getByText("Enhanced Revolutionary Engine"),
@@ -405,38 +405,37 @@ describe("Complete Frontend-Backend Integration", () => {
     });
 
     it("should execute enhanced prediction with all mathematical components", async () => {
-      const user = userEvent.setup();
-      render(<EnhancedRevolutionaryInterface />);
 
-      // Fill in event ID
-      const eventIdInput = screen.getByLabelText("Event ID");
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
+
+      // Fill in event ID;
+
       await user.type(eventIdInput, "test_integration_001");
 
-      // Enable all mathematical components
+      // Enable all mathematical components;
       const neuromorphicCheckbox = screen.getByLabelText(
         "Hodgkin-Huxley Neuromorphic",
       );
-      const mambaCheckbox = screen.getByLabelText("Mamba State Space O(L)");
+
       const causalCheckbox = screen.getByLabelText(
         "PC Algorithm + Do-Calculus",
       );
       const topologicalCheckbox = screen.getByLabelText(
         "GUDHI Persistent Homology",
       );
-      const riemannianCheckbox = screen.getByLabelText("Riemannian Geometry");
 
-      // These should already be checked by default, but ensure they are
+      // These should already be checked by default, but ensure they are;
       if (!neuromorphicCheckbox.checked) await user.click(neuromorphicCheckbox);
       if (!mambaCheckbox.checked) await user.click(mambaCheckbox);
       if (!causalCheckbox.checked) await user.click(causalCheckbox);
       if (!topologicalCheckbox.checked) await user.click(topologicalCheckbox);
       if (!riemannianCheckbox.checked) await user.click(riemannianCheckbox);
 
-      // Execute prediction
-      const executeButton = screen.getByText("Execute Enhanced Prediction");
+      // Execute prediction;
+
       await user.click(executeButton);
 
-      // Wait for prediction to complete
+      // Wait for prediction to complete;
       await waitFor(
         () => {
           expect(
@@ -455,34 +454,33 @@ describe("Complete Frontend-Backend Integration", () => {
         { timeout: 10000 },
       );
 
-      // Check if results are displayed
+      // Check if results are displayed;
       await waitFor(() => {
-        expect(screen.getByText("80.50")).toBeInTheDocument(); // Final prediction
-        expect(screen.getByText("87.0%")).toBeInTheDocument(); // Confidence
+        expect(screen.getByText("80.50")).toBeInTheDocument(); // Final prediction;
+        expect(screen.getByText("87.0%")).toBeInTheDocument(); // Confidence;
       });
     });
 
     it("should display mathematical results and analysis", async () => {
-      const user = userEvent.setup();
-      render(<EnhancedRevolutionaryInterface />);
 
-      // Execute a prediction first
-      const eventIdInput = screen.getByLabelText("Event ID");
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
+
+      // Execute a prediction first;
+
       await user.type(eventIdInput, "test_integration_001");
 
-      const executeButton = screen.getByText("Execute Enhanced Prediction");
       await user.click(executeButton);
 
-      // Wait for results
+      // Wait for results;
       await waitFor(() => {
         expect(screen.getByText("80.50")).toBeInTheDocument();
       });
 
-      // Switch to Mathematical Results tab
-      const mathResultsTab = screen.getByText("Mathematical Results");
+      // Switch to Mathematical Results tab;
+
       await user.click(mathResultsTab);
 
-      // Check for mathematical components
+      // Check for mathematical components;
       expect(screen.getByText(/Neuromorphic Enhancement/)).toBeInTheDocument();
       expect(screen.getByText(/Mamba Refinement/)).toBeInTheDocument();
       expect(screen.getByText(/Causal Adjustment/)).toBeInTheDocument();
@@ -491,25 +489,24 @@ describe("Complete Frontend-Backend Integration", () => {
     });
 
     it("should validate mathematical guarantees", async () => {
-      const user = userEvent.setup();
-      render(<EnhancedRevolutionaryInterface />);
 
-      // Execute prediction
-      const eventIdInput = screen.getByLabelText("Event ID");
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
+
+      // Execute prediction;
+
       await user.type(eventIdInput, "test_integration_001");
 
-      const executeButton = screen.getByText("Execute Enhanced Prediction");
       await user.click(executeButton);
 
       await waitFor(() => {
         expect(screen.getByText("80.50")).toBeInTheDocument();
       });
 
-      // Switch to Validation & Proofs tab
-      const validationTab = screen.getByText("Validation & Proofs");
+      // Switch to Validation & Proofs tab;
+
       await user.click(validationTab);
 
-      // Check for mathematical validation results
+      // Check for mathematical validation results;
       expect(
         screen.getByText("Numerical Stability Validation"),
       ).toBeInTheDocument();
@@ -519,7 +516,7 @@ describe("Complete Frontend-Backend Integration", () => {
 
   describe("Ultra Advanced ML Dashboard Integration", () => {
     it("should render the Ultra Advanced ML Dashboard", () => {
-      render(<UltraAdvancedMLDashboard />);
+      render(<UltraAdvancedMLDashboard / key={603263}>);
 
       expect(
         screen.getByText("Ultra-Advanced ML Dashboard"),
@@ -532,35 +529,35 @@ describe("Complete Frontend-Backend Integration", () => {
     });
 
     it("should load and display system health metrics", async () => {
-      render(<UltraAdvancedMLDashboard />);
+      render(<UltraAdvancedMLDashboard / key={603263}>);
 
-      // Wait for system health data to load
+      // Wait for system health data to load;
       await waitFor(() => {
         expect(mockPredictionInstance.getSystemHealth).toHaveBeenCalled();
       });
 
-      // Check if system status is displayed
+      // Check if system status is displayed;
       await waitFor(() => {
         expect(screen.getByText("HEALTHY")).toBeInTheDocument();
-        expect(screen.getByText("87.0%")).toBeInTheDocument(); // Prediction accuracy
-        expect(screen.getByText("92")).toBeInTheDocument(); // Mathematical rigor score
+        expect(screen.getByText("87.0%")).toBeInTheDocument(); // Prediction accuracy;
+        expect(screen.getByText("92")).toBeInTheDocument(); // Mathematical rigor score;
       });
     });
 
     it("should display model performance metrics", async () => {
-      render(<UltraAdvancedMLDashboard />);
+      render(<UltraAdvancedMLDashboard / key={603263}>);
 
-      // Wait for model metrics to load
+      // Wait for model metrics to load;
       await waitFor(() => {
         expect(mockPredictionInstance.getModelPerformance).toHaveBeenCalled();
       });
 
-      // Switch to models tab
-      const user = userEvent.setup();
-      const modelsTab = screen.getByText("Model Performance");
+      // Switch to models tab;
+
+
       await user.click(modelsTab);
 
-      // Check if model cards are displayed
+      // Check if model cards are displayed;
       await waitFor(() => {
         expect(
           screen.getByText("Enhanced Revolutionary Engine"),
@@ -572,43 +569,43 @@ describe("Complete Frontend-Backend Integration", () => {
     });
 
     it("should execute live predictions", async () => {
-      const user = userEvent.setup();
-      render(<UltraAdvancedMLDashboard />);
 
-      // Click live prediction button
-      const livePredictionButton = screen.getByText("Live Prediction");
+      render(<UltraAdvancedMLDashboard / key={603263}>);
+
+      // Click live prediction button;
+
       await user.click(livePredictionButton);
 
-      // Wait for prediction to be added to the stream
+      // Wait for prediction to be added to the stream;
       await waitFor(() => {
         expect(mockPredictionInstance.generatePrediction).toHaveBeenCalled();
       });
 
-      // Switch to predictions tab to see the result
-      const predictionsTab = screen.getByText("Live Predictions");
+      // Switch to predictions tab to see the result;
+
       await user.click(predictionsTab);
 
-      // Check if live prediction appears
+      // Check if live prediction appears;
       await waitFor(() => {
         expect(screen.getByText(/live_/)).toBeInTheDocument(); // Event ID starts with 'live_'
       });
     });
 
     it("should display real-time monitoring data", async () => {
-      const user = userEvent.setup();
-      render(<UltraAdvancedMLDashboard />);
 
-      // Enable auto-refresh
-      const autoRefreshButton = screen.getByText("Auto Refresh");
+      render(<UltraAdvancedMLDashboard / key={603263}>);
+
+      // Enable auto-refresh;
+
       await user.click(autoRefreshButton);
 
-      // Wait for initial data load
+      // Wait for initial data load;
       await waitFor(() => {
         expect(mockPredictionInstance.getSystemHealth).toHaveBeenCalled();
       });
 
-      // Check if resource utilization is displayed
-      const healthTab = screen.getByText("System Health");
+      // Check if resource utilization is displayed;
+
       await user.click(healthTab);
 
       await waitFor(() => {
@@ -621,21 +618,18 @@ describe("Complete Frontend-Backend Integration", () => {
 
   describe("Service Integration Tests", () => {
     it("should handle backend service errors gracefully", async () => {
-      // Mock a service error
+      // Mock a service error;
       mockBackendInstance.getEnhancedRevolutionaryPrediction.mockRejectedValueOnce(
         new Error("Backend service unavailable"),
       );
 
-      const user = userEvent.setup();
-      render(<EnhancedRevolutionaryInterface />);
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
 
-      const eventIdInput = screen.getByLabelText("Event ID");
       await user.type(eventIdInput, "test_error");
 
-      const executeButton = screen.getByText("Execute Enhanced Prediction");
       await user.click(executeButton);
 
-      // Should handle error gracefully without crashing
+      // Should handle error gracefully without crashing;
       await waitFor(() => {
         expect(
           mockBackendInstance.getEnhancedRevolutionaryPrediction,
@@ -644,13 +638,11 @@ describe("Complete Frontend-Backend Integration", () => {
     });
 
     it("should validate mathematical computation accuracy", async () => {
-      const user = userEvent.setup();
-      render(<EnhancedRevolutionaryInterface />);
 
-      const eventIdInput = screen.getByLabelText("Event ID");
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
+
       await user.type(eventIdInput, "test_accuracy");
 
-      const executeButton = screen.getByText("Execute Enhanced Prediction");
       await user.click(executeButton);
 
       await waitFor(() => {
@@ -665,74 +657,66 @@ describe("Complete Frontend-Backend Integration", () => {
         );
       });
 
-      // Verify the mathematical guarantees are checked
+      // Verify the mathematical guarantees are checked;
       await waitFor(() => {
         expect(screen.getByText("80.50")).toBeInTheDocument();
       });
 
-      // Switch to validation tab and check guarantees
-      const validationTab = screen.getByText("Validation & Proofs");
+      // Switch to validation tab and check guarantees;
+
       await user.click(validationTab);
 
-      // Should show mathematical validation results
+      // Should show mathematical validation results;
       expect(
         screen.getByText("Numerical Stability Validation"),
       ).toBeInTheDocument();
     });
 
     it("should demonstrate real-time data flow", async () => {
-      const user = userEvent.setup();
-      render(<UltraAdvancedMLDashboard />);
 
-      // Enable real-time monitoring
-      const autoRefreshButton = screen.getByText("Auto Refresh");
+      render(<UltraAdvancedMLDashboard / key={603263}>);
+
+      // Enable real-time monitoring;
+
       if (autoRefreshButton.textContent?.includes("Auto Refresh")) {
         await user.click(autoRefreshButton);
       }
 
-      // Initial data load
+      // Initial data load;
       await waitFor(() => {
         expect(mockPredictionInstance.getSystemHealth).toHaveBeenCalled();
         expect(mockPredictionInstance.getModelPerformance).toHaveBeenCalled();
       });
 
-      // Verify real-time capabilities are active
-      expect(screen.getByText("Pause")).toBeInTheDocument(); // Auto refresh should be active
+      // Verify real-time capabilities are active;
+      expect(screen.getByText("Pause")).toBeInTheDocument(); // Auto refresh should be active;
     });
   });
 
   describe("Performance and Quality Tests", () => {
     it("should complete predictions within reasonable time limits", async () => {
-      const user = userEvent.setup();
-      render(<EnhancedRevolutionaryInterface />);
 
-      const startTime = Date.now();
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
 
-      const eventIdInput = screen.getByLabelText("Event ID");
       await user.type(eventIdInput, "test_performance");
 
-      const executeButton = screen.getByText("Execute Enhanced Prediction");
       await user.click(executeButton);
 
       await waitFor(() => {
         expect(screen.getByText("80.50")).toBeInTheDocument();
       });
 
-      const endTime = Date.now();
-      const totalTime = endTime - startTime;
 
       // Should complete within 10 seconds (including UI interactions)
       expect(totalTime).toBeLessThan(10000);
     });
 
     it("should maintain mathematical rigor across all components", async () => {
-      const user = userEvent.setup();
-      render(<EnhancedRevolutionaryInterface />);
 
-      const eventIdInput = screen.getByLabelText("Event ID");
+      render(<EnhancedRevolutionaryInterface / key={684508}>);
+
       await user.type(eventIdInput, "test_rigor");
 
-      const executeButton = screen.getByText("Execute Enhanced Prediction");
       await user.click(executeButton);
 
       await waitFor(() => {
@@ -749,17 +733,17 @@ describe("Complete Frontend-Backend Integration", () => {
         );
       });
 
-      // Check that all mathematical guarantees are satisfied
-      const response = mockPredictionResponse.mathematical_guarantees;
+      // Check that all mathematical guarantees are satisfied;
+
       expect(Object.values(response).every(Boolean)).toBe(true);
     });
 
     it("should provide comprehensive explainability", async () => {
-      const user = userEvent.setup();
-      render(<UltraAdvancedMLDashboard />);
 
-      // Execute a prediction that includes explainability
-      const livePredictionButton = screen.getByText("Live Prediction");
+      render(<UltraAdvancedMLDashboard / key={603263}>);
+
+      // Execute a prediction that includes explainability;
+
       await user.click(livePredictionButton);
 
       await waitFor(() => {
@@ -772,7 +756,7 @@ describe("Complete Frontend-Backend Integration", () => {
         );
       });
 
-      // The prediction service should provide explainability data
+      // The prediction service should provide explainability data;
       const predictionCall =
         mockPredictionInstance.generatePrediction.mock.calls[0][0];
       expect(predictionCall.include_causal_analysis).toBe(true);

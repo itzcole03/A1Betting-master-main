@@ -1,11 +1,11 @@
-import React from 'react';
-import useStore from '../../../store/useStore';
-import { Toast } from '../../../store/types';
-import { m, AnimatePresence } from 'framer-motion';
-import CheckCircleIcon from '@heroicons/react/24/outline/CheckCircleIcon';
-import ExclamationCircleIcon from '@heroicons/react/24/outline/ExclamationCircleIcon';
-import InformationCircleIcon from '@heroicons/react/24/outline/InformationCircleIcon';
-import XMarkIcon from '@heroicons/react/24/outline/XMarkIcon';
+import React from 'react.ts';
+import useStore from '@/../store/useStore.ts';
+import { Toast } from '@/../store/types.ts';
+import { m, AnimatePresence } from 'framer-motion.ts';
+import CheckCircleIcon from '@heroicons/react/24/outline/CheckCircleIcon.ts';
+import ExclamationCircleIcon from '@heroicons/react/24/outline/ExclamationCircleIcon.ts';
+import InformationCircleIcon from '@heroicons/react/24/outline/InformationCircleIcon.ts';
+import XMarkIcon from '@heroicons/react/24/outline/XMarkIcon.ts';
 
 const toastVariants = {
   initial: { opacity: 0, y: -20 },
@@ -14,10 +14,10 @@ const toastVariants = {
 };
 
 const toastIcons = {
-  success: <CheckCircleIcon className="h-6 w-6 text-green-500" />,
-  error: <ExclamationCircleIcon className="h-6 w-6 text-red-500" />,
-  info: <InformationCircleIcon className="h-6 w-6 text-blue-500" />,
-  warning: <ExclamationCircleIcon className="h-6 w-6 text-yellow-500" />,
+  success: <CheckCircleIcon className="h-6 w-6 text-green-500" / key={44150}>,
+  error: <ExclamationCircleIcon className="h-6 w-6 text-red-500" / key={593370}>,
+  info: <InformationCircleIcon className="h-6 w-6 text-blue-500" / key={100112}>,
+  warning: <ExclamationCircleIcon className="h-6 w-6 text-yellow-500" / key={26626}>,
 };
 
 const toastColors = {
@@ -31,26 +31,26 @@ const ToastItem: React.FC<{ toast: Toast }> = ({ toast }) => {
   const { removeToast } = useStore();
 
   return (
-    <m.div
-      layout
+    <m.div;
+      layout;
       animate="animate"
       className={`flex items-start p-4 mb-4 rounded-lg border ${toastColors[toast.type]} shadow-lg`}
       exit="exit"
       initial="initial"
       variants={toastVariants}
-    >
-      <div className="flex-shrink-0">{toastIcons[toast.type]}</div>
-      <div className="ml-3 w-0 flex-1">
-        <p className="text-sm font-medium text-gray-900 dark:text-white">{toast.message}</p>
+     key={567105}>
+      <div className="flex-shrink-0" key={11962}>{toastIcons[toast.type]}</div>
+      <div className="ml-3 w-0 flex-1" key={644384}>
+        <p className="text-sm font-medium text-gray-900 dark:text-white" key={192053}>{toast.message}</p>
       </div>
-      <div className="ml-4 flex-shrink-0 flex">
-        <button
+      <div className="ml-4 flex-shrink-0 flex" key={215682}>
+        <button;
           className="inline-flex text-gray-400 hover:text-gray-500 focus:outline-none"
-          onClick={() => removeToast(toast.id)}
+          onClick={() = key={634036}> removeToast(toast.id)}
           title="Dismiss notification"
           aria-label="Dismiss notification"
         >
-          <XMarkIcon className="h-5 w-5" />
+          <XMarkIcon className="h-5 w-5" / key={628914}>
         </button>
       </div>
     </m.div>
@@ -58,13 +58,12 @@ const ToastItem: React.FC<{ toast: Toast }> = ({ toast }) => {
 };
 
 const ToastContainer: React.FC = () => {
-  const toasts = useStore(state => state.toasts);
 
   return (
-    <div className="fixed top-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]">
-      <AnimatePresence mode="popLayout">
+    <div className="fixed top-4 right-4 z-50 w-96 max-w-[calc(100vw-2rem)]" key={554858}>
+      <AnimatePresence mode="popLayout" key={441220}>
         {toasts.map(toast => (
-          <ToastItem key={toast.id} toast={toast} />
+          <ToastItem key={toast.id} toast={toast} / key={916515}>
         ))}
       </AnimatePresence>
     </div>

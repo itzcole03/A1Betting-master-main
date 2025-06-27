@@ -33,7 +33,7 @@ class UnifiedAnalyticsService {
             return response.data;
         }
         catch (error) {
-            console.error("Error fetching betting metrics:", error);
+            // console statement removed
             toast.error("Failed to fetch betting metrics");
             return this.metricsCache.get("metrics") || this.getDefaultMetrics();
         }
@@ -55,12 +55,12 @@ class UnifiedAnalyticsService {
     }
     async getModelPerformance() {
         try {
-            const response = await axios.get(`${this.apiUrl}/api/analytics/model-performance`);
+
             this.metricsCache.set("modelPerformance", response.data);
             return response.data;
         }
         catch (error) {
-            console.error("Error fetching model performance:", error);
+            // console statement removed
             return this.metricsCache.get("modelPerformance") || [];
         }
     }
@@ -73,7 +73,7 @@ class UnifiedAnalyticsService {
             return response.data;
         }
         catch (error) {
-            console.error("Error fetching betting stats:", error);
+            // console statement removed
             return this.metricsCache.get("stats") || this.getDefaultStats();
         }
     }
@@ -100,7 +100,7 @@ class UnifiedAnalyticsService {
             return response.data;
         }
         catch (error) {
-            console.error("Error fetching line movements:", error);
+            // console statement removed
             return [];
         }
     }
@@ -109,11 +109,11 @@ class UnifiedAnalyticsService {
             return [];
         }
         try {
-            const response = await axios.get(`${this.apiUrl}/api/analytics/arbitrage`);
+
             return response.data;
         }
         catch (error) {
-            console.error("Error fetching arbitrage opportunities:", error);
+            // console statement removed
             return [];
         }
     }
@@ -125,7 +125,7 @@ class UnifiedAnalyticsService {
             return response.data;
         }
         catch (error) {
-            console.error("Error fetching performance breakdown:", error);
+            // console statement removed
             return {
                 bySport: {},
                 byMarket: {},
@@ -136,11 +136,11 @@ class UnifiedAnalyticsService {
     }
     async getRiskAnalysis() {
         try {
-            const response = await axios.get(`${this.apiUrl}/api/analytics/risk-analysis`);
+
             return response.data;
         }
         catch (error) {
-            console.error("Error fetching risk analysis:", error);
+            // console statement removed
             return {
                 volatility: 0,
                 sharpeRatio: 0,

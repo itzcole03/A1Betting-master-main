@@ -6,14 +6,14 @@ export class PredictionService {
         }
         return PredictionService.instance;
     }
-    // Main interface for frontend: get prediction with confidence band and win probability
+    // Main interface for frontend: get prediction with confidence band and win probability;
     async getPredictionWithConfidence(eventId, model, market, context) {
-        // Simulate call to backend/model for prediction, confidence, and win probability
-        // In production, replace with real API/model call
-        const predictedValue = Math.random() * 100;
-        const confidenceLevel = 0.95;
-        const stdDev = Math.random() * 10;
-        const mean = predictedValue;
+        // Simulate call to backend/model for prediction, confidence, and win probability;
+        // In production, replace with real API/model call;
+
+
+
+
         const confidenceBand = {
             lower: mean - 1.96 * stdDev,
             upper: mean + 1.96 * stdDev,

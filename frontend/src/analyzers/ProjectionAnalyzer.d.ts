@@ -1,5 +1,5 @@
-import { Analyzer } from '../unified/Analyzer';
-import { DailyFantasyData } from '../adapters/DailyFantasyAdapter';
+import { Analyzer } from '@/unified/Analyzer.ts';
+import { DailyFantasyData } from '@/adapters/DailyFantasyAdapter.ts';
 export interface ProjectionAnalysis {
     player: string;
     predictions: {

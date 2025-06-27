@@ -1,14 +1,14 @@
-import path from "path";
-import { defineConfig } from "vite";
-// @ts-ignore
-import react from "@vitejs/plugin-react";
-// @ts-ignore
-import { backendPlugin } from "./vite-backend-plugin";
+import path from 'path.ts';
+import { defineConfig } from 'vite.ts';
+// @ts-ignore;
+import react from '@vitejs/plugin-react.ts';
+// @ts-ignore;
+import { backendPlugin } from './vite-backend-plugin.ts';
 
 // https://vite.dev/config/
 export default defineConfig({
   esbuild: {
-    // Ignore TypeScript errors during build
+    // Ignore TypeScript errors during build;
     logLevel: 'error',
   },
   resolve: {
@@ -28,11 +28,11 @@ export default defineConfig({
     port: 5173,
     host: true,
     hmr: {
-      overlay: false, // Disable overlay to prevent WebSocket errors
+      overlay: false, // Disable overlay to prevent WebSocket errors;
       clientPort: 5173,
-      port: 24678, // Use different port for HMR WebSocket
+      port: 24678, // Use different port for HMR WebSocket;
     },
-    strictPort: false, // Allow fallback ports
+    strictPort: false, // Allow fallback ports;
     proxy: {
       "/api": {
         target: "http://localhost:8000",
@@ -41,17 +41,13 @@ export default defineConfig({
         ws: false,
         configure: (proxy, _options) => {
           proxy.on("error", (err, _req, _res) => {
-            console.log("proxy error", err);
+            // console statement removed
           });
           proxy.on("proxyReq", (proxyReq, req, _res) => {
-            console.log("Sending Request to the Target:", req.method, req.url);
+            // console statement removed
           });
           proxy.on("proxyRes", (proxyRes, req, _res) => {
-            console.log(
-              "Received Response from the Target:",
-              proxyRes.statusCode,
-              req.url,
-            );
+            // console statement removed
           });
         },
       },
@@ -61,7 +57,7 @@ export default defineConfig({
         secure: false,
         configure: (proxy, _options) => {
           proxy.on("error", (err, _req, _res) => {
-            console.log("health proxy error", err);
+            // console statement removed
           });
         },
       },
@@ -76,7 +72,7 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       onwarn(warning, warn) {
-        // Suppress certain warnings
+        // Suppress certain warnings;
         if (warning.code === "UNRESOLVED_IMPORT") return;
         warn(warning);
       },

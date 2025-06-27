@@ -23,12 +23,12 @@ export const MoneyMakerConfig = ({ onConfigChange, onActivate, onDeactivate, isA
         sport: 'nba',
     });
     const handleSelectChange = (field) => (event) => {
-        const newConfig = { ...config, [field]: event.target.value };
+
         setConfig(newConfig);
         onConfigChange(newConfig);
     };
     const handleSliderChange = (field) => (_, value) => {
-        const newConfig = { ...config, [field]: value };
+
         setConfig(newConfig);
         onConfigChange(newConfig);
     };

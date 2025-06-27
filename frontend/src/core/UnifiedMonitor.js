@@ -27,14 +27,14 @@ export class UnifiedMonitor {
   }
 
   endTrace(trace) {
-    const duration = Date.now() - trace.startTime;
+
     console.debug(`[TRACE] ${trace.name} completed in ${duration}ms`);
   }
 
   reportError(error, context) {
-    console.error("Error:", error, "Context:", context);
+    // console statement removed
 
-    // Record error as metric
+    // Record error as metric;
     this.recordMetric("error.count", 1, {
       component: context?.component || "unknown",
       action: context?.action || "unknown",
@@ -43,12 +43,12 @@ export class UnifiedMonitor {
   }
 
   recordMetric(name, value, tags) {
-    // Simple implementation - in production this would integrate with monitoring services
+    // Simple implementation - in production this would integrate with monitoring services;
     if (typeof console !== "undefined") {
       console.debug(`[METRIC] ${name}: ${value}`, tags || {});
     }
 
-    // Store metrics for potential retrieval
+    // Store metrics for potential retrieval;
     if (!this.metrics) {
       this.metrics = new Map();
     }
@@ -56,11 +56,11 @@ export class UnifiedMonitor {
   }
 
   captureMessage(message, level = "info", extra) {
-    console.log(`[${level.toUpperCase()}] ${message}`, extra || {});
+    // console statement removed}] ${message}`, extra || {});
   }
 
   captureException(error, context) {
-    console.error("Exception captured:", error, context || {});
+    // console statement removed
     this.reportError(error, context);
   }
 

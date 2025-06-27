@@ -1,6 +1,6 @@
-import { ModelOutput, BetRecommendation } from '../types/prediction';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedMetrics } from '../metrics/types';
+import { ModelOutput, BetRecommendation } from '@/types/prediction.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
 
 export interface ModelPerformanceMetrics {
   totalPredictions: number;
@@ -33,7 +33,7 @@ export class ModelPerformanceTracker {
   constructor(
     private logger: UnifiedLogger,
     private metrics: UnifiedMetrics,
-    private readonly maxHistoryLength: number = 100
+    private readonly maxHistoryLength: number = 100;
   ) {
     this.performanceHistory = new Map();
     this.currentMetrics = new Map();
@@ -43,19 +43,18 @@ export class ModelPerformanceTracker {
   public trackPrediction(
     modelName: string,
     prediction: ModelOutput,
-    recommendation: BetRecommendation
+    recommendation: BetRecommendation;
   ): void {
-    const current = this.getOrCreateMetrics(modelName);
 
     current.totalPredictions++;
     current.totalStake += recommendation.stake;
     current.averageConfidence = this.updateAverage(
       current.averageConfidence,
       prediction.confidence,
-      current.totalPredictions
+      current.totalPredictions;
     );
 
-    // Update calibration data
+    // Update calibration data;
     this.updateCalibrationData(modelName, prediction.confidence);
 
     this.currentMetrics.set(modelName, current);
@@ -63,8 +62,7 @@ export class ModelPerformanceTracker {
   }
 
   public recordOutcome(modelName: string, stake: number, payout: number, odds: number): void {
-    const current = this.getOrCreateMetrics(modelName);
-    const profit = payout - stake;
+
 
     current.totalPayout += payout;
     current.correctPredictions += profit > 0 ? 1 : 0;
@@ -72,7 +70,7 @@ export class ModelPerformanceTracker {
     current.winRate = current.correctPredictions / current.totalPredictions;
     current.averageOdds = this.updateAverage(current.averageOdds, odds, current.totalPredictions);
 
-    // Calculate advanced metrics
+    // Calculate advanced metrics;
     current.profitFactor = this.calculateProfitFactor(current);
     current.sharpeRatio = this.calculateSharpeRatio(modelName);
     current.maxDrawdown = this.calculateMaxDrawdown(modelName);
@@ -82,7 +80,7 @@ export class ModelPerformanceTracker {
 
     current.lastUpdated = new Date();
 
-    // Update history
+    // Update history;
     this.updateHistory(modelName, current);
     this.currentMetrics.set(modelName, current);
     this.trackMetrics(modelName, current);
@@ -96,22 +94,21 @@ export class ModelPerformanceTracker {
     modelName: string,
     timeframe: 'day' | 'week' | 'month' | 'all' = 'all'
   ): PerformanceSnapshot[] {
-    const history = this.performanceHistory.get(modelName) || [];
-    const now = new Date();
-    const cutoff = this.getCutoffDate(timeframe);
+
+
 
     return history.filter(snapshot => snapshot.timestamp >= cutoff);
   }
 
   public getTopPerformingModels(
     metric: keyof ModelPerformanceMetrics = 'roi',
-    limit: number = 5
+    limit: number = 5;
   ): Array<{ modelName: string; metrics: ModelPerformanceMetrics }> {
     return Array.from(this.currentMetrics.entries())
       .map(([modelName, metrics]) => ({ modelName, metrics }))
       .sort((a, b) => {
-        const aValue = a.metrics[metric] as number;
-        const bValue = b.metrics[metric] as number;
+
+
         return bValue - aValue;
       })
       .slice(0, limit);
@@ -144,42 +141,41 @@ export class ModelPerformanceTracker {
   }
 
   private calculateProfitFactor(metrics: ModelPerformanceMetrics): number {
-    const grossProfit = metrics.totalPayout - metrics.totalStake;
-    const grossLoss = metrics.totalStake;
+
+
     return grossLoss === 0 ? 0 : Number(grossProfit) / Number(grossLoss);
   }
 
   private calculateSharpeRatio(modelName: string): number {
-    const history = this.performanceHistory.get(modelName) || [];
+
     if (history.length < 2) return 0;
 
     const returns = history.map((snapshot, i) => {
       if (i === 0) return 0;
-      const prevRoi = history[i - 1].metrics.roi;
+
       return snapshot.metrics.roi - prevRoi;
     });
 
-    const avgReturn = returns.reduce((sum, ret) => sum + ret, 0) / returns.length;
     const stdDev = Math.sqrt(
-      returns.reduce((sum, ret) => sum + Math.pow(ret - avgReturn, 2), 0) / returns.length
+      returns.reduce((sum, ret) => sum + Math.pow(ret - avgReturn, 2), 0) / returns.length;
     );
 
     return stdDev === 0 ? 0 : avgReturn / stdDev;
   }
 
   private calculateMaxDrawdown(modelName: string): number {
-    const history = this.performanceHistory.get(modelName) || [];
+
     if (history.length < 2) return 0;
 
-    let maxDrawdown = 0;
-    let peak = history[0].metrics.roi;
+    const maxDrawdown = 0;
+    const peak = history[0].metrics.roi;
 
     for (const snapshot of history) {
-      const roi = snapshot.metrics.roi;
+
       if (roi > peak) {
         peak = roi;
       }
-      const drawdown = (peak - roi) / peak;
+
       maxDrawdown = Math.max(maxDrawdown, drawdown);
     }
 
@@ -187,52 +183,48 @@ export class ModelPerformanceTracker {
   }
 
   private calculateKellyCriterion(metrics: ModelPerformanceMetrics): number {
-    const winProb = metrics.winRate;
-    const lossProb = 1 - winProb;
-    const winAmount = metrics.averageOdds - 1;
-    const lossAmount = 1;
 
-    const kelly = (winProb * winAmount - lossProb * lossAmount) / winAmount;
-    return Math.max(0, Math.min(kelly, 0.5)); // Cap at 50% of bankroll
+
+
+
+    return Math.max(0, Math.min(kelly, 0.5)); // Cap at 50% of bankroll;
   }
 
   private calculateExpectedValue(metrics: ModelPerformanceMetrics, odds: number): number {
-    const winProb = metrics.winRate;
-    const stake = metrics.totalStake / metrics.totalPredictions;
-    const winAmount = stake * (odds - 1);
-    const lossAmount = stake;
+
+
+
 
     return winProb * winAmount - (1 - winProb) * lossAmount;
   }
 
   private updateCalibrationData(modelName: string, predictedConfidence: number): void {
-    const data = this.calibrationData.get(modelName) || { predicted: [], actual: [] };
+
     data.predicted.push(predictedConfidence);
     this.calibrationData.set(modelName, data);
   }
 
   private calculateCalibrationScore(modelName: string): number {
-    const data = this.calibrationData.get(modelName);
+
     if (!data || data.predicted.length < 10) return 0;
 
-    // Group predictions into bins
-    const bins = 10;
-    const binSize = 1 / bins;
-    const binCounts = new Array(bins).fill(0);
-    const binCorrect = new Array(bins).fill(0);
+    // Group predictions into bins;
+
+
+
 
     data.predicted.forEach((pred, i) => {
-      const bin = Math.min(Math.floor(pred / binSize), bins - 1);
+
       binCounts[bin]++;
       if (data.actual[i]) binCorrect[bin]++;
     });
 
-    // Calculate calibration error
-    let calibrationError = 0;
-    for (let i = 0; i < bins; i++) {
+    // Calculate calibration error;
+    const calibrationError = 0;
+    for (const i = 0; i < bins; i++) {
       if (binCounts[i] > 0) {
-        const expectedProb = (i + 0.5) * binSize;
-        const actualProb = binCorrect[i] / binCounts[i];
+
+
         calibrationError += Math.pow(expectedProb - actualProb, 2);
       }
     }
@@ -241,13 +233,13 @@ export class ModelPerformanceTracker {
   }
 
   private updateHistory(modelName: string, metrics: ModelPerformanceMetrics): void {
-    const history = this.performanceHistory.get(modelName) || [];
+
     history.push({
       timestamp: new Date(),
       metrics: { ...metrics },
     });
 
-    // Maintain history length limit
+    // Maintain history length limit;
     if (history.length > this.maxHistoryLength) {
       history.shift();
     }
@@ -256,7 +248,7 @@ export class ModelPerformanceTracker {
   }
 
   private getCutoffDate(timeframe: 'day' | 'week' | 'month' | 'all'): Date {
-    const now = new Date();
+
     switch (timeframe) {
       case 'day':
         return new Date(now.setDate(now.getDate() - 1));

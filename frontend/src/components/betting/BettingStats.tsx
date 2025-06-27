@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import {
   Box,
   SimpleGrid,
@@ -8,9 +8,9 @@ import {
   StatHelpText,
   StatArrow,
   useColorModeValue,
-} from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+} from '@chakra-ui/react.ts';
+import { useQuery } from '@tanstack/react-query.ts';
+import axios from 'axios.ts';
 
 interface BettingStats {
   _id: string;
@@ -20,13 +20,12 @@ interface BettingStats {
 }
 
 export const BettingStats: React.FC = () => {
-  const bgColor = useColorModeValue('white', 'gray.800');
-  const borderColor = useColorModeValue('gray.200', 'gray.700');
 
-  const { data, isLoading, error } = useQuery<BettingStats[]>({
+
+  const { data, isLoading, error } = useQuery<BettingStats[] key={463327}>({
     queryKey: ['bettingStats'],
     queryFn: async () => {
-      const response = await axios.get('/api/betting/stats/summary');
+
       return response.data;
     },
   });
@@ -44,48 +43,46 @@ export const BettingStats: React.FC = () => {
     totalWinnings: data.reduce((acc, curr) => acc + curr.totalWinnings, 0),
   };
 
-  const winRate = stats.total > 0 ? (stats.won / (stats.won + stats.lost)) * 100 : 0;
-  const profit = stats.totalWinnings - stats.totalStake;
-  const roi = stats.totalStake > 0 ? (profit / stats.totalStake) * 100 : 0;
+
 
   return (
-    <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={4}>
-      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4}>
-        <Stat>
-          <StatLabel>Total Bets</StatLabel>
-          <StatNumber>{stats.total}</StatNumber>
-          <StatHelpText>{stats.pending} pending</StatHelpText>
+    <SimpleGrid columns={{ base: 1, md: 2, lg: 4 }} spacing={4} key={277634}>
+      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4} key={968706}>
+        <Stat key={212070}>
+          <StatLabel key={238154}>Total Bets</StatLabel>
+          <StatNumber key={950974}>{stats.total}</StatNumber>
+          <StatHelpText key={563333}>{stats.pending} pending</StatHelpText>
         </Stat>
       </Box>
 
-      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4}>
-        <Stat>
-          <StatLabel>Win Rate</StatLabel>
-          <StatNumber>{winRate.toFixed(1)}%</StatNumber>
-          <StatHelpText>
-            {stats.won} wins / {stats.lost} losses
+      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4} key={968706}>
+        <Stat key={212070}>
+          <StatLabel key={238154}>Win Rate</StatLabel>
+          <StatNumber key={950974}>{winRate.toFixed(1)}%</StatNumber>
+          <StatHelpText key={563333}>
+            {stats.won} wins / {stats.lost} losses;
           </StatHelpText>
         </Stat>
       </Box>
 
-      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4}>
-        <Stat>
-          <StatLabel>Total Stake</StatLabel>
-          <StatNumber>${stats.totalStake.toFixed(2)}</StatNumber>
-          <StatHelpText>
-            Average ${(stats.totalStake / stats.total).toFixed(2)} per bet
+      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4} key={968706}>
+        <Stat key={212070}>
+          <StatLabel key={238154}>Total Stake</StatLabel>
+          <StatNumber key={950974}>${stats.totalStake.toFixed(2)}</StatNumber>
+          <StatHelpText key={563333}>
+            Average ${(stats.totalStake / stats.total).toFixed(2)} per bet;
           </StatHelpText>
         </Stat>
       </Box>
 
-      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4}>
-        <Stat>
-          <StatLabel>Profit/Loss</StatLabel>
-          <StatNumber>
+      <Box bg={bgColor} borderColor={borderColor} borderRadius="lg" borderWidth={1} p={4} key={968706}>
+        <Stat key={212070}>
+          <StatLabel key={238154}>Profit/Loss</StatLabel>
+          <StatNumber key={950974}>
             ${profit.toFixed(2)}
-            <StatArrow type={profit >= 0 ? 'increase' : 'decrease'} />
+            <StatArrow type={profit  key={270974}>= 0 ? 'increase' : 'decrease'} />
           </StatNumber>
-          <StatHelpText>ROI: {roi.toFixed(1)}%</StatHelpText>
+          <StatHelpText key={563333}>ROI: {roi.toFixed(1)}%</StatHelpText>
         </Stat>
       </Box>
     </SimpleGrid>

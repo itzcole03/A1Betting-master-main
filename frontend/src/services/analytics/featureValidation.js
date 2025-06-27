@@ -11,22 +11,22 @@ export class FeatureValidator {
                 errors: [],
                 warnings: [],
             };
-            // Validate numerical features
-            const numericalValidation = await this.validateNumericalFeatures(features.numerical);
+            // Validate numerical features;
+
             this.mergeValidationResults(result, numericalValidation);
-            // Validate categorical features
-            const categoricalValidation = await this.validateCategoricalFeatures(features.categorical);
+            // Validate categorical features;
+
             this.mergeValidationResults(result, categoricalValidation);
-            // Validate temporal features
-            const temporalValidation = await this.validateTemporalFeatures(features.temporal);
+            // Validate temporal features;
+
             this.mergeValidationResults(result, temporalValidation);
-            // Validate derived features
-            const derivedValidation = await this.validateDerivedFeatures(features.derived);
+            // Validate derived features;
+
             this.mergeValidationResults(result, derivedValidation);
-            // Validate feature metadata
-            const metadataValidation = await this.validateFeatureMetadata(features.metadata);
+            // Validate feature metadata;
+
             this.mergeValidationResults(result, metadataValidation);
-            // Check overall validation threshold
+            // Check overall validation threshold;
             result.isValid = this.checkValidationThreshold(result);
             return result;
         }
@@ -42,28 +42,28 @@ export class FeatureValidator {
             warnings: [],
         };
         for (const [feature, values] of Object.entries(features)) {
-            // Check for missing values
-            const missingCount = values.filter(v => v === null || v === undefined || isNaN(v)).length;
+            // Check for missing values;
+
             if (missingCount > 0) {
                 result.errors.push(`Feature ${feature} has ${missingCount} missing values`);
             }
-            // Check for infinite values
-            const infiniteCount = values.filter(v => !isFinite(v)).length;
+            // Check for infinite values;
+
             if (infiniteCount > 0) {
                 result.errors.push(`Feature ${feature} has ${infiniteCount} infinite values`);
             }
-            // Check for constant values
-            const uniqueValues = new Set(values).size;
+            // Check for constant values;
+
             if (uniqueValues === 1) {
                 result.warnings.push(`Feature ${feature} is constant`);
             }
-            // Check for outliers
-            const outliers = this.detectOutliers(values);
+            // Check for outliers;
+
             if (outliers.length > 0) {
                 result.warnings.push(`Feature ${feature} has ${outliers.length} outliers`);
             }
-            // Check for distribution
-            const distributionCheck = this.checkDistribution(values);
+            // Check for distribution;
+
             if (!distributionCheck.isValid) {
                 result.warnings.push(`Feature ${feature} has non-normal distribution: ${distributionCheck.reason}`);
             }
@@ -77,22 +77,22 @@ export class FeatureValidator {
             warnings: [],
         };
         for (const [feature, values] of Object.entries(features)) {
-            // Check for missing values
-            const missingCount = values.filter(v => v === null || v === undefined || v === '').length;
+            // Check for missing values;
+
             if (missingCount > 0) {
                 result.errors.push(`Feature ${feature} has ${missingCount} missing values`);
             }
-            // Check cardinality
-            const uniqueValues = new Set(values).size;
+            // Check cardinality;
+
             if (uniqueValues === 1) {
                 result.warnings.push(`Feature ${feature} has only one unique value`);
             }
             else if (uniqueValues === values.length) {
                 result.warnings.push(`Feature ${feature} has too many unique values`);
             }
-            // Check value distribution
-            const distribution = this.calculateValueDistribution(values);
-            const imbalancedCategories = this.detectImbalancedCategories(distribution);
+            // Check value distribution;
+
+
             if (imbalancedCategories.length > 0) {
                 result.warnings.push(`Feature ${feature} has imbalanced categories: ${imbalancedCategories.join(', ')}`);
             }
@@ -106,23 +106,23 @@ export class FeatureValidator {
             warnings: [],
         };
         for (const [feature, values] of Object.entries(features)) {
-            // Check for missing values
-            const missingCount = values.filter(v => v === null || v === undefined || isNaN(v)).length;
+            // Check for missing values;
+
             if (missingCount > 0) {
                 result.errors.push(`Feature ${feature} has ${missingCount} missing values`);
             }
-            // Check for temporal consistency
-            const consistencyCheck = this.checkTemporalConsistency(values);
+            // Check for temporal consistency;
+
             if (!consistencyCheck.isValid) {
                 result.errors.push(`Feature ${feature} has temporal inconsistency: ${consistencyCheck.reason}`);
             }
-            // Check for seasonality
-            const seasonalityCheck = this.checkSeasonality(values);
+            // Check for seasonality;
+
             if (seasonalityCheck.hasSeasonality) {
                 result.warnings.push(`Feature ${feature} shows seasonality with period ${seasonalityCheck.period}`);
             }
-            // Check for trend
-            const trendCheck = this.checkTrend(values);
+            // Check for trend;
+
             if (trendCheck.hasTrend) {
                 result.warnings.push(`Feature ${feature} shows ${trendCheck.trendType} trend`);
             }
@@ -136,18 +136,18 @@ export class FeatureValidator {
             warnings: [],
         };
         for (const [feature, values] of Object.entries(features)) {
-            // Check for missing values
-            const missingCount = values.filter(v => v === null || v === undefined || isNaN(v)).length;
+            // Check for missing values;
+
             if (missingCount > 0) {
                 result.errors.push(`Feature ${feature} has ${missingCount} missing values`);
             }
-            // Check for infinite values
-            const infiniteCount = values.filter(v => !isFinite(v)).length;
+            // Check for infinite values;
+
             if (infiniteCount > 0) {
                 result.errors.push(`Feature ${feature} has ${infiniteCount} infinite values`);
             }
-            // Check for correlation with original features
-            const correlationCheck = this.checkFeatureCorrelation(feature, values);
+            // Check for correlation with original features;
+
             if (correlationCheck.hasHighCorrelation) {
                 result.warnings.push(`Feature ${feature} has high correlation with ${correlationCheck.correlatedFeatures.join(', ')}`);
             }
@@ -160,23 +160,23 @@ export class FeatureValidator {
             errors: [],
             warnings: [],
         };
-        // Check feature names
+        // Check feature names;
         if (metadata.featureNames.length === 0) {
             result.errors.push('No feature names provided');
         }
-        // Check feature types
+        // Check feature types;
         for (const [feature, type] of Object.entries(metadata.featureTypes)) {
             if (!['numerical', 'categorical', 'temporal', 'derived'].includes(type)) {
                 result.errors.push(`Invalid feature type for ${feature}: ${type}`);
             }
         }
-        // Check scaling parameters
+        // Check scaling parameters;
         for (const [feature, params] of Object.entries(metadata.scalingParams)) {
             if (isNaN(params.mean) || isNaN(params.std) || params.std <= 0) {
                 result.errors.push(`Invalid scaling parameters for ${feature}`);
             }
         }
-        // Check encoding maps
+        // Check encoding maps;
         for (const [feature, encodingMap] of Object.entries(metadata.encodingMaps)) {
             if (Object.keys(encodingMap).length === 0) {
                 result.warnings.push(`Empty encoding map for ${feature}`);
@@ -190,21 +190,21 @@ export class FeatureValidator {
         target.isValid = target.isValid && source.isValid;
     }
     checkValidationThreshold(result) {
-        const totalChecks = result.errors.length + result.warnings.length;
-        const errorRatio = result.errors.length / totalChecks;
+
+
         return errorRatio <= 1 - this.config.validationThreshold;
     }
     detectOutliers(values) {
-        const mean = values.reduce((a, b) => a + b, 0) / values.length;
-        const std = Math.sqrt(values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / values.length);
-        const threshold = 3; // 3 standard deviations
+
+
+        const threshold = 3; // 3 standard deviations;
         return values.filter(value => Math.abs(value - mean) > threshold * std);
     }
     checkDistribution(values) {
-        // Simple normality test using skewness and kurtosis
-        const mean = values.reduce((a, b) => a + b, 0) / values.length;
-        const std = Math.sqrt(values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / values.length);
-        const skewness = values.reduce((a, b) => a + Math.pow(b - mean, 3), 0) / (values.length * Math.pow(std, 3));
+        // Simple normality test using skewness and kurtosis;
+
+
+
         const kurtosis = values.reduce((a, b) => a + Math.pow(b - mean, 4), 0) / (values.length * Math.pow(std, 4)) -
             3;
         if (Math.abs(skewness) > 1) {
@@ -216,8 +216,8 @@ export class FeatureValidator {
         return { isValid: true, reason: '' };
     }
     calculateValueDistribution(values) {
-        const distribution = {};
-        const total = values.length;
+
+
         for (const value of values) {
             distribution[value] = (distribution[value] || 0) + 1;
         }
@@ -227,22 +227,22 @@ export class FeatureValidator {
         return distribution;
     }
     detectImbalancedCategories(distribution) {
-        const threshold = 0.1; // 10% threshold for imbalance
+        const threshold = 0.1; // 10% threshold for imbalance;
         return Object.entries(distribution)
             .filter(([_, ratio]) => ratio < threshold)
             .map(([category]) => category);
     }
     checkTemporalConsistency(values) {
-        // Check for gaps in the sequence
-        const gaps = this.findTemporalGaps(values);
+        // Check for gaps in the sequence;
+
         if (gaps.length > 0) {
             return {
                 isValid: false,
                 reason: `Found ${gaps.length} temporal gaps`,
             };
         }
-        // Check for sudden changes
-        const changes = this.detectSuddenChanges(values);
+        // Check for sudden changes;
+
         if (changes.length > 0) {
             return {
                 isValid: false,
@@ -252,8 +252,8 @@ export class FeatureValidator {
         return { isValid: true, reason: '' };
     }
     findTemporalGaps(values) {
-        const gaps = [];
-        for (let i = 1; i < values.length; i++) {
+
+        for (const i = 1; i < values.length; i++) {
             if (values[i] - values[i - 1] > 1) {
                 gaps.push(i);
             }
@@ -261,12 +261,12 @@ export class FeatureValidator {
         return gaps;
     }
     detectSuddenChanges(values) {
-        const changes = [];
-        const threshold = 3; // 3 standard deviations
-        const mean = values.reduce((a, b) => a + b, 0) / values.length;
-        const std = Math.sqrt(values.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / values.length);
-        for (let i = 1; i < values.length; i++) {
-            const change = Math.abs(values[i] - values[i - 1]);
+
+        const threshold = 3; // 3 standard deviations;
+
+
+        for (const i = 1; i < values.length; i++) {
+
             if (change > threshold * std) {
                 changes.push(i);
             }
@@ -274,11 +274,11 @@ export class FeatureValidator {
         return changes;
     }
     checkSeasonality(values) {
-        const maxLag = Math.min(50, Math.floor(values.length / 2));
-        let bestPeriod = 1;
-        let maxAutocorr = -1;
-        for (let lag = 1; lag <= maxLag; lag++) {
-            const autocorr = this.calculateAutocorrelation(values, lag);
+
+        const bestPeriod = 1;
+        const maxAutocorr = -1;
+        for (const lag = 1; lag <= maxLag; lag++) {
+
             if (autocorr > maxAutocorr) {
                 maxAutocorr = autocorr;
                 bestPeriod = lag;
@@ -290,8 +290,8 @@ export class FeatureValidator {
         };
     }
     checkTrend(values) {
-        const x = Array.from({ length: values.length }, (_, i) => i);
-        const slope = this.calculateLinearRegressionSlope(x, values);
+
+
         if (Math.abs(slope) < 0.01) {
             return { hasTrend: false, trendType: '' };
         }
@@ -301,29 +301,29 @@ export class FeatureValidator {
         };
     }
     checkFeatureCorrelation(feature, values) {
-        // This is a placeholder implementation
-        // In a real application, calculate correlation with other features
+        // This is a placeholder implementation;
+        // In a real application, calculate correlation with other features;
         return {
             hasHighCorrelation: false,
             correlatedFeatures: [],
         };
     }
     calculateAutocorrelation(values, lag) {
-        const mean = values.reduce((a, b) => a + b, 0) / values.length;
-        let numerator = 0;
-        let denominator = 0;
-        for (let i = 0; i < values.length - lag; i++) {
+
+        const numerator = 0;
+        const denominator = 0;
+        for (const i = 0; i < values.length - lag; i++) {
             numerator += (values[i] - mean) * (values[i + lag] - mean);
             denominator += Math.pow(values[i] - mean, 2);
         }
         return numerator / denominator;
     }
     calculateLinearRegressionSlope(x, y) {
-        const n = x.length;
-        const sumX = x.reduce((a, b) => a + b, 0);
-        const sumY = y.reduce((a, b) => a + b, 0);
-        const sumXY = x.reduce((sum, xi, i) => sum + xi * y[i], 0);
-        const sumXX = x.reduce((sum, xi) => sum + xi * xi, 0);
+
+
+
+
+
         return (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
     }
 }

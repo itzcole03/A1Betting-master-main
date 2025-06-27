@@ -1,4 +1,4 @@
-import { ToastOptions } from 'react-toastify';
+import { ToastOptions } from 'react-toastify.ts';
 interface NotificationConfig {
     position: 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
     autoClose: number;

@@ -1,7 +1,7 @@
-// Real zod-based validation schemas for production
-import { z } from '../zod';
+// Real zod-based validation schemas for production;
+import { z } from '@/zod.ts';
 
-// Bet Validation Schema
+// Bet Validation Schema;
 export const betSchema = z.object({
   id: z.string(),
   userId: z.string(),
@@ -13,7 +13,7 @@ export const betSchema = z.object({
   status: z.enum(['pending', 'won', 'lost', 'void']),
 });
 
-// User Validation Schema
+// User Validation Schema;
 export const userSchema = z.object({
   id: z.string(),
   username: z.string().min(3),
@@ -22,7 +22,7 @@ export const userSchema = z.object({
   isActive: z.boolean(),
 });
 
-// Prediction Validation Schema
+// Prediction Validation Schema;
 export const predictionSchema = z.object({
   id: z.string(),
   betId: z.string(),
@@ -32,7 +32,7 @@ export const predictionSchema = z.object({
   createdAt: z.string().datetime(),
 });
 
-// Market Validation Schema
+// Market Validation Schema;
 export const marketSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -40,7 +40,7 @@ export const marketSchema = z.object({
   isActive: z.boolean(),
 });
 
-// Event Validation Schema
+// Event Validation Schema;
 export const eventSchema = z.object({
   id: z.string(),
   name: z.string(),
@@ -49,9 +49,9 @@ export const eventSchema = z.object({
   venueId: z.string(),
 });
 
-// Validation Middleware
-import type { Request, Response, NextFunction } from 'express';
-import type { ZodSchema, ZodTypeAny } from 'zod';
+// Validation Middleware;
+import type { Request, Response, NextFunction } from 'express.ts';
+import type { ZodSchema, ZodTypeAny } from 'zod.ts';
 export const validateRequest = (schema: ZodSchema<unknown> | ZodTypeAny) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     try {

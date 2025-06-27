@@ -2,10 +2,10 @@ import {
   PrizePicksProps,
   PrizePicksPlayer,
   PrizePicksLines,
-} from "../../types/prizePicks";
+} from '@/types/prizePicks.ts';
 // No separate PrizePicksAdapter file exists; using implementation from this file.
-import { logger } from "../logger";
-import { cache } from "../cache";
+import { logger } from '@/logger.ts';
+import { cache } from '@/cache.ts';
 
 export class PrizePicksAdapterImpl {
   private static instance: PrizePicksAdapterImpl;
@@ -30,8 +30,8 @@ export class PrizePicksAdapterImpl {
     timeWindow: string;
   }): Promise<PrizePicksProps[]> {
     try {
-      const cacheKey = `prizepicks:props:${JSON.stringify(params)}`;
-      const cachedProps = await cache.get(cacheKey);
+
+
       if (cachedProps) {
         return cachedProps;
       }
@@ -49,7 +49,6 @@ export class PrizePicksAdapterImpl {
         throw new Error(`Failed to fetch props: ${response.statusText}`);
       }
 
-      const props = await response.json();
       await cache.set(cacheKey, props);
       return props;
     } catch (error) {
@@ -62,8 +61,8 @@ export class PrizePicksAdapterImpl {
     sports: string[];
   }): Promise<PrizePicksPlayer[]> {
     try {
-      const cacheKey = `prizepicks:players:${JSON.stringify(params)}`;
-      const cachedPlayers = await cache.get(cacheKey);
+
+
       if (cachedPlayers) {
         return cachedPlayers;
       }
@@ -81,7 +80,6 @@ export class PrizePicksAdapterImpl {
         throw new Error(`Failed to fetch players: ${response.statusText}`);
       }
 
-      const players = await response.json();
       await cache.set(cacheKey, players);
       return players;
     } catch (error) {
@@ -94,8 +92,8 @@ export class PrizePicksAdapterImpl {
     propIds: string[];
   }): Promise<PrizePicksLines[]> {
     try {
-      const cacheKey = `prizepicks:lines:${JSON.stringify(params)}`;
-      const cachedLines = await cache.get(cacheKey);
+
+
       if (cachedLines) {
         return cachedLines;
       }
@@ -113,7 +111,6 @@ export class PrizePicksAdapterImpl {
         throw new Error(`Failed to fetch lines: ${response.statusText}`);
       }
 
-      const lines = await response.json();
       await cache.set(cacheKey, lines);
       return lines;
     } catch (error) {

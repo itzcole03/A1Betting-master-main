@@ -1,10 +1,10 @@
 import DOMPurify from 'dompurify';
 import { v4 as uuidv4 } from 'uuid';
-// CSRF Token management
-let csrfToken = null;
-const CSRF_HEADER = 'X-CSRF-Token';
-const TOKEN_EXPIRY = 3600000; // 1 hour
-let tokenExpiry = null;
+// CSRF Token management;
+const csrfToken = null;
+
+const TOKEN_EXPIRY = 3600000; // 1 hour;
+const tokenExpiry = null;
 export function generateCSRFToken() {
     csrfToken = uuidv4();
     tokenExpiry = Date.now() + TOKEN_EXPIRY;
@@ -27,15 +27,15 @@ export function getCSRFToken() {
     }
     return csrfToken;
 }
-// Input Sanitization
+// Input Sanitization;
 export function sanitizeInput(input) {
     return DOMPurify.sanitize(input, {
-        ALLOWED_TAGS: [], // No HTML allowed
-        ALLOWED_ATTR: [] // No attributes allowed
+        ALLOWED_TAGS: [], // No HTML allowed;
+        ALLOWED_ATTR: [] // No attributes allowed;
     }).trim();
 }
 export function sanitizeObject(obj) {
-    const sanitized = {};
+
     for (const [key, value] of Object.entries(obj)) {
         if (typeof value === 'string') {
             sanitized[key] = sanitizeInput(value);
@@ -59,7 +59,7 @@ export function sanitizeObject(obj) {
     }
     return sanitized;
 }
-// Security Headers
+// Security Headers;
 export function getSecurityHeaders() {
     return {
         'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;",
@@ -70,22 +70,22 @@ export function getSecurityHeaders() {
         'Referrer-Policy': 'strict-origin-when-cross-origin'
     };
 }
-// Input Validation
+// Input Validation;
 export function validateEmail(email) {
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
     return emailRegex.test(email);
 }
 export function validatePassword(password) {
-    // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    // At least 8 characters, 1 uppercase, 1 lowercase, 1 number, 1 special character;
+
     return passwordRegex.test(password);
 }
 export function validateUsername(username) {
-    // 3-20 characters, letters, numbers, underscores, hyphens
-    const usernameRegex = /^[a-zA-Z0-9_-]{3,20}$/;
+    // 3-20 characters, letters, numbers, underscores, hyphens;
+
     return usernameRegex.test(username);
 }
-// Rate Limiting Headers
+// Rate Limiting Headers;
 export function getRateLimitHeaders(remaining, reset) {
     return {
         'X-RateLimit-Remaining': remaining.toString(),

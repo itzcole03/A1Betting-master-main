@@ -1,4 +1,4 @@
-import { ErrorMetrics } from '../types/core';
+import { ErrorMetrics } from '@/types/core.ts';
 export declare class ErrorHandler {
     private static instance;
     private errorMetrics;

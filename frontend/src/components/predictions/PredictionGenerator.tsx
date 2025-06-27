@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react.ts';
 import {
   Box,
   Card,
@@ -21,9 +21,9 @@ import {
   TableRow,
   Paper,
   SelectChangeEvent,
-} from '@mui/material';
-import { useLogger } from '../../hooks/useLogger';
-import { useMetrics } from '../../hooks/useMetrics';
+} from '@mui/material.ts';
+import { useLogger } from '@/hooks/useLogger.ts';
+import { useMetrics } from '@/hooks/useMetrics.ts';
 
 interface PredictionGeneratorProps {
   modelName: string;
@@ -40,13 +40,13 @@ interface PredictionGeneratorProps {
   ) => void;
 }
 
-export const PredictionGenerator: React.FC<PredictionGeneratorProps> = ({
+export const PredictionGenerator: React.FC<PredictionGeneratorProps key={196479}> = ({
   modelName,
   availableModels,
   onPredictionsGenerated,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
   const [selectedModel, setSelectedModel] = useState(modelName);
   const [predictions, setPredictions] = useState<
     Array<{
@@ -58,9 +58,8 @@ export const PredictionGenerator: React.FC<PredictionGeneratorProps> = ({
       timestamp: string;
     }>
   >([]);
-  const [date, setDate] = useState<string>(new Date().toISOString().split('T')[0]);
-  const logger = useLogger();
-  const metrics = useMetrics();
+  const [date, setDate] = useState<string key={278855}>(new Date().toISOString().split('T')[0]);
+
 
   useEffect(() => {
     setSelectedModel(modelName);
@@ -70,7 +69,7 @@ export const PredictionGenerator: React.FC<PredictionGeneratorProps> = ({
     setSelectedModel(event.target.value);
   };
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDateChange = (event: React.ChangeEvent<HTMLInputElement key={553350}>) => {
     setDate(event.target.value);
   };
 
@@ -94,8 +93,6 @@ export const PredictionGenerator: React.FC<PredictionGeneratorProps> = ({
         throw new Error(`Failed to generate predictions: ${response.statusText}`);
       }
 
-      const data = await response.json();
-      const timestamp = new Date().toISOString();
 
       const processedPredictions = data.map((prediction: any) => ({
         ...prediction,
@@ -115,7 +112,7 @@ export const PredictionGenerator: React.FC<PredictionGeneratorProps> = ({
         predictionCount: processedPredictions.length,
       });
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to generate predictions';
+
       setError(errorMessage);
       logger.error('Error generating predictions', { error: errorMessage });
       metrics.increment('prediction_generation_error');
@@ -125,87 +122,87 @@ export const PredictionGenerator: React.FC<PredictionGeneratorProps> = ({
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Typography gutterBottom variant="h6">
-          Generate Predictions
+    <Card key={650115}>
+      <CardContent key={452065}>
+        <Typography gutterBottom variant="h6" key={368112}>
+          Generate Predictions;
         </Typography>
 
-        <Grid container spacing={3}>
-          <Grid item md={4} xs={12}>
-            <FormControl fullWidth>
-              <InputLabel>Model</InputLabel>
-              <Select label="Model" value={selectedModel} onChange={handleModelChange}>
+        <Grid container spacing={3} key={459826}>
+          <Grid item md={4} xs={12} key={317197}>
+            <FormControl fullWidth key={113575}>
+              <InputLabel key={405232}>Model</InputLabel>
+              <Select label="Model" value={selectedModel} onChange={handleModelChange} key={651761}>
                 {availableModels.map(model => (
-                  <MenuItem key={model} value={model}>
+                  <MenuItem key={model} value={model} key={644248}>
                     {model}
                   </MenuItem>
                 ))}
               </Select>
             </FormControl>
           </Grid>
-          <Grid item md={4} xs={12}>
-            <TextField
-              fullWidth
+          <Grid item md={4} xs={12} key={317197}>
+            <TextField;
+              fullWidth;
               InputLabelProps={{ shrink: true }}
               label="Date"
               type="date"
               value={date}
               onChange={handleDateChange}
-            />
+            / key={229537}>
           </Grid>
-          <Grid item md={4} xs={12}>
-            <Button
-              fullWidth
+          <Grid item md={4} xs={12} key={317197}>
+            <Button;
+              fullWidth;
               color="primary"
               disabled={isLoading}
               sx={{ height: '56px' }}
               variant="contained"
               onClick={generatePredictions}
-            >
-              Generate Predictions
+             key={149891}>
+              Generate Predictions;
             </Button>
           </Grid>
         </Grid>
 
         {isLoading && (
-          <Box display="flex" justifyContent="center" my={3}>
-            <CircularProgress />
+          <Box display="flex" justifyContent="center" my={3} key={112333}>
+            <CircularProgress / key={730118}>
           </Box>
         )}
 
         {error && (
-          <Alert severity="error" sx={{ mt: 2 }}>
+          <Alert severity="error" sx={{ mt: 2 }} key={474760}>
             {error}
           </Alert>
         )}
 
         {predictions.length > 0 && (
-          <Box mt={3}>
-            <Typography gutterBottom variant="subtitle1">
-              Generated Predictions
+          <Box mt={3} key={641440}>
+            <Typography gutterBottom variant="subtitle1" key={521154}>
+              Generated Predictions;
             </Typography>
-            <TableContainer component={Paper}>
-              <Table>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Player</TableCell>
-                    <TableCell align="right">Win Probability</TableCell>
-                    <TableCell align="right">Predicted Score</TableCell>
-                    <TableCell align="right">Confidence</TableCell>
-                    <TableCell align="right">Generated At</TableCell>
+            <TableContainer component={Paper} key={746829}>
+              <Table key={889668}>
+                <TableHead key={813147}>
+                  <TableRow key={300096}>
+                    <TableCell key={942983}>Player</TableCell>
+                    <TableCell align="right" key={741903}>Win Probability</TableCell>
+                    <TableCell align="right" key={741903}>Predicted Score</TableCell>
+                    <TableCell align="right" key={741903}>Confidence</TableCell>
+                    <TableCell align="right" key={741903}>Generated At</TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody key={923191}>
                   {predictions.map(prediction => (
-                    <TableRow key={prediction.playerId}>
-                      <TableCell>{prediction.playerName}</TableCell>
-                      <TableCell align="right">
+                    <TableRow key={prediction.playerId} key={699693}>
+                      <TableCell key={942983}>{prediction.playerName}</TableCell>
+                      <TableCell align="right" key={741903}>
                         {prediction.predictedWinProbability.toFixed(1)}%
                       </TableCell>
-                      <TableCell align="right">{prediction.predictedScore.toFixed(1)}</TableCell>
-                      <TableCell align="right">{prediction.confidence.toFixed(1)}%</TableCell>
-                      <TableCell align="right">
+                      <TableCell align="right" key={741903}>{prediction.predictedScore.toFixed(1)}</TableCell>
+                      <TableCell align="right" key={741903}>{prediction.confidence.toFixed(1)}%</TableCell>
+                      <TableCell align="right" key={741903}>
                         {new Date(prediction.timestamp).toLocaleString()}
                       </TableCell>
                     </TableRow>

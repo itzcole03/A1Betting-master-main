@@ -1,7 +1,7 @@
-import React from 'react';
-import { EntryStatus } from '@/types';
-import { calculateProgressPercentage } from '../utils/odds';
-import { motion, Variants } from 'framer-motion';
+import React from 'react.ts';
+import { EntryStatus } from '@/types.ts';
+import { calculateProgressPercentage } from '@/utils/odds.ts';
+import { motion, Variants } from 'framer-motion.ts';
 
 interface ProgressBarProps {
   current: number;
@@ -26,7 +26,7 @@ const glowVariants: Variants = {
   animate: { opacity: [0.4, 1, 0.4], transition: { duration: 2, repeat: Infinity } },
 };
 
-export const ProgressBar: React.FC<ProgressBarProps> = ({
+export const ProgressBar: React.FC<ProgressBarProps key={734163}> = ({
   current,
   target,
   status,
@@ -35,7 +35,6 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   showGlow = true,
   animated = true,
 }) => {
-  const percentage = calculateProgressPercentage(current, target);
 
   const getStatusColor = () => {
     switch (status) {
@@ -63,49 +62,49 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
   const { bar, text, glow } = getStatusColor();
 
   return (
-    <div className="relative">
-      <div
+    <div className="relative" key={579431}>
+      <div;
         className={`
-          relative h-2 rounded-full overflow-hidden
-          glass-morphism
+          relative h-2 rounded-full overflow-hidden;
+          glass-morphism;
           ${className}
         `}
-      >
+       key={742284}>
         {/* Background */}
-        <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700" />
+        <div className="absolute inset-0 bg-gray-200 dark:bg-gray-700" / key={53162}>
 
         {/* Progress Bar */}
-        <motion.div
+        <motion.div;
           animate="animate"
           className={`absolute inset-y-0 left-0 ${bar}`}
           custom={percentage}
           initial="initial"
           variants={progressVariants}
-        />
+        / key={764239}>
 
         {/* Glow Effect */}
         {showGlow && (
-          <motion.div
+          <motion.div;
             animate="animate"
             className={`
-              absolute inset-y-0 left-0
-              w-full h-full
-              bg-gradient-to-r from-transparent
+              absolute inset-y-0 left-0;
+              w-full h-full;
+              bg-gradient-to-r from-transparent;
               ${glow}
-              blur-sm
+              blur-sm;
             `}
             initial="initial"
             style={{ width: `${percentage}%` }}
             variants={glowVariants}
-          />
+          / key={463146}>
         )}
 
         {/* Animated Stripes */}
         {animated && percentage < 100 && status === EntryStatus.PENDING && (
-          <div
+          <div;
             className={`
-              absolute inset-y-0 left-0 
-              bg-gradient-to-r from-transparent via-white/10 to-transparent
+              absolute inset-y-0 left-0; 
+              bg-gradient-to-r from-transparent via-white/10 to-transparent;
               animate-[progress-stripe_1s_linear_infinite]
             `}
             style={{
@@ -113,18 +112,18 @@ export const ProgressBar: React.FC<ProgressBarProps> = ({
               backgroundSize: '20px 100%',
               animation: 'progress-stripe 1s linear infinite',
             }}
-          />
+          / key={909063}>
         )}
       </div>
 
       {/* Percentage Label */}
       {showPercentage && (
-        <div className="absolute -top-6 right-0">
-          <motion.span
+        <div className="absolute -top-6 right-0" key={572462}>
+          <motion.span;
             animate={{ opacity: 1, y: 0 }}
             className={`text-xs font-medium ${text}`}
             initial={{ opacity: 0, y: 10 }}
-          >
+           key={156985}>
             {percentage}%
           </motion.span>
         </div>

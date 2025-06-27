@@ -1,14 +1,14 @@
-import { Alert } from '../hooks/useSmartAlerts';
-import { useState, useCallback } from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import { Alert } from '@/hooks/useSmartAlerts.ts';
+import { useState, useCallback } from 'react.ts';
+import { v4 as uuidv4 } from 'uuid.ts';
 import {
   BookOdds,
   BettingOpportunity,
   TeaserLeg,
   TeaserStrategy,
   RiskProfileType,
-} from '@/types/betting';
-import { Market } from '../types/sports';
+} from '@/types/betting.ts';
+import { Market } from '@/types/sports.ts';
 
 export class BettingStrategyService {
   private static instance: BettingStrategyService;
@@ -47,11 +47,9 @@ export class BettingStrategyService {
       for (const [marketName, books] of markets) {
         this.validateMarket(marketName, books);
 
-        const bestOdds = this.findBestOdds(books);
-        const totalImpliedProb = this.calculateTotalImpliedProbability(bestOdds);
 
         if (totalImpliedProb < 1) {
-          const expectedValue = (1 / totalImpliedProb - 1) * 100;
+
           opportunities.push({
             id: `arb_${marketName}_${Date.now()}`,
             sport: 'UNKNOWN',
@@ -69,9 +67,9 @@ export class BettingStrategyService {
             expectedValue,
             confidence: 1 - totalImpliedProb,
             metadata: { timestamp: Date.now() },
-            event: null as any, // Will be populated by the caller
-            selection: null as any, // Will be populated by the caller
-            odds: null as any, // Will be populated by the caller
+            event: null as any, // Will be populated by the caller;
+            selection: null as any, // Will be populated by the caller;
+            odds: null as any, // Will be populated by the caller;
             prediction: 0,
             riskLevel: RiskProfileType.MODERATE,
             timestamp: new Date().toISOString(),
@@ -81,7 +79,7 @@ export class BettingStrategyService {
         }
       }
     } catch (error) {
-      console.error('Error in arbitrage detection:', error);
+      // console statement removed
       return [];
     }
 
@@ -95,7 +93,7 @@ export class BettingStrategyService {
       for (const [marketName, books] of markets) {
         this.validateMarket(marketName, books);
 
-        const spreads = books
+        const spreads = books;
           .map(book => ({
             book,
             spread: this.oddsToSpread(book.odds),
@@ -104,15 +102,14 @@ export class BettingStrategyService {
 
         if (spreads.length < 2) continue;
 
-        const sortedSpreads = spreads.sort((a, b) => a.spread - b.spread);
-        for (let i = 0; i < sortedSpreads.length - 1; i++) {
-          const middleSize = sortedSpreads[i + 1].spread - sortedSpreads[i].spread;
+        for (const i = 0; i < sortedSpreads.length - 1; i++) {
+
           if (middleSize >= 1) {
-            // Minimum 1 point middle
+            // Minimum 1 point middle;
             const ev = this.calculateMiddleEV(
               middleSize,
               sortedSpreads[i].book.odds,
-              sortedSpreads[i + 1].book.odds
+              sortedSpreads[i + 1].book.odds;
             );
 
             if (ev > 0) {
@@ -131,14 +128,14 @@ export class BettingStrategyService {
                 description: `Middle opportunity in ${marketName}`,
                 books: [sortedSpreads[i].book, sortedSpreads[i + 1].book],
                 expectedValue: ev,
-                confidence: middleSize / 7, // Normalized by typical spread range
+                confidence: middleSize / 7, // Normalized by typical spread range;
                 metadata: {
                   middleSize,
                   timestamp: Date.now(),
                 },
-                event: null as any, // Will be populated by the caller
-                selection: null as any, // Will be populated by the caller
-                odds: null as any, // Will be populated by the caller
+                event: null as any, // Will be populated by the caller;
+                selection: null as any, // Will be populated by the caller;
+                odds: null as any, // Will be populated by the caller;
                 prediction: 0,
                 riskLevel: RiskProfileType.MODERATE,
                 timestamp: new Date().toISOString(),
@@ -150,7 +147,7 @@ export class BettingStrategyService {
         }
       }
     } catch (error) {
-      console.error('Error in middle detection:', error);
+      // console statement removed
       return [];
     }
 
@@ -172,10 +169,8 @@ export class BettingStrategyService {
         adjustedOdds: this.adjustOddsForTeaser(leg.originalOdds ?? leg.odds ?? 0, points),
       }));
 
-      const totalOdds = this.calculateTotalTeaserOdds(adjustedLegs);
-      const expectedValue = this.calculateTeaserEV(adjustedLegs, totalOdds);
 
-      // Validate correlation risk
+      // Validate correlation risk;
       this.validateCorrelation(adjustedLegs);
 
       return {
@@ -183,17 +178,16 @@ export class BettingStrategyService {
         legs: adjustedLegs,
         totalOdds,
         expectedValue,
-        riskAmount: 100, // Default risk amount
+        riskAmount: 100, // Default risk amount;
         potentialPayout: this.calculatePayout(100, totalOdds),
       };
     } catch (error) {
-      console.error('Error in teaser optimization:', error);
-      throw error; // Rethrow as this is a direct user action
+      // console statement removed
+      throw error; // Rethrow as this is a direct user action;
     }
   }
 
   private validateCorrelation(legs: TeaserLeg[]): void {
-    const correlatedGroups = new Map<string, TeaserLeg[]>();
 
     legs.forEach(leg => {
       if (leg.correlatedMarkets) {
@@ -216,7 +210,7 @@ export class BettingStrategyService {
   private findBestOdds(books: BookOdds[]): BookOdds[] {
     return books.reduce((acc, book) => {
       const existingBook = acc.find(
-        b => Math.abs(this.oddsToSpread(b.odds) - this.oddsToSpread(book.odds)) < 0.5
+        b => Math.abs(this.oddsToSpread(b.odds) - this.oddsToSpread(book.odds)) < 0.5;
       );
 
       if (!existingBook || book.odds > existingBook.odds) {
@@ -228,7 +222,7 @@ export class BettingStrategyService {
 
   private calculateTotalImpliedProbability(books: BookOdds[]): number {
     return books.reduce((sum, book) => {
-      const decimal = this.americanToDecimal(book.odds);
+
       return sum + 1 / decimal;
     }, 0);
   }
@@ -241,19 +235,19 @@ export class BettingStrategyService {
   }
 
   private oddsToSpread(odds: number): number {
-    // Simplified conversion - would need more complex logic for real implementation
+    // Simplified conversion - would need more complex logic for real implementation;
     return odds > 0 ? -odds / 20 : odds / 20;
   }
 
   private calculateMiddleEV(middleSize: number, odds1: number, odds2: number): number {
-    const prob1 = 1 / this.americanToDecimal(odds1);
-    const prob2 = 1 / this.americanToDecimal(odds2);
-    const middleProb = (middleSize / 14) * (1 - (prob1 + prob2)); // Simplified model
+
+
+    const middleProb = (middleSize / 14) * (1 - (prob1 + prob2)); // Simplified model;
     return middleProb * 100;
   }
 
   private adjustOddsForTeaser(odds: number, points: number): number {
-    // Simplified adjustment - real implementation would use proper odds movement calculations
+    // Simplified adjustment - real implementation would use proper odds movement calculations;
     return odds + points * 10;
   }
 
@@ -261,7 +255,7 @@ export class BettingStrategyService {
     return legs.reduce(
       (total, leg) =>
         total * this.americanToDecimal(leg.adjustedOdds ?? leg.originalOdds ?? leg.odds ?? 0),
-      1
+      1;
     );
   }
 
@@ -280,7 +274,7 @@ export class BettingStrategyService {
   }
 
   public addHistoricalData(market: string, odds: BookOdds): void {
-    const existing = this.historicalData.get(market) || [];
+
     this.historicalData.set(market, [...existing, odds]);
   }
 
@@ -320,9 +314,9 @@ export class BettingStrategyService {
         source: 'betting-strategy',
         ...metadata,
       },
-      event: null as any, // Will be populated by the caller
-      selection: null as any, // Will be populated by the caller
-      odds: null as any, // Will be populated by the caller
+      event: null as any, // Will be populated by the caller;
+      selection: null as any, // Will be populated by the caller;
+      odds: null as any, // Will be populated by the caller;
       prediction: 0,
       riskLevel: RiskProfileType.MODERATE,
       timestamp: new Date().toISOString(),

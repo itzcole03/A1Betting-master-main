@@ -1,14 +1,14 @@
-import axios from "axios";
-import { toast } from "react-toastify";
-import UnifiedPredictionService from "./predictionService";
-import UnifiedBettingService from "./bettingService";
+import axios from 'axios.ts';
+import { toast } from 'react-toastify.ts';
+import UnifiedPredictionService from './predictionService.ts';
+import UnifiedBettingService from './bettingService.ts';
 import type {
   BettingMetrics,
   ModelPerformance,
   BettingStats,
   LineMovement,
   ArbitrageOpportunity,
-} from "../../types/betting";
+} from '@/types/betting.ts';
 
 interface AnalyticsConfig {
   autoRefresh: boolean;
@@ -56,7 +56,7 @@ class UnifiedAnalyticsService {
       this.lastUpdate = Date.now();
       return response.data;
     } catch (error) {
-      console.error("Error fetching betting metrics:", error);
+      // console statement removed
       toast.error("Failed to fetch betting metrics");
       return this.metricsCache.get("metrics") || this.getDefaultMetrics();
     }
@@ -86,7 +86,7 @@ class UnifiedAnalyticsService {
       this.metricsCache.set("modelPerformance", response.data);
       return response.data;
     } catch (error) {
-      console.error("Error fetching model performance:", error);
+      // console statement removed
       return this.metricsCache.get("modelPerformance") || [];
     }
   }
@@ -99,7 +99,7 @@ class UnifiedAnalyticsService {
       this.metricsCache.set("stats", response.data);
       return response.data;
     } catch (error) {
-      console.error("Error fetching betting stats:", error);
+      // console statement removed
       return this.metricsCache.get("stats") || this.getDefaultStats();
     }
   }
@@ -131,7 +131,7 @@ class UnifiedAnalyticsService {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching line movements:", error);
+      // console statement removed
       return [];
     }
   }
@@ -147,7 +147,7 @@ class UnifiedAnalyticsService {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching arbitrage opportunities:", error);
+      // console statement removed
       return [];
     }
   }
@@ -162,7 +162,7 @@ class UnifiedAnalyticsService {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching performance breakdown:", error);
+      // console statement removed
       return {
         bySport: {},
         byMarket: {},
@@ -179,7 +179,7 @@ class UnifiedAnalyticsService {
       );
       return response.data;
     } catch (error) {
-      console.error("Error fetching risk analysis:", error);
+      // console statement removed
       return {
         volatility: 0,
         sharpeRatio: 0,

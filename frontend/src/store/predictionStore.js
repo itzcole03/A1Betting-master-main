@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { isLineup } from '@/types/lineup';
 export const usePredictionStore = create((set, get) => ({
-    // Initial State
+    // Initial State;
     currentLineup: null,
     savedLineups: [],
     opportunities: [],
@@ -26,13 +26,13 @@ export const usePredictionStore = create((set, get) => ({
     isLoading: false,
     error: null,
     automatedStrategies: {},
-    // Actions
+    // Actions;
     setCurrentLineup: lineup => {
         if (lineup === null || isLineup(lineup)) {
             set({ currentLineup: lineup });
         }
         else {
-            console.error('Invalid lineup object:', lineup);
+            // console statement removed
         }
     },
     addSavedLineup: lineup => {
@@ -42,7 +42,7 @@ export const usePredictionStore = create((set, get) => ({
             }));
         }
         else {
-            console.error('Invalid lineup object:', lineup);
+            // console statement removed
         }
     },
     setOpportunities: opportunities => set({ opportunities }),

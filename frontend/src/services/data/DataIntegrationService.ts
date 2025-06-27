@@ -1,6 +1,6 @@
-import { Subject, Observable } from 'rxjs';
-import { newsService } from '../services/newsService';
-import type { ESPNHeadline } from '../types/index';
+import { Subject, Observable } from 'rxjs.ts';
+import { newsService } from '@/services/newsService.ts';
+import type { ESPNHeadline } from '@/types/index.ts';
 
 type DataStreamType = 'news';
 
@@ -22,15 +22,15 @@ class DataIntegrationService {
   private dataStreams: Map<DataStreamType, Subject<DataStream<ESPNHeadline[]>>> = new Map();
   private cache: DataCache<ESPNHeadline[]> = {};
   private updateIntervals: Map<string, NodeJS.Timeout> = new Map();
-  private readonly DEFAULT_CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+  private readonly DEFAULT_CACHE_TTL = 5 * 60 * 1000; // 5 minutes;
 
   constructor() {
     this.initializeStreams();
   }
 
   private initializeStreams() {
-    // Initialize data streams
-    // Only 'news' stream is implemented in this modernized version
+    // Initialize data streams;
+    // Only 'news' stream is implemented in this modernized version;
     this.dataStreams.set('news', new Subject<DataStream<ESPNHeadline[]>>());
 
     // All legacy WebSocket streams removed as part of modernization.
@@ -38,25 +38,25 @@ class DataIntegrationService {
   }
 
   public startAllStreams() {
-    // Start periodic data updates
-    this.startPeriodicUpdate('stats', 60000); // Update stats every minute
-    this.startPeriodicUpdate('odds', 30000); // Update odds every 30 seconds
-    this.startPeriodicUpdate('injuries', 300000); // Update injuries every 5 minutes
-    this.startPeriodicUpdate('news', 300000); // Update news every 5 minutes
+    // Start periodic data updates;
+    this.startPeriodicUpdate('stats', 60000); // Update stats every minute;
+    this.startPeriodicUpdate('odds', 30000); // Update odds every 30 seconds;
+    this.startPeriodicUpdate('injuries', 300000); // Update injuries every 5 minutes;
+    this.startPeriodicUpdate('news', 300000); // Update news every 5 minutes;
   }
 
   private startPeriodicUpdate(type: string, interval: number) {
-    // Clear existing interval if any
+    // Clear existing interval if any;
     if (this.updateIntervals.has(type)) {
       clearInterval(this.updateIntervals.get(type));
     }
 
-    // Set new interval
+    // Set new interval;
     const intervalId = setInterval(async () => {
       try {
         await this.fetchAndUpdateData(type);
       } catch (error) {
-        console.error(`Error updating ${type} data:`, error);
+        // console statement removed
       }
     }, interval);
 
@@ -70,11 +70,11 @@ class DataIntegrationService {
         this.updateCache('news', headlines);
         this.emitUpdate('news', headlines);
       } catch (error) {
-        console.error('Failed to fetch news headlines:', error);
+        // console statement removed
       }
     } else {
-      // TODO: Implement stats/odds/injuries fetching using modernized services
-      // For now, do nothing for other types
+      // TODO: Implement stats/odds/injuries fetching using modernized services;
+      // For now, do nothing for other types;
     }
   }
 
@@ -90,10 +90,9 @@ class DataIntegrationService {
   }
 
   public getCachedData(key: string): ESPNHeadline[] | null {
-    const cached = this.cache[key];
+
     if (!cached) return null;
 
-    const now = Date.now();
     if (now - cached.timestamp > cached.ttl) {
       delete this.cache[key];
       return null;
@@ -103,7 +102,7 @@ class DataIntegrationService {
   }
 
   public getStream(type: 'news'): Observable<DataStream<ESPNHeadline[]>> {
-    const stream = this.dataStreams.get(type);
+
     if (!stream) {
       throw new Error(`Stream not found for type: ${type}`);
     }
@@ -111,7 +110,7 @@ class DataIntegrationService {
   }
 
   private emitUpdate(type: DataStreamType, data: ESPNHeadline[]): void {
-    const stream = this.dataStreams.get(type);
+
     if (stream) {
       stream.next({
         type,
@@ -125,11 +124,11 @@ class DataIntegrationService {
   // If needed, implement with strict typing and modern services.
 
   public stopAllStreams() {
-    // Clear all update intervals
+    // Clear all update intervals;
     this.updateIntervals.forEach(interval => clearInterval(interval));
     this.updateIntervals.clear();
 
-    // Complete all subjects
+    // Complete all subjects;
     this.dataStreams.forEach(stream => stream.complete());
     this.dataStreams.clear();
   }

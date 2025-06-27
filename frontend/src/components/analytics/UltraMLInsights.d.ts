@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface UltraMLInsightsProps {
     autoUpdateInterval?: number;
     showQuantumAnalysis?: boolean;

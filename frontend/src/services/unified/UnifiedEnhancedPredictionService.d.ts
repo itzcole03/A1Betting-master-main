@@ -1,6 +1,6 @@
 /**
- * Unified Enhanced Prediction Service
- * Orchestrates all enhanced mathematical prediction services
+ * Unified Enhanced Prediction Service;
+ * Orchestrates all enhanced mathematical prediction services;
  */
 export interface UnifiedPredictionRequest {
     event_id: string;
@@ -153,23 +153,23 @@ declare class UnifiedEnhancedPredictionService {
     private constructor();
     static getInstance(): UnifiedEnhancedPredictionService;
     /**
-     * Generate a unified enhanced prediction
+     * Generate a unified enhanced prediction;
      */
     generatePrediction(request: UnifiedPredictionRequest): Promise<UnifiedPredictionResponse>;
     /**
-     * Get model performance metrics
+     * Get model performance metrics;
      */
     getModelPerformance(): Promise<ModelPerformanceMetrics[]>;
     /**
-     * Get system health metrics
+     * Get system health metrics;
      */
     getSystemHealth(): Promise<SystemHealthMetrics>;
     /**
-     * Get batch predictions for multiple events
+     * Get batch predictions for multiple events;
      */
     getBatchPredictions(requests: UnifiedPredictionRequest[]): Promise<UnifiedPredictionResponse[]>;
     /**
-     * Get real-time prediction updates
+     * Get real-time prediction updates;
      */
     getRealTimePredictionUpdates(predictionId: string): Promise<Partial<UnifiedPredictionResponse>>;
     private validatePredictionRequest;

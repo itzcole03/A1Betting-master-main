@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react.ts';
 
 interface CyberButtonProps {
   label: string;
@@ -10,7 +10,7 @@ interface CyberButtonProps {
   disabled?: boolean;
 }
 
-const CyberButton: React.FC<CyberButtonProps> = ({
+const CyberButton: React.FC<CyberButtonProps key={799523}> = ({
   label,
   onClick,
   variant = "primary",
@@ -60,14 +60,14 @@ const CyberButton: React.FC<CyberButtonProps> = ({
     lg: { padding: "16px 32px", fontSize: "18px" },
   };
 
-  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement key={390513}>) => {
     if (variant === "primary" && !disabled) {
       e.currentTarget.style.boxShadow = "0 0 30px rgba(0,255,136,0.6)";
       e.currentTarget.style.transform = "translateY(-2px)";
     }
   };
 
-  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement key={390513}>) => {
     if (variant === "primary" && !disabled) {
       e.currentTarget.style.boxShadow = "none";
       e.currentTarget.style.transform = "translateY(0)";
@@ -75,7 +75,7 @@ const CyberButton: React.FC<CyberButtonProps> = ({
   };
 
   return (
-    <button
+    <button;
       onClick={onClick}
       disabled={disabled}
       style={{
@@ -86,9 +86,9 @@ const CyberButton: React.FC<CyberButtonProps> = ({
       className={className}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-    >
-      {icon && <i className={`fas ${icon}`} style={{ fontSize: "16px" }} />}
-      <span>{label}</span>
+     key={533230}>
+      {icon && <i className={`fas ${icon}`} style={{ fontSize: "16px" }} / key={470521}>}
+      <span key={595076}>{label}</span>
     </button>
   );
 };

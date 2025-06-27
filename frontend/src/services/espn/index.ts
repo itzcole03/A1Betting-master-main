@@ -1,7 +1,7 @@
-import { adapterManager } from '../adapters';
-import { ESPNAdapter } from '../adapters';
-import { measurePerformance, handleApiError, transformData } from '../utils';
-import { Headline, GameSummary, PlayerNews } from '@/types';
+import { adapterManager } from '@/adapters.ts';
+import { ESPNAdapter } from '@/adapters.ts';
+import { measurePerformance, handleApiError, transformData } from '@/utils.ts';
+import { Headline, GameSummary, PlayerNews } from '@/types.ts';
 
 class ESPNService {
   private adapter: ESPNAdapter;
@@ -13,7 +13,7 @@ class ESPNService {
   async fetchHeadlines(): Promise<Headline[]> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchHeadlines();
+
         return transformData(data, this.transformHeadlines, 'espn.fetchHeadlines');
       } catch (error) {
         handleApiError(error, 'espn.fetchHeadlines');
@@ -24,7 +24,7 @@ class ESPNService {
   async fetchGameSummary(gameId: string): Promise<GameSummary> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchGameSummary(gameId);
+
         return transformData(data, this.transformGameSummary, 'espn.fetchGameSummary');
       } catch (error) {
         handleApiError(error, 'espn.fetchGameSummary');
@@ -35,7 +35,7 @@ class ESPNService {
   async fetchPlayerNews(playerId: string): Promise<PlayerNews[]> {
     return measurePerformance(async () => {
       try {
-        const data = await this.adapter.fetchPlayerNews(playerId);
+
         return transformData(data, this.transformPlayerNews, 'espn.fetchPlayerNews');
       } catch (error) {
         handleApiError(error, 'espn.fetchPlayerNews');
@@ -104,5 +104,5 @@ class ESPNService {
   }
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const espnService = new ESPNService();

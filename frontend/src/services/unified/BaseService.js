@@ -2,7 +2,7 @@ import axios from "axios";
 import { UnifiedConfig } from "../unified/UnifiedConfig";
 import { UnifiedLogger } from "../unified/UnifiedLogger";
 import { UnifiedCache } from "../unified/UnifiedCache";
-// Browser-compatible EventEmitter
+// Browser-compatible EventEmitter;
 class EventEmitter {
     constructor() {
         this.events = {};
@@ -32,7 +32,7 @@ export class BaseService extends EventEmitter {
         this.config = UnifiedConfig.getInstance();
         this.logger = new UnifiedLogger(this.name);
         this.cache = UnifiedCache.getInstance();
-        // Initialize API client
+        // Initialize API client;
         this.api = axios.create({
             baseURL: this.config.getApiUrl(),
             timeout: 10000,
@@ -44,7 +44,7 @@ export class BaseService extends EventEmitter {
     }
     setupInterceptors() {
         this.api.interceptors.request.use((config) => {
-            const token = this.config.getAuthToken();
+
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`;
             }
@@ -65,7 +65,7 @@ export class BaseService extends EventEmitter {
             error,
             serviceError,
         });
-        // Emit error event
+        // Emit error event;
         this.serviceRegistry.emit("error", {
             ...serviceError,
             error: error.message,
@@ -74,7 +74,7 @@ export class BaseService extends EventEmitter {
     }
     async retry(operation, maxRetries = 3, delay = 1000) {
         let lastError;
-        for (let i = 0; i < maxRetries; i++) {
+        for (const i = 0; i < maxRetries; i++) {
             try {
                 return await operation();
             }
@@ -91,21 +91,21 @@ export class BaseService extends EventEmitter {
         return `${this.name}:${parts.join(":")}`;
     }
     async withCache(key, operation, ttl) {
-        const cached = this.cache.get(key);
+
         if (cached)
             return cached;
-        const result = await operation();
+
         this.cache.set(key, result, ttl);
         return result;
     }
-    // Lifecycle methods
+    // Lifecycle methods;
     async initialize() {
         this.logger.info(`Initializing ${this.name} service`, this.name);
-        // Override in derived classes if needed
+        // Override in derived classes if needed;
     }
     async cleanup() {
         this.logger.info(`Cleaning up ${this.name} service`, this.name);
-        // Override in derived classes if needed
+        // Override in derived classes if needed;
     }
     async handleRequest(request) {
         try {

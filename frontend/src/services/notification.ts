@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { EventEmitter } from 'events';
-import { ToastNotification } from '@/types';
+import { Injectable } from '@nestjs/common.ts';
+import { EventEmitter } from 'events.ts';
+import { ToastNotification } from '@/types.ts';
 
 export type NotificationType = 'info' | 'warning' | 'error' | 'success';
 export type NotificationData = Record<string, any>;
@@ -25,7 +25,7 @@ export class NotificationService extends EventEmitter {
   subscribe(callback: (notifications: ToastNotification[]) => void): () => void {
     this.subscribers.push(callback);
     return () => {
-      const index = this.subscribers.indexOf(callback);
+
       if (index > -1) {
         this.subscribers.splice(index, 1);
       }
@@ -92,14 +92,14 @@ export class NotificationService extends EventEmitter {
       data,
     };
 
-    // Emit the notification event
+    // Emit the notification event;
     this.emit('notification', notification);
 
-    // Log the notification
-    console.log(`[${type.toUpperCase()}] ${message}`, data ? data : '');
+    // Log the notification;
+    // console statement removed}] ${message}`, data ? data : '');
   }
 }
 
-// Export a singleton instance
+// Export a singleton instance;
 export const notificationService = NotificationService.getInstance();
 export default notificationService;

@@ -1,9 +1,9 @@
 /**
- * Purple Gradient Theme for A1Betting
- * Matches the design shown in the user's images
+ * Purple Gradient Theme for A1Betting;
+ * Matches the design shown in the user's images;
  */
 
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles.ts';
 
 export const purpleGradientTheme = createTheme({
     palette: {

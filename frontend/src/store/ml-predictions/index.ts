@@ -1,9 +1,9 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
-import { ModelOutput, PredictionState } from '../../types/prediction';
+import { create } from 'zustand.ts';
+import { devtools } from 'zustand/middleware.ts';
+import { ModelOutput, PredictionState } from '@/types/prediction.ts';
 
 interface MLPredictionsState extends PredictionState {
-  // Actions
+  // Actions;
   setPredictions: (predictions: Map<string, ModelOutput>) => void;
   addPrediction: (id: string, prediction: ModelOutput) => void;
   removePrediction: (id: string) => void;
@@ -22,13 +22,13 @@ export const useMLPredictionsStore = create<MLPredictionsState>()(
       setPredictions: predictions => set({ predictions }),
       addPrediction: (id, prediction) =>
         set(state => {
-          const newPredictions = new Map(state.predictions);
+
           newPredictions.set(id, prediction);
           return { predictions: newPredictions };
         }),
       removePrediction: id =>
         set(state => {
-          const newPredictions = new Map(state.predictions);
+
           newPredictions.delete(id);
           return { predictions: newPredictions };
         }),

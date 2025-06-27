@@ -28,9 +28,9 @@ export class UnifiedPredictionEngine {
     async initialize() {
         if (this.isInitialized)
             return;
-        const traceId = this.performanceMonitor.startTrace('prediction-engine-init');
+
         try {
-            // Initialize prediction models
+            // Initialize prediction models;
             await this.initializePredictionModels();
             this.isInitialized = true;
             this.performanceMonitor.endTrace(traceId);
@@ -41,19 +41,19 @@ export class UnifiedPredictionEngine {
         }
     }
     async generatePrediction(context) {
-        const traceId = this.performanceMonitor.startTrace('generate-prediction');
+
         try {
-            const config = await this.configManager.getConfig();
-            const shapContext = [];
-            const predictionInput = { ...context, features: {}, shapContext };
-            // Use feature flags from config.features for model gating
-            const features = config.features || {};
+
+
+
+            // Use feature flags from config.features for model gating;
+
             if (features.enablePvPModel?.enabled && context.playerId && context.metric) {
-                const playerA = context.playerId;
-                const playerB = context.opponentId || '';
-                const sport = context.sport || 'nba';
+
+
+
                 try {
-                    const pvpResult = await getPvPMatchupFeatures(playerA, playerB, sport, context);
+
                     predictionInput.features = { ...predictionInput.features, ...pvpResult.features };
                     if (pvpResult.shapInsights?.length)
                         shapContext.push(...pvpResult.shapInsights);
@@ -63,9 +63,9 @@ export class UnifiedPredictionEngine {
                 }
             }
             if (features.enablePlayerFormModel?.enabled && context.playerId) {
-                const sport = context.sport || 'nba';
+
                 try {
-                    const pfResult = await getPlayerFormFeatures(context.playerId, sport, context);
+
                     predictionInput.features = { ...predictionInput.features, ...pfResult.features };
                     if (pfResult.shapInsights?.length)
                         shapContext.push(...pfResult.shapInsights);
@@ -75,9 +75,9 @@ export class UnifiedPredictionEngine {
                 }
             }
             if (features.enableVenueEffectModel?.enabled && context.venueId) {
-                const sport = context.sport || 'nba';
+
                 try {
-                    const venueResult = await getVenueEffectFeatures(context.venueId, sport, context);
+
                     predictionInput.features = { ...predictionInput.features, ...venueResult.features };
                     if (venueResult.shapInsights?.length)
                         shapContext.push(...venueResult.shapInsights);
@@ -87,9 +87,9 @@ export class UnifiedPredictionEngine {
                 }
             }
             if (features.enableRefereeImpactModel?.enabled && context.refereeId) {
-                const sport = context.sport || 'nba';
+
                 try {
-                    const refResult = await getRefereeImpactFeatures(context.refereeId, sport, context);
+
                     predictionInput.features = { ...predictionInput.features, ...refResult.features };
                     if (refResult.shapInsights?.length)
                         shapContext.push(...refResult.shapInsights);
@@ -99,9 +99,9 @@ export class UnifiedPredictionEngine {
                 }
             }
             if (features.enableLineupSynergyModel?.enabled && Array.isArray(context.lineupIds)) {
-                const sport = context.sport || 'nba';
+
                 try {
-                    const lineupResult = await getLineupSynergyFeatures(context.lineupIds, sport, context);
+
                     predictionInput.features = { ...predictionInput.features, ...lineupResult.features };
                     if (lineupResult.shapInsights?.length)
                         shapContext.push(...lineupResult.shapInsights);
@@ -110,20 +110,20 @@ export class UnifiedPredictionEngine {
                     this.eventBus.emit('model:error', { model: 'LineupSynergyModel', error: err });
                 }
             }
-            // Get predictions from all models
-            const modelPredictions = await this.getModelPredictions(predictionInput);
-            // Filter out null predictions if any model failed
-            const validModelPredictions = modelPredictions.filter(p => p.prediction !== null);
+            // Get predictions from all models;
+
+            // Filter out null predictions if any model failed;
+
             if (validModelPredictions.length === 0) {
-                // Handle case where no models could generate a prediction
+                // Handle case where no models could generate a prediction;
                 this.performanceMonitor.endTrace(traceId, new Error('No valid model predictions generated.'));
                 throw new Error('Failed to generate any model predictions.');
             }
-            // Combine predictions using weighted ensemble
-            const combinedPrediction = this.combineModelPredictions(validModelPredictions);
-            // Generate analysis result
-            const analysis = await this.generateAnalysis(predictionInput, validModelPredictions);
-            // Create betting opportunity
+            // Combine predictions using weighted ensemble;
+
+            // Generate analysis result;
+
+            // Create betting opportunity;
             const opportunity = {
                 id: `opp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                 propId: `${context.playerId}:${context.metric}`,
@@ -142,7 +142,7 @@ export class UnifiedPredictionEngine {
                     riskFactors: combinedPrediction.analysis.risk_factors,
                 },
             };
-            // Emit prediction update event
+            // Emit prediction update event;
             this.eventBus.emit('prediction:update', opportunity);
             this.performanceMonitor.endTrace(traceId);
             return opportunity;
@@ -153,7 +153,7 @@ export class UnifiedPredictionEngine {
         }
     }
     async initializePredictionModels() {
-        // Initialize base models
+        // Initialize base models;
         const baseModels = [
             {
                 id: 'historical_trends',
@@ -181,7 +181,7 @@ export class UnifiedPredictionEngine {
                 type: 'sportradar',
             },
         ];
-        // Create prediction states for each model
+        // Create prediction states for each model;
         for (const model of baseModels) {
             this.models.set(model.id, {
                 id: model.id,
@@ -198,10 +198,10 @@ export class UnifiedPredictionEngine {
         }
     }
     async getModelPredictions(context) {
-        const predictions = [];
+
         for (const [modelId, model] of this.models) {
-            const prediction = await this.generateModelPrediction(modelId, context);
-            // We will push the prediction even if it's null, and handle filtering later
+
+            // We will push the prediction even if it's null, and handle filtering later;
             predictions.push({
                 id: modelId,
                 prediction,
@@ -212,10 +212,10 @@ export class UnifiedPredictionEngine {
     }
     async generateModelPrediction(modelId, context) {
         try {
-            const model = this.models.get(modelId);
+
             if (!model)
                 return null;
-            // Generate prediction based on model type
+            // Generate prediction based on model type;
             switch (model.type) {
                 case 'time_series':
                     return this.generateTimeSeriesPrediction(context);
@@ -223,7 +223,7 @@ export class UnifiedPredictionEngine {
                     return this.generateMarketAnalysisPrediction(context);
                 case 'performance_analysis':
                     return this.generatePerformanceAnalysisPrediction(context);
-                // Remove calls to non-existent ESPN and Sportradar prediction methods
+                // Remove calls to non-existent ESPN and Sportradar prediction methods;
                 default:
                     return null;
             }
@@ -233,7 +233,7 @@ export class UnifiedPredictionEngine {
         }
     }
     combineModelPredictions(predictions) {
-        const totalWeight = predictions.reduce((sum, p) => sum + p.weight, 0);
+
         if (totalWeight === 0) {
             return {
                 value: 0,
@@ -245,12 +245,12 @@ export class UnifiedPredictionEngine {
                 },
             };
         }
-        const weightedValue = predictions.reduce((sum, p) => sum + p.prediction.value * p.weight, 0) / totalWeight;
-        const weightedConfidence = predictions.reduce((sum, p) => sum + p.prediction.confidence * p.weight, 0) / totalWeight;
-        // Combine risk factors
-        const riskFactors = new Set();
+
+
+        // Combine risk factors;
+
         predictions.forEach(p => p.prediction.analysis.risk_factors.forEach(rf => riskFactors.add(rf)));
-        // Combine prediction factors
+        // Combine prediction factors;
         const factors = predictions.flatMap(p => p.prediction.factors.map(f => ({
             ...f,
             weight: f.weight * (p.weight / totalWeight),
@@ -270,12 +270,12 @@ export class UnifiedPredictionEngine {
         };
     }
     async generateAnalysis(context, predictions) {
-        const historicalTrends = await this.analyzeHistoricalTrends(context);
-        const marketSignals = context.marketState ? this.analyzeMarketSignals(context.marketState) : [];
-        // Ensure predictions array is not empty and totalWeight is not zero before division
-        const totalWeight = predictions.reduce((sum, p) => sum + p.weight, 0);
-        const confidence = totalWeight > 0
-            ? predictions.reduce((sum, p) => sum + p.prediction.confidence * p.weight, 0) / totalWeight
+
+
+        // Ensure predictions array is not empty and totalWeight is not zero before division;
+
+        const confidence = totalWeight > 0;
+            ? predictions.reduce((sum, p) => sum + p.prediction.confidence * p.weight, 0) / totalWeight;
             : 0;
         return {
             id: `analysis_${Date.now()}`,
@@ -291,12 +291,12 @@ export class UnifiedPredictionEngine {
     async analyzeHistoricalTrends(context) {
         if (!context.historicalData)
             return [];
-        const trends = [];
-        const data = context.historicalData;
-        // Calculate moving averages
-        const shortMA = this.calculateMovingAverage(data, 5);
-        const longMA = this.calculateMovingAverage(data, 20);
-        // Detect trend
+
+
+        // Calculate moving averages;
+
+
+        // Detect trend;
         if (shortMA > longMA) {
             trends.push({ trend: 'upward', strength: (shortMA - longMA) / longMA });
         }
@@ -308,15 +308,15 @@ export class UnifiedPredictionEngine {
     analyzeMarketSignals(marketState) {
         if (!marketState)
             return [];
-        const signals = [];
-        // Analyze line movement
+
+        // Analyze line movement;
         if (marketState.movement === 'up') {
             signals.push({ signal: 'line_movement_up', strength: 0.7 });
         }
         else if (marketState.movement === 'down') {
             signals.push({ signal: 'line_movement_down', strength: 0.7 });
         }
-        // Analyze volume
+        // Analyze volume;
         if (marketState.volume > 1000) {
             signals.push({ signal: 'high_volume', strength: 0.8 });
         }
@@ -325,13 +325,13 @@ export class UnifiedPredictionEngine {
     calculateMovingAverage(data, period) {
         if (!data || data.length < period)
             return 0;
-        const values = data.slice(-period).map(d => d.value ?? 0);
+
         return values.reduce((sum, val) => (sum ?? 0) + (val ?? 0), 0) / period;
     }
     setupEventListeners() {
-        // Use a type assertion to fix eventBus.on signature for market:update
+        // Use a type assertion to fix eventBus.on signature for market:update;
         this.eventBus.on('market:update', (update) => {
-            const marketUpdate = update;
+
             (async () => {
                 try {
                     const context = {
@@ -347,7 +347,7 @@ export class UnifiedPredictionEngine {
                     await this.generatePrediction(context);
                 }
                 catch (error) {
-                    // No trace for string, just log error
+                    // No trace for string, just log error;
                     // this.performanceMonitor.endTrace('market:update', error as Error);
                 }
             })();
@@ -355,7 +355,7 @@ export class UnifiedPredictionEngine {
     }
     async generateTimeSeriesPrediction(context) {
         try {
-            const timeSeriesData = this.analyticsService.getTimeSeriesData('1d');
+
             if (!timeSeriesData || timeSeriesData.length === 0) {
                 return {
                     value: 0,
@@ -373,10 +373,10 @@ export class UnifiedPredictionEngine {
                     },
                 };
             }
-            const recentData = timeSeriesData.slice(-5);
-            const averageProfitLoss = recentData.reduce((sum, dp) => sum + dp.metrics.profitLoss, 0) / recentData.length;
-            const trendValue = averageProfitLoss > 0 ? 1 : -1;
-            const predictedValue = context.marketState
+
+
+
+            const predictedValue = context.marketState;
                 ? context.marketState.line * (1 + trendValue * 0.05)
                 : 50 + trendValue * 5;
             return {
@@ -406,7 +406,7 @@ export class UnifiedPredictionEngine {
     }
     async generateMarketAnalysisPrediction(context) {
         try {
-            const playerAnalysis = await this.advancedAnalysisEngine.analyzePlayer(context.playerId);
+
             if (!playerAnalysis || !playerAnalysis.meta_analysis) {
                 return {
                     value: context.marketState?.line || 0,
@@ -429,9 +429,9 @@ export class UnifiedPredictionEngine {
                     },
                 };
             }
-            const marketEfficiency = playerAnalysis.meta_analysis.market_efficiency || 0.5;
-            const valueAdjustmentFactor = (marketEfficiency - 0.5) * 0.1;
-            const predictedValue = (context.marketState?.line || 50) * (1 + valueAdjustmentFactor);
+
+
+
             return {
                 value: predictedValue,
                 confidence: playerAnalysis.meta_analysis.prediction_stability || 0.65,
@@ -452,7 +452,7 @@ export class UnifiedPredictionEngine {
                 analysis: {
                     risk_factors: [
                         'market_volatility_proxy',
-                        ...(playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0
+                        ...(playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0;
                             ? Object.values(playerAnalysis.risks).flatMap(r => r.factors)
                             : ['unknown_market_risks']),
                     ],
@@ -470,7 +470,7 @@ export class UnifiedPredictionEngine {
     }
     async generatePerformanceAnalysisPrediction(context) {
         try {
-            const playerAnalysis = await this.advancedAnalysisEngine.analyzePlayer(context.playerId);
+
             if (!playerAnalysis || !playerAnalysis.predictions[context.metric]) {
                 return {
                     value: 0,
@@ -493,7 +493,7 @@ export class UnifiedPredictionEngine {
                     },
                 };
             }
-            const metricPrediction = playerAnalysis.predictions[context.metric];
+
             return {
                 value: metricPrediction.value,
                 confidence: metricPrediction.confidence,
@@ -504,7 +504,7 @@ export class UnifiedPredictionEngine {
                     confidence: metricPrediction.confidence,
                 })),
                 analysis: {
-                    risk_factors: playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0
+                    risk_factors: playerAnalysis.risks && Object.keys(playerAnalysis.risks).length > 0;
                         ? Object.values(playerAnalysis.risks).flatMap(r => r.factors)
                         : ['general_performance_variance'],
                     meta_analysis: {

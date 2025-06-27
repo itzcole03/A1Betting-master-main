@@ -1,11 +1,11 @@
-import React, { useEffect, useCallback, useState } from "react";
-import { useMoneyMakerStore } from "@/stores/moneyMakerStore";
+import React, { useEffect, useCallback, useState  } from 'react.ts';
+import { useMoneyMakerStore } from '@/stores/moneyMakerStore.ts';
 import {
   MoneyMakerConfig,
   MoneyMakerPrediction,
   MoneyMakerPortfolio,
   RiskLevel,
-} from "@/types/money-maker";
+} from '@/types/money-maker.ts';
 import {
   Card,
   Button,
@@ -19,10 +19,10 @@ import {
   Tabs,
   Tab,
   Progress,
-} from "../ui/UnifiedUI";
+} from '@/ui/UnifiedUI.ts';
 
 export const UnifiedMoneyMaker: React.FC = () => {
-  const store = useMoneyMakerStore();
+
   const {
     config,
     predictions,
@@ -44,13 +44,13 @@ export const UnifiedMoneyMaker: React.FC = () => {
     "success" | "error" | "warning" | "info"
   >("info");
 
-  // Load initial data
+  // Load initial data;
   useEffect(() => {
     const loadData = async () => {
       try {
         store.setLoading(true);
-        // Load initial data from your backend
-        // This is where you would integrate with your actual services
+        // Load initial data from your backend;
+        // This is where you would integrate with your actual services;
         store.setLoading(false);
       } catch (error) {
         handleError("Failed to load initial data", error);
@@ -60,7 +60,7 @@ export const UnifiedMoneyMaker: React.FC = () => {
     loadData();
   }, []);
 
-  // Fetch predictions on mount and when filters/sort change
+  // Fetch predictions on mount and when filters/sort change;
   useEffect(() => {
     store.fetchPredictions();
   }, [JSON.stringify(filters), JSON.stringify(sort)]);
@@ -70,7 +70,7 @@ export const UnifiedMoneyMaker: React.FC = () => {
     setToastMessage(message);
     setToastType("error");
     setShowToast(true);
-    console.error(message, error);
+    // console statement removed
   }, []);
 
   const handleTabChange = useCallback((value: string) => {
@@ -105,8 +105,8 @@ export const UnifiedMoneyMaker: React.FC = () => {
   const handleGeneratePortfolio = useCallback(async () => {
     try {
       store.setLoading(true);
-      // Generate portfolio based on current predictions and config
-      // This is where you would integrate with your portfolio generation logic
+      // Generate portfolio based on current predictions and config;
+      // This is where you would integrate with your portfolio generation logic;
       store.setLoading(false);
     } catch (error) {
       handleError("Failed to generate portfolio", error);
@@ -129,13 +129,13 @@ export const UnifiedMoneyMaker: React.FC = () => {
   };
 
   const handleShowDetails = useCallback((prediction: MoneyMakerPrediction) => {
-    // TODO: Implement details modal
-    console.log("Show details for prediction:", prediction);
+    // TODO: Implement details modal;
+    // console statement removed
   }, []);
 
   const handlePlaceBet = useCallback((prediction: MoneyMakerPrediction) => {
-    // TODO: Implement bet placement
-    console.log("Place bet for prediction:", prediction);
+    // TODO: Implement bet placement;
+    // console statement removed
   }, []);
 
   const getBadgeVariant = (
@@ -153,7 +153,7 @@ export const UnifiedMoneyMaker: React.FC = () => {
     }
   };
 
-  // Sorting/filtering handlers
+  // Sorting/filtering handlers;
   const handleSortChange = (field: keyof MoneyMakerPrediction) => {
     store.updateSort({
       field,
@@ -166,56 +166,56 @@ export const UnifiedMoneyMaker: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Spinner size="large" />
+      <div className="flex items-center justify-center min-h-screen" key={591667}>
+        <Spinner size="large" / key={932834}>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold">Money Maker</h1>
-          <Badge variant="success">Active</Badge>
+    <div className="container mx-auto px-4 py-8" key={53071}>
+      <div className="max-w-7xl mx-auto" key={70872}>
+        <div className="flex items-center justify-between mb-8" key={106512}>
+          <h1 className="text-3xl font-bold" key={339210}>Money Maker</h1>
+          <Badge variant="success" key={925752}>Active</Badge>
         </div>
 
         {/* Navigation Tabs */}
-        <Tabs className="mb-8" value={activeTab} onChange={handleTabChange}>
-          <Tab label="Configuration" value="config" />
-          <Tab label="Predictions" value="predictions" />
-          <Tab label="Portfolios" value="portfolios" />
-          <Tab label="Metrics" value="metrics" />
+        <Tabs className="mb-8" value={activeTab} onChange={handleTabChange} key={873518}>
+          <Tab label="Configuration" value="config" / key={844370}>
+          <Tab label="Predictions" value="predictions" / key={703997}>
+          <Tab label="Portfolios" value="portfolios" / key={412546}>
+          <Tab label="Metrics" value="metrics" / key={310311}>
         </Tabs>
 
         {/* Configuration Tab */}
         {activeTab === "config" && (
-          <Card className="p-6">
-            <h2 className="text-xl font-bold mb-4">Configuration</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Investment Amount
+          <Card className="p-6" key={260389}>
+            <h2 className="text-xl font-bold mb-4" key={939378}>Configuration</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4" key={476625}>
+              <div key={241917}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                  Investment Amount;
                 </label>
-                <Input
+                <Input;
                   max="100000"
                   min="0"
                   type="number"
                   value={String(config.investmentAmount)}
                   onChange={handleInputChange("investmentAmount")}
-                />
+                / key={282464}>
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              <div key={241917}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
                   Time Horizon (Hours)
                 </label>
-                <Input
+                <Input;
                   max="72"
                   min="1"
                   type="number"
                   value={String(config.timeHorizon)}
                   onChange={handleInputChange("timeHorizon")}
-                />
+                / key={120824}>
               </div>
             </div>
           </Card>
@@ -223,10 +223,10 @@ export const UnifiedMoneyMaker: React.FC = () => {
 
         {/* Predictions Tab */}
         {activeTab === "predictions" && (
-          <Card className="p-6">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4">
-              <div className="flex flex-wrap gap-2">
-                <Select
+          <Card className="p-6" key={260389}>
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4 gap-4" key={397088}>
+              <div className="flex flex-wrap gap-2" key={835928}>
+                <Select;
                   className="w-32"
                   options={[
                     { value: "", label: "All Risks" },
@@ -235,22 +235,22 @@ export const UnifiedMoneyMaker: React.FC = () => {
                     { value: "high", label: "High" },
                   ]}
                   value={filters.riskLevel || ""}
-                  onChange={(value) =>
+                  onChange={(value) = key={162222}>
                     handleFilterChange("riskLevel", value || undefined)
                   }
                 />
-                <Select
+                <Select;
                   className="w-32"
                   options={[
                     { value: "", label: "All Models" },
-                    // Optionally map over available models
+                    // Optionally map over available models;
                   ]}
                   value={filters.modelId || ""}
-                  onChange={(value) =>
+                  onChange={(value) = key={453682}>
                     handleFilterChange("modelId", value || undefined)
                   }
                 />
-                <Select
+                <Select;
                   className="w-32"
                   options={[
                     { value: "confidence", label: "Confidence" },
@@ -259,61 +259,61 @@ export const UnifiedMoneyMaker: React.FC = () => {
                     { value: "timestamp", label: "Timestamp" },
                   ]}
                   value={sort.field}
-                  onChange={(value) =>
+                  onChange={(value) = key={955821}>
                     handleSortChange(value as keyof MoneyMakerPrediction)
                   }
                 />
               </div>
             </div>
             {isLoading ? (
-              <div className="flex items-center justify-center min-h-[200px]">
-                <Spinner size="large" />
+              <div className="flex items-center justify-center min-h-[200px]" key={259241}>
+                <Spinner size="large" / key={932834}>
               </div>
             ) : predictions.length === 0 ? (
-              <div className="text-center text-gray-500 py-8">
+              <div className="text-center text-gray-500 py-8" key={111479}>
                 No predictions available.
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <thead>
-                    <tr>
-                      <th className="px-4 py-2 text-left">Label</th>
-                      <th className="px-4 py-2 text-left">Confidence</th>
-                      <th className="px-4 py-2 text-left">EV</th>
-                      <th className="px-4 py-2 text-left">Model</th>
-                      <th className="px-4 py-2 text-left">Timestamp</th>
-                      <th className="px-4 py-2 text-left">Rationale</th>
+              <div className="overflow-x-auto" key={522094}>
+                <table className="min-w-full divide-y divide-gray-200" key={413460}>
+                  <thead key={851248}>
+                    <tr key={70014}>
+                      <th className="px-4 py-2 text-left" key={818949}>Label</th>
+                      <th className="px-4 py-2 text-left" key={818949}>Confidence</th>
+                      <th className="px-4 py-2 text-left" key={818949}>EV</th>
+                      <th className="px-4 py-2 text-left" key={818949}>Model</th>
+                      <th className="px-4 py-2 text-left" key={818949}>Timestamp</th>
+                      <th className="px-4 py-2 text-left" key={818949}>Rationale</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody key={453335}>
                     {predictions.map((pred) => (
-                      <tr key={pred.eventId} className="hover:bg-gray-50">
-                        <td className="px-4 py-2 font-medium">
+                      <tr key={pred.eventId} className="hover:bg-gray-50" key={807287}>
+                        <td className="px-4 py-2 font-medium" key={646112}>
                           {pred.selection} ({pred.marketType})
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2" key={421594}>
                           {(pred.confidence * 100).toFixed(1)}%
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2" key={421594}>
                           {pred.expectedValue.toFixed(3)}
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2" key={421594}>
                           {pred.metadata.modelVersion ||
                             Object.keys(pred.modelContributions).join(", ")}
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2" key={421594}>
                           {new Date(pred.metadata.timestamp).toLocaleString()}
                         </td>
-                        <td className="px-4 py-2">
+                        <td className="px-4 py-2" key={421594}>
                           {pred.explanation &&
                           pred.explanation.decisionPath &&
                           pred.explanation.decisionPath.length > 0 ? (
-                            <span>
+                            <span key={595076}>
                               {pred.explanation.decisionPath.join(" → ")}
                             </span>
                           ) : (
-                            <span className="text-gray-400">—</span>
+                            <span className="text-gray-400" key={912100}>—</span>
                           )}
                         </td>
                       </tr>
@@ -327,33 +327,33 @@ export const UnifiedMoneyMaker: React.FC = () => {
 
         {/* Portfolios Tab */}
         {activeTab === "portfolios" && (
-          <Card className="p-6">
-            <div className="flex justify-between items-center mb-4">
-              <h2 className="text-xl font-bold">Active Portfolios</h2>
-              <Button variant="primary" onClick={handleGeneratePortfolio}>
-                Generate New Portfolio
+          <Card className="p-6" key={260389}>
+            <div className="flex justify-between items-center mb-4" key={240336}>
+              <h2 className="text-xl font-bold" key={540247}>Active Portfolios</h2>
+              <Button variant="primary" onClick={handleGeneratePortfolio} key={751213}>
+                Generate New Portfolio;
               </Button>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4" key={160407}>
               {portfolios.map((portfolio) => (
-                <div key={portfolio.id} className="border rounded-lg p-4">
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <h3 className="font-medium">Portfolio {portfolio.id}</h3>
-                      <p className="text-sm text-gray-500">
-                        {portfolio.legs.length} legs
+                <div key={portfolio.id} className="border rounded-lg p-4" key={765714}>
+                  <div className="flex justify-between items-center" key={795957}>
+                    <div key={241917}>
+                      <h3 className="font-medium" key={380049}>Portfolio {portfolio.id}</h3>
+                      <p className="text-sm text-gray-500" key={212051}>
+                        {portfolio.legs.length} legs;
                       </p>
                     </div>
-                    <div className="text-right">
-                      <p className="font-medium">
+                    <div className="text-right" key={144468}>
+                      <p className="font-medium" key={787187}>
                         Total Odds: {portfolio.totalOdds.toFixed(2)}
                       </p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-gray-500" key={212051}>
                         EV: {formatPercentage(portfolio.expectedValue)}
                       </p>
                     </div>
                   </div>
-                  <Progress className="mt-2" value={portfolio.confidence} />
+                  <Progress className="mt-2" value={portfolio.confidence} / key={537310}>
                 </div>
               ))}
             </div>
@@ -362,35 +362,35 @@ export const UnifiedMoneyMaker: React.FC = () => {
 
         {/* Metrics Tab */}
         {activeTab === "metrics" && (
-          <Card className="p-6">
-            <h2 className="text-xl font-bold mb-4">Performance Metrics</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              <div className="border rounded-lg p-4">
-                <h3 className="font-medium mb-2">Overall Performance</h3>
-                <p className="text-2xl font-bold">
+          <Card className="p-6" key={260389}>
+            <h2 className="text-xl font-bold mb-4" key={939378}>Performance Metrics</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={881323}>
+              <div className="border rounded-lg p-4" key={860455}>
+                <h3 className="font-medium mb-2" key={656044}>Overall Performance</h3>
+                <p className="text-2xl font-bold" key={180814}>
                   {formatCurrency(metrics.totalProfit)}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500" key={212051}>
                   ROI: {formatPercentage(metrics.roi)}
                 </p>
               </div>
 
-              <div className="border rounded-lg p-4">
-                <h3 className="font-medium mb-2">Success Rate</h3>
-                <p className="text-2xl font-bold">
+              <div className="border rounded-lg p-4" key={860455}>
+                <h3 className="font-medium mb-2" key={656044}>Success Rate</h3>
+                <p className="text-2xl font-bold" key={180814}>
                   {formatPercentage(metrics.successRate)}
                 </p>
-                <p className="text-sm text-gray-500">
-                  {metrics.winningBets} / {metrics.totalBets} bets
+                <p className="text-sm text-gray-500" key={212051}>
+                  {metrics.winningBets} / {metrics.totalBets} bets;
                 </p>
               </div>
 
-              <div className="border rounded-lg p-4">
-                <h3 className="font-medium mb-2">Risk Metrics</h3>
-                <p className="text-2xl font-bold">
+              <div className="border rounded-lg p-4" key={860455}>
+                <h3 className="font-medium mb-2" key={656044}>Risk Metrics</h3>
+                <p className="text-2xl font-bold" key={180814}>
                   {metrics.sharpeRatio.toFixed(2)}
                 </p>
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-500" key={212051}>
                   Max Drawdown: {formatPercentage(metrics.maxDrawdown)}
                 </p>
               </div>
@@ -400,10 +400,10 @@ export const UnifiedMoneyMaker: React.FC = () => {
 
         {/* Toast Notifications */}
         {showToast && (
-          <Toast
+          <Toast;
             message={toastMessage}
             type={toastType}
-            onClose={() => setShowToast(false)}
+            onClose={() = key={628485}> setShowToast(false)}
           />
         )}
       </div>

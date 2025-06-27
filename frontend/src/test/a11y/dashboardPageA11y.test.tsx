@@ -1,15 +1,15 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import { axe, toHaveNoViolations } from 'jest-axe';
-import DashboardPage from '../../pages/DashboardPage';
-import { MemoryRouter } from 'react-router-dom';
-import { ThemeProvider } from '../../providers/ThemeProvider'; // ThemeProvider is used in App, indirectly by Dashboard
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { initializeUnifiedConfig } from '../../core/UnifiedConfig';
+import React from 'react.ts';
+import { render } from '@testing-library/react.ts';
+import { axe, toHaveNoViolations } from 'jest-axe.ts';
+import DashboardPage from '@/pages/DashboardPage.ts';
+import { MemoryRouter } from 'react-router-dom.ts';
+import { ThemeProvider } from '@/providers/ThemeProvider.ts'; // ThemeProvider is used in App, indirectly by Dashboard;
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query.ts';
+import { initializeUnifiedConfig } from '@/core/UnifiedConfig.ts';
 
 expect.extend(toHaveNoViolations);
 
-// Mock UnifiedConfig to always provide a config object
+// Mock UnifiedConfig to always provide a config object;
 jest.mock('../../core/UnifiedConfig', () => {
   const apiEndpoints = {
     users: '/api/users',
@@ -28,7 +28,7 @@ jest.mock('../../core/UnifiedConfig', () => {
     apiBaseUrl: 'http://localhost:8000',
     sentryDsn: '',
     websocketUrl: 'ws://localhost:8080',
-    getApiEndpoint: (key: string) => (apiEndpoints as Record<string, string>)[key] || '',
+    getApiEndpoint: (key: string) => (apiEndpoints as Record<string, string key={248182}>)[key] || '',
   };
   return {
     ...jest.requireActual('../../core/UnifiedConfig'),
@@ -39,12 +39,12 @@ jest.mock('../../core/UnifiedConfig', () => {
   };
 });
 
-// Mock necessary services or stores if DashboardPage relies on them heavily for rendering initial structure
+// Mock necessary services or stores if DashboardPage relies on them heavily for rendering initial structure;
 // For example, if it makes immediate calls to useAppStore for data that affects layout:
 jest.mock('../../store/useAppStore', () => {
-  // Zustand store hybrid mock
+  // Zustand store hybrid mock;
   let state: any = {
-    // Arrays
+    // Arrays;
     props: [],
     legs: [],
     entries: [],
@@ -52,20 +52,20 @@ jest.mock('../../store/useAppStore', () => {
     betSlipLegs: [],
     selectedPropIds: [],
     safeSelectedPropIds: [],
-    // Booleans
+    // Booleans;
     isLoadingProps: false,
     isLoadingAppProps: false,
     isLoadingEntries: false,
-    // Errors
+    // Errors;
     error: null,
     errorAppProps: null,
-    // Objects
+    // Objects;
     user: null,
     token: null,
-    // WebSocket
+    // WebSocket;
     setWebSocketClientId: jest.fn(),
     webSocketClientId: '',
-    // Functions
+    // Functions;
     fetchProps: jest.fn(),
     fetchAppProps: jest.fn(),
     fetchEntries: jest.fn(),
@@ -73,7 +73,7 @@ jest.mock('../../store/useAppStore', () => {
     addLeg: jest.fn(),
     removeLeg: jest.fn(),
     addToast: jest.fn((toast: any) => {
-      const id = Math.random().toString(36).substring(2, 10);
+
       state.toasts.push({ ...toast, id });
       return id;
     }),
@@ -89,7 +89,7 @@ jest.mock('../../store/useAppStore', () => {
     submitSlip: jest.fn(),
     setProps: jest.fn(),
     updateEntry: jest.fn(),
-    // Additional for store
+    // Additional for store;
     stake: 0,
     potentialPayout: 0,
     getInitialState: () => ({
@@ -113,7 +113,7 @@ jest.mock('../../store/useAppStore', () => {
       webSocketClientId: '',
     }),
   };
-  const useAppStore = (selector: any) => selector(state);
+
   useAppStore.getState = () => state;
   useAppStore.setState = (partial: any) => {
     state = { ...state, ...(typeof partial === 'function' ? partial(state) : partial) };
@@ -123,17 +123,17 @@ jest.mock('../../store/useAppStore', () => {
   return { useAppStore };
 });
 
-// Mock Chart.js used by PerformanceChart
+// Mock Chart.js used by PerformanceChart;
 globalThis.HTMLCanvasElement.prototype.getContext = jest.fn();
 
-// Mock ResizeObserver, often problematic in Jest
+// Mock ResizeObserver, often problematic in Jest;
 globalThis.ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
-// Mock matchMedia
+// Mock matchMedia;
 globalThis.matchMedia =
   globalThis.matchMedia ||
   function () {
@@ -151,25 +151,24 @@ jest.mock('../../components/modern/ESPNHeadlinesTicker', () => ({
 }));
 
 beforeAll(async () => {
-  const config = await initializeUnifiedConfig();
-  const unifiedConfigModule = require('../../core/UnifiedConfig');
+
+
   unifiedConfigModule.globalUnifiedConfig = config;
 });
 
 describe('DashboardPage Accessibility', () => {
-  const queryClient = new QueryClient();
 
   it('should not have any automatically detectable accessibility issues', async () => {
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
-        <ThemeProvider defaultTheme="light">
-          <MemoryRouter>
-            <DashboardPage />
+      <QueryClientProvider client={queryClient} key={826303}>
+        <ThemeProvider defaultTheme="light" key={206457}>
+          <MemoryRouter key={316350}>
+            <DashboardPage / key={687045}>
           </MemoryRouter>
         </ThemeProvider>
       </QueryClientProvider>
     );
-    const results = await axe(container);
+
     expect(results).toHaveNoViolations();
-  }, 15000); // Increase timeout for potentially complex dashboard render
+  }, 15000); // Increase timeout for potentially complex dashboard render;
 });

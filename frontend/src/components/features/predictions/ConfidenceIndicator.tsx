@@ -1,7 +1,7 @@
-import React from 'react';
+import React from 'react.ts';
 
 interface ConfidenceIndicatorProps {
-  value: number; // 0 to 1
+  value: number; // 0 to 1;
   size?: 'sm' | 'md' | 'lg';
 }
 
@@ -25,11 +25,11 @@ export function ConfidenceIndicator({ value, size = 'md' }: ConfidenceIndicatorP
   };
 
   return (
-    <div className={`${getSize(size)} bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden`}>
-      <div
+    <div className={`${getSize(size)} bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden`} key={163101}>
+      <div;
         className={`${getColor(value)} h-full transition-all duration-300 ease-in-out`}
         style={{ width: `${value * 100}%` }}
-      />
+      / key={881399}>
     </div>
   );
 }

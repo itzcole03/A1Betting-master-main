@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
     variant?: 'default' | 'success' | 'warning' | 'danger' | 'info';
     size?: 'sm' | 'md' | 'lg';

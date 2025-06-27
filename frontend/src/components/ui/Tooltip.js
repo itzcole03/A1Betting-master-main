@@ -5,16 +5,16 @@ export const Tooltip = ({ content, children, delay = 300, position = 'top', clas
     const [isVisible, setIsVisible] = useState(false);
     const [coords, setCoords] = useState({ x: 0, y: 0 });
     const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
-    const timeoutRef = useRef();
-    const tooltipRef = useRef(null);
-    const triggerRef = useRef(null);
+
+
+
     const updatePosition = () => {
         if (triggerRef.current && tooltipRef.current) {
-            const triggerRect = triggerRef.current.getBoundingClientRect();
-            const tooltipRect = tooltipRef.current.getBoundingClientRect();
-            let x = 0;
-            let y = 0;
-            const offset = 8;
+
+
+            const x = 0;
+            const y = 0;
+
             switch (position) {
                 case 'top':
                     x = triggerRect.left + (triggerRect.width - tooltipRect.width) / 2;
@@ -33,7 +33,7 @@ export const Tooltip = ({ content, children, delay = 300, position = 'top', clas
                     y = triggerRect.top + (triggerRect.height - tooltipRect.height) / 2;
                     break;
             }
-            // Ensure tooltip stays within viewport
+            // Ensure tooltip stays within viewport;
             x = Math.max(offset, Math.min(window.innerWidth - tooltipRect.width - offset, x));
             y = Math.max(offset, Math.min(window.innerHeight - tooltipRect.height - offset, y));
             setCoords({ x, y });
@@ -45,7 +45,7 @@ export const Tooltip = ({ content, children, delay = 300, position = 'top', clas
         }
         timeoutRef.current = window.setTimeout(() => {
             setIsVisible(true);
-            // Wait for the tooltip to be visible before calculating position
+            // Wait for the tooltip to be visible before calculating position;
             requestAnimationFrame(updatePosition);
         }, delay);
     };

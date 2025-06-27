@@ -1,4 +1,4 @@
-import { RiskProfile, RiskProfileType } from '@/types/betting';
+import { RiskProfile, RiskProfileType } from '@/types/betting.ts';
 interface RiskState {
     currentProfile: RiskProfile;
     bankroll: number;

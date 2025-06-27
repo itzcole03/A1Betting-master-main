@@ -1,5 +1,5 @@
-// Service for aggregating and providing historical performance data
-import type { UserPerformanceHistory, ModelPerformanceHistory } from '../../types/history';
+// Service for aggregating and providing historical performance data;
+import type { UserPerformanceHistory, ModelPerformanceHistory } from '@/types/history.ts';
 
 export class PerformanceHistoryService {
   private static instance: PerformanceHistoryService;
@@ -31,7 +31,7 @@ export class PerformanceHistoryService {
   }
 
   public addModelHistoryEntry(model: string, market: string, entry: ModelPerformanceHistory['entries'][0]): void {
-    const key = `${model}:${market}`;
+
     if (!this.modelHistories.has(key)) {
       this.modelHistories.set(key, { model, market, entries: [] });
     }
@@ -39,11 +39,11 @@ export class PerformanceHistoryService {
   }
 
   public getUserStats(userId: string) {
-    const history = this.getUserHistory(userId);
+
     if (!history) return null;
-    const wins = history.entries.filter(e => e.result === 'win').length;
-    const losses = history.entries.filter(e => e.result === 'loss').length;
-    const roi = history.entries.reduce((sum, e) => sum + e.payout - e.stake, 0) / (history.entries.reduce((sum, e) => sum + e.stake, 0) || 1);
+
+
+
     return { wins, losses, roi };
   }
 }

@@ -1,4 +1,4 @@
-import { User, Bet, Prop, UserStats, PerformanceData, Headline } from '@/types';
+import { User, Bet, Prop, UserStats, PerformanceData, Headline } from '@/types.ts';
 interface AppState {
     user: User | null;
     setUser: (user: User | null) => void;

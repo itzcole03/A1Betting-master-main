@@ -1,5 +1,5 @@
-import React from 'react';
-import type { Prediction } from '../../services/predictionService';
+import React from 'react.ts';
+import type { Prediction } from '@/services/predictionService.ts';
 interface BettingOpportunitiesProps {
     predictions: Prediction[];
 }

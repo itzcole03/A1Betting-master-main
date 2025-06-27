@@ -1,12 +1,12 @@
-import { apiClient } from '../api/client';
+import { apiClient } from '@/api/client.ts';
 
 export class CacheService {
     static async get(key: string) {
         try {
-            const response = await apiClient.get(`/cache/get?key=${encodeURIComponent(key)}`);
+
             return response.data?.value ?? null;
         } catch (error) {
-            console.error('CacheService.get failed:', error);
+            // console statement removed
             return null;
         }
     }
@@ -16,7 +16,7 @@ export class CacheService {
             await apiClient.post('/cache/set', { key, value });
             return true;
         } catch (error) {
-            console.error('CacheService.set failed:', error);
+            // console statement removed
             return false;
         }
     }

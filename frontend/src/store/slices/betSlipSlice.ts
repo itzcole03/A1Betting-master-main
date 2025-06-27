@@ -1,7 +1,7 @@
-import { StateCreator } from "zustand";
-import { ParlayLeg } from "../../../../shared/betting";
-import { bettingStrategyService } from "../../strategies/bettingStrategy";
-import { AppStore } from "../../stores/useAppStore";
+import { StateCreator } from 'zustand.ts';
+import { ParlayLeg } from '@/../../shared/betting.ts';
+import { bettingStrategyService } from '@/strategies/bettingStrategy.ts';
+import { AppStore } from '@/stores/useAppStore.ts';
 
 // Helper for Odds Conversion (Simplified)
 const americanToDecimal = (americanOdds: number): number => {
@@ -16,13 +16,13 @@ export interface BetSlipSlice {
   stake: number;
   potentialPayout: number;
   isSubmitting: boolean;
-  error: string | null; // Slice-specific error
+  error: string | null; // Slice-specific error;
   addLeg: (leg: ParlayLeg) => void;
-  removeLeg: (propId: string, pick: "over" | "under") => void; // Requires pick to uniquely identify
+  removeLeg: (propId: string, pick: "over" | "under") => void; // Requires pick to uniquely identify;
   updateStake: (stake: number) => void;
   calculatePotentialPayout: () => void;
   clearSlip: () => void;
-  submitSlip: () => Promise<boolean>; // Returns true on success, false on failure
+  submitSlip: () => Promise<boolean>; // Returns true on success, false on failure;
 }
 
 export const initialBetSlipState: Pick<
@@ -40,7 +40,7 @@ export const createBetSlipSlice: StateCreator<
   AppStore,
   [],
   [],
-  BetSlipSlice
+  BetSlipSlice;
 > = (set, get) => ({
   ...initialBetSlipState,
   addLeg: (leg) => {
@@ -51,7 +51,7 @@ export const createBetSlipSlice: StateCreator<
           "Cannot add leg without odds. Please select a valid prop line.",
         type: "error",
       });
-      console.error("Attempted to add leg without odds:", leg);
+      // console statement removed
       return;
     }
     if (legs.some((l) => l.propId === leg.propId && l.pick === leg.pick)) {
@@ -62,7 +62,7 @@ export const createBetSlipSlice: StateCreator<
       return;
     }
     if (legs.length >= 6) {
-      // Max 6 legs for PrizePicks style parlays, adjust if needed
+      // Max 6 legs for PrizePicks style parlays, adjust if needed;
       addToast({
         message: "Maximum 6 legs allowed in a parlay.",
         type: "warning",
@@ -92,17 +92,17 @@ export const createBetSlipSlice: StateCreator<
     // PrizePicks has fixed multipliers for N-leg parlays, not based on individual odds.
     // This is a simplified example. Real PrizePicks payout calculation is more complex.
     // For other sportsbooks, you'd multiply decimal odds.
-    let multiplier = 1;
+    const multiplier = 1;
     if (legs.length === 2) multiplier = 3;
     else if (legs.length === 3) multiplier = 5;
     else if (legs.length === 4) multiplier = 10;
     else if (legs.length === 5)
-      multiplier = 20; // Example, adjust based on actual PrizePicks rules
+      multiplier = 20; // Example, adjust based on actual PrizePicks rules;
     else if (legs.length === 6)
-      multiplier = 25; // Example
+      multiplier = 25; // Example;
     else {
       // Fallback for single leg or if direct odds multiplication is desired (not typical for PrizePicks)
-      // This part assumes traditional parlay calculation if not 2-6 legs for fixed multiplier
+      // This part assumes traditional parlay calculation if not 2-6 legs for fixed multiplier;
       multiplier = legs.reduce((acc, leg) => {
         if (!leg.odds) return acc; // Skip if odds are missing (should not happen with guard in addLeg)
         return acc * americanToDecimal(leg.odds);
@@ -119,7 +119,7 @@ export const createBetSlipSlice: StateCreator<
       return false;
     }
     if (legs.length < 2 || legs.length > 6) {
-      // Typical PrizePicks rules
+      // Typical PrizePicks rules;
       addToast({
         message: "Parlays must have between 2 and 6 legs.",
         type: "warning",
@@ -143,7 +143,7 @@ export const createBetSlipSlice: StateCreator<
             type: "parlay",
             legs: legs.map((l) => ({
               propId: l.propId,
-              marketKey: "", // Fill as needed
+              marketKey: "", // Fill as needed;
               outcome: l.pick,
               odds: l.odds!,
               line: l.line,
@@ -151,11 +151,10 @@ export const createBetSlipSlice: StateCreator<
               playerName: l.playerName,
             })),
             stakeSuggestion: stake,
-            potentialPayout: 0, // Fill as needed
+            potentialPayout: 0, // Fill as needed;
           },
         ],
       };
-      const confirmation = await bettingStrategyService.placeBets(betInput);
 
       if (confirmation && confirmation.length > 0 && confirmation[0].success) {
         addToast({
@@ -169,7 +168,7 @@ export const createBetSlipSlice: StateCreator<
       set({ isSubmitting: false });
       return true;
     } catch (e: any) {
-      const errorMsg = e.message || "Failed to submit bet";
+
       set({ error: errorMsg, isSubmitting: false });
       addToast({ message: `Error submitting bet: ${errorMsg}`, type: "error" });
       return false;

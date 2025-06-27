@@ -17,22 +17,22 @@ const FEATURES = [
 export const FeatureStatusPanel = () => {
     const [statuses, setStatuses] = useState({});
     useEffect(() => {
-        const config = UnifiedConfig.getInstance();
-        const initialStatuses = {};
+
+
         FEATURES.forEach(({ key }) => {
-            const flag = config.get(key);
+
             initialStatuses[key] = Boolean(flag && flag.enabled);
         });
         setStatuses(initialStatuses);
         const handler = () => {
-            const updated = {};
+
             FEATURES.forEach(({ key }) => {
-                const flag = config.get(key);
+
                 updated[key] = Boolean(flag && flag.enabled);
             });
             setStatuses(updated);
         };
-        const eventBus = EventBus.getInstance();
+
         eventBus.on('config:update', handler);
         return () => {
             eventBus.off('config:update', handler);

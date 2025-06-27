@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { EventEmitter } from 'events';
-import { MLPrediction } from './mlPredictions';
+import { Injectable } from '@nestjs/common.ts';
+import { EventEmitter } from 'events.ts';
+import { MLPrediction } from './mlPredictions.ts';
 
 interface Bet {
   id: string;
@@ -61,9 +61,9 @@ export class RiskManagementService extends EventEmitter {
     lossStreak: 0,
   };
   private bets: Bet[] = [];
-  private readonly MAX_BANKROLL_PERCENTAGE = 0.05; // 5% max bet size
-  private readonly MIN_BANKROLL_PERCENTAGE = 0.01; // 1% min bet size
-  private readonly KELLY_FRACTION = 0.5; // Half Kelly for conservative betting
+  private readonly MAX_BANKROLL_PERCENTAGE = 0.05; // 5% max bet size;
+  private readonly MIN_BANKROLL_PERCENTAGE = 0.01; // 1% min bet size;
+  private readonly KELLY_FRACTION = 0.5; // Half Kelly for conservative betting;
 
   private constructor() {
     super();
@@ -77,7 +77,7 @@ export class RiskManagementService extends EventEmitter {
   }
 
   public async initialize(): Promise<void> {
-    // Initialize risk management service
+    // Initialize risk management service;
   }
 
   public async assessRisk(params: {
@@ -91,7 +91,7 @@ export class RiskManagementService extends EventEmitter {
     maxStake: number;
     recommendedStake: number;
   }> {
-    // Implement risk assessment logic
+    // Implement risk assessment logic;
     return {
       riskLevel: 'low',
       expectedValue: 0.1,
@@ -110,14 +110,13 @@ export class RiskManagementService extends EventEmitter {
   }
 
   calculateRiskMetrics(prediction: MLPrediction): RiskMetrics {
-    const kellyCriterion = this.calculateKellyCriterion(prediction);
-    const recommendedStake = this.calculateRecommendedStake(kellyCriterion, prediction);
-    const maxStake = this.calculateMaxStake(prediction);
-    const riskLevel = this.determineRiskLevel(prediction, recommendedStake);
-    const edge = prediction.edge;
-    const expectedValue = prediction.expectedValue;
-    const variance = this.calculateVariance(prediction);
-    const sharpeRatio = this.calculateSharpeRatio(expectedValue, variance);
+
+
+
+
+
+
+
 
     return {
       kellyCriterion,
@@ -163,14 +162,14 @@ export class RiskManagementService extends EventEmitter {
   }
 
   resolveBet(betId: string, won: boolean): void {
-    const bet = this.bets.find(b => b.id === betId);
+
     if (!bet || bet.status !== 'pending') {
       throw new Error('Invalid bet');
     }
 
     bet.status = won ? 'won' : 'lost';
     if (won) {
-      const payout = bet.amount * bet.odds;
+
       bet.payout = payout;
       this.bankroll.current += payout;
       this.bankroll.winningBets++;
@@ -200,17 +199,16 @@ export class RiskManagementService extends EventEmitter {
   }
 
   private calculateKellyCriterion(prediction: MLPrediction): number {
-    const winProbability = prediction.probability;
-    const lossProbability = 1 - winProbability;
-    const winAmount = prediction.expectedValue - 1;
-    const lossAmount = 1;
+
+
+
 
     return (winProbability * winAmount - lossProbability * lossAmount) / winAmount;
   }
 
   private calculateRecommendedStake(kellyCriterion: number, prediction: MLPrediction): number {
-    const kellyStake = this.bankroll.current * kellyCriterion * this.KELLY_FRACTION;
-    const maxStake = this.calculateMaxStake(prediction);
+
+
     return Math.min(kellyStake, maxStake);
   }
 
@@ -219,16 +217,15 @@ export class RiskManagementService extends EventEmitter {
   }
 
   private determineRiskLevel(prediction: MLPrediction, stake: number): 'low' | 'medium' | 'high' {
-    const stakePercentage = stake / this.bankroll.current;
-    const confidence = prediction.confidence;
-    const edge = prediction.edge;
+
+
 
     if (stakePercentage <= this.MIN_BANKROLL_PERCENTAGE && confidence >= 80 && edge >= 0.1) {
       return 'low';
     } else if (
       stakePercentage <= this.MAX_BANKROLL_PERCENTAGE &&
       confidence >= 60 &&
-      edge >= 0.05
+      edge >= 0.05;
     ) {
       return 'medium';
     } else {
@@ -237,12 +234,10 @@ export class RiskManagementService extends EventEmitter {
   }
 
   private calculateVariance(prediction: MLPrediction): number {
-    const winProbability = prediction.probability;
-    const lossProbability = 1 - winProbability;
-    const winAmount = prediction.expectedValue - 1;
-    const lossAmount = 1;
 
-    const expectedValue = winProbability * winAmount - lossProbability * lossAmount;
+
+
+
     const variance =
       winProbability * Math.pow(winAmount - expectedValue, 2) +
       lossProbability * Math.pow(-lossAmount - expectedValue, 2);

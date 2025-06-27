@@ -1,6 +1,6 @@
-import { BettingContext, BettingDecision } from '../core/UnifiedBettingSystem';
-import { UnifiedBettingSystem } from '../core/UnifiedBettingSystem';
-import { useState, useEffect, useCallback } from 'react';
+import { BettingContext, BettingDecision } from '@/core/UnifiedBettingSystem.ts';
+import { UnifiedBettingSystem } from '@/core/UnifiedBettingSystem.ts';
+import { useState, useEffect, useCallback } from 'react.ts';
 
 
 
@@ -17,13 +17,11 @@ export function useUnifiedBetting({
   metric,
   autoRefresh = true,
   refreshInterval = 30000,
-  onNewOpportunity
+  onNewOpportunity;
 }: UseUnifiedBettingOptions = {}) {
   const [decision, setDecision] = useState<BettingDecision | null>(null);
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [error, setError] = useState<Error | null>(null);
-
-  const bettingSystem = UnifiedBettingSystem.getInstance();
 
   const analyze = useCallback(async () => {
     if (!playerId || !metric) return;
@@ -40,7 +38,6 @@ export function useUnifiedBetting({
         correlationFactors: []
       };
 
-      const newDecision = await bettingSystem.analyzeBettingOpportunity(context);
       setDecision(newDecision);
 
       if (onNewOpportunity && newDecision.confidence > 0.8) {
@@ -57,7 +54,7 @@ export function useUnifiedBetting({
     analyze();
 
     if (autoRefresh && playerId && metric) {
-      const interval = setInterval(analyze, refreshInterval);
+
       return () => clearInterval(interval);
     }
   }, [analyze, autoRefresh, playerId, metric, refreshInterval]);
@@ -66,6 +63,6 @@ export function useUnifiedBetting({
     decision,
     isAnalyzing,
     error,
-    analyze
+    analyze;
   };
 } 

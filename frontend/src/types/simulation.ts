@@ -1,6 +1,6 @@
-// Types for bet probability simulation and result modeling
+// Types for bet probability simulation and result modeling;
 
-import type { ConfidenceBand, WinProbability } from './confidence';
+import type { ConfidenceBand, WinProbability } from './confidence.ts';
 
 export interface BetSimulationInput {
   stake: number;

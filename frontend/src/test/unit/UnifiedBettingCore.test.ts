@@ -1,6 +1,6 @@
-import { UnifiedBettingCore } from '../../services/unified/UnifiedBettingCore';
-import { BettingContext, BettingDecision, PredictionResult } from '@/types';
-import { BetRecord } from '@/types/core';
+import { UnifiedBettingCore } from '@/services/unified/UnifiedBettingCore.ts';
+import { BettingContext, BettingDecision, PredictionResult } from '@/types.ts';
+import { BetRecord } from '@/types/core.ts';
 
 describe('UnifiedBettingCore', () => {
   let bettingCore: UnifiedBettingCore;
@@ -18,8 +18,6 @@ describe('UnifiedBettingCore', () => {
         marketState: 'active',
         correlationFactors: [],
       };
-
-      const decision = await bettingCore.analyzeBettingOpportunity(context);
 
       expect(decision).toBeDefined();
       expect(decision.confidence).toBeGreaterThanOrEqual(0);
@@ -39,11 +37,9 @@ describe('UnifiedBettingCore', () => {
         correlationFactors: [],
       };
 
-      // First call should generate new prediction
-      const firstDecision = await bettingCore.analyzeBettingOpportunity(context);
+      // First call should generate new prediction;
 
-      // Second call should use cached prediction
-      const secondDecision = await bettingCore.analyzeBettingOpportunity(context);
+      // Second call should use cached prediction;
 
       expect(secondDecision.timestamp).toBe(firstDecision.timestamp);
       expect(secondDecision.confidence).toBe(firstDecision.confidence);
@@ -54,16 +50,14 @@ describe('UnifiedBettingCore', () => {
       const context: BettingContext = {
         playerId: 'player-1',
         metric: 'points',
-        timestamp: Date.now() - 400000, // Older than cache timeout
+        timestamp: Date.now() - 400000, // Older than cache timeout;
         marketState: 'active',
         correlationFactors: [],
       };
 
-      // First call should generate new prediction
-      const firstDecision = await bettingCore.analyzeBettingOpportunity(context);
+      // First call should generate new prediction;
 
-      // Second call should generate new prediction due to expired cache
-      const secondDecision = await bettingCore.analyzeBettingOpportunity(context);
+      // Second call should generate new prediction due to expired cache;
 
       expect(secondDecision.timestamp).toBeGreaterThan(firstDecision.timestamp);
     });
@@ -78,23 +72,19 @@ describe('UnifiedBettingCore', () => {
         timestamp: Date.now(),
       };
 
-      const stake = bettingCore['calculateStake'](prediction);
-
       expect(stake).toBeGreaterThan(0);
-      expect(stake).toBeLessThanOrEqual(0.05); // maxRiskPerBet
+      expect(stake).toBeLessThanOrEqual(0.05); // maxRiskPerBet;
     });
 
     it('should respect maxRiskPerBet limit', () => {
       const prediction: PredictionResult = {
-        confidence: 1.0, // Very high confidence
+        confidence: 1.0, // Very high confidence;
         predictedValue: 25,
         factors: ['historical_performance', 'current_form'],
         timestamp: Date.now(),
       };
 
-      const stake = bettingCore['calculateStake'](prediction);
-
-      expect(stake).toBeLessThanOrEqual(0.05); // maxRiskPerBet
+      expect(stake).toBeLessThanOrEqual(0.05); // maxRiskPerBet;
     });
   });
 
@@ -133,13 +123,10 @@ describe('UnifiedBettingCore', () => {
         },
       ];
 
-      const winRate = bettingCore['calculateWinRate'](bets);
-
-      expect(winRate).toBe(66.66666666666667); // 2 wins out of 3 bets
+      expect(winRate).toBe(66.66666666666667); // 2 wins out of 3 bets;
     });
 
     it('should handle empty bet array', () => {
-      const winRate = bettingCore['calculateWinRate']([]);
 
       expect(winRate).toBe(0);
     });
@@ -147,7 +134,7 @@ describe('UnifiedBettingCore', () => {
 
   describe('error handling', () => {
     it('should emit error event on prediction failure', async () => {
-      const errorHandler = jest.fn();
+
       bettingCore.on('error', errorHandler);
 
       const context: BettingContext = {

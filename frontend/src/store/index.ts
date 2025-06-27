@@ -1,35 +1,35 @@
-import { Bet, Headline, PerformanceData, Prop, User, UserStats } from '@/types';
-import { create } from 'zustand';
+import { Bet, Headline, PerformanceData, Prop, User, UserStats } from '@/types.ts';
+import { create } from 'zustand.ts';
 
 interface AppState {
-  // User state
+  // User state;
   user: User | null;
   setUser: (user: User | null) => void;
 
-  // Bets state
+  // Bets state;
   bets: Bet[];
   addBet: (bet: Bet) => void;
   removeBet: (betId: string) => void;
   updateBet: (betId: string, updates: Partial<Bet>) => void;
 
-  // Props state
+  // Props state;
   props: Prop[];
   setProps: (props: Prop[]) => void;
   updateProp: (propId: string, updates: Partial<Prop>) => void;
 
-  // Stats state
+  // Stats state;
   stats: UserStats | null;
   setStats: (stats: UserStats | null) => void;
 
-  // Performance state
+  // Performance state;
   performance: PerformanceData[];
   setPerformance: (data: PerformanceData[]) => void;
 
-  // News state
+  // News state;
   headlines: Headline[];
   setHeadlines: (headlines: Headline[]) => void;
 
-  // UI state
+  // UI state;
   isDarkMode: boolean;
   toggleDarkMode: () => void;
 
@@ -44,11 +44,11 @@ interface AppState {
 }
 
 export const useStore = create<AppState>(set => ({
-  // User state
+  // User state;
   user: null,
   setUser: user => set({ user }),
 
-  // Bets state
+  // Bets state;
   bets: [],
   addBet: bet => set(state => ({ bets: [...state.bets, bet] })),
   removeBet: betId =>
@@ -60,7 +60,7 @@ export const useStore = create<AppState>(set => ({
       bets: state.bets.map(bet => (bet.id === betId ? { ...bet, ...updates } : bet)),
     })),
 
-  // Props state
+  // Props state;
   props: [],
   setProps: props => set({ props }),
   updateProp: (propId, updates) =>
@@ -68,19 +68,19 @@ export const useStore = create<AppState>(set => ({
       props: state.props.map(prop => (prop.id === propId ? { ...prop, ...updates } : prop)),
     })),
 
-  // Stats state
+  // Stats state;
   stats: null,
   setStats: stats => set({ stats }),
 
-  // Performance state
+  // Performance state;
   performance: [],
   setPerformance: data => set({ performance: data }),
 
-  // News state
+  // News state;
   headlines: [],
   setHeadlines: headlines => set({ headlines }),
 
-  // UI state
+  // UI state;
   isDarkMode: false,
   toggleDarkMode: () => set(state => ({ isDarkMode: !state.isDarkMode })),
 
@@ -94,5 +94,5 @@ export const useStore = create<AppState>(set => ({
   setSelectedLeague: league => set({ selectedLeague: league }),
 }));
 
-// Export the new Zustand-based store
-export { default as useAppStore } from './useAppStore';
+// Export the new Zustand-based store;
+export { default as useAppStore } from './useAppStore.ts';

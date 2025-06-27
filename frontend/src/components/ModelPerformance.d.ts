@@ -1,5 +1,5 @@
-import React from 'react';
-import { ModelMetrics } from '../types/prediction';
+import React from 'react.ts';
+import { ModelMetrics } from '@/types/prediction.ts';
 export interface ModelPerformanceProps {
     modelMetricsData: ModelMetrics;
 }

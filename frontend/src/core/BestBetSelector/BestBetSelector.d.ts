@@ -1,11 +1,11 @@
-import { RiskProfile } from '../types/prediction';
-import { UnifiedLogger } from '../logging/types';
-import { UnifiedMetrics } from '../metrics/types';
-import { BettingOpportunity } from '../../types/betting';
-import { PredictionEngine } from '../FinalPredictionEngine/FinalPredictionEngine';
-import { EventBus } from '../../unified/EventBus';
-import { ErrorHandler } from '../../unified/ErrorHandler';
-import { PerformanceMonitor } from '../../unified/PerformanceMonitor';
+import { RiskProfile } from '@/types/prediction.ts';
+import { UnifiedLogger } from '@/logging/types.ts';
+import { UnifiedMetrics } from '@/metrics/types.ts';
+import { BettingOpportunity } from '@/types/betting.ts';
+import { PredictionEngine } from '@/FinalPredictionEngine/FinalPredictionEngine.ts';
+import { EventBus } from '@/unified/EventBus.ts';
+import { ErrorHandler } from '@/unified/ErrorHandler.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
 interface ModelPerformance {
     wins: number;
     losses: number;

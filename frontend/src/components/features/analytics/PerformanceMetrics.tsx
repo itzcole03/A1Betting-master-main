@@ -1,6 +1,6 @@
-import React from 'react';
-import { Box, Card, CardContent, Typography, LinearProgress, Skeleton } from '@mui/material';
-import { formatPercentage } from '@/utils/formatters';
+import React from 'react.ts';
+import { Box, Card, CardContent, Typography, LinearProgress, Skeleton } from '@mui/material.ts';
+import { formatPercentage } from '@/utils/formatters.ts';
 
 interface PerformanceMetricsProps {
   performance: {
@@ -14,7 +14,7 @@ interface PerformanceMetricsProps {
   isLoading: boolean;
 }
 
-export const PerformanceMetrics: React.FC<PerformanceMetricsProps> = ({
+export const PerformanceMetrics: React.FC<PerformanceMetricsProps key={355997}> = ({
   performance,
   isLoading,
 }) => {
@@ -59,7 +59,7 @@ export const PerformanceMetrics: React.FC<PerformanceMetricsProps> = ({
 
   if (isLoading) {
     return (
-      <Box
+      <Box;
         sx={{
           display: 'grid',
           gridTemplateColumns: {
@@ -69,12 +69,12 @@ export const PerformanceMetrics: React.FC<PerformanceMetricsProps> = ({
           },
           gap: 3,
         }}
-      >
+       key={809848}>
         {metrics.map((_, index) => (
-          <Card key={index}>
-            <CardContent>
-              <Skeleton variant="text" width="60%" />
-              <Skeleton height={40} sx={{ mt: 2 }} variant="rectangular" />
+          <Card key={index} key={520458}>
+            <CardContent key={452065}>
+              <Skeleton variant="text" width="60%" / key={884479}>
+              <Skeleton height={40} sx={{ mt: 2 }} variant="rectangular" / key={802253}>
             </CardContent>
           </Card>
         ))}
@@ -83,7 +83,7 @@ export const PerformanceMetrics: React.FC<PerformanceMetricsProps> = ({
   }
 
   return (
-    <Box
+    <Box;
       sx={{
         display: 'grid',
         gridTemplateColumns: {
@@ -93,22 +93,22 @@ export const PerformanceMetrics: React.FC<PerformanceMetricsProps> = ({
         },
         gap: 3,
       }}
-    >
+     key={475084}>
       {metrics.map((metric, index) => (
-        <Card key={index}>
-          <CardContent>
-            <Typography gutterBottom color="text.secondary" variant="subtitle2">
+        <Card key={index} key={520458}>
+          <CardContent key={452065}>
+            <Typography gutterBottom color="text.secondary" variant="subtitle2" key={771402}>
               {metric.label}
             </Typography>
-            <Typography gutterBottom component="div" variant="h4">
+            <Typography gutterBottom component="div" variant="h4" key={303550}>
               {metric.format(metric.value)}
             </Typography>
-            <LinearProgress
+            <LinearProgress;
               color={metric.color as any}
               sx={{ height: 8, borderRadius: 4 }}
               value={Math.min(Math.abs(metric.value) * 100, 100)}
               variant="determinate"
-            />
+            / key={568719}>
           </CardContent>
         </Card>
       ))}

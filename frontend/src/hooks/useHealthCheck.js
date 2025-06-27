@@ -7,8 +7,8 @@ export const useHealthCheck = () => {
     useEffect(() => {
         const checkHealth = async () => {
             try {
-                const response = await fetch('/api/health');
-                const data = await response.json();
+
+
                 setHealthStatus({
                     healthy: data.status === 'ok',
                     lastChecked: Date.now(),
@@ -22,10 +22,10 @@ export const useHealthCheck = () => {
                 });
             }
         };
-        // Initial check
+        // Initial check;
         checkHealth();
-        // Set up interval for regular checks
-        const interval = setInterval(checkHealth, 30000); // Check every 30 seconds
+        // Set up interval for regular checks;
+        const interval = setInterval(checkHealth, 30000); // Check every 30 seconds;
         return () => clearInterval(interval);
     }, []);
     return { healthStatus };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface MLInsightsProps {
     autoUpdateInterval?: number;
     showFeatureImportance?: boolean;

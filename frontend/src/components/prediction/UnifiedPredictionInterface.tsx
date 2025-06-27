@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { UnifiedServiceRegistry } from '../../services/unified/UnifiedServiceRegistry';
-import { UnifiedPredictionService } from '../../services/unified/UnifiedPredictionService';
-import { UnifiedAnalyticsService } from '../../services/unified/UnifiedAnalyticsService';
-import { UnifiedWebSocketService } from '../../services/unified/UnifiedWebSocketService';
-import { UnifiedStateService } from '../../services/unified/UnifiedStateService';
-import { UnifiedSettingsService } from '../../services/unified/UnifiedSettingsService';
-import { UnifiedNotificationService } from '../../services/unified/UnifiedNotificationService';
-import { UnifiedErrorService } from '../../services/unified/UnifiedErrorService';
-import { Card, Button, Spinner, Badge, Modal, Toast } from '../ui/UnifiedUI';
+import React, { useState, useEffect  } from 'react.ts';
+import { UnifiedServiceRegistry } from '@/services/unified/UnifiedServiceRegistry.ts';
+import { UnifiedPredictionService } from '@/services/unified/UnifiedPredictionService.ts';
+import { UnifiedAnalyticsService } from '@/services/unified/UnifiedAnalyticsService.ts';
+import { UnifiedWebSocketService } from '@/services/unified/UnifiedWebSocketService.ts';
+import { UnifiedStateService } from '@/services/unified/UnifiedStateService.ts';
+import { UnifiedSettingsService } from '@/services/unified/UnifiedSettingsService.ts';
+import { UnifiedNotificationService } from '@/services/unified/UnifiedNotificationService.ts';
+import { UnifiedErrorService } from '@/services/unified/UnifiedErrorService.ts';
+import { Card, Button, Spinner, Badge, Modal, Toast } from '@/ui/UnifiedUI.ts';
 
 interface Prediction {
   id: string;
@@ -16,9 +16,9 @@ interface Prediction {
   prediction: number;
   confidence: number;
   timestamp: number;
-  features: Record<string, number>;
+  features: Record<string, number key={817366}>;
   modelVersion: string;
-  metadata: Record<string, any>;
+  metadata: Record<string, any key={989582}>;
 }
 
 interface PredictionOpportunity {
@@ -30,34 +30,33 @@ interface PredictionOpportunity {
   expectedValue: number;
   kellyFraction: number;
   timestamp: number;
-  metadata: Record<string, any>;
+  metadata: Record<string, any key={989582}>;
 }
 
 export const UnifiedPredictionInterface: React.FC = () => {
-  // Initialize services
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const predictionService = serviceRegistry.getService<UnifiedPredictionService>('prediction');
-  const analyticsService = serviceRegistry.getService<UnifiedAnalyticsService>('analytics');
-  const webSocketService = serviceRegistry.getService<UnifiedWebSocketService>('websocket');
-  const stateService = serviceRegistry.getService<UnifiedStateService>('state');
-  const settingsService = serviceRegistry.getService<UnifiedSettingsService>('settings');
-  const notificationService =
-    serviceRegistry.getService<UnifiedNotificationService>('notification');
-  const errorService = serviceRegistry.getService<UnifiedErrorService>('error');
+  // Initialize services;
 
-  // State
-  const [predictions, setPredictions] = useState<Prediction[]>([]);
-  const [opportunities, setOpportunities] = useState<PredictionOpportunity[]>([]);
+
+
+
+
+
+  const notificationService =
+    serviceRegistry.getService<UnifiedNotificationService key={460301}>('notification');
+
+  // State;
+  const [predictions, setPredictions] = useState<Prediction[] key={925811}>([]);
+  const [opportunities, setOpportunities] = useState<PredictionOpportunity[] key={190641}>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [selectedPrediction, setSelectedPrediction] = useState<Prediction | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
+  const [selectedPrediction, setSelectedPrediction] = useState<Prediction | null key={547963}>(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
   const [toast, setToast] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning' | 'info';
   } | null>(null);
 
-  // Load data
+  // Load data;
   useEffect(() => {
     loadData();
     setupWebSocket();
@@ -131,21 +130,21 @@ export const UnifiedPredictionInterface: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Spinner size="large" />
+      <div className="flex items-center justify-center min-h-screen" key={591667}>
+        <Spinner size="large" / key={932834}>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Card className="max-w-md">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold text-red-500 mb-4">Error</h2>
-            <p className="text-gray-600 mb-4">{error}</p>
-            <Button variant="primary" onClick={loadData}>
-              Retry
+      <div className="flex items-center justify-center min-h-screen" key={591667}>
+        <Card className="max-w-md" key={545553}>
+          <div className="text-center" key={120206}>
+            <h2 className="text-2xl font-bold text-red-500 mb-4" key={966495}>Error</h2>
+            <p className="text-gray-600 mb-4" key={575456}>{error}</p>
+            <Button variant="primary" onClick={loadData} key={159}>
+              Retry;
             </Button>
           </div>
         </Card>
@@ -154,39 +153,39 @@ export const UnifiedPredictionInterface: React.FC = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-4">Predictions & Opportunities</h1>
-        <div className="flex justify-between items-center">
-          <div className="flex space-x-4">
-            <Button variant="primary" onClick={loadData}>
-              Refresh
+    <div className="container mx-auto px-4 py-8" key={53071}>
+      <div className="mb-8" key={286587}>
+        <h1 className="text-3xl font-bold mb-4" key={838056}>Predictions & Opportunities</h1>
+        <div className="flex justify-between items-center" key={795957}>
+          <div className="flex space-x-4" key={470893}>
+            <Button variant="primary" onClick={loadData} key={159}>
+              Refresh;
             </Button>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
         {/* Predictions */}
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Recent Predictions</h2>
-          <div className="space-y-4">
+        <div key={241917}>
+          <h2 className="text-2xl font-bold mb-4" key={946196}>Recent Predictions</h2>
+          <div className="space-y-4" key={160407}>
             {predictions.map(prediction => (
-              <Card
+              <Card;
                 key={prediction.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => handlePredictionClick(prediction)}
+                onClick={() = key={213727}> handlePredictionClick(prediction)}
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-semibold">{prediction.marketType}</h3>
-                    <p className="text-sm text-gray-600">Event ID: {prediction.eventId}</p>
+                <div className="flex justify-between items-start" key={678391}>
+                  <div key={241917}>
+                    <h3 className="font-semibold" key={204068}>{prediction.marketType}</h3>
+                    <p className="text-sm text-gray-600" key={656535}>Event ID: {prediction.eventId}</p>
                   </div>
-                  <Badge
+                  <Badge;
                     variant={
-                      prediction.confidence >= 0.8
+                      prediction.confidence  key={319259}>= 0.8;
                         ? 'success'
-                        : prediction.confidence >= 0.6
+                        : prediction.confidence >= 0.6;
                           ? 'primary'
                           : 'secondary'
                     }
@@ -194,11 +193,11 @@ export const UnifiedPredictionInterface: React.FC = () => {
                     {prediction.confidence.toFixed(2)}
                   </Badge>
                 </div>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-600">
+                <div className="mt-2" key={848027}>
+                  <p className="text-sm text-gray-600" key={656535}>
                     Prediction: {prediction.prediction.toFixed(2)}
                   </p>
-                  <p className="text-xs text-gray-500">Model: {prediction.modelVersion}</p>
+                  <p className="text-xs text-gray-500" key={596425}>Model: {prediction.modelVersion}</p>
                 </div>
               </Card>
             ))}
@@ -206,25 +205,25 @@ export const UnifiedPredictionInterface: React.FC = () => {
         </div>
 
         {/* Opportunities */}
-        <div>
-          <h2 className="text-2xl font-bold mb-4">Betting Opportunities</h2>
-          <div className="space-y-4">
+        <div key={241917}>
+          <h2 className="text-2xl font-bold mb-4" key={946196}>Betting Opportunities</h2>
+          <div className="space-y-4" key={160407}>
             {opportunities.map(opportunity => (
-              <Card
+              <Card;
                 key={opportunity.id}
                 className="cursor-pointer hover:shadow-lg transition-shadow"
-                onClick={() => handleOpportunityClick(opportunity)}
+                onClick={() = key={966343}> handleOpportunityClick(opportunity)}
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-semibold">{opportunity.marketType}</h3>
-                    <p className="text-sm text-gray-600">Event ID: {opportunity.eventId}</p>
+                <div className="flex justify-between items-start" key={678391}>
+                  <div key={241917}>
+                    <h3 className="font-semibold" key={204068}>{opportunity.marketType}</h3>
+                    <p className="text-sm text-gray-600" key={656535}>Event ID: {opportunity.eventId}</p>
                   </div>
-                  <Badge
+                  <Badge;
                     variant={
-                      opportunity.expectedValue >= 0.1
+                      opportunity.expectedValue  key={588154}>= 0.1;
                         ? 'success'
-                        : opportunity.expectedValue >= 0
+                        : opportunity.expectedValue >= 0;
                           ? 'primary'
                           : 'danger'
                     }
@@ -232,11 +231,11 @@ export const UnifiedPredictionInterface: React.FC = () => {
                     EV: {opportunity.expectedValue.toFixed(2)}
                   </Badge>
                 </div>
-                <div className="mt-2">
-                  <p className="text-sm text-gray-600">
+                <div className="mt-2" key={848027}>
+                  <p className="text-sm text-gray-600" key={656535}>
                     Prediction: {opportunity.prediction.toFixed(2)}
                   </p>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600" key={656535}>
                     Kelly Fraction: {opportunity.kellyFraction.toFixed(2)}
                   </p>
                 </div>
@@ -247,45 +246,45 @@ export const UnifiedPredictionInterface: React.FC = () => {
       </div>
 
       {/* Prediction Details Modal */}
-      <Modal
+      <Modal;
         isOpen={showDetailsModal}
         title="Prediction Details"
-        onClose={() => setShowDetailsModal(false)}
+        onClose={() = key={745742}> setShowDetailsModal(false)}
       >
         {selectedPrediction && (
-          <div className="space-y-4">
-            <div>
-              <h3 className="font-semibold">Market Information</h3>
-              <p className="text-sm text-gray-600">Type: {selectedPrediction.marketType}</p>
-              <p className="text-sm text-gray-600">Event ID: {selectedPrediction.eventId}</p>
+          <div className="space-y-4" key={160407}>
+            <div key={241917}>
+              <h3 className="font-semibold" key={204068}>Market Information</h3>
+              <p className="text-sm text-gray-600" key={656535}>Type: {selectedPrediction.marketType}</p>
+              <p className="text-sm text-gray-600" key={656535}>Event ID: {selectedPrediction.eventId}</p>
             </div>
-            <div>
-              <h3 className="font-semibold">Prediction Details</h3>
-              <p className="text-sm text-gray-600">
+            <div key={241917}>
+              <h3 className="font-semibold" key={204068}>Prediction Details</h3>
+              <p className="text-sm text-gray-600" key={656535}>
                 Value: {selectedPrediction.prediction.toFixed(2)}
               </p>
-              <p className="text-sm text-gray-600">
+              <p className="text-sm text-gray-600" key={656535}>
                 Confidence: {selectedPrediction.confidence.toFixed(2)}
               </p>
             </div>
-            <div>
-              <h3 className="font-semibold">Features</h3>
-              <div className="grid grid-cols-2 gap-2">
+            <div key={241917}>
+              <h3 className="font-semibold" key={204068}>Features</h3>
+              <div className="grid grid-cols-2 gap-2" key={23071}>
                 {Object.entries(selectedPrediction.features).map(([key, value]) => (
-                  <div key={key} className="text-sm">
-                    <span className="text-gray-600">{key}:</span>
-                    <span className="ml-2">{value.toFixed(2)}</span>
+                  <div key={key} className="text-sm" key={870752}>
+                    <span className="text-gray-600" key={588716}>{key}:</span>
+                    <span className="ml-2" key={654787}>{value.toFixed(2)}</span>
                   </div>
                 ))}
               </div>
             </div>
-            <div>
-              <h3 className="font-semibold">Metadata</h3>
-              <div className="grid grid-cols-2 gap-2">
+            <div key={241917}>
+              <h3 className="font-semibold" key={204068}>Metadata</h3>
+              <div className="grid grid-cols-2 gap-2" key={23071}>
                 {Object.entries(selectedPrediction.metadata).map(([key, value]) => (
-                  <div key={key} className="text-sm">
-                    <span className="text-gray-600">{key}:</span>
-                    <span className="ml-2">{value}</span>
+                  <div key={key} className="text-sm" key={870752}>
+                    <span className="text-gray-600" key={588716}>{key}:</span>
+                    <span className="ml-2" key={654787}>{value}</span>
                   </div>
                 ))}
               </div>
@@ -295,7 +294,7 @@ export const UnifiedPredictionInterface: React.FC = () => {
       </Modal>
 
       {/* Toast Notifications */}
-      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() = key={337979}> setToast(null)} />}
     </div>
   );
 };

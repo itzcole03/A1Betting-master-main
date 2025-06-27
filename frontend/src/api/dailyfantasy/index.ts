@@ -1,9 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getLogger } from '../../core/logging/logger';
-import { getMetrics } from '../../core/metrics/metrics';
+import { NextApiRequest, NextApiResponse } from 'next.ts';
+import { getLogger } from '@/core/logging/logger.ts';
+import { getMetrics } from '@/core/metrics/metrics.ts';
 
-const logger = getLogger('DailyFantasyAPI');
-const metrics = getMetrics();
 
 interface DailyFantasyRequest {
   site: 'draftkings' | 'fanduel';
@@ -17,16 +15,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   const { site, date, sport } = req.body as DailyFantasyRequest;
-  const apiKey = req.headers.authorization?.split(' ')[1];
 
   if (!apiKey) {
     return res.status(401).json({ error: 'API key is required' });
   }
 
   try {
-    const startTime = Date.now();
-    const data = await fetchDailyFantasyData(site, date, sport, apiKey);
-    const duration = Date.now() - startTime;
+
+
 
     metrics.timing('dailyfantasy_api_request_duration', duration, {
       site,
@@ -42,7 +38,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     return res.status(200).json(data);
   } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
     logger.error('Error fetching DailyFantasy data', {
       error: errorMessage,
       site,
@@ -63,7 +59,7 @@ async function fetchDailyFantasyData(
   site: 'draftkings' | 'fanduel',
   date: string,
   sport: string,
-  apiKey: string
+  apiKey: string;
 ) {
   const baseUrl =
     site === 'draftkings' ? 'https://api.draftkings.com/v1' : 'https://api.fanduel.com/v1';
@@ -79,17 +75,15 @@ async function fetchDailyFantasyData(
     throw new Error(`API request failed: ${response.statusText}`);
   }
 
-  const data = await response.json();
   return processFantasyData(data, site);
 }
 
 function processFantasyData(data: unknown, _site: 'draftkings' | 'fanduel') {  
-  // Process the raw API response into our standardized format
-  const typedData = data as Record<string, unknown>;
-  const players = typedData.players as unknown[];
+  // Process the raw API response into our standardized format;
+
 
   return players.map((player: unknown) => {
-    const playerData = player as Record<string, unknown>;
+
     return {
       playerId: playerData.id,
       playerName: playerData.name,

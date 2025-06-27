@@ -64,8 +64,8 @@ export const UserProfile = () => {
     const handleSave = async () => {
         setIsLoading(true);
         try {
-            // TODO: Implement profile update API call
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated API call
+            // TODO: Implement profile update API call;
+            await new Promise(resolve => setTimeout(resolve, 1000)); // Simulated API call;
             setProfile(editedProfile);
             setIsEditing(false);
             setSnackbar({
@@ -92,9 +92,9 @@ export const UserProfile = () => {
         }));
     };
     const handleAvatarChange = (event) => {
-        const file = event.target.files?.[0];
+
         if (file) {
-            const reader = new FileReader();
+
             reader.onloadend = () => {
                 setEditedProfile(prev => ({
                     ...prev,

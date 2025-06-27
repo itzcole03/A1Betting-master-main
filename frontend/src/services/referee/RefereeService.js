@@ -5,10 +5,10 @@ import { API_CONFIG } from '../../config/apiConfig.js';
 export class RefereeService {
     constructor() {
         /**
-         * Fetch referee stats from backend/external API
+         * Fetch referee stats from backend/external API;
          */
         this.getRefereeStats = wrapWithRateLimit(async (refereeId) => {
-            const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/${refereeId}/stats`;
+
             const res = await fetch(url, {
                 method: 'GET',
                 headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }
@@ -18,10 +18,10 @@ export class RefereeService {
             return (await res.json());
         });
         /**
-         * Batch fetch referee stats by IDs
+         * Batch fetch referee stats by IDs;
          */
         this.getRefereeStatsBatch = wrapWithRateLimit(async (refereeIds) => {
-            const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/batch`;
+
             const res = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -35,10 +35,10 @@ export class RefereeService {
             return (await res.json());
         });
         /**
-         * Search referees by name
+         * Search referees by name;
          */
         this.searchReferees = wrapWithRateLimit(async (query) => {
-            const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/search?q=${encodeURIComponent(query)}`;
+
             const res = await fetch(url, {
                 method: 'GET',
                 headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }
@@ -48,10 +48,10 @@ export class RefereeService {
             return (await res.json());
         });
         /**
-         * Fetch advanced modeling/analytics for a referee
+         * Fetch advanced modeling/analytics for a referee;
          */
         this.getRefereeModeling = wrapWithRateLimit(async (refereeId) => {
-            const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/${refereeId}/modeling`;
+
             const res = await fetch(url, {
                 method: 'GET',
                 headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }

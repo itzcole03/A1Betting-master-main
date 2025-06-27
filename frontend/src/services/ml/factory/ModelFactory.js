@@ -68,13 +68,13 @@ export class ModelFactory {
     }
     trainModel(modelId, data) {
         try {
-            const model = this.getModel(modelId);
+
             if (!model) {
                 throw new ModelError(`Model ${modelId} not found`);
             }
             this.logger.info(`Training model ${modelId}`);
             this.monitor.setMetric(`model_${modelId}_training_started`, true);
-            return model
+            return model;
                 .train(data)
                 .then(() => {
                 this.logger.info(`Model ${modelId} trained successfully`);
@@ -95,13 +95,13 @@ export class ModelFactory {
     }
     predict(modelId, input) {
         try {
-            const model = this.getModel(modelId);
+
             if (!model) {
                 throw new ModelError(`Model ${modelId} not found`);
             }
             this.logger.info(`Making prediction with model ${modelId}`);
             this.monitor.setMetric(`model_${modelId}_prediction_started`, true);
-            return model
+            return model;
                 .predict(input)
                 .then(result => {
                 this.predictionHistory.push({
@@ -142,13 +142,13 @@ export class ModelFactory {
     }
     saveModel(modelId, path) {
         try {
-            const model = this.getModel(modelId);
+
             if (!model) {
                 throw new ModelError(`Model ${modelId} not found`);
             }
             this.logger.info(`Saving model ${modelId} to ${path}`);
             this.monitor.setMetric(`model_${modelId}_save_started`, true);
-            return model
+            return model;
                 .save(path)
                 .then(() => {
                 this.logger.info(`Model ${modelId} saved successfully`);
@@ -169,13 +169,13 @@ export class ModelFactory {
     }
     loadModel(modelId, path) {
         try {
-            const model = this.getModel(modelId);
+
             if (!model) {
                 throw new ModelError(`Model ${modelId} not found`);
             }
             this.logger.info(`Loading model ${modelId} from ${path}`);
             this.monitor.setMetric(`model_${modelId}_load_started`, true);
-            return model
+            return model;
                 .load(path)
                 .then(() => {
                 this.logger.info(`Model ${modelId} loaded successfully`);
@@ -215,8 +215,8 @@ export class ModelFactory {
         return Array.from(this.models.keys());
     }
     getModelInfo(modelId) {
-        const model = this.getModel(modelId);
-        const config = this.getModelConfig(modelId);
+
+
         if (!model || !config) {
             return undefined;
         }
@@ -228,7 +228,7 @@ export class ModelFactory {
         };
     }
     isModelTrained(modelId) {
-        const model = this.getModel(modelId);
+
         return model ? model.isModelTrained() : false;
     }
 }

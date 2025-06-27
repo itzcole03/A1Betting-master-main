@@ -1,4 +1,4 @@
-import { StrategyRecommendation, RiskTolerance } from '../types/core';
+import { StrategyRecommendation, RiskTolerance } from '@/types/core.ts';
 interface StrategyPerformance {
     totalExecutions: number;
     successRate: number;

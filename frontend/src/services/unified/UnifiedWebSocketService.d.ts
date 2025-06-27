@@ -1,6 +1,6 @@
 import { BaseService } from "./BaseService.js";
 import { UnifiedServiceRegistry } from "./UnifiedServiceRegistry.js";
-import { WebSocketMessage } from "../../types/webSocket.js";
+import { WebSocketMessage } from '@/types/webSocket.js';
 export interface WebSocketConfig {
     reconnectAttempts: number;
     reconnectInterval: number;

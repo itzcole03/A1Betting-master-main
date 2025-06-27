@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect  } from 'react.ts';
 import {
   DollarSign,
   TrendingUp,
@@ -6,10 +6,10 @@ import {
   Zap,
   Brain,
   AlertCircle,
-} from "lucide-react";
-import { useBetting, useUser } from "../../store/unified/UnifiedStoreManager";
-import { mlEngine } from "../../services/ml/UnifiedMLEngine";
-import type { EnsemblePrediction } from "../../services/ml/UnifiedMLEngine";
+} from 'lucide-react.ts';
+import { useBetting, useUser } from '@/store/unified/UnifiedStoreManager.ts';
+import { mlEngine } from '@/services/ml/UnifiedMLEngine.ts';
+import type { EnsemblePrediction } from '@/services/ml/UnifiedMLEngine.ts';
 
 interface OpportunityCandidate {
   id: string;
@@ -28,23 +28,23 @@ interface OpportunityCandidate {
 }
 
 const UltimateMoneyMaker: React.FC = () => {
-  const [opportunities, setOpportunities] = useState<OpportunityCandidate[]>(
+  const [opportunities, setOpportunities] = useState<OpportunityCandidate[] key={222904}>(
     [],
   );
   const [isScanning, setIsScanning] = useState(false);
   const [autoMode, setAutoMode] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] =
-    useState<OpportunityCandidate | null>(null);
+    useState<OpportunityCandidate | null key={510592}>(null);
   const [stakeAmount, setStakeAmount] = useState(0);
 
   const { bankroll, addBet, addOpportunity } = useBetting();
   const { preferences } = useUser();
 
-  // Scan for opportunities
+  // Scan for opportunities;
   const scanForOpportunities = async () => {
     setIsScanning(true);
     try {
-      // Simulate scanning process
+      // Simulate scanning process;
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
       const mockOpportunities: OpportunityCandidate[] = [
@@ -95,7 +95,7 @@ const UltimateMoneyMaker: React.FC = () => {
         },
       ];
 
-      // Calculate expected returns
+      // Calculate expected returns;
       mockOpportunities.forEach((opp) => {
         opp.expectedReturn =
           opp.recommendedStake *
@@ -105,7 +105,7 @@ const UltimateMoneyMaker: React.FC = () => {
 
       setOpportunities(mockOpportunities);
 
-      // Add to betting store
+      // Add to betting store;
       mockOpportunities.forEach((opp) => {
         addOpportunity({
           id: opp.id,
@@ -126,13 +126,13 @@ const UltimateMoneyMaker: React.FC = () => {
         });
       });
     } catch (error) {
-      console.error("Failed to scan for opportunities:", error);
+      // console statement removed
     } finally {
       setIsScanning(false);
     }
   };
 
-  // Place bet
+  // Place bet;
   const placeBet = (opportunity: OpportunityCandidate, amount: number) => {
     addBet({
       eventId: opportunity.eventId,
@@ -152,18 +152,18 @@ const UltimateMoneyMaker: React.FC = () => {
     setStakeAmount(0);
   };
 
-  // Auto-scan when component mounts
+  // Auto-scan when component mounts;
   useEffect(() => {
     scanForOpportunities();
   }, []);
 
-  // Auto-mode scanning
+  // Auto-mode scanning;
   useEffect(() => {
     if (!autoMode) return;
 
     const interval = setInterval(() => {
       scanForOpportunities();
-    }, 60000); // Scan every minute
+    }, 60000); // Scan every minute;
 
     return () => clearInterval(interval);
   }, [autoMode]);
@@ -186,61 +186,61 @@ const UltimateMoneyMaker: React.FC = () => {
     0,
   );
   const averageConfidence =
-    opportunities.length > 0
+    opportunities.length > 0;
       ? opportunities.reduce((sum, opp) => sum + opp.confidence, 0) /
-        opportunities.length
+        opportunities.length;
       : 0;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6" key={501869}>
       {/* Header */}
-      <div className="bg-gradient-to-r from-green-500 to-blue-600 rounded-lg p-6 text-white">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-2xl font-bold mb-2">Ultimate Money Maker</h1>
-            <p className="opacity-90">AI-powered value betting opportunities</p>
+      <div className="bg-gradient-to-r from-green-500 to-blue-600 rounded-lg p-6 text-white" key={349807}>
+        <div className="flex items-center justify-between" key={96335}>
+          <div key={241917}>
+            <h1 className="text-2xl font-bold mb-2" key={850338}>Ultimate Money Maker</h1>
+            <p className="opacity-90" key={381616}>AI-powered value betting opportunities</p>
           </div>
-          <div className="text-right">
-            <div className="text-3xl font-bold">
+          <div className="text-right" key={144468}>
+            <div className="text-3xl font-bold" key={118592}>
               ${totalPotentialReturn.toFixed(2)}
             </div>
-            <div className="opacity-90">Potential Return</div>
+            <div className="opacity-90" key={549921}>Potential Return</div>
           </div>
         </div>
       </div>
 
       {/* Controls */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-            Opportunity Scanner
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6" key={713143}>
+        <div className="flex items-center justify-between mb-4" key={810034}>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white" key={262972}>
+            Opportunity Scanner;
           </h2>
-          <div className="flex items-center space-x-3">
-            <label className="flex items-center space-x-2">
-              <input
+          <div className="flex items-center space-x-3" key={602729}>
+            <label className="flex items-center space-x-2" key={152301}>
+              <input;
                 type="checkbox"
                 checked={autoMode}
-                onChange={(e) => setAutoMode(e.target.checked)}
+                onChange={(e) = key={985374}> setAutoMode(e.target.checked)}
                 className="rounded"
               />
-              <span className="text-sm text-gray-600 dark:text-gray-400">
-                Auto Mode
+              <span className="text-sm text-gray-600 dark:text-gray-400" key={10584}>
+                Auto Mode;
               </span>
             </label>
-            <button
+            <button;
               onClick={scanForOpportunities}
               disabled={isScanning}
               className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-            >
+             key={494977}>
               {isScanning ? (
                 <>
-                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
-                  <span>Scanning...</span>
+                  <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" / key={818113}>
+                  <span key={595076}>Scanning...</span>
                 </>
               ) : (
                 <>
-                  <Zap className="w-4 h-4" />
-                  <span>Scan Now</span>
+                  <Zap className="w-4 h-4" / key={768470}>
+                  <span key={595076}>Scan Now</span>
                 </>
               )}
             </button>
@@ -248,148 +248,148 @@ const UltimateMoneyMaker: React.FC = () => {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <div className="text-2xl font-bold text-gray-900 dark:text-white">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6" key={66564}>
+          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={810618}>
+            <div className="text-2xl font-bold text-gray-900 dark:text-white" key={543826}>
               {opportunities.length}
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              Opportunities
+            <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+              Opportunities;
             </div>
           </div>
-          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <div className="text-2xl font-bold text-green-600">
+          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={810618}>
+            <div className="text-2xl font-bold text-green-600" key={702696}>
               {(averageConfidence * 100).toFixed(0)}%
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              Avg Confidence
+            <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+              Avg Confidence;
             </div>
           </div>
-          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <div className="text-2xl font-bold text-blue-600">
+          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={810618}>
+            <div className="text-2xl font-bold text-blue-600" key={634378}>
               ${bankroll.toLocaleString()}
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              Bankroll
+            <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+              Bankroll;
             </div>
           </div>
-          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-            <div className="text-2xl font-bold text-purple-600">
+          <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={810618}>
+            <div className="text-2xl font-bold text-purple-600" key={630773}>
               {opportunities.filter((o) => o.riskLevel === "low").length}
             </div>
-            <div className="text-sm text-gray-600 dark:text-gray-400">
-              Low Risk
+            <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+              Low Risk;
             </div>
           </div>
         </div>
       </div>
 
       {/* Opportunities */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg p-6">
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-          Current Opportunities
+      <div className="bg-white dark:bg-gray-800 rounded-lg p-6" key={713143}>
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4" key={296202}>
+          Current Opportunities;
         </h2>
 
         {opportunities.length === 0 ? (
-          <div className="text-center py-8">
-            <Brain className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500 dark:text-gray-400">
-              {isScanning
+          <div className="text-center py-8" key={715292}>
+            <Brain className="w-12 h-12 text-gray-400 mx-auto mb-4" / key={927977}>
+            <p className="text-gray-500 dark:text-gray-400" key={436614}>
+              {isScanning;
                 ? "Scanning for opportunities..."
                 : "No opportunities found. Click scan to search for value bets."}
             </p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4" key={160407}>
             {opportunities.map((opportunity) => (
-              <div
+              <div;
                 key={opportunity.id}
                 className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:shadow-md transition-shadow"
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
+               key={18988}>
+                <div className="flex items-center justify-between mb-3" key={56204}>
+                  <div key={241917}>
+                    <h3 className="font-semibold text-gray-900 dark:text-white" key={38736}>
                       {opportunity.description}
                     </h3>
-                    <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                      <span>Odds: {opportunity.currentOdds}</span>
-                      <span>•</span>
-                      <span>
+                    <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400" key={700533}>
+                      <span key={595076}>Odds: {opportunity.currentOdds}</span>
+                      <span key={595076}>•</span>
+                      <span key={595076}>
                         Edge: {(opportunity.valueEdge * 100).toFixed(1)}%
                       </span>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-2">
-                    <span
+                  <div className="flex items-center space-x-2" key={740830}>
+                    <span;
                       className={`px-2 py-1 rounded text-xs font-medium ${getRiskColor(opportunity.riskLevel)}`}
-                    >
+                     key={526634}>
                       {opportunity.riskLevel.toUpperCase()}
                     </span>
-                    <span className="text-lg font-bold text-green-600">
+                    <span className="text-lg font-bold text-green-600" key={39511}>
                       ${opportunity.expectedReturn.toFixed(2)}
                     </span>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-3">
-                  <div className="text-center">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Confidence
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-3" key={622020}>
+                  <div className="text-center" key={120206}>
+                    <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+                      Confidence;
                     </div>
-                    <div className="font-semibold text-gray-900 dark:text-white">
+                    <div className="font-semibold text-gray-900 dark:text-white" key={483754}>
                       {(opportunity.confidence * 100).toFixed(0)}%
                     </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Probability
+                  <div className="text-center" key={120206}>
+                    <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+                      Probability;
                     </div>
-                    <div className="font-semibold text-gray-900 dark:text-white">
+                    <div className="font-semibold text-gray-900 dark:text-white" key={483754}>
                       {(opportunity.predictedProbability * 100).toFixed(1)}%
                     </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="text-center" key={120206}>
+                    <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
                       Kelly %
                     </div>
-                    <div className="font-semibold text-gray-900 dark:text-white">
+                    <div className="font-semibold text-gray-900 dark:text-white" key={483754}>
                       {(opportunity.kellyFraction * 100).toFixed(1)}%
                     </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Recommended
+                  <div className="text-center" key={120206}>
+                    <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+                      Recommended;
                     </div>
-                    <div className="font-semibold text-green-600">
+                    <div className="font-semibold text-green-600" key={56507}>
                       ${opportunity.recommendedStake.toFixed(2)}
                     </div>
                   </div>
-                  <div className="text-center">
-                    <div className="text-sm text-gray-600 dark:text-gray-400">
-                      Max Stake
+                  <div className="text-center" key={120206}>
+                    <div className="text-sm text-gray-600 dark:text-gray-400" key={885780}>
+                      Max Stake;
                     </div>
-                    <div className="font-semibold text-gray-900 dark:text-white">
+                    <div className="font-semibold text-gray-900 dark:text-white" key={483754}>
                       ${opportunity.maxStake.toFixed(2)}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400">
-                    <Target className="w-4 h-4" />
-                    <span>
+                <div className="flex items-center justify-between" key={96335}>
+                  <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-400" key={700533}>
+                    <Target className="w-4 h-4" / key={184202}>
+                    <span key={595076}>
                       Expected Return: ${opportunity.expectedReturn.toFixed(2)}
                     </span>
                   </div>
-                  <button
-                    onClick={() => {
+                  <button;
+                    onClick={() = key={263171}> {
                       setSelectedOpportunity(opportunity);
                       setStakeAmount(opportunity.recommendedStake);
                     }}
                     className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center space-x-2"
                   >
-                    <DollarSign className="w-4 h-4" />
-                    <span>Place Bet</span>
+                    <DollarSign className="w-4 h-4" / key={683600}>
+                    <span key={595076}>Place Bet</span>
                   </button>
                 </div>
               </div>
@@ -400,30 +400,30 @@ const UltimateMoneyMaker: React.FC = () => {
 
       {/* Bet Placement Modal */}
       {selectedOpportunity && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-              Place Bet
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" key={831253}>
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4" key={152550}>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4" key={122149}>
+              Place Bet;
             </h3>
 
-            <div className="mb-4">
-              <p className="text-gray-600 dark:text-gray-400 mb-2">
+            <div className="mb-4" key={158827}>
+              <p className="text-gray-600 dark:text-gray-400 mb-2" key={681860}>
                 {selectedOpportunity.description}
               </p>
-              <div className="text-sm text-gray-500 dark:text-gray-500">
+              <div className="text-sm text-gray-500 dark:text-gray-500" key={172217}>
                 Odds: {selectedOpportunity.currentOdds} • Confidence:{" "}
                 {(selectedOpportunity.confidence * 100).toFixed(0)}%
               </div>
             </div>
 
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                Stake Amount
+            <div className="mb-4" key={158827}>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                Stake Amount;
               </label>
-              <input
+              <input;
                 type="number"
                 value={stakeAmount}
-                onChange={(e) =>
+                onChange={(e) = key={302264}>
                   setStakeAmount(parseFloat(e.target.value) || 0)
                 }
                 min="1"
@@ -431,30 +431,30 @@ const UltimateMoneyMaker: React.FC = () => {
                 step="0.01"
                 className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-white"
               />
-              <div className="flex justify-between text-xs text-gray-500 dark:text-gray-500 mt-1">
-                <span>
+              <div className="flex justify-between text-xs text-gray-500 dark:text-gray-500 mt-1" key={950022}>
+                <span key={595076}>
                   Recommended: $
                   {selectedOpportunity.recommendedStake.toFixed(2)}
                 </span>
-                <span>Max: ${selectedOpportunity.maxStake.toFixed(2)}</span>
+                <span key={595076}>Max: ${selectedOpportunity.maxStake.toFixed(2)}</span>
               </div>
             </div>
 
             {stakeAmount > 0 && (
-              <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                <div className="flex justify-between text-sm">
-                  <span>Potential Win:</span>
-                  <span className="font-semibold text-green-600">
+              <div className="mb-4 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg" key={281931}>
+                <div className="flex justify-between text-sm" key={353204}>
+                  <span key={595076}>Potential Win:</span>
+                  <span className="font-semibold text-green-600" key={567278}>
                     $
                     {(
                       (selectedOpportunity.currentOdds - 1) *
-                      stakeAmount
+                      stakeAmount;
                     ).toFixed(2)}
                   </span>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>Total Return:</span>
-                  <span className="font-semibold">
+                <div className="flex justify-between text-sm" key={353204}>
+                  <span key={595076}>Total Return:</span>
+                  <span className="font-semibold" key={331625}>
                     $
                     {(selectedOpportunity.currentOdds * stakeAmount).toFixed(2)}
                   </span>
@@ -462,26 +462,26 @@ const UltimateMoneyMaker: React.FC = () => {
               </div>
             )}
 
-            <div className="flex space-x-3">
-              <button
-                onClick={() => {
+            <div className="flex space-x-3" key={744346}>
+              <button;
+                onClick={() = key={206350}> {
                   setSelectedOpportunity(null);
                   setStakeAmount(0);
                 }}
                 className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700"
               >
-                Cancel
+                Cancel;
               </button>
-              <button
-                onClick={() => placeBet(selectedOpportunity, stakeAmount)}
+              <button;
+                onClick={() = key={206350}> placeBet(selectedOpportunity, stakeAmount)}
                 disabled={
                   stakeAmount <= 0 ||
                   stakeAmount > selectedOpportunity.maxStake ||
-                  stakeAmount > bankroll
+                  stakeAmount > bankroll;
                 }
                 className="flex-1 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                Confirm Bet
+                Confirm Bet;
               </button>
             </div>
           </div>

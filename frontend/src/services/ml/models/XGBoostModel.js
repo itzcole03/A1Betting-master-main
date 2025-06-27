@@ -9,7 +9,7 @@ export class XGBoostModel {
     }
     async initialize() {
         try {
-            // Initialize XGBoost model
+            // Initialize XGBoost model;
             this.model = await this.createModel();
             this.logger.info('XGBoost model initialized successfully');
         }
@@ -19,36 +19,36 @@ export class XGBoostModel {
         }
     }
     async createModel() {
-        // Implementation for XGBoost model using a JavaScript implementation
-        const logger = this.logger; // Capture logger for use in model methods
-        // Create XGBoost-style model
+        // Implementation for XGBoost model using a JavaScript implementation;
+        const logger = this.logger; // Capture logger for use in model methods;
+        // Create XGBoost-style model;
         const model = {
             async predict(input) {
-                // Placeholder gradient boosting prediction
-                // In a real implementation, this would use an actual XGBoost library
+                // Placeholder gradient boosting prediction;
+                // In a real implementation, this would use an actual XGBoost library;
                 return input.map(features => {
-                    // Simple ensemble prediction simulation
-                    let prediction = 0;
-                    const numTrees = 10; // Simulated tree count
-                    for (let i = 0; i < numTrees; i++) {
-                        // Simulate tree prediction with weighted features
-                        const treeOutput = features.reduce((sum, feature, idx) => sum + feature * Math.pow(0.9, idx), 0) * 0.1; // learningRate
+                    // Simple ensemble prediction simulation;
+                    const prediction = 0;
+                    const numTrees = 10; // Simulated tree count;
+                    for (const i = 0; i < numTrees; i++) {
+                        // Simulate tree prediction with weighted features;
+                        const treeOutput = features.reduce((sum, feature, idx) => sum + feature * Math.pow(0.9, idx), 0) * 0.1; // learningRate;
                         prediction += treeOutput;
                     }
-                    // Apply sigmoid for binary classification or return raw for regression
+                    // Apply sigmoid for binary classification or return raw for regression;
                     return prediction > 0 ? 1 / (1 + Math.exp(-prediction)) : prediction;
                 });
             },
             async train(_data, _options) {
-                // Placeholder boosting training
+                // Placeholder boosting training;
                 logger.info('XGBoost model training completed');
             },
             async save(path) {
-                // Placeholder save logic
+                // Placeholder save logic;
                 logger.info(`XGBoost model saved to ${path}`);
             },
             async load(path) {
-                // Placeholder load logic
+                // Placeholder load logic;
                 logger.info(`XGBoost model loaded from ${path}`);
             }
         };
@@ -60,13 +60,13 @@ export class XGBoostModel {
                 throw new Error('Model not initialized');
             }
             const { trainData, validationData } = this.prepareTrainingData(features, options);
-            // Train model
+            // Train model;
             await this.model.train(trainData, {
                 ...this.config,
                 ...options,
             });
-            // Evaluate model
-            const metrics = await this.evaluate(validationData);
+            // Evaluate model;
+
             return metrics;
         }
         catch (error) {
@@ -82,8 +82,8 @@ export class XGBoostModel {
             if (!this.model) {
                 throw new Error('Model not initialized');
             }
-            const input = this.preparePredictionInput(features);
-            const output = await this.model.predict(input);
+
+
             const prediction = {
                 timestamp: new Date().toISOString(),
                 input: this.formatInput(input),
@@ -107,7 +107,7 @@ export class XGBoostModel {
                 throw new Error('Model not initialized');
             }
             const { input, target } = this.prepareEvaluationData(features);
-            const predictions = await this.model.predict(input);
+
             const metrics = {
                 accuracy: this.calculateAccuracy(predictions, target),
                 precision: this.calculatePrecision(predictions, target),
@@ -163,65 +163,65 @@ export class XGBoostModel {
         }
     }
     prepareTrainingData(_features, _options) {
-        // Implement training data preparation
+        // Implement training data preparation;
         return {
             trainData: { input: [[]], target: [] },
             validationData: _features,
         };
     }
     preparePredictionInput(_features) {
-        // Implement prediction input preparation
+        // Implement prediction input preparation;
         return [[]];
     }
     prepareEvaluationData(_features) {
-        // Implement evaluation data preparation
+        // Implement evaluation data preparation;
         return {
             input: [[]],
             target: [],
         };
     }
     formatInput(_input) {
-        // Implement input formatting
+        // Implement input formatting;
         return {};
     }
     formatOutput(_output) {
-        // Implement output formatting
+        // Implement output formatting;
         return {};
     }
     calculateConfidence(_output) {
-        // Implement confidence calculation
+        // Implement confidence calculation;
         return 0;
     }
     calculateAccuracy(_predictions, _target) {
-        // Implement accuracy calculation
+        // Implement accuracy calculation;
         return 0;
     }
     calculatePrecision(_predictions, _target) {
-        // Implement precision calculation
+        // Implement precision calculation;
         return 0;
     }
     calculateRecall(_predictions, _target) {
-        // Implement recall calculation
+        // Implement recall calculation;
         return 0;
     }
     calculateF1Score(_predictions, _target) {
-        // Implement F1 score calculation
+        // Implement F1 score calculation;
         return 0;
     }
     calculateAUC(_predictions, _target) {
-        // Implement AUC calculation
+        // Implement AUC calculation;
         return 0;
     }
     calculateRMSE(_predictions, _target) {
-        // Implement RMSE calculation
+        // Implement RMSE calculation;
         return 0;
     }
     calculateMAE(_predictions, _target) {
-        // Implement MAE calculation
+        // Implement MAE calculation;
         return 0;
     }
     calculateR2(_predictions, _target) {
-        // Implement R2 calculation
+        // Implement R2 calculation;
         return 0;
     }
     getMetadata() {

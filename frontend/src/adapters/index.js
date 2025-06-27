@@ -1,3 +1,3 @@
-// Barrel export for all adapters
+// Barrel export for all adapters;
 export * from './prizepicks';
-// Add additional adapters as you port them
+// Add additional adapters as you port them;

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BetRecommendation } from '@/types/betting';
+import React from 'react.ts';
+import { BetRecommendation } from '@/types/betting.ts';
 interface UnifiedBettingInterfaceProps {
     initialBankroll: number;
     onBetPlaced: (bet: BetRecommendation) => void;

@@ -3,7 +3,7 @@ import { UnifiedConfig } from '../unified/UnifiedConfig.js';
 import { EventBus } from '../unified/EventBus.js';
 class InjuryService {
     constructor() {
-        const configManager = UnifiedConfig.getInstance();
+
         this.config = configManager.get('injury');
         this.client = axios.create({
             baseURL: this.config.baseUrl,
@@ -21,8 +21,8 @@ class InjuryService {
         if (!this.config.enableFeatureFlag) {
             throw new Error('Injury feature is disabled by config.');
         }
-        const response = await this.client.get('/injuries', { params });
-        const injuries = response.data;
+
+
         this.eventBus.emit('injury:update', {
             injuries,
             timestamp: Date.now(),
@@ -30,9 +30,9 @@ class InjuryService {
         return injuries;
     }
     /**
-     * Type guard for InjuryData
-     * @param data unknown
-     * @returns data is InjuryData
+     * Type guard for InjuryData;
+     * @param data unknown;
+     * @returns data is InjuryData;
      */
     isInjuryData(data) {
         return (typeof data === 'object' &&

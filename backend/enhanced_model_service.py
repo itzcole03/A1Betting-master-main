@@ -184,7 +184,7 @@ class EnhancedMathematicalModelService:
         logger.info(
             f"Starting unified prediction {request_id} for event {request.event_id}"
         )
-        logger.info(f"Processing level: {request.processing_level.value}")
+        logger.info("Processing level: {request.processing_level.value}")
         logger.info(
             f"Models requested: {[m.value for m in (request.model_types or [])]}"
         )
@@ -374,8 +374,8 @@ class EnhancedMathematicalModelService:
 
             return result
 
-        except Exception as e:
-            logger.error(f"Unified prediction {request_id} failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Unified prediction {request_id} failed: {e!s}")
 
             # Return fallback result
             fallback_prediction = (
@@ -906,7 +906,7 @@ class EnhancedMathematicalModelService:
         self, requests: List[UnifiedPredictionRequest]
     ) -> List[UnifiedPredictionResult]:
         """Process multiple predictions in batch with optimal resource management"""
-        logger.info(f"Processing batch of {len(requests)} predictions")
+        logger.info("Processing batch of {len(requests)} predictions")
 
         # Determine optimal batch processing strategy
         if len(requests) <= 5:
@@ -927,7 +927,7 @@ class EnhancedMathematicalModelService:
                 *[bounded_prediction(req) for req in requests]
             )
 
-        logger.info(f"Batch processing completed: {len(results)} predictions generated")
+        logger.info("Batch processing completed: {len(results)} predictions generated")
 
         return results
 

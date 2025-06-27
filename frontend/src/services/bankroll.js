@@ -39,16 +39,16 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
 import apiService from './api';
 import { Injectable } from '@nestjs/common';
 import { EventEmitter } from 'events';
-let BankrollService = (() => {
+const BankrollService = (() => {
     let _classDecorators = [Injectable()];
     let _classDescriptor;
-    let _classExtraInitializers = [];
+    const _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = EventEmitter;
+    const _classSuper = EventEmitter;
     var BankrollService = _classThis = class extends _classSuper {
         constructor() {
             super();
-            this.currentBalance = 1000; // Starting balance
+            this.currentBalance = 1000; // Starting balance;
             this.transactions = [];
             this.settings = {
                 maxBetPercentage: 0.05,
@@ -56,8 +56,8 @@ let BankrollService = (() => {
                 takeProfitPercentage: 0.2,
                 kellyFraction: 0.5,
             };
-            // Initialize balance from localStorage if available
-            const storedBalance = localStorage.getItem('current_balance');
+            // Initialize balance from localStorage if available;
+
             if (storedBalance) {
                 this.currentBalance = parseFloat(storedBalance);
             }
@@ -69,17 +69,17 @@ let BankrollService = (() => {
             return BankrollService.instance;
         }
         async initialize() {
-            // Initialize bankroll service
+            // Initialize bankroll service;
         }
         async getBalance() {
             try {
-                const response = await apiService.getUserProfile();
+
                 this.currentBalance = response.data.balance;
                 localStorage.setItem('current_balance', this.currentBalance.toString());
                 return this.currentBalance;
             }
             catch (error) {
-                console.error('Failed to fetch balance:', error);
+                // console statement removed
                 throw error;
             }
         }
@@ -97,7 +97,7 @@ let BankrollService = (() => {
                 return response.data;
             }
             catch (error) {
-                console.error('Failed to process deposit:', error);
+                // console statement removed
                 throw error;
             }
         }
@@ -118,17 +118,17 @@ let BankrollService = (() => {
                 return response.data;
             }
             catch (error) {
-                console.error('Failed to process withdrawal:', error);
+                // console statement removed
                 throw error;
             }
         }
         async getTransactionHistory() {
             try {
-                const response = await apiService.getTransactions();
+
                 return response.data;
             }
             catch (error) {
-                console.error('Failed to fetch transaction history:', error);
+                // console statement removed
                 throw error;
             }
         }
@@ -156,7 +156,7 @@ let BankrollService = (() => {
                 }
             }
             catch (error) {
-                console.error('Failed to update balance:', error);
+                // console statement removed
                 throw error;
             }
         }
@@ -191,11 +191,11 @@ let BankrollService = (() => {
             return stats;
         }
         getStartingBalance() {
-            const firstDeposit = this.transactions.find(t => t.type === 'deposit');
+
             return firstDeposit ? firstDeposit.amount : 0;
         }
         getTotalDeposits() {
-            return this.transactions
+            return this.transactions;
                 .filter(t => t.type === 'deposit')
                 .reduce((sum, t) => sum + t.amount, 0);
         }
@@ -215,39 +215,39 @@ let BankrollService = (() => {
             return this.transactions.reduce((sum, t) => sum + t.amount, 0);
         }
         getROI() {
-            const totalBets = this.getTotalBets();
+
             if (totalBets === 0)
                 return 0;
             return (this.getNetProfit() / this.getTotalDeposits()) * 100;
         }
         getWinRate() {
-            const totalBets = this.getTotalBets();
+
             if (totalBets === 0)
                 return 0;
             return (this.getTotalWins() / totalBets) * 100;
         }
         getAverageBetSize() {
-            const bets = this.transactions.filter(t => t.type === 'bet');
+
             if (bets.length === 0)
                 return 0;
             return Math.abs(bets.reduce((sum, t) => sum + t.amount, 0)) / bets.length;
         }
         getLargestWin() {
-            const wins = this.transactions.filter(t => t.type === 'win');
+
             if (wins.length === 0)
                 return 0;
             return Math.max(...wins.map(t => t.amount));
         }
         getLargestLoss() {
-            const losses = this.transactions.filter(t => t.type === 'loss');
+
             if (losses.length === 0)
                 return 0;
             return Math.abs(Math.min(...losses.map(t => t.amount)));
         }
         getCurrentStreak() {
-            let streak = 0;
-            for (let i = this.transactions.length - 1; i >= 0; i--) {
-                const t = this.transactions[i];
+            const streak = 0;
+            for (const i = this.transactions.length - 1; i >= 0; i--) {
+
                 if (t.type === 'win')
                     streak++;
                 else if (t.type === 'loss')
@@ -256,8 +256,8 @@ let BankrollService = (() => {
             return streak;
         }
         getBestStreak() {
-            let currentStreak = 0;
-            let bestStreak = 0;
+            const currentStreak = 0;
+            const bestStreak = 0;
             for (const t of this.transactions) {
                 if (t.type === 'win') {
                     currentStreak++;
@@ -270,8 +270,8 @@ let BankrollService = (() => {
             return bestStreak;
         }
         getWorstStreak() {
-            let currentStreak = 0;
-            let worstStreak = 0;
+            const currentStreak = 0;
+            const worstStreak = 0;
             for (const t of this.transactions) {
                 if (t.type === 'loss') {
                     currentStreak++;
@@ -287,33 +287,33 @@ let BankrollService = (() => {
             return this.currentBalance * this.settings.maxBetPercentage;
         }
         getDailyBetsCount() {
-            const today = new Date().toISOString().split('T')[0];
+
             return this.transactions.filter(t => t.type === 'bet' && t.timestamp.startsWith(today)).length;
         }
         getConcurrentBetsCount() {
             return this.transactions.filter(t => t.type === 'bet' && t.status === 'completed').length;
         }
         checkStopLoss() {
-            const stopLossAmount = this.currentBalance * this.settings.stopLossPercentage;
+
             return this.currentBalance <= stopLossAmount;
         }
         checkTakeProfit() {
-            const takeProfitAmount = this.currentBalance * this.settings.takeProfitPercentage;
+
             return this.currentBalance >= takeProfitAmount;
         }
         getMetrics() {
-            const totalWins = this.transactions.filter(t => t.type === 'win').length;
-            const totalLosses = this.transactions.filter(t => t.type === 'loss').length;
-            const totalBets = this.transactions.filter(t => t.type === 'bet').length;
-            const winRate = totalBets > 0 ? totalWins / totalBets : 0;
-            const averageBetSize = totalBets > 0
+
+
+
+
+            const averageBetSize = totalBets > 0;
                 ? this.transactions.filter(t => t.type === 'bet').reduce((sum, t) => sum + t.amount, 0) /
-                    totalBets
+                    totalBets;
                 : 0;
-            const largestWin = Math.max(...this.transactions.filter(t => t.type === 'win').map(t => t.amount), 0);
-            const largestLoss = Math.min(...this.transactions.filter(t => t.type === 'loss').map(t => t.amount), 0);
-            const netProfit = this.currentBalance - 1000; // Starting balance
-            const roi = netProfit / 1000; // ROI relative to starting balance
+
+
+            const netProfit = this.currentBalance - 1000; // Starting balance;
+            const roi = netProfit / 1000; // ROI relative to starting balance;
             return {
                 currentBalance: this.currentBalance,
                 startingBalance: 1000,
@@ -330,7 +330,7 @@ let BankrollService = (() => {
     };
     __setFunctionName(_classThis, "BankrollService");
     (() => {
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
         BankrollService = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });

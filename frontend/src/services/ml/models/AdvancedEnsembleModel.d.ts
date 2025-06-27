@@ -1,10 +1,10 @@
 /**
  * Advanced ensemble model that combines multiple specialized models for improved predictions.
  */
-import { BaseModel } from './BaseModel';
-import { AdvancedEnsembleConfig, ModelMetrics } from '@/types';
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../core/UnifiedErrorHandler';
+import { BaseModel } from './BaseModel.ts';
+import { AdvancedEnsembleConfig, ModelMetrics } from '@/types.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/core/UnifiedErrorHandler.ts';
 export declare class AdvancedEnsembleModel extends BaseModel {
     private models;
     private weights;

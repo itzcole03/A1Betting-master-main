@@ -1,8 +1,8 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { DollarSign, Target, TrendingUp } from "lucide-react";
+import React from 'react.ts';
+import { motion } from 'framer-motion.ts';
+import { DollarSign, Target, TrendingUp } from 'lucide-react.ts';
 
-// Enhanced styling for module management
+// Enhanced styling for module management;
 export const moduleEnhancementStyles = `
   .enhanced-module-card {
     background: linear-gradient(135deg, rgba(30, 41, 59, 0.4) 0%, rgba(51, 65, 85, 0.3) 100%);
@@ -67,7 +67,7 @@ export const moduleEnhancementStyles = `
   }
 `;
 
-// Money-making scores for modules
+// Money-making scores for modules;
 export const getModuleScore = (moduleId: string) => {
   const scores = {
     "advanced-analytics": { money: 95, accuracy: 12, profit: 25000 },
@@ -82,83 +82,82 @@ export const getModuleScore = (moduleId: string) => {
   return scores[moduleId] || { money: 50, accuracy: 3, profit: 5000 };
 };
 
-// Enhanced module card component
+// Enhanced module card component;
 export const EnhancedModuleIndicators = ({ moduleId, isActive }) => {
-  const scores = getModuleScore(moduleId);
 
   return (
     <>
       {/* Money-making badge for high-value modules */}
       {scores.money >= 80 && (
-        <div className="money-badge">💰 {scores.money}%</div>
+        <div className="money-badge" key={106837}>💰 {scores.money}%</div>
       )}
 
       {/* Performance metrics */}
-      <div style={{ marginBottom: "12px" }}>
-        <div
+      <div style={{ marginBottom: "12px" }} key={559205}>
+        <div;
           style={{
             display: "flex",
             justifyContent: "space-between",
             marginBottom: "4px",
           }}
-        >
-          <span style={{ fontSize: "11px", color: "#94a3b8" }}>
-            Money Impact
+         key={594268}>
+          <span style={{ fontSize: "11px", color: "#94a3b8" }} key={712316}>
+            Money Impact;
           </span>
-          <span
+          <span;
             style={{ fontSize: "11px", fontWeight: "bold", color: "#10b981" }}
-          >
+           key={675849}>
             {scores.money}%
           </span>
         </div>
-        <div className="profit-bar">
-          <div
-            className={`profit-fill ${scores.money >= 85 ? "high" : scores.money >= 70 ? "medium" : "low"}`}
+        <div className="profit-bar" key={190170}>
+          <div;
+            className={`profit-fill ${scores.money  key={235590}>= 85 ? "high" : scores.money >= 70 ? "medium" : "low"}`}
             style={{ width: `${scores.money}%` }}
           />
         </div>
       </div>
 
-      <div
+      <div;
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "8px",
           marginBottom: "8px",
         }}
-      >
-        <div
+       key={465743}>
+        <div;
           style={{
             background: "rgba(59, 130, 246, 0.1)",
             padding: "6px",
             borderRadius: "6px",
             border: "1px solid rgba(59, 130, 246, 0.2)",
           }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span style={{ fontSize: "10px", color: "#93c5fd" }}>Accuracy</span>
-            <span
+         key={234963}>
+          <div style={{ display: "flex", justifyContent: "space-between" }} key={754913}>
+            <span style={{ fontSize: "10px", color: "#93c5fd" }} key={358851}>Accuracy</span>
+            <span;
               style={{ fontSize: "10px", fontWeight: "bold", color: "#60a5fa" }}
-            >
+             key={971076}>
               +{scores.accuracy}%
             </span>
           </div>
         </div>
 
-        <div
+        <div;
           style={{
             background: "rgba(34, 197, 94, 0.1)",
             padding: "6px",
             borderRadius: "6px",
             border: "1px solid rgba(34, 197, 94, 0.2)",
           }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <span style={{ fontSize: "10px", color: "#86efac" }}>Daily</span>
-            <span
+         key={698274}>
+          <div style={{ display: "flex", justifyContent: "space-between" }} key={754913}>
+            <span style={{ fontSize: "10px", color: "#86efac" }} key={968213}>Daily</span>
+            <span;
               style={{ fontSize: "10px", fontWeight: "bold", color: "#22c55e" }}
-            >
-              ${(scores.profit / 1000).toFixed(0)}k
+             key={617399}>
+              ${(scores.profit / 1000).toFixed(0)}k;
             </span>
           </div>
         </div>

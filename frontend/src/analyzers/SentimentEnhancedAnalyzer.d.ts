@@ -1,8 +1,8 @@
-import { Analyzer } from '../utils/Analyzer';
-import { ProjectionAnalysis } from './ProjectionAnalyzer';
-import { SocialSentimentData } from '../adapters/SocialSentimentAdapter';
-import { SportsRadarData } from '../adapters/SportsRadarAdapter';
-import { TheOddsData } from '../adapters/TheOddsAdapter';
+import { Analyzer } from '@/utils/Analyzer.ts';
+import { ProjectionAnalysis } from './ProjectionAnalyzer.ts';
+import { SocialSentimentData } from '@/adapters/SocialSentimentAdapter.ts';
+import { SportsRadarData } from '@/adapters/SportsRadarAdapter.ts';
+import { TheOddsData } from '@/adapters/TheOddsAdapter.ts';
 export interface EnhancedAnalysis extends ProjectionAnalysis {
     confidence: number;
     sentiment: {

@@ -1,4 +1,4 @@
-import EventEmitter from 'eventemitter3';
+import EventEmitter from 'eventemitter3.ts';
 export interface BettingStrategy {
     id: string;
     name: string;

@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import { FantasyPredictionEnhancer } from '../FantasyPredictionEnhancer';
 import { useLogger } from '../../../hooks/useLogger';
 import { useMetrics } from '../../../hooks/useMetrics';
-// Mock the hooks
+// Mock the hooks;
 jest.mock('../../../hooks/useLogger');
 jest.mock('../../../hooks/useMetrics');
 const mockLogger = {
@@ -58,7 +58,7 @@ describe.skip('FantasyPredictionEnhancer', () => {
             predictedScore: 20,
         },
     ];
-    const mockOnEnhancedPredictions = jest.fn();
+
     beforeEach(() => {
         useLogger.mockReturnValue(mockLogger);
         useMetrics.mockReturnValue(mockMetrics);
@@ -120,7 +120,7 @@ describe.skip('FantasyPredictionEnhancer', () => {
                 }),
             ]));
         });
-        // Should not include the unknown player
+        // Should not include the unknown player;
         expect(mockOnEnhancedPredictions).not.toHaveBeenCalledWith(expect.arrayContaining([
             expect.objectContaining({
                 playerId: '3',
@@ -133,7 +133,7 @@ describe.skip('FantasyPredictionEnhancer', () => {
         expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
     it('handles errors gracefully', async () => {
-        const error = new Error('Test error');
+
         mockOnEnhancedPredictions.mockRejectedValueOnce(error);
         render(_jsx(FantasyPredictionEnhancer, { fantasyData: mockFantasyData, predictions: mockPredictions, onEnhancedPredictions: mockOnEnhancedPredictions }));
         await waitFor(() => {

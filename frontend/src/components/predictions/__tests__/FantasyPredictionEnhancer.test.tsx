@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { FantasyPredictionEnhancer } from '../FantasyPredictionEnhancer';
-import { useLogger } from '../../../hooks/useLogger';
-import { useMetrics } from '../../../hooks/useMetrics';
+import React from 'react.ts';
+import { render, screen, waitFor } from '@testing-library/react.ts';
+import { FantasyPredictionEnhancer } from '@/FantasyPredictionEnhancer.ts';
+import { useLogger } from '@/../hooks/useLogger.ts';
+import { useMetrics } from '@/../hooks/useMetrics.ts';
 
-// Mock the hooks
+// Mock the hooks;
 jest.mock('../../../hooks/useLogger');
 jest.mock('../../../hooks/useMetrics');
 
@@ -64,8 +64,6 @@ describe.skip('FantasyPredictionEnhancer', () => {
     },
   ];
 
-  const mockOnEnhancedPredictions = jest.fn();
-
   beforeEach(() => {
     (useLogger as jest.Mock).mockReturnValue(mockLogger);
     (useMetrics as jest.Mock).mockReturnValue(mockMetrics);
@@ -78,11 +76,11 @@ describe.skip('FantasyPredictionEnhancer', () => {
 
   it('renders the component with initial state', () => {
     render(
-      <FantasyPredictionEnhancer
+      <FantasyPredictionEnhancer;
         fantasyData={mockFantasyData}
         predictions={mockPredictions}
         onEnhancedPredictions={mockOnEnhancedPredictions}
-      />
+      / key={829024}>
     );
 
     expect(screen.getByText('Enhanced Predictions')).toBeInTheDocument();
@@ -90,11 +88,11 @@ describe.skip('FantasyPredictionEnhancer', () => {
 
   it('enhances predictions with fantasy data', async () => {
     render(
-      <FantasyPredictionEnhancer
+      <FantasyPredictionEnhancer;
         fantasyData={mockFantasyData}
         predictions={mockPredictions}
         onEnhancedPredictions={mockOnEnhancedPredictions}
-      />
+      / key={829024}>
     );
 
     await waitFor(() => {
@@ -139,11 +137,11 @@ describe.skip('FantasyPredictionEnhancer', () => {
     ];
 
     render(
-      <FantasyPredictionEnhancer
+      <FantasyPredictionEnhancer;
         fantasyData={mockFantasyData}
         predictions={predictionsWithMissingData}
         onEnhancedPredictions={mockOnEnhancedPredictions}
-      />
+      / key={416597}>
     );
 
     await waitFor(() => {
@@ -161,7 +159,7 @@ describe.skip('FantasyPredictionEnhancer', () => {
       );
     });
 
-    // Should not include the unknown player
+    // Should not include the unknown player;
     expect(mockOnEnhancedPredictions).not.toHaveBeenCalledWith(
       expect.arrayContaining([
         expect.objectContaining({
@@ -174,26 +172,26 @@ describe.skip('FantasyPredictionEnhancer', () => {
 
   it('displays loading state while processing', () => {
     render(
-      <FantasyPredictionEnhancer
+      <FantasyPredictionEnhancer;
         fantasyData={mockFantasyData}
         predictions={mockPredictions}
         onEnhancedPredictions={mockOnEnhancedPredictions}
-      />
+      / key={829024}>
     );
 
     expect(screen.getByRole('progressbar')).toBeInTheDocument();
   });
 
   it('handles errors gracefully', async () => {
-    const error = new Error('Test error');
+
     mockOnEnhancedPredictions.mockRejectedValueOnce(error);
 
     render(
-      <FantasyPredictionEnhancer
+      <FantasyPredictionEnhancer;
         fantasyData={mockFantasyData}
         predictions={mockPredictions}
         onEnhancedPredictions={mockOnEnhancedPredictions}
-      />
+      / key={829024}>
     );
 
     await waitFor(() => {

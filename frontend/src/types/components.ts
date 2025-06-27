@@ -1,6 +1,6 @@
-import { RiskProfileType } from './betting';
-import { SHAPExplanation, ShapFeature } from './betting';
-import { BetRecommendation } from './betting';
+import { RiskProfileType } from './betting.ts';
+import { SHAPExplanation, ShapFeature } from './betting.ts';
+import { BetRecommendation } from './betting.ts';
 
 export interface RiskProfileSelectorProps {
   currentProfile: RiskProfileType;

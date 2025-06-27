@@ -1,10 +1,10 @@
 /**
- * Unified Prediction Engine - Integrated Version
+ * Unified Prediction Engine - Integrated Version;
  *
- * This is the consolidated prediction engine that integrates all existing models
+ * This is the consolidated prediction engine that integrates all existing models;
  * and connects properly to the backend services for Items 1 & 2 of the integration checklist.
  */
-import { TimestampedData, BettingOpportunity, PredictionState } from '../types/core';
+import { TimestampedData, BettingOpportunity, PredictionState } from '@/types/core.ts';
 export interface PredictionRequest {
     features: Record<string, number>;
     playerId?: string;

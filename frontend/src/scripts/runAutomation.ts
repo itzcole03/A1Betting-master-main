@@ -1,53 +1,52 @@
-import { BettingAutomationService } from '../services/automation/BettingAutomationService';
-import { defaultConfig } from '../config/automation.config';
-import { notificationService } from '../services/notification';
+import { BettingAutomationService } from '@/services/automation/BettingAutomationService.ts';
+import { defaultConfig } from '@/config/automation.config.ts';
+import { notificationService } from '@/services/notification.ts';
 
 async function main() {
   try {
-    const automationService = BettingAutomationService.getInstance();
 
-    // Set up process handlers
+    // Set up process handlers;
     process.on('SIGINT', async () => {
-      console.log('\nGracefully shutting down...');
+      // console statement removed
       await automationService.stop();
       process.exit(0);
     });
 
     process.on('SIGTERM', async () => {
-      console.log('\nReceived SIGTERM. Shutting down...');
+      // console statement removed
       await automationService.stop();
       process.exit(0);
     });
 
     process.on('uncaughtException', async error => {
-      console.error('Uncaught Exception:', error);
+      // console statement removed
       notificationService.notify('error', 'Uncaught Exception', { error });
       await automationService.stop();
       process.exit(1);
     });
 
     process.on('unhandledRejection', async (reason, promise) => {
-      console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+      // console statement removed
       notificationService.notify('error', 'Unhandled Rejection', { reason });
       await automationService.stop();
       process.exit(1);
     });
 
-    // Start the automation
-    console.log('Starting betting automation...');
+    // Start the automation;
+    // console statement removed
     await automationService.start();
 
-    // Log startup success
-    console.log('Betting automation started successfully');
+    // Log startup success;
+    // console statement removed
     notificationService.notify('success', 'Betting automation started successfully');
   } catch (error) {
-    console.error('Failed to start betting automation:', error);
+    // console statement removed
     process.exit(1);
   }
 }
 
-// Run the automation
+// Run the automation;
 main().catch(error => {
-  console.error('Fatal error:', error);
+  // console statement removed
   process.exit(1);
 });

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react.ts';
 
 
 
@@ -23,9 +23,9 @@ interface UseVirtualListResult<T> {
 
 export function useVirtualList<T>(
   items: T[],
-  { itemHeight, overscan = 3, containerHeight = 0 }: UseVirtualListOptions
+  { itemHeight, overscan = 3, containerHeight = 0 }: UseVirtualListOptions;
 ): UseVirtualListResult<T> {
-  const containerRef = useRef<HTMLDivElement>(null);
+
   const [scrollTop, setScrollTop] = useState(0);
   const [clientHeight, setClientHeight] = useState(containerHeight);
 
@@ -43,23 +43,20 @@ export function useVirtualList<T>(
     return () => resizeObserver.disconnect();
   }, []);
 
-  const totalHeight = items.length * itemHeight;
-
   const getVirtualItems = useCallback(() => {
     if (!clientHeight) return [];
 
-    const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
     const endIndex = Math.min(
       items.length,
-      Math.ceil((scrollTop + clientHeight) / itemHeight) + overscan
+      Math.ceil((scrollTop + clientHeight) / itemHeight) + overscan;
     );
 
     const virtualItems: VirtualItem[] = [];
 
-    for (let i = startIndex; i < endIndex; i++) {
+    for (const i = startIndex; i < endIndex; i++) {
       virtualItems.push({
         index: i,
-        start: i * itemHeight
+        start: i * itemHeight;
       });
     }
 
@@ -70,34 +67,31 @@ export function useVirtualList<T>(
     (index: number) => {
       if (!containerRef.current) return;
 
-      const top = index * itemHeight;
       containerRef.current.scrollTop = top;
     },
     [itemHeight]
   );
 
   const handleScroll = useCallback((event: Event) => {
-    const target = event.target as HTMLDivElement;
+
     setScrollTop(target.scrollTop);
   }, []);
 
   useEffect(() => {
-    const container = containerRef.current;
+
     if (!container) return;
 
     container.addEventListener('scroll', handleScroll);
     return () => container.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  const virtualItems = getVirtualItems();
-  const visibleItems = virtualItems.map((virtual) => items[virtual.index]);
 
   return {
     virtualItems,
     totalHeight,
     containerRef,
     scrollTo,
-    visibleItems
+    visibleItems;
   };
 }
 
@@ -113,22 +107,22 @@ function VirtualizedList({ items }: { items: ListItem[] }) {
     virtualItems,
     totalHeight,
     containerRef,
-    visibleItems
+    visibleItems;
   } = useVirtualList(items, {
     itemHeight: 50,
     overscan: 5,
-    containerHeight: 400
+    containerHeight: 400;
   });
 
   return (
-    <div
+    <div;
       ref={containerRef}
       style={{
         height: '400px',
         overflow: 'auto'
       }}
     >
-      <div
+      <div;
         style={{
           height: `${totalHeight}px`,
           width: '100%',
@@ -136,7 +130,7 @@ function VirtualizedList({ items }: { items: ListItem[] }) {
         }}
       >
         {virtualItems.map((virtualItem, index) => (
-          <div
+          <div;
             key={visibleItems[index].id}
             style={{
               position: 'absolute',

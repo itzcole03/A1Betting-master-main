@@ -17,7 +17,7 @@ export class UnifiedConfig {
             'http://localhost:8000');
     }
     get(key, defaultValue) {
-        const value = this.config[key];
+
         if (value !== undefined)
             return value;
         if (defaultValue !== undefined)

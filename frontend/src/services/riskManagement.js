@@ -38,12 +38,12 @@ var __setFunctionName = (this && this.__setFunctionName) || function (f, name, p
 };
 import { Injectable } from '@nestjs/common';
 import { EventEmitter } from 'events';
-let RiskManagementService = (() => {
+const RiskManagementService = (() => {
     let _classDecorators = [Injectable()];
     let _classDescriptor;
-    let _classExtraInitializers = [];
+    const _classExtraInitializers = [];
     let _classThis;
-    let _classSuper = EventEmitter;
+    const _classSuper = EventEmitter;
     var RiskManagementService = _classThis = class extends _classSuper {
         constructor() {
             super();
@@ -64,9 +64,9 @@ let RiskManagementService = (() => {
                 lossStreak: 0,
             };
             this.bets = [];
-            this.MAX_BANKROLL_PERCENTAGE = 0.05; // 5% max bet size
-            this.MIN_BANKROLL_PERCENTAGE = 0.01; // 1% min bet size
-            this.KELLY_FRACTION = 0.5; // Half Kelly for conservative betting
+            this.MAX_BANKROLL_PERCENTAGE = 0.05; // 5% max bet size;
+            this.MIN_BANKROLL_PERCENTAGE = 0.01; // 1% min bet size;
+            this.KELLY_FRACTION = 0.5; // Half Kelly for conservative betting;
         }
         static getInstance() {
             if (!RiskManagementService.instance) {
@@ -75,10 +75,10 @@ let RiskManagementService = (() => {
             return RiskManagementService.instance;
         }
         async initialize() {
-            // Initialize risk management service
+            // Initialize risk management service;
         }
         async assessRisk(params) {
-            // Implement risk assessment logic
+            // Implement risk assessment logic;
             return {
                 riskLevel: 'low',
                 expectedValue: 0.1,
@@ -94,14 +94,14 @@ let RiskManagementService = (() => {
             return [...this.bets];
         }
         calculateRiskMetrics(prediction) {
-            const kellyCriterion = this.calculateKellyCriterion(prediction);
-            const recommendedStake = this.calculateRecommendedStake(kellyCriterion, prediction);
-            const maxStake = this.calculateMaxStake(prediction);
-            const riskLevel = this.determineRiskLevel(prediction, recommendedStake);
-            const edge = prediction.edge;
-            const expectedValue = prediction.expectedValue;
-            const variance = this.calculateVariance(prediction);
-            const sharpeRatio = this.calculateSharpeRatio(expectedValue, variance);
+
+
+
+
+
+
+
+
             return {
                 kellyCriterion,
                 recommendedStake,
@@ -136,13 +136,13 @@ let RiskManagementService = (() => {
             this.updateBankrollMetrics();
         }
         resolveBet(betId, won) {
-            const bet = this.bets.find(b => b.id === betId);
+
             if (!bet || bet.status !== 'pending') {
                 throw new Error('Invalid bet');
             }
             bet.status = won ? 'won' : 'lost';
             if (won) {
-                const payout = bet.amount * bet.odds;
+
                 bet.payout = payout;
                 this.bankroll.current += payout;
                 this.bankroll.winningBets++;
@@ -171,24 +171,24 @@ let RiskManagementService = (() => {
             this.updateBankrollMetrics();
         }
         calculateKellyCriterion(prediction) {
-            const winProbability = prediction.probability;
-            const lossProbability = 1 - winProbability;
-            const winAmount = prediction.expectedValue - 1;
-            const lossAmount = 1;
+
+
+
+
             return (winProbability * winAmount - lossProbability * lossAmount) / winAmount;
         }
         calculateRecommendedStake(kellyCriterion, prediction) {
-            const kellyStake = this.bankroll.current * kellyCriterion * this.KELLY_FRACTION;
-            const maxStake = this.calculateMaxStake(prediction);
+
+
             return Math.min(kellyStake, maxStake);
         }
         calculateMaxStake(prediction) {
             return this.bankroll.current * this.MAX_BANKROLL_PERCENTAGE;
         }
         determineRiskLevel(prediction, stake) {
-            const stakePercentage = stake / this.bankroll.current;
-            const confidence = prediction.confidence;
-            const edge = prediction.edge;
+
+
+
             if (stakePercentage <= this.MIN_BANKROLL_PERCENTAGE && confidence >= 80 && edge >= 0.1) {
                 return 'low';
             }
@@ -202,11 +202,11 @@ let RiskManagementService = (() => {
             }
         }
         calculateVariance(prediction) {
-            const winProbability = prediction.probability;
-            const lossProbability = 1 - winProbability;
-            const winAmount = prediction.expectedValue - 1;
-            const lossAmount = 1;
-            const expectedValue = winProbability * winAmount - lossProbability * lossAmount;
+
+
+
+
+
             const variance = winProbability * Math.pow(winAmount - expectedValue, 2) +
                 lossProbability * Math.pow(-lossAmount - expectedValue, 2);
             return variance;
@@ -239,7 +239,7 @@ let RiskManagementService = (() => {
     };
     __setFunctionName(_classThis, "RiskManagementService");
     (() => {
-        const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+
         __esDecorate(null, _classDescriptor = { value: _classThis }, _classDecorators, { kind: "class", name: _classThis.name, metadata: _metadata }, null, _classExtraInitializers);
         RiskManagementService = _classThis = _classDescriptor.value;
         if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });

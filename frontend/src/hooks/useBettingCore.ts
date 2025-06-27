@@ -1,9 +1,9 @@
-import useStore from '../store/useStore';
-import { BetRecord, Opportunity } from '../types/core';
-import { BettingContext, BettingDecision, PerformanceMetrics } from '@/types';
-import { UnifiedBettingCore } from '../services/unified/UnifiedBettingCore';
-import { useDataSync } from './useDataSync';
-import { useState, useEffect, useCallback } from 'react';
+import useStore from '@/store/useStore.ts';
+import { BetRecord, Opportunity } from '@/types/core.ts';
+import { BettingContext, BettingDecision, PerformanceMetrics } from '@/types.ts';
+import { UnifiedBettingCore } from '@/services/unified/UnifiedBettingCore.ts';
+import { useDataSync } from './useDataSync.ts';
+import { useState, useEffect, useCallback } from 'react.ts';
 
 
 
@@ -32,27 +32,26 @@ export function useBettingCore({
   autoRefresh = true,
   refreshInterval = 30000,
   onNewDecision,
-  onPerformanceUpdate
+  onPerformanceUpdate;
 }: UseBettingCoreOptions = {}) {
   const [state, setState] = useState<BettingCoreState>({
     decision: null,
     performance: UnifiedBettingCore.getInstance().calculatePerformanceMetrics([]),
     opportunities: [],
     isAnalyzing: false,
-    error: null
+    error: null;
   });
 
   const { addToast } = useStore();
-  const bettingCore = UnifiedBettingCore.getInstance();
 
-  // Sync betting history with local storage
+  // Sync betting history with local storage;
   const { data: bettingHistory } = useDataSync<BetRecord[]>({
     key: 'betting-history',
     initialData: [],
-    syncInterval: 60000
+    syncInterval: 60000;
   });
 
-  // Analyze betting opportunity
+  // Analyze betting opportunity;
   const analyze = useCallback(async () => {
     if (!playerId || !metric) return;
 
@@ -67,52 +66,49 @@ export function useBettingCore({
         correlationFactors: []
       };
 
-      const decision = await bettingCore.analyzeBettingOpportunity(context);
-      
       if (decision.confidence >= minConfidence) {
         setState(prev => ({ ...prev, decision }));
         onNewDecision?.(decision);
       }
     } catch (err) {
-      const error = err instanceof Error ? err : new Error('Analysis failed');
+
       setState(prev => ({ ...prev, error }));
       addToast({
         id: 'analysis-error',
         type: 'error',
         title: 'Analysis Error',
-        message: error.message
+        message: error.message;
       });
     } finally {
       setState(prev => ({ ...prev, isAnalyzing: false }));
     }
   }, [playerId, metric, minConfidence, bettingCore, onNewDecision, addToast]);
 
-  // Update performance metrics
+  // Update performance metrics;
   const updatePerformanceMetrics = useCallback(() => {
     if (!bettingHistory?.length) return;
 
     try {
-      const metrics = bettingCore.calculatePerformanceMetrics(bettingHistory);
-      
+
       setState(prev => ({
         ...prev,
-        performance: metrics
+        performance: metrics;
       }));
 
       onPerformanceUpdate?.(metrics);
     } catch (err) {
-      const error = err instanceof Error ? err : new Error('Failed to update metrics');
+
       setState(prev => ({ ...prev, error }));
       addToast({
         id: 'metrics-error',
         type: 'error',
         title: 'Metrics Error',
-        message: error.message
+        message: error.message;
       });
     }
   }, [bettingHistory, bettingCore, onPerformanceUpdate, addToast]);
 
-  // Handle new opportunities
+  // Handle new opportunities;
   const handleNewOpportunity = useCallback((opportunity: Opportunity) => {
     setState(prev => ({
       ...prev,
@@ -129,7 +125,7 @@ export function useBettingCore({
     }
   }, [minConfidence, addToast]);
 
-  // Setup event listeners
+  // Setup event listeners;
   useEffect(() => {
     bettingCore.on('newDecision', (decision: BettingDecision) => {
       if (decision.confidence >= minConfidence) {
@@ -146,7 +142,7 @@ export function useBettingCore({
         id: 'betting-error',
         type: 'error',
         title: 'Error',
-        message: error.message
+        message: error.message;
       });
     });
 
@@ -155,17 +151,17 @@ export function useBettingCore({
     };
   }, [bettingCore, minConfidence, onNewDecision, onPerformanceUpdate, addToast]);
 
-  // Auto-refresh analysis
+  // Auto-refresh analysis;
   useEffect(() => {
     analyze();
 
     if (autoRefresh && playerId && metric) {
-      const interval = setInterval(analyze, refreshInterval);
+
       return () => clearInterval(interval);
     }
   }, [analyze, autoRefresh, playerId, metric, refreshInterval]);
 
-  // Update metrics when betting history changes
+  // Update metrics when betting history changes;
   useEffect(() => {
     updatePerformanceMetrics();
   }, [updatePerformanceMetrics]);
@@ -174,6 +170,6 @@ export function useBettingCore({
     ...state,
     analyze,
     updatePerformanceMetrics,
-    handleNewOpportunity
+    handleNewOpportunity;
   };
 } 

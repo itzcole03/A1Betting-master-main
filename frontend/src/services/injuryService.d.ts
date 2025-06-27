@@ -1,4 +1,4 @@
-import type { InjuryData } from '../types/core.js';
+import type { InjuryData } from '@/types/core.js';
 /**
  * Strictly typed injury data interface.
  */
@@ -25,9 +25,9 @@ declare class InjuryService {
      */
     getInjuries(params?: Partial<InjuryData>): Promise<InjuryData[]>;
     /**
-     * Type guard for InjuryData
-     * @param data unknown
-     * @returns data is InjuryData
+     * Type guard for InjuryData;
+     * @param data unknown;
+     * @returns data is InjuryData;
      */
     private isInjuryData;
 }

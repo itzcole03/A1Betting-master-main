@@ -1,4 +1,4 @@
-import { PrizePicksEntry } from '../frontend/src/types';
+import { PrizePicksEntry } from '@/frontend/src/types.ts';
 export interface UserStatsData {
     totalBets: number;
     settledBets: number;

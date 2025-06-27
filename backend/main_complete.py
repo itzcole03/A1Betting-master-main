@@ -7,7 +7,7 @@ import logging
 import os
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Any, Dict, List, Optional
 
 import uvicorn
@@ -410,7 +410,7 @@ async def root():
         "version": "5.0.0",
         "description": "Full AI-powered sports betting analytics with PropOllama integration",
         "status": "operational",
-        "timestamp": datetime.utcnow(),
+        "timestamp": datetime.now(timezone.utc),
         "features": [
             "PropOllama AI Chat",
             "SHAP Explainable AI",
@@ -426,7 +426,7 @@ async def health_check():
     uptime = time.time() - app_start_time
     return {
         "status": "healthy",
-        "timestamp": datetime.utcnow(),
+        "timestamp": datetime.now(timezone.utc),
         "version": "5.0.0",
         "uptime": uptime,
         "services": {
@@ -479,7 +479,7 @@ async def get_enhanced_predictions():
             "confidence": 0.82,
             "odds": 1.67,
             "expected_value": 0.124,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(timezone.utc).isoformat(),
             "model_version": "Enhanced_Ensemble_v5.0",
             "features": {
                 "recent_form": 0.78,

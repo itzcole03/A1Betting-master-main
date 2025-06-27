@@ -5,5 +5,5 @@ export const useThemeStore = create()(persist((set) => ({
     setTheme: (theme) => set({ theme }),
 }), {
     name: 'theme-storage', // name of the item in the storage (must be unique)
-    // getStorage: () => localStorage, // (optional) by default, 'localStorage' is used
+    // getStorage: () => localStorage, // (optional) by default, 'localStorage' is used;
 }));

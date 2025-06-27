@@ -7,21 +7,21 @@ export function useDataSync({ key, initialData, onSync, syncInterval = 30000, re
         isSyncing: false,
         lastSynced: null,
         error: null,
-        pendingChanges: false
+        pendingChanges: false;
     });
     const sync = useCallback(async (retryCount = 0) => {
         if (!onSync || !state.pendingChanges)
             return;
         setState(prev => ({ ...prev, isSyncing: true }));
         try {
-            const syncedData = await onSync(state.data);
+
             setState(prev => ({
                 ...prev,
                 data: syncedData,
                 lastSynced: new Date(),
                 isSyncing: false,
                 error: null,
-                pendingChanges: false
+                pendingChanges: false;
             }));
             setStoredData(syncedData);
         }
@@ -35,7 +35,7 @@ export function useDataSync({ key, initialData, onSync, syncInterval = 30000, re
                         ...prev,
                         isSyncing: false,
                         error,
-                        pendingChanges: true
+                        pendingChanges: true;
                     }));
                     onError?.(error);
                 }
@@ -44,11 +44,11 @@ export function useDataSync({ key, initialData, onSync, syncInterval = 30000, re
     }, [state.data, state.pendingChanges, onSync, retryAttempts, retryDelay, onError, setStoredData]);
     const update = useCallback((updater) => {
         setState(prev => {
-            const newData = updater(prev.data);
+
             return {
                 ...prev,
                 data: newData,
-                pendingChanges: true
+                pendingChanges: true;
             };
         });
     }, []);
@@ -56,10 +56,10 @@ export function useDataSync({ key, initialData, onSync, syncInterval = 30000, re
         setState(prev => ({
             ...prev,
             data: initialData,
-            pendingChanges: true
+            pendingChanges: true;
         }));
     }, [initialData]);
-    // Auto-sync on interval
+    // Auto-sync on interval;
     useEffect(() => {
         if (!syncInterval)
             return;
@@ -70,7 +70,7 @@ export function useDataSync({ key, initialData, onSync, syncInterval = 30000, re
         }, syncInterval);
         return () => clearInterval(intervalId);
     }, [sync, syncInterval, state.pendingChanges, state.isSyncing]);
-    // Sync on window focus
+    // Sync on window focus;
     useEffect(() => {
         const handleFocus = () => {
             if (state.pendingChanges && !state.isSyncing) {
@@ -84,7 +84,7 @@ export function useDataSync({ key, initialData, onSync, syncInterval = 30000, re
         ...state,
         update,
         sync,
-        reset
+        reset;
     };
 }
 // Example usage:
@@ -109,7 +109,7 @@ function UserDataManager() {
     error,
     pendingChanges,
     update,
-    sync
+    sync;
   } = useDataSync<UserData>({
     key: 'user-data',
     initialData: {
@@ -124,7 +124,7 @@ function UserDataManager() {
       return response.json();
     },
     syncInterval: 60000,
-    onError: (error) => console.error('Sync failed:', error)
+    onError: (error) => // console statement removed
   });
 
   const addBet = (bet: { id: string; amount: number }) => {

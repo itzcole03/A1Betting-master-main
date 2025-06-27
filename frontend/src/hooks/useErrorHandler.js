@@ -2,15 +2,15 @@ import { useState, useCallback } from 'react';
 export function useErrorHandler(options = {}) {
     const [errorState, setErrorState] = useState({ error: null });
     const handleError = useCallback((error, info) => {
-        const normalizedError = error instanceof Error ? error : new Error(String(error));
+
         setErrorState({ error: normalizedError, info });
-        // Call the provided error handler if any
+        // Call the provided error handler if any;
         options.onError?.(normalizedError, info);
-        // Log error to console in development
+        // Log error to console in development;
         if (import.meta.env.MODE === 'development') {
-            console.error('Error caught by useErrorHandler:', normalizedError, info);
+            // console statement removed
         }
-        // Optionally rethrow the error
+        // Optionally rethrow the error;
         if (options.shouldRethrow) {
             throw normalizedError;
         }
@@ -23,15 +23,15 @@ export function useErrorHandler(options = {}) {
         errorInfo: errorState.info,
         handleError,
         clearError,
-        hasError: errorState.error !== null
+        hasError: errorState.error !== null;
     };
 }
 // Example usage:
 // function MyComponent() {
 //   const { error, handleError, clearError } = useErrorHandler({
 //     onError: (error) => {
-//       // Log to error tracking service
-//       console.error('Component error:', error);
+//       // Log to error tracking service;
+//       // console statement removed
 //     }
 //   });
 //

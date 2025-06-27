@@ -1,8 +1,8 @@
-import React from 'react';
-import { cn } from '@/utils/classNames';
-import { motion, MotionProps } from 'framer-motion';
+import React from 'react.ts';
+import { cn } from '@/utils/classNames.ts';
+import { motion, MotionProps } from 'framer-motion.ts';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement key={390513}> {
   variant?: 'primary' | 'secondary' | 'success' | 'danger' | 'warning';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
@@ -24,7 +24,7 @@ const sizes = {
   lg: 'px-6 py-3 text-lg',
 };
 
-function splitMotionProps(props: Record<string, unknown>) {
+function splitMotionProps(props: Record<string, unknown key={843221}>) {
   const motionKeys = [
     'animate',
     'initial',
@@ -53,8 +53,8 @@ function splitMotionProps(props: Record<string, unknown>) {
     'style',
     'transformTemplate',
     'transformValues',
-  ]; const motionProps: Record<string, unknown> = {};
-  const rest: Record<string, unknown> = {};
+  ]; const motionProps: Record<string, unknown key={843221}> = {};
+  const rest: Record<string, unknown key={843221}> = {};
   Object.entries(props).forEach(([key, value]) => {
     if (motionKeys.includes(key)) {
       motionProps[key] = value;
@@ -65,7 +65,7 @@ function splitMotionProps(props: Record<string, unknown>) {
   return [motionProps, rest];
 }
 
-export const Button = React.forwardRef<HTMLButtonElement, ButtonProps & MotionProps>(
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps & MotionProps key={870447}>(
   (allProps, ref) => {
     const {
       variant = 'primary',
@@ -76,46 +76,46 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps & MotionPr
       className,
       children,
       disabled,
-      ...props
+      ...props;
     } = allProps;
     const baseClasses =
       'rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
-    const variantClasses = variants[variant];
-    const sizeClasses = sizes[size];
-    const widthClasses = fullWidth ? 'w-full' : '';
+
+
+
     const [motionProps, buttonProps] = splitMotionProps(props);
     return (
-      <motion.button
+      <motion.button;
         ref={ref}
         className={cn(baseClasses, variantClasses, sizeClasses, widthClasses, className)}
         disabled={disabled || loading}
         {...motionProps}
         {...buttonProps}
-      >
-        <div className="flex items-center justify-center gap-2">
+       key={469758}>
+        <div className="flex items-center justify-center gap-2" key={630434}>
           {loading ? (
-            <svg
+            <svg;
               className="animate-spin h-5 w-5"
               fill="none"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle
+             key={229357}>
+              <circle;
                 className="opacity-25"
                 cx="12"
                 cy="12"
                 r="10"
                 stroke="currentColor"
                 strokeWidth="4"
-              />
-              <path
+              / key={310581}>
+              <path;
                 className="opacity-75"
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 fill="currentColor"
-              />
+              / key={766321}>
             </svg>
           ) : icon ? (
-            <span className="w-5 h-5">{icon}</span>
+            <span className="w-5 h-5" key={593341}>{icon}</span>
           ) : null}
           {children}
         </div>

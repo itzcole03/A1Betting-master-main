@@ -1,17 +1,17 @@
-import React from "react";
-import SafeChart from "../ui/SafeChart";
-import { Box, Typography, CircularProgress, Alert } from "@mui/material";
-import { ShapValue } from "../../types/explainability";
+import React from 'react.ts';
+import SafeChart from '@/ui/SafeChart.ts';
+import { Box, Typography, CircularProgress, Alert } from '@mui/material.ts';
+import { ShapValue } from '@/types/explainability.ts';
 
 interface SHAPVisualizationProps {
-  shapValues: Record<string, number>;
+  shapValues: Record<string, number key={817366}>;
   baseValue?: number;
   confidence?: number;
   isLoading?: boolean;
   error?: string | null;
 }
 
-const SHAPVisualization: React.FC<SHAPVisualizationProps> = ({
+const SHAPVisualization: React.FC<SHAPVisualizationProps key={80852}> = ({
   shapValues,
   baseValue,
   confidence,
@@ -20,20 +20,20 @@ const SHAPVisualization: React.FC<SHAPVisualizationProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <Box
+      <Box;
         alignItems="center"
         display="flex"
         height="400px"
         justifyContent="center"
-      >
-        <CircularProgress />
+       key={276562}>
+        <CircularProgress / key={730118}>
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Alert severity="error" sx={{ mt: 2 }}>
+      <Alert severity="error" sx={{ mt: 2 }} key={474760}>
         {error}
       </Alert>
     );
@@ -41,16 +41,16 @@ const SHAPVisualization: React.FC<SHAPVisualizationProps> = ({
 
   if (!shapValues || Object.keys(shapValues).length === 0) {
     return (
-      <Alert severity="info" sx={{ mt: 2 }}>
-        No SHAP values available for this prediction
+      <Alert severity="info" sx={{ mt: 2 }} key={550011}>
+        No SHAP values available for this prediction;
       </Alert>
     );
   }
 
-  // Sort features by absolute SHAP value
+  // Sort features by absolute SHAP value;
   const sortedFeatures = Object.entries(shapValues)
     .sort(([, a], [, b]) => Math.abs(b) - Math.abs(a))
-    .slice(0, 10); // Show top 10 features
+    .slice(0, 10); // Show top 10 features;
 
   const chartData = {
     labels: sortedFeatures.map(([feature]) => feature),
@@ -80,7 +80,7 @@ const SHAPVisualization: React.FC<SHAPVisualizationProps> = ({
       tooltip: {
         callbacks: {
           label: (context: any) => {
-            const value = context.raw;
+
             return `SHAP Value: ${value.toFixed(4)}`;
           },
         },
@@ -105,28 +105,28 @@ const SHAPVisualization: React.FC<SHAPVisualizationProps> = ({
   };
 
   return (
-    <Box>
-      <Box className="h-96">
-        <SafeChart
+    <Box key={485947}>
+      <Box className="h-96" key={157340}>
+        <SafeChart;
           type="bar"
           data={chartData}
           options={options}
           loadingMessage="Loading SHAP visualization..."
-        />
+        / key={438857}>
       </Box>
-      <Box mt={2}>
-        <Typography color="text.secondary" variant="body2">
-          SHAP (SHapley Additive exPlanations) values show how each feature
-          contributes to the prediction. Positive values (blue) increase the
+      <Box mt={2} key={781906}>
+        <Typography color="text.secondary" variant="body2" key={497604}>
+          SHAP (SHapley Additive exPlanations) values show how each feature;
+          contributes to the prediction. Positive values (blue) increase the;
           prediction, while negative values (orange) decrease it.
         </Typography>
         {baseValue !== undefined && (
-          <Typography color="text.secondary" mt={1} variant="body2">
+          <Typography color="text.secondary" mt={1} variant="body2" key={621003}>
             Base Value: {baseValue.toFixed(4)}
           </Typography>
         )}
         {confidence !== undefined && (
-          <Typography color="text.secondary" mt={1} variant="body2">
+          <Typography color="text.secondary" mt={1} variant="body2" key={621003}>
             Prediction Confidence: {(confidence * 100).toFixed(1)}%
           </Typography>
         )}

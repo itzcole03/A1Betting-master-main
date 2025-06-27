@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Box, Typography, TextField, Slider, FormControl, InputLabel, Select, MenuItem, Chip, OutlinedInput, } from '@mui/material';
-const SPORTS_OPTIONS = ['NBA', 'NFL', 'MLB', 'NHL', 'Soccer'];
-const MARKET_OPTIONS = ['Moneyline', 'Spread', 'Over/Under', 'Props', 'Parlays'];
+
+
 export const UserConstraintsForm = ({ constraints, onConstraintsChange, }) => {
     const handleMultiSelectChange = (field, value) => {
         onConstraintsChange(field, value);

@@ -1,4 +1,4 @@
-import { EventMap } from '../types/core.js';
+import { EventMap } from '@/types/core.js';
 
 type EventHandler<T> = (data: T) => void;
 
@@ -8,7 +8,7 @@ export class EventBus {
    * @param event The event object with type and payload.
    */
   public async publish<K extends keyof EventMap>(event: { type: K; payload?: EventMap[K] }): Promise<void> {
-    const handlers = this.handlers.get(event.type);
+
     if (handlers) {
       handlers.forEach((handler) => {
         handler(event.payload!);
@@ -38,7 +38,7 @@ export class EventBus {
   }
 
   public off<K extends keyof EventMap>(event: K, handler: EventHandler<EventMap[K]>): void {
-    const handlers = this.handlers.get(event);
+
     if (handlers) {
       handlers.delete(handler);
       if (handlers.size === 0) {
@@ -48,13 +48,13 @@ export class EventBus {
   }
 
   public emit<K extends keyof EventMap>(event: K, data: EventMap[K]): void {
-    const handlers = this.handlers.get(event);
+
     if (handlers) {
       handlers.forEach(handler => {
         try {
           handler(data);
         } catch (error) {
-          console.error(`Error in event handler for ${event}:`, error);
+          // console statement removed
         }
       });
     }

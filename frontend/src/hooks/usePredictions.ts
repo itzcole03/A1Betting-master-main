@@ -1,9 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { UnifiedServiceRegistry } from '../services/unified/UnifiedServiceRegistry';
-import { UnifiedPredictionService } from '../services/unified/UnifiedPredictionService';
-import { UnifiedAnalyticsService } from '../services/unified/UnifiedAnalyticsService';
-import { webSocketManager } from '../services/unified/WebSocketManager';
-import type { PredictionStreamPayload } from '../../shared/webSocket';
+import { useState, useEffect, useCallback } from 'react.ts';
+import { UnifiedServiceRegistry } from '@/services/unified/UnifiedServiceRegistry.ts';
+import { UnifiedPredictionService } from '@/services/unified/UnifiedPredictionService.ts';
+import { UnifiedAnalyticsService } from '@/services/unified/UnifiedAnalyticsService.ts';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
+import type { PredictionStreamPayload } from '@/shared/webSocket.ts';
 
 export interface PredictionModelOutput {
   confidenceScore: number;
@@ -34,9 +34,7 @@ export interface PredictionState {
 }
 
 export const usePredictions = () => {
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const predictionService = serviceRegistry.getService<UnifiedPredictionService>('prediction');
-  const analyticsService = serviceRegistry.getService<UnifiedAnalyticsService>('analytics');
+
 
 
   const [state, setState] = useState<PredictionState>({
@@ -74,7 +72,6 @@ export const usePredictions = () => {
   const loadPredictions = useCallback(async () => {
     try {
       setState(prev => ({ ...prev, loading: true, error: null }));
-      const predictions = await predictionService.getPredictions();
 
       const processedPredictions = predictions.map(pred => ({
         id: pred.id,
@@ -102,13 +99,12 @@ export const usePredictions = () => {
   useEffect(() => {
     loadPredictions();
 
-    // Setup WebSocket connection for real-time updates
+    // Setup WebSocket connection for real-time updates;
     let unsub: (() => void) | undefined;
-    let isMounted = true;
+    const isMounted = true;
     const reconnectTimeout: NodeJS.Timeout | null = null;
-    const reconnectAttempts = 0;
-    const maxReconnectAttempts = 5;
-    const reconnectInterval = 3000;
+
+
 
     function handlePredictionUpdate(data: PredictionStreamPayload) {
       if (!isMounted) return;
@@ -128,7 +124,7 @@ export const usePredictions = () => {
       }));
     }
 
-    // Subscribe to predictions event
+    // Subscribe to predictions event;
     webSocketManager.on('predictions', handlePredictionUpdate);
 
     return () => {

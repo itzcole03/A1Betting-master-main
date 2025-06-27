@@ -1,8 +1,8 @@
-import type { AxiosInstance } from "axios";
-import { UnifiedServiceRegistry } from "./UnifiedServiceRegistry";
-import { UnifiedConfig } from "../unified/UnifiedConfig";
-import { UnifiedLogger } from "../unified/UnifiedLogger";
-import { UnifiedCache } from "../unified/UnifiedCache";
+import type { AxiosInstance } from 'axios.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.ts';
+import { UnifiedLogger } from '@/unified/UnifiedLogger.ts';
+import { UnifiedCache } from '@/unified/UnifiedCache.ts';
 declare class EventEmitter {
     private events;
     on(event: string, listener: Function): void;

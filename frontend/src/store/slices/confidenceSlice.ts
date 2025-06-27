@@ -1,8 +1,8 @@
-// confidenceSlice.ts
-// Zustand slice for confidence band and win probability state
+// confidenceSlice.ts;
+// Zustand slice for confidence band and win probability state;
 
-import { create } from 'zustand';
-import type { ConfidenceBand, WinProbability, PredictionWithConfidence } from '../../types/confidence';
+import { create } from 'zustand.ts';
+import type { ConfidenceBand, WinProbability, PredictionWithConfidence } from '@/types/confidence.ts';
 
 interface ConfidenceState {
   prediction: PredictionWithConfidence | null;

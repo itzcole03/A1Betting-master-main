@@ -1,11 +1,11 @@
 /**
- * Real-Time API Integration Dashboard Component
- * Shows live status of your actual API integrations
+ * Real-Time API Integration Dashboard Component;
+ * Shows live status of your actual API integrations;
  */
 
-import React, { useState, useEffect } from 'react';
-import LiveAPIIntegrationService from '../services/LiveAPIIntegrationService';
-import APITestSuite from '../utils/APITestSuite';
+import React, { useState, useEffect  } from 'react.ts';
+import LiveAPIIntegrationService from '@/services/LiveAPIIntegrationService.ts';
+import APITestSuite from '@/utils/APITestSuite.ts';
 import './RealTimeAPIIntegrationDashboard.css';
 
 interface APIStatus {
@@ -18,17 +18,15 @@ interface APIStatus {
 }
 
 export const RealTimeAPIIntegrationDashboard: React.FC = () => {
-  const [apiStatuses, setApiStatuses] = useState<APIStatus[]>([]);
+  const [apiStatuses, setApiStatuses] = useState<APIStatus[] key={234707}>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [lastUpdate, setLastUpdate] = useState<number>(Date.now());
-  const [testResults, setTestResults] = useState<any>(null);
+  const [lastUpdate, setLastUpdate] = useState<number key={430559}>(Date.now());
+  const [testResults, setTestResults] = useState<any key={295429}>(null);
 
-  const liveAPI = LiveAPIIntegrationService.getInstance();
-  const testSuite = new APITestSuite();
 
   useEffect(() => {
     initializeDashboard();
-    const interval = setInterval(updateAPIStatuses, 30000); // Update every 30 seconds
+    const interval = setInterval(updateAPIStatuses, 30000); // Update every 30 seconds;
     return () => clearInterval(interval);
   }, []);
 
@@ -40,31 +38,30 @@ export const RealTimeAPIIntegrationDashboard: React.FC = () => {
 
   const updateAPIStatuses = async () => {
     try {
-      const health = await liveAPI.checkAPIHealth();
-      const rateLimits = liveAPI.getRateLimitStatus();
-      
+
+
       const statuses: APIStatus[] = Object.entries(health).map(([service, info]) => ({
         service,
         status: (info as any).status || 'unknown',
         responseTime: (info as any).responseTime || 0,
         lastCheck: Date.now(),
-        rateLimitRemaining: rateLimits[service]?.requestsRemaining
+        rateLimitRemaining: rateLimits[service]?.requestsRemaining;
       }));
 
       setApiStatuses(statuses);
       setLastUpdate(Date.now());
     } catch (error) {
-      console.error('Failed to update API statuses:', error);
+      // console statement removed
     }
   };
 
   const runFullTest = async () => {
     setIsLoading(true);
     try {
-      const results = await testSuite.runFullAPITest();
+
       setTestResults(results);
     } catch (error) {
-      console.error('Test failed:', error);
+      // console statement removed
     }
     setIsLoading(false);
   };
@@ -101,89 +98,89 @@ export const RealTimeAPIIntegrationDashboard: React.FC = () => {
   };
 
   const formatLastUpdate = (timestamp: number) => {
-    const seconds = Math.floor((Date.now() - timestamp) / 1000);
+
     if (seconds < 60) return `${seconds}s ago`;
-    const minutes = Math.floor(seconds / 60);
+
     if (minutes < 60) return `${minutes}m ago`;
-    const hours = Math.floor(minutes / 60);
+
     return `${hours}h ago`;
   };
 
   if (isLoading && !apiStatuses.length) {
     return (
-      <div className="loading-container">
-        <div className="loading-title">🔄 Initializing API Dashboard...</div>
-        <div className="loading-subtitle">Testing your API integrations...</div>
+      <div className="loading-container" key={376802}>
+        <div className="loading-title" key={13972}>🔄 Initializing API Dashboard...</div>
+        <div className="loading-subtitle" key={748778}>Testing your API integrations...</div>
       </div>
     );
   }
 
   return (
-    <div className="api-dashboard-container">
+    <div className="api-dashboard-container" key={561214}>
       {/* Header */}
-      <div className="dashboard-header">
-        <div>
-          <h2 className="dashboard-title">🚀 Live API Integration Dashboard</h2>
-          <p className="dashboard-subtitle">
-            Real-time status of your betting platform APIs
+      <div className="dashboard-header" key={709232}>
+        <div key={241917}>
+          <h2 className="dashboard-title" key={721579}>🚀 Live API Integration Dashboard</h2>
+          <p className="dashboard-subtitle" key={690283}>
+            Real-time status of your betting platform APIs;
           </p>
         </div>
-        <div className="header-buttons">
-          <button 
+        <div className="header-buttons" key={397886}>
+          <button; 
             onClick={updateAPIStatuses}
             disabled={isLoading}
             className="refresh-button"
-          >
-            🔄 Refresh
+           key={12124}>
+            🔄 Refresh;
           </button>
-          <button 
+          <button; 
             onClick={runFullTest}
             disabled={isLoading}
             className="test-button"
-          >
-            🧪 Run Full Test
+           key={147096}>
+            🧪 Run Full Test;
           </button>
         </div>
       </div>
 
       {/* API Status Cards */}
-      <div className="api-status-grid">
+      <div className="api-status-grid" key={949626}>
         {apiStatuses.map((api) => (
-          <div key={api.service} className={`api-status-card ${getStatusClass(api.status)}`}>
-            <div className="api-card-header">
-              <h3 className="api-card-title">
+          <div key={api.service} className={`api-status-card ${getStatusClass(api.status)}`} key={719962}>
+            <div className="api-card-header" key={378126}>
+              <h3 className="api-card-title" key={648972}>
                 {api.service === 'theodds' && '🎲 TheOdds API'}
                 {api.service === 'sportradar' && '📊 SportsRadar API'}
                 {api.service === 'prizepicks' && '🎯 PrizePicks API'}
                 {api.service === 'espn' && '🏈 ESPN API'}
               </h3>
-              <div className="api-status-icon">
+              <div className="api-status-icon" key={354017}>
                 {getStatusIcon(api.status)}
               </div>
             </div>
             
-            <div className="api-card-details">
-              <div className="api-detail-row">
-                <strong>Status:</strong> 
-                <span className={`api-status-text ${getStatusTextClass(api.status)}`}>
+            <div className="api-card-details" key={637643}>
+              <div className="api-detail-row" key={853347}>
+                <strong key={829099}>Status:</strong> 
+                <span className={`api-status-text ${getStatusTextClass(api.status)}`} key={363709}>
                   {api.status.toUpperCase()}
                 </span>
               </div>
-              <div className="api-detail-row">
-                <strong>Response Time:</strong> {formatResponseTime(api.responseTime)}
+              <div className="api-detail-row" key={853347}>
+                <strong key={829099}>Response Time:</strong> {formatResponseTime(api.responseTime)}
               </div>
               {api.rateLimitRemaining !== undefined && (
-                <div className="api-detail-row">
-                  <strong>Quota Remaining:</strong> {api.rateLimitRemaining.toLocaleString()}
+                <div className="api-detail-row" key={853347}>
+                  <strong key={829099}>Quota Remaining:</strong> {api.rateLimitRemaining.toLocaleString()}
                 </div>
               )}
-              <div className="api-detail-row">
-                <strong>Last Check:</strong> {formatLastUpdate(api.lastCheck)}
+              <div className="api-detail-row" key={853347}>
+                <strong key={829099}>Last Check:</strong> {formatLastUpdate(api.lastCheck)}
               </div>
             </div>
 
             {/* Service-specific info */}
-            <div className="api-service-description">
+            <div className="api-service-description" key={358995}>
               {api.service === 'theodds' && 'Live odds, line movements, bookmaker data'}
               {api.service === 'sportradar' && 'Detailed stats, player analytics, historical data'}
               {api.service === 'prizepicks' && 'Player projections, prop lines, daily fantasy'}
@@ -194,42 +191,42 @@ export const RealTimeAPIIntegrationDashboard: React.FC = () => {
       </div>
 
       {/* API Keys Status */}
-      <div className="api-config-section">
-        <h3 className="config-section-title">🔑 API Configuration Status</h3>
-        <div className="config-grid">
-          <div className="config-item config-item-sportradar">
-            <strong>SportsRadar:</strong> R10yQ...7s ✅
+      <div className="api-config-section" key={445533}>
+        <h3 className="config-section-title" key={168235}>🔑 API Configuration Status</h3>
+        <div className="config-grid" key={540866}>
+          <div className="config-item config-item-sportradar" key={692191}>
+            <strong key={829099}>SportsRadar:</strong> R10yQ...7s ✅
           </div>
-          <div className="config-item config-item-theodds">
-            <strong>TheOdds:</strong> 8684b...0ee ✅
+          <div className="config-item config-item-theodds" key={809650}>
+            <strong key={829099}>TheOdds:</strong> 8684b...0ee ✅
           </div>
-          <div className="config-item config-item-prizepicks">
-            <strong>PrizePicks:</strong> Public API ✅
+          <div className="config-item config-item-prizepicks" key={232077}>
+            <strong key={829099}>PrizePicks:</strong> Public API ✅
           </div>
-          <div className="config-item config-item-espn">
-            <strong>ESPN:</strong> Public API ✅
+          <div className="config-item config-item-espn" key={783579}>
+            <strong key={829099}>ESPN:</strong> Public API ✅
           </div>
         </div>
       </div>
 
       {/* Test Results */}
       {testResults && (
-        <div className="test-results-section">
-          <h3 className="test-results-title">
-            🧪 Latest Test Results 
+        <div className="test-results-section" key={568311}>
+          <h3 className="test-results-title" key={827207}>
+            🧪 Latest Test Results; 
             {testResults.success ? '✅' : '⚠️'}
           </h3>
           
-          <div className={`test-summary ${testResults.success ? 'test-summary-success' : 'test-summary-error'}`}>
-            <strong>{testResults.summary}</strong>
+          <div className={`test-summary ${testResults.success ? 'test-summary-success' : 'test-summary-error'}`} key={942223}>
+            <strong key={829099}>{testResults.summary}</strong>
           </div>
 
           {testResults.recommendations && (
-            <div>
-              <h4 className="recommendations-title">💡 Recommendations:</h4>
-              <ul className="recommendations-list">
+            <div key={241917}>
+              <h4 className="recommendations-title" key={398675}>💡 Recommendations:</h4>
+              <ul className="recommendations-list" key={206069}>
                 {testResults.recommendations.map((rec: string, index: number) => (
-                  <li key={index} className="recommendation-item">{rec}</li>
+                  <li key={index} className="recommendation-item" key={542276}>{rec}</li>
                 ))}
               </ul>
             </div>
@@ -238,9 +235,9 @@ export const RealTimeAPIIntegrationDashboard: React.FC = () => {
       )}
 
       {/* Footer */}
-      <div className="dashboard-footer">
+      <div className="dashboard-footer" key={725547}>
         Last updated: {new Date(lastUpdate).toLocaleTimeString()} | 
-        Auto-refresh every 30 seconds
+        Auto-refresh every 30 seconds;
       </div>
     </div>
   );

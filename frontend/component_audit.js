@@ -1,20 +1,15 @@
-#!/usr/bin/env node
+#!/usr/bin/env node;
 
-const fs = require('fs');
-const path = require('path');
 
-// Define the components directory
-const componentsDir = path.join(process.cwd(), 'src', 'components');
+// Define the components directory;
 
-// Function to recursively find all component files
+// Function to recursively find all component files;
 function findComponentFiles(dir, componentFiles = []) {
   try {
-    const files = fs.readdirSync(dir);
-    
+
     files.forEach(file => {
-      const filePath = path.join(dir, file);
-      const stat = fs.statSync(filePath);
-      
+
+
       if (stat.isDirectory()) {
         findComponentFiles(filePath, componentFiles);
       } else if (file.endsWith('.tsx') || file.endsWith('.jsx')) {
@@ -22,28 +17,27 @@ function findComponentFiles(dir, componentFiles = []) {
       }
     });
   } catch (error) {
-    console.error(`Error reading directory ${dir}:`, error.message);
+    // console statement removed
   }
   
   return componentFiles;
 }
 
-// Function to extract component names from a file
+// Function to extract component names from a file;
 function extractComponentNames(filePath) {
   try {
-    const content = fs.readFileSync(filePath, 'utf8');
-    const components = [];
-    
-    // Match exported components
-    const exportRegex = /export\s+(?:const|function|default)\s+([A-Z][a-zA-Z0-9]*)/g;
+
+
+    // Match exported components;
+
     let match;
     
     while ((match = exportRegex.exec(content)) !== null) {
       components.push(match[1]);
     }
     
-    // Match React.FC components
-    const fcRegex = /(?:const|function)\s+([A-Z][a-zA-Z0-9]*)\s*:\s*React\.FC/g;
+    // Match React.FC components;
+
     while ((match = fcRegex.exec(content)) !== null) {
       if (!components.includes(match[1])) {
         components.push(match[1]);
@@ -52,33 +46,32 @@ function extractComponentNames(filePath) {
     
     return components;
   } catch (error) {
-    console.error(`Error reading file ${filePath}:`, error.message);
+    // console statement removed
     return [];
   }
 }
 
-// Function to check if a component is properly implemented
+// Function to check if a component is properly implemented;
 function checkComponentImplementation(filePath) {
   try {
-    const content = fs.readFileSync(filePath, 'utf8');
-    const issues = [];
-    
-    // Check for basic implementation
+
+
+    // Check for basic implementation;
     if (content.length < 100) {
       issues.push('File too short - likely a stub');
     }
     
-    // Check for proper imports
+    // Check for proper imports;
     if (!content.includes('import React') && !content.includes('import { React')) {
       issues.push('Missing React import');
     }
     
-    // Check for TSX syntax
+    // Check for TSX syntax;
     if (filePath.endsWith('.tsx') && !content.includes('<') && !content.includes('JSX')) {
       issues.push('No JSX found in TSX file');
     }
     
-    // Check for export
+    // Check for export;
     if (!content.includes('export')) {
       issues.push('No exports found');
     }
@@ -89,17 +82,16 @@ function checkComponentImplementation(filePath) {
   }
 }
 
-// Main audit function
+// Main audit function;
 function auditComponents() {
-  console.log('🔍 Starting Component Audit...\n');
+  // console statement removed
   
   if (!fs.existsSync(componentsDir)) {
-    console.error('❌ Components directory not found:', componentsDir);
+    // console statement removed
     return;
   }
-  
-  const componentFiles = findComponentFiles(componentsDir);
-  console.log(`📁 Found ${componentFiles.length} component files\n`);
+
+  // console statement removed
   
   const audit = {
     totalFiles: componentFiles.length,
@@ -111,15 +103,12 @@ function auditComponents() {
     issues: [],
     components: {}
   };
-  
-  const componentNames = new Set();
-  const duplicates = new Set();
-  
+
+
   componentFiles.forEach(filePath => {
-    const relativePath = path.relative(componentsDir, filePath);
-    const components = extractComponentNames(filePath);
-    const issues = checkComponentImplementation(filePath);
-    
+
+
+
     audit.totalComponents += components.length;
     
     components.forEach(name => {
@@ -147,59 +136,59 @@ function auditComponents() {
     };
   });
   
-  // Generate report
-  console.log('📊 COMPONENT AUDIT RESULTS');
-  console.log('=' + '='.repeat(50));
-  console.log(`📁 Total Files: ${audit.totalFiles}`);
-  console.log(`🧩 Total Components: ${audit.totalComponents}`);
-  console.log(`✅ Implemented: ${audit.implementedComponents}`);
-  console.log(`⚠️  Stubs: ${audit.stubComponents}`);
-  console.log(`❌ Broken: ${audit.brokenComponents}`);
-  console.log(`🔄 Duplicates: ${audit.duplicateComponents}`);
-  console.log();
+  // Generate report;
+  // console statement removed
+  // console statement removed);
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
   
   if (duplicates.size > 0) {
-    console.log('🔄 DUPLICATE COMPONENTS:');
-    duplicates.forEach(name => console.log(`  - ${name}`));
-    console.log();
+    // console statement removed
+    duplicates.forEach(name => // console statement removed);
+    // console statement removed
   }
   
   const brokenFiles = Object.entries(audit.components)
     .filter(([, data]) => data.status === 'broken');
   
   if (brokenFiles.length > 0) {
-    console.log('❌ BROKEN COMPONENTS:');
+    // console statement removed
     brokenFiles.forEach(([filePath, data]) => {
-      console.log(`  📄 ${filePath}`);
-      data.issues.forEach(issue => console.log(`    - ${issue}`));
+      // console statement removed
+      data.issues.forEach(issue => // console statement removed);
     });
-    console.log();
+    // console statement removed
   }
   
   const stubFiles = Object.entries(audit.components)
     .filter(([, data]) => data.status === 'stub');
   
   if (stubFiles.length > 0) {
-    console.log('⚠️  STUB COMPONENTS:');
+    // console statement removed
     stubFiles.forEach(([filePath, data]) => {
-      console.log(`  📄 ${filePath} (${data.components.join(', ')})`);
+      // console statement removed})`);
     });
-    console.log();
+    // console statement removed
   }
   
-  // Calculate completion percentage
-  const completionRate = ((audit.implementedComponents / audit.totalComponents) * 100).toFixed(1);
-  console.log(`🎯 COMPLETION RATE: ${completionRate}%`);
-    // Save detailed report
-  const reportPath = path.join(process.cwd(), 'component_audit_report.json');
+  // Calculate completion percentage;
+
+  // console statement removed
+    // Save detailed report;
+
   fs.writeFileSync(reportPath, JSON.stringify(audit, null, 2));
   
-  console.log('💾 Detailed report saved to: component_audit_report.json');
+  // console statement removed
   
   return audit;
 }
 
-// Run the audit
+// Run the audit;
 if (require.main === module) {
   auditComponents();
 }

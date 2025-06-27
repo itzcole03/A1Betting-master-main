@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
-import { PredictionData } from '@/types/betting';
-import { StrategyRecommendation } from '../types/core';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useMemo  } from 'react.ts';
+import { PredictionData } from '@/types/betting.ts';
+import { StrategyRecommendation } from '@/types/core.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 
 export interface MLInsight {
   factor: string;
@@ -17,7 +17,7 @@ export interface MLFactorVizProps {
   strategy?: StrategyRecommendation;
 }
 
-const MLFactorViz: React.FC<MLFactorVizProps> = ({ playerId, metric, prediction, strategy }) => {
+const MLFactorViz: React.FC<MLFactorVizProps key={146982}> = ({ playerId, metric, prediction, strategy }) => {
   const insights: MLInsight[] = useMemo(() => {
     if (!playerId || !metric || !prediction || !strategy) {
       return [];
@@ -59,41 +59,41 @@ const MLFactorViz: React.FC<MLFactorVizProps> = ({ playerId, metric, prediction,
 
   if (!playerId || !metric) {
     return (
-      <div className="p-4 text-gray-500">Select a player and metric to view ML factor analysis</div>
+      <div className="p-4 text-gray-500" key={72742}>Select a player and metric to view ML factor analysis</div>
     );
   }
 
   if (!prediction || !strategy) {
-    return <div className="p-4 text-gray-500">Loading ML factor analysis...</div>;
+    return <div className="p-4 text-gray-500" key={72742}>Loading ML factor analysis...</div>;
   }
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold mb-4">ML Factor Analysis</h3>
-      <div className="space-y-6">
+    <div className="space-y-4" key={160407}>
+      <h3 className="text-lg font-semibold mb-4" key={792268}>ML Factor Analysis</h3>
+      <div className="space-y-6" key={501869}>
         {insights.map((insight: MLInsight, index: number) => (
-          <motion.div
+          <motion.div;
             key={insight.factor}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-lg p-4 shadow-sm"
             initial={{ opacity: 0, y: 20 }}
             transition={{ delay: index * 0.1 }}
-          >
-            <div className="flex items-center justify-between mb-2">
-              <h4 className="font-medium">{insight.factor}</h4>
-              <span className={`text-sm ${getConfidenceColor(insight.confidence)}`}>
-                {Math.round(insight.confidence * 100)}% confidence
+           key={706261}>
+            <div className="flex items-center justify-between mb-2" key={120997}>
+              <h4 className="font-medium" key={965615}>{insight.factor}</h4>
+              <span className={`text-sm ${getConfidenceColor(insight.confidence)}`} key={116008}>
+                {Math.round(insight.confidence * 100)}% confidence;
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2">
-              <motion.div
+            <div className="w-full bg-gray-200 rounded-full h-2.5 mb-2" key={540888}>
+              <motion.div;
                 animate={{ width: `${insight.impact * 100}%` }}
                 className={`h-2.5 rounded-full ${getImpactColor(insight.impact)}`}
                 initial={{ width: 0 }}
                 transition={{ duration: 0.5 }}
-              />
+              / key={106140}>
             </div>
-            <p className="text-sm text-gray-600">{insight.description}</p>
+            <p className="text-sm text-gray-600" key={656535}>{insight.description}</p>
           </motion.div>
         ))}
       </div>

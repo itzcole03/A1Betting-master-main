@@ -1,18 +1,18 @@
 import '@testing-library/jest-dom';
-import 'jest-canvas-mock'; // Added to mock canvas for chart.js
+import 'jest-canvas-mock'; // Added to mock canvas for chart.js;
 import { jest, beforeAll, afterAll } from '@jest/globals';
-// Mock import.meta.env for Jest environment
-// Cast global to unknown to allow dynamic property assignment for the mock
-const globalUnknown = globalThis;
+// Mock import.meta.env for Jest environment;
+// Cast global to unknown to allow dynamic property assignment for the mock;
+
 globalAny.import = globalAny.import || {};
 globalAny.import.meta = globalAny.import.meta || {};
 globalAny.import.meta.env = globalAny.import.meta.env || {};
-// Set default mock values for Vite environment variables used in the code
+// Set default mock values for Vite environment variables used in the code;
 // Override these in specific test files if needed.
 globalAny.import.meta.env.VITE_API_URL = 'http://localhost:3001/api/test';
 globalAny.import.meta.env.VITE_SENTRY_DSN = '';
 globalAny.import.meta.env.VITE_WEBSOCKET_URL = 'ws://localhost:8080/test';
-// Add other VITE_ variables used in your codebase here with sensible test defaults
+// Add other VITE_ variables used in your codebase here with sensible test defaults;
 // Example:
 globalAny.import.meta.env.VITE_DAILYFANTASY_API_KEY = 'test-dailyfantasy-key';
 globalAny.import.meta.env.VITE_SPORTRADAR_API_KEY = 'test-sportradar-key';
@@ -23,7 +23,7 @@ globalAny.import.meta.env.VITE_THEODDS_API_KEY = 'test-theodds-key';
 // beforeEach(() => {
 //   jest.clearAllMocks();
 // });
-// Mock for window.matchMedia used by ThemeProvider
+// Mock for window.matchMedia used by ThemeProvider;
 Object.defineProperty(window, 'matchMedia', {
     writable: true,
     value: jest.fn().mockImplementation((query) => ({
@@ -106,7 +106,7 @@ jest.mock('chart.js/auto', () => ({
     },
     registerables: [],
 }));
-// Global mock for UnifiedConfig for all tests
+// Global mock for UnifiedConfig for all tests;
 jest.mock('../core/UnifiedConfig', () => {
     const apiEndpoints = {
         users: '/api/users',
@@ -126,7 +126,7 @@ jest.mock('../core/UnifiedConfig', () => {
         experiments: [],
         apiEndpoints,
         getApiEndpoint: (key) => typeof key === 'string'
-            ? apiEndpoints[key] !== undefined
+            ? apiEndpoints[key] !== undefined;
                 ? apiEndpoints[key]
                 : `/api/${key}`
             : '',
@@ -140,7 +140,7 @@ jest.mock('../core/UnifiedConfig', () => {
     };
     return { __esModule: true, default: config };
 });
-// Mock IntersectionObserver
+// Mock IntersectionObserver;
 class MockIntersectionObserver {
     constructor(callback, options) {
         this.observe = jest.fn();
@@ -149,9 +149,9 @@ class MockIntersectionObserver {
     }
 }
 global.IntersectionObserver = MockIntersectionObserver;
-// Mock localStorage
+// Mock localStorage;
 const localStorageMock = (() => {
-    let store = {};
+    const store = {};
     return {
         getItem: (key) => store[key] || null,
         setItem: (key, value) => {
@@ -166,9 +166,9 @@ const localStorageMock = (() => {
     };
 })();
 Object.defineProperty(window, 'localStorage', { value: localStorageMock });
-// Mock sessionStorage
+// Mock sessionStorage;
 const sessionStorageMock = (() => {
-    let store = {};
+    const store = {};
     return {
         getItem: (key) => store[key] || null,
         setItem: (key, value) => {
@@ -183,8 +183,8 @@ const sessionStorageMock = (() => {
     };
 })();
 Object.defineProperty(window, 'sessionStorage', { value: sessionStorageMock });
-// Suppress console errors during tests
-const originalError = console.error;
+// Suppress console errors during tests;
+
 beforeAll(() => {
     console.error = (..._args) => {
         if (typeof args[0] === 'string' &&

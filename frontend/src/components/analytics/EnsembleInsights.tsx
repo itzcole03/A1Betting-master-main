@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import {
   BarChart,
   Bar,
@@ -8,24 +8,24 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-} from 'recharts';
-import { useUnifiedAnalytics } from '@/hooks/useUnifiedAnalytics';
+} from 'recharts.ts';
+import { useUnifiedAnalytics } from '@/hooks/useUnifiedAnalytics.ts';
 
 const EnsembleInsights: React.FC = () => {
-  // Use unified analytics for model performance
+  // Use unified analytics for model performance;
   const { performance } = useUnifiedAnalytics({ performance: true });
 
   if (performance.loading) {
-    return <div className="p-4">Loading model performance...</div>;
+    return <div className="p-4" key={916123}>Loading model performance...</div>;
   }
   if (performance.error) {
-    return <div className="p-4 text-red-600">Error: {performance.error}</div>;
+    return <div className="p-4 text-red-600" key={168758}>Error: {performance.error}</div>;
   }
   if (!performance.data) {
-    return <div className="p-4 text-gray-500">No model performance data available.</div>;
+    return <div className="p-4 text-gray-500" key={72742}>No model performance data available.</div>;
   }
 
-  // Example: Show a bar chart of model performance metrics
+  // Example: Show a bar chart of model performance metrics;
   const data = performance.data.map(item => ({
     name: item.model,
     accuracy: item.metrics.accuracy,
@@ -38,19 +38,19 @@ const EnsembleInsights: React.FC = () => {
   }));
 
   return (
-    <div className="space-y-8">
-      <section className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-2xl font-bold mb-4">Model Performance</h2>
-        <ResponsiveContainer height={400} width="100%">
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="accuracy" fill="#3B82F6" name="Accuracy" />
-            <Bar dataKey="f1" fill="#10B981" name="F1 Score" />
-            <Bar dataKey="roc_auc" fill="#6366F1" name="ROC AUC" />
+    <div className="space-y-8" key={778766}>
+      <section className="bg-white rounded-lg shadow p-6" key={881091}>
+        <h2 className="text-2xl font-bold mb-4" key={946196}>Model Performance</h2>
+        <ResponsiveContainer height={400} width="100%" key={180590}>
+          <BarChart data={data} key={678565}>
+            <CartesianGrid strokeDasharray="3 3" / key={580708}>
+            <XAxis dataKey="name" / key={113992}>
+            <YAxis / key={190086}>
+            <Tooltip / key={554254}>
+            <Legend / key={913243}>
+            <Bar dataKey="accuracy" fill="#3B82F6" name="Accuracy" / key={632835}>
+            <Bar dataKey="f1" fill="#10B981" name="F1 Score" / key={966277}>
+            <Bar dataKey="roc_auc" fill="#6366F1" name="ROC AUC" / key={640490}>
           </BarChart>
         </ResponsiveContainer>
       </section>

@@ -75,7 +75,7 @@ const defaultActivities = [
     },
 ];
 const getActivityIcon = (type, status) => {
-    const iconClass = "w-4 h-4";
+
     switch (type) {
         case "bet_won":
             return _jsx(CheckCircle, { className: `${iconClass} text-green-400` });
@@ -108,10 +108,10 @@ const getStatusColor = (status) => {
     }
 };
 const formatTimestamp = (timestamp) => {
-    const now = new Date();
-    const diff = now.getTime() - timestamp.getTime();
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(minutes / 60);
+
+
+
+
     if (minutes < 1)
         return "Just now";
     if (minutes < 60)
@@ -121,9 +121,9 @@ const formatTimestamp = (timestamp) => {
     return timestamp.toLocaleDateString();
 };
 export const ModernActivityFeed = ({ className = "", activities = defaultActivities, maxItems = 10, showTimeline = true, }) => {
-    const displayActivities = activities.slice(0, maxItems);
+
     return (_jsxs("div", { className: `space-y-4 ${className}`, children: [_jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { className: "flex items-center space-x-2", children: [_jsx(Activity, { size: 18, className: "text-gray-400" }), _jsx("h3", { className: "text-lg font-semibold text-white", children: "Recent Activity" })] }), _jsxs("div", { className: "text-xs text-gray-500", children: ["Last updated: ", new Date().toLocaleTimeString()] })] }), _jsx("div", { className: "space-y-3", children: displayActivities.map((activity, index) => (_jsxs(motion.div, { initial: { opacity: 0, y: 20 }, animate: { opacity: 1, y: 0 }, transition: { delay: index * 0.05 }, className: `
-              relative p-4 rounded-xl border transition-all hover:bg-gray-800/30
+              relative p-4 rounded-xl border transition-all hover:bg-gray-800/30;
               ${getStatusColor(activity.status)}
             `, children: [showTimeline && index < displayActivities.length - 1 && (_jsx("div", { className: "absolute left-6 top-12 w-px h-6 bg-gray-600/30" })), _jsxs("div", { className: "flex items-start space-x-3", children: [_jsx("div", { className: "flex-shrink-0 p-2 rounded-lg bg-gray-800/50", children: getActivityIcon(activity.type, activity.status) }), _jsxs("div", { className: "flex-1 min-w-0", children: [_jsxs("div", { className: "flex items-start justify-between", children: [_jsxs("div", { children: [_jsx("h4", { className: "text-sm font-medium text-white", children: activity.title }), _jsx("p", { className: "mt-1 text-sm text-gray-300", children: activity.description })] }), _jsxs("div", { className: "flex items-center space-x-1 text-xs text-gray-500 ml-4", children: [_jsx(Clock, { size: 12 }), _jsx("span", { children: formatTimestamp(activity.timestamp) })] })] }), activity.metadata && (_jsxs("div", { className: "mt-3 flex flex-wrap gap-2", children: [activity.metadata.amount && (_jsxs("div", { className: "flex items-center space-x-1 px-2 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs", children: [_jsx(DollarSign, { size: 12 }), _jsxs("span", { children: ["$", activity.metadata.amount] })] })), activity.metadata.profit && (_jsxs("div", { className: "flex items-center space-x-1 px-2 py-1 bg-green-500/10 text-green-400 rounded-lg text-xs", children: [_jsx(TrendingUp, { size: 12 }), _jsxs("span", { children: ["+$", activity.metadata.profit] })] })), activity.metadata.odds && (_jsxs("div", { className: "flex items-center space-x-1 px-2 py-1 bg-purple-500/10 text-purple-400 rounded-lg text-xs", children: [_jsx(Target, { size: 12 }), _jsx("span", { children: activity.metadata.odds })] })), activity.metadata.confidence && (_jsxs("div", { className: "flex items-center space-x-1 px-2 py-1 bg-yellow-500/10 text-yellow-400 rounded-lg text-xs", children: [_jsx(Zap, { size: 12 }), _jsxs("span", { children: [activity.metadata.confidence, "%"] })] })), activity.metadata.game && (_jsx("div", { className: "px-2 py-1 bg-gray-500/10 text-gray-400 rounded-lg text-xs", children: activity.metadata.game })), activity.metadata.model && (_jsx("div", { className: "px-2 py-1 bg-cyan-500/10 text-cyan-400 rounded-lg text-xs", children: activity.metadata.model }))] }))] })] })] }, activity.id))) }), activities.length > maxItems && (_jsx("div", { className: "text-center", children: _jsxs("button", { className: "text-sm text-blue-400 hover:text-blue-300 transition-colors", children: ["View all ", activities.length, " activities"] }) }))] }));
 };

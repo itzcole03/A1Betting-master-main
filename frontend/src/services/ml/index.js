@@ -23,12 +23,12 @@ export class MLService {
     }
     async predict(params) {
         try {
-            const cacheKey = `prediction:${JSON.stringify(params)}`;
-            const cachedResult = await cache.get(cacheKey);
+
+
             if (cachedResult) {
                 return cachedResult;
             }
-            const result = await this.executePrediction(params);
+
             await cache.set(cacheKey, result);
             return result;
         }
@@ -38,7 +38,7 @@ export class MLService {
         }
     }
     async executePrediction(params) {
-        // Implementation of prediction logic
+        // Implementation of prediction logic;
         return [];
     }
     async updateMetrics(metrics) {

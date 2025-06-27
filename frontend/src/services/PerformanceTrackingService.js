@@ -10,14 +10,14 @@ export class PerformanceTrackingService extends EventEmitter {
             processingTime: 0,
         };
     }
-    // User Performance Tracking
+    // User Performance Tracking;
     recordBetResult(result) {
         this.betHistory.push(result);
         this.emit('betRecorded', result);
         this.updateMetrics();
     }
     getPerformanceMetrics(timeRange) {
-        let relevantBets = this.betHistory;
+        const relevantBets = this.betHistory;
         if (timeRange) {
             relevantBets = this.betHistory.filter(bet => bet.timestamp >= timeRange.start && bet.timestamp <= timeRange.end);
         }
@@ -32,7 +32,7 @@ export class PerformanceTrackingService extends EventEmitter {
         };
         return metrics;
     }
-    // System Performance Tracking
+    // System Performance Tracking;
     updateSystemMetrics(metrics) {
         this.systemMetrics = { ...this.systemMetrics, ...metrics };
         this.emit('systemMetricsUpdated', this.systemMetrics);
@@ -40,18 +40,18 @@ export class PerformanceTrackingService extends EventEmitter {
     getSystemMetrics() {
         return this.systemMetrics;
     }
-    // Private helper methods
+    // Private helper methods;
     calculateWinRate(bets) {
         if (bets.length === 0)
             return 0;
-        const wins = bets.filter(bet => bet.isWin).length;
+
         return (wins / bets.length) * 100;
     }
     calculateROI(bets) {
         if (bets.length === 0)
             return 0;
-        const totalStake = bets.reduce((sum, bet) => sum + bet.stakeAmount, 0);
-        const totalProfit = this.calculateTotalProfitLoss(bets);
+
+
         return (totalProfit / totalStake) * 100;
     }
     calculateTotalProfitLoss(bets) {
@@ -60,13 +60,13 @@ export class PerformanceTrackingService extends EventEmitter {
     calculateAverageStake(bets) {
         if (bets.length === 0)
             return 0;
-        const totalStake = bets.reduce((sum, bet) => sum + bet.stakeAmount, 0);
+
         return totalStake / bets.length;
     }
     calculateStreaks(bets) {
-        let current = 0;
-        let longest = 0;
-        let isWinStreak = false;
+        const current = 0;
+        const longest = 0;
+        const isWinStreak = false;
         bets.forEach((bet, index) => {
             if (index === 0) {
                 current = 1;
@@ -85,10 +85,10 @@ export class PerformanceTrackingService extends EventEmitter {
         return { current, longest };
     }
     calculateMetricsByConfidence(bets) {
-        const confidenceBuckets = {};
+
         bets.forEach(bet => {
-            const confidenceLevel = Math.floor(bet.prediction.confidence * 10) * 10;
-            const key = `${confidenceLevel}-${confidenceLevel + 9}`;
+
+
             if (!confidenceBuckets[key]) {
                 confidenceBuckets[key] = {
                     winRate: 0,
@@ -107,7 +107,7 @@ export class PerformanceTrackingService extends EventEmitter {
         return confidenceBuckets;
     }
     updateMetrics() {
-        const metrics = this.getPerformanceMetrics();
+
         this.emit('metricsUpdated', metrics);
     }
 }

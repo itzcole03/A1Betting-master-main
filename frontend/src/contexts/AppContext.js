@@ -1,6 +1,6 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, useReducer, useEffect } from "react";
-// Initial state
+// Initial state;
 const initialState = {
     darkMode: false,
     connectedSources: 12,
@@ -11,7 +11,7 @@ const initialState = {
     connectionStatus: "connected",
     notifications: [],
 };
-// Reducer
+// Reducer;
 function appReducer(state, action) {
     switch (action.type) {
         case "TOGGLE_DARK_MODE":
@@ -49,11 +49,11 @@ function appReducer(state, action) {
             return state;
     }
 }
-const AppContext = createContext(undefined);
-// Provider component
+
+// Provider component;
 export const AppProvider = ({ children, }) => {
     const [state, dispatch] = useReducer(appReducer, initialState);
-    // Apply dark mode to document
+    // Apply dark mode to document;
     useEffect(() => {
         if (state.darkMode) {
             document.documentElement.classList.add("dark");
@@ -62,7 +62,7 @@ export const AppProvider = ({ children, }) => {
             document.documentElement.classList.remove("dark");
         }
     }, [state.darkMode]);
-    // Auto-remove notifications after 5 seconds
+    // Auto-remove notifications after 5 seconds;
     useEffect(() => {
         state.notifications.forEach((notification) => {
             const timer = setTimeout(() => {
@@ -95,9 +95,9 @@ export const AppProvider = ({ children, }) => {
     const refreshData = async () => {
         dispatch({ type: "REFRESH_DATA" });
         try {
-            // Simulate data refresh
+            // Simulate data refresh;
             await new Promise((resolve) => setTimeout(resolve, 1000));
-            // Update data quality and connection status
+            // Update data quality and connection status;
             dispatch({
                 type: "SET_DATA_QUALITY",
                 payload: Math.random() * 0.3 + 0.7,
@@ -132,9 +132,9 @@ export const AppProvider = ({ children, }) => {
     };
     return _jsx(AppContext.Provider, { value: value, children: children });
 };
-// Hook to use the app context
+// Hook to use the app context;
 export const useApp = () => {
-    const context = useContext(AppContext);
+
     if (context === undefined) {
         throw new Error("useApp must be used within an AppProvider");
     }

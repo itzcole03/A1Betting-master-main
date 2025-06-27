@@ -6,7 +6,7 @@ Tests all API endpoints, error handling, and system integration
 import pytest
 import asyncio
 import json
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from fastapi.testclient import TestClient
 from unittest.mock import patch, MagicMock, AsyncMock
 
@@ -46,19 +46,19 @@ class TestHealthAndMonitoring:
         response = client.get("/api/v4/health/comprehensive")
         assert response.status_code == 200
         data = response.json()
-        
+
         # Check required fields
         assert "status" in data
         assert "timestamp" in data
         assert "services" in data
         assert "metrics" in data
         assert "version" in data
-        
+
         # Check services status
         services = data["services"]
         assert "database" in services
         assert "prediction_engine" in services
-        
+
         # Check metrics
         metrics = data["metrics"]
         assert "uptime_seconds" in metrics
@@ -85,7 +85,7 @@ class TestValueBetsAndArbitrage:
         assert response.status_code == 200
         data = response.json()
         assert "value_bets" in data
-        
+
         if data["value_bets"]:
             bet = data["value_bets"][0]
             required_fields = ["event", "sport", "bookmaker", "outcome", "odds", "edge"]
@@ -98,7 +98,7 @@ class TestValueBetsAndArbitrage:
         assert response.status_code == 200
         data = response.json()
         assert "arbitrage_opportunities" in data
-        
+
         if data["arbitrage_opportunities"]:
             arb = data["arbitrage_opportunities"][0]
             required_fields = ["event", "sport", "legs", "profit_percent"]
@@ -115,7 +115,7 @@ class TestValueBetsAndArbitrage:
             "odds": 2.5,
             "stake": 50
         }
-        
+
         response = client.post("/api/v4/betting/place-bet", json=bet_data)
         assert response.status_code == 200
         data = response.json()
@@ -140,7 +140,7 @@ class TestValueBetsAndArbitrage:
         data = response.json()
         assert "format" in data
         assert data["format"] == "json"
-        
+
         # Test CSV export
         response = client.get("/api/v4/betting/export?format=csv")
         assert response.status_code == 200
@@ -170,7 +170,7 @@ class TestUserManagement:
             "preferred_stake": 100.0,
             "bookmakers": ["Bet365", "Pinnacle"]
         }
-        
+
         response = client.post("/api/v4/user/profile/test_user", json=profile_data)
         assert response.status_code == 200
         data = response.json()
@@ -204,12 +204,12 @@ class TestModelManagement:
     def test_start_model_retraining(self, mock_service):
         """Test model retraining initiation"""
         mock_service.start_retraining = AsyncMock(return_value="test_job_id")
-        
+
         config = {
             "training_data_days": 90,
             "validation_split": 0.2
         }
-        
+
         response = client.post("/api/v4/model/retrain", json=config)
         assert response.status_code == 200
         data = response.json()
@@ -226,7 +226,7 @@ class TestModelManagement:
             "current_stage": "model_training"
         }
         mock_service.get_retraining_status = AsyncMock(return_value=mock_status)
-        
+
         response = client.get("/api/v4/model/retrain/status/test_job")
         assert response.status_code == 200
         data = response.json()
@@ -242,7 +242,7 @@ class TestModelManagement:
             "rolled_back_to": "v3.5"
         }
         mock_service.rollback_to_previous_version = AsyncMock(return_value=mock_rollback)
-        
+
         response = client.post("/api/v4/model/rollback")
         assert response.status_code == 200
         data = response.json()
@@ -271,7 +271,7 @@ class TestPredictionExplanations:
             }
         }
         mock_service.get_explanation = AsyncMock(return_value=mock_explanation)
-        
+
         response = client.get("/api/v4/explain/test_pred")
         assert response.status_code == 200
         data = response.json()
@@ -306,7 +306,7 @@ class TestDataQuality:
             "features_with_drift": []
         }
         mock_service.get_data_drift_report = AsyncMock(return_value=mock_drift)
-        
+
         response = client.get("/api/v4/data/drift")
         assert response.status_code == 200
         data = response.json()
@@ -322,7 +322,7 @@ class TestDataQuality:
             "quality_metrics": {}
         }
         mock_service.get_data_quality_report = AsyncMock(return_value=mock_quality)
-        
+
         response = client.get("/api/v4/data/quality")
         assert response.status_code == 200
         data = response.json()
@@ -341,7 +341,7 @@ class TestEnsembleManagement:
             "ensemble_performance": {}
         }
         mock_service.get_diversity_metrics = AsyncMock(return_value=mock_metrics)
-        
+
         response = client.get("/api/v4/ensemble/diversity")
         assert response.status_code == 200
         data = response.json()
@@ -356,7 +356,7 @@ class TestEnsembleManagement:
             "recommended_ensemble": []
         }
         mock_service.get_candidate_models = AsyncMock(return_value=mock_candidates)
-        
+
         response = client.get("/api/v4/ensemble/candidates")
         assert response.status_code == 200
         data = response.json()
@@ -371,11 +371,11 @@ class TestDocumentationGeneration:
         """Test documentation aggregation"""
         mock_docs = {
             "sections": [],
-            "generated_at": datetime.utcnow().isoformat(),
+            "generated_at": datetime.now(timezone.utc).isoformat(),
             "total_files": 10
         }
         mock_service.generate_aggregate_docs = AsyncMock(return_value=mock_docs)
-        
+
         response = client.get("/api/v4/docs/aggregate")
         assert response.status_code == 200
         data = response.json()
@@ -397,7 +397,7 @@ class TestAuditAndCompliance:
             }
         }
         mock_service.get_prediction_audit = AsyncMock(return_value=mock_audit)
-        
+
         response = client.get("/api/v4/audit/predictions")
         assert response.status_code == 200
         data = response.json()
@@ -464,7 +464,7 @@ class TestIntegration:
         response = client.get("/api/v4/betting/value-bets")
         assert response.status_code == 200
         value_bets = response.json()["value_bets"]
-        
+
         if value_bets:
             # 2. Place a bet
             bet = value_bets[0]
@@ -476,10 +476,10 @@ class TestIntegration:
                 "odds": bet["odds"],
                 "stake": 25
             }
-            
+
             response = client.post("/api/v4/betting/place-bet", json=bet_data)
             assert response.status_code == 200
-            
+
             # 3. Check user analytics
             response = client.get("/api/v4/user/profit-analytics?user_id=integration_test_user")
             assert response.status_code == 200
@@ -489,7 +489,7 @@ class TestIntegration:
         # 1. Check current model versions
         response = client.get("/api/v4/model/versions")
         assert response.status_code == 200
-        
+
         # 2. Start retraining (if service is available)
         config = {"training_data_days": 30}
         response = client.post("/api/v4/model/retrain", json=config)

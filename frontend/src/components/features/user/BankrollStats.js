@@ -3,9 +3,9 @@ import { Card, CardContent, Typography, Grid, LinearProgress, Box, Slider, Switc
 import { bankrollService } from '@/services/bankroll';
 import { usePredictionStore } from '@/store/predictionStore';
 export const BankrollStats = () => {
-    const stats = bankrollService.getStats();
-    const settings = bankrollService.getSettings();
-    const setStrategyAutomation = usePredictionStore(state => state.setStrategyAutomation);
+
+
+
     const handleSettingChange = (setting, value) => {
         bankrollService.updateSettings({ [setting]: value });
     };

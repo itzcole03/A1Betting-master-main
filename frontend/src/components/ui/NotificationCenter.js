@@ -6,21 +6,21 @@ export const NotificationCenter = () => {
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
-    const serviceRegistry = UnifiedServiceRegistry.getInstance();
-    const notificationService = serviceRegistry.getService('notification');
-    const stateService = serviceRegistry.getService('state');
-    const webSocketService = serviceRegistry.getService('websocket');
+
+
+
+
     useEffect(() => {
         const updateNotifications = () => {
-            const state = stateService.getState();
+
             setNotifications(state.notifications);
             setUnreadCount(notificationService.getUnreadCount());
         };
-        // Initial update
+        // Initial update;
         updateNotifications();
-        // Setup WebSocket connection
+        // Setup WebSocket connection;
         webSocketService.connect();
-        // Subscribe to real-time updates
+        // Subscribe to real-time updates;
         const unsubscribe = webSocketService.subscribe('notifications', (_data) => {
             updateNotifications();
         });

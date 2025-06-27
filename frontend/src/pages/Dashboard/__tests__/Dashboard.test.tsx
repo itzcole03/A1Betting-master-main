@@ -1,10 +1,10 @@
-import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import Dashboard from '../Dashboard';
-import { getActiveBets, getTotalWinnings, getWinRate } from '@services/bettingService';
+import React from 'react.ts';
+import { render, screen, waitFor } from '@testing-library/react.ts';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query.ts';
+import Dashboard from '@/Dashboard.ts';
+import { getActiveBets, getTotalWinnings, getWinRate } from '@services/bettingService.ts';
 
-// Mock the betting service
+// Mock the betting service;
 jest.mock('@services/bettingService', () => ({
   getActiveBets: jest.fn(),
   getTotalWinnings: jest.fn(),
@@ -21,8 +21,8 @@ const queryClient = new QueryClient({
 
 const renderDashboard = () => {
   return render(
-    <QueryClientProvider client={queryClient}>
-      <Dashboard />
+    <QueryClientProvider client={queryClient} key={826303}>
+      <Dashboard / key={547136}>
     </QueryClientProvider>
   );
 };

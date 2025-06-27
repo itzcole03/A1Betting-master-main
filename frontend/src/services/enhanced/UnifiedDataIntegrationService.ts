@@ -1,17 +1,17 @@
 /**
- * Unified Data Integration Service
+ * Unified Data Integration Service;
  * Orchestrates data from multiple real providers:
- * - DailyFantasy: DraftKings, SportsDataIO, FairPlay
- * - Odds: The-Odds-API, OddsJam, SportsDataIO
- * - Sportsbooks: DraftKings, FanDuel, BetMGM, Caesars
+ * - DailyFantasy: DraftKings, SportsDataIO, FairPlay;
+ * - Odds: The-Odds-API, OddsJam, SportsDataIO;
+ * - Sportsbooks: DraftKings, FanDuel, BetMGM, Caesars;
  */
 
-import { enhancedDailyFantasyService } from "./DailyFantasyService";
-import { enhancedTheOddsService } from "./TheOddsService";
-import { sportsbookDataService } from "./SportsbookDataService";
-import { optimizedSportsRadarService } from "./OptimizedSportsRadarService";
-import { autonomousSportsbookService } from "./AutonomousSportsbookService";
-import { prizePicksProjectionsService } from "./PrizePicksProjectionsService";
+import { enhancedDailyFantasyService } from './DailyFantasyService.ts';
+import { enhancedTheOddsService } from './TheOddsService.ts';
+import { sportsbookDataService } from './SportsbookDataService.ts';
+import { optimizedSportsRadarService } from './OptimizedSportsRadarService.ts';
+import { autonomousSportsbookService } from './AutonomousSportsbookService.ts';
+import { prizePicksProjectionsService } from './PrizePicksProjectionsService.ts';
 
 interface UnifiedSportsData {
   sport: string;
@@ -71,8 +71,8 @@ interface IntegrationMetrics {
 
 export class UnifiedDataIntegrationService {
   private readonly cache: Map<string, { data: any; timestamp: number }>;
-  private readonly cacheTTL: number = 60000; // 1 minute for unified data
-  private readonly healthCheckInterval: number = 300000; // 5 minutes
+  private readonly cacheTTL: number = 60000; // 1 minute for unified data;
+  private readonly healthCheckInterval: number = 300000; // 5 minutes;
 
   private healthStatus: Map<string, DataSourceHealth> = new Map();
   private metrics: IntegrationMetrics = {
@@ -91,27 +91,26 @@ export class UnifiedDataIntegrationService {
   }
 
   /**
-   * Get unified sports data combining all providers
+   * Get unified sports data combining all providers;
    */
   async getUnifiedSportsData(
     sport: string,
     league?: string,
   ): Promise<UnifiedSportsData> {
-    const startTime = Date.now();
+
     this.metrics.total_requests++;
 
     try {
-      const cacheKey = `unified_${sport}_${league || "all"}`;
 
-      // Check cache first
-      const cached = this.cache.get(cacheKey);
+      // Check cache first;
+
       if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
         this.metrics.cache_hit_rate =
           this.metrics.cache_hit_rate * 0.9 + 0.1 * 1;
         return cached.data;
       }
 
-      // Fetch data from all sources in parallel - prioritizing configured APIs
+      // Fetch data from all sources in parallel - prioritizing configured APIs;
       const [theOddsData, sportsRadarData, dfsData, autonomousSportsbookData] =
         await Promise.allSettled([
           enhancedTheOddsService.getAggregatedOdds(sport),
@@ -120,7 +119,7 @@ export class UnifiedDataIntegrationService {
           autonomousSportsbookService.getAllAutonomousOdds(sport),
         ]);
 
-      // Process and merge the data
+      // Process and merge the data;
       const unifiedData = await this.mergeDataSources(
         sport,
         league,
@@ -130,7 +129,7 @@ export class UnifiedDataIntegrationService {
         autonomousSportsbookData,
       );
 
-      // Cache the result
+      // Cache the result;
       this.cache.set(cacheKey, {
         data: unifiedData,
         timestamp: Date.now(),
@@ -145,15 +144,15 @@ export class UnifiedDataIntegrationService {
       return unifiedData;
     } catch (error) {
       this.metrics.failed_requests++;
-      console.error("Unified data integration error:", error);
+      // console statement removed
 
-      // Return fallback data
+      // Return fallback data;
       return this.getFallbackData(sport, league);
     }
   }
 
   /**
-   * Merge data from multiple sources with optimized API usage
+   * Merge data from multiple sources with optimized API usage;
    */
   private async mergeDataSources(
     sport: string,
@@ -185,28 +184,27 @@ export class UnifiedDataIntegrationService {
       sources.odds_providers.push("SportsRadar");
     }
 
-    // Process DFS data
+    // Process DFS data;
     let dfsData: any = null;
     if (dfsResult.status === "fulfilled" && dfsResult.value) {
       dfsData = dfsResult.value;
-      sources.dfs_providers = dfsData.sources
+      sources.dfs_providers = dfsData.sources;
         ? Object.values(dfsData.sources)
         : ["DraftKings", "SportsDataIO"];
     }
 
-    // Process autonomous sportsbook data
+    // Process autonomous sportsbook data;
     let autonomousEvents: any[] = [];
     if (autonomousResult.status === "fulfilled" && autonomousResult.value) {
       autonomousEvents = autonomousResult.value;
       sources.sportsbooks.push("DraftKings", "FanDuel", "BetMGM", "Caesars");
     }
 
-    // Merge events data
-    const eventMap = new Map<string, any>();
+    // Merge events data;
 
     // Add The-Odds-API events (Priority)
     for (const event of theOddsEvents) {
-      const key = `${event.home_team}_vs_${event.away_team}`;
+
       eventMap.set(key, {
         event_id: event.event_id || event.id,
         home_team: event.home_team,
@@ -223,9 +221,9 @@ export class UnifiedDataIntegrationService {
       });
     }
 
-    // Add SportsRadar events
+    // Add SportsRadar events;
     for (const event of sportsRadarEvents) {
-      const key = `${event.home_team}_vs_${event.away_team}`;
+
       if (!eventMap.has(key)) {
         eventMap.set(key, {
           event_id: event.event_id,
@@ -243,9 +241,9 @@ export class UnifiedDataIntegrationService {
       }
     }
 
-    // Add autonomous sportsbook data
+    // Add autonomous sportsbook data;
     for (const event of autonomousEvents) {
-      const key = `${event.event}_autonomous`;
+
       if (!eventMap.has(key.replace("_autonomous", ""))) {
         eventMap.set(key.replace("_autonomous", ""), {
           event_id: `autonomous_${event.event.replace(" ", "_")}`,
@@ -263,7 +261,7 @@ export class UnifiedDataIntegrationService {
       }
     }
 
-    // Add DFS data to events
+    // Add DFS data to events;
     if (dfsData && dfsData.contests) {
       const dfsInfo = {
         contests: dfsData.contests.length,
@@ -281,18 +279,18 @@ export class UnifiedDataIntegrationService {
           })) || [],
       };
 
-      // Add DFS data to all events
+      // Add DFS data to all events;
       eventMap.forEach((event) => {
         event.dfs_data = dfsInfo;
       });
     }
 
-    // Get arbitrage opportunities
+    // Get arbitrage opportunities;
     try {
       const arbitrageOpps =
         await sportsbookDataService.getArbitrageOpportunities(sport);
 
-      // Match arbitrage opportunities to events
+      // Match arbitrage opportunities to events;
       eventMap.forEach((event) => {
         const matchingArb = arbitrageOpps.find(
           (arb) =>
@@ -310,7 +308,7 @@ export class UnifiedDataIntegrationService {
         }
       });
     } catch (error) {
-      console.warn("Failed to get arbitrage opportunities:", error);
+      // console statement removed
     }
 
     return {
@@ -323,7 +321,7 @@ export class UnifiedDataIntegrationService {
   }
 
   /**
-   * Get fallback data when all providers fail
+   * Get fallback data when all providers fail;
    */
   private getFallbackData(sport: string, league?: string): UnifiedSportsData {
     return {
@@ -372,7 +370,7 @@ export class UnifiedDataIntegrationService {
   }
 
   /**
-   * Get real-time arbitrage opportunities across all providers
+   * Get real-time arbitrage opportunities across all providers;
    */
   async getArbitrageOpportunities(sport: string): Promise<
     Array<{
@@ -399,7 +397,7 @@ export class UnifiedDataIntegrationService {
 
       const opportunities: any[] = [];
 
-      // Process The-Odds-API arbitrage
+      // Process The-Odds-API arbitrage;
       if (theOddsArb.status === "fulfilled") {
         for (const arb of theOddsArb.value) {
           opportunities.push({
@@ -416,19 +414,19 @@ export class UnifiedDataIntegrationService {
             })),
             confidence_score: Math.min(arb.profit_margin * 10, 100),
             time_sensitivity:
-              arb.profit_margin > 3
+              arb.profit_margin > 3;
                 ? "high"
-                : arb.profit_margin > 1
+                : arb.profit_margin > 1;
                   ? "medium"
                   : "low",
           });
         }
       }
 
-      // Process sportsbook arbitrage
+      // Process sportsbook arbitrage;
       if (sportsbookArb.status === "fulfilled") {
         for (const arb of sportsbookArb.value) {
-          // Avoid duplicates
+          // Avoid duplicates;
           const exists = opportunities.find(
             (opp) =>
               opp.event === arb.event && opp.opportunity_type === "Moneyline",
@@ -449,9 +447,9 @@ export class UnifiedDataIntegrationService {
               })),
               confidence_score: Math.min(arb.profit_margin * 10, 100),
               time_sensitivity:
-                arb.profit_margin > 3
+                arb.profit_margin > 3;
                   ? "high"
-                  : arb.profit_margin > 1
+                  : arb.profit_margin > 1;
                     ? "medium"
                     : "low",
             });
@@ -459,16 +457,16 @@ export class UnifiedDataIntegrationService {
         }
       }
 
-      // Sort by profit margin
+      // Sort by profit margin;
       return opportunities.sort((a, b) => b.profit_margin - a.profit_margin);
     } catch (error) {
-      console.error("Error getting arbitrage opportunities:", error);
+      // console statement removed
       return [];
     }
   }
 
   /**
-   * Get optimal DFS lineups with real-time data
+   * Get optimal DFS lineups with real-time data;
    */
   async getOptimalDFSLineups(
     sport: string,
@@ -509,19 +507,19 @@ export class UnifiedDataIntegrationService {
       ]);
 
       let lineup: any[] = [];
-      let totalSalary = 0;
-      let projectedPoints = 0;
-      let optimizationScore = 0;
+      const totalSalary = 0;
+      const projectedPoints = 0;
+      const optimizationScore = 0;
       let stackInfo;
 
       if (optimalLineup.status === "fulfilled" && optimalLineup.value) {
-        const optimal = optimalLineup.value;
+
         lineup = optimal.players.map((player: any) => ({
           player: player.name,
           position: player.position,
           salary: player.salary,
           projected_points: player.projectedPoints,
-          ownership_projection: Math.random() * 30, // Mock ownership
+          ownership_projection: Math.random() * 30, // Mock ownership;
           value_score: (player.projectedPoints / player.salary) * 1000,
         }));
         totalSalary = optimal.totalSalary;
@@ -529,8 +527,8 @@ export class UnifiedDataIntegrationService {
         optimizationScore = optimal.optimization_score;
         stackInfo = optimal.stack_info;
       } else if (dfsData.status === "fulfilled" && dfsData.value?.players) {
-        // Fallback to simple optimization
-        const players = dfsData.value.players.slice(0, 8); // Typical lineup size
+        // Fallback to simple optimization;
+        const players = dfsData.value.players.slice(0, 8); // Typical lineup size;
         lineup = players.map((player: any) => ({
           player: player.name,
           position: player.position,
@@ -572,25 +570,25 @@ export class UnifiedDataIntegrationService {
         },
       };
     } catch (error) {
-      console.error("Error generating optimal lineup:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Start health monitoring for all providers
+   * Start health monitoring for all providers;
    */
   private startHealthMonitoring(): void {
     setInterval(async () => {
       await this.updateHealthStatus();
     }, this.healthCheckInterval);
 
-    // Initial health check
+    // Initial health check;
     this.updateHealthStatus();
   }
 
   /**
-   * Update health status for all providers
+   * Update health status for all providers;
    */
   private async updateHealthStatus(): Promise<void> {
     const providers = [
@@ -602,11 +600,9 @@ export class UnifiedDataIntegrationService {
     ];
 
     for (const provider of providers) {
-      const startTime = Date.now();
 
       try {
-        const health = await provider.service.healthCheck();
-        const responseTime = Date.now() - startTime;
+
 
         this.healthStatus.set(provider.name, {
           provider: provider.name,
@@ -633,41 +629,40 @@ export class UnifiedDataIntegrationService {
   }
 
   /**
-   * Calculate availability percentage for a provider
+   * Calculate availability percentage for a provider;
    */
   private calculateAvailability(
     provider: string,
     isHealthy: boolean = true,
   ): number {
-    const current = this.healthStatus.get(provider);
+
     if (!current) return isHealthy ? 100 : 0;
 
-    // Simple moving average
+    // Simple moving average;
     return current.availability_percentage * 0.9 + (isHealthy ? 10 : 0);
   }
 
   /**
-   * Update overall metrics
+   * Update overall metrics;
    */
   private updateMetrics(): void {
     const healthyProviders = Array.from(this.healthStatus.values()).filter(
       (h) => h.status === "healthy",
     ).length;
 
-    const totalProviders = this.healthStatus.size;
     this.metrics.uptime_percentage =
       totalProviders > 0 ? (healthyProviders / totalProviders) * 100 : 100;
 
-    // Calculate data freshness score based on cache usage and update frequency
+    // Calculate data freshness score based on cache usage and update frequency;
     const cacheAge =
       Date.now() -
       Math.max(...Array.from(this.cache.values()).map((c) => c.timestamp));
 
-    this.metrics.data_freshness_score = Math.max(0, 100 - cacheAge / 60000); // Decrease by age in minutes
+    this.metrics.data_freshness_score = Math.max(0, 100 - cacheAge / 60000); // Decrease by age in minutes;
   }
 
   /**
-   * Get comprehensive health status
+   * Get comprehensive health status;
    */
   getHealthStatus(): {
     overall_status: string;
@@ -675,10 +670,9 @@ export class UnifiedDataIntegrationService {
     metrics: IntegrationMetrics;
     recommendations: string[];
   } {
-    const providers = Array.from(this.healthStatus.values());
-    const healthyCount = providers.filter((p) => p.status === "healthy").length;
 
-    let overallStatus = "offline";
+
+    const overallStatus = "offline";
     if (healthyCount === providers.length) {
       overallStatus = "healthy";
     } else if (healthyCount > 0) {
@@ -714,7 +708,7 @@ export class UnifiedDataIntegrationService {
   }
 
   /**
-   * Clear all caches
+   * Clear all caches;
    */
   clearAllCaches(): void {
     this.cache.clear();
@@ -724,7 +718,7 @@ export class UnifiedDataIntegrationService {
   }
 
   /**
-   * Cleanup resources
+   * Cleanup resources;
    */
   cleanup(): void {
     this.clearAllCaches();
@@ -732,7 +726,7 @@ export class UnifiedDataIntegrationService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const unifiedDataIntegrationService =
   new UnifiedDataIntegrationService();
 export default unifiedDataIntegrationService;

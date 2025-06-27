@@ -1,4 +1,4 @@
-import { apiService } from './api';
+import { apiService } from './api.ts';
 
 interface SportradarConfig {
   baseUrl: string;
@@ -80,7 +80,7 @@ class SportradarService {
       });
       return response.data;
     } catch (error) {
-      console.error('Failed to get player stats:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -95,7 +95,7 @@ class SportradarService {
       });
       return response.data;
     } catch (error) {
-      console.error('Failed to get injuries:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -109,7 +109,7 @@ class SportradarService {
       });
       return response.data;
     } catch (error) {
-      console.error('Failed to get matchup:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -132,7 +132,7 @@ class SportradarService {
       });
       return response.data;
     } catch (error) {
-      console.error('Failed to get team stats:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -151,7 +151,7 @@ class SportradarService {
       });
       return response.data;
     } catch (error) {
-      console.error('Failed to get game schedule:', error);
+      // console statement removed
       throw error;
     }
   }

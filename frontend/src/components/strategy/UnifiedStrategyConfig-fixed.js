@@ -21,16 +21,15 @@ import {
 } from "../ui/UnifiedUI";
 
 const UnifiedStrategyConfig = () => {
-  // Initialize services
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const predictionService = serviceRegistry.getService("prediction");
-  const analyticsService = serviceRegistry.getService("analytics");
-  const stateService = serviceRegistry.getService("state");
-  const notificationService = serviceRegistry.getService("notification");
-  const errorService = serviceRegistry.getService("error");
-  const webSocketService = serviceRegistry.getService("websocket");
+  // Initialize services;
 
-  // State
+
+
+
+
+
+
+  // State;
   const [config, setConfig] = useState({
     investmentAmount: 1000,
     modelSet: {},
@@ -60,14 +59,14 @@ const UnifiedStrategyConfig = () => {
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [activeTab, setActiveTab] = useState("basic");
 
-  // Analytics state using the existing hook
+  // Analytics state using the existing hook;
   const analytics = useUnifiedAnalytics({
     ml: true,
     performance: true,
     betting: true,
   });
 
-  // Load available models
+  // Load available models;
   useEffect(() => {
     loadModels();
   }, []);
@@ -75,7 +74,7 @@ const UnifiedStrategyConfig = () => {
   const loadModels = async () => {
     try {
       setLoading(true);
-      // Mock model loading since we can't access the actual service methods
+      // Mock model loading since we can't access the actual service methods;
       const mockModels = [
         {
           id: "model1",
@@ -101,8 +100,8 @@ const UnifiedStrategyConfig = () => {
       ];
       setModels(mockModels);
 
-      // Initialize model weights in config
-      const modelSet = {};
+      // Initialize model weights in config;
+
       mockModels.forEach((model) => {
         modelSet[model.id] = {
           enabled: model.enabled,
@@ -144,7 +143,7 @@ const UnifiedStrategyConfig = () => {
   const generateRecommendations = async () => {
     try {
       setLoading(true);
-      // Mock recommendations generation
+      // Mock recommendations generation;
       const mockRecommendations = [
         {
           id: 1,
@@ -166,7 +165,7 @@ const UnifiedStrategyConfig = () => {
   };
 
   const handleError = (message, error) => {
-    console.error(message, error);
+    // console statement removed
     setError(message);
     setToast({
       type: "error",
@@ -304,7 +303,7 @@ const UnifiedStrategyConfig = () => {
                                 children: model.name,
                               }),
                               _jsx(Button, {
-                                variant: config.modelSet[model.id]?.enabled
+                                variant: config.modelSet[model.id]?.enabled;
                                   ? "primary"
                                   : "secondary",
                                 size: "sm",
@@ -313,7 +312,7 @@ const UnifiedStrategyConfig = () => {
                                     model.id,
                                     !config.modelSet[model.id]?.enabled,
                                   ),
-                                children: config.modelSet[model.id]?.enabled
+                                children: config.modelSet[model.id]?.enabled;
                                   ? "Enabled"
                                   : "Disabled",
                               }),
@@ -395,7 +394,7 @@ const UnifiedStrategyConfig = () => {
                 onClick: generateRecommendations,
                 disabled: loading,
                 className: "w-full",
-                children: loading
+                children: loading;
                   ? "Generating..."
                   : "Generate Recommendations",
               }),
@@ -467,6 +466,6 @@ const UnifiedStrategyConfig = () => {
   });
 };
 
-// Export both named and default exports to support all import styles
+// Export both named and default exports to support all import styles;
 export { UnifiedStrategyConfig };
 export default UnifiedStrategyConfig;

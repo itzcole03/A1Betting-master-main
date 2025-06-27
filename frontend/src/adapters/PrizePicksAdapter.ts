@@ -3,21 +3,21 @@ import {
   PrizePicksLeague,
   PrizePicksPlayer,
   PrizePicksProjection,
-} from '../types/prizePicks'; // Updated import path (adjust as needed)
+} from '@/types/prizePicks.ts'; // Updated import path (adjust as needed)
 import {
   PrizePicksAPI,
   PrizePicksAPIResponse,
   RawPrizePicksIncludedLeague,
   RawPrizePicksIncludedPlayer,
   RawPrizePicksProjection,
-} from './../api/PrizePicksAPI'; // Updated import path
-import { unifiedMonitor } from './../core/UnifiedMonitor'; // Updated import path
+} from './../api/PrizePicksAPI.ts'; // Updated import path;
+import { unifiedMonitor } from './../core/UnifiedMonitor.ts'; // Updated import path;
 
 interface PrizePicksAdapterConfig {
-  apiKey?: string; // VITE_PRIZEPICKS_API_KEY - made optional
-  baseUrl?: string; // Optional: api.prizepicks.com is default in PrizePicksAPI
-  cacheTimeout?: number; // Milliseconds, e.g., 5 minutes
-  defaultLeagueId?: string; // e.g., NBA league ID for default fetches
+  apiKey?: string; // VITE_PRIZEPICKS_API_KEY - made optional;
+  baseUrl?: string; // Optional: api.prizepicks.com is default in PrizePicksAPI;
+  cacheTimeout?: number; // Milliseconds, e.g., 5 minutes;
+  defaultLeagueId?: string; // e.g., NBA league ID for default fetches;
 }
 
 export class PrizePicksAdapter {
@@ -33,12 +33,12 @@ export class PrizePicksAdapter {
 
   constructor(config: PrizePicksAdapterConfig) {
     this.config = {
-      cacheTimeout: 300000, // Default 5 minutes
-      apiKey: '', // Explicitly pass empty string if not provided
+      cacheTimeout: 300000, // Default 5 minutes;
+      apiKey: '', // Explicitly pass empty string if not provided;
       ...config,
     };
     this.prizePicksApi = new PrizePicksAPI({
-      apiKey: this.config.apiKey, // This will be an empty string if not in .env
+      apiKey: this.config.apiKey, // This will be an empty string if not in .env;
       baseUrl: this.config.baseUrl || 'https://api.prizepicks.com',
     });
     this.cache = {
@@ -48,21 +48,16 @@ export class PrizePicksAdapter {
   }
 
   public async isAvailable(): Promise<boolean> {
-    // return Boolean(this.config.apiKey); // No longer dependent on API key
-    return true; // Assume available for scraping
+    // return Boolean(this.config.apiKey); // No longer dependent on API key;
+    return true; // Assume available for scraping;
   }
 
   public async fetch(): Promise<PrizePicksData> {
-    const trace = unifiedMonitor.startTrace('prize-picks-adapter-fetch', 'adapter.fetch');
 
     try {
       if (this.isCacheValid()) {
         return this.cache.data!;
       }
-
-      const rawApiResponse = await this.prizePicksApi.fetchProjections(this.config.defaultLeagueId);
-
-      const transformedData = this.transformData(rawApiResponse);
 
       this.cache = {
         data: transformedData,
@@ -73,7 +68,7 @@ export class PrizePicksAdapter {
       return transformedData;
     } catch (error) {
       unifiedMonitor.endTrace(trace);
-      console.error(`[PrizePicksAdapter] Error during fetch: ${(error as Error).message}`);
+      // console statement removed.message}`);
       throw error;
     }
   }
@@ -81,13 +76,12 @@ export class PrizePicksAdapter {
   private transformData(
     apiResponse: PrizePicksAPIResponse<RawPrizePicksProjection>
   ): PrizePicksData {
-    const includedPlayersMap = new Map<string, PrizePicksPlayer>();
-    const includedLeaguesMap = new Map<string, PrizePicksLeague>();
+
 
     if (apiResponse.included) {
       apiResponse.included.forEach(item => {
         if (item.type === 'new_player') {
-          const rawPlayer = item as RawPrizePicksIncludedPlayer;
+
           includedPlayersMap.set(rawPlayer.id, {
             id: rawPlayer.id,
             name: rawPlayer.attributes.name,
@@ -96,7 +90,7 @@ export class PrizePicksAdapter {
             image_url: rawPlayer.attributes.image_url,
           });
         } else if (item.type === 'league') {
-          const rawLeague = item as RawPrizePicksIncludedLeague;
+
           includedLeaguesMap.set(rawLeague.id, {
             id: rawLeague.id,
             name: rawLeague.attributes.name,
@@ -107,8 +101,7 @@ export class PrizePicksAdapter {
     }
 
     const projections: PrizePicksProjection[] = apiResponse.data.map(rawProj => {
-      const playerId = rawProj.relationships.new_player.data.id;
-      const playerDetail = includedPlayersMap.get(playerId);
+
 
       return {
         id: rawProj.id,
@@ -131,7 +124,7 @@ export class PrizePicksAdapter {
 
   private isCacheValid(): boolean {
     if (!this.cache.data) return false;
-    const age = Date.now() - this.cache.timestamp;
+
     return age < (this.config.cacheTimeout || 0);
   }
 
@@ -148,8 +141,8 @@ export class PrizePicksAdapter {
   public async getData(): Promise<PrizePicksData> {
     if (!this.cache.data) {
       // throw new Error('No data available in PrizePicksAdapter. Call fetch() first.');
-      // Attempt to fetch if no data is available, common for initial load or if cache cleared
-      console.warn('[PrizePicksAdapter] No data in cache for getData(), attempting fetch...');
+      // Attempt to fetch if no data is available, common for initial load or if cache cleared;
+      // console statement removed, attempting fetch...');
       return await this.fetch();
     }
     return this.cache.data;

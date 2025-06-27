@@ -1,12 +1,12 @@
 import useStore from "../store/useStore";
 import { useEffect, useCallback, useRef } from "react";
 export const useWebSocket = ({ url, onMessage, reconnectAttempts = 5, reconnectDelay = 1000, autoReconnect = true, }) => {
-    const ws = useRef(null);
-    const reconnectCount = useRef(0);
+
+
     const { addToast } = useStore();
     const connect = useCallback(() => {
-        // Safety checks to prevent invalid WebSocket connections
-        // Disable ALL WebSocket connections for debugging
+        // Safety checks to prevent invalid WebSocket connections;
+        // Disable ALL WebSocket connections for debugging;
         if (!url ||
             url === "" ||
             url === "wss://api.betproai.com/ws" ||
@@ -16,28 +16,28 @@ export const useWebSocket = ({ url, onMessage, reconnectAttempts = 5, reconnectD
             url.includes("wss://") ||
             import.meta.env.VITE_ENABLE_WEBSOCKET === "false" ||
             import.meta.env.NODE_ENV === "development") {
-            console.log("WebSocket connection disabled or invalid URL:", url);
+            // console statement removed
             return;
         }
         try {
-            console.log("Attempting WebSocket connection to:", url);
+            // console statement removed
             ws.current = new WebSocket(url);
             ws.current.onopen = () => {
-                console.log("WebSocket connected to:", url);
+                // console statement removed
                 reconnectCount.current = 0;
             };
             ws.current.onmessage = (event) => {
                 try {
-                    const message = JSON.parse(event.data);
+
                     onMessage?.(message);
                 }
                 catch (error) {
-                    console.error("Failed to parse WebSocket message:", error);
+                    // console statement removed
                 }
             };
             ws.current.onclose = () => {
                 if (autoReconnect && reconnectCount.current < reconnectAttempts) {
-                    const delay = reconnectDelay * Math.pow(2, reconnectCount.current);
+
                     setTimeout(() => {
                         reconnectCount.current++;
                         connect();
@@ -53,11 +53,11 @@ export const useWebSocket = ({ url, onMessage, reconnectAttempts = 5, reconnectD
                 }
             };
             ws.current.onerror = (error) => {
-                console.error("WebSocket error:", error);
+                // console statement removed
             };
         }
         catch (error) {
-            console.error("Failed to create WebSocket connection:", error);
+            // console statement removed
         }
     }, [
         url,
@@ -78,11 +78,11 @@ export const useWebSocket = ({ url, onMessage, reconnectAttempts = 5, reconnectD
             ws.current.send(JSON.stringify(data));
         }
         else {
-            console.error("WebSocket is not connected");
+            // console statement removed
         }
     }, []);
     useEffect(() => {
-        // Only attempt connection if URL is valid - DISABLED FOR DEBUGGING
+        // Only attempt connection if URL is valid - DISABLED FOR DEBUGGING;
         if (url &&
             url !== "" &&
             url !== "wss://api.betproai.com/ws" &&
@@ -95,7 +95,7 @@ export const useWebSocket = ({ url, onMessage, reconnectAttempts = 5, reconnectD
             connect();
         }
         else {
-            console.log("Skipping WebSocket connection due to invalid/disabled URL:", url);
+            // console statement removed
         }
         return () => {
             disconnect();

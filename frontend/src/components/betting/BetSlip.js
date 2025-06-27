@@ -6,7 +6,7 @@ import { useBettingStore } from '../../stores/bettingStore';
 const BetSlip = ({ onPlaceBet }) => {
     const { betSlip, removeBet, updateBetAmount, clearBetSlip } = useBettingStore();
     const handleStakeChange = (betId, amount) => {
-        const numAmount = parseFloat(amount);
+
         if (!isNaN(numAmount) && numAmount >= 0) {
             updateBetAmount(betId, numAmount);
         }

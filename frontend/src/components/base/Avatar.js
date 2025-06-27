@@ -22,7 +22,7 @@ export const Avatar = ({ src, alt, size = 'md', status, shape = 'circle', fallba
     const getFallbackInitials = () => {
         if (!fallback)
             return '';
-        return fallback
+        return fallback;
             .split(' ')
             .map(word => word[0])
             .join('')
@@ -32,7 +32,7 @@ export const Avatar = ({ src, alt, size = 'md', status, shape = 'circle', fallba
     return (_jsxs("div", { className: "relative inline-block", children: [_jsx("div", { className: cn('relative flex items-center justify-center bg-gray-200 dark:bg-gray-700 overflow-hidden', sizes[size], shape === 'circle' ? 'rounded-full' : 'rounded-lg', bordered && 'ring-2 ring-white dark:ring-gray-800', className), ...props, children: src && !imageError ? (_jsx("img", { alt: alt, className: "h-full w-full object-cover", src: src, onError: handleImageError })) : (_jsx("span", { className: "font-medium text-gray-600 dark:text-gray-300", children: getFallbackInitials() })) }), status && (_jsx("span", { className: cn('absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full ring-2 ring-white dark:ring-gray-800', statusColors[status]) }))] }));
 };
 export const AvatarGroup = ({ avatars, max = 4, size = 'md', className }) => {
-    const visibleAvatars = avatars.slice(0, max);
-    const remainingCount = avatars.length - max;
+
+
     return (_jsxs("div", { className: cn('flex -space-x-2', className), children: [visibleAvatars.map((avatar, index) => (_jsx(Avatar, { ...avatar, className: "ring-2 ring-white dark:ring-gray-800", size: size }, index))), remainingCount > 0 && (_jsxs("div", { className: cn('relative flex items-center justify-center bg-gray-300 dark:bg-gray-600 text-gray-600 dark:text-gray-300 font-medium ring-2 ring-white dark:ring-gray-800 rounded-full', sizes[size]), children: ["+", remainingCount] }))] }));
 };

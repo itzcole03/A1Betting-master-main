@@ -55,11 +55,11 @@ export class EnhancedDataSourceManager {
 
     for (const config of sourceConfigs) {
       try {
-        const source = await this.initializeSource(config);
+
         this.sources.set(config.id, source);
       } catch (error) {
-        console.warn(`Failed to initialize ${config.name}:`, error);
-        // Add as disconnected source
+        // console statement removed
+        // Add as disconnected source;
         this.sources.set(config.id, {
           id: config.id,
           name: config.name,
@@ -75,26 +75,24 @@ export class EnhancedDataSourceManager {
       }
     }
 
-    // Start periodic updates
+    // Start periodic updates;
     this.startPeriodicUpdates();
 
     return this.sources;
   }
 
   private async initializeSource(config: any): Promise<EnhancedDataSource> {
-    const startTime = Date.now();
 
     try {
-      // Simulate API call with timeout
-      const data = await this.fetchSourceData(config.endpoint, config.category);
-      const latency = Date.now() - startTime;
+      // Simulate API call with timeout;
+
 
       return {
         id: config.id,
         name: config.name,
         category: config.category,
         connected: true,
-        quality: 0.85 + Math.random() * 0.1, // Simulate quality score
+        quality: 0.85 + Math.random() * 0.1, // Simulate quality score;
         reliability: 0.9 + Math.random() * 0.08,
         lastUpdate: new Date(),
         data,
@@ -114,7 +112,7 @@ export class EnhancedDataSourceManager {
     endpoint: string,
     category: string,
   ): Promise<any> {
-    // Simulate different data based on category
+    // Simulate different data based on category;
     switch (category) {
       case "sports_data":
         return this.generateSportsData();
@@ -226,7 +224,7 @@ export class EnhancedDataSourceManager {
   private startPeriodicUpdates(): void {
     this.updateInterval = setInterval(async () => {
       await this.refreshAllSources();
-    }, 300000); // Update every 5 minutes
+    }, 300000); // Update every 5 minutes;
   }
 
   async refreshAllSources(): Promise<void> {
@@ -235,7 +233,7 @@ export class EnhancedDataSourceManager {
         try {
           await this.refreshSource(sourceId);
         } catch (error) {
-          console.warn(`Failed to refresh source ${sourceId}:`, error);
+          // console statement removed
         }
       },
     );
@@ -244,16 +242,13 @@ export class EnhancedDataSourceManager {
   }
 
   private async refreshSource(sourceId: string): Promise<void> {
-    const source = this.sources.get(sourceId);
+
     if (!source) return;
 
-    const startTime = Date.now();
-
     try {
-      const data = await this.fetchSourceData("", source.category);
-      const latency = Date.now() - startTime;
 
-      // Update source
+
+      // Update source;
       this.sources.set(sourceId, {
         ...source,
         connected: true,
@@ -291,22 +286,22 @@ export class EnhancedDataSourceManager {
   }
 
   getOverallDataQuality(): number {
-    const connectedSources = this.getConnectedSources();
+
     if (connectedSources.length === 0) return 0;
 
     return (
       connectedSources.reduce((sum, source) => sum + source.quality, 0) /
-      connectedSources.length
+      connectedSources.length;
     );
   }
 
   getSourceReliability(): number {
-    const connectedSources = this.getConnectedSources();
+
     if (connectedSources.length === 0) return 0;
 
     return (
       connectedSources.reduce((sum, source) => sum + source.reliability, 0) /
-      connectedSources.length
+      connectedSources.length;
     );
   }
 
@@ -315,7 +310,6 @@ export class EnhancedDataSourceManager {
   }
 
   getDataSourceMetrics(): any {
-    const connectedSources = this.getConnectedSources();
 
     return {
       totalSources: this.sources.size,

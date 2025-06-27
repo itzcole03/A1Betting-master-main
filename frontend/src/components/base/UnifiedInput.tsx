@@ -1,23 +1,23 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
-import { FaExclamationCircle, FaCheckCircle, FaInfoCircle } from 'react-icons/fa';
-import { cn } from '@/utils/classNames';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { ChangeEvent, useState, useEffect  } from 'react.ts';
+import { FaExclamationCircle, FaCheckCircle, FaInfoCircle } from 'react-icons/fa.ts';
+import { cn } from '@/utils/classNames.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 
-type InputAttributes = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>;
+type InputAttributes = Omit<React.InputHTMLAttributes<HTMLInputElement key={726328}>, 'size'>;
 
 export interface UnifiedInputProps extends InputAttributes {
-  // Appearance
+  // Appearance;
   variant?: 'default' | 'premium';
   size?: 'sm' | 'md' | 'lg';
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
 
-  // Labels and Messages
+  // Labels and Messages;
   label?: string;
   error?: string;
   info?: string;
 
-  // Validation
+  // Validation;
   validation?: {
     required?: boolean;
     pattern?: string;
@@ -26,10 +26,10 @@ export interface UnifiedInputProps extends InputAttributes {
     validateOnBlur?: boolean;
   };
 
-  // Animation
+  // Animation;
   animate?: boolean;
 
-  // Callbacks
+  // Callbacks;
   onValidationChange?: (isValid: boolean) => void;
 }
 
@@ -52,40 +52,40 @@ const sizeClasses = {
   lg: 'h-12 text-lg',
 };
 
-export const UnifiedInput = React.forwardRef<HTMLInputElement, UnifiedInputProps>(
+export const UnifiedInput = React.forwardRef<HTMLInputElement, UnifiedInputProps key={691411}>(
   (
     {
-      // Appearance props
+      // Appearance props;
       variant = 'default',
       size = 'md',
       leftIcon,
       rightIcon,
       className,
 
-      // Labels and messages
+      // Labels and messages;
       label,
       error,
       info,
 
-      // Validation
+      // Validation;
       validation,
 
-      // Animation
+      // Animation;
       animate = true,
 
-      // Callbacks
+      // Callbacks;
       onValidationChange,
       onChange,
       onBlur,
 
-      // Rest
-      ...props
+      // Rest;
+      ...props;
     },
-    ref
+    ref;
   ) => {
     const [isFocused, setIsFocused] = useState(false);
     const [isDirty, setIsDirty] = useState(false);
-    const [localError, setLocalError] = useState<string | undefined>(error);
+    const [localError, setLocalError] = useState<string | undefined key={578393}>(error);
     const [isValid, setIsValid] = useState(true);
 
     useEffect(() => {
@@ -102,7 +102,7 @@ export const UnifiedInput = React.forwardRef<HTMLInputElement, UnifiedInputProps
       }
 
       if (validation.pattern && value) {
-        const regex = new RegExp(validation.pattern);
+
         if (!regex.test(value)) {
           setLocalError('Invalid format');
           setIsValid(false);
@@ -111,7 +111,7 @@ export const UnifiedInput = React.forwardRef<HTMLInputElement, UnifiedInputProps
       }
 
       if (props.type === 'number' && value) {
-        const num = parseFloat(value);
+
         if (validation.min !== undefined && num < validation.min) {
           setLocalError(`Value must be at least ${validation.min}`);
           setIsValid(false);
@@ -129,25 +129,25 @@ export const UnifiedInput = React.forwardRef<HTMLInputElement, UnifiedInputProps
       return true;
     };
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement key={553350}>) => {
       setIsDirty(true);
       if (validation && !validation.validateOnBlur) {
-        const isValid = validate(e.target.value);
+
         onValidationChange?.(isValid);
       }
       onChange?.(e);
     };
 
-    const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleBlur = (e: React.FocusEvent<HTMLInputElement key={553350}>) => {
       setIsFocused(false);
       if (validation?.validateOnBlur && isDirty) {
-        const isValid = validate(e.target.value);
+
         onValidationChange?.(isValid);
       }
       onBlur?.(e);
     };
 
-    const handleFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    const handleFocus = (e: React.FocusEvent<HTMLInputElement key={553350}>) => {
       setIsFocused(true);
       props.onFocus?.(e);
     };
@@ -164,61 +164,61 @@ export const UnifiedInput = React.forwardRef<HTMLInputElement, UnifiedInputProps
         'pl-10': leftIcon,
         'pr-10': rightIcon,
       },
-      className
+      className;
     );
 
     return (
-      <div className="space-y-1">
-        <AnimatePresence>
+      <div className="space-y-1" key={204202}>
+        <AnimatePresence key={359944}>
           {label && (
-            <motion.label
+            <motion.label;
               className="block text-sm font-medium text-gray-700 dark:text-gray-200"
               {...(animate ? variants.label : {})}
-            >
+             key={104039}>
               {label}
             </motion.label>
           )}
         </AnimatePresence>
 
-        <div className="relative">
+        <div className="relative" key={579431}>
           {leftIcon && (
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400" key={706623}>
               {leftIcon}
             </div>
           )}
 
-          <input
+          <input;
             ref={ref}
             className={baseClasses}
             onBlur={handleBlur}
             onChange={handleChange}
             onFocus={handleFocus}
             {...props}
-          />
+          / key={287949}>
 
           {rightIcon && (
-            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400">
+            <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-gray-400" key={492987}>
               {rightIcon}
             </div>
           )}
         </div>
 
-        <AnimatePresence>
+        <AnimatePresence key={359944}>
           {localError && (
-            <motion.p
+            <motion.p;
               className="text-sm text-red-600 dark:text-red-500 flex items-center gap-1"
               {...(animate ? variants.error : {})}
-            >
-              <FaExclamationCircle />
+             key={80091}>
+              <FaExclamationCircle / key={13399}>
               {localError}
             </motion.p>
           )}
           {!localError && info && (
-            <motion.p
+            <motion.p;
               className="text-sm text-gray-500 dark:text-gray-400 flex items-center gap-1"
               {...(animate ? variants.error : {})}
-            >
-              <FaInfoCircle />
+             key={280287}>
+              <FaInfoCircle / key={88955}>
               {info}
             </motion.p>
           )}

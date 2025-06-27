@@ -2,29 +2,29 @@
  * Main prediction service that integrates all prediction models and services.
  */
 
-import { AnalyticsService } from '../AnalyticsService.js';
-import { MarketAnalysisService } from '../marketAnalysisService.js';
-import { PerformanceTrackingService } from '../PerformanceTrackingService.js';
-import { RiskManagerService } from '../RiskManagerService.js';
-import { SocialSentimentService, socialSentimentService } from '../SocialSentimentServiceModern.js';
-import { DataSource, UnifiedDataService } from '../UnifiedDataService.js';
-import { weatherService } from '../weatherModern.js';
+import { AnalyticsService } from '@/AnalyticsService.js';
+import { MarketAnalysisService } from '@/marketAnalysisService.js';
+import { PerformanceTrackingService } from '@/PerformanceTrackingService.js';
+import { RiskManagerService } from '@/RiskManagerService.js';
+import { SocialSentimentService, socialSentimentService } from '@/SocialSentimentServiceModern.js';
+import { DataSource, UnifiedDataService } from '@/UnifiedDataService.js';
+import { weatherService } from '@/weatherModern.js';
 import { DailyFantasyService } from './DailyFantasyService.js';
 import type {
   PredictionRequest,
   PredictionResponse,
   PredictionResult,
 } from './types.js';
-// import { WebSocketManager } from '../unified/WebSocketManager'; // Removed unused import
-import { UnifiedConfigManager } from '../../core/config/types.js';
-import { FinalPredictionEngineImpl } from '../../core/FinalPredictionEngine/FinalPredictionEngine.js';
-import type { FinalPredictionEngineConfig, ModelOutput, RiskProfile } from '../../core/FinalPredictionEngine/types.js';
-import { UnifiedLogger } from '../../core/logging/types.js';
-import { UnifiedMetrics } from '../../core/metrics/types.js';
+// import { WebSocketManager } from '@/unified/WebSocketManager.ts'; // Removed unused import;
+import { UnifiedConfigManager } from '@/core/config/types.js';
+import { FinalPredictionEngineImpl } from '@/core/FinalPredictionEngine/FinalPredictionEngine.js';
+import type { FinalPredictionEngineConfig, ModelOutput, RiskProfile } from '@/core/FinalPredictionEngine/types.js';
+import { UnifiedLogger } from '@/core/logging/types.js';
+import { UnifiedMetrics } from '@/core/metrics/types.js';
 
 
 export class PredictionIntegrationService {
-  // private webSocket: WebSocketManager; // Unused, removed to fix lint error
+  // private webSocket: WebSocketManager; // Unused, removed to fix lint error;
   private dailyFantasy: DailyFantasyService;
   private weather: typeof weatherService;
   private socialSentiment: SocialSentimentService;
@@ -39,7 +39,7 @@ export class PredictionIntegrationService {
     logger?: UnifiedLogger,
     metrics?: UnifiedMetrics,
     config?: UnifiedConfigManager,
-    engineConfig?: FinalPredictionEngineConfig
+    engineConfig?: FinalPredictionEngineConfig;
   ) {
     this.dailyFantasy = new DailyFantasyService();
     this.weather = weatherService;
@@ -49,7 +49,7 @@ export class PredictionIntegrationService {
     this.performanceTracking = new PerformanceTrackingService();
     this.analytics = AnalyticsService.getInstance();
     this.unifiedData = UnifiedDataService.getInstance();
-    // this.webSocket = WebSocketManager.getInstance(); // Unused, removed to fix lint error
+    // this.webSocket = WebSocketManager.getInstance(); // Unused, removed to fix lint error;
     // Use provided dependencies or fall back to defaults (should be injected in production)
     this.finalPredictionEngine = new FinalPredictionEngineImpl(
       {
@@ -78,15 +78,14 @@ export class PredictionIntegrationService {
 
   public async generateIntegratedPrediction(request: PredictionRequest): Promise<PredictionResult> {
     try {
-      // Get auxiliary data
-      const unifiedData = await this.unifiedData.fetchData(DataSource.PRIZEPICKS, request.eventId);
-      const weatherData = await this.weather.getCurrentWeather(request.eventId);
-      const sentimentData = await this.socialSentiment.analyzeSentiment(request.eventId, 'twitter');
-      const marketData = await this.marketAnalysis.getMarketMetrics(request.eventId);
-      const riskAssessment = await this.riskManager.getRiskAssessment(request.eventId);
+      // Get auxiliary data;
+
+
+
+
 
       // Gather model outputs (simulate or aggregate from available services)
-      // In production, replace this with real model outputs from all available models
+      // In production, replace this with real model outputs from all available models;
       const modelOutputs: ModelOutput[] = [
         // Example: populate with real model outputs from ensemble, reality, market, etc.
         // { type: 'historical', score: 0.7, features: { ... }, prediction: 0.7, confidence: 0.8, timestamp: Date.now(), metadata: { ... } },
@@ -95,7 +94,7 @@ export class PredictionIntegrationService {
       // Use a default risk profile for now (should be dynamic per user/request)
       const riskProfile: RiskProfile = { type: 'safe', multiplier: 1.2, maxStake: 100 };
 
-      // Generate the final prediction using the engine
+      // Generate the final prediction using the engine;
       const finalPrediction = await this.finalPredictionEngine.generatePrediction(
         modelOutputs,
         riskProfile,
@@ -108,7 +107,7 @@ export class PredictionIntegrationService {
         }
       );
 
-      // Generate daily fantasy recommendations if requested
+      // Generate daily fantasy recommendations if requested;
       let dailyFantasy;
       if (request.includeDailyFantasy) {
         const fantasyResponse = await this.dailyFantasy.generateRecommendations({
@@ -128,7 +127,7 @@ export class PredictionIntegrationService {
       // Optionally update models, track performance, etc.
       await this.updateModels(request);
 
-      // Build the response
+      // Build the response;
       const response: PredictionResponse = {
         realityExploitation: {
           value: finalPrediction.finalScore,
@@ -224,7 +223,6 @@ export class PredictionIntegrationService {
       },
     };
 
-    const result = await this.generateIntegratedPrediction(request);
     return [result];
   }
 
@@ -232,31 +230,31 @@ export class PredictionIntegrationService {
    * Evaluate models (public accessor for model evaluation)
    */
   public async evaluateModels(): Promise<Record<string, unknown>> {
-    // Return performance metrics from the tracking service
+    // Return performance metrics from the tracking service;
     return this.performanceTracking as unknown as Record<string, unknown>;
   }
 
   /**
-   * Get model comparison data
+   * Get model comparison data;
    */
   public async getModelComparison(): Promise<Record<string, unknown>> {
-    // Return comparison data from analytics service
+    // Return comparison data from analytics service;
     return this.analytics as unknown as Record<string, unknown>;
   }
 
   /**
-   * Get performance metrics
+   * Get performance metrics;
    */
   public async getPerformanceMetrics(): Promise<Record<string, unknown>> {
-    // Return performance metrics from tracking service
+    // Return performance metrics from tracking service;
     return this.performanceTracking as unknown as Record<string, unknown>;
   }
 
   /**
-   * Get fantasy recommendations
+   * Get fantasy recommendations;
    */
   public async getFantasyRecommendations(): Promise<Record<string, unknown>> {
-    // Return fantasy recommendations from daily fantasy service
+    // Return fantasy recommendations from daily fantasy service;
     return this.dailyFantasy as unknown as Record<string, unknown>;
   }
 
@@ -264,7 +262,7 @@ export class PredictionIntegrationService {
    * Public method to update models (wrapper for private updateModels)
    */
   public async updateModelData(modelData: Record<string, unknown>): Promise<void> {
-    // Create a mock request for the private method
+    // Create a mock request for the private method;
     const request = {
       eventId: 'model-update',
       sport: 'general',
@@ -278,10 +276,10 @@ export class PredictionIntegrationService {
   }
 
   private async updateModels(request: PredictionRequest): Promise<void> {
-    // Only track performance for now; model updates are handled by FPE or auxiliary services if needed
+    // Only track performance for now; model updates are handled by FPE or auxiliary services if needed;
     this.performanceTracking.recordBetResult({
       propId: request.eventId,
-      prediction: { value: 0, confidence: 0 }, // Placeholder values
+      prediction: { value: 0, confidence: 0 }, // Placeholder values;
       actualValue: 0,
       isWin: false,
       stakeAmount: 0,

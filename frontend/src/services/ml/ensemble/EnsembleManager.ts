@@ -1,6 +1,6 @@
-import { BaseModel } from '../models/BaseModel';
-import { ModelRegistry } from '../registry/ModelRegistry';
-import { EventEmitter } from 'events';
+import { BaseModel } from '@/models/BaseModel.ts';
+import { ModelRegistry } from '@/registry/ModelRegistry.ts';
+import { EventEmitter } from 'events.ts';
 
 interface EnsembleConfig {
   name: string;
@@ -46,17 +46,17 @@ export class EnsembleManager extends EventEmitter {
   }
 
   public async createEnsemble(config: EnsembleConfig): Promise<void> {
-    // Validate models exist
+    // Validate models exist;
     for (const modelName of config.models) {
       if (!this.modelRegistry.getModel(modelName)) {
         throw new Error(`Model ${modelName} not found in registry`);
       }
     }
 
-    // Initialize weights if not provided
+    // Initialize weights if not provided;
     if (!config.weights) {
       config.weights = {};
-      const weight = 1 / config.models.length;
+
       config.models.forEach(model => {
         config.weights![model] = weight;
       });
@@ -68,21 +68,21 @@ export class EnsembleManager extends EventEmitter {
 
   public async getEnsemblePrediction(
     ensembleName: string,
-    input: any
+    input: any;
   ): Promise<EnsemblePrediction> {
-    const ensemble = this.ensembles.get(ensembleName);
+
     if (!ensemble) {
       throw new Error(`Ensemble ${ensembleName} not found`);
     }
 
-    // Get predictions from all models
+    // Get predictions from all models;
     const predictions = await Promise.all(
       ensemble.models.map(async modelName => {
-        const model = this.modelRegistry.getModel(modelName);
+
         if (!model) {
           throw new Error(`Model ${modelName} not found`);
         }
-        const prediction = await model.predict(input);
+
         return {
           modelName,
           prediction,
@@ -91,10 +91,9 @@ export class EnsembleManager extends EventEmitter {
       })
     );
 
-    // Combine predictions based on voting strategy
-    const combinedPrediction = this.combinePredictions(predictions, ensemble);
+    // Combine predictions based on voting strategy;
 
-    // Create ensemble prediction object
+    // Create ensemble prediction object;
     const ensemblePrediction: EnsemblePrediction = {
       prediction: combinedPrediction.prediction,
       confidence: combinedPrediction.confidence,
@@ -106,7 +105,7 @@ export class EnsembleManager extends EventEmitter {
       },
     };
 
-    // Add individual model contributions
+    // Add individual model contributions;
     predictions.forEach(({ modelName, prediction, weight }) => {
       ensemblePrediction.modelContributions[modelName] = {
         prediction: prediction.prediction,
@@ -129,7 +128,7 @@ export class EnsembleManager extends EventEmitter {
       prediction: any;
       weight: number;
     }>,
-    ensemble: EnsembleConfig
+    ensemble: EnsembleConfig;
   ): { prediction: any; confidence: number } {
     switch (ensemble.votingStrategy) {
       case 'weighted':
@@ -152,12 +151,12 @@ export class EnsembleManager extends EventEmitter {
   ): { prediction: any; confidence: number } {
     const weightedSum = predictions.reduce(
       (sum, { prediction, weight }) => sum + prediction.prediction * weight,
-      0
+      0;
     );
 
     const confidence = predictions.reduce(
       (sum, { prediction, weight }) => sum + prediction.confidence * weight,
-      0
+      0;
     );
 
     return {
@@ -173,17 +172,17 @@ export class EnsembleManager extends EventEmitter {
       weight: number;
     }>
   ): { prediction: any; confidence: number } {
-    const votes = new Map<any, number>();
-    let totalConfidence = 0;
+
+    const totalConfidence = 0;
 
     predictions.forEach(({ prediction }) => {
-      const vote = Math.round(prediction.prediction);
+
       votes.set(vote, (votes.get(vote) || 0) + 1);
       totalConfidence += prediction.confidence;
     });
 
-    let maxVotes = 0;
-    let majorityPrediction = null;
+    const maxVotes = 0;
+    const majorityPrediction = null;
 
     votes.forEach((count, prediction) => {
       if (count > maxVotes) {
@@ -206,7 +205,7 @@ export class EnsembleManager extends EventEmitter {
     }>
   ): { prediction: any; confidence: number } {
     const sortedPredictions = [...predictions].sort(
-      (a, b) => b.prediction.confidence - a.prediction.confidence
+      (a, b) => b.prediction.confidence - a.prediction.confidence;
     );
 
     return {
@@ -219,13 +218,13 @@ export class EnsembleManager extends EventEmitter {
     ensembleName: string,
     weights: { [modelName: string]: number }
   ): Promise<void> {
-    const ensemble = this.ensembles.get(ensembleName);
+
     if (!ensemble) {
       throw new Error(`Ensemble ${ensembleName} not found`);
     }
 
-    // Validate weights
-    const totalWeight = Object.values(weights).reduce((sum, weight) => sum + weight, 0);
+    // Validate weights;
+
     if (Math.abs(totalWeight - 1) > 0.0001) {
       throw new Error('Weights must sum to 1');
     }

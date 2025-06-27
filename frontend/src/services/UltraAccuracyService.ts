@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios.ts';
 
 interface UltraAccuracyRequest {
     features: Record<string, any>;
@@ -33,7 +33,7 @@ interface UltraAccuracyResponse {
 class UltraAccuracyService {
     private baseURL: string;
     private cache: Map<string, { data: UltraAccuracyResponse; timestamp: number }>;
-    private cacheTimeout: number = 300000; // 5 minutes
+    private cacheTimeout: number = 300000; // 5 minutes;
 
     constructor() {
         this.baseURL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
@@ -41,17 +41,16 @@ class UltraAccuracyService {
     }
 
     /**
-     * Generate ultra-accurate prediction with maximum possible accuracy
+     * Generate ultra-accurate prediction with maximum possible accuracy;
      */
     async generateUltraAccuratePrediction(
-        request: UltraAccuracyRequest
+        request: UltraAccuracyRequest;
     ): Promise<UltraAccuracyResponse | null> {
         try {
-            // Create cache key
-            const cacheKey = this.createCacheKey(request);
+            // Create cache key;
 
-            // Check cache first
-            const cached = this.getCachedPrediction(cacheKey);
+            // Check cache first;
+
             if (cached) {
                 return cached;
             }
@@ -63,37 +62,35 @@ class UltraAccuracyService {
                     context: request.context || 'general',
                     market_data: request.marketData,
                     alternative_data: request.alternativeData,
-                    target_accuracy: request.targetAccuracy || 0.995
+                    target_accuracy: request.targetAccuracy || 0.995;
                 },
                 {
-                    timeout: 30000, // 30 second timeout for ultra-accuracy processing
+                    timeout: 30000, // 30 second timeout for ultra-accuracy processing;
                     headers: {
                         'Content-Type': 'application/json'
                     }
                 }
             );
 
-            const prediction = response.data;
-
-            // Only cache and return if it meets ultra-accuracy criteria
+            // Only cache and return if it meets ultra-accuracy criteria;
             if (prediction && prediction.confidenceScore >= (request.targetAccuracy || 0.995)) {
                 this.cachePrediction(cacheKey, prediction);
                 return prediction;
             } else {
-                console.warn('Prediction rejected - does not meet ultra-accuracy criteria');
+                // console statement removed
                 return null;
             }
 
         } catch (error) {
-            console.error('Error generating ultra-accurate prediction:', error);
+            // console statement removed
 
-            // Always return mock ultra-accurate prediction if API fails
+            // Always return mock ultra-accurate prediction if API fails;
             return this.generateMockUltraAccuratePrediction(request);
         }
     }
 
     /**
-     * Get real-time market efficiency analysis
+     * Get real-time market efficiency analysis;
      */
     async getMarketEfficiencyAnalysis(marketData: Record<string, any>): Promise<any> {
         try {
@@ -105,7 +102,7 @@ class UltraAccuracyService {
 
             return response.data;
         } catch (error) {
-            console.error('Error analyzing market efficiency:', error);
+            // console statement removed
             return {
                 efficiencyScore: Math.random() * 0.7 + 0.2,
                 predictabilityScore: Math.random() * 0.8 + 0.1,
@@ -119,7 +116,7 @@ class UltraAccuracyService {
     }
 
     /**
-     * Get behavioral pattern analysis
+     * Get behavioral pattern analysis;
      */
     async getBehavioralPatternAnalysis(
         features: Record<string, any>,
@@ -134,41 +131,41 @@ class UltraAccuracyService {
 
             return response.data;
         } catch (error) {
-            console.error('Error analyzing behavioral patterns:', error);
+            // console statement removed
             return {
                 overreactionBias: Math.random(),
                 herdingBehavior: Math.random(),
                 anchoring: Math.random(),
                 recencyBias: Math.random(),
                 confirmationBias: Math.random(),
-                overallImpact: Math.random() * 0.1 - 0.05
+                overallImpact: Math.random() * 0.1 - 0.05;
             };
         }
     }
 
     /**
-     * Update model performance with actual outcomes
+     * Update model performance with actual outcomes;
      */
     async updateModelPerformance(
         predictionId: string,
-        actualOutcome: number
+        actualOutcome: number;
     ): Promise<void> {
         try {
             await axios.post(
                 `${this.baseURL}/api/ultra-accuracy/update-performance`,
                 {
                     prediction_id: predictionId,
-                    actual_outcome: actualOutcome
+                    actual_outcome: actualOutcome;
                 },
                 { timeout: 5000 }
             );
         } catch (error) {
-            console.error('Error updating model performance:', error);
+            // console statement removed
         }
     }
 
     /**
-     * Get system performance metrics
+     * Get system performance metrics;
      */
     async getSystemPerformanceMetrics(): Promise<any> {
         try {
@@ -179,7 +176,7 @@ class UltraAccuracyService {
 
             return response.data;
         } catch (error) {
-            console.error('Error getting performance metrics:', error);
+            // console statement removed
             return {
                 overallAccuracy: 0.945 + Math.random() * 0.05,
                 modelConsensus: 0.92 + Math.random() * 0.05,
@@ -191,12 +188,11 @@ class UltraAccuracyService {
     }
 
     /**
-     * Generate mock ultra-accurate prediction for development
+     * Generate mock ultra-accurate prediction for development;
      */
     private generateMockUltraAccuratePrediction(
-        request: UltraAccuracyRequest
+        request: UltraAccuracyRequest;
     ): UltraAccuracyResponse {
-        const targetAccuracy = request.targetAccuracy || 0.995;
 
         return {
             finalPrediction: 0.75 + Math.random() * 0.2,
@@ -211,7 +207,7 @@ class UltraAccuracyService {
                 weatherImpact: Math.random() * 0.1 - 0.05,
                 newsSentiment: Math.random() * 2 - 1,
                 venueFactors: Math.random() * 0.2 - 0.1,
-                injuryReports: Math.random() * 0.15 - 0.075
+                injuryReports: Math.random() * 0.15 - 0.075;
             },
             behavioralPatterns: {
                 overreactionBias: Math.random(),
@@ -220,7 +216,7 @@ class UltraAccuracyService {
                 recencyBias: Math.random(),
                 confirmationBias: Math.random(),
                 dispositionEffect: Math.random(),
-                overallImpact: Math.random() * 0.1 - 0.05
+                overallImpact: Math.random() * 0.1 - 0.05;
             },
             microstructureAnalysis: {
                 bidAskSpread: Math.random() * 0.03,
@@ -229,7 +225,7 @@ class UltraAccuracyService {
                 volatilityClustering: Math.random(),
                 meanReversionStrength: Math.random(),
                 momentumPersistence: Math.random(),
-                predictabilityScore: 0.7 + Math.random() * 0.25
+                predictabilityScore: 0.7 + Math.random() * 0.25;
             },
             featureImportance: {
                 'player_recent_form': 0.25 + Math.random() * 0.1,
@@ -240,13 +236,13 @@ class UltraAccuracyService {
                 'market_sentiment': 0.08 + Math.random() * 0.03,
                 'injury_reports': 0.06 + Math.random() * 0.04,
                 'coaching_decisions': 0.04 + Math.random() * 0.03,
-                'travel_fatigue': 0.02 + Math.random() * 0.02
+                'travel_fatigue': 0.02 + Math.random() * 0.02;
             },
             modelContributions: {
                 'quantum_ensemble': 0.35 + Math.random() * 0.1,
                 'neural_architecture_search': 0.25 + Math.random() * 0.05,
                 'meta_learning': 0.20 + Math.random() * 0.05,
-                'transformer_ensemble': 0.20 + Math.random() * 0.05
+                'transformer_ensemble': 0.20 + Math.random() * 0.05;
             },
             riskAdjustedEdge: 0.05 + Math.random() * 0.1,
             optimalStakeFraction: 0.015 + Math.random() * 0.035,
@@ -265,21 +261,20 @@ class UltraAccuracyService {
     }
 
     /**
-     * Create cache key for prediction
+     * Create cache key for prediction;
      */
     private createCacheKey(request: UltraAccuracyRequest): string {
         return JSON.stringify({
             features: request.features,
             context: request.context,
-            targetAccuracy: request.targetAccuracy
+            targetAccuracy: request.targetAccuracy;
         });
     }
 
     /**
-     * Get cached prediction if valid
+     * Get cached prediction if valid;
      */
     private getCachedPrediction(cacheKey: string): UltraAccuracyResponse | null {
-        const cached = this.cache.get(cacheKey);
 
         if (cached && (Date.now() - cached.timestamp) < this.cacheTimeout) {
             return cached.data;
@@ -293,7 +288,7 @@ class UltraAccuracyService {
     }
 
     /**
-     * Cache prediction
+     * Cache prediction;
      */
     private cachePrediction(cacheKey: string, prediction: UltraAccuracyResponse): void {
         this.cache.set(cacheKey, {
@@ -301,31 +296,31 @@ class UltraAccuracyService {
             timestamp: Date.now()
         });
 
-        // Clean up old cache entries
+        // Clean up old cache entries;
         if (this.cache.size > 100) {
-            const oldestKey = this.cache.keys().next().value;
+
             this.cache.delete(oldestKey);
         }
     }
 
     /**
-     * Clear all cached predictions
+     * Clear all cached predictions;
      */
     clearCache(): void {
         this.cache.clear();
     }
 
     /**
-     * Get cache statistics
+     * Get cache statistics;
      */
     getCacheStats(): { size: number; hitRate: number } {
         return {
             size: this.cache.size,
-            hitRate: 0.85 // Mock hit rate
+            hitRate: 0.85 // Mock hit rate;
         };
     }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const ultraAccuracyService = new UltraAccuracyService();
 export default ultraAccuracyService;

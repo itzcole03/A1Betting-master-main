@@ -19,8 +19,8 @@ const ProgressBar = styled(LinearProgress)(({ theme }) => ({
     marginTop: theme.spacing(1),
 }));
 export const BankrollMetrics = () => {
-    const bankroll = riskManagement.getBankroll();
-    const bets = riskManagement.getBets();
+
+
     const calculateWinRate = () => {
         if (bankroll.totalBets === 0)
             return 0;

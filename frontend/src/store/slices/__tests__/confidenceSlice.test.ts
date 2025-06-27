@@ -1,6 +1,6 @@
-import { act } from 'react-dom/test-utils';
-import { useConfidenceStore } from '../confidenceSlice';
-import type { ConfidenceBand, WinProbability, PredictionWithConfidence } from '../../../types/confidence';
+import { act } from 'react-dom/test-utils.ts';
+import { useConfidenceStore } from '@/confidenceSlice.ts';
+import type { ConfidenceBand, WinProbability, PredictionWithConfidence } from '@/../types/confidence.ts';
 
 describe('confidenceSlice', () => {
   it('sets and clears prediction, confidenceBand, and winProbability', () => {

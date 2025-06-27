@@ -1,5 +1,5 @@
-import { SportsDataApi, OddsDataApi, SentimentApi } from "./integrations";
-import { EventEmitter } from "events";
+import { SportsDataApi, OddsDataApi, SentimentApi } from './integrations.ts';
+import { EventEmitter } from 'events.ts';
 import { isFeatureEnabled } from "./configService.ts";
 import {
   normalizePlayerProp,
@@ -8,7 +8,7 @@ import {
 } from "./integrations/normalizeExternalData.js";
 import { logLiveData } from "./integrations/liveDataLogger.js";
 
-// Status reporting for UI/monitoring
+// Status reporting for UI/monitoring;
 function reportRealTimeStatus(connected: boolean, quality: number) {
   if (typeof window !== "undefined") {
     if (!window.appStatus) window.appStatus = {};
@@ -16,7 +16,7 @@ function reportRealTimeStatus(connected: boolean, quality: number) {
   }
 }
 
-// Simulated fallback data for degraded/disabled scenarios
+// Simulated fallback data for degraded/disabled scenarios;
 const simulatedGames = [
   {
     id: "sim-game",
@@ -25,7 +25,7 @@ const simulatedGames = [
     startTime: new Date().toISOString(),
   },
 ];
-const simulatedOdds = [{ id: "sim-odds", player: "Sim Player", value: 1.5 }];
+
 const simulatedSentiment = [
   { id: "sim-sentiment", player: "Sim Player", sentiment: 0 },
 ];
@@ -34,7 +34,7 @@ export class RealTimeUpdateService extends EventEmitter {
   private sportsApi = new SportsDataApi();
   private oddsApi = new OddsDataApi();
   private sentimentApi = new SentimentApi();
-  private pollingInterval = 10000; // fallback polling in ms
+  private pollingInterval = 10000; // fallback polling in ms;
   private pollingTimer: NodeJS.Timeout | null = null;
   private ws: WebSocket | null = null;
   private featureEnabled = true;
@@ -62,9 +62,7 @@ export class RealTimeUpdateService extends EventEmitter {
   private initWebSocket() {
     if (!this.featureEnabled) return;
 
-    const wsUrl = process.env.VITE_REALTIME_WS_URL || "";
-
-    // Safety checks to prevent invalid WebSocket connections - AGGRESSIVE FOR DEBUGGING
+    // Safety checks to prevent invalid WebSocket connections - AGGRESSIVE FOR DEBUGGING;
     if (
       !wsUrl ||
       wsUrl === "" ||
@@ -76,8 +74,7 @@ export class RealTimeUpdateService extends EventEmitter {
       import.meta.env.VITE_ENABLE_WEBSOCKET === "false" ||
       import.meta.env.NODE_ENV === "development"
     ) {
-      console.log(
-        "WebSocket connection disabled for realtime updates (aggressive safety):",
+      // console statement removed:",
         wsUrl,
       );
       this.startPollingFallback();
@@ -97,8 +94,8 @@ export class RealTimeUpdateService extends EventEmitter {
 
   private handleMessage(data: string) {
     try {
-      const parsed = JSON.parse(data);
-      // Normalize and route to appropriate listeners
+
+      // Normalize and route to appropriate listeners;
       let normalized;
       switch (parsed.type) {
         case "games":
@@ -122,9 +119,9 @@ export class RealTimeUpdateService extends EventEmitter {
       this.emit(parsed.type, normalized);
       logLiveData(`[WS] ${parsed.type} update received`);
     } catch (e) {
-      // Log parse error
+      // Log parse error;
       logLiveData(`[WS ERROR] Failed to parse message: ${e}`);
-      console.error("[RealTimeUpdateService] Failed to parse WS message:", e);
+      // console statement removed
     }
   }
 
@@ -144,7 +141,7 @@ export class RealTimeUpdateService extends EventEmitter {
       this.emit("sentiment", simulatedSentiment);
       return;
     }
-    // Poll all APIs for updates
+    // Poll all APIs for updates;
     try {
       const [games, odds, sentiment] = await Promise.all([
         this.sportsApi.getGames(),
@@ -174,7 +171,7 @@ export class RealTimeUpdateService extends EventEmitter {
     } catch (e) {
       reportRealTimeStatus(false, 0.3);
       logLiveData(`[POLL ERROR] ${e}`);
-      console.error("[RealTimeUpdateService] Polling error:", e);
+      // console statement removed
       this.emit("games", simulatedGames);
       this.emit("odds", simulatedOdds);
       this.emit("sentiment", simulatedSentiment);

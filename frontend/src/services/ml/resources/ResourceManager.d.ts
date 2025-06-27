@@ -1,4 +1,4 @@
-import { BaseModel } from '../models/BaseModel';
+import { BaseModel } from '@/models/BaseModel.ts';
 declare class EventEmitter {
     private listeners;
     on(event: string, fn: Function): void;

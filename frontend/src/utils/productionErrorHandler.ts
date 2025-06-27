@@ -1,9 +1,9 @@
 /**
- * Production-ready error handler replacing all TODO error implementations
+ * Production-ready error handler replacing all TODO error implementations;
  */
 
-import { logger, logError } from "./logger";
-import toast from "react-hot-toast";
+import { logger, logError } from './logger.ts';
+import toast from 'react-hot-toast.ts';
 
 export interface ErrorContext {
   component?: string;
@@ -30,7 +30,7 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Handle API errors with intelligent retry and user feedback
+   * Handle API errors with intelligent retry and user feedback;
    */
   handleApiError(
     error: Error,
@@ -46,7 +46,7 @@ export class ProductionErrorHandler {
 
     logError(error, `API Error: ${endpoint}`);
 
-    // Categorize error and provide appropriate user feedback
+    // Categorize error and provide appropriate user feedback;
     if (
       error.message.includes("NetworkError") ||
       error.message.includes("fetch")
@@ -109,7 +109,7 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Handle component errors with graceful degradation
+   * Handle component errors with graceful degradation;
    */
   handleComponentError(
     error: Error,
@@ -124,8 +124,8 @@ export class ProductionErrorHandler {
 
     logError(error, `Component Error: ${componentName}`);
 
-    // Don't show toast for component errors to avoid spam
-    // Instead, log for debugging and attempt graceful degradation
+    // Don't show toast for component errors to avoid spam;
+    // Instead, log for debugging and attempt graceful degradation;
     if (fallbackAction) {
       try {
         fallbackAction();
@@ -139,7 +139,7 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Handle user action errors with contextual feedback
+   * Handle user action errors with contextual feedback;
    */
   handleUserActionError(
     error: Error,
@@ -154,7 +154,7 @@ export class ProductionErrorHandler {
 
     logError(error, `User Action Error: ${action}`);
 
-    // Provide action-specific feedback
+    // Provide action-specific feedback;
     switch (action) {
       case "login":
         toast.error(
@@ -186,7 +186,7 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Handle prediction errors with fallback strategies
+   * Handle prediction errors with fallback strategies;
    */
   handlePredictionError(error: Error, predictionId?: string): void {
     const context: ErrorContext = {
@@ -205,7 +205,7 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Handle WebSocket errors with reconnection logic
+   * Handle WebSocket errors with reconnection logic;
    */
   handleWebSocketError(
     error: Error,
@@ -232,14 +232,14 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Schedule retry for failed operations
+   * Schedule retry for failed operations;
    */
   private scheduleRetry(
     error: Error,
     context: ErrorContext,
     retryCallback: () => Promise<any>,
   ): void {
-    const maxRetries = 3;
+
     const existingRetry = this.errorQueue.find(
       (item) =>
         item.context.action === context.action &&
@@ -262,18 +262,17 @@ export class ProductionErrorHandler {
       this.errorQueue.push({ error, context, retryCount: 1 });
     }
 
-    // Exponential backoff
-    const delay = Math.pow(2, existingRetry?.retryCount || 1) * 1000;
+    // Exponential backoff;
 
     setTimeout(async () => {
       try {
         await retryCallback();
-        // Remove from queue on success
+        // Remove from queue on success;
         this.errorQueue = this.errorQueue.filter(
           (item) =>
             !(
               item.context.action === context.action &&
-              item.context.component === context.component
+              item.context.component === context.component;
             ),
         );
         toast.success("Connection restored!", {
@@ -287,21 +286,21 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Get error statistics for monitoring
+   * Get error statistics for monitoring;
    */
   getErrorStats(): {
     totalErrors: number;
     recentErrors: number;
     topErrors: string[];
   } {
-    const recentErrors = logger.getLogsByLevel(0); // ERROR level
+    const recentErrors = logger.getLogsByLevel(0); // ERROR level;
     const last24Hours = recentErrors.filter(
       (log) => Date.now() - log.timestamp.getTime() < 24 * 60 * 60 * 1000,
     );
 
     const errorCounts = recentErrors.reduce(
       (acc, log) => {
-        const key = log.source || "Unknown";
+
         acc[key] = (acc[key] || 0) + 1;
         return acc;
       },
@@ -321,7 +320,7 @@ export class ProductionErrorHandler {
   }
 
   /**
-   * Clear error queue and reset state
+   * Clear error queue and reset state;
    */
   clearErrorQueue(): void {
     this.errorQueue = [];
@@ -329,10 +328,10 @@ export class ProductionErrorHandler {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const productionErrorHandler = ProductionErrorHandler.getInstance();
 
-// Convenience functions for different error types
+// Convenience functions for different error types;
 export const handleApiError = (
   error: Error,
   endpoint: string,
@@ -373,13 +372,13 @@ export const handleWebSocketError = (
   productionErrorHandler.handleWebSocketError(error, url, reconnectCallback);
 };
 
-// Global error handlers
+// Global error handlers;
 window.addEventListener("error", (event) => {
   productionErrorHandler.handleComponentError(
     new Error(event.message),
     "Global",
     () => {
-      // Attempt to reload the page as last resort
+      // Attempt to reload the page as last resort;
       if (
         confirm("A critical error occurred. Would you like to reload the page?")
       ) {

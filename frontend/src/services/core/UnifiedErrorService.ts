@@ -1,6 +1,6 @@
-import { UnifiedLogger } from '../../core/UnifiedLogger';
-import { UnifiedServiceRegistry } from '../unified/UnifiedServiceRegistry';
-import { UnifiedNotificationService } from './UnifiedNotificationService';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedServiceRegistry } from '@/unified/UnifiedServiceRegistry.ts';
+import { UnifiedNotificationService } from './UnifiedNotificationService.ts';
 
 export interface ErrorContext {
   code: string;
@@ -37,7 +37,7 @@ export class UnifiedErrorService {
   private startErrorCountReset(): void {
     setInterval(() => {
       this.errorCount.clear();
-    }, 60000); // Reset every minute
+    }, 60000); // Reset every minute;
   }
 
   public handleError(error: unknown, component: string, action: string): void {
@@ -51,19 +51,19 @@ export class UnifiedErrorService {
       stack: error instanceof Error ? error.stack : undefined,
     };
 
-    // Log the error
+    // Log the error;
     this.logger.error(
       `Error in ${component} during ${action}: ${errorContext.message}`,
       'error',
-      errorContext
+      errorContext;
     );
 
-    // Check error rate
-    const errorKey = `${component}:${action}`;
-    const currentCount = (this.errorCount.get(errorKey) || 0) + 1;
+    // Check error rate;
+
+
     this.errorCount.set(errorKey, currentCount);
 
-    // Send notification if error rate exceeds threshold
+    // Send notification if error rate exceeds threshold;
     if (currentCount >= this.MAX_ERRORS_PER_MINUTE) {
       this.notificationService.sendNotification({
         type: 'error',

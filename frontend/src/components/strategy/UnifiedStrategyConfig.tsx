@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { UnifiedServiceRegistry } from '../../services/unified/UnifiedServiceRegistry';
-import { UnifiedPredictionService } from '../../services/unified/UnifiedPredictionService';
-import { UnifiedAnalyticsService } from '../../services/unified/UnifiedAnalyticsService';
-import { UnifiedStateService } from '../../services/unified/UnifiedStateService';
-import { UnifiedNotificationService } from '../../services/unified/UnifiedNotificationService';
-import { UnifiedErrorService } from '../../services/unified/UnifiedErrorService';
-import { useEventAnalytics } from '../../hooks/useUnifiedAnalytics';
+import React, { useState, useEffect  } from 'react.ts';
+import { UnifiedServiceRegistry } from '@/services/unified/UnifiedServiceRegistry.ts';
+import { UnifiedPredictionService } from '@/services/unified/UnifiedPredictionService.ts';
+import { UnifiedAnalyticsService } from '@/services/unified/UnifiedAnalyticsService.ts';
+import { UnifiedStateService } from '@/services/unified/UnifiedStateService.ts';
+import { UnifiedNotificationService } from '@/services/unified/UnifiedNotificationService.ts';
+import { UnifiedErrorService } from '@/services/unified/UnifiedErrorService.ts';
+import { useEventAnalytics } from '@/hooks/useUnifiedAnalytics.ts';
 import {
   Card,
   Button,
@@ -18,7 +18,7 @@ import {
   Modal,
   Tabs,
   Tab,
-} from '../ui/UnifiedUI';
+} from '@/ui/UnifiedUI.ts';
 
 interface StrategyConfig {
   investmentAmount: number;
@@ -79,18 +79,17 @@ interface PortfolioRecommendation {
 }
 
 export const UnifiedStrategyConfig: React.FC = () => {
-  // Initialize services
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const predictionService = serviceRegistry.getService<UnifiedPredictionService>('prediction');
-  const analyticsService = serviceRegistry.getService<UnifiedAnalyticsService>('analytics');
-  const stateService = serviceRegistry.getService<UnifiedStateService>('state');
-  const notificationService =
-    serviceRegistry.getService<UnifiedNotificationService>('notification');
-  const errorService = serviceRegistry.getService<UnifiedErrorService>('error');
-  const webSocketService = serviceRegistry.getService<any>('websocket');
+  // Initialize services;
 
-  // State
-  const [config, setConfig] = useState<StrategyConfig>({
+
+
+
+  const notificationService =
+    serviceRegistry.getService<UnifiedNotificationService key={460301}>('notification');
+
+
+  // State;
+  const [config, setConfig] = useState<StrategyConfig key={856046}>({
     investmentAmount: 1000,
     modelSet: {},
     confidenceThreshold: 85,
@@ -110,21 +109,21 @@ export const UnifiedStrategyConfig: React.FC = () => {
       correlationLimit: 0.7,
     },
   });
-  const [models, setModels] = useState<ModelInfo[]>([]);
+  const [models, setModels] = useState<ModelInfo[] key={907361}>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
   const [toast, setToast] = useState<{
     message: string;
     type: 'success' | 'error' | 'warning' | 'info';
   } | null>(null);
-  const [recommendations, setRecommendations] = useState<PortfolioRecommendation[]>([]);
+  const [recommendations, setRecommendations] = useState<PortfolioRecommendation[] key={30381}>([]);
   const [showRecommendations, setShowRecommendations] = useState(false);
   const [activeTab, setActiveTab] = useState<'basic' | 'advanced' | 'risk' | 'models'>('basic');
 
-  // Analytics state
-  const [selectedEvent, setSelectedEvent] = useState<string | null>(null);
-  const [selectedMarket, setSelectedMarket] = useState<string | null>(null);
-  const [selectedSelection, setSelectedSelection] = useState<string | null>(null);
+  // Analytics state;
+  const [selectedEvent, setSelectedEvent] = useState<string | null key={121216}>(null);
+  const [selectedMarket, setSelectedMarket] = useState<string | null key={121216}>(null);
+  const [selectedSelection, setSelectedSelection] = useState<string | null key={121216}>(null);
 
   const analytics = useEventAnalytics(
     selectedEvent || '',
@@ -145,7 +144,7 @@ export const UnifiedStrategyConfig: React.FC = () => {
     getRiskLevelColor,
   } = analytics;
 
-  // Load available models
+  // Load available models;
   useEffect(() => {
     loadModels();
   }, []);
@@ -153,10 +152,10 @@ export const UnifiedStrategyConfig: React.FC = () => {
   const loadModels = async () => {
     try {
       setLoading(true);
-      const availableModels = await predictionService.getAvailableModels();
+
       setModels(availableModels);
 
-      // Initialize model set with default weights
+      // Initialize model set with default weights;
       const modelSet = availableModels.reduce(
         (acc, model) => ({
           ...acc,
@@ -209,7 +208,7 @@ export const UnifiedStrategyConfig: React.FC = () => {
   const generateRecommendations = async () => {
     try {
       setLoading(true);
-      const recommendations = await predictionService.generatePortfolioRecommendations(config);
+
       setRecommendations(recommendations);
       setShowRecommendations(true);
     } catch (error) {
@@ -244,13 +243,13 @@ export const UnifiedStrategyConfig: React.FC = () => {
     }).format(value / 100);
   };
 
-  // Subscribe to real-time updates
+  // Subscribe to real-time updates;
   useEffect(() => {
     if (!selectedEvent || !selectedMarket || !selectedSelection) return;
 
     const unsubscribe = webSocketService?.subscribe?.('analytics', (data: any) => {
       if (data.eventId === selectedEvent && data.marketId === selectedMarket) {
-        // Analytics hook will auto-update via its own effect
+        // Analytics hook will auto-update via its own effect;
       }
     });
 
@@ -259,88 +258,88 @@ export const UnifiedStrategyConfig: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Spinner size="large" />
+      <div className="flex items-center justify-center min-h-screen" key={591667}>
+        <Spinner size="large" / key={932834}>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Strategy Configuration</h1>
+    <div className="container mx-auto px-4 py-8" key={53071}>
+      <div className="max-w-7xl mx-auto" key={70872}>
+        <h1 className="text-3xl font-bold mb-8" key={442016}>Strategy Configuration</h1>
 
         {/* Analytics Overview */}
         {selectedEvent && selectedMarket && selectedSelection && (
-          <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-            <h2 className="text-2xl font-bold mb-6">Strategy Configuration</h2>
+          <div className="mb-6 p-4 bg-gray-50 rounded-lg" key={233947}>
+            <h2 className="text-2xl font-bold mb-6" key={839480}>Strategy Configuration</h2>
 
             {/* Analytics Overview */}
             {analyticsLoading ? (
-              <div className="flex justify-center py-4">
-                <Spinner size="medium" />
+              <div className="flex justify-center py-4" key={430736}>
+                <Spinner size="medium" / key={469565}>
               </div>
             ) : analyticsError ? (
-              <div className="text-red-500 text-center">
-                <p>{analyticsError}</p>
+              <div className="text-red-500 text-center" key={232604}>
+                <p key={161203}>{analyticsError}</p>
               </div>
             ) : (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4" key={815557}>
                 {metrics && (
                   <>
-                    <div>
-                      <p className="text-sm text-gray-600">Accuracy</p>
-                      <div className="flex items-center space-x-2">
-                        <p className="text-lg font-semibold">
+                    <div key={241917}>
+                      <p className="text-sm text-gray-600" key={656535}>Accuracy</p>
+                      <div className="flex items-center space-x-2" key={740830}>
+                        <p className="text-lg font-semibold" key={930820}>
                           {(metrics.accuracy * 100).toFixed(1)}%
                         </p>
                         {trendDelta && (
-                          <Icon
+                          <Icon;
                             className={`w-4 h-4 ${getMetricColor(trendDelta.accuracyDelta, 'positive')}`}
                             name={getTrendIcon(trendDelta.accuracyDelta)}
-                          />
+                          / key={438800}>
                         )}
                       </div>
                     </div>
 
-                    <div>
-                      <p className="text-sm text-gray-600">Precision</p>
-                      <div className="flex items-center space-x-2">
-                        <p className="text-lg font-semibold">
+                    <div key={241917}>
+                      <p className="text-sm text-gray-600" key={656535}>Precision</p>
+                      <div className="flex items-center space-x-2" key={740830}>
+                        <p className="text-lg font-semibold" key={930820}>
                           {(metrics.precision * 100).toFixed(1)}%
                         </p>
                         {trendDelta && (
-                          <Icon
+                          <Icon;
                             className={`w-4 h-4 ${getMetricColor(trendDelta.precisionDelta, 'positive')}`}
                             name={getTrendIcon(trendDelta.precisionDelta)}
-                          />
+                          / key={876676}>
                         )}
                       </div>
                     </div>
 
-                    <div>
-                      <p className="text-sm text-gray-600">Recall</p>
-                      <div className="flex items-center space-x-2">
-                        <p className="text-lg font-semibold">
+                    <div key={241917}>
+                      <p className="text-sm text-gray-600" key={656535}>Recall</p>
+                      <div className="flex items-center space-x-2" key={740830}>
+                        <p className="text-lg font-semibold" key={930820}>
                           {(metrics.recall * 100).toFixed(1)}%
                         </p>
                         {trendDelta && (
-                          <Icon
+                          <Icon;
                             className={`w-4 h-4 ${getMetricColor(trendDelta.recallDelta, 'positive')}`}
                             name={getTrendIcon(trendDelta.recallDelta)}
-                          />
+                          / key={205804}>
                         )}
                       </div>
                     </div>
 
-                    <div>
-                      <p className="text-sm text-gray-600">Profit/Loss</p>
-                      <div className="flex items-center space-x-2">
-                        <p className="text-lg font-semibold">{metrics.profitLoss.toFixed(2)}%</p>
-                        <Icon
+                    <div key={241917}>
+                      <p className="text-sm text-gray-600" key={656535}>Profit/Loss</p>
+                      <div className="flex items-center space-x-2" key={740830}>
+                        <p className="text-lg font-semibold" key={930820}>{metrics.profitLoss.toFixed(2)}%</p>
+                        <Icon;
                           className={`w-4 h-4 ${getMetricColor(metrics.profitLoss, 'positive')}`}
                           name={getTrendIcon(metrics.profitLoss)}
-                        />
+                        / key={106987}>
                       </div>
                     </div>
                   </>
@@ -350,38 +349,38 @@ export const UnifiedStrategyConfig: React.FC = () => {
 
             {/* Risk Profile */}
             {riskProfile && (
-              <div className="mt-4">
-                <h4 className="text-sm font-medium mb-2">Risk Profile</h4>
-                <div className="flex items-center space-x-2">
-                  <Badge variant={riskProfile.riskLevel.toLowerCase() as any}>
+              <div className="mt-4" key={139982}>
+                <h4 className="text-sm font-medium mb-2" key={943837}>Risk Profile</h4>
+                <div className="flex items-center space-x-2" key={740830}>
+                  <Badge variant={riskProfile.riskLevel.toLowerCase() as any} key={679506}>
                     {riskProfile.riskLevel}
                   </Badge>
-                  <p className="text-sm text-gray-600">{riskProfile.recommendation}</p>
+                  <p className="text-sm text-gray-600" key={656535}>{riskProfile.recommendation}</p>
                 </div>
               </div>
             )}
 
             {/* Model Stability */}
             {modelMetadata && (
-              <div className="mt-4">
-                <h4 className="text-sm font-medium mb-2">Model Stability</h4>
-                <div className="flex items-center space-x-2">
-                  <Badge
+              <div className="mt-4" key={139982}>
+                <h4 className="text-sm font-medium mb-2" key={943837}>Model Stability</h4>
+                <div className="flex items-center space-x-2" key={740830}>
+                  <Badge;
                     variant={
-                      modelMetadata.stability > 0.8
+                      modelMetadata.stability  key={197442}> 0.8;
                         ? 'success'
-                        : modelMetadata.stability > 0.6
+                        : modelMetadata.stability > 0.6;
                           ? 'warning'
                           : 'danger'
                     }
                   >
-                    {modelMetadata.stability > 0.8
+                    {modelMetadata.stability > 0.8;
                       ? 'High'
-                      : modelMetadata.stability > 0.6
+                      : modelMetadata.stability > 0.6;
                         ? 'Medium'
                         : 'Low'}
                   </Badge>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600" key={656535}>
                     Last updated: {new Date(modelMetadata.lastUpdated).toLocaleString()}
                   </p>
                 </div>
@@ -391,40 +390,40 @@ export const UnifiedStrategyConfig: React.FC = () => {
         )}
 
         {/* Navigation Tabs */}
-        <Tabs className="mb-8" value={activeTab} onChange={setActiveTab}>
-          <Tab label="Basic Settings" value="basic" />
-          <Tab label="Advanced Settings" value="advanced" />
-          <Tab label="Risk Management" value="risk" />
-          <Tab label="Model Selection" value="models" />
+        <Tabs className="mb-8" value={activeTab} onChange={setActiveTab} key={900880}>
+          <Tab label="Basic Settings" value="basic" / key={913312}>
+          <Tab label="Advanced Settings" value="advanced" / key={352110}>
+          <Tab label="Risk Management" value="risk" / key={783938}>
+          <Tab label="Model Selection" value="models" / key={430226}>
         </Tabs>
 
         {/* Basic Settings Tab */}
         {activeTab === 'basic' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Card>
-              <h2 className="text-xl font-bold mb-4">Investment & Strategy</h2>
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Investment Amount
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8" key={411597}>
+            <Card key={650115}>
+              <h2 className="text-xl font-bold mb-4" key={939378}>Investment & Strategy</h2>
+              <div className="space-y-6" key={501869}>
+                <div key={241917}>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                    Investment Amount;
                   </label>
-                  <Input
+                  <Input;
                     max="100000"
                     min="10"
                     type="number"
                     value={config.investmentAmount}
-                    onChange={e =>
+                    onChange={e = key={965761}>
                       handleConfigChange('investmentAmount', parseFloat(e.target.value))
                     }
                   />
-                  <p className="mt-1 text-sm text-gray-500">Range: $10 - $100,000</p>
+                  <p className="mt-1 text-sm text-gray-500" key={381339}>Range: $10 - $100,000</p>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Strategy Mode
+                <div key={241917}>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                    Strategy Mode;
                   </label>
-                  <Select
+                  <Select;
                     options={[
                       { value: 'maximum_profit', label: 'Maximum Profit' },
                       { value: 'balanced', label: 'Balanced' },
@@ -434,15 +433,15 @@ export const UnifiedStrategyConfig: React.FC = () => {
                       { value: 'ai_adaptive', label: 'AI-Adaptive' },
                     ]}
                     value={config.strategyMode}
-                    onChange={e => handleConfigChange('strategyMode', e.target.value)}
+                    onChange={e = key={272996}> handleConfigChange('strategyMode', e.target.value)}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Portfolio Size
+                <div key={241917}>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                    Portfolio Size;
                   </label>
-                  <Select
+                  <Select;
                     options={[
                       { value: 2, label: '2 Legs' },
                       { value: 3, label: '3 Legs' },
@@ -451,26 +450,26 @@ export const UnifiedStrategyConfig: React.FC = () => {
                       { value: 6, label: '6 Legs' },
                     ]}
                     value={config.portfolioSize}
-                    onChange={e => handleConfigChange('portfolioSize', parseInt(e.target.value))}
+                    onChange={e = key={127004}> handleConfigChange('portfolioSize', parseInt(e.target.value))}
                   />
                 </div>
               </div>
             </Card>
 
-            <Card>
-              <h2 className="text-xl font-bold mb-4">Sports & Time Horizon</h2>
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Sports Universe
+            <Card key={650115}>
+              <h2 className="text-xl font-bold mb-4" key={939378}>Sports & Time Horizon</h2>
+              <div className="space-y-6" key={501869}>
+                <div key={241917}>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                    Sports Universe;
                   </label>
-                  <div className="space-y-2">
-                    <div className="flex items-center">
-                      <input
+                  <div className="space-y-2" key={725977}>
+                    <div className="flex items-center" key={520222}>
+                      <input;
                         checked={config.sportsUniverse.all}
                         className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                         type="checkbox"
-                        onChange={e =>
+                        onChange={e = key={83568}>
                           handleConfigChange('sportsUniverse', {
                             ...config.sportsUniverse,
                             all: e.target.checked,
@@ -478,13 +477,13 @@ export const UnifiedStrategyConfig: React.FC = () => {
                           })
                         }
                       />
-                      <label className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
-                        All Sports
+                      <label className="ml-2 block text-sm text-gray-700 dark:text-gray-300" key={273366}>
+                        All Sports;
                       </label>
                     </div>
                     {!config.sportsUniverse.all && (
-                      <Select
-                        multiple
+                      <Select;
+                        multiple;
                         options={[
                           { value: 'football', label: 'Football' },
                           { value: 'basketball', label: 'Basketball' },
@@ -494,7 +493,7 @@ export const UnifiedStrategyConfig: React.FC = () => {
                           { value: 'tennis', label: 'Tennis' },
                         ]}
                         value={config.sportsUniverse.selected}
-                        onChange={e =>
+                        onChange={e = key={516223}>
                           handleConfigChange('sportsUniverse', {
                             ...config.sportsUniverse,
                             selected: Array.from(e.target.selectedOptions, option => option.value),
@@ -505,31 +504,31 @@ export const UnifiedStrategyConfig: React.FC = () => {
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                    Time Horizon
+                <div key={241917}>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                    Time Horizon;
                   </label>
-                  <div className="flex space-x-4">
-                    <Input
+                  <div className="flex space-x-4" key={470893}>
+                    <Input;
                       className="w-24"
                       min="1"
                       type="number"
                       value={config.timeHorizon.value}
-                      onChange={e =>
+                      onChange={e = key={687887}>
                         handleConfigChange('timeHorizon', {
                           ...config.timeHorizon,
                           value: parseInt(e.target.value),
                         })
                       }
                     />
-                    <Select
+                    <Select;
                       options={[
                         { value: 'minutes', label: 'Minutes' },
                         { value: 'hours', label: 'Hours' },
                         { value: 'days', label: 'Days' },
                       ]}
                       value={config.timeHorizon.unit}
-                      onChange={e =>
+                      onChange={e = key={574377}>
                         handleConfigChange('timeHorizon', {
                           ...config.timeHorizon,
                           unit: e.target.value,
@@ -545,52 +544,52 @@ export const UnifiedStrategyConfig: React.FC = () => {
 
         {/* Advanced Settings Tab */}
         {activeTab === 'advanced' && (
-          <Card>
-            <h2 className="text-xl font-bold mb-4">Advanced Configuration</h2>
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Confidence Threshold
+          <Card key={650115}>
+            <h2 className="text-xl font-bold mb-4" key={939378}>Advanced Configuration</h2>
+            <div className="space-y-6" key={501869}>
+              <div key={241917}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                  Confidence Threshold;
                 </label>
-                <div className="space-y-2">
-                  <Slider
+                <div className="space-y-2" key={725977}>
+                  <Slider;
                     max={99}
                     min={80}
                     value={config.confidenceThreshold}
-                    onChange={value => handleConfigChange('confidenceThreshold', value)}
+                    onChange={value = key={250813}> handleConfigChange('confidenceThreshold', value)}
                   />
-                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-                    <span>80%</span>
-                    <span>Current: {config.confidenceThreshold}%</span>
-                    <span>99%</span>
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400" key={323743}>
+                    <span key={595076}>80%</span>
+                    <span key={595076}>Current: {config.confidenceThreshold}%</span>
+                    <span key={595076}>99%</span>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <h3 className="font-medium mb-2">Model Weights</h3>
-                <div className="space-y-4">
+              <div key={241917}>
+                <h3 className="font-medium mb-2" key={656044}>Model Weights</h3>
+                <div className="space-y-4" key={160407}>
                   {models.map(model => (
-                    <div key={model.id} className="flex items-center space-x-4">
-                      <input
+                    <div key={model.id} className="flex items-center space-x-4" key={110244}>
+                      <input;
                         checked={config.modelSet[model.id]?.enabled}
                         className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                         type="checkbox"
-                        onChange={e => handleModelToggle(model.id, e.target.checked)}
+                        onChange={e = key={926582}> handleModelToggle(model.id, e.target.checked)}
                       />
-                      <div className="flex-1">
-                        <div className="flex justify-between mb-1">
-                          <span className="font-medium">{model.name}</span>
-                          <span className="text-sm text-gray-600 dark:text-gray-400">
+                      <div className="flex-1" key={745195}>
+                        <div className="flex justify-between mb-1" key={790471}>
+                          <span className="font-medium" key={514486}>{model.name}</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-400" key={10584}>
                             Accuracy: {formatPercentage(model.accuracy)}
                           </span>
                         </div>
-                        <Slider
+                        <Slider;
                           disabled={!config.modelSet[model.id]?.enabled}
                           max={100}
                           min={0}
                           value={config.modelSet[model.id]?.weight * 100}
-                          onChange={value => handleModelWeightChange(model.id, value / 100)}
+                          onChange={value = key={699377}> handleModelWeightChange(model.id, value / 100)}
                         />
                       </div>
                     </div>
@@ -603,78 +602,78 @@ export const UnifiedStrategyConfig: React.FC = () => {
 
         {/* Risk Management Tab */}
         {activeTab === 'risk' && (
-          <Card>
-            <h2 className="text-xl font-bold mb-4">Risk Management</h2>
-            <div className="space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Maximum Drawdown
+          <Card key={650115}>
+            <h2 className="text-xl font-bold mb-4" key={939378}>Risk Management</h2>
+            <div className="space-y-6" key={501869}>
+              <div key={241917}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                  Maximum Drawdown;
                 </label>
-                <div className="space-y-2">
-                  <Slider
+                <div className="space-y-2" key={725977}>
+                  <Slider;
                     max={50}
                     min={5}
                     value={config.riskProfile.maxDrawdown}
-                    onChange={value =>
+                    onChange={value = key={35135}>
                       handleConfigChange('riskProfile', {
                         ...config.riskProfile,
                         maxDrawdown: value,
                       })
                     }
                   />
-                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-                    <span>5%</span>
-                    <span>Current: {config.riskProfile.maxDrawdown}%</span>
-                    <span>50%</span>
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400" key={323743}>
+                    <span key={595076}>5%</span>
+                    <span key={595076}>Current: {config.riskProfile.maxDrawdown}%</span>
+                    <span key={595076}>50%</span>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Maximum Exposure
+              <div key={241917}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                  Maximum Exposure;
                 </label>
-                <div className="space-y-2">
-                  <Slider
+                <div className="space-y-2" key={725977}>
+                  <Slider;
                     max={100}
                     min={10}
                     value={config.riskProfile.maxExposure}
-                    onChange={value =>
+                    onChange={value = key={321190}>
                       handleConfigChange('riskProfile', {
                         ...config.riskProfile,
                         maxExposure: value,
                       })
                     }
                   />
-                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-                    <span>10%</span>
-                    <span>Current: {config.riskProfile.maxExposure}%</span>
-                    <span>100%</span>
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400" key={323743}>
+                    <span key={595076}>10%</span>
+                    <span key={595076}>Current: {config.riskProfile.maxExposure}%</span>
+                    <span key={595076}>100%</span>
                   </div>
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Correlation Limit
+              <div key={241917}>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" key={651895}>
+                  Correlation Limit;
                 </label>
-                <div className="space-y-2">
-                  <Slider
+                <div className="space-y-2" key={725977}>
+                  <Slider;
                     max={1}
                     min={0}
                     step={0.1}
                     value={config.riskProfile.correlationLimit}
-                    onChange={value =>
+                    onChange={value = key={313517}>
                       handleConfigChange('riskProfile', {
                         ...config.riskProfile,
                         correlationLimit: value,
                       })
                     }
                   />
-                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-                    <span>0.0</span>
-                    <span>Current: {config.riskProfile.correlationLimit}</span>
-                    <span>1.0</span>
+                  <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400" key={323743}>
+                    <span key={595076}>0.0</span>
+                    <span key={595076}>Current: {config.riskProfile.correlationLimit}</span>
+                    <span key={595076}>1.0</span>
                   </div>
                 </div>
               </div>
@@ -684,40 +683,40 @@ export const UnifiedStrategyConfig: React.FC = () => {
 
         {/* Model Selection Tab */}
         {activeTab === 'models' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8" key={411597}>
             {models.map(model => (
-              <Card key={model.id}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-lg font-medium">{model.name}</h3>
-                  <Badge
+              <Card key={model.id} key={137354}>
+                <div className="flex items-center justify-between mb-4" key={810034}>
+                  <h3 className="text-lg font-medium" key={767483}>{model.name}</h3>
+                  <Badge;
                     variant={
-                      model.accuracy >= 90 ? 'success' : model.accuracy >= 80 ? 'warning' : 'danger'
+                      model.accuracy  key={852568}>= 90 ? 'success' : model.accuracy >= 80 ? 'warning' : 'danger'
                     }
                   >
-                    {formatPercentage(model.accuracy)} Accuracy
+                    {formatPercentage(model.accuracy)} Accuracy;
                   </Badge>
                 </div>
-                <div className="space-y-4">
-                  <p className="text-gray-600 dark:text-gray-400">{model.description}</p>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Type</p>
-                      <p className="font-medium">{model.type}</p>
+                <div className="space-y-4" key={160407}>
+                  <p className="text-gray-600 dark:text-gray-400" key={300965}>{model.description}</p>
+                  <div className="grid grid-cols-2 gap-4" key={354810}>
+                    <div key={241917}>
+                      <p className="text-sm text-gray-600 dark:text-gray-400" key={316578}>Type</p>
+                      <p className="font-medium" key={787187}>{model.type}</p>
                     </div>
-                    <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">Profit Factor</p>
-                      <p className="font-medium">{model.profitFactor.toFixed(2)}</p>
+                    <div key={241917}>
+                      <p className="text-sm text-gray-600 dark:text-gray-400" key={316578}>Profit Factor</p>
+                      <p className="font-medium" key={787187}>{model.profitFactor.toFixed(2)}</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-600 dark:text-gray-400">
+                  <div className="flex items-center justify-between" key={96335}>
+                    <span className="text-sm text-gray-600 dark:text-gray-400" key={10584}>
                       Last Updated: {new Date(model.lastUpdated).toLocaleDateString()}
                     </span>
-                    <input
+                    <input;
                       checked={config.modelSet[model.id]?.enabled}
                       className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                       type="checkbox"
-                      onChange={e => handleModelToggle(model.id, e.target.checked)}
+                      onChange={e = key={24149}> handleModelToggle(model.id, e.target.checked)}
                     />
                   </div>
                 </div>
@@ -727,96 +726,96 @@ export const UnifiedStrategyConfig: React.FC = () => {
         )}
 
         {/* Action Buttons */}
-        <div className="flex justify-end mt-8 space-x-4">
-          <Button
+        <div className="flex justify-end mt-8 space-x-4" key={407679}>
+          <Button;
             variant="secondary"
-            onClick={() => {
-              // Reset to default configuration
+            onClick={() = key={565568}> {
+              // Reset to default configuration;
               loadModels();
             }}
           >
-            Reset
+            Reset;
           </Button>
-          <Button disabled={loading} variant="primary" onClick={generateRecommendations}>
-            {loading ? <Spinner size="small" /> : 'Generate Recommendations'}
+          <Button disabled={loading} variant="primary" onClick={generateRecommendations} key={260562}>
+            {loading ? <Spinner size="small" / key={64504}> : 'Generate Recommendations'}
           </Button>
         </div>
       </div>
 
       {/* Recommendations Modal */}
-      <Modal
+      <Modal;
         isOpen={showRecommendations}
         title="Portfolio Recommendations"
-        onClose={() => setShowRecommendations(false)}
+        onClose={() = key={68107}> setShowRecommendations(false)}
       >
-        <div className="space-y-6">
+        <div className="space-y-6" key={501869}>
           {recommendations.map((recommendation, index) => (
-            <Card key={index}>
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-medium">Portfolio {index + 1}</h3>
-                <Badge
+            <Card key={index} key={520458}>
+              <div className="flex items-center justify-between mb-4" key={810034}>
+                <h3 className="text-lg font-medium" key={767483}>Portfolio {index + 1}</h3>
+                <Badge;
                   variant={
-                    recommendation.expectedValue > 0
+                    recommendation.expectedValue  key={601424}> 0;
                       ? 'success'
-                      : recommendation.expectedValue < 0
+                      : recommendation.expectedValue < 0;
                         ? 'danger'
                         : 'warning'
                   }
                 >
-                  {formatPercentage(recommendation.expectedValue)} Expected Value
+                  {formatPercentage(recommendation.expectedValue)} Expected Value;
                 </Badge>
               </div>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-medium mb-2">Legs</h4>
-                  <div className="space-y-2">
+              <div className="space-y-4" key={160407}>
+                <div key={241917}>
+                  <h4 className="font-medium mb-2" key={450376}>Legs</h4>
+                  <div className="space-y-2" key={725977}>
                     {recommendation.legs.map((leg, legIndex) => (
-                      <div key={legIndex} className="p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                        <div className="flex justify-between mb-1">
-                          <span className="font-medium">{leg.selection}</span>
-                          <span>{leg.odds.toFixed(2)}</span>
+                      <div key={legIndex} className="p-2 bg-gray-50 dark:bg-gray-800 rounded" key={23676}>
+                        <div className="flex justify-between mb-1" key={790471}>
+                          <span className="font-medium" key={514486}>{leg.selection}</span>
+                          <span key={595076}>{leg.odds.toFixed(2)}</span>
                         </div>
-                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
-                          <span>{leg.marketType}</span>
-                          <span>Confidence: {formatPercentage(leg.confidence)}</span>
+                        <div className="flex justify-between text-sm text-gray-600 dark:text-gray-400" key={323743}>
+                          <span key={595076}>{leg.marketType}</span>
+                          <span key={595076}>Confidence: {formatPercentage(leg.confidence)}</span>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Total Odds</p>
-                    <p className="font-medium">{recommendation.totalOdds.toFixed(2)}</p>
+                <div className="grid grid-cols-2 gap-4" key={354810}>
+                  <div key={241917}>
+                    <p className="text-sm text-gray-600 dark:text-gray-400" key={316578}>Total Odds</p>
+                    <p className="font-medium" key={787187}>{recommendation.totalOdds.toFixed(2)}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Risk Score</p>
-                    <p className="font-medium">{recommendation.riskScore.toFixed(2)}</p>
+                  <div key={241917}>
+                    <p className="text-sm text-gray-600 dark:text-gray-400" key={316578}>Risk Score</p>
+                    <p className="font-medium" key={787187}>{recommendation.riskScore.toFixed(2)}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Confidence</p>
-                    <p className="font-medium">{formatPercentage(recommendation.confidence)}</p>
+                  <div key={241917}>
+                    <p className="text-sm text-gray-600 dark:text-gray-400" key={316578}>Confidence</p>
+                    <p className="font-medium" key={787187}>{formatPercentage(recommendation.confidence)}</p>
                   </div>
-                  <div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Expected Value</p>
-                    <p
+                  <div key={241917}>
+                    <p className="text-sm text-gray-600 dark:text-gray-400" key={316578}>Expected Value</p>
+                    <p;
                       className={`font-medium ${
-                        recommendation.expectedValue > 0 ? 'text-green-600' : 'text-red-600'
+                        recommendation.expectedValue  key={78306}> 0 ? 'text-green-600' : 'text-red-600'
                       }`}
                     >
                       {formatPercentage(recommendation.expectedValue)}
                     </p>
                   </div>
                 </div>
-                <Button
+                <Button;
                   className="w-full"
                   variant="primary"
-                  onClick={() => {
-                    // Handle portfolio selection
+                  onClick={() = key={769449}> {
+                    // Handle portfolio selection;
                     setShowRecommendations(false);
                   }}
                 >
-                  Select Portfolio
+                  Select Portfolio;
                 </Button>
               </div>
             </Card>
@@ -825,7 +824,7 @@ export const UnifiedStrategyConfig: React.FC = () => {
       </Modal>
 
       {/* Toast Notifications */}
-      {toast && <Toast message={toast.message} type={toast.type} onClose={() => setToast(null)} />}
+      {toast && <Toast message={toast.message} type={toast.type} onClose={() = key={337979}> setToast(null)} />}
     </div>
   );
 };

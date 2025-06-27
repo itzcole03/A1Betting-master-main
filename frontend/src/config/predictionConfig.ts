@@ -1,10 +1,10 @@
-// betaTest4/src/config/predictionConfig.ts
+// betaTest4/src/config/predictionConfig.ts;
 
 export interface FeatureFlags {
   enableExperimentalOddsCalculation: boolean;
   showAdvancedAnalyticsDashboard: boolean;
   useNewSentimentModel: boolean;
-  // Add more feature flags as needed
+  // Add more feature flags as needed;
 }
 
 export interface ExperimentConfig {
@@ -21,7 +21,7 @@ const defaultFeatureFlags: FeatureFlags = {
 };
 
 const activeExperiments: ExperimentConfig[] = [
-  // Example experiment
+  // Example experiment;
   // {
   //   id: 'exp_dashboard_layout_v2',
   //   name: 'Dashboard Layout V2 Test',

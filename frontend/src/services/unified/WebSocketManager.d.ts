@@ -4,7 +4,7 @@ declare class EventEmitter {
     off(event: string, fn: Function): void;
     emit(event: string, ...args: any[]): void;
 }
-import { WSMessage, WebSocketConfig } from "../../types/core";
+import { WSMessage, WebSocketConfig } from '@/types/core.ts';
 export declare class WebSocketManager extends EventEmitter {
     private static instance;
     private connections;

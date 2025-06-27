@@ -19,7 +19,7 @@ interface ImportMetaEnv {
   readonly VITE_CACHE_DURATION: string;
   readonly VITE_LOG_LEVEL: string;
   readonly VITE_SENTRY_DSN: string;
-  // add more as needed
+  // add more as needed;
 }
 
 interface ImportMeta {

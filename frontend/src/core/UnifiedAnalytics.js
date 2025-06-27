@@ -17,9 +17,9 @@ export class UnifiedAnalytics {
         this.config = {
             enabled: true,
             sampleRate: 1.0,
-            retentionPeriod: 30 * 24 * 60 * 60 * 1000, // 30 days
+            retentionPeriod: 30 * 24 * 60 * 60 * 1000, // 30 days;
             batchSize: 100,
-            flushInterval: 5000, // 5 seconds
+            flushInterval: 5000, // 5 seconds;
         };
         this.flushTimer = null;
         this.setupEventListeners();
@@ -32,7 +32,7 @@ export class UnifiedAnalytics {
         return UnifiedAnalytics.instance;
     }
     setupEventListeners() {
-        // Listen for all events that need analytics tracking
+        // Listen for all events that need analytics tracking;
         this.eventBus.on('market:update', data => {
             this.trackEvent('market_update', data);
         });
@@ -57,7 +57,7 @@ export class UnifiedAnalytics {
     trackEvent(type, data, metadata) {
         if (!this.config.enabled)
             return;
-        // Apply sampling
+        // Apply sampling;
         if (Math.random() > this.config.sampleRate)
             return;
         const event = {
@@ -69,16 +69,16 @@ export class UnifiedAnalytics {
         };
         this.eventQueue.push(event);
         this.updateMetrics(event);
-        // Flush if queue size exceeds batch size
+        // Flush if queue size exceeds batch size;
         if (this.eventQueue.length >= this.config.batchSize) {
             this.flushEvents();
         }
     }
     updateMetrics(event) {
         this.metrics.totalEvents++;
-        const currentCount = this.metrics.eventsByType.get(event.type) || 0;
+
         this.metrics.eventsByType.set(event.type, currentCount + 1);
-        const latency = Date.now() - event.timestamp;
+
         this.metrics.averageLatency =
             (this.metrics.averageLatency * (this.metrics.totalEvents - 1) + latency) /
                 this.metrics.totalEvents;
@@ -87,10 +87,10 @@ export class UnifiedAnalytics {
     async flushEvents() {
         if (this.eventQueue.length === 0)
             return;
-        const events = [...this.eventQueue];
-        this.eventQueue.length = 0; // Clear the queue
+
+        this.eventQueue.length = 0; // Clear the queue;
         try {
-            // In a real implementation, this would send events to an analytics service
+            // In a real implementation, this would send events to an analytics service;
             await this.processEvents(events);
             this.eventBus.emit('analytics:flushed', {
                 count: events.length,
@@ -105,18 +105,18 @@ export class UnifiedAnalytics {
                 firstEventTimestamp: events[0].timestamp,
                 lastEventTimestamp: events[events.length - 1].timestamp,
             });
-            // Retry failed events
+            // Retry failed events;
             this.eventQueue.push(...events);
         }
     }
     async processEvents(events) {
-        // This is a placeholder for actual analytics processing
+        // This is a placeholder for actual analytics processing;
         // In a real implementation, this would:
-        // 1. Format events for the analytics service
-        // 2. Send events to the analytics service
-        // 3. Handle responses and errors
-        // 4. Update metrics based on processing results
-        await Promise.resolve(); // Placeholder for actual processing
+        // 1. Format events for the analytics service;
+        // 2. Send events to the analytics service;
+        // 3. Handle responses and errors;
+        // 4. Update metrics based on processing results;
+        await Promise.resolve(); // Placeholder for actual processing;
     }
     getMetrics() {
         return { ...this.metrics };
@@ -136,9 +136,9 @@ export class UnifiedAnalytics {
             clearInterval(this.flushTimer);
             this.flushTimer = null;
         }
-        // Flush any remaining events
+        // Flush any remaining events;
         await this.flushEvents();
-        // Clear metrics
+        // Clear metrics;
         this.metrics.totalEvents = 0;
         this.metrics.eventsByType.clear();
         this.metrics.averageLatency = 0;

@@ -1,4 +1,4 @@
-import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types';
+import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types.ts';
 export interface MLService {
     createModel(metadata: ModelMetadata): Promise<string>;
     getModel(modelId: string): Promise<ModelMetadata>;

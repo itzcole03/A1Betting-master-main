@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface BettingHistoryProps {
     eventId: string;
     marketId: string;

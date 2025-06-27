@@ -1,5 +1,5 @@
-import { FeatureFlags } from "../types";
-import { UnifiedApplicationConfig } from "../core/UnifiedConfig";
+import { FeatureFlags } from '@/types.ts';
+import { UnifiedApplicationConfig } from '@/core/UnifiedConfig.ts';
 /**
  * Fetches the main application configuration from the backend.
  * This includes feature flags, API endpoints, versioning info, etc.

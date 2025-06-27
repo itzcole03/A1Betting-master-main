@@ -32,7 +32,7 @@ const PerformanceChart = ({ metrics, title, yAxisLabel = 'Value', showLegend = t
             tooltip: {
                 callbacks: {
                     label: context => {
-                        const value = context.parsed.y;
+
                         return `${yAxisLabel}: ${value.toFixed(2)}`;
                     },
                 },

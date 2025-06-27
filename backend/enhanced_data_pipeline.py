@@ -248,7 +248,7 @@ class AdvancedSignalProcessing:
         sst_matrix = np.zeros((len(omega_grid), len(signal)), dtype=complex)
 
         for i, scale in enumerate(scales):
-            for j in range(len(signal)):
+            for _ in range(len(signal)):
                 # Find closest frequency bin
                 omega_val = omega_cwt[i, j]
                 if np.isfinite(omega_val):
@@ -443,7 +443,7 @@ class AdvancedMissingDataImputation:
 
         # For each missing entry, estimate uncertainty using nearby observed values
         for i in range(X_original.shape[0]):
-            for j in range(X_original.shape[1]):
+            for _ in range(X_original.shape[1]):
                 if missing_mask[i, j]:
                     # Find nearby observed values
                     nearby_values = []
@@ -512,7 +512,7 @@ class AdvancedMissingDataImputation:
             # M-step: update parameters
             # Update W
             W_new = np.zeros_like(W)
-            for j in range(n):
+            for _ in range(n):
                 observed_idx = ~missing_mask[:, j]
 
                 if np.any(observed_idx):
@@ -591,7 +591,7 @@ class AdvancedMissingDataImputation:
         uncertainties = np.zeros_like(X)
 
         # Impute each column independently
-        for j in range(X.shape[1]):
+        for _ in range(X.shape[1]):
             column_missing = missing_mask[:, j]
 
             if np.any(column_missing) and np.any(~column_missing):
@@ -615,7 +615,7 @@ class AdvancedMissingDataImputation:
                     X_imputed[column_missing, j] = y_pred
                     uncertainties[column_missing, j] = y_std
 
-                except Exception:
+                except Exception:  # pylint: disable=broad-exception-caught
                     # Fallback to mean imputation
                     mean_val = np.nanmean(X[:, j])
                     X_imputed[column_missing, j] = mean_val
@@ -872,7 +872,7 @@ class EnhancedMathematicalDataPipeline:
         """Comprehensive data processing with advanced mathematical methods"""
         start_time = time.time()
 
-        logger.info(f"Starting comprehensive data processing for {data.shape} dataset")
+        logger.info("Starting comprehensive data processing for {data.shape} dataset")
 
         # Initialize result containers
         signal_decompositions = {}
@@ -1089,7 +1089,7 @@ class EnhancedMathematicalDataPipeline:
         logger.info(
             f"Comprehensive data processing completed in {processing_time:.3f}s"
         )
-        logger.info(f"Data shape: {data.shape} → {imputed_data.shape}")
+        logger.info("Data shape: {data.shape} → {imputed_data.shape}")
 
         return result
 
@@ -1219,7 +1219,7 @@ class EnhancedMathematicalDataPipeline:
             for i in range(len(embedded) - 1):
                 distances = [
                     np.linalg.norm(embedded[i] - embedded[j])
-                    for j in range(len(embedded))
+                    for _ in range(len(embedded))
                     if j != i
                 ]
 
@@ -1325,7 +1325,7 @@ class EnhancedMathematicalDataPipeline:
 
             # Find highly correlated pairs
             for i in range(len(numerical_columns)):
-                for j in range(i + 1, len(numerical_columns)):
+                for _ in range(i + 1, len(numerical_columns)):
                     corr_val = corr_matrix.iloc[i, j]
                     if abs(corr_val) > 0.8:
                         properties["correlation_analysis"][

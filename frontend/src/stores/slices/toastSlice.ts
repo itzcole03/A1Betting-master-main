@@ -1,6 +1,6 @@
-import { StateCreator } from 'zustand';
-import { Toast } from '@/types';
-import { v4 as uuidv4 } from 'uuid';
+import { StateCreator } from 'zustand.ts';
+import { Toast } from '@/types.ts';
+import { v4 as uuidv4 } from 'uuid.ts';
 
 export interface ToastSlice {
   toasts: Toast[];
@@ -11,7 +11,7 @@ export interface ToastSlice {
 export const createToastSlice: StateCreator<ToastSlice> = set => ({
   toasts: [],
   addToast: (type, message) => {
-    const id = uuidv4();
+
     set(state => ({
       toasts: [...state.toasts, { id, type, message }],
     }));

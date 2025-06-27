@@ -1,4 +1,4 @@
-import { PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from "../../types/prizePicks";
+import { PrizePicksProps, PrizePicksPlayer, PrizePicksLines } from '@/types/prizePicks.ts';
 export declare class PrizePicksAdapterImpl {
     private static instance;
     private baseUrl;

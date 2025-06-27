@@ -1,5 +1,5 @@
-import React from 'react';
-import { PredictionWithExplanation } from '../../core/types/prediction';
+import React from 'react.ts';
+import { PredictionWithExplanation } from '@/core/types/prediction.ts';
 interface PredictionExplanationModalProps {
     open: boolean;
     onClose: () => void;

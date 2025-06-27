@@ -6,7 +6,7 @@ import { UnifiedSettingsService } from "../../services/unified/UnifiedSettingsSe
 export const Button = ({ children, variant = "primary", size = "medium", isLoading = false, disabled = false, onClick, className = "", ariaLabel, ...props }) => {
     // const settings = UnifiedSettingsService.getInstance();
     // const theme = settings.getSettingValue<'light' | 'dark'>('theme');
-    const baseClasses = "inline-flex items-center justify-center rounded-md font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-900";
+
     const variantClasses = {
         primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 active:bg-blue-800",
         secondary: "bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-gray-500 active:bg-gray-400 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600",
@@ -19,42 +19,42 @@ export const Button = ({ children, variant = "primary", size = "medium", isLoadi
         medium: "px-4 py-2 text-base",
         large: "px-6 py-3 text-lg",
     };
-    const classes = twMerge(baseClasses, variantClasses[variant], sizeClasses[size], className);
+
     return (_jsxs(motion.button, { "aria-busy": isLoading, "aria-label": ariaLabel, className: classes, disabled: disabled || isLoading, whileTap: { scale: 0.98 }, onClick: onClick, ...props, children: [isLoading ? (_jsx("span", { className: "mr-2", children: _jsx(Spinner, { size: "small" }) })) : null, children] }));
 };
 export const Card = ({ children, className = "" }) => (_jsx("div", { className: `bg-white dark:bg-gray-800 rounded-lg shadow-sm p-4 ${className}`, children: children }));
 export const Input = ({ type = "text", label, value, onChange, error, disabled = false, placeholder, className = "", helperText, required = false, ...props }) => {
-    const settings = UnifiedSettingsService.getInstance();
-    const theme = settings.getSettingValue("theme");
-    const id = React.useId();
+
+
+
     const handleChange = (e) => {
         onChange(e.target.value);
     };
     return (_jsxs("div", { className: twMerge("w-full", className), children: [label && (_jsxs("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1", htmlFor: id, children: [label, required && _jsx("span", { className: "text-red-500 ml-1", children: "*" })] })), _jsx(motion.div, { transition: { duration: 0.2 }, whileFocus: { scale: 1.01 }, children: _jsx("input", { "aria-describedby": error ? `${id}-error` : helperText ? `${id}-helper` : undefined, "aria-invalid": !!error, className: twMerge("w-full rounded-lg border transition-colors duration-200", theme === "dark"
                         ? "bg-gray-700 border-gray-600 text-white"
-                        : "bg-white border-gray-300 text-gray-900", error
+                        : "bg-white border-gray-300 text-gray-900", error;
                         ? "border-red-500 focus:border-red-500"
                         : "focus:border-blue-500", disabled ? "opacity-50 cursor-not-allowed" : "", "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent", "px-4 py-2"), disabled: disabled, id: id, placeholder: placeholder, required: required, type: type, value: value, onChange: handleChange, ...props }) }), error && (_jsx(motion.p, { animate: { opacity: 1, y: 0 }, className: "mt-1 text-sm text-red-500", id: `${id}-error`, initial: { opacity: 0, y: -10 }, role: "alert", children: error })), helperText && !error && (_jsx("p", { className: "mt-1 text-sm text-gray-500 dark:text-gray-400", id: `${id}-helper`, children: helperText }))] }));
 };
 export const Select = ({ label, value, onChange, options, error, disabled = false, className = "", }) => {
-    const settings = UnifiedSettingsService.getInstance();
-    const theme = settings.getSettingValue("theme");
-    const id = React.useId();
+
+
+
     const handleChange = (e) => {
         onChange(e.target.value);
     };
     return (_jsxs("div", { className: twMerge("w-full", className), children: [label && (_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1", htmlFor: id, children: label })), _jsx("select", { "aria-invalid": !!error, className: twMerge("w-full rounded-lg border transition-colors duration-200", theme === "dark"
                     ? "bg-gray-700 border-gray-600 text-white"
-                    : "bg-white border-gray-300 text-gray-900", error
+                    : "bg-white border-gray-300 text-gray-900", error;
                     ? "border-red-500 focus:border-red-500"
                     : "focus:border-blue-500", disabled ? "opacity-50 cursor-not-allowed" : "", "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent", "px-4 py-2"), disabled: disabled, id: id, value: value, onChange: handleChange, children: options.map((option) => (_jsx("option", { value: option.value, children: option.label }, option.value))) }), error && (_jsx(motion.p, { animate: { opacity: 1, y: 0 }, className: "mt-1 text-sm text-red-500", id: `${id}-error`, initial: { opacity: 0, y: -10 }, role: "alert", children: error }))] }));
 };
-// Modal component
+// Modal component;
 export const Modal = ({ isOpen, onClose, title, children, className = "" }) => {
     if (!isOpen)
         return null;
     return (_jsx("div", { className: "fixed inset-0 z-50 overflow-y-auto", children: _jsxs("div", { className: "flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0", children: [_jsx("div", { "aria-hidden": "true", className: "fixed inset-0 transition-opacity", onClick: onClose, children: _jsx("div", { className: "absolute inset-0 bg-gray-500 opacity-75" }) }), _jsx("span", { "aria-hidden": "true", className: "hidden sm:inline-block sm:align-middle sm:h-screen", children: "\u200B" }), _jsxs("div", { className: `
-            inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full
+            inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full;
             ${className}
           `, children: [title && (_jsx("div", { className: "px-6 py-4 border-b border-gray-200", children: _jsx("h3", { className: "text-lg font-semibold text-gray-900", children: title }) })), _jsx("div", { className: "px-6 py-4", children: children })] })] }) }));
 };
@@ -66,19 +66,19 @@ const toastTypeStyles = {
 };
 export const Toast = ({ message, type = "info", onClose, duration = 4000, index = 0, }) => {
     React.useEffect(() => {
-        const timer = setTimeout(onClose, duration);
+
         return () => clearTimeout(timer);
     }, [duration, onClose]);
-    // Responsive position: bottom-center on mobile, bottom-right on desktop
-    // Stacking: offset by index
+    // Responsive position: bottom-center on mobile, bottom-right on desktop;
+    // Stacking: offset by index;
     return (_jsx(motion.div, { initial: { opacity: 0, y: 40 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0, y: 40 }, transition: { duration: 0.3, ease: "easeInOut" }, onClick: onClose, className: `
-        fixed z-50
-        sm:right-4 sm:bottom-4 left-1/2 sm:left-auto sm:translate-x-0 -translate-x-1/2 bottom-4
-        min-w-[220px] max-w-xs px-6 py-3 rounded-2xl shadow-2xl cursor-pointer select-none
-        bg-gradient-to-br ${toastTypeStyles[type]} backdrop-blur-lg
-        text-white font-semibold flex items-center gap-3
-        border border-white/10
-        glass-morphism
+        fixed z-50;
+        sm:right-4 sm:bottom-4 left-1/2 sm:left-auto sm:translate-x-0 -translate-x-1/2 bottom-4;
+        min-w-[220px] max-w-xs px-6 py-3 rounded-2xl shadow-2xl cursor-pointer select-none;
+        bg-gradient-to-br ${toastTypeStyles[type]} backdrop-blur-lg;
+        text-white font-semibold flex items-center gap-3;
+        border border-white/10;
+        glass-morphism;
       `, style: { marginBottom: `${index * 72}px` }, role: "alert", tabIndex: 0, "aria-live": "polite", "aria-atomic": "true", title: "Click to dismiss", children: message }));
 };
 export const Spinner = ({ size = "medium", className = "", }) => {
@@ -102,7 +102,7 @@ export const Slider = ({ value, onChange, min, max, step = 1, label, className, 
     return (_jsxs("div", { className: twMerge("w-full", className), children: [label && (_jsx("label", { className: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1", children: label })), _jsx("input", { className: "w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700", max: max, min: min, step: step, type: "range", value: value, onChange: (e) => onChange(Number(e.target.value)) }), _jsxs("div", { className: "flex justify-between text-sm text-gray-500 mt-1", children: [_jsx("span", { children: min }), _jsx("span", { children: value }), _jsx("span", { children: max })] })] }));
 };
 export const Progress = ({ value, max = 100, className, }) => {
-    const percentage = (value / max) * 100;
+
     return (_jsx("div", { className: twMerge("w-full h-2 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700", className), children: _jsx("div", { className: "h-full bg-primary-500 transition-all duration-300", style: { width: `${percentage}%` } }) }));
 };
 export const Tabs = ({ value, onChange, children, className, }) => {

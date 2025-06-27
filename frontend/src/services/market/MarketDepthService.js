@@ -5,10 +5,10 @@ import { API_CONFIG } from '../../config/apiConfig.js';
 export class MarketDepthService {
     constructor() {
         /**
-         * Fetch market depth for a single event from backend/bookmaker API
+         * Fetch market depth for a single event from backend/bookmaker API;
          */
         this.getMarketDepth = wrapWithRateLimit(async (eventId) => {
-            const url = `${API_CONFIG.ODDS_DATA.BASE_URL}/market-depth/${eventId}`;
+
             const res = await fetch(url, {
                 method: 'GET',
                 headers: { 'x-api-key': API_CONFIG.ODDS_DATA.API_KEY }
@@ -21,7 +21,7 @@ export class MarketDepthService {
          * Fetch market depth for multiple events (batch)
          */
         this.getMarketDepthBatch = wrapWithRateLimit(async (eventIds) => {
-            const url = `${API_CONFIG.ODDS_DATA.BASE_URL}/market-depth/batch`;
+
             const res = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -35,10 +35,10 @@ export class MarketDepthService {
             return (await res.json());
         });
         /**
-         * Fetch market depth trends and analytics for an event
+         * Fetch market depth trends and analytics for an event;
          */
         this.getMarketDepthTrends = wrapWithRateLimit(async (eventId) => {
-            const url = `${API_CONFIG.ODDS_DATA.BASE_URL}/market-depth/${eventId}/trends`;
+
             const res = await fetch(url, {
                 method: 'GET',
                 headers: { 'x-api-key': API_CONFIG.ODDS_DATA.API_KEY }

@@ -25,13 +25,13 @@ class UnifiedNotificationService {
     }
     loadNotifications() {
         try {
-            const stored = localStorage.getItem(this.STORAGE_KEY);
+
             if (stored) {
                 this.notifications = JSON.parse(stored);
             }
         }
         catch (error) {
-            console.error('Error loading notifications:', error);
+            // console statement removed
             this.notifications = [];
         }
     }
@@ -40,7 +40,7 @@ class UnifiedNotificationService {
             localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.notifications));
         }
         catch (error) {
-            console.error('Error saving notifications:', error);
+            // console statement removed
         }
     }
     createNotification(type, message, title, data) {
@@ -55,7 +55,7 @@ class UnifiedNotificationService {
         };
     }
     showToast(notification, options) {
-        const config = { ...this.defaultConfig, ...options };
+
         switch (notification.type) {
             case 'success':
                 toast.success(notification.message, config);
@@ -71,25 +71,25 @@ class UnifiedNotificationService {
         }
     }
     notify(type, message, title, data, options) {
-        const preferences = this.settingsService.getPreferences();
-        // Check if notifications are enabled
+
+        // Check if notifications are enabled;
         if (!preferences.notifications.enabled) {
             return;
         }
-        // Create and store notification
-        const notification = this.createNotification(type, message, title, data);
+        // Create and store notification;
+
         this.notifications.unshift(notification);
-        // Trim notifications if exceeding max limit
+        // Trim notifications if exceeding max limit;
         if (this.notifications.length > this.MAX_NOTIFICATIONS) {
             this.notifications = this.notifications.slice(0, this.MAX_NOTIFICATIONS);
         }
-        // Save notifications
+        // Save notifications;
         this.saveNotifications();
-        // Show toast if appropriate
+        // Show toast if appropriate;
         if (preferences.notifications.desktop) {
             this.showToast(notification, options);
         }
-        // Dispatch notification event
+        // Dispatch notification event;
         this.dispatchNotificationEvent(notification);
     }
     dispatchNotificationEvent(notification) {
@@ -105,7 +105,7 @@ class UnifiedNotificationService {
         return this.notifications.filter(n => !n.read);
     }
     markAsRead(id) {
-        const notification = this.notifications.find(n => n.id === id);
+
         if (notification) {
             notification.read = true;
             this.saveNotifications();
@@ -120,7 +120,7 @@ class UnifiedNotificationService {
         this.saveNotifications();
     }
     clearOldNotifications(maxAge) {
-        const cutoff = Date.now() - maxAge;
+
         this.notifications = this.notifications.filter(n => n.timestamp > cutoff);
         this.saveNotifications();
     }

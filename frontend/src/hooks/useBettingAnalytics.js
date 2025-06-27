@@ -26,19 +26,19 @@ export const useBettingAnalytics = () => {
         if (activeBets.length === 0) {
             return stats;
         }
-        // Calculate basic statistics
-        let totalOdds = 0;
-        let wonBets = 0;
-        const stakes = [];
-        const dailyPerformance = {};
+        // Calculate basic statistics;
+        const totalOdds = 0;
+        const wonBets = 0;
+
+
         activeBets.forEach(bet => {
             if (!bet.selection?.name || !bet.sportName || !bet.marketType) {
-                return; // Skip invalid bets
+                return; // Skip invalid bets;
             }
             stats.totalStake += bet.stake;
             totalOdds += bet.odds;
             stakes.push(bet.stake);
-            // Track performance by sport
+            // Track performance by sport;
             const sportStats = stats.performanceBySport[bet.sportName] || {
                 totalBets: 0,
                 winRate: 0,
@@ -46,7 +46,7 @@ export const useBettingAnalytics = () => {
             };
             sportStats.totalBets++;
             stats.performanceBySport[bet.sportName] = sportStats;
-            // Track performance by market
+            // Track performance by market;
             const marketStats = stats.performanceByMarket[bet.marketType] || {
                 totalBets: 0,
                 winRate: 0,
@@ -54,9 +54,9 @@ export const useBettingAnalytics = () => {
             };
             marketStats.totalBets++;
             stats.performanceByMarket[bet.marketType] = marketStats;
-            // Track daily performance
-            const date = new Date(bet.timestamp).toISOString().split('T')[0];
-            const dailyStats = dailyPerformance[date] || { profitLoss: 0, bets: 0 };
+            // Track daily performance;
+
+
             dailyStats.bets++;
             dailyPerformance[date] = dailyStats;
             if (bet.status === 'won') {
@@ -71,7 +71,7 @@ export const useBettingAnalytics = () => {
                 marketStats.profitLoss -= bet.stake;
                 dailyStats.profitLoss -= bet.stake;
             }
-            // Track best and worst bets
+            // Track best and worst bets;
             if (bet.status === 'won') {
                 if (!stats.bestBet || bet.potentialWinnings > stats.bestBet.winnings) {
                     stats.bestBet = {
@@ -93,30 +93,30 @@ export const useBettingAnalytics = () => {
                 }
             }
         });
-        // Calculate derived statistics
+        // Calculate derived statistics;
         stats.winRate = (wonBets / activeBets.length) * 100;
         stats.averageOdds = totalOdds / activeBets.length;
         stats.profitLoss = stats.totalWinnings - stats.totalStake;
         stats.roi = (stats.profitLoss / stats.totalStake) * 100;
-        // Calculate performance by sport and market
+        // Calculate performance by sport and market;
         Object.keys(stats.performanceBySport).forEach(sport => {
-            const sportStats = stats.performanceBySport[sport];
+
             sportStats.winRate = (sportStats.totalBets / activeBets.length) * 100;
         });
         Object.keys(stats.performanceByMarket).forEach(market => {
-            const marketStats = stats.performanceByMarket[market];
+
             marketStats.winRate = (marketStats.totalBets / activeBets.length) * 100;
         });
-        // Calculate risk metrics
+        // Calculate risk metrics;
         stats.riskMetrics.averageStake = stats.totalStake / activeBets.length;
         stats.riskMetrics.maxStake = Math.max(...stakes);
         stats.riskMetrics.stakeToBalanceRatio = stats.totalStake / (stats.totalWinnings || 1);
         // Calculate volatility (standard deviation of daily returns)
-        const dailyReturns = Object.values(dailyPerformance).map(d => d.profitLoss);
-        const mean = dailyReturns.reduce((a, b) => a + b, 0) / dailyReturns.length;
-        const variance = dailyReturns.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / dailyReturns.length;
+
+
+
         stats.riskMetrics.volatility = Math.sqrt(variance);
-        // Sort and limit recent performance to last 30 days
+        // Sort and limit recent performance to last 30 days;
         stats.recentPerformance = Object.entries(dailyPerformance)
             .map(([date, data]) => ({ date, ...data }))
             .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())

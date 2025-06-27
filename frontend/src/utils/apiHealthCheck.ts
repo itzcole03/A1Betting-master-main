@@ -1,9 +1,9 @@
 /**
- * API Health Check Utility
- * Provides centralized health checking and fallback mechanisms
+ * API Health Check Utility;
+ * Provides centralized health checking and fallback mechanisms;
  */
 
-import { api } from "../services/integrationService";
+import { api } from '@/services/integrationService.ts';
 
 interface ApiHealthResult {
   isOnline: boolean;
@@ -20,7 +20,7 @@ class ApiHealthChecker {
   private static instance: ApiHealthChecker;
   private healthCache: ApiHealthResult | null = null;
   private lastCheckTime = 0;
-  private readonly CACHE_DURATION = 30000; // 30 seconds
+  private readonly CACHE_DURATION = 30000; // 30 seconds;
 
   private constructor() {}
 
@@ -32,12 +32,11 @@ class ApiHealthChecker {
   }
 
   /**
-   * Check API health with caching
+   * Check API health with caching;
    */
   public async checkHealth(): Promise<ApiHealthResult> {
-    const now = Date.now();
 
-    // Return cached result if still valid
+    // Return cached result if still valid;
     if (this.healthCache && now - this.lastCheckTime < this.CACHE_DURATION) {
       return this.healthCache;
     }
@@ -54,12 +53,12 @@ class ApiHealthChecker {
     };
 
     try {
-      // Test main health endpoint
-      const healthStatus = await api.getHealthStatus();
+      // Test main health endpoint;
+
       result.services.backend = healthStatus.status === "online";
       result.isOnline = result.services.backend;
 
-      // Test analytics endpoint
+      // Test analytics endpoint;
       try {
         await api.getUserAnalytics("default_user");
         result.services.analytics = true;
@@ -67,7 +66,7 @@ class ApiHealthChecker {
         result.services.analytics = false;
       }
 
-      // Test predictions endpoint
+      // Test predictions endpoint;
       try {
         await api.getBettingOpportunities(undefined, 1);
         result.services.predictions = true;
@@ -75,11 +74,11 @@ class ApiHealthChecker {
         result.services.predictions = false;
       }
     } catch (error) {
-      console.warn("API health check failed:", error);
+      // console statement removed
       result.fallbackMode = true;
     }
 
-    // Update cache
+    // Update cache;
     this.healthCache = result;
     this.lastCheckTime = now;
 
@@ -87,14 +86,14 @@ class ApiHealthChecker {
   }
 
   /**
-   * Get cached health status without making new requests
+   * Get cached health status without making new requests;
    */
   public getCachedHealth(): ApiHealthResult | null {
     return this.healthCache;
   }
 
   /**
-   * Force refresh health status
+   * Force refresh health status;
    */
   public async forceRefresh(): Promise<ApiHealthResult> {
     this.healthCache = null;
@@ -103,7 +102,7 @@ class ApiHealthChecker {
   }
 
   /**
-   * Check if we should use fallback data
+   * Check if we should use fallback data;
    */
   public shouldUseFallback(): boolean {
     if (!this.healthCache) return true;
@@ -111,11 +110,11 @@ class ApiHealthChecker {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const apiHealthChecker = ApiHealthChecker.getInstance();
 
 /**
- * Wrapper for API calls with automatic fallback
+ * Wrapper for API calls with automatic fallback;
  */
 export async function safeApiCall<T>(
   apiCall: () => Promise<T>,
@@ -123,18 +122,18 @@ export async function safeApiCall<T>(
   serviceName = "API",
 ): Promise<{ data: T; fromFallback: boolean }> {
   try {
-    const data = await apiCall();
+
     return { data, fromFallback: false };
   } catch (error) {
-    console.error(`${serviceName} call failed - production mode should handle errors without fallback data:`, error);
-    // In production, consider throwing the error instead of using fallback
+    // console statement removed
+    // In production, consider throwing the error instead of using fallback;
     return { data: fallbackData, fromFallback: true };
   }
 }
 
 /**
- * Get fallback data for common API endpoints
- * WARNING: This should only be used for development/testing, not production
+ * Get fallback data for common API endpoints;
+ * WARNING: This should only be used for development/testing, not production;
  */
 export const fallbackData = {
   userAnalytics: {

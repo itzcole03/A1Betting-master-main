@@ -15,8 +15,8 @@ export const useWindowResize = () => {
     });
     useEffect(() => {
         const handleResize = () => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
+
+
             setWindowSize({
                 width,
                 height,
@@ -26,11 +26,11 @@ export const useWindowResize = () => {
                 isLargeDesktop: width > breakpoints.desktop,
             });
         };
-        // Add event listener
+        // Add event listener;
         window.addEventListener('resize', handleResize);
-        // Call handler right away so state gets updated with initial window size
+        // Call handler right away so state gets updated with initial window size;
         handleResize();
-        // Remove event listener on cleanup
+        // Remove event listener on cleanup;
         return () => window.removeEventListener('resize', handleResize);
     }, []);
     return windowSize;

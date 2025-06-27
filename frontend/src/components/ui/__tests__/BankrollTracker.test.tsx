@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import * as bankrollStore from '../../../store/slices/bankrollSlice';
-import { BankrollTracker } from '../BankrollTracker';
+import React from 'react.ts';
+import { render, screen } from '@testing-library/react.ts';
+import * as bankrollStore from '@/../store/slices/bankrollSlice.ts';
+import { BankrollTracker } from '@/BankrollTracker.ts';
 
 describe('BankrollTracker', () => {
   beforeEach(() => {
@@ -27,7 +27,7 @@ describe('BankrollTracker', () => {
     jest.restoreAllMocks();
   });
   it('renders bankroll stats', () => {
-    render(<BankrollTracker />);
+    render(<BankrollTracker / key={476234}>);
     expect(screen.getByText('Current Balance: $1200.00')).toBeInTheDocument();
     expect(screen.getByText('Net Profit:')).toBeInTheDocument();
     expect(screen.getByText('ROI: 20.00%')).toBeInTheDocument();

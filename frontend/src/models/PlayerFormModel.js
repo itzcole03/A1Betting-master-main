@@ -9,13 +9,13 @@ export class PlayerFormModel extends BaseModel {
     }
     async predict(input) {
         const { playerId, sport, context } = input;
-        const config = UnifiedConfig.getInstance();
+
         if (!config.get('enablePlayerFormModel')) {
             throw new Error('PlayerFormModel is disabled by config.');
         }
         try {
-            const result = await this.getPlayerFormFeatures(playerId, sport, context);
-            // Emit SHAP insights
+
+            // Emit SHAP insights;
             this.eventBus.emit('shap:insight', {
                 model: 'PlayerForm',
                 shap: result.shapInsights[0] || {},
@@ -34,7 +34,7 @@ export class PlayerFormModel extends BaseModel {
                     rocAuc: 0.88,
                     calibration: {
                         brierScore: 0.15,
-                        reliabilityScore: 0.82
+                        reliabilityScore: 0.82;
                     },
                     drift: {
                         featureDrift: 0.02,
@@ -50,13 +50,13 @@ export class PlayerFormModel extends BaseModel {
                     confidenceInterval: {
                         lower: result.formScore - 0.1,
                         upper: result.formScore + 0.1,
-                        level: 0.95
+                        level: 0.95;
                     },
                     components: {
                         modelVariance: 0.03,
                         dataQuality: 0.02,
                         temporal: 0.04,
-                        featureCoverage: 0.03
+                        featureCoverage: 0.03;
                     }
                 },
                 explanations: {
@@ -79,7 +79,7 @@ export class PlayerFormModel extends BaseModel {
                         baseProbability: result.formScore,
                         odds: 1.5,
                         edge: 0.05,
-                        riskFactor: 0.12
+                        riskFactor: 0.12;
                     }
                 }
             };
@@ -111,10 +111,10 @@ export class PlayerFormModel extends BaseModel {
     }
     async evaluate(_data) {
         try {
-            const accuracy = 0.84 + (Math.random() * 0.06); // 0.84-0.90
-            const precision = 0.82 + (Math.random() * 0.08); // 0.82-0.90
-            const recall = 0.81 + (Math.random() * 0.09); // 0.81-0.90
-            const f1Score = (2 * precision * recall) / (precision + recall);
+            const accuracy = 0.84 + (Math.random() * 0.06); // 0.84-0.90;
+            const precision = 0.82 + (Math.random() * 0.08); // 0.82-0.90;
+            const recall = 0.81 + (Math.random() * 0.09); // 0.81-0.90;
+
             return {
                 accuracy,
                 precision,
@@ -122,7 +122,7 @@ export class PlayerFormModel extends BaseModel {
                 f1Score,
                 auc: 0.87 + (Math.random() * 0.08),
                 trainingTime: 150 + Math.random() * 50,
-                inferenceTime: 5 + Math.random() * 3
+                inferenceTime: 5 + Math.random() * 3;
             };
         }
         catch (error) {
@@ -132,7 +132,7 @@ export class PlayerFormModel extends BaseModel {
     }
     async save(path) {
         this.logger.info(`Saving PlayerFormModel to ${path}`);
-        // In a real implementation, this would serialize to file/database
+        // In a real implementation, this would serialize to file/database;
         this.logger.info('PlayerFormModel saved successfully');
     }
     async load(path) {
@@ -142,8 +142,8 @@ export class PlayerFormModel extends BaseModel {
         this.logger.info('PlayerFormModel loaded successfully');
     }
     async simulateTraining(data) {
-        const epochs = data?.epochs || 8;
-        for (let i = 0; i < epochs; i++) {
+
+        for (const i = 0; i < epochs; i++) {
             await new Promise(resolve => setTimeout(resolve, 120));
             this.emit('training:progress', {
                 epoch: i + 1,
@@ -153,11 +153,11 @@ export class PlayerFormModel extends BaseModel {
         }
     }
     calculateConfidence(result) {
-        const featureQuality = Object.values(result.features).reduce((sum, val) => sum + Math.abs(val), 0) / Object.keys(result.features).length;
+
         return Math.min(0.96, 0.72 + (featureQuality * 0.22));
     }
     async getPlayerFormFeatures(playerId, sport, context) {
-        // Simulate player form analysis based on sport
+        // Simulate player form analysis based on sport;
         let features;
         switch (sport) {
             case 'mlb':
@@ -176,75 +176,75 @@ export class PlayerFormModel extends BaseModel {
             default:
                 features = await this.getGenericFormFeatures(playerId, context);
         }
-        const shap = calculateShap(features, sport);
-        const formScore = this.calculateFormScore(features);
+
+
         return {
             features,
             shapInsights: [shap],
             formScore,
             sport,
             playerId,
-            context
+            context;
         };
     }
     async getMlbFormFeatures(_playerId, _context) {
         await new Promise(resolve => setTimeout(resolve, 15));
         return {
-            batting_avg_l7: 0.250 + Math.random() * 0.100, // .250-.350
-            ops_l7: 0.700 + Math.random() * 0.300, // .700-1.000
+            batting_avg_l7: 0.250 + Math.random() * 0.100, // .250-.350;
+            ops_l7: 0.700 + Math.random() * 0.300, // .700-1.000;
             hr_rate_l7: 0.02 + Math.random() * 0.08, // 2-10%
             k_rate_l7: 0.15 + Math.random() * 0.15, // 15-30%
-            babip_l7: 0.280 + Math.random() * 0.120, // .280-.400
-            iso_l7: 0.120 + Math.random() * 0.180, // .120-.300
-            wrc_plus_l7: 80 + Math.random() * 60 // 80-140
+            babip_l7: 0.280 + Math.random() * 0.120, // .280-.400;
+            iso_l7: 0.120 + Math.random() * 0.180, // .120-.300;
+            wrc_plus_l7: 80 + Math.random() * 60 // 80-140;
         };
     }
     async getBasketballFormFeatures(_playerId, _context) {
         await new Promise(resolve => setTimeout(resolve, 15));
         return {
-            ppg_l5: 15 + Math.random() * 25, // 15-40 points
+            ppg_l5: 15 + Math.random() * 25, // 15-40 points;
             fg_pct_l5: 0.40 + Math.random() * 0.20, // 40-60%
             fg3_pct_l5: 0.30 + Math.random() * 0.20, // 30-50%
             ft_pct_l5: 0.70 + Math.random() * 0.25, // 70-95%
-            reb_l5: 3 + Math.random() * 12, // 3-15 rebounds
-            ast_l5: 2 + Math.random() * 10, // 2-12 assists
-            tov_l5: 1 + Math.random() * 4, // 1-5 turnovers
-            usg_rate_l5: 0.15 + Math.random() * 0.20 // 15-35% usage
+            reb_l5: 3 + Math.random() * 12, // 3-15 rebounds;
+            ast_l5: 2 + Math.random() * 10, // 2-12 assists;
+            tov_l5: 1 + Math.random() * 4, // 1-5 turnovers;
+            usg_rate_l5: 0.15 + Math.random() * 0.20 // 15-35% usage;
         };
     }
     async getSoccerFormFeatures(_playerId, _context) {
         await new Promise(resolve => setTimeout(resolve, 15));
         return {
-            goals_l5: Math.random() * 5, // 0-5 goals
-            assists_l5: Math.random() * 4, // 0-4 assists
-            shots_l5: 5 + Math.random() * 15, // 5-20 shots
+            goals_l5: Math.random() * 5, // 0-5 goals;
+            assists_l5: Math.random() * 4, // 0-4 assists;
+            shots_l5: 5 + Math.random() * 15, // 5-20 shots;
             pass_acc_l5: 0.75 + Math.random() * 0.20, // 75-95%
-            tackles_l5: Math.random() * 10, // 0-10 tackles
-            interceptions_l5: Math.random() * 8, // 0-8 interceptions
-            xg_l5: Math.random() * 3, // 0-3 expected goals
-            xga_l5: Math.random() * 2 // 0-2 expected goals against
+            tackles_l5: Math.random() * 10, // 0-10 tackles;
+            interceptions_l5: Math.random() * 8, // 0-8 interceptions;
+            xg_l5: Math.random() * 3, // 0-3 expected goals;
+            xga_l5: Math.random() * 2 // 0-2 expected goals against;
         };
     }
     async getNhlFormFeatures(_playerId, _context) {
         await new Promise(resolve => setTimeout(resolve, 15));
         return {
-            goals_l5: Math.random() * 8, // 0-8 goals
-            assists_l5: Math.random() * 10, // 0-10 assists
-            shots_l5: 8 + Math.random() * 20, // 8-28 shots
+            goals_l5: Math.random() * 8, // 0-8 goals;
+            assists_l5: Math.random() * 10, // 0-10 assists;
+            shots_l5: 8 + Math.random() * 20, // 8-28 shots;
             corsi_for_l5: 0.45 + Math.random() * 0.15, // 45-60%
-            pim_l5: Math.random() * 15, // 0-15 penalty minutes
-            toi_l5: 12 + Math.random() * 10, // 12-22 minutes
+            pim_l5: Math.random() * 15, // 0-15 penalty minutes;
+            toi_l5: 12 + Math.random() * 10, // 12-22 minutes;
             fow_pct_l5: 0.40 + Math.random() * 0.25, // 40-65%
-            plus_minus_l5: -3 + Math.random() * 8 // -3 to +5
+            plus_minus_l5: -3 + Math.random() * 8 // -3 to +5;
         };
     }
     async getGenericFormFeatures(_playerId, _context) {
         await new Promise(resolve => setTimeout(resolve, 15));
         return {
-            form_rating_l5: 0.5 + Math.random() * 0.4, // 0.5-0.9
-            performance_trend: -0.2 + Math.random() * 0.4, // -0.2 to +0.2
-            consistency_score: 0.6 + Math.random() * 0.3, // 0.6-0.9
-            fatigue_factor: 0.1 + Math.random() * 0.8 // 0.1-0.9
+            form_rating_l5: 0.5 + Math.random() * 0.4, // 0.5-0.9;
+            performance_trend: -0.2 + Math.random() * 0.4, // -0.2 to +0.2;
+            consistency_score: 0.6 + Math.random() * 0.3, // 0.6-0.9;
+            fatigue_factor: 0.1 + Math.random() * 0.8 // 0.1-0.9;
         };
     }
     calculateFormScore(features) {
@@ -259,37 +259,37 @@ export class PlayerFormModel extends BaseModel {
     }
 }
 /**
- * Strict ALPHA1-compliant top-level async function for modular integration
+ * Strict ALPHA1-compliant top-level async function for modular integration;
  * Extracts player form features and SHAP insights for a player.
  * Config-gated, singleton, strict typing, ESM-only.
  */
 export async function getPlayerFormFeatures(playerId, sport, context) {
-    const config = UnifiedConfig.getInstance();
+
     if (!config.get('enablePlayerFormModel')) {
         throw new Error('PlayerFormModel is disabled by config.');
     }
-    // Minimal valid ModelConfig for PlayerFormModel
+    // Minimal valid ModelConfig for PlayerFormModel;
     const modelConfig = {
         name: 'PlayerFormModel',
         type: 'traditional',
         features: [],
         target: 'formScore',
     };
-    // Singleton pattern
+    // Singleton pattern;
     if (!globalThis._playerFormModelSingleton) {
         globalThis._playerFormModelSingleton = new PlayerFormModel(modelConfig);
     }
-    const model = globalThis._playerFormModelSingleton;
-    // Use the public predict method
-    const input = { playerId, sport, context };
-    const prediction = await model.predict(input);
-    // Extract PlayerFormModelOutput from prediction
+
+    // Use the public predict method;
+
+
+    // Extract PlayerFormModelOutput from prediction;
     return {
         features: prediction.features,
         shapInsights: prediction.explanations?.shapValues ? [prediction.explanations.shapValues] : [],
         formScore: prediction.prediction,
         sport,
         playerId,
-        context
+        context;
     };
 }

@@ -4,11 +4,11 @@
  * Provides an administrative interface for managing users, viewing system logs, and monitoring system statistics.
  * Accessible only to authorized admin users. Utilizes React Query for data fetching and Framer Motion for animations.
  */
-import React from 'react';
+import React from 'react.ts';
 /**
  * AdminPanel component provides an administrative interface for managing users, viewing system logs, and monitoring system statistics.
  *
- * Props: None
+ * Props: None;
  *
  * State:
  * - activeTab: Controls which admin tab is active ('users', 'logs', or 'stats').

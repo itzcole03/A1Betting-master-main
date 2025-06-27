@@ -1,12 +1,12 @@
-import React from 'react';
-import { ModelMetrics } from '../types/prediction';
-import { motion } from 'framer-motion';
+import React from 'react.ts';
+import { ModelMetrics } from '@/types/prediction.ts';
+import { motion } from 'framer-motion.ts';
 
 export interface ModelPerformanceProps {
-  modelMetricsData: ModelMetrics; // Renamed prop
+  modelMetricsData: ModelMetrics; // Renamed prop;
 }
 
-const ModelPerformance: React.FC<ModelPerformanceProps> = ({ modelMetricsData }) => {
+const ModelPerformance: React.FC<ModelPerformanceProps key={227733}> = ({ modelMetricsData }) => {
   const displayMetrics = [
     {
       label: 'Win Rate',
@@ -31,19 +31,19 @@ const ModelPerformance: React.FC<ModelPerformanceProps> = ({ modelMetricsData })
   ];
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-semibold mb-4">Model Performance</h3>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+    <div className="space-y-4" key={160407}>
+      <h3 className="text-lg font-semibold mb-4" key={792268}>Model Performance</h3>
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" key={293803}>
         {displayMetrics.map((metric, index) => (
-          <motion.div
+          <motion.div;
             key={metric.label}
             animate={{ opacity: 1, y: 0 }}
             className="bg-white rounded-lg p-4 shadow-sm"
             initial={{ opacity: 0, y: 20 }}
             transition={{ delay: index * 0.1 }}
-          >
-            <div className="text-sm text-gray-600 mb-1">{metric.label}</div>
-            <div className={`text-xl font-bold ${metric.color}`}>{metric.value}</div>
+           key={906240}>
+            <div className="text-sm text-gray-600 mb-1" key={513589}>{metric.label}</div>
+            <div className={`text-xl font-bold ${metric.color}`} key={545700}>{metric.value}</div>
           </motion.div>
         ))}
       </div>

@@ -21,7 +21,7 @@ const RealTimeDataStream = () => {
     const [autoScroll, setAutoScroll] = useState(true);
     const [selectedItem, setSelectedItem] = useState(null);
     const { realtime } = useUnifiedAnalytics({ realtime: true });
-    // Real-time WebSocket connection
+    // Real-time WebSocket connection;
     const { data, isConnected: wsConnected } = useRealtimeData({
         url: "ws://localhost:8080/realtime",
         onMessage: useCallback((message) => {
@@ -34,13 +34,13 @@ const RealTimeDataStream = () => {
                 processed: false,
             };
             setStreamData((prev) => {
-                const updated = [newData, ...prev].slice(0, filters.maxMessages);
+
                 return updated;
             });
             setMetrics((prev) => ({
                 ...prev,
                 totalMessages: prev.totalMessages + 1,
-                messagesPerSecond: prev.messagesPerSecond + 0.1, // Approximate
+                messagesPerSecond: prev.messagesPerSecond + 0.1, // Approximate;
             }));
         }, [filters.maxMessages]),
         onConnect: useCallback(() => {
@@ -54,11 +54,11 @@ const RealTimeDataStream = () => {
             setMetrics((prev) => ({ ...prev, errors: prev.errors + 1 }));
         }, []),
     });
-    // Simulated real-time data generator for development
+    // Simulated real-time data generator for development;
     useEffect(() => {
         if (!wsConnected) {
             const interval = setInterval(() => {
-                const mockData = generateMockStreamData();
+
                 const newData = {
                     timestamp: Date.now(),
                     type: mockData.type,
@@ -68,15 +68,15 @@ const RealTimeDataStream = () => {
                     processed: false,
                 };
                 setStreamData((prev) => {
-                    const updated = [newData, ...prev].slice(0, filters.maxMessages);
+
                     return updated;
                 });
                 setMetrics((prev) => ({
                     ...prev,
                     totalMessages: prev.totalMessages + 1,
-                    latency: Math.random() * 50 + 10, // Simulate latency 10-60ms
+                    latency: Math.random() * 50 + 10, // Simulate latency 10-60ms;
                 }));
-            }, 2000 + Math.random() * 3000); // Random interval 2-5 seconds
+            }, 2000 + Math.random() * 3000); // Random interval 2-5 seconds;
             return () => clearInterval(interval);
         }
     }, [wsConnected, filters.maxMessages]);
@@ -97,10 +97,10 @@ const RealTimeDataStream = () => {
             "internal",
             "external",
         ];
-        const impacts = ["high", "medium", "low"];
-        const type = types[Math.floor(Math.random() * types.length)];
-        const source = sources[Math.floor(Math.random() * sources.length)];
-        const impact = impacts[Math.floor(Math.random() * impacts.length)];
+
+
+
+
         const mockDataMap = {
             odds: {
                 playerId: "player_123",
@@ -146,22 +146,22 @@ const RealTimeDataStream = () => {
             },
         };
     };
-    // Filtered data based on current filters
+    // Filtered data based on current filters;
     const filteredData = useMemo(() => {
         return streamData.filter((item) => {
             if (!filters.types.has(item.type))
                 return false;
             if (!filters.sources.has(item.source))
                 return false;
-            const impactLevel = { low: 1, medium: 2, high: 3 };
-            const minLevel = impactLevel[filters.minImpact];
-            const itemLevel = impactLevel[item.impact];
+
+
+
             return itemLevel >= minLevel;
         });
     }, [streamData, filters]);
     const toggleFilter = useCallback((category, value) => {
         setFilters((prev) => {
-            const newSet = new Set(prev[category]);
+
             if (newSet.has(value)) {
                 newSet.delete(value);
             }
@@ -189,8 +189,8 @@ const RealTimeDataStream = () => {
         const blob = new Blob([JSON.stringify(exportData, null, 2)], {
             type: "application/json",
         });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
+
+
         a.href = url;
         a.download = `realtime-stream-${Date.now()}.json`;
         a.click();
@@ -223,7 +223,7 @@ const RealTimeDataStream = () => {
         };
         return icons[type] || "📡";
     };
-    return (_jsxs("div", { className: "realtime-stream max-w-7xl mx-auto p-6 space-y-6", children: [_jsxs("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow p-6", children: [_jsxs("div", { className: "flex justify-between items-center", children: [_jsxs("div", { className: "flex items-center space-x-4", children: [_jsx("h1", { className: "text-2xl font-bold text-gray-900 dark:text-white", children: "\u26A1 Real-Time Data Stream" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx("div", { className: `w-3 h-3 rounded-full ${isConnected ? "bg-green-500 animate-pulse" : "bg-red-500"}` }), _jsx("span", { className: "text-sm text-gray-600 dark:text-gray-300", children: isConnected ? "Connected" : "Disconnected" })] })] }), _jsxs("div", { className: "flex items-center space-x-3", children: [_jsxs("button", { onClick: () => setAutoScroll(!autoScroll), className: `px-3 py-1 text-sm rounded ${autoScroll
+    return (_jsxs("div", { className: "realtime-stream max-w-7xl mx-auto p-6 space-y-6", children: [_jsxs("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow p-6", children: [_jsxs("div", { className: "flex justify-between items-center", children: [_jsxs("div", { className: "flex items-center space-x-4", children: [_jsx("h1", { className: "text-2xl font-bold text-gray-900 dark:text-white", children: "\u26A1 Real-Time Data Stream" }), _jsxs("div", { className: "flex items-center space-x-2", children: [_jsx("div", { className: `w-3 h-3 rounded-full ${isConnected ? "bg-green-500 animate-pulse" : "bg-red-500"}` }), _jsx("span", { className: "text-sm text-gray-600 dark:text-gray-300", children: isConnected ? "Connected" : "Disconnected" })] })] }), _jsxs("div", { className: "flex items-center space-x-3", children: [_jsxs("button", { onClick: () => setAutoScroll(!autoScroll), className: `px-3 py-1 text-sm rounded ${autoScroll;
                                             ? "bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400"
                                             : "bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400"}`, children: ["Auto-scroll: ", autoScroll ? "ON" : "OFF"] }), _jsx("button", { onClick: exportStream, className: "px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700", children: "Export" }), _jsx("button", { onClick: clearStream, className: "px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700", children: "Clear" })] })] }), _jsxs("div", { className: "grid grid-cols-2 md:grid-cols-5 gap-4 mt-6", children: [_jsxs("div", { className: "text-center", children: [_jsxs("div", { className: "text-lg font-semibold text-gray-900 dark:text-white", children: [metrics.latency.toFixed(0), "ms"] }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Latency" })] }), _jsxs("div", { className: "text-center", children: [_jsx("div", { className: "text-lg font-semibold text-gray-900 dark:text-white", children: metrics.totalMessages }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Total Messages" })] }), _jsxs("div", { className: "text-center", children: [_jsxs("div", { className: "text-lg font-semibold text-gray-900 dark:text-white", children: [metrics.messagesPerSecond.toFixed(1), "/s"] }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Rate" })] }), _jsxs("div", { className: "text-center", children: [_jsxs("div", { className: "text-lg font-semibold text-gray-900 dark:text-white", children: [Math.floor((Date.now() - metrics.connectionUptime) / 1000), "s"] }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Uptime" })] }), _jsxs("div", { className: "text-center", children: [_jsx("div", { className: "text-lg font-semibold text-gray-900 dark:text-white", children: metrics.errors }), _jsx("div", { className: "text-sm text-gray-600 dark:text-gray-400", children: "Errors" })] })] })] }), _jsxs("div", { className: "bg-white dark:bg-gray-800 rounded-lg shadow p-6", children: [_jsx("h2", { className: "text-lg font-semibold text-gray-900 dark:text-white mb-4", children: "Filters" }), _jsxs("div", { className: "space-y-4", children: [_jsxs("div", { children: [_jsx("h3", { className: "text-sm font-medium text-gray-700 dark:text-gray-300 mb-2", children: "Data Types" }), _jsx("div", { className: "flex flex-wrap gap-2", children: [
                                             "odds",

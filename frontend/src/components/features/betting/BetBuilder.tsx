@@ -1,50 +1,50 @@
-import React, { useState } from "react";
-import { useStore } from "../../../stores/useStore";
-import type { PlayerProp, Entry } from "../../../types/core";
-import { getErrorMessage } from "../../../utils/errorUtils";
-import { isTeamDiversified, validateEntry } from "../../../utils/businessRules";
+import React, { useState  } from 'react.ts';
+import { useStore } from '@/../stores/useStore.ts';
+import type { PlayerProp, Entry } from '@/../types/core.ts';
+import { getErrorMessage } from '@/../utils/errorUtils.ts';
+import { isTeamDiversified, validateEntry } from '@/../utils/businessRules.ts';
 import {
   oddsToDecimal,
   calculatePotentialPayout,
   calculateWinProbability,
-} from "../../../utils/odds";
-import { SmartControlsBar } from "../../../components/controls/SmartControlsBar";
-import GlassCard from "../../../components/ui/GlassCard";
-import EnhancedPropCard from "../../../components/ui/EnhancedPropCard";
-import PredictionExplanationOverlay from "../../../components/ui/PredictionExplanationOverlay";
-import { PayoutPreview } from "../../../components/PayoutPreview";
+} from '@/../utils/odds.ts';
+import { SmartControlsBar } from '@/../components/controls/SmartControlsBar.ts';
+import GlassCard from '@/../components/ui/GlassCard.ts';
+import EnhancedPropCard from '@/../components/ui/EnhancedPropCard.ts';
+import PredictionExplanationOverlay from '@/../components/ui/PredictionExplanationOverlay.ts';
+import { PayoutPreview } from '@/../components/PayoutPreview.ts';
 
 export const BetBuilder: React.FC = () => {
-  const selectedProps = useStore((s: any) => s.selectedProps);
-  const clearSelectedProps = useStore((s: any) => s.clearSelectedProps);
-  const addEntry = useStore((s: any) => s.addEntry);
+
+
+
   const [entry, setEntry] = useState(10);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<string | null key={121216}>(null);
+  const [success, setSuccess] = useState<string | null key={121216}>(null);
   const [overlayOpen, setOverlayOpen] = useState(false);
 
-  // Odds and payout calculation
-  const oddsArr = selectedProps.map((p: PlayerProp) => p.odds.toString());
-  const payout = calculatePotentialPayout(entry, oddsArr);
+  // Odds and payout calculation;
+
+
   const winProb = calculateWinProbability(
     selectedProps.map((p: PlayerProp) => p.confidence),
   );
-  const diversified = isTeamDiversified(selectedProps);
+
   const combinedDecimal = oddsArr.reduce(
     (acc: number, o: string) => acc * oddsToDecimal(o),
     1,
   );
 
   // Bonus and enhancement (placeholder logic)
-  const bonusPercent = selectedProps.length * 2; // Example: 2% per pick
+  const bonusPercent = selectedProps.length * 2; // Example: 2% per pick;
   const enhancementPercent =
     selectedProps.reduce(
       (acc: number, p: PlayerProp) => acc + ((p as any).aiBoost || 0),
       0,
     ) / (selectedProps.length || 1);
 
-  // Submit betslip
+  // Submit betslip;
   const handleSubmit = async () => {
     setError(null);
     setSuccess(null);
@@ -67,7 +67,7 @@ export const BetBuilder: React.FC = () => {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
-    const validationErrors = validateEntry(entryObj);
+
     if (validationErrors.length) {
       setError(validationErrors.join(" "));
       return;
@@ -80,7 +80,7 @@ export const BetBuilder: React.FC = () => {
         body: JSON.stringify(entryObj),
       });
       if (!res.ok) {
-        const err = await res.json();
+
         setError(getErrorMessage(err));
         setLoading(false);
         return;
@@ -95,34 +95,33 @@ export const BetBuilder: React.FC = () => {
     }
   };
 
-  // Add missing variable/type definitions for props, isLoadingProps, propsError, availableProps, handleSelect, handleViewDetails, riskMultiplier, projectedEV
-  // For demonstration, use placeholders or simple logic if not already defined
-  const isLoadingProps = false;
-  const propsError = null;
+  // Add missing variable/type definitions for props, isLoadingProps, propsError, availableProps, handleSelect, handleViewDetails, riskMultiplier, projectedEV;
+  // For demonstration, use placeholders or simple logic if not already defined;
+
+
   const availableProps: PlayerProp[] = [];
-  const handleSelect = (prop: PlayerProp, pick: string) => {};
-  const handleViewDetails = (prop: PlayerProp) => {};
-  const riskMultiplier = 1.0;
-  const projectedEV = 0;
+
+
+
 
   return (
-    <div className="space-y-6">
-      <SmartControlsBar className="mb-4 glass-card animate-fade-in" />
+    <div className="space-y-6" key={501869}>
+      <SmartControlsBar className="mb-4 glass-card animate-fade-in" / key={256278}>
       {/* Left: Available Props */}
-      <div className="flex-1 space-y-4">
-        <GlassCard className="p-4 animate-scale-in">
-          <h2 className="text-xl font-bold mb-2 text-primary-600">
-            Available Props
+      <div className="flex-1 space-y-4" key={148951}>
+        <GlassCard className="p-4 animate-scale-in" key={915758}>
+          <h2 className="text-xl font-bold mb-2 text-primary-600" key={723629}>
+            Available Props;
           </h2>
           {isLoadingProps && (
-            <div className="text-gray-400">Loading props...</div>
+            <div className="text-gray-400" key={7335}>Loading props...</div>
           )}
           {propsError && (
-            <div className="text-red-500">Failed to load props.</div>
+            <div className="text-red-500" key={501560}>Failed to load props.</div>
           )}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4" key={997137}>
             {availableProps.map((prop: any) => (
-              <EnhancedPropCard
+              <EnhancedPropCard;
                 key={prop.id}
                 playerName={prop.player?.name || prop.playerName}
                 statType={prop.type}
@@ -135,7 +134,7 @@ export const BetBuilder: React.FC = () => {
                 bonusPercent={bonusPercent}
                 enhancementPercent={enhancementPercent}
                 selected={selectedProps.some(
-                  (p: PlayerProp) => p.id === prop.id,
+                  (p: PlayerProp) = key={247789}> p.id === prop.id,
                 )}
                 onSelect={(pick) => handleSelect(prop, pick)}
                 onViewDetails={() => handleViewDetails(prop)}
@@ -146,76 +145,76 @@ export const BetBuilder: React.FC = () => {
         </GlassCard>
       </div>
       {/* Right: Bet Slip and Payout Preview */}
-      <div className="flex-1 space-y-6">
-        <GlassCard className="p-4 animate-fade-in">
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-4 flex-wrap">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Entry
+      <div className="flex-1 space-y-6" key={311300}>
+        <GlassCard className="p-4 animate-fade-in" key={795347}>
+          <div className="flex flex-col gap-4" key={986910}>
+            <div className="flex items-center gap-4 flex-wrap" key={436873}>
+              <div key={241917}>
+                <label className="block text-sm font-medium text-gray-700" key={795081}>
+                  Entry;
                 </label>
-                <div className="premium-input-container w-24">
-                  <span className="currency-symbol">$</span>
-                  <input
+                <div className="premium-input-container w-24" key={529765}>
+                  <span className="currency-symbol" key={599010}>$</span>
+                  <input;
                     className="premium-input text-gray-900"
                     max={1000}
                     min={1}
                     type="number"
                     value={entry}
-                    onChange={(e) => setEntry(Number(e.target.value))}
+                    onChange={(e) = key={287489}> setEntry(Number(e.target.value))}
                   />
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 font-medium">Payout</div>
-                <div className="text-xl font-bold text-green-600 animate-glow">
+              <div key={241917}>
+                <div className="text-sm text-gray-600 font-medium" key={5706}>Payout</div>
+                <div className="text-xl font-bold text-green-600 animate-glow" key={986652}>
                   ${payout.toFixed(2)}
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Win Prob
+              <div key={241917}>
+                <div className="text-sm text-gray-600 font-medium" key={5706}>
+                  Win Prob;
                 </div>
-                <div className="text-xl font-bold text-blue-600">
+                <div className="text-xl font-bold text-blue-600" key={543399}>
                   {winProb.toFixed(1)}%
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Combined Odds
+              <div key={241917}>
+                <div className="text-sm text-gray-600 font-medium" key={5706}>
+                  Combined Odds;
                 </div>
-                <div className="text-xl font-bold text-purple-600">
+                <div className="text-xl font-bold text-purple-600" key={380623}>
                   {combinedDecimal.toFixed(2)}
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 font-medium">Bonus %</div>
-                <div className="text-lg text-green-500 font-bold">
+              <div key={241917}>
+                <div className="text-sm text-gray-600 font-medium" key={5706}>Bonus %</div>
+                <div className="text-lg text-green-500 font-bold" key={973732}>
                   {bonusPercent}%
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 font-medium">
+              <div key={241917}>
+                <div className="text-sm text-gray-600 font-medium" key={5706}>
                   Enhance %
                 </div>
-                <div className="text-lg text-blue-500 font-bold">
+                <div className="text-lg text-blue-500 font-bold" key={963847}>
                   {enhancementPercent.toFixed(1)}%
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Risk Multiplier
+              <div key={241917}>
+                <div className="text-sm text-gray-600 font-medium" key={5706}>
+                  Risk Multiplier;
                 </div>
-                <div className="text-lg text-yellow-500 font-bold">
-                  {riskMultiplier.toFixed(2)}x
+                <div className="text-lg text-yellow-500 font-bold" key={866800}>
+                  {riskMultiplier.toFixed(2)}x;
                 </div>
               </div>
-              <div>
-                <div className="text-sm text-gray-600 font-medium">
-                  Projected EV
+              <div key={241917}>
+                <div className="text-sm text-gray-600 font-medium" key={5706}>
+                  Projected EV;
                 </div>
-                <div
-                  className={`text-lg font-bold ${projectedEV >= 0 ? "text-green-600" : "text-red-500"}`}
+                <div;
+                  className={`text-lg font-bold ${projectedEV  key={292289}>= 0 ? "text-green-600" : "text-red-500"}`}
                 >
                   {projectedEV.toFixed(2)}
                 </div>
@@ -223,18 +222,18 @@ export const BetBuilder: React.FC = () => {
             </div>
           </div>
         </GlassCard>
-        <GlassCard className="p-4 animate-fade-in">
-          <h3 className="text-lg font-semibold text-primary-600 mb-2">
-            Your Picks
+        <GlassCard className="p-4 animate-fade-in" key={795347}>
+          <h3 className="text-lg font-semibold text-primary-600 mb-2" key={153745}>
+            Your Picks;
           </h3>
           {selectedProps.length === 0 && (
-            <div className="text-gray-400 dark:text-gray-500">
+            <div className="text-gray-400 dark:text-gray-500" key={266832}>
               No picks selected yet.
             </div>
           )}
-          <div className="space-y-2">
+          <div className="space-y-2" key={725977}>
             {selectedProps.map((leg: PlayerProp) => (
-              <EnhancedPropCard
+              <EnhancedPropCard;
                 key={leg.id}
                 playerName={leg.player?.name || (leg as any).playerName}
                 statType={leg.type}
@@ -247,7 +246,7 @@ export const BetBuilder: React.FC = () => {
                 bonusPercent={bonusPercent}
                 enhancementPercent={enhancementPercent}
                 selected={true}
-                onSelect={(pick: "over" | "under") => handleSelect(leg, pick)}
+                onSelect={(pick: "over" | "under") = key={393515}> handleSelect(leg, pick)}
                 onViewDetails={() => handleViewDetails(leg)}
                 className="opacity-90"
               />
@@ -255,27 +254,27 @@ export const BetBuilder: React.FC = () => {
           </div>
           {/* --- POE-preview: PayoutPreview integration --- */}
           {selectedProps.length > 0 && (
-            <div className="mt-6 animate-fade-in">
-              <PayoutPreview eventId={selectedProps[0].id} />
+            <div className="mt-6 animate-fade-in" key={496322}>
+              <PayoutPreview eventId={selectedProps[0].id} / key={894555}>
             </div>
           )}
         </GlassCard>
         {error && (
-          <div className="p-4 text-red-600 text-sm font-medium">{error}</div>
+          <div className="p-4 text-red-600 text-sm font-medium" key={369251}>{error}</div>
         )}
         {success && (
-          <div className="p-4 text-green-600 text-sm font-medium">
+          <div className="p-4 text-green-600 text-sm font-medium" key={102170}>
             {success}
           </div>
         )}
-        <div className="flex justify-end">
-          <button
+        <div className="flex justify-end" key={3830}>
+          <button;
             className="modern-button bg-primary-500 text-white px-8 py-3 rounded-xl font-bold text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading || selectedProps.length < 2}
             onClick={handleSubmit}
-          >
+           key={840209}>
             {loading ? (
-              <span className="loading-spinner-premium"></span>
+              <span className="loading-spinner-premium" key={649905}></span>
             ) : (
               "Submit Entry"
             )}
@@ -283,9 +282,9 @@ export const BetBuilder: React.FC = () => {
         </div>
       </div>
       {/* Overlay for prediction explanation */}
-      <PredictionExplanationOverlay
+      <PredictionExplanationOverlay;
         open={overlayOpen}
-        onClose={() => setOverlayOpen(false)}
+        onClose={() = key={92207}> setOverlayOpen(false)}
         data={{}}
       />
     </div>

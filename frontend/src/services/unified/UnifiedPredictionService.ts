@@ -1,9 +1,9 @@
-import { EventBus } from "../../core/EventBus";
-import { ErrorHandler } from "../../core/ErrorHandler";
-import { PerformanceMonitor } from "../../core/PerformanceMonitor";
-import { UnifiedConfig } from "../../core/UnifiedConfig";
-import { WebSocketManager } from "./WebSocketManager";
-import { RiskProfile } from "../../types/core";
+import { EventBus } from '@/core/EventBus.ts';
+import { ErrorHandler } from '@/core/ErrorHandler.ts';
+import { PerformanceMonitor } from '@/core/PerformanceMonitor.ts';
+import { UnifiedConfig } from '@/core/UnifiedConfig.ts';
+import { WebSocketManager } from './WebSocketManager.ts';
+import { RiskProfile } from '@/types/core.ts';
 
 export interface PredictionResult {
   id: string;
@@ -94,7 +94,7 @@ export class UnifiedPredictionService {
 
   private async recalculatePredictions(profile: RiskProfile): Promise<void> {
     try {
-      const predictions = Array.from(this.activePredictions.values());
+
       for (const prediction of predictions) {
         const updatedPrediction = await this.recalculatePrediction(
           prediction,
@@ -114,9 +114,9 @@ export class UnifiedPredictionService {
     prediction: PredictionResult,
     profile: RiskProfile,
   ): Promise<PredictionResult> {
-    const startTime = performance.now();
+
     try {
-      // Implement prediction recalculation logic based on risk profile
+      // Implement prediction recalculation logic based on risk profile;
       const updatedPrediction = {
         ...prediction,
         riskScore: this.calculateRiskScore(prediction, profile),
@@ -147,12 +147,12 @@ export class UnifiedPredictionService {
     prediction: PredictionResult,
     profile: RiskProfile,
   ): number {
-    // Implement risk score calculation based on prediction and profile
+    // Implement risk score calculation based on prediction and profile;
     const confidence =
       typeof prediction.confidence === "number" ? prediction.confidence : 0;
     const riskToleranceLevel =
       typeof profile.riskToleranceLevel === "number"
-        ? profile.riskToleranceLevel
+        ? profile.riskToleranceLevel;
         : 0;
     const maxRiskScore =
       typeof profile.maxRiskScore === "number" ? profile.maxRiskScore : 1;
@@ -163,16 +163,16 @@ export class UnifiedPredictionService {
     prediction: PredictionResult,
     profile: RiskProfile,
   ): number {
-    // Implement confidence adjustment based on risk profile
+    // Implement confidence adjustment based on risk profile;
     const confidence =
       typeof prediction.confidence === "number" ? prediction.confidence : 0;
     const riskToleranceLevel =
       typeof profile.riskToleranceLevel === "number"
-        ? profile.riskToleranceLevel
+        ? profile.riskToleranceLevel;
         : 0;
     const minConfidenceThreshold =
       typeof profile.minConfidenceThreshold === "number"
-        ? profile.minConfidenceThreshold
+        ? profile.minConfidenceThreshold;
         : 0;
     return Math.max(
       confidence * (1 - riskToleranceLevel * 0.2),

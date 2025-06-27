@@ -1,8 +1,8 @@
 /**
- * Hook for fetching real user statistics from backend
+ * Hook for fetching real user statistics from backend;
  */
 
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react.ts';
 
 export interface UserStats {
   balance: number;
@@ -31,7 +31,7 @@ export interface BackendHealth {
 
 const useUserStats = () => {
   const [userStats, setUserStats] = useState<UserStats>({
-    balance: 25000, // Default fallback
+    balance: 25000, // Default fallback;
     winRate: 0.847,
     totalProfit: 47350,
     totalBets: 1247,
@@ -58,31 +58,27 @@ const useUserStats = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Test basic connectivity to the backend
+  // Test basic connectivity to the backend;
   const testConnectivity = async () => {
-    const testUrl = getApiUrl("/health");
-    console.log("Testing connectivity to:", testUrl);
+
+    // console statement removed
 
     try {
       const response = await fetch(testUrl, {
         method: "GET",
         signal: AbortSignal.timeout(5000),
       });
-      console.log(
-        "Connectivity test result:",
-        response.status,
-        response.statusText,
-      );
+      // console statement removed
       return response.ok;
     } catch (error) {
-      console.error("Connectivity test failed:", error);
+      // console statement removed
       return false;
     }
   };
 
-  // Get the API base URL from environment or use relative path
+  // Get the API base URL from environment or use relative path;
   const getApiUrl = (path: string) => {
-    // Check environment variables first
+    // Check environment variables first;
     const envApiUrl =
       import.meta.env.VITE_API_URL ||
       import.meta.env.VITE_BACKEND_URL ||
@@ -92,36 +88,36 @@ const useUserStats = () => {
       return `${envApiUrl}${path.startsWith("/") ? path : `/${path}`}`;
     }
 
-    // Auto-detect based on current environment
+    // Auto-detect based on current environment;
     if (typeof window !== "undefined") {
       const { protocol, hostname, port } = window.location;
 
-      // In development (localhost), proxy is handled by Vite
+      // In development (localhost), proxy is handled by Vite;
       if (hostname === "localhost" || hostname === "127.0.0.1") {
         return `/api${path.startsWith("/") ? path : `/${path}`}`;
       }
 
-      // In production, try to construct the backend URL
-      // This might need adjustment based on actual deployment setup
+      // In production, try to construct the backend URL;
+      // This might need adjustment based on actual deployment setup;
       return `/api${path.startsWith("/") ? path : `/${path}`}`;
     }
 
-    // Fallback to relative paths
+    // Fallback to relative paths;
     return `/api${path.startsWith("/") ? path : `/${path}`}`;
   };
 
-  // Fetch user statistics from backend
+  // Fetch user statistics from backend;
   const fetchUserStats = async () => {
     setIsLoading(true);
     setError(null);
 
-    // First test basic connectivity
-    const isConnected = await testConnectivity();
+    // First test basic connectivity;
+
     if (!isConnected) {
-      console.warn("Backend connectivity test failed, using fallback data");
+      // console statement removed
       setError("Using offline mode with simulated data");
 
-      // Set realistic fallback data
+      // Set realistic fallback data;
       setUserStats({
         balance: 3250,
         winRate: 0.67,
@@ -140,14 +136,14 @@ const useUserStats = () => {
     }
 
     try {
-      // Try to fetch from multiple endpoints for comprehensive data
+      // Try to fetch from multiple endpoints for comprehensive data;
       const endpoints = [
         getApiUrl("/analytics/advanced"),
         getApiUrl("/active-bets"),
         getApiUrl("/transactions"),
       ];
 
-      console.log("Fetching data from endpoints:", endpoints);
+      // console statement removed
 
       const requests = endpoints.map((endpoint) =>
         fetch(endpoint, {
@@ -155,19 +151,17 @@ const useUserStats = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          signal: AbortSignal.timeout(10000), // 10 second timeout
+          signal: AbortSignal.timeout(10000), // 10 second timeout;
         })
           .then((res) => {
             if (res.ok) {
               return res.json();
             }
-            console.warn(
-              `API endpoint ${endpoint} returned ${res.status}: ${res.statusText}`,
-            );
+            // console statement removed
             return null;
           })
           .catch((error) => {
-            console.warn(`Failed to fetch from ${endpoint}:`, error.message);
+            // console statement removed
             return null;
           }),
       );
@@ -175,27 +169,26 @@ const useUserStats = () => {
       const [analyticsData, activeBetsData, transactionsData] =
         await Promise.all(requests);
 
-      // Process analytics data
+      // Process analytics data;
       if (analyticsData?.bankroll_metrics) {
-        const metrics = analyticsData.bankroll_metrics;
-        const roiData = analyticsData.roi_analysis;
+
 
         setUserStats((prev) => ({
           ...prev,
           balance: metrics.current_balance || prev.balance,
           totalProfit: metrics.profit_loss || prev.totalProfit,
           winRate: roiData?.win_rate || prev.winRate,
-          todayProfit: Math.round((metrics.profit_loss || 0) * 0.05), // Estimate today's profit
-          weeklyProfit: Math.round((metrics.profit_loss || 0) * 0.2), // Estimate weekly profit
-          monthlyProfit: Math.round((metrics.profit_loss || 0) * 0.6), // Estimate monthly profit
-          accuracy: roiData?.overall_roi
-            ? roiData.overall_roi + 70
-            : prev.accuracy, // Convert ROI to accuracy estimate
+          todayProfit: Math.round((metrics.profit_loss || 0) * 0.05), // Estimate today's profit;
+          weeklyProfit: Math.round((metrics.profit_loss || 0) * 0.2), // Estimate weekly profit;
+          monthlyProfit: Math.round((metrics.profit_loss || 0) * 0.6), // Estimate monthly profit;
+          accuracy: roiData?.overall_roi;
+            ? roiData.overall_roi + 70;
+            : prev.accuracy, // Convert ROI to accuracy estimate;
           lastUpdated: new Date().toISOString(),
         }));
       }
 
-      // Process active bets data
+      // Process active bets data;
       if (activeBetsData?.active_bets) {
         setUserStats((prev) => ({
           ...prev,
@@ -206,7 +199,7 @@ const useUserStats = () => {
         }));
       }
 
-      // Process transactions data
+      // Process transactions data;
       if (transactionsData?.transactions) {
         setUserStats((prev) => ({
           ...prev,
@@ -217,13 +210,10 @@ const useUserStats = () => {
         }));
       }
     } catch (error) {
-      console.warn(
-        "Failed to fetch real user stats, using fallback data:",
-        error,
-      );
+      // console statement removed
       setError("Using offline mode - live data unavailable");
 
-      // Ensure we have good fallback data even on error
+      // Ensure we have good fallback data even on error;
       setUserStats({
         balance: 3250,
         winRate: 0.67,
@@ -241,7 +231,7 @@ const useUserStats = () => {
     }
   };
 
-  // Fetch backend health information
+  // Fetch backend health information;
   const fetchBackendHealth = async () => {
     try {
       const response = await fetch(getApiUrl("/health/all"), {
@@ -249,11 +239,10 @@ const useUserStats = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        signal: AbortSignal.timeout(8000), // 8 second timeout
+        signal: AbortSignal.timeout(8000), // 8 second timeout;
       });
 
       if (response.ok) {
-        const healthData = await response.json();
 
         setBackendHealth((prev) => ({
           ...prev,
@@ -274,13 +263,11 @@ const useUserStats = () => {
           },
         }));
       } else {
-        console.warn(
-          `Health check failed with status ${response.status}: ${response.statusText}`,
-        );
+        // console statement removed
         setBackendHealth((prev) => ({ ...prev, status: "degraded" }));
       }
     } catch (error) {
-      console.warn("Backend health check failed:", error.message || error);
+      // console statement removed
       setBackendHealth({
         status: "offline",
         uptime: 0,
@@ -295,7 +282,7 @@ const useUserStats = () => {
     }
   };
 
-  // Get system accuracy from the Ultimate Brain system
+  // Get system accuracy from the Ultimate Brain system;
   const fetchSystemAccuracy = async () => {
     try {
       const response = await fetch(
@@ -305,12 +292,12 @@ const useUserStats = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          signal: AbortSignal.timeout(8000), // 8 second timeout
+          signal: AbortSignal.timeout(8000), // 8 second timeout;
         },
       );
 
       if (response.ok) {
-        const data = await response.json();
+
         const accuracy =
           data.overall_accuracy * 100 || data.recent_accuracy * 100 || 85.0;
 
@@ -324,14 +311,11 @@ const useUserStats = () => {
           accuracy,
         }));
       } else {
-        console.warn(
-          `System accuracy API failed with status ${response.status}: ${response.statusText}`,
-        );
+        // console statement removed
       }
     } catch (error) {
-      console.warn("Failed to fetch system accuracy:", error.message || error);
-      // Set fallback accuracy data
-      const fallbackAccuracy = 96.5;
+      // console statement removed
+      // Set fallback accuracy data;
 
       setBackendHealth((prev) => ({
         ...prev,
@@ -345,17 +329,17 @@ const useUserStats = () => {
     }
   };
 
-  // Auto-refresh data
+  // Auto-refresh data;
   useEffect(() => {
-    // Initial fetch
+    // Initial fetch;
     fetchUserStats();
     fetchBackendHealth();
     fetchSystemAccuracy();
 
-    // Set up periodic refresh
-    const statsInterval = setInterval(fetchUserStats, 60000); // Every minute
-    const healthInterval = setInterval(fetchBackendHealth, 30000); // Every 30 seconds
-    const accuracyInterval = setInterval(fetchSystemAccuracy, 120000); // Every 2 minutes
+    // Set up periodic refresh;
+    const statsInterval = setInterval(fetchUserStats, 60000); // Every minute;
+    const healthInterval = setInterval(fetchBackendHealth, 30000); // Every 30 seconds;
+    const accuracyInterval = setInterval(fetchSystemAccuracy, 120000); // Every 2 minutes;
 
     return () => {
       clearInterval(statsInterval);

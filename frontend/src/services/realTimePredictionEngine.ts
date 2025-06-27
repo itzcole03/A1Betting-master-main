@@ -1,4 +1,4 @@
-// Copied from prototype for RealTimePredictions integration
+// Copied from prototype for RealTimePredictions integration;
 export interface EnhancedPrediction {
     id: string;
     sport: string;
@@ -28,7 +28,7 @@ export interface EnhancedPrediction {
     reasoning: string[];
     sources: string[];
     timestamp: Date;
-    value: string; // fallback for legacy
-    risk: number; // fallback for legacy
-    details: string; // fallback for legacy
+    value: string; // fallback for legacy;
+    risk: number; // fallback for legacy;
+    details: string; // fallback for legacy;
 }

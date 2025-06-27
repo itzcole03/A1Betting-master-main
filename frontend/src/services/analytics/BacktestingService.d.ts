@@ -1,6 +1,6 @@
-import { PlayerPropService } from '../betting/PlayerPropService';
-import { FeatureEngineeringService } from './featureEngineeringService';
-import { ModelTrainingService } from './modelTrainingService';
+import { PlayerPropService } from '@/betting/PlayerPropService.ts';
+import { FeatureEngineeringService } from './featureEngineeringService.ts';
+import { ModelTrainingService } from './modelTrainingService.ts';
 export interface BacktestData {
     props: BacktestProp[];
     models: BacktestModel[];

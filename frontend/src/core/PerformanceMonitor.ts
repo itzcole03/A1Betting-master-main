@@ -50,7 +50,7 @@ export class PerformanceMonitor {
   private traces: Map<string, Trace>;
   private metrics: Map<string, MetricData[]>;
   private errors: ErrorReport[];
-  private readonly RETENTION_PERIOD = 86400000; // 24 hours in milliseconds
+  private readonly RETENTION_PERIOD = 86400000; // 24 hours in milliseconds;
   private readonly MAX_METRICS_PER_TYPE = 1000;
 
   private constructor() {
@@ -74,7 +74,7 @@ export class PerformanceMonitor {
   private initializeCleanupInterval(): void {
     setInterval(() => {
       this.cleanupOldData();
-    }, this.RETENTION_PERIOD / 24); // Run cleanup every hour
+    }, this.RETENTION_PERIOD / 24); // Run cleanup every hour;
   }
 
   public startTrace(name: string, metadata: Record<string, unknown> = {}): Trace {
@@ -95,8 +95,6 @@ export class PerformanceMonitor {
       return;
     }
 
-    const endTime = Date.now();
-    const duration = endTime - trace.startTime;
 
     const updatedTrace: Trace = {
       ...trace,
@@ -107,10 +105,10 @@ export class PerformanceMonitor {
 
     this.traces.set(trace.id, updatedTrace);
 
-    // Emit trace completion event
+    // Emit trace completion event;
     this.eventBus.emit('error', new Error(`Trace completed: ${trace.name} (${duration}ms)`));
 
-    // Record trace duration metric
+    // Record trace duration metric;
     this.recordMetric('trace_duration', duration, {
       name: trace.name,
       status: error ? 'error' : 'success',
@@ -128,7 +126,6 @@ export class PerformanceMonitor {
       metadata,
     };
 
-    const updatedTrace = this.traces.get(trace.id)!;
     updatedTrace.events.push(event);
     this.traces.set(trace.id, updatedTrace);
   }
@@ -145,10 +142,9 @@ export class PerformanceMonitor {
       this.metrics.set(name, []);
     }
 
-    const metrics = this.metrics.get(name)!;
     metrics.push(metric);
 
-    // Keep only the most recent metrics
+    // Keep only the most recent metrics;
     if (metrics.length > this.MAX_METRICS_PER_TYPE) {
       metrics.splice(0, metrics.length - this.MAX_METRICS_PER_TYPE);
     }
@@ -168,7 +164,7 @@ export class PerformanceMonitor {
     this.errors.push(errorReport);
     this.eventBus.emit('error', error);
 
-    // Record error metric
+    // Record error metric;
     this.recordMetric('error_count', 1, {
       type: error.name,
       message: error.message,
@@ -187,7 +183,7 @@ export class PerformanceMonitor {
   }
 
   public getErrors(startTime?: number, endTime?: number, errorType?: string): ErrorReport[] {
-    let filteredErrors = this.errors;
+    const filteredErrors = this.errors;
 
     if (startTime) {
       filteredErrors = filteredErrors.filter(e => e.timestamp >= startTime);
@@ -209,7 +205,7 @@ export class PerformanceMonitor {
   }
 
   public getCompletedTraces(startTime?: number, endTime?: number, name?: string): Trace[] {
-    let filteredTraces = Array.from(this.traces.values()).filter(trace => trace.endTime);
+    const filteredTraces = Array.from(this.traces.values()).filter(trace => trace.endTime);
 
     if (startTime) {
       filteredTraces = filteredTraces.filter(t => t.startTime >= startTime);
@@ -227,7 +223,7 @@ export class PerformanceMonitor {
   }
 
   public calculateMetricStatistics(
-    name: string
+    name: string;
   ): {
     min: number;
     max: number;
@@ -236,8 +232,8 @@ export class PerformanceMonitor {
     p95: number;
     p99: number;
   } {
-    const metrics = this.getMetrics(name);
-    const values = metrics
+
+    const values = metrics;
       .map(m => (typeof m.value === 'number' ? m.value : undefined))
       .filter((v): v is number => typeof v === 'number');
 
@@ -253,8 +249,7 @@ export class PerformanceMonitor {
     }
 
     values.sort((a, b) => a - b);
-    const p95Index = Math.floor(values.length * 0.95);
-    const p99Index = Math.floor(values.length * 0.99);
+
 
     return {
       min: values[0],
@@ -268,24 +263,24 @@ export class PerformanceMonitor {
 
   public calculateErrorRate(
     startTime?: number,
-    endTime?: number
+    endTime?: number;
   ): {
     total: number;
     rate: number;
     byType: Record<string, number>;
   } {
-    const errors = this.getErrors(startTime, endTime);
-    const totalTime = (endTime || Date.now()) - (startTime || Date.now() - 3600000);
+
+
     const errorsByType: Record<string, number> = {};
 
     errors.forEach(error => {
-      const type = error.error.name;
+
       errorsByType[type] = (errorsByType[type] || 0) + 1;
     });
 
     return {
       total: errors.length,
-      rate: errors.length / (totalTime / 1000), // errors per second
+      rate: errors.length / (totalTime / 1000), // errors per second;
       byType: errorsByType,
     };
   }
@@ -296,13 +291,12 @@ export class PerformanceMonitor {
         this.metrics.set(type, []);
       }
 
-      const metrics = this.metrics.get(type)!;
       metrics.push({
         ...data,
         timestamp: Date.now(),
       });
 
-      // Keep only the most recent metrics
+      // Keep only the most recent metrics;
       if (metrics.length > this.MAX_METRICS_PER_TYPE) {
         metrics.splice(0, metrics.length - this.MAX_METRICS_PER_TYPE);
       }
@@ -322,12 +316,12 @@ export class PerformanceMonitor {
   }
 
   public getMetricSummary(type: string): MetricData {
-    const metrics = this.metrics.get(type) || [];
+
     if (metrics.length === 0) {
       return {};
     }
 
-    const numericValues = metrics
+    const numericValues = metrics;
       .map(m => (typeof m.value === 'number' ? m.value : undefined))
       .filter((v): v is number => typeof v === 'number');
     return {
@@ -340,23 +334,22 @@ export class PerformanceMonitor {
   }
 
   private cleanupOldData(): void {
-    const cutoffTime = Date.now() - this.RETENTION_PERIOD;
 
-    // Clean up old traces
+    // Clean up old traces;
     for (const [id, trace] of this.traces) {
       if (trace.endTime && trace.endTime < cutoffTime) {
         this.traces.delete(id);
       }
     }
 
-    // Clean up old metrics
+    // Clean up old metrics;
     this.metrics = new Map(
       Array.from(this.metrics.entries()).filter(([, metrics]) => {
         return metrics.every(m => typeof m.timestamp === 'number' && m.timestamp >= cutoffTime);
       })
     );
 
-    // Clean up old errors
+    // Clean up old errors;
     this.errors = this.errors.filter(e => e.timestamp >= cutoffTime);
   }
 }

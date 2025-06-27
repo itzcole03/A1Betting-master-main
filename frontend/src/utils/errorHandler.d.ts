@@ -1,4 +1,4 @@
-import { BettingSystemError } from '../unified/UnifiedError';
+import { BettingSystemError } from '@/unified/UnifiedError.ts';
 export declare class ErrorHandler {
     private static instance;
     private readonly eventBus;

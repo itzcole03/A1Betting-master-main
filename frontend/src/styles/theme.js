@@ -66,7 +66,7 @@ export const themeTokens = {
         danger: 'linear-gradient(135deg, #ff6b6b 0%, #ff4757 100%)',
     },
 };
-// Theme utility functions
+// Theme utility functions;
 export const getThemeValue = (category, key) => {
     return themeTokens[category][key];
 };

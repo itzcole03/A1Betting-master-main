@@ -1,67 +1,67 @@
 import { EventEmitter } from "eventemitter3";
 import { storeEventBus } from "../../store/unified/UnifiedStoreManager";
 import { FEATURE_FLAGS, VALIDATION_RULES, } from "../../config/unifiedApiConfig";
-// Feature Engineering Classes
+// Feature Engineering Classes;
 class FeatureEngineer {
     static engineerFeatures(rawData) {
-        const features = {};
-        // Player features
+
+        // Player features;
         if (rawData.playerStats) {
             features.player_recent_form = this.calculateRecentForm(rawData.playerStats);
             features.player_vs_opponent = this.calculateHeadToHead(rawData.playerStats, rawData.opponent);
             features.player_rest_impact = this.calculateRestImpact(rawData.playerStats, rawData.restDays);
         }
-        // Team features
+        // Team features;
         if (rawData.teamStats) {
             features.team_offensive_rating = rawData.teamStats.offensiveRating || 0;
             features.team_defensive_rating = rawData.teamStats.defensiveRating || 0;
             features.team_pace = rawData.teamStats.pace || 0;
-            features.home_court_advantage = rawData.isHome
-                ? rawData.teamStats.homeAdvantage || 2.5
+            features.home_court_advantage = rawData.isHome;
+                ? rawData.teamStats.homeAdvantage || 2.5;
                 : 0;
         }
-        // Game context features
+        // Game context features;
         features.rest_days = Math.min(rawData.restDays || 0, 7);
         features.back_to_back = rawData.backToBack ? 1 : 0;
         features.travel_distance =
             Math.min(rawData.travelDistance || 0, 3000) / 3000;
-        // Market features
+        // Market features;
         if (rawData.market) {
             features.line_movement = this.calculateLineMovement(rawData.market.history);
             features.betting_volume = this.normalizeVolume(rawData.market.volume);
             features.sharp_money_indicator = rawData.market.sharpMoney || 0;
         }
-        // Environmental features
+        // Environmental features;
         if (rawData.environmental) {
             features.weather_impact = this.calculateWeatherImpact(rawData.environmental.weather);
             features.venue_advantage = rawData.environmental.venue?.advantage || 0;
         }
-        // ELO ratings
+        // ELO ratings;
         features.elo_rating_home = rawData.eloRatings?.home || 1500;
         features.elo_rating_away = rawData.eloRatings?.away || 1500;
         features.elo_difference =
             features.elo_rating_home - features.elo_rating_away;
-        // Injury impact
+        // Injury impact;
         features.injury_impact = this.calculateInjuryImpact(rawData.injuries);
         return features;
     }
     static calculateRecentForm(playerStats) {
         if (!playerStats?.length)
             return 0;
-        const recentGames = playerStats.slice(-5);
-        const weights = [0.4, 0.3, 0.2, 0.1, 0.05]; // More weight on recent games
-        let weightedPerformance = 0;
-        let totalWeight = 0;
+
+        const weights = [0.4, 0.3, 0.2, 0.1, 0.05]; // More weight on recent games;
+        const weightedPerformance = 0;
+        const totalWeight = 0;
         recentGames.forEach((game, index) => {
-            const weight = weights[index] || 0.05;
-            const performance = (game.points + game.rebounds + game.assists) / 30; // Normalized
+
+            const performance = (game.points + game.rebounds + game.assists) / 30; // Normalized;
             weightedPerformance += performance * weight;
             totalWeight += weight;
         });
         return totalWeight > 0 ? weightedPerformance / totalWeight : 0;
     }
     static calculateHeadToHead(playerStats, opponent) {
-        const h2hGames = playerStats.filter((game) => game.opponent === opponent);
+
         if (!h2hGames.length)
             return 0;
         return (h2hGames.reduce((acc, game) => {
@@ -70,27 +70,27 @@ class FeatureEngineer {
     }
     static calculateRestImpact(playerStats, restDays) {
         if (restDays <= 1)
-            return -0.1; // Back-to-back penalty
+            return -0.1; // Back-to-back penalty;
         if (restDays >= 4)
-            return -0.05; // Rust factor
-        return Math.min(restDays * 0.02, 0.1); // Optimal rest boost
+            return -0.05; // Rust factor;
+        return Math.min(restDays * 0.02, 0.1); // Optimal rest boost;
     }
     static calculateLineMovement(marketHistory) {
         if (!marketHistory?.length)
             return 0;
-        const initial = marketHistory[0]?.line || 0;
-        const current = marketHistory[marketHistory.length - 1]?.line || 0;
+
+
         return (current - initial) / (initial || 1);
     }
     static normalizeVolume(volume) {
-        return Math.min(volume / 1000000, 1); // Normalize to 0-1 scale
+        return Math.min(volume / 1000000, 1); // Normalize to 0-1 scale;
     }
     static calculateWeatherImpact(weather) {
         if (!weather)
             return 0;
-        let impact = 0;
+        const impact = 0;
         if (weather.temperature) {
-            const tempImpact = Math.abs(weather.temperature - 70) / 100; // Ideal temp ~70F
+            const tempImpact = Math.abs(weather.temperature - 70) / 100; // Ideal temp ~70F;
             impact += tempImpact;
         }
         if (weather.windSpeed) {
@@ -105,9 +105,9 @@ class FeatureEngineer {
         if (!injuries?.length)
             return 0;
         return injuries.reduce((impact, injury) => {
-            const severity = injury.severity || "minor";
-            const playerImportance = injury.playerValue || 0.1;
-            let injuryMultiplier = 0.1;
+
+
+            const injuryMultiplier = 0.1;
             if (severity === "major")
                 injuryMultiplier = 0.5;
             else if (severity === "moderate")
@@ -137,38 +137,38 @@ FeatureEngineer.FEATURE_CATEGORIES = {
     MARKET: ["line_movement", "volume", "sharp_money", "public_betting"],
     ENVIRONMENTAL: ["weather", "venue", "referees", "motivation"],
 };
-// SHAP (SHapley Additive exPlanations) Implementation
+// SHAP (SHapley Additive exPlanations) Implementation;
 class SHAPExplainer {
     static calculateShapValues(model, features, prediction) {
-        const shapValues = {};
-        const baseValue = 0.5; // Baseline prediction
-        // Calculate feature contributions using approximate SHAP
-        const totalContribution = prediction - baseValue;
-        let remainingContribution = totalContribution;
-        // Get feature importance weights for this model
-        const featureImportances = this.getFeatureImportances(model);
+
+        const baseValue = 0.5; // Baseline prediction;
+        // Calculate feature contributions using approximate SHAP;
+
+        const remainingContribution = totalContribution;
+        // Get feature importance weights for this model;
+
         Object.entries(features).forEach(([feature, value]) => {
-            const importance = featureImportances[feature] || 0.01;
-            const normalizedValue = this.normalizeFeatureValue(feature, value);
-            // Calculate SHAP value as importance * normalized_value * total_contribution
-            const shapValue = importance * normalizedValue * totalContribution;
+
+
+            // Calculate SHAP value as importance * normalized_value * total_contribution;
+
             shapValues[feature] = shapValue;
             remainingContribution -= shapValue;
         });
-        // Distribute remaining contribution to top features
+        // Distribute remaining contribution to top features;
         if (Math.abs(remainingContribution) > 0.001) {
             const topFeatures = Object.entries(shapValues)
                 .sort(([, a], [, b]) => Math.abs(b) - Math.abs(a))
                 .slice(0, 3);
             topFeatures.forEach(([feature], index) => {
-                const adjustment = remainingContribution / topFeatures.length;
+
                 shapValues[feature] += adjustment;
             });
         }
         return shapValues;
     }
     static getFeatureImportances(model) {
-        // Mock feature importances - in real implementation, these would come from trained models
+        // Mock feature importances - in real implementation, these would come from trained models;
         const importances = {
             player_recent_form: 0.25,
             elo_difference: 0.2,
@@ -184,7 +184,7 @@ class SHAPExplainer {
         return importances;
     }
     static normalizeFeatureValue(feature, value) {
-        // Normalize feature values to [-1, 1] range for SHAP calculation
+        // Normalize feature values to [-1, 1] range for SHAP calculation;
         const ranges = {
             player_recent_form: [0, 2],
             elo_difference: [-400, 400],
@@ -198,7 +198,7 @@ class SHAPExplainer {
         return Math.max(-1, Math.min(1, ((value - min) / (max - min)) * 2 - 1));
     }
 }
-// Main ML Engine
+// Main ML Engine;
 export class UnifiedMLEngine extends EventEmitter {
     constructor() {
         super();
@@ -216,7 +216,7 @@ export class UnifiedMLEngine extends EventEmitter {
         return UnifiedMLEngine.instance;
     }
     initializeModels() {
-        // Initialize ensemble models with realistic configurations
+        // Initialize ensemble models with realistic configurations;
         const models = [
             {
                 name: "XGBoost_Primary",
@@ -244,7 +244,7 @@ export class UnifiedMLEngine extends EventEmitter {
                     roc_auc: 0.751,
                     logLoss: 0.635,
                 },
-                lastTrained: Date.now() - 86400000, // 24 hours ago
+                lastTrained: Date.now() - 86400000, // 24 hours ago;
                 isActive: true,
             },
             {
@@ -310,7 +310,7 @@ export class UnifiedMLEngine extends EventEmitter {
                 type: "neural_network",
                 version: "1.0.0",
                 weight: 0.1,
-                features: ["all"], // Uses all available features
+                features: ["all"], // Uses all available features;
                 hyperparameters: {
                     hidden_layers: [128, 64, 32],
                     dropout_rate: 0.3,
@@ -334,22 +334,22 @@ export class UnifiedMLEngine extends EventEmitter {
         });
     }
     async generatePrediction(input) {
-        const startTime = performance.now();
+
         try {
-            // Engineer features from raw input
-            const features = FeatureEngineer.engineerFeatures(input);
-            // Validate input
+            // Engineer features from raw input;
+
+            // Validate input;
             this.validateInput(input, features);
-            // Generate predictions from each active model
-            const modelPredictions = [];
-            const activeModels = Array.from(this.models.values()).filter((m) => m.isActive);
+            // Generate predictions from each active model;
+
+
             for (const model of activeModels) {
-                const prediction = await this.generateModelPrediction(model, features, input);
+
                 modelPredictions.push(prediction);
             }
-            // Combine predictions using weighted ensemble
-            const ensemblePrediction = this.combineModelPredictions(modelPredictions, features);
-            // Calculate additional metrics
+            // Combine predictions using weighted ensemble;
+
+            // Calculate additional metrics;
             ensemblePrediction.metadata.processingTime =
                 performance.now() - startTime;
             ensemblePrediction.metadata.dataFreshness =
@@ -358,14 +358,14 @@ export class UnifiedMLEngine extends EventEmitter {
                 this.calculateSignalQuality(modelPredictions);
             ensemblePrediction.metadata.modelAgreement =
                 this.calculateModelAgreement(modelPredictions);
-            // Cache the prediction
+            // Cache the prediction;
             this.cache.set(`prediction:${input.eventId}:${input.market}`, ensemblePrediction);
-            // Emit prediction event
+            // Emit prediction event;
             this.emit("prediction:generated", {
                 eventId: input.eventId,
                 prediction: ensemblePrediction,
             });
-            // Update store
+            // Update store;
             storeEventBus.emit("prediction:updated", {
                 eventId: input.eventId,
                 prediction: {
@@ -390,12 +390,12 @@ export class UnifiedMLEngine extends EventEmitter {
         }
     }
     async generateModelPrediction(model, features, input) {
-        const startTime = performance.now();
-        // In a real implementation, this would call the actual ML model
-        // For now, we'll simulate model predictions with realistic logic
-        const prediction = this.simulateModelPrediction(model, features);
-        const confidence = this.calculateModelConfidence(model, features, prediction);
-        const shapValues = SHAPExplainer.calculateShapValues(model, features, prediction);
+
+        // In a real implementation, this would call the actual ML model;
+        // For now, we'll simulate model predictions with realistic logic;
+
+
+
         return {
             modelName: model.name,
             prediction,
@@ -407,9 +407,9 @@ export class UnifiedMLEngine extends EventEmitter {
         };
     }
     simulateModelPrediction(model, features) {
-        // Simulate realistic model prediction based on features
-        let prediction = 0.5; // Base probability
-        // Apply feature influences based on model type
+        // Simulate realistic model prediction based on features;
+        const prediction = 0.5; // Base probability;
+        // Apply feature influences based on model type;
         if (model.type === "xgboost") {
             prediction += (features.elo_difference || 0) * 0.0005;
             prediction += (features.player_recent_form || 0) * 0.1;
@@ -425,51 +425,51 @@ export class UnifiedMLEngine extends EventEmitter {
             prediction += (features.team_offensive_rating || 0) * 0.005;
             prediction += (features.back_to_back || 0) * -0.05;
         }
-        // Add some model-specific noise and ensure bounds
-        const noise = (Math.random() - 0.5) * 0.1;
+        // Add some model-specific noise and ensure bounds;
+
         prediction = Math.max(0.05, Math.min(0.95, prediction + noise));
         return prediction;
     }
     calculateModelConfidence(model, features, prediction) {
-        // Base confidence on model performance and prediction characteristics
-        let confidence = model.performance.accuracy;
+        // Base confidence on model performance and prediction characteristics;
+        const confidence = model.performance.accuracy;
         // Adjust based on prediction extremity (more confident at extremes)
-        const extremity = Math.abs(prediction - 0.5) * 2;
+
         confidence += extremity * 0.1;
-        // Adjust based on feature completeness
-        const expectedFeatures = model.features.length;
-        const availableFeatures = Object.keys(features).length;
-        const featureCompleteness = availableFeatures / expectedFeatures;
+        // Adjust based on feature completeness;
+
+
+
         confidence *= featureCompleteness;
         return Math.max(0.1, Math.min(1.0, confidence));
     }
     combineModelPredictions(predictions, features) {
-        // Weighted ensemble prediction
-        let weightedSum = 0;
-        let totalWeight = 0;
-        let confidenceSum = 0;
+        // Weighted ensemble prediction;
+        const weightedSum = 0;
+        const totalWeight = 0;
+        const confidenceSum = 0;
         predictions.forEach((pred) => {
-            const model = this.models.get(pred.modelName);
+
             if (!model)
                 return;
-            const weight = model.weight * pred.confidence;
+
             weightedSum += pred.prediction * weight;
             totalWeight += weight;
             confidenceSum += pred.confidence;
         });
-        const finalPrediction = totalWeight > 0 ? weightedSum / totalWeight : 0.5;
-        const avgConfidence = predictions.length > 0 ? confidenceSum / predictions.length : 0;
+
+
         // Calculate consensus score (how much models agree)
-        const consensusScore = this.calculateConsensusScore(predictions);
-        // Calculate value edge and Kelly fraction
-        const valueEdge = this.calculateValueEdge(finalPrediction, features);
-        const kellyFraction = this.calculateKellyFraction(finalPrediction, valueEdge);
-        // Determine risk level
-        const riskLevel = this.determineRiskLevel(avgConfidence, consensusScore, valueEdge);
-        // Calculate recommended stake
-        const recommendedStake = this.calculateRecommendedStake(kellyFraction, riskLevel);
-        // Extract key factors
-        const factors = this.extractKeyFactors(predictions, features);
+
+        // Calculate value edge and Kelly fraction;
+
+
+        // Determine risk level;
+
+        // Calculate recommended stake;
+
+        // Extract key factors;
+
         return {
             finalPrediction,
             confidence: avgConfidence,
@@ -481,9 +481,9 @@ export class UnifiedMLEngine extends EventEmitter {
             riskLevel,
             factors,
             metadata: {
-                processingTime: 0, // Will be set by caller
-                dataFreshness: 0, // Will be set by caller
-                signalQuality: 0, // Will be set by caller
+                processingTime: 0, // Will be set by caller;
+                dataFreshness: 0, // Will be set by caller;
+                signalQuality: 0, // Will be set by caller;
                 modelAgreement: consensusScore,
             },
         };
@@ -493,27 +493,27 @@ export class UnifiedMLEngine extends EventEmitter {
             return 1;
         const avgPrediction = predictions.reduce((sum, p) => sum + p.prediction, 0) /
             predictions.length;
-        const variance = predictions.reduce((sum, p) => sum + Math.pow(p.prediction - avgPrediction, 2), 0) / predictions.length;
+
         // Convert variance to consensus score (lower variance = higher consensus)
         return Math.max(0, 1 - variance * 10);
     }
     calculateValueEdge(prediction, features) {
-        // Simplified value edge calculation
-        // In real implementation, this would compare against actual market odds
-        const impliedMarketProb = 0.5; // Mock market probability
+        // Simplified value edge calculation;
+        // In real implementation, this would compare against actual market odds;
+        const impliedMarketProb = 0.5; // Mock market probability;
         return prediction - impliedMarketProb;
     }
     calculateKellyFraction(prediction, valueEdge) {
-        // Kelly Criterion: f = (bp - q) / b
-        // Where b = odds, p = probability, q = 1-p
-        const odds = 2.0; // Mock odds
-        const p = prediction;
-        const q = 1 - p;
-        const b = odds - 1;
+        // Kelly Criterion: f = (bp - q) / b;
+        // Where b = odds, p = probability, q = 1-p;
+        const odds = 2.0; // Mock odds;
+
+
+
         return Math.max(0, (b * p - q) / b);
     }
     determineRiskLevel(confidence, consensus, valueEdge) {
-        const riskScore = 1 - confidence + (1 - consensus) + Math.abs(valueEdge);
+
         if (riskScore < 0.5)
             return "low";
         if (riskScore < 1.0)
@@ -521,8 +521,8 @@ export class UnifiedMLEngine extends EventEmitter {
         return "high";
     }
     calculateRecommendedStake(kelly, riskLevel) {
-        const maxStake = 0.05; // Maximum 5% of bankroll
-        let kellyMultiplier = 0.25; // Conservative Kelly
+        const maxStake = 0.05; // Maximum 5% of bankroll;
+        const kellyMultiplier = 0.25; // Conservative Kelly;
         if (riskLevel === "low")
             kellyMultiplier = 0.5;
         else if (riskLevel === "high")
@@ -530,10 +530,10 @@ export class UnifiedMLEngine extends EventEmitter {
         return Math.min(kelly * kellyMultiplier, maxStake);
     }
     extractKeyFactors(predictions, features) {
-        const factorImpacts = {};
-        // Aggregate SHAP values across models
+
+        // Aggregate SHAP values across models;
         predictions.forEach((pred) => {
-            const model = this.models.get(pred.modelName);
+
             if (!model)
                 return;
             Object.entries(pred.shapValues).forEach(([feature, shap]) => {
@@ -544,7 +544,7 @@ export class UnifiedMLEngine extends EventEmitter {
                 factorImpacts[feature].weight += model.weight;
             });
         });
-        // Normalize and sort factors
+        // Normalize and sort factors;
         return Object.entries(factorImpacts)
             .map(([name, data]) => ({
             name,
@@ -553,11 +553,11 @@ export class UnifiedMLEngine extends EventEmitter {
             direction: data.impact > 0 ? "positive" : "negative",
         }))
             .sort((a, b) => Math.abs(b.impact) - Math.abs(a.impact))
-            .slice(0, 10); // Top 10 factors
+            .slice(0, 10); // Top 10 factors;
     }
     calculateDataFreshness(input) {
-        const maxAge = 24 * 60 * 60 * 1000; // 24 hours
-        const age = Date.now() - input.timestamp;
+        const maxAge = 24 * 60 * 60 * 1000; // 24 hours;
+
         return Math.max(0, 1 - age / maxAge);
     }
     calculateSignalQuality(predictions) {
@@ -569,10 +569,10 @@ export class UnifiedMLEngine extends EventEmitter {
         return this.calculateConsensusScore(predictions);
     }
     aggregateShapValues(predictions) {
-        const aggregated = {};
-        let totalWeight = 0;
+
+        const totalWeight = 0;
         predictions.forEach((pred) => {
-            const model = this.models.get(pred.modelName);
+
             if (!model)
                 return;
             Object.entries(pred.shapValues).forEach(([feature, value]) => {
@@ -582,7 +582,7 @@ export class UnifiedMLEngine extends EventEmitter {
             });
             totalWeight += model.weight;
         });
-        // Normalize by total weight
+        // Normalize by total weight;
         Object.keys(aggregated).forEach((feature) => {
             aggregated[feature] /= totalWeight;
         });
@@ -595,12 +595,12 @@ export class UnifiedMLEngine extends EventEmitter {
         if (Object.keys(features).length < 5) {
             throw new Error("Insufficient features for prediction");
         }
-        const dataAge = Date.now() - input.timestamp;
+
         if (dataAge > VALIDATION_RULES.MAX_PREDICTION_AGE) {
             throw new Error("Input data is too old");
         }
     }
-    // Public API methods
+    // Public API methods;
     getActiveModels() {
         return Array.from(this.models.values()).filter((m) => m.isActive);
     }
@@ -608,7 +608,7 @@ export class UnifiedMLEngine extends EventEmitter {
         return this.performanceMetrics.get(modelName);
     }
     updateModelPerformance(modelName, metrics) {
-        const existing = this.performanceMetrics.get(modelName) || {};
+
         this.performanceMetrics.set(modelName, {
             ...existing,
             ...metrics,
@@ -622,8 +622,8 @@ export class UnifiedMLEngine extends EventEmitter {
         this.isTraining = true;
         this.emit("training:started", { modelName });
         try {
-            // In real implementation, this would trigger actual model retraining
-            await new Promise((resolve) => setTimeout(resolve, 5000)); // Simulate training
+            // In real implementation, this would trigger actual model retraining;
+            await new Promise((resolve) => setTimeout(resolve, 5000)); // Simulate training;
             this.emit("training:completed", { modelName });
         }
         catch (error) {
@@ -641,5 +641,5 @@ export class UnifiedMLEngine extends EventEmitter {
         this.cache.clear();
     }
 }
-// Export singleton instance
+// Export singleton instance;
 export const mlEngine = UnifiedMLEngine.getInstance();

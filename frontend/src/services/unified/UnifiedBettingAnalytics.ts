@@ -1,7 +1,7 @@
 
-import { EventEmitter } from 'events';
+import { EventEmitter } from 'events.ts';
 import { DataSource, UnifiedDataService } from './UnifiedDataService.js';
-// BetRecommendation type is not found in types.js, so define it here for now
+// BetRecommendation type is not found in types.js, so define it here for now;
 export interface BetRecommendation {
   id: string;
   market: string;
@@ -58,9 +58,9 @@ interface MarketData {
   data: Record<string, unknown>;
 }
 
-// Removed unused PredictionResult interface
+// Removed unused PredictionResult interface;
 
-// Ensure correct EventEmitter3 usage for TypeScript
+// Ensure correct EventEmitter3 usage for TypeScript;
 export class UnifiedBettingAnalytics extends EventEmitter {
   private static instance: UnifiedBettingAnalytics;
   private dataService: UnifiedDataService;
@@ -83,55 +83,50 @@ export class UnifiedBettingAnalytics extends EventEmitter {
   }
 
   private initializeEventListeners() {
-    // Listen for real-time odds updates
-    // @ts-expect-error: UnifiedDataService is EventEmitter
+    // Listen for real-time odds updates;
+    // @ts-expect-error: UnifiedDataService is EventEmitter;
     this.dataService.on('ws:prizepicks:odds_update', (data: Record<string, unknown>) => {
       this.analyzeOddsMovement(data as { market: string; movement: number; significance: number });
     });
 
-    // Listen for model updates
-    // @ts-expect-error: UnifiedDataService is EventEmitter
+    // Listen for model updates;
+    // @ts-expect-error: UnifiedDataService is EventEmitter;
     this.dataService.on('ws:odds_api:line_movement', (data: Record<string, unknown>) => {
       this.updatePredictions(data as { market: string; updates: Record<string, unknown> });
     });
   }
 
   private calculateKellyCriterion(probability: number, odds: number): number {
-    const decimalOdds = odds;
-    const q = 1 - probability;
-    const b = decimalOdds - 1;
-    const kelly = (probability * b - q) / b;
-    return Math.max(0, Math.min(kelly, 0.1)); // Cap at 10% of bankroll
+
+
+
+
+    return Math.max(0, Math.min(kelly, 0.1)); // Cap at 10% of bankroll;
   }
 
   async analyzeBettingOpportunity(
     market: string,
     odds: number,
-    stake: number
+    stake: number;
   ): Promise<BettingAnalysis> {
     try {
-      // Fetch latest market data
+      // Fetch latest market data;
       const marketData = await this.dataService.fetchData(
         DataSource.PRIZEPICKS,
         `/markets/${market}`
       );
 
-      // Get prediction from model
-      const prediction = await this.generatePrediction(market, (marketData as { data: Record<string, unknown> }).data);
+      // Get prediction from model;
 
-      // Calculate optimal stake using Kelly Criterion
-      const recommendedStake = this.calculateKellyCriterion(prediction.probability, odds);
+      // Calculate optimal stake using Kelly Criterion;
 
-      // Assess risk factors
-      const riskFactors = this.assessRiskFactors((marketData as { data: Record<string, unknown> }).data, prediction);
+      // Assess risk factors;
 
-      // Find hedging opportunities
-      const hedging = await this.findHedgingOpportunities(market, odds);
+      // Find hedging opportunities;
 
-
-      // Placeholder: risk_reasoning should be sourced from model/strategy or risk assessment
+      // Placeholder: risk_reasoning should be sourced from model/strategy or risk assessment;
       // For now, derive a simple example from risk factors (replace with real source as needed)
-      const risk_reasoning: string[] = riskFactors.length > 0
+      const risk_reasoning: string[] = riskFactors.length > 0;
         ? riskFactors.map(f => `Reason: ${f}`)
         : ['No significant risk factors identified.'];
 
@@ -163,7 +158,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
     market: string,
     data: Record<string, unknown>
   ): Promise<{ probability: number; confidence: number }> {
-    // Real model integration: Call backend ML/analytics API
+    // Real model integration: Call backend ML/analytics API;
     try {
       const response = await fetch('/api/prediction', {
         method: 'POST',
@@ -173,7 +168,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
       if (!response.ok) {
         throw new Error(`Prediction API error: ${response.statusText}`);
       }
-      const result = await response.json();
+
       return {
         probability: result.probability ?? 0,
         confidence: result.confidence ?? 0,
@@ -182,22 +177,22 @@ export class UnifiedBettingAnalytics extends EventEmitter {
       if (typeof (this.emit) === 'function') {
         this.emit('error', err);
       }
-      // Fallback: return neutral prediction
+      // Fallback: return neutral prediction;
       return { probability: 0.5, confidence: 0.5 };
     }
   }
 
   private assessRiskFactors(marketData: Record<string, unknown>, prediction: { confidence: number }): string[] {
     const factors: string[] = [];
-    // Market volatility check
+    // Market volatility check;
     if ((marketData as { volatility?: number }).volatility && (marketData as { volatility: number }).volatility > 0.1) {
       factors.push('High market volatility');
     }
-    // Prediction confidence check
+    // Prediction confidence check;
     if (prediction.confidence < 0.7) {
       factors.push('Low prediction confidence');
     }
-    // Time to event check
+    // Time to event check;
     if ((marketData as { timeToEvent?: number }).timeToEvent && (marketData as { timeToEvent: number }).timeToEvent < 3600) {
       factors.push('Close to event start');
     }
@@ -212,7 +207,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
 
   private async findHedgingOpportunities(
     market: string,
-    originalOdds: number
+    originalOdds: number;
   ): Promise<Array<{ market: string; odds: number; recommendedStake: number }>> {
     try {
       const relatedMarkets = await this.dataService.fetchData<{ data: Array<{ id: string; odds: number }> }>(
@@ -221,7 +216,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
       );
       const markets: Array<{ id: string; odds: number }> = relatedMarkets.data;
 
-      return markets
+      return markets;
         .filter((m: { id: string; odds: number }) => m.odds < originalOdds)
         .map((m: { id: string; odds: number }) => ({
           market: m.id,
@@ -235,7 +230,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
   }
 
   private calculateHedgeStake(originalOdds: number, hedgeOdds: number): number {
-    // Implement hedging stake calculation logic
+    // Implement hedging stake calculation logic;
     // For now, return 0. This can be replaced with a real formula.
     void originalOdds;
     void hedgeOdds;
@@ -243,7 +238,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
   }
 
   private analyzeOddsMovement(data: { market: string; movement: number; significance: number }) {
-    // Implement odds movement analysis
+    // Implement odds movement analysis;
     if (typeof (this.emit) === 'function') {
       this.emit('odds_movement', {
         market: data.market,
@@ -254,7 +249,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
   }
 
   private updatePredictions(data: { market: string; updates: Record<string, unknown> }) {
-    // Update prediction models based on new data
+    // Update prediction models based on new data;
     if (typeof (this.emit) === 'function') {
       this.emit('predictions_updated', {
         market: data.market,
@@ -263,7 +258,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
     }
   }
 
-  // Strategy management methods
+  // Strategy management methods;
   addStrategy(strategy: BettingStrategy) {
     this.activeStrategies.set(strategy.id, strategy);
     if (typeof (this.emit) === 'function') {
@@ -278,7 +273,7 @@ export class UnifiedBettingAnalytics extends EventEmitter {
     }
   }
 
-  // Prediction model management methods
+  // Prediction model management methods;
   addPredictionModel(model: PredictionModel) {
     this.predictionModels.set(model.id, model);
     if (typeof (this.emit) === 'function') {
@@ -295,15 +290,15 @@ export class UnifiedBettingAnalytics extends EventEmitter {
 
   async getBettingOpportunities(minConfidence: number = 0.7): Promise<BetRecommendation[]> {
     try {
-      // Fetch all active markets
+      // Fetch all active markets;
       const markets = await this.dataService.fetchData<{ data: MarketData[] }>(
         DataSource.PRIZEPICKS,
         '/markets/active'
       );
-      // Filter and analyze opportunities
+      // Filter and analyze opportunities;
       const opportunities: BetRecommendation[] = [];
       for (const market of markets.data) {
-        const prediction = await this.generatePrediction(market.id, market.data);
+
         if (prediction.probability >= minConfidence) {
           const analysis = await this.analyzeBettingOpportunity(
             market.id,

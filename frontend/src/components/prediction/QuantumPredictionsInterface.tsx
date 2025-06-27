@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import React, { useState, useEffect, useCallback, useMemo  } from 'react.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.ts';
+import { Button } from '@/components/ui/button.ts';
+import { Badge } from '@/components/ui/badge.ts';
+import { Progress } from '@/components/ui/progress.ts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.ts';
+import { Input } from '@/components/ui/input.ts';
+import { Label } from '@/components/ui/label.ts';
 import {
   Atom,
   Zap,
@@ -22,8 +22,8 @@ import {
   Network,
   Cpu,
   Activity,
-} from "lucide-react";
-import SafeChart from "@/components/ui/SafeChart";
+} from 'lucide-react.ts';
+import SafeChart from '@/components/ui/SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -37,7 +37,7 @@ import {
   Filler,
 } from "chart.js";
 
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -53,7 +53,7 @@ ChartJS.register(
 interface QuantumPredictionRequest {
   event_id: string;
   sport: string;
-  features: Record<string, number>;
+  features: Record<string, number key={817366}>;
   target_accuracy: number;
   optimization_strategy: string;
   uncertainty_method: string;
@@ -84,7 +84,7 @@ interface QuantumPredictionResult {
 
 export const QuantumPredictionsInterface: React.FC = () => {
   const [predictionRequest, setPredictionRequest] =
-    useState<QuantumPredictionRequest>({
+    useState<QuantumPredictionRequest key={856587}>({
       event_id: "",
       sport: "basketball",
       features: {},
@@ -94,7 +94,7 @@ export const QuantumPredictionsInterface: React.FC = () => {
     });
 
   const [predictionResult, setPredictionResult] =
-    useState<QuantumPredictionResult | null>(null);
+    useState<QuantumPredictionResult | null key={461256}>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [processingStage, setProcessingStage] = useState("");
   const [quantumState, setQuantumState] = useState({
@@ -104,21 +104,21 @@ export const QuantumPredictionsInterface: React.FC = () => {
     decoherence: 0,
   });
 
-  // Quantum state visualization - production should use real quantum data if available
+  // Quantum state visualization - production should use real quantum data if available;
   useEffect(() => {
     const interval = setInterval(() => {
       setQuantumState((prev) => ({
-        superposition: 0, // Should come from actual quantum calculations
-        entanglement: 0, // Should come from actual quantum measurements
-        coherence: 0, // Should come from quantum coherence data
-        decoherence: 0, // Should come from decoherence measurements
+        superposition: 0, // Should come from actual quantum calculations;
+        entanglement: 0, // Should come from actual quantum measurements;
+        coherence: 0, // Should come from quantum coherence data;
+        decoherence: 0, // Should come from decoherence measurements;
       }));
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  // Generate quantum prediction
+  // Generate quantum prediction;
   const generateQuantumPrediction = useCallback(async () => {
     if (!predictionRequest.event_id) {
       alert("Please provide an event ID");
@@ -129,7 +129,7 @@ export const QuantumPredictionsInterface: React.FC = () => {
     setProcessingStage("Initializing quantum states...");
 
     try {
-      // Simulate processing stages
+      // Simulate processing stages;
       const stages = [
         "Initializing quantum states...",
         "Applying quantum superposition...",
@@ -140,12 +140,12 @@ export const QuantumPredictionsInterface: React.FC = () => {
         "Finalizing prediction...",
       ];
 
-      for (let i = 0; i < stages.length; i++) {
+      for (const i = 0; i < stages.length; i++) {
         setProcessingStage(stages[i]);
         await new Promise((resolve) => setTimeout(resolve, 1000));
       }
 
-      // Make actual API call with error handling
+      // Make actual API call with error handling;
       try {
         const response = await fetch("/api/v4/predict/ultra-accuracy", {
           method: "POST",
@@ -154,45 +154,43 @@ export const QuantumPredictionsInterface: React.FC = () => {
         });
 
         if (response.ok) {
-          const responseText = await response.text();
 
           // Check if response is HTML (not JSON)
-          if (responseText.includes('<script>') || responseText.includes('<!doctype html>')) {
-            console.warn("⚠️ Quantum API returned HTML instead of JSON - Using simulated data");
+          if (responseText.includes('<script key={932205}>') || responseText.includes('<!doctype html>')) {
+            // console statement removed
             throw new Error("Backend not available");
           }
 
-          const result = JSON.parse(responseText);
           setPredictionResult(result);
           return;
         }
       } catch (fetchError) {
-        console.error("⚠️ Quantum prediction API not available");
+        // console statement removed
         setPredictionResult(null);
         return;
       }
     } catch (error) {
-      console.error("Quantum prediction failed:", error);
+      // console statement removed
     } finally {
       setIsProcessing(false);
       setProcessingStage("");
     }
   }, [predictionRequest]);
 
-  // Add sample features - production version should not use random data
+  // Add sample features - production version should not use random data;
   const addSampleFeatures = useCallback(() => {
-    // In production, this should come from real API data
-    console.warn("Using placeholder feature values - implement proper API integration");
+    // In production, this should come from real API data;
+    // console statement removed
     
     const placeholderFeatures = {
-      player_efficiency: 0, // Should come from real player stats API
-      team_rating: 0, // Should come from real team ratings API
-      recent_performance: 0, // Should come from real performance data
-      venue_advantage: 0, // Should come from venue/location data
-      weather_impact: 0, // Should come from weather API
-      injury_factor: 0, // Should come from injury reports API
-      momentum_score: 0, // Should come from calculated momentum data
-      market_sentiment: 0, // Should come from social sentiment API
+      player_efficiency: 0, // Should come from real player stats API;
+      team_rating: 0, // Should come from real team ratings API;
+      recent_performance: 0, // Should come from real performance data;
+      venue_advantage: 0, // Should come from venue/location data;
+      weather_impact: 0, // Should come from weather API;
+      injury_factor: 0, // Should come from injury reports API;
+      momentum_score: 0, // Should come from calculated momentum data;
+      market_sentiment: 0, // Should come from social sentiment API;
     };
 
     setPredictionRequest((prev) => ({
@@ -201,7 +199,7 @@ export const QuantumPredictionsInterface: React.FC = () => {
     }));
   }, []);
 
-  // Quantum state visualization
+  // Quantum state visualization;
   const quantumStateData = useMemo(
     () => ({
       labels: ["Superposition", "Entanglement", "Coherence", "Stability"],
@@ -226,7 +224,7 @@ export const QuantumPredictionsInterface: React.FC = () => {
     [quantumState],
   );
 
-  // Quantum advantage chart
+  // Quantum advantage chart;
   const quantumAdvantageData = useMemo(() => {
     if (!predictionResult) return null;
 
@@ -249,33 +247,33 @@ export const QuantumPredictionsInterface: React.FC = () => {
   }, [predictionResult]);
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6" key={80798}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
-            <Atom className="w-8 h-8 text-purple-600" />
-            Quantum Predictions Engine
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3" key={727332}>
+            <Atom className="w-8 h-8 text-purple-600" / key={141419}>
+            Quantum Predictions Engine;
           </h1>
-          <p className="text-gray-600 mt-1">
-            Advanced quantum-inspired predictions with superposition and
-            entanglement
+          <p className="text-gray-600 mt-1" key={187387}>
+            Advanced quantum-inspired predictions with superposition and;
+            entanglement;
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button onClick={addSampleFeatures} variant="outline">
-            <Settings className="w-4 h-4 mr-2" />
-            Add Sample Data
+        <div className="flex gap-3" key={13535}>
+          <Button onClick={addSampleFeatures} variant="outline" key={248338}>
+            <Settings className="w-4 h-4 mr-2" / key={671342}>
+            Add Sample Data;
           </Button>
-          <Button
+          <Button;
             onClick={generateQuantumPrediction}
             disabled={isProcessing}
             className="bg-gradient-to-r from-purple-600 to-violet-600 hover:from-purple-700 hover:to-violet-700"
-          >
+           key={742643}>
             {isProcessing ? (
-              <RefreshCw className="w-4 h-4 animate-spin mr-2" />
+              <RefreshCw className="w-4 h-4 animate-spin mr-2" / key={28598}>
             ) : (
-              <Zap className="w-4 h-4 mr-2" />
+              <Zap className="w-4 h-4 mr-2" / key={559151}>
             )}
             {isProcessing ? "Processing..." : "Generate Quantum Prediction"}
           </Button>
@@ -283,49 +281,49 @@ export const QuantumPredictionsInterface: React.FC = () => {
       </div>
 
       {/* Live Quantum State Monitor */}
-      <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-violet-50">
-        <CardHeader>
-          <CardTitle className="flex items-center">
-            <Activity className="w-5 h-5 mr-2 text-purple-600" />
-            Live Quantum State
+      <Card className="border-l-4 border-l-purple-500 bg-gradient-to-r from-purple-50 to-violet-50" key={315842}>
+        <CardHeader key={236869}>
+          <CardTitle className="flex items-center" key={762707}>
+            <Activity className="w-5 h-5 mr-2 text-purple-600" / key={915147}>
+            Live Quantum State;
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div>
-              <p className="text-sm font-medium text-gray-600">Superposition</p>
-              <Progress
+        <CardContent key={452065}>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4" key={815557}>
+            <div key={241917}>
+              <p className="text-sm font-medium text-gray-600" key={275140}>Superposition</p>
+              <Progress;
                 value={quantumState.superposition * 100}
                 className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
+              / key={892776}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
                 {(quantumState.superposition * 100).toFixed(1)}%
               </p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-gray-600">Entanglement</p>
-              <Progress
+            <div key={241917}>
+              <p className="text-sm font-medium text-gray-600" key={275140}>Entanglement</p>
+              <Progress;
                 value={quantumState.entanglement * 100}
                 className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
+              / key={843915}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
                 {(quantumState.entanglement * 100).toFixed(1)}%
               </p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-gray-600">Coherence</p>
-              <Progress value={quantumState.coherence * 100} className="mt-2" />
-              <p className="text-xs text-gray-500 mt-1">
+            <div key={241917}>
+              <p className="text-sm font-medium text-gray-600" key={275140}>Coherence</p>
+              <Progress value={quantumState.coherence * 100} className="mt-2" / key={567074}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
                 {(quantumState.coherence * 100).toFixed(1)}%
               </p>
             </div>
-            <div>
-              <p className="text-sm font-medium text-gray-600">Stability</p>
-              <Progress
+            <div key={241917}>
+              <p className="text-sm font-medium text-gray-600" key={275140}>Stability</p>
+              <Progress;
                 value={(1 - quantumState.decoherence) * 100}
                 className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
+              / key={187753}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
                 {((1 - quantumState.decoherence) * 100).toFixed(1)}%
               </p>
             </div>
@@ -335,13 +333,13 @@ export const QuantumPredictionsInterface: React.FC = () => {
 
       {/* Processing Status */}
       {isProcessing && (
-        <Card className="border-l-4 border-l-blue-500 bg-blue-50">
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3">
-              <RefreshCw className="w-5 h-5 animate-spin text-blue-600" />
-              <div>
-                <p className="font-medium text-blue-800">{processingStage}</p>
-                <p className="text-sm text-blue-600">
+        <Card className="border-l-4 border-l-blue-500 bg-blue-50" key={924529}>
+          <CardContent className="p-4" key={706827}>
+            <div className="flex items-center gap-3" key={443099}>
+              <RefreshCw className="w-5 h-5 animate-spin text-blue-600" / key={262352}>
+              <div key={241917}>
+                <p className="font-medium text-blue-800" key={80079}>{processingStage}</p>
+                <p className="text-sm text-blue-600" key={535959}>
                   Quantum computation in progress...
                 </p>
               </div>
@@ -351,28 +349,28 @@ export const QuantumPredictionsInterface: React.FC = () => {
       )}
 
       {/* Main Interface */}
-      <Tabs defaultValue="input" className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="input">Input & Configuration</TabsTrigger>
-          <TabsTrigger value="quantum">Quantum Visualization</TabsTrigger>
-          <TabsTrigger value="results">Prediction Results</TabsTrigger>
-          <TabsTrigger value="analysis">Quantum Analysis</TabsTrigger>
+      <Tabs defaultValue="input" className="w-full" key={584855}>
+        <TabsList className="grid w-full grid-cols-4" key={277827}>
+          <TabsTrigger value="input" key={908004}>Input & Configuration</TabsTrigger>
+          <TabsTrigger value="quantum" key={285388}>Quantum Visualization</TabsTrigger>
+          <TabsTrigger value="results" key={947363}>Prediction Results</TabsTrigger>
+          <TabsTrigger value="analysis" key={89597}>Quantum Analysis</TabsTrigger>
         </TabsList>
 
         {/* Input Configuration */}
-        <TabsContent value="input">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Event Configuration</CardTitle>
+        <TabsContent value="input" key={879787}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle key={202979}>Event Configuration</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="event-id">Event ID</Label>
-                  <Input
+              <CardContent className="space-y-4" key={796196}>
+                <div key={241917}>
+                  <Label htmlFor="event-id" key={870362}>Event ID</Label>
+                  <Input;
                     id="event-id"
                     value={predictionRequest.event_id}
-                    onChange={(e) =>
+                    onChange={(e) = key={273884}>
                       setPredictionRequest((prev) => ({
                         ...prev,
                         event_id: e.target.value,
@@ -381,12 +379,12 @@ export const QuantumPredictionsInterface: React.FC = () => {
                     placeholder="Enter event identifier"
                   />
                 </div>
-                <div>
-                  <Label htmlFor="sport">Sport</Label>
-                  <select
+                <div key={241917}>
+                  <Label htmlFor="sport" key={208532}>Sport</Label>
+                  <select;
                     id="sport"
                     value={predictionRequest.sport}
-                    onChange={(e) =>
+                    onChange={(e) = key={569775}>
                       setPredictionRequest((prev) => ({
                         ...prev,
                         sport: e.target.value,
@@ -394,23 +392,23 @@ export const QuantumPredictionsInterface: React.FC = () => {
                     }
                     className="w-full px-3 py-2 border rounded-md"
                   >
-                    <option value="basketball">Basketball</option>
-                    <option value="football">Football</option>
-                    <option value="baseball">Baseball</option>
-                    <option value="soccer">Soccer</option>
-                    <option value="hockey">Hockey</option>
+                    <option value="basketball" key={32898}>Basketball</option>
+                    <option value="football" key={465014}>Football</option>
+                    <option value="baseball" key={560777}>Baseball</option>
+                    <option value="soccer" key={890296}>Soccer</option>
+                    <option value="hockey" key={942764}>Hockey</option>
                   </select>
                 </div>
-                <div>
-                  <Label htmlFor="target-accuracy">Target Accuracy</Label>
-                  <Input
+                <div key={241917}>
+                  <Label htmlFor="target-accuracy" key={8899}>Target Accuracy</Label>
+                  <Input;
                     id="target-accuracy"
                     type="number"
                     min="0.8"
                     max="0.99"
                     step="0.01"
                     value={predictionRequest.target_accuracy}
-                    onChange={(e) =>
+                    onChange={(e) = key={992677}>
                       setPredictionRequest((prev) => ({
                         ...prev,
                         target_accuracy: parseFloat(e.target.value),
@@ -421,19 +419,19 @@ export const QuantumPredictionsInterface: React.FC = () => {
               </CardContent>
             </Card>
 
-            <Card>
-              <CardHeader>
-                <CardTitle>Quantum Parameters</CardTitle>
+            <Card key={650115}>
+              <CardHeader key={236869}>
+                <CardTitle key={202979}>Quantum Parameters</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <Label htmlFor="optimization-strategy">
-                    Optimization Strategy
+              <CardContent className="space-y-4" key={796196}>
+                <div key={241917}>
+                  <Label htmlFor="optimization-strategy" key={775009}>
+                    Optimization Strategy;
                   </Label>
-                  <select
+                  <select;
                     id="optimization-strategy"
                     value={predictionRequest.optimization_strategy}
-                    onChange={(e) =>
+                    onChange={(e) = key={596239}>
                       setPredictionRequest((prev) => ({
                         ...prev,
                         optimization_strategy: e.target.value,
@@ -441,22 +439,22 @@ export const QuantumPredictionsInterface: React.FC = () => {
                     }
                     className="w-full px-3 py-2 border rounded-md"
                   >
-                    <option value="quantum_ensemble">Quantum Ensemble</option>
-                    <option value="neural_architecture_search">
-                      Neural Architecture Search
+                    <option value="quantum_ensemble" key={298573}>Quantum Ensemble</option>
+                    <option value="neural_architecture_search" key={826705}>
+                      Neural Architecture Search;
                     </option>
-                    <option value="meta_learning">Meta Learning</option>
-                    <option value="bayesian_optimization">
-                      Bayesian Optimization
+                    <option value="meta_learning" key={281495}>Meta Learning</option>
+                    <option value="bayesian_optimization" key={518005}>
+                      Bayesian Optimization;
                     </option>
                   </select>
                 </div>
-                <div>
-                  <Label htmlFor="uncertainty-method">Uncertainty Method</Label>
-                  <select
+                <div key={241917}>
+                  <Label htmlFor="uncertainty-method" key={744175}>Uncertainty Method</Label>
+                  <select;
                     id="uncertainty-method"
                     value={predictionRequest.uncertainty_method}
-                    onChange={(e) =>
+                    onChange={(e) = key={689792}>
                       setPredictionRequest((prev) => ({
                         ...prev,
                         uncertainty_method: e.target.value,
@@ -464,34 +462,34 @@ export const QuantumPredictionsInterface: React.FC = () => {
                     }
                     className="w-full px-3 py-2 border rounded-md"
                   >
-                    <option value="deep_ensembles">Deep Ensembles</option>
-                    <option value="bayesian_neural_network">
-                      Bayesian Neural Network
+                    <option value="deep_ensembles" key={422399}>Deep Ensembles</option>
+                    <option value="bayesian_neural_network" key={687972}>
+                      Bayesian Neural Network;
                     </option>
-                    <option value="monte_carlo_dropout">
-                      Monte Carlo Dropout
+                    <option value="monte_carlo_dropout" key={611309}>
+                      Monte Carlo Dropout;
                     </option>
-                    <option value="conformal_prediction">
-                      Conformal Prediction
+                    <option value="conformal_prediction" key={479420}>
+                      Conformal Prediction;
                     </option>
                   </select>
                 </div>
-                <div className="bg-purple-100 p-4 rounded-lg">
-                  <h4 className="font-medium text-purple-800 mb-2">
-                    Quantum Features Active
+                <div className="bg-purple-100 p-4 rounded-lg" key={889689}>
+                  <h4 className="font-medium text-purple-800 mb-2" key={866874}>
+                    Quantum Features Active;
                   </h4>
-                  <div className="space-y-1 text-sm text-purple-700">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Superposition-based ensemble modeling</span>
+                  <div className="space-y-1 text-sm text-purple-700" key={930022}>
+                    <div className="flex items-center gap-2" key={100294}>
+                      <CheckCircle className="w-4 h-4" / key={423201}>
+                      <span key={595076}>Superposition-based ensemble modeling</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Feature entanglement analysis</span>
+                    <div className="flex items-center gap-2" key={100294}>
+                      <CheckCircle className="w-4 h-4" / key={423201}>
+                      <span key={595076}>Feature entanglement analysis</span>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4" />
-                      <span>Quantum coherence optimization</span>
+                    <div className="flex items-center gap-2" key={100294}>
+                      <CheckCircle className="w-4 h-4" / key={423201}>
+                      <span key={595076}>Quantum coherence optimization</span>
                     </div>
                   </div>
                 </div>
@@ -500,23 +498,23 @@ export const QuantumPredictionsInterface: React.FC = () => {
           </div>
 
           {/* Feature Input */}
-          <Card className="mt-6">
-            <CardHeader>
-              <CardTitle>Feature Vector Input</CardTitle>
+          <Card className="mt-6" key={913443}>
+            <CardHeader key={236869}>
+              <CardTitle key={202979}>Feature Vector Input</CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <CardContent key={452065}>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4" key={815557}>
                 {Object.entries(predictionRequest.features).map(
                   ([key, value]) => (
-                    <div key={key}>
-                      <Label htmlFor={key}>
+                    <div key={key} key={360951}>
+                      <Label htmlFor={key} key={428022}>
                         {key.replace("_", " ").toUpperCase()}
                       </Label>
-                      <Input
+                      <Input;
                         id={key}
                         type="number"
                         value={value}
-                        onChange={(e) =>
+                        onChange={(e) = key={82682}>
                           setPredictionRequest((prev) => ({
                             ...prev,
                             features: {
@@ -531,10 +529,10 @@ export const QuantumPredictionsInterface: React.FC = () => {
                 )}
               </div>
               {Object.keys(predictionRequest.features).length === 0 && (
-                <div className="text-center py-8">
-                  <p className="text-gray-500 mb-4">No features configured</p>
-                  <Button onClick={addSampleFeatures} variant="outline">
-                    Add Sample Features
+                <div className="text-center py-8" key={715292}>
+                  <p className="text-gray-500 mb-4" key={306573}>No features configured</p>
+                  <Button onClick={addSampleFeatures} variant="outline" key={248338}>
+                    Add Sample Features;
                   </Button>
                 </div>
               )}
@@ -543,17 +541,17 @@ export const QuantumPredictionsInterface: React.FC = () => {
         </TabsContent>
 
         {/* Quantum Visualization */}
-        <TabsContent value="quantum">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Layers className="w-5 h-5 mr-2 text-purple-600" />
-                Quantum State Visualization
+        <TabsContent value="quantum" key={398388}>
+          <Card key={650115}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center" key={762707}>
+                <Layers className="w-5 h-5 mr-2 text-purple-600" / key={350159}>
+                Quantum State Visualization;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="h-80">
-                <Radar
+            <CardContent key={452065}>
+              <div className="h-80" key={286132}>
+                <Radar;
                   data={quantumStateData}
                   options={{
                     responsive: true,
@@ -575,42 +573,42 @@ export const QuantumPredictionsInterface: React.FC = () => {
                       },
                     },
                   }}
-                />
+                / key={81189}>
               </div>
             </CardContent>
           </Card>
         </TabsContent>
 
         {/* Prediction Results */}
-        <TabsContent value="results">
+        <TabsContent value="results" key={841232}>
           {predictionResult ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Target className="w-5 h-5 mr-2 text-green-600" />
-                    Prediction Output
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Target className="w-5 h-5 mr-2 text-green-600" / key={902291}>
+                    Prediction Output;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">
-                          Base Prediction
+                <CardContent key={452065}>
+                  <div className="space-y-4" key={160407}>
+                    <div className="grid grid-cols-2 gap-4" key={354810}>
+                      <div key={241917}>
+                        <p className="text-sm font-medium text-gray-600" key={275140}>
+                          Base Prediction;
                         </p>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-2xl font-bold text-gray-900" key={842057}>
                           {predictionResult.prediction.base_prediction.toFixed(
                             2,
                           )}
                         </p>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">
-                          Quantum Correction
+                      <div key={241917}>
+                        <p className="text-sm font-medium text-gray-600" key={275140}>
+                          Quantum Correction;
                         </p>
-                        <p className="text-2xl font-bold text-purple-600">
-                          {predictionResult.prediction.quantum_correction > 0
+                        <p className="text-2xl font-bold text-purple-600" key={213052}>
+                          {predictionResult.prediction.quantum_correction > 0;
                             ? "+"
                             : ""}
                           {predictionResult.prediction.quantum_correction.toFixed(
@@ -620,16 +618,16 @@ export const QuantumPredictionsInterface: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="bg-gradient-to-r from-purple-100 to-blue-100 p-4 rounded-lg">
-                      <p className="text-sm font-medium text-purple-800">
-                        Final Quantum Prediction
+                    <div className="bg-gradient-to-r from-purple-100 to-blue-100 p-4 rounded-lg" key={188253}>
+                      <p className="text-sm font-medium text-purple-800" key={816651}>
+                        Final Quantum Prediction;
                       </p>
-                      <p className="text-3xl font-bold text-purple-900">
+                      <p className="text-3xl font-bold text-purple-900" key={2018}>
                         {predictionResult.prediction.final_prediction.toFixed(
                           2,
                         )}
                       </p>
-                      <p className="text-sm text-purple-700 mt-1">
+                      <p className="text-sm text-purple-700 mt-1" key={110567}>
                         Uncertainty: [
                         {predictionResult.prediction.uncertainty_bounds[0].toFixed(
                           1,
@@ -645,85 +643,85 @@ export const QuantumPredictionsInterface: React.FC = () => {
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Brain className="w-5 h-5 mr-2 text-purple-600" />
-                    Quantum Metrics
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Brain className="w-5 h-5 mr-2 text-purple-600" / key={221045}>
+                    Quantum Metrics;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">
-                        Entanglement Score
+                <CardContent key={452065}>
+                  <div className="space-y-3" key={186520}>
+                    <div className="flex justify-between items-center" key={795957}>
+                      <span className="text-sm font-medium" key={318054}>
+                        Entanglement Score;
                       </span>
-                      <Badge variant="outline">
+                      <Badge variant="outline" key={93734}>
                         {(
                           predictionResult.quantum_metrics.entanglement_score *
-                          100
+                          100;
                         ).toFixed(1)}
                         %
                       </Badge>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">
-                        Coherence Measure
+                    <div className="flex justify-between items-center" key={795957}>
+                      <span className="text-sm font-medium" key={318054}>
+                        Coherence Measure;
                       </span>
-                      <Badge variant="outline">
+                      <Badge variant="outline" key={93734}>
                         {(
                           predictionResult.quantum_metrics.coherence_measure *
-                          100
+                          100;
                         ).toFixed(1)}
                         %
                       </Badge>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">
-                        Quantum Advantage
+                    <div className="flex justify-between items-center" key={795957}>
+                      <span className="text-sm font-medium" key={318054}>
+                        Quantum Advantage;
                       </span>
-                      <Badge variant="outline">
+                      <Badge variant="outline" key={93734}>
                         {(
                           predictionResult.quantum_metrics.quantum_advantage *
-                          100
+                          100;
                         ).toFixed(1)}
                         %
                       </Badge>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">Fidelity</span>
-                      <Badge variant="outline">
+                    <div className="flex justify-between items-center" key={795957}>
+                      <span className="text-sm font-medium" key={318054}>Fidelity</span>
+                      <Badge variant="outline" key={93734}>
                         {(
-                          predictionResult.quantum_metrics.fidelity * 100
+                          predictionResult.quantum_metrics.fidelity * 100;
                         ).toFixed(1)}
                         %
                       </Badge>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-sm font-medium">
-                        Decoherence Time
+                    <div className="flex justify-between items-center" key={795957}>
+                      <span className="text-sm font-medium" key={318054}>
+                        Decoherence Time;
                       </span>
-                      <Badge variant="outline">
+                      <Badge variant="outline" key={93734}>
                         {predictionResult.quantum_metrics.decoherence_time.toFixed(
                           1,
                         )}
-                        s
+                        s;
                       </Badge>
                     </div>
                   </div>
 
-                  <div className="mt-4 p-3 bg-gray-50 rounded">
-                    <p className="text-sm font-medium text-gray-700 mb-2">
-                      Entangled Features
+                  <div className="mt-4 p-3 bg-gray-50 rounded" key={45071}>
+                    <p className="text-sm font-medium text-gray-700 mb-2" key={817461}>
+                      Entangled Features;
                     </p>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2" key={835928}>
                       {predictionResult.quantum_metrics.entangled_features.map(
                         (feature, idx) => (
-                          <Badge
+                          <Badge;
                             key={idx}
                             variant="secondary"
                             className="text-xs"
-                          >
+                           key={108649}>
                             {feature.replace("_", " ")}
                           </Badge>
                         ),
@@ -734,14 +732,14 @@ export const QuantumPredictionsInterface: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Atom className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                <p className="text-gray-500">
-                  No quantum prediction generated yet
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <Atom className="w-12 h-12 mx-auto mb-4 text-gray-400" / key={68708}>
+                <p className="text-gray-500" key={992645}>
+                  No quantum prediction generated yet;
                 </p>
-                <p className="text-sm text-gray-400 mt-2">
-                  Configure your input and generate a prediction to see results
+                <p className="text-sm text-gray-400 mt-2" key={310803}>
+                  Configure your input and generate a prediction to see results;
                 </p>
               </CardContent>
             </Card>
@@ -749,19 +747,19 @@ export const QuantumPredictionsInterface: React.FC = () => {
         </TabsContent>
 
         {/* Quantum Analysis */}
-        <TabsContent value="analysis">
+        <TabsContent value="analysis" key={202358}>
           {predictionResult && quantumAdvantageData ? (
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
-                    Quantum vs Classical Comparison
+            <div className="space-y-6" key={501869}>
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <BarChart3 className="w-5 h-5 mr-2 text-blue-600" / key={226737}>
+                    Quantum vs Classical Comparison;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="h-64">
-                    <Scatter
+                <CardContent key={452065}>
+                  <div className="h-64" key={118048}>
+                    <Scatter;
                       data={quantumAdvantageData}
                       options={{
                         responsive: true,
@@ -786,48 +784,48 @@ export const QuantumPredictionsInterface: React.FC = () => {
                           },
                         },
                       }}
-                    />
+                    / key={768357}>
                   </div>
                 </CardContent>
               </Card>
 
-              <Card>
-                <CardHeader>
-                  <CardTitle>Performance Analysis</CardTitle>
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle key={202979}>Performance Analysis</CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">
-                        Total Processing Time
+                <CardContent key={452065}>
+                  <div className="grid grid-cols-3 gap-4" key={542789}>
+                    <div key={241917}>
+                      <p className="text-sm font-medium text-gray-600" key={275140}>
+                        Total Processing Time;
                       </p>
-                      <p className="text-lg font-bold text-gray-900">
+                      <p className="text-lg font-bold text-gray-900" key={241254}>
                         {predictionResult.processing_metrics.total_processing_time.toFixed(
                           2,
                         )}
-                        s
+                        s;
                       </p>
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">
-                        Feature Engineering
+                    <div key={241917}>
+                      <p className="text-sm font-medium text-gray-600" key={275140}>
+                        Feature Engineering;
                       </p>
-                      <p className="text-lg font-bold text-gray-900">
+                      <p className="text-lg font-bold text-gray-900" key={241254}>
                         {predictionResult.processing_metrics.feature_engineering_time.toFixed(
                           2,
                         )}
-                        s
+                        s;
                       </p>
                     </div>
-                    <div>
-                      <p className="text-sm font-medium text-gray-600">
-                        Prediction Time
+                    <div key={241917}>
+                      <p className="text-sm font-medium text-gray-600" key={275140}>
+                        Prediction Time;
                       </p>
-                      <p className="text-lg font-bold text-gray-900">
+                      <p className="text-lg font-bold text-gray-900" key={241254}>
                         {predictionResult.processing_metrics.prediction_time.toFixed(
                           2,
                         )}
-                        s
+                        s;
                       </p>
                     </div>
                   </div>
@@ -835,12 +833,12 @@ export const QuantumPredictionsInterface: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Network className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                <p className="text-gray-500">No analysis data available</p>
-                <p className="text-sm text-gray-400 mt-2">
-                  Generate a quantum prediction to view detailed analysis
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <Network className="w-12 h-12 mx-auto mb-4 text-gray-400" / key={416064}>
+                <p className="text-gray-500" key={992645}>No analysis data available</p>
+                <p className="text-sm text-gray-400 mt-2" key={310803}>
+                  Generate a quantum prediction to view detailed analysis;
                 </p>
               </CardContent>
             </Card>

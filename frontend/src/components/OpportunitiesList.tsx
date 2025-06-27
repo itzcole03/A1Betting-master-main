@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo  } from 'react.ts';
 import {
   Card,
   CardContent,
@@ -10,14 +10,14 @@ import {
   Chip,
   IconButton,
   Tooltip,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   Sort as SortIcon,
   FilterList as FilterIcon,
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
-} from '@mui/icons-material';
-import { BettingOpportunity } from './BettingOpportunity'; // Remove .tsx extension for correct import
+} from '@mui/icons-material.ts';
+import { BettingOpportunity } from './BettingOpportunity.ts'; // Remove .tsx extension for correct import;
 
 interface Opportunity {
   id: string;
@@ -39,8 +39,8 @@ interface Opportunity {
     volume: number;
   };
   stats?: {
-    homeTeam: Record<string, unknown>; // Replaced 'any' with type-safe Record
-    awayTeam: Record<string, unknown>;
+    homeTeam: Record<string, unknown key={843221}>; // Replaced 'any' with type-safe Record;
+    awayTeam: Record<string, unknown key={843221}>;
   };
   arbitrage?: {
     roi: number;
@@ -57,23 +57,23 @@ type SortField = 'edge' | 'confidence' | 'odds' | 'volume' | 'probability';
 type SortOrder = 'asc' | 'desc';
 type FilterType = 'all' | 'value' | 'arbitrage' | 'sentiment' | 'statistical';
 
-export const OpportunitiesList: React.FC<OpportunitiesListProps> = ({
+export const OpportunitiesList: React.FC<OpportunitiesListProps key={594364}> = ({
   opportunities,
   onPlaceBet,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortField, setSortField] = useState<SortField>('edge');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
-  const [filterType, setFilterType] = useState<FilterType>('all');
+  const [sortField, setSortField] = useState<SortField key={473879}>('edge');
+  const [sortOrder, setSortOrder] = useState<SortOrder key={82347}>('desc');
+  const [filterType, setFilterType] = useState<FilterType key={720919}>('all');
   const [minEdge, setMinEdge] = useState(0);
   const [minConfidence, setMinConfidence] = useState(0);
 
   const filteredAndSortedOpportunities = useMemo(() => {
-    let filtered = opportunities;
+    const filtered = opportunities;
 
-    // Apply search filter
+    // Apply search filter;
     if (searchTerm) {
-      const searchLower = searchTerm.toLowerCase();
+
       filtered = filtered.filter(
         opp =>
           opp.event.homeTeam.toLowerCase().includes(searchLower) ||
@@ -83,7 +83,7 @@ export const OpportunitiesList: React.FC<OpportunitiesListProps> = ({
       );
     }
 
-    // Apply type filter
+    // Apply type filter;
     if (filterType !== 'all') {
       filtered = filtered.filter(opp => {
         switch (filterType) {
@@ -101,14 +101,14 @@ export const OpportunitiesList: React.FC<OpportunitiesListProps> = ({
       });
     }
 
-    // Apply edge and confidence filters
+    // Apply edge and confidence filters;
     filtered = filtered.filter(opp => opp.edge >= minEdge && opp.confidence >= minConfidence);
 
-    // Apply sorting
+    // Apply sorting;
     return filtered.sort((a, b) => {
-      const multiplier = sortOrder === 'asc' ? 1 : -1;
-      const aValue = a[sortField];
-      const bValue = b[sortField];
+
+
+
       return (aValue - bValue) * multiplier;
     });
   }, [opportunities, searchTerm, sortField, sortOrder, filterType, minEdge, minConfidence]);
@@ -124,133 +124,133 @@ export const OpportunitiesList: React.FC<OpportunitiesListProps> = ({
 
   const getSortIcon = (field: SortField) => {
     if (field !== sortField) return null;
-    return sortOrder === 'asc' ? <TrendingUpIcon /> : <TrendingDownIcon />;
+    return sortOrder === 'asc' ? <TrendingUpIcon / key={780325}> : <TrendingDownIcon / key={929577}>;
   };
 
   return (
-    <Card>
-      <CardContent>
-        <Typography gutterBottom variant="h6">
-          Betting Opportunities
+    <Card key={650115}>
+      <CardContent key={452065}>
+        <Typography gutterBottom variant="h6" key={368112}>
+          Betting Opportunities;
         </Typography>
 
         {/* Filters and Search */}
-        <Grid container spacing={2} sx={{ mb: 3 }}>
-          <Grid item md={4} xs={12}>
-            <TextField
-              fullWidth
+        <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
+          <Grid item md={4} xs={12} key={317197}>
+            <TextField;
+              fullWidth;
               label="Search"
               size="small"
               value={searchTerm}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement key={407167}>) => setSearchTerm(e.target.value)}
             />
           </Grid>
-          <Grid item md={4} xs={12}>
-            <TextField
-              fullWidth
-              select
+          <Grid item md={4} xs={12} key={317197}>
+            <TextField;
+              fullWidth;
+              select;
               label="Filter Type"
               size="small"
               value={filterType}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilterType(e.target.value as FilterType)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement key={588814}>) => setFilterType(e.target.value as FilterType)}
             >
-              <MenuItem value="all">All Opportunities</MenuItem>
-              <MenuItem value="value">Value Bets</MenuItem>
-              <MenuItem value="arbitrage">Arbitrage</MenuItem>
-              <MenuItem value="sentiment">Sentiment Based</MenuItem>
-              <MenuItem value="statistical">Statistical</MenuItem>
+              <MenuItem value="all" key={641531}>All Opportunities</MenuItem>
+              <MenuItem value="value" key={301171}>Value Bets</MenuItem>
+              <MenuItem value="arbitrage" key={518711}>Arbitrage</MenuItem>
+              <MenuItem value="sentiment" key={553342}>Sentiment Based</MenuItem>
+              <MenuItem value="statistical" key={21786}>Statistical</MenuItem>
             </TextField>
           </Grid>
-          <Grid item md={4} xs={12}>
-            <Box display="flex" gap={1}>
-              <TextField
-                fullWidth
+          <Grid item md={4} xs={12} key={317197}>
+            <Box display="flex" gap={1} key={999669}>
+              <TextField;
+                fullWidth;
                 label="Min Edge %"
                 size="small"
                 type="number"
                 value={minEdge}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMinEdge(Number(e.target.value))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement key={348889}>) => setMinEdge(Number(e.target.value))}
               />
-              <TextField
-                fullWidth
+              <TextField;
+                fullWidth;
                 label="Min Confidence"
                 size="small"
                 type="number"
                 value={minConfidence}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setMinConfidence(Number(e.target.value))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement key={386728}>) => setMinConfidence(Number(e.target.value))}
               />
             </Box>
           </Grid>
         </Grid>
 
         {/* Sort Headers */}
-        <Grid container spacing={2} sx={{ mb: 2 }}>
-          <Grid item xs={3}>
-            <Box alignItems="center" display="flex" gap={1}>
-              <Typography variant="subtitle2">Event</Typography>
+        <Grid container spacing={2} sx={{ mb: 2 }} key={795993}>
+          <Grid item xs={3} key={607637}>
+            <Box alignItems="center" display="flex" gap={1} key={110385}>
+              <Typography variant="subtitle2" key={895}>Event</Typography>
             </Box>
           </Grid>
-          <Grid item xs={2}>
-            <Box alignItems="center" display="flex" gap={1}>
-              <Typography variant="subtitle2">Market</Typography>
+          <Grid item xs={2} key={114891}>
+            <Box alignItems="center" display="flex" gap={1} key={110385}>
+              <Typography variant="subtitle2" key={895}>Market</Typography>
             </Box>
           </Grid>
-          <Grid item xs={1}>
-            <Tooltip title="Sort by Edge">
-              <IconButton size="small" onClick={() => handleSort('edge')}>
-                <SortIcon />
+          <Grid item xs={1} key={924397}>
+            <Tooltip title="Sort by Edge" key={293701}>
+              <IconButton size="small" onClick={() = key={229705}> handleSort('edge')}>
+                <SortIcon / key={219030}>
                 {getSortIcon('edge')}
               </IconButton>
             </Tooltip>
           </Grid>
-          <Grid item xs={1}>
-            <Tooltip title="Sort by Confidence">
-              <IconButton size="small" onClick={() => handleSort('confidence')}>
-                <SortIcon />
+          <Grid item xs={1} key={924397}>
+            <Tooltip title="Sort by Confidence" key={875139}>
+              <IconButton size="small" onClick={() = key={229705}> handleSort('confidence')}>
+                <SortIcon / key={219030}>
                 {getSortIcon('confidence')}
               </IconButton>
             </Tooltip>
           </Grid>
-          <Grid item xs={1}>
-            <Tooltip title="Sort by Odds">
-              <IconButton size="small" onClick={() => handleSort('odds')}>
-                <SortIcon />
+          <Grid item xs={1} key={924397}>
+            <Tooltip title="Sort by Odds" key={255393}>
+              <IconButton size="small" onClick={() = key={229705}> handleSort('odds')}>
+                <SortIcon / key={219030}>
                 {getSortIcon('odds')}
               </IconButton>
             </Tooltip>
           </Grid>
-          <Grid item xs={1}>
-            <Tooltip title="Sort by Volume">
-              <IconButton size="small" onClick={() => handleSort('volume')}>
-                <SortIcon />
+          <Grid item xs={1} key={924397}>
+            <Tooltip title="Sort by Volume" key={951352}>
+              <IconButton size="small" onClick={() = key={229705}> handleSort('volume')}>
+                <SortIcon / key={219030}>
                 {getSortIcon('volume')}
               </IconButton>
             </Tooltip>
           </Grid>
-          <Grid item xs={1}>
-            <Tooltip title="Sort by Probability">
-              <IconButton size="small" onClick={() => handleSort('probability')}>
-                <SortIcon />
+          <Grid item xs={1} key={924397}>
+            <Tooltip title="Sort by Probability" key={567732}>
+              <IconButton size="small" onClick={() = key={229705}> handleSort('probability')}>
+                <SortIcon / key={219030}>
                 {getSortIcon('probability')}
               </IconButton>
             </Tooltip>
           </Grid>
-          <Grid item xs={2}>
-            <Typography variant="subtitle2">Actions</Typography>
+          <Grid item xs={2} key={114891}>
+            <Typography variant="subtitle2" key={895}>Actions</Typography>
           </Grid>
         </Grid>
 
         {/* Opportunities List */}
-        <Grid container spacing={2}>
+        <Grid container spacing={2} key={272161}>
           {filteredAndSortedOpportunities.map(opportunity => (
-            <Grid key={opportunity.id} item xs={12}>
-              <BettingOpportunity opportunity={opportunity} onPlaceBet={onPlaceBet} />
+            <Grid key={opportunity.id} item xs={12} key={400621}>
+              <BettingOpportunity opportunity={opportunity} onPlaceBet={onPlaceBet} / key={591567}>
             </Grid>
           ))}
           {filteredAndSortedOpportunities.length === 0 && (
-            <Grid item xs={12}>
-              <Typography align="center" color="textSecondary" variant="body1">
-                No opportunities match your criteria
+            <Grid item xs={12} key={689816}>
+              <Typography align="center" color="textSecondary" variant="body1" key={908247}>
+                No opportunities match your criteria;
               </Typography>
             </Grid>
           )}

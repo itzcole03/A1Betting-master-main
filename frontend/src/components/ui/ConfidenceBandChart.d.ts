@@ -1,5 +1,5 @@
-import React from 'react';
-import type { ConfidenceBand } from '../../types/confidence';
+import React from 'react.ts';
+import type { ConfidenceBand } from '@/types/confidence.ts';
 interface ConfidenceBandChartProps {
     band: ConfidenceBand | null;
 }

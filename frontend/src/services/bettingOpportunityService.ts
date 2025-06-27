@@ -1,18 +1,18 @@
-import { EventEmitter } from 'events';
-import { ArbitrageService } from './ArbitrageService';
-import { LineShoppingService } from './lineShoppingService';
-import { PredictionService } from './predictionService';
-import { AdvancedPredictionService } from './advancedPredictionService';
-import { MarketAnalysisService } from './marketAnalysisService';
-import { NotificationManager, Notification } from './notification/notificationManager';
+import { EventEmitter } from 'events.ts';
+import { ArbitrageService } from './ArbitrageService.ts';
+import { LineShoppingService } from './lineShoppingService.ts';
+import { PredictionService } from './predictionService.ts';
+import { AdvancedPredictionService } from './advancedPredictionService.ts';
+import { MarketAnalysisService } from './marketAnalysisService.ts';
+import { NotificationManager, Notification } from './notification/notificationManager.ts';
 import {
   BettingOdds,
   ArbitrageOpportunity,
   LineShoppingResult,
   Sportsbook,
-} from '@/types/betting';
-import { NotificationPreferences } from './notification/notificationManager';
-import { MarketContext, BettingContext } from '../types/core';
+} from '@/types/betting.ts';
+import { NotificationPreferences } from './notification/notificationManager.ts';
+import { MarketContext, BettingContext } from '@/types/core.ts';
 
 interface VolumeData {
   totalVolume: number;
@@ -37,8 +37,8 @@ export class BettingOpportunityService extends EventEmitter {
   private notificationManager: NotificationManager;
   private isMonitoring: boolean = false;
   private marketMetrics: Map<string, MarketMetrics> = new Map();
-  private readonly VOLUME_WINDOW = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-  private readonly CLEANUP_INTERVAL = 60 * 60 * 1000; // 1 hour in milliseconds
+  private readonly VOLUME_WINDOW = 24 * 60 * 60 * 1000; // 24 hours in milliseconds;
+  private readonly CLEANUP_INTERVAL = 60 * 60 * 1000; // 1 hour in milliseconds;
 
   private constructor() {
     super();
@@ -49,7 +49,7 @@ export class BettingOpportunityService extends EventEmitter {
     this.marketAnalysisService = MarketAnalysisService.getInstance();
     this.notificationManager = new NotificationManager();
 
-    // Set up event listeners
+    // Set up event listeners;
     this.arbitrageService.on('newOpportunity', this.handleArbitrageOpportunity.bind(this));
     this.lineShoppingService.on('oddsUpdated', this.handleOddsUpdate.bind(this));
     this.predictionService.on('newPrediction', this.handlePrediction.bind(this));
@@ -60,12 +60,12 @@ export class BettingOpportunityService extends EventEmitter {
     this.marketAnalysisService.on('marketAnomaly', this.handleMarketAnomaly.bind(this));
     this.marketAnalysisService.on('marketEfficiency', this.handleMarketEfficiency.bind(this));
 
-    // Set up periodic cleanup
+    // Set up periodic cleanup;
     setInterval(() => this.cleanup(), this.CLEANUP_INTERVAL);
   }
 
   /**
-   * Get the singleton instance
+   * Get the singleton instance;
    */
   public static getInstance(): BettingOpportunityService {
     if (!BettingOpportunityService.instance) {
@@ -75,7 +75,7 @@ export class BettingOpportunityService extends EventEmitter {
   }
 
   /**
-   * Start monitoring for betting opportunities
+   * Start monitoring for betting opportunities;
    */
   public startMonitoring(): void {
     if (this.isMonitoring) {
@@ -91,7 +91,7 @@ export class BettingOpportunityService extends EventEmitter {
   }
 
   /**
-   * Stop monitoring for betting opportunities
+   * Stop monitoring for betting opportunities;
    */
   public stopMonitoring(): void {
     if (!this.isMonitoring) {
@@ -107,7 +107,7 @@ export class BettingOpportunityService extends EventEmitter {
   }
 
   /**
-   * Handle new arbitrage opportunities
+   * Handle new arbitrage opportunities;
    */
   private handleArbitrageOpportunity(opportunity: ArbitrageOpportunity): void {
     if (!this.isMonitoring) {
@@ -130,8 +130,8 @@ export class BettingOpportunityService extends EventEmitter {
       trend: 0,
     };
 
-    // Update volume
-    const newVolume = odds.reduce((sum, odd) => sum + (odd.volume || 0), 0);
+    // Update volume;
+
     currentMetrics.volume.totalVolume += newVolume;
     currentMetrics.volume.lastUpdate = Date.now();
     currentMetrics.volume.volumeHistory.push({
@@ -140,13 +140,13 @@ export class BettingOpportunityService extends EventEmitter {
     });
 
     // Calculate liquidity (based on odds spread and available stakes)
-    const liquidity = this.calculateLiquidity(odds);
+
     currentMetrics.liquidity = liquidity;
 
-    // Calculate volatility
+    // Calculate volatility;
     currentMetrics.volatility = this.calculateVolatility(currentMetrics.volume.volumeHistory);
 
-    // Calculate trend
+    // Calculate trend;
     currentMetrics.trend = this.calculateTrend(currentMetrics.volume.volumeHistory);
 
     this.marketMetrics.set(eventId, currentMetrics);
@@ -155,10 +155,8 @@ export class BettingOpportunityService extends EventEmitter {
   private calculateLiquidity(odds: BettingOdds[]): number {
     if (odds.length < 2) return 0;
 
-    const bestBack = Math.max(...odds.map(o => o.odds));
-    const bestLay = Math.min(...odds.map(o => o.odds));
-    const spread = bestBack - bestLay;
-    const totalStake = odds.reduce((sum, odd) => sum + (odd.maxStake || 0), 0);
+
+
 
     return totalStake / (spread || 1);
   }
@@ -166,8 +164,7 @@ export class BettingOpportunityService extends EventEmitter {
   private calculateVolatility(volumeHistory: Array<{ timestamp: number; volume: number }>): number {
     if (volumeHistory.length < 2) return 0;
 
-    const volumes = volumeHistory.map(v => v.volume);
-    const mean = volumes.reduce((sum, vol) => sum + vol, 0) / volumes.length;
+
     const variance =
       volumes.reduce((sum, vol) => sum + Math.pow(vol - mean, 2), 0) / volumes.length;
     return Math.sqrt(variance);
@@ -176,16 +173,14 @@ export class BettingOpportunityService extends EventEmitter {
   private calculateTrend(volumeHistory: Array<{ timestamp: number; volume: number }>): number {
     if (volumeHistory.length < 2) return 0;
 
-    const recentVolumes = volumeHistory.slice(-5);
-    const xMean = (recentVolumes.length - 1) / 2;
-    const yMean = recentVolumes.reduce((sum, v) => sum + v.volume, 0) / recentVolumes.length;
 
-    let numerator = 0;
-    let denominator = 0;
+
+    const numerator = 0;
+    const denominator = 0;
 
     recentVolumes.forEach((v, i) => {
-      const xDiff = i - xMean;
-      const yDiff = v.volume - yMean;
+
+
       numerator += xDiff * yDiff;
       denominator += xDiff * xDiff;
     });
@@ -194,33 +189,31 @@ export class BettingOpportunityService extends EventEmitter {
   }
 
   /**
-   * Handle odds updates from line shopping service
+   * Handle odds updates from line shopping service;
    */
   private handleOddsUpdate(data: { bookmakerId: string; odds: BettingOdds[] }): void {
     if (!this.isMonitoring) {
       return;
     }
 
-    // Update market analysis
+    // Update market analysis;
     this.marketAnalysisService.updateMarketMetrics(data.odds[0].eventId, data.odds);
 
-    // Get market metrics and efficiency
-    const metrics = this.marketAnalysisService.getMarketMetrics(data.odds[0].eventId);
-    const efficiency = this.marketAnalysisService.getMarketEfficiency(data.odds[0].eventId);
+    // Get market metrics and efficiency;
+
 
     if (!metrics || !efficiency) return;
 
-    // Update arbitrage service with new odds
+    // Update arbitrage service with new odds;
     this.arbitrageService.monitorOpportunities(
       new Map([[data.bookmakerId, new Map([[data.odds[0].market, data.odds]])]])
     );
 
-    // Check for line shopping opportunities with enhanced market context
+    // Check for line shopping opportunities with enhanced market context;
     data.odds.forEach(odd => {
-      const result = this.lineShoppingService.findBestOdds(odd.eventId, odd.market, odd.selection);
 
       if (result) {
-        // Add market context to line shopping result
+        // Add market context to line shopping result;
         result.marketContext = {
           volume: metrics.volume.totalVolume,
           movement: metrics.trend,
@@ -232,7 +225,7 @@ export class BettingOpportunityService extends EventEmitter {
       }
     });
 
-    // Generate predictions with enhanced market context
+    // Generate predictions with enhanced market context;
     const marketContext: MarketContext = {
       eventId: data.odds[0].eventId,
       market: data.odds[0].market,
@@ -259,7 +252,7 @@ export class BettingOpportunityService extends EventEmitter {
       },
     };
 
-    // Generate both basic and advanced predictions
+    // Generate both basic and advanced predictions;
     this.predictionService.generatePrediction(marketContext, []);
     this.advancedPredictionService.generateAdvancedPrediction(marketContext, bettingContext);
   }
@@ -299,7 +292,7 @@ export class BettingOpportunityService extends EventEmitter {
       this.notificationManager.notifySystemAlert(
         'Market Anomaly Detected',
         `${anomaly.type.toUpperCase()} anomaly: ${anomaly.description}`,
-        anomaly.severity
+        anomaly.severity;
       );
     });
 
@@ -309,7 +302,7 @@ export class BettingOpportunityService extends EventEmitter {
   private handleMarketEfficiency(data: { eventId: string; metrics: any }): void {
     if (!this.isMonitoring) return;
 
-    // Only notify for significant efficiency changes
+    // Only notify for significant efficiency changes;
     if (data.metrics.spreadEfficiency < 0.8) {
       this.notificationManager.notifySystemAlert(
         'Low Market Efficiency',
@@ -322,60 +315,59 @@ export class BettingOpportunityService extends EventEmitter {
   }
 
   /**
-   * Register a sportsbook for line shopping
+   * Register a sportsbook for line shopping;
    */
   public registerSportsbook(sportsbook: Sportsbook): void {
     this.lineShoppingService.registerSportsbook(sportsbook);
   }
 
   /**
-   * Update notification preferences
+   * Update notification preferences;
    */
   public updateNotificationPreferences(preferences: Partial<NotificationPreferences>): void {
     this.notificationManager.updatePreferences(preferences);
   }
 
   /**
-   * Get all current notifications
+   * Get all current notifications;
    */
   public getNotifications(): Notification[] {
     return this.notificationManager.getNotifications();
   }
 
   /**
-   * Mark notification as read
+   * Mark notification as read;
    */
   public markNotificationAsRead(notificationId: string): void {
     this.notificationManager.markAsRead(notificationId);
   }
 
   /**
-   * Clear expired opportunities and notifications
+   * Clear expired opportunities and notifications;
    */
   public cleanup(): void {
-    const now = Date.now();
 
-    // Clean up expired market metrics
+    // Clean up expired market metrics;
     for (const [eventId, metrics] of this.marketMetrics.entries()) {
-      // Remove old volume history entries
+      // Remove old volume history entries;
       metrics.volume.volumeHistory = metrics.volume.volumeHistory.filter(
-        v => now - v.timestamp < this.VOLUME_WINDOW
+        v => now - v.timestamp < this.VOLUME_WINDOW;
       );
 
-      // Remove metrics for events with no recent updates
+      // Remove metrics for events with no recent updates;
       if (now - metrics.volume.lastUpdate > this.VOLUME_WINDOW) {
         this.marketMetrics.delete(eventId);
       }
     }
 
-    // Clean up other services
+    // Clean up other services;
     this.arbitrageService.clearExpiredOpportunities();
     this.lineShoppingService.clearExpiredOdds();
     this.predictionService.clearPredictions();
   }
 
   /**
-   * Get current monitoring status
+   * Get current monitoring status;
    */
   public isActive(): boolean {
     return this.isMonitoring;

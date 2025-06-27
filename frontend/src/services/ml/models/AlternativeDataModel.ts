@@ -2,8 +2,8 @@
  * Model for analyzing alternative data sources and generating predictions.
  */
 
-import { BaseModel } from './BaseModel';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types';
+import { BaseModel } from './BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
 
 interface AlternativeDataConfig extends ModelConfig {
   features: string[];
@@ -30,7 +30,7 @@ export class AlternativeDataModel extends BaseModel {
   }
 
   async predict(data: unknown): Promise<ModelPrediction> {
-    // Implement alternative data prediction logic
+    // Implement alternative data prediction logic;
     return {
       timestamp: new Date().toISOString(),
       input: data,
@@ -45,7 +45,7 @@ export class AlternativeDataModel extends BaseModel {
   }
 
   async update(data: unknown): Promise<void> {
-    // Implement model update logic
+    // Implement model update logic;
     this.lastUpdate = new Date().toISOString();
     this.metadata = {
       ...this.metadata,
@@ -55,7 +55,7 @@ export class AlternativeDataModel extends BaseModel {
   }
 
   async train(data: any[]): Promise<void> {
-    // Implement training logic
+    // Implement training logic;
     this.isTrained = true;
   }
 
@@ -73,82 +73,71 @@ export class AlternativeDataModel extends BaseModel {
   }
 
   async save(path: string): Promise<void> {
-    // Implement save logic
+    // Implement save logic;
   }
 
   async load(path: string): Promise<void> {
-    // Implement load logic
+    // Implement load logic;
     this.isTrained = true;
   }
 
   private analyzeSentiment(features: Record<string, any>): number {
-    const sentimentData = features.sentimentData || {};
-    const textSentiment = sentimentData.textSentiment || 0;
-    const socialSentiment = sentimentData.socialSentiment || 0;
-    const newsSentiment = sentimentData.newsSentiment || 0;
 
-    // Combine different sentiment sources
-    const combinedSentiment = textSentiment * 0.4 + socialSentiment * 0.3 + newsSentiment * 0.3;
+
+
+
+    // Combine different sentiment sources;
 
     return Math.min(1, Math.max(0, combinedSentiment));
   }
 
   private analyzeSocialMedia(features: Record<string, any>): number {
-    const socialData = features.socialData || {};
-    const engagement = socialData.engagement || 0;
-    const reach = socialData.reach || 0;
-    const virality = socialData.virality || 0;
 
-    // Calculate social media impact
-    const impact = engagement * 0.4 + reach * 0.3 + virality * 0.3;
+
+
+
+    // Calculate social media impact;
 
     return Math.min(1, Math.max(0, impact));
   }
 
   private analyzeNews(features: Record<string, any>): number {
-    const newsData = features.newsData || {};
-    const coverage = newsData.coverage || 0;
-    const sentiment = newsData.sentiment || 0;
-    const relevance = newsData.relevance || 0;
 
-    // Calculate news impact
-    const impact = coverage * 0.3 + sentiment * 0.4 + relevance * 0.3;
+
+
+
+    // Calculate news impact;
 
     return Math.min(1, Math.max(0, impact));
   }
 
   private analyzeMarketSentiment(features: Record<string, any>): number {
-    const marketData = features.marketData || {};
-    const volatility = marketData.volatility || 0;
-    const trend = marketData.trend || 0;
-    const volume = marketData.volume || 0;
 
-    // Calculate market sentiment
-    const sentiment = (1 - volatility) * 0.3 + trend * 0.4 + volume * 0.3;
+
+
+
+    // Calculate market sentiment;
 
     return Math.min(1, Math.max(0, sentiment));
   }
 
   private calculateEngagementScore(metrics: Record<string, number>): number {
     const { likes, comments, shares, views } = metrics;
-    const totalInteractions = likes + comments + shares;
-    const engagementRate = totalInteractions / (views || 1);
+
 
     return Math.min(1, engagementRate * 100);
   }
 
   private calculateViralityScore(metrics: Record<string, number>): number {
     const { shares, views, reach } = metrics;
-    const shareRate = shares / (views || 1);
-    const reachRate = reach / (views || 1);
+
 
     return Math.min(1, (shareRate + reachRate) * 50);
   }
 
   private calculateCoverageScore(metrics: Record<string, number>): number {
     const { articles, sources, mentions } = metrics;
-    const sourceDiversity = sources / (articles || 1);
-    const mentionDensity = mentions / (articles || 1);
+
 
     return Math.min(1, (sourceDiversity + mentionDensity) / 2);
   }

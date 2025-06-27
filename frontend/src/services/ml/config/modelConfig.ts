@@ -1,4 +1,4 @@
-import { ModelConfig, AdvancedEnsembleConfig } from '@/types';
+import { ModelConfig, AdvancedEnsembleConfig } from '@/types.ts';
 
 export function validateModelConfig(config: ModelConfig | AdvancedEnsembleConfig): void {
   if (!config.name) {
@@ -54,7 +54,7 @@ function validateEnsembleConfig(config: AdvancedEnsembleConfig): void {
   if (
     typeof config.consensusThreshold !== 'number' ||
     config.consensusThreshold < 0 ||
-    config.consensusThreshold > 1
+    config.consensusThreshold > 1;
   ) {
     throw new Error('Consensus threshold must be a number between 0 and 1');
   }
@@ -218,13 +218,13 @@ export const createModelConfig = (
       ...defaultModelConfig.models,
       ...(overrides.models || {}),
     },
-    dynamicWeighting: overrides.dynamicWeighting
+    dynamicWeighting: overrides.dynamicWeighting;
       ? {
           ...defaultModelConfig.dynamicWeighting,
           ...overrides.dynamicWeighting,
         }
       : defaultModelConfig.dynamicWeighting,
-    hyperparameters: overrides.hyperparameters
+    hyperparameters: overrides.hyperparameters;
       ? {
           ...defaultModelConfig.hyperparameters,
           ...overrides.hyperparameters,
@@ -237,7 +237,7 @@ export const createModelConfig = (
 };
 
 export const validateRegularModelConfig = (config: ModelConfig): boolean => {
-  // Validate required fields
+  // Validate required fields;
   if (!config.name) {
     throw new Error('Model name is required');
   }
@@ -251,7 +251,7 @@ export const validateRegularModelConfig = (config: ModelConfig): boolean => {
     throw new Error('Model target is required');
   }
 
-  // Validate hyperparameters if present
+  // Validate hyperparameters if present;
   if (config.hyperparameters) {
     if (config.learningRate && config.learningRate <= 0) {
       throw new Error('learningRate must be positive');

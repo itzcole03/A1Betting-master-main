@@ -24,23 +24,23 @@ const Predictions = () => {
     const [predictions, setPredictions] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const wsRef = useRef(null);
+
     useEffect(() => {
         setLoading(true);
         setError(null);
-        // Safety checks to prevent invalid WebSocket connections
+        // Safety checks to prevent invalid WebSocket connections;
         if (!WS_URL ||
             WS_URL === "" ||
             WS_URL === "wss://api.betproai.com/ws" ||
             WS_URL.includes("api.betproai.com") ||
             WS_URL.includes("localhost:8000") ||
             import.meta.env.VITE_ENABLE_WEBSOCKET === "false") {
-            console.log("WebSocket connection disabled for Predictions page:", WS_URL);
+            // console statement removed
             setLoading(false);
             setError("WebSocket connections are currently disabled");
             return;
         }
-        const ws = new WebSocket(WS_URL);
+
         wsRef.current = ws;
         ws.onopen = () => {
             ws.send(JSON.stringify({
@@ -51,10 +51,10 @@ const Predictions = () => {
         };
         ws.onmessage = (event) => {
             try {
-                const msg = JSON.parse(event.data);
+
                 if (msg.type === "prediction_result") {
                     setPredictions(Array.isArray(msg.data.prediction)
-                        ? msg.data.prediction
+                        ? msg.data.prediction;
                         : [msg.data.prediction]);
                     setLoading(false);
                 }
@@ -63,7 +63,7 @@ const Predictions = () => {
                     setLoading(false);
                 }
                 else {
-                    // Handle other message types if needed
+                    // Handle other message types if needed;
                 }
             }
             catch (e) {
@@ -76,7 +76,7 @@ const Predictions = () => {
             setLoading(false);
         };
         ws.onclose = () => {
-            // Optionally: try to reconnect
+            // Optionally: try to reconnect;
         };
         return () => {
             ws.close();
@@ -94,15 +94,15 @@ const Predictions = () => {
         setSelectedPrediction(null);
     };
     const handleAction = (action) => {
-        // TODO: Implement bet actions
+        // TODO: Implement bet actions;
         handleMenuClose();
     };
     const filteredPredictions = predictions.filter((p) => (!search ||
         p.match?.toLowerCase().includes(search.toLowerCase()) ||
         p.sport?.toLowerCase().includes(search.toLowerCase())) &&
-        (value === 0
+        (value === 0;
             ? p.status === "active"
-            : value === 1
+            : value === 1;
                 ? p.status === "completed"
                 : true));
     return (_jsx("div", { className: "p-6 space-y-8 min-h-screen bg-gradient-to-br from-purple-900/80 to-purple-700/80 dark:from-gray-900 dark:to-gray-800 transition-colors", children: _jsxs(GlassCard, { className: "mb-8", children: [_jsx("h2", { className: "text-2xl font-bold text-purple-900 dark:text-purple-100 mb-4", children: "Model Predictions" }), _jsxs("div", { className: "grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6", children: [filteredPredictions.length === 0 && !loading && (_jsx(Grid, { item: true, xs: 12, children: _jsx(Typography, { children: "No predictions found." }) })), filteredPredictions.map((prediction) => (_jsx(Grid, { item: true, xs: 12, children: _jsx(EnhancedPropCard, { playerName: prediction.match, team: prediction.sport, position: prediction.prediction, statType: "Confidence", line: Math.round(prediction.confidence * 100), overOdds: prediction.odds, underOdds: prediction.odds, pickType: "normal", trendValue: prediction.trend === "up" ? 1 : -1, gameInfo: { opponent: 'BOS', day: 'Fri', time: '7:30pm' }, playerImageUrl: "https://cdn.nba.com/headshots/nba/latest/1040x760/2544.png", onSelect: () => { }, onViewDetails: () => { } }) }, prediction.id)))] })] }) }));

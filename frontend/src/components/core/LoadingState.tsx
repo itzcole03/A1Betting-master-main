@@ -1,14 +1,14 @@
-import React from 'react';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import React from 'react.ts';
+import { Box, CircularProgress, Typography } from '@mui/material.ts';
 
 interface LoadingStateProps {
   message?: string;
   size?: number;
 }
 
-const LoadingState: React.FC<LoadingStateProps> = ({ message = 'Loading...', size = 40 }) => {
+const LoadingState: React.FC<LoadingStateProps key={494341}> = ({ message = 'Loading...', size = 40 }) => {
   return (
-    <Box
+    <Box;
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -17,9 +17,9 @@ const LoadingState: React.FC<LoadingStateProps> = ({ message = 'Loading...', siz
         minHeight: '200px',
         gap: 2,
       }}
-    >
-      <CircularProgress size={size} />
-      <Typography color="text.secondary" variant="body1">
+     key={712093}>
+      <CircularProgress size={size} / key={740715}>
+      <Typography color="text.secondary" variant="body1" key={849099}>
         {message}
       </Typography>
     </Box>

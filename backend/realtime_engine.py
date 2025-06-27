@@ -8,7 +8,7 @@ import logging
 import uuid
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from enum import Enum
 from typing import Any, Callable, Dict, List, Optional, Set
 
@@ -121,7 +121,7 @@ class StreamAggregator:
             self.message_buffer[dedup_key].append(message)
 
             # Check if we should aggregate
-            current_time = datetime.utcnow()
+            current_time = datetime.now(timezone.utc)
             buffer_messages = list(self.message_buffer[dedup_key])
 
             if not buffer_messages:
@@ -142,8 +142,8 @@ class StreamAggregator:
 
             return aggregated
 
-        except Exception as e:
-            logger.error(f"Message aggregation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Message aggregation failed: {e!s}")
             return message  # Return original on error
 
     async def _aggregate_messages(
@@ -324,23 +324,23 @@ class PredictionTriggerEngine:
                                     "event_id": message.event_id,
                                     "triggering_message": message,
                                     "metadata": {
-                                        "trigger_timestamp": datetime.utcnow(),
+                                        "trigger_timestamp": datetime.now(timezone.utc),
                                         "source_stream": message.stream_type,
                                     },
                                 }
                             )
 
                             # Update last prediction time
-                            self.last_predictions[trigger_key] = datetime.utcnow()
+                            self.last_predictions[trigger_key] = datetime.now(timezone.utc)
 
-                except Exception as e:
-                    logger.warning(f"Trigger evaluation failed: {e!s}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.warning("Trigger evaluation failed: {e!s}")
                     continue
 
             return triggers
 
-        except Exception as e:
-            logger.error(f"Trigger evaluation error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Trigger evaluation error: {e!s}")
             return []
 
     def _is_cooldown_satisfied(self, trigger_key: str, cooldown_seconds: int) -> bool:
@@ -349,7 +349,7 @@ class PredictionTriggerEngine:
             return True
 
         last_prediction = self.last_predictions[trigger_key]
-        elapsed = (datetime.utcnow() - last_prediction).total_seconds()
+        elapsed = (datetime.now(timezone.utc) - last_prediction).total_seconds()
 
         return elapsed >= cooldown_seconds
 
@@ -369,7 +369,7 @@ class RealTimeStreamManager:
             "messages_processed": 0,
             "messages_sent": 0,
             "active_subscribers": 0,
-            "uptime_start": datetime.utcnow(),
+            "uptime_start": datetime.now(timezone.utc),
         }
 
     async def initialize(self):
@@ -393,8 +393,8 @@ class RealTimeStreamManager:
 
             logger.info("Real-time stream manager initialized")
 
-        except Exception as e:
-            logger.error(f"Stream manager initialization failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Stream manager initialization failed: {e!s}")
             raise
 
     async def _setup_redis_subscriptions(self):
@@ -409,8 +409,8 @@ class RealTimeStreamManager:
             # Start Redis message handler
             asyncio.create_task(self._redis_message_handler(pubsub))
 
-        except Exception as e:
-            logger.error(f"Redis subscription setup failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Redis subscription setup failed: {e!s}")
 
     async def _redis_message_handler(self, pubsub):
         """Handle messages from Redis pub/sub"""
@@ -435,11 +435,11 @@ class RealTimeStreamManager:
 
                         await self.message_queue.put(stream_message)
 
-                    except Exception as e:
-                        logger.warning(f"Redis message processing failed: {e!s}")
+                    except Exception as e:  # pylint: disable=broad-exception-caught
+                        logger.warning("Redis message processing failed: {e!s}")
 
-        except Exception as e:
-            logger.error(f"Redis message handler error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Redis message handler error: {e!s}")
 
     async def _message_processor(self):
         """Main message processing loop"""
@@ -456,12 +456,12 @@ class RealTimeStreamManager:
 
                 except asyncio.TimeoutError:
                     continue
-                except Exception as e:
-                    logger.error(f"Message processing error: {e!s}")
+                except Exception as e:  # pylint: disable=broad-exception-caught
+                    logger.error("Message processing error: {e!s}")
                     await asyncio.sleep(0.1)
 
-        except Exception as e:
-            logger.error(f"Message processor fatal error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Message processor fatal error: {e!s}")
 
     async def _process_stream_message(self, message: StreamMessage):
         """Process individual stream message"""
@@ -484,8 +484,8 @@ class RealTimeStreamManager:
             # Broadcast to subscribers
             await self._broadcast_message(aggregated_message)
 
-        except Exception as e:
-            logger.error(f"Stream message processing failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Stream message processing failed: {e!s}")
 
     async def _handle_prediction_trigger(self, trigger: Dict[str, Any]):
         """Handle prediction trigger"""
@@ -515,7 +515,7 @@ class RealTimeStreamManager:
                         "models_used": prediction.metadata.get("selected_models", []),
                         "context": context.value,
                     },
-                    timestamp=datetime.utcnow(),
+                    timestamp=datetime.now(timezone.utc),
                     source="prediction_engine",
                     event_id=event_id,
                     metadata=trigger["metadata"],
@@ -523,8 +523,8 @@ class RealTimeStreamManager:
 
                 await self._broadcast_message(prediction_message)
 
-        except Exception as e:
-            logger.error(f"Prediction trigger handling failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Prediction trigger handling failed: {e!s}")
 
     async def _get_event_features(self, event_id: str) -> Optional[Dict[str, float]]:
         """Get latest features for an event"""
@@ -539,8 +539,8 @@ class RealTimeStreamManager:
                 "pace": 95.5,
             }
 
-        except Exception as e:
-            logger.error(f"Feature retrieval failed for event {event_id}: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Feature retrieval failed for event {event_id}: {e!s}")
             return None
 
     async def _broadcast_message(self, message: StreamMessage):
@@ -567,10 +567,10 @@ class RealTimeStreamManager:
                         await subscription.callback(message)
 
                     subscription.message_count += 1
-                    subscription.last_activity = datetime.utcnow()
+                    subscription.last_activity = datetime.now(timezone.utc)
                     broadcast_count += 1
 
-                except Exception as e:
+                except Exception as e:  # pylint: disable=broad-exception-caught
                     logger.warning(
                         f"Failed to send message to subscriber {subscriber_id}: {e!s}"
                     )
@@ -579,8 +579,8 @@ class RealTimeStreamManager:
 
             self.statistics["messages_sent"] += broadcast_count
 
-        except Exception as e:
-            logger.error(f"Message broadcast failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Message broadcast failed: {e!s}")
 
     def _message_matches_filters(
         self, message: StreamMessage, filters: Dict[str, Any]
@@ -601,8 +601,8 @@ class RealTimeStreamManager:
 
             return True
 
-        except Exception as e:
-            logger.warning(f"Filter matching failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("Filter matching failed: {e!s}")
             return True  # Default to allowing message
 
     async def _send_websocket_message(self, websocket, message: StreamMessage):
@@ -621,8 +621,8 @@ class RealTimeStreamManager:
 
             await websocket.send(json.dumps(message_data))
 
-        except Exception as e:
-            logger.warning(f"WebSocket send failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.warning("WebSocket send failed: {e!s}")
             raise
 
     def _mark_subscription_for_removal(self, subscriber_id: str):
@@ -636,7 +636,7 @@ class RealTimeStreamManager:
             while True:
                 await asyncio.sleep(30)  # Check every 30 seconds
 
-                current_time = datetime.utcnow()
+                current_time = datetime.now(timezone.utc)
                 inactive_threshold = timedelta(minutes=5)
 
                 inactive_subscribers = []
@@ -648,10 +648,10 @@ class RealTimeStreamManager:
                 # Remove inactive subscribers
                 for subscriber_id in inactive_subscribers:
                     await self.unsubscribe(subscriber_id)
-                    logger.info(f"Removed inactive subscriber: {subscriber_id}")
+                    logger.info("Removed inactive subscriber: {subscriber_id}")
 
-        except Exception as e:
-            logger.error(f"Heartbeat monitor error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Heartbeat monitor error: {e!s}")
 
     async def _statistics_updater(self):
         """Update system statistics"""
@@ -662,14 +662,14 @@ class RealTimeStreamManager:
                 self.statistics["active_subscribers"] = len(self.subscribers)
                 self.statistics["queue_size"] = self.message_queue.qsize()
                 self.statistics["uptime_seconds"] = (
-                    datetime.utcnow() - self.statistics["uptime_start"]
+                    datetime.now(timezone.utc) - self.statistics["uptime_start"]
                 ).total_seconds()
 
                 # Log statistics
-                logger.info(f"Stream stats: {self.statistics}")
+                logger.info("Stream stats: {self.statistics}")
 
-        except Exception as e:
-            logger.error(f"Statistics updater error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Statistics updater error: {e!s}")
 
     async def _cleanup_task(self):
         """Periodic cleanup of resources"""
@@ -678,7 +678,7 @@ class RealTimeStreamManager:
                 await asyncio.sleep(300)  # Cleanup every 5 minutes
 
                 # Cleanup expired messages in aggregator
-                current_time = datetime.utcnow()
+                current_time = datetime.now(timezone.utc)
 
                 for key, messages in list(
                     self.stream_aggregator.message_buffer.items()
@@ -695,8 +695,8 @@ class RealTimeStreamManager:
                     if not messages:
                         del self.stream_aggregator.message_buffer[key]
 
-        except Exception as e:
-            logger.error(f"Cleanup task error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Cleanup task error: {e!s}")
 
     async def subscribe(
         self,
@@ -724,11 +724,11 @@ class RealTimeStreamManager:
             if websocket:
                 self.websocket_connections.add(websocket)
 
-            logger.info(f"New subscription: {subscriber_id} for {stream_types}")
+            logger.info("New subscription: {subscriber_id} for {stream_types}")
             return True
 
-        except Exception as e:
-            logger.error(f"Subscription failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Subscription failed: {e!s}")
             return False
 
     async def unsubscribe(self, subscriber_id: str) -> bool:
@@ -744,13 +744,13 @@ class RealTimeStreamManager:
                     self.websocket_connections.remove(subscription.websocket)
 
                 del self.subscribers[subscriber_id]
-                logger.info(f"Unsubscribed: {subscriber_id}")
+                logger.info("Unsubscribed: {subscriber_id}")
                 return True
 
             return False
 
-        except Exception as e:
-            logger.error(f"Unsubscribe failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Unsubscribe failed: {e!s}")
             return False
 
     async def publish_message(self, message: StreamMessage):
@@ -775,8 +775,8 @@ class RealTimeStreamManager:
 
                 await self.redis_client.publish(channel, json.dumps(message_data))
 
-        except Exception as e:
-            logger.error(f"Message publishing failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Message publishing failed: {e!s}")
 
     async def get_stream_health(self) -> Dict[str, Any]:
         """Get real-time stream health metrics"""
@@ -795,8 +795,8 @@ class RealTimeStreamManager:
                 "trigger_cooldowns": len(self.prediction_trigger.last_predictions),
             }
 
-        except Exception as e:
-            logger.error(f"Stream health check failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Stream health check failed: {e!s}")
             return {"status": "unhealthy", "error": str(e)}
 
     async def shutdown(self):
@@ -821,8 +821,8 @@ class RealTimeStreamManager:
 
             logger.info("Real-time stream manager shutdown complete")
 
-        except Exception as e:
-            logger.error(f"Shutdown error: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Shutdown error: {e!s}")
 
 
 # Global instance

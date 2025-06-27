@@ -1,10 +1,9 @@
-import { refereeService, RefereeStats } from '../RefereeService';
+import { refereeService, RefereeStats } from '@/RefereeService.ts';
 
 global.fetch = jest.fn();
 
 describe('RefereeService', () => {
-  const refereeId = 'ref123';
-  const refereeIds = ['ref123', 'ref456'];
+
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -13,7 +12,7 @@ describe('RefereeService', () => {
   it('fetches referee stats', async () => {
     const mockStats: RefereeStats = { id: refereeId, name: 'John Doe', foulRate: 3.2 };
     (fetch as jest.Mock).mockResolvedValue({ ok: true, json: async () => mockStats });
-    const stats = await refereeService.getRefereeStats(refereeId);
+
     expect(stats).toEqual(mockStats);
     expect(fetch).toHaveBeenCalled();
   });
@@ -29,7 +28,7 @@ describe('RefereeService', () => {
       { id: 'ref456', name: 'Jane Smith', foulRate: 2.8 }
     ];
     (fetch as jest.Mock).mockResolvedValue({ ok: true, json: async () => mockStats });
-    const stats = await refereeService.getRefereeStatsBatch(refereeIds);
+
     expect(stats).toEqual(mockStats);
     expect(fetch).toHaveBeenCalled();
   });
@@ -44,7 +43,7 @@ describe('RefereeService', () => {
       { id: 'ref123', name: 'John Doe', foulRate: 3.2 }
     ];
     (fetch as jest.Mock).mockResolvedValue({ ok: true, json: async () => mockStats });
-    const stats = await refereeService.searchReferees('John');
+
     expect(stats).toEqual(mockStats);
     expect(fetch).toHaveBeenCalled();
   });
@@ -55,9 +54,9 @@ describe('RefereeService', () => {
   });
 
   it('fetches referee modeling', async () => {
-    const mockModeling = { impact: 0.7, bias: 0.1 };
+
     (fetch as jest.Mock).mockResolvedValue({ ok: true, json: async () => mockModeling });
-    const modeling = await refereeService.getRefereeModeling(refereeId);
+
     expect(modeling).toEqual(mockModeling);
     expect(fetch).toHaveBeenCalled();
   });

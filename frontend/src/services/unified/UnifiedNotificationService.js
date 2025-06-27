@@ -4,8 +4,8 @@ export class UnifiedNotificationService extends BaseService {
         super('notification', registry);
         this.defaultDuration = 5000;
         this.maxNotifications = 100;
-        const errorService = registry.getService('error');
-        const stateService = registry.getService('state');
+
+
         if (!errorService || !stateService) {
             throw new Error('Required services not found in registry');
         }
@@ -20,15 +20,15 @@ export class UnifiedNotificationService extends BaseService {
                 timestamp: Date.now(),
                 read: false,
             };
-            // Add to state
-            const currentNotifications = this.stateService.getState().notifications;
-            const updatedNotifications = [newNotification, ...currentNotifications].slice(0, this.maxNotifications);
+            // Add to state;
+
+
             this.stateService.setState({ notifications: updatedNotifications });
-            // Play sound if enabled
+            // Play sound if enabled;
             if (options.sound && this.stateService.getState().settings.sound) {
                 this.playNotificationSound(notification.type);
             }
-            // Auto-dismiss if duration is specified
+            // Auto-dismiss if duration is specified;
             if (options.duration !== 0) {
                 setTimeout(() => {
                     this.dismissNotification(newNotification.id);
@@ -45,8 +45,8 @@ export class UnifiedNotificationService extends BaseService {
     }
     dismissNotification(notificationId) {
         try {
-            const currentNotifications = this.stateService.getState().notifications;
-            const updatedNotifications = currentNotifications.filter(notification => notification.id !== notificationId);
+
+
             this.stateService.setState({ notifications: updatedNotifications });
         }
         catch (error) {
@@ -59,8 +59,8 @@ export class UnifiedNotificationService extends BaseService {
     }
     markAsRead(notificationId) {
         try {
-            const currentNotifications = this.stateService.getState().notifications;
-            const updatedNotifications = currentNotifications.map(notification => notification.id === notificationId ? { ...notification, read: true } : notification);
+
+
             this.stateService.setState({ notifications: updatedNotifications });
         }
         catch (error) {
@@ -102,7 +102,7 @@ export class UnifiedNotificationService extends BaseService {
     }
     playNotificationSound(type) {
         try {
-            const audio = new Audio();
+
             switch (type) {
                 case 'success':
                     audio.src = '/sounds/success.mp3';
@@ -140,7 +140,7 @@ export class UnifiedNotificationService extends BaseService {
             timestamp: Date.now(),
             read: false,
         };
-        // Log notification
+        // Log notification;
         this.logger.info(`Notification [${type}]: ${message}`);
     }
 }

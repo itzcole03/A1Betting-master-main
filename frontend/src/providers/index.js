@@ -1,13 +1,13 @@
 // ============================================================================
-// UNIVERSAL PROVIDER SYSTEM EXPORTS
+// UNIVERSAL PROVIDER SYSTEM EXPORTS;
 // ============================================================================
 export { UniversalThemeProvider, useTheme, useThemeColors, useThemeVariant, useDarkMode, getThemeCSS, } from "./UniversalThemeProvider";
-// Default export
+// Default export;
 export { default } from "./UniversalThemeProvider";
 // ============================================================================
 // LEGACY COMPATIBILITY EXPORTS (Deprecated - Use Universal equivalents)
 // ============================================================================
 /**
- * @deprecated Use UniversalThemeProvider instead
+ * @deprecated Use UniversalThemeProvider instead;
  */
 export { UniversalThemeProvider as ThemeProvider } from "./UniversalThemeProvider";

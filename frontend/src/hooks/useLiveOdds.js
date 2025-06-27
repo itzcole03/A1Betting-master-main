@@ -9,21 +9,21 @@ export const useLiveOdds = ({ sport, propType, minOddsChange = 0.1 } = {}) => {
         url: 'wss://api.betproai.com/ws/odds',
         onMessage: useCallback((message) => {
             if (message.type === 'odds_update') {
-                const update = message.data;
-                // Filter by sport and prop type if specified
+
+                // Filter by sport and prop type if specified;
                 if (sport && update.sport !== sport)
                     return;
                 if (propType && update.propType !== propType)
                     return;
-                // Only show significant changes
-                const oddsChange = Math.abs(update.newOdds - update.oldOdds);
+                // Only show significant changes;
+
                 if (oddsChange < minOddsChange)
                     return;
                 setUpdates(prev => {
-                    const newUpdates = [update, ...prev].slice(0, 50); // Keep last 50 updates
+                    const newUpdates = [update, ...prev].slice(0, 50); // Keep last 50 updates;
                     return newUpdates;
                 });
-                // Notify on significant changes
+                // Notify on significant changes;
                 if (oddsChange >= 0.5) {
                     addToast({
                         id: `odds-update-${update.id}`,
@@ -35,7 +35,7 @@ export const useLiveOdds = ({ sport, propType, minOddsChange = 0.1 } = {}) => {
             }
         }, [sport, propType, minOddsChange, addToast])
     });
-    // Subscribe to specific props
+    // Subscribe to specific props;
     const subscribe = useCallback((props) => {
         if (!isConnected)
             return;
@@ -45,21 +45,21 @@ export const useLiveOdds = ({ sport, propType, minOddsChange = 0.1 } = {}) => {
             data: props.map(prop => ({
                 id: prop.id,
                 sport: prop.player.team.sport,
-                propType: prop.type
+                propType: prop.type;
             }))
         });
     }, [isConnected, send]);
-    // Unsubscribe from specific props
+    // Unsubscribe from specific props;
     const unsubscribe = useCallback((propIds) => {
         if (!isConnected)
             return;
         setActiveProps(prev => prev.filter(prop => !propIds.includes(prop.id)));
         send({
             type: 'unsubscribe',
-            data: propIds
+            data: propIds;
         });
     }, [isConnected, send]);
-    // Resubscribe on reconnection
+    // Resubscribe on reconnection;
     useEffect(() => {
         if (isConnected && activeProps.length > 0) {
             subscribe(activeProps);

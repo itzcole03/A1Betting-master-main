@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect, useCallback  } from 'react.ts';
+import { motion } from 'framer-motion.ts';
 import {
   BarChart3,
   Brain,
@@ -15,22 +15,22 @@ import {
   Eye,
   Cpu,
   Network,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// Import existing analytics component
-import AdvancedAnalyticsHub from "../analytics/AdvancedAnalyticsHub";
+// Import existing analytics component;
+import AdvancedAnalyticsHub from '@/analytics/AdvancedAnalyticsHub.ts';
 
-// Cyber UI Components
-import GlassCard from "../ui/GlassCard";
-import CyberButton from "../ui/CyberButton";
-import MetricCard from "../ui/MetricCard";
-import StatusIndicator from "../ui/StatusIndicator";
+// Cyber UI Components;
+import GlassCard from '@/ui/GlassCard.ts';
+import CyberButton from '@/ui/CyberButton.ts';
+import MetricCard from '@/ui/MetricCard.ts';
+import StatusIndicator from '@/ui/StatusIndicator.ts';
 
-// Store integration
+// Store integration;
 import {
   usePredictions,
   useBetting,
-} from "../../store/unified/UnifiedStoreManager";
+} from '@/store/unified/UnifiedStoreManager.ts';
 
 interface AnalyticsMetric {
   name: string;
@@ -65,11 +65,11 @@ interface CyberAnalyticsState {
 }
 
 const CyberAnalyticsHub: React.FC = () => {
-  // State management
-  const [state, setState] = useState<CyberAnalyticsState>({
+  // State management;
+  const [state, setState] = useState<CyberAnalyticsState key={545510}>({
     isAnalyzing: false,
     autoRefresh: true,
-    refreshInterval: 10000, // 10 seconds
+    refreshInterval: 10000, // 10 seconds;
     metrics: [],
     modelAnalytics: [],
     timeRange: "24h",
@@ -77,13 +77,13 @@ const CyberAnalyticsHub: React.FC = () => {
     lastUpdate: null,
   });
 
-  // Store integration
+  // Store integration;
   const { latestPredictions } = usePredictions();
   const { bets, opportunities } = useBetting();
 
-  // Generate enhanced metrics
+  // Generate enhanced metrics;
   const generateCyberMetrics = useCallback((): AnalyticsMetric[] => {
-    const currentTime = Date.now();
+
     const timeRangeMs = {
       "1h": 3600000,
       "24h": 86400000,
@@ -122,10 +122,10 @@ const CyberAnalyticsHub: React.FC = () => {
       {
         name: "Confidence Score",
         value:
-          recentPredictions.length > 0
+          recentPredictions.length > 0;
             ? (recentPredictions.reduce((sum, p) => sum + p.confidence, 0) /
                 recentPredictions.length) *
-              100
+              100;
             : 0,
         unit: "%",
         change: 1.8,
@@ -167,7 +167,7 @@ const CyberAnalyticsHub: React.FC = () => {
     ];
   }, [latestPredictions, bets, state.timeRange]);
 
-  // Generate model analytics
+  // Generate model analytics;
   const generateModelAnalytics = useCallback((): ModelAnalysis[] => {
     return [
       {
@@ -177,7 +177,7 @@ const CyberAnalyticsHub: React.FC = () => {
         predictions: 1247,
         profitability: 156.8,
         status: "active",
-        lastUpdate: new Date(Date.now() - 300000), // 5 minutes ago
+        lastUpdate: new Date(Date.now() - 300000), // 5 minutes ago;
       },
       {
         modelName: "Neural Network Pro",
@@ -186,7 +186,7 @@ const CyberAnalyticsHub: React.FC = () => {
         predictions: 987,
         profitability: 134.2,
         status: "active",
-        lastUpdate: new Date(Date.now() - 180000), // 3 minutes ago
+        lastUpdate: new Date(Date.now() - 180000), // 3 minutes ago;
       },
       {
         modelName: "Quantum Predictor",
@@ -195,7 +195,7 @@ const CyberAnalyticsHub: React.FC = () => {
         predictions: 456,
         profitability: 198.7,
         status: "training",
-        lastUpdate: new Date(Date.now() - 600000), // 10 minutes ago
+        lastUpdate: new Date(Date.now() - 600000), // 10 minutes ago;
       },
       {
         modelName: "Ensemble Alpha",
@@ -204,7 +204,7 @@ const CyberAnalyticsHub: React.FC = () => {
         predictions: 2134,
         profitability: 112.5,
         status: "active",
-        lastUpdate: new Date(Date.now() - 120000), // 2 minutes ago
+        lastUpdate: new Date(Date.now() - 120000), // 2 minutes ago;
       },
       {
         modelName: "Deep Learning V2",
@@ -213,21 +213,19 @@ const CyberAnalyticsHub: React.FC = () => {
         predictions: 1567,
         profitability: 145.3,
         status: "active",
-        lastUpdate: new Date(Date.now() - 90000), // 1.5 minutes ago
+        lastUpdate: new Date(Date.now() - 90000), // 1.5 minutes ago;
       },
     ];
   }, []);
 
-  // Perform cyber analysis
+  // Perform cyber analysis;
   const performCyberAnalysis = useCallback(async () => {
     setState((prev) => ({ ...prev, isAnalyzing: true }));
 
     try {
-      // Simulate analysis process
+      // Simulate analysis process;
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      const metrics = generateCyberMetrics();
-      const modelAnalytics = generateModelAnalytics();
 
       setState((prev) => ({
         ...prev,
@@ -237,12 +235,12 @@ const CyberAnalyticsHub: React.FC = () => {
         isAnalyzing: false,
       }));
     } catch (error) {
-      console.error("Cyber analysis failed:", error);
+      // console statement removed
       setState((prev) => ({ ...prev, isAnalyzing: false }));
     }
   }, [generateCyberMetrics, generateModelAnalytics]);
 
-  // Auto refresh effect
+  // Auto refresh effect;
   useEffect(() => {
     let intervalId: NodeJS.Timeout;
 
@@ -255,7 +253,7 @@ const CyberAnalyticsHub: React.FC = () => {
     };
   }, [state.autoRefresh, state.refreshInterval, performCyberAnalysis]);
 
-  // Initial analysis
+  // Initial analysis;
   useEffect(() => {
     performCyberAnalysis();
   }, [performCyberAnalysis]);
@@ -287,30 +285,30 @@ const CyberAnalyticsHub: React.FC = () => {
   };
 
   return (
-    <div className="space-y-8 animate-slide-in-up">
+    <div className="space-y-8 animate-slide-in-up" key={741941}>
       {/* Cyber Header */}
-      <div className="text-center mb-8">
-        <div className="text-6xl mb-6 text-electric-400 float-element">
-          <BarChart3 className="w-16 h-16 mx-auto" />
+      <div className="text-center mb-8" key={490373}>
+        <div className="text-6xl mb-6 text-electric-400 float-element" key={181314}>
+          <BarChart3 className="w-16 h-16 mx-auto" / key={214272}>
         </div>
-        <h1 className="holographic text-4xl font-black mb-4">
-          QUANTUM ANALYTICS
+        <h1 className="holographic text-4xl font-black mb-4" key={25617}>
+          QUANTUM ANALYTICS;
         </h1>
-        <p className="text-xl text-gray-400 max-w-2xl mx-auto">
-          Advanced AI-powered analytics with real-time performance monitoring
+        <p className="text-xl text-gray-400 max-w-2xl mx-auto" key={760682}>
+          Advanced AI-powered analytics with real-time performance monitoring;
         </p>
       </div>
 
       {/* Control Panel */}
-      <GlassCard title="Analytics Control Center" glowing={state.isAnalyzing}>
-        <div className="flex flex-wrap gap-4 items-center justify-between mb-6">
+      <GlassCard title="Analytics Control Center" glowing={state.isAnalyzing} key={162265}>
+        <div className="flex flex-wrap gap-4 items-center justify-between mb-6" key={810571}>
           {/* Time Range Selector */}
-          <div className="flex space-x-2">
+          <div className="flex space-x-2" key={753076}>
             {(["1h", "24h", "7d", "30d"] as const).map((range) => (
-              <CyberButton
+              <CyberButton;
                 key={range}
                 label={range}
-                onClick={() =>
+                onClick={() = key={260248}>
                   setState((prev) => ({ ...prev, timeRange: range }))
                 }
                 variant={state.timeRange === range ? "primary" : "ghost"}
@@ -320,18 +318,18 @@ const CyberAnalyticsHub: React.FC = () => {
           </div>
 
           {/* Control Buttons */}
-          <div className="flex gap-4 items-center">
-            <CyberButton
+          <div className="flex gap-4 items-center" key={274395}>
+            <CyberButton;
               label={state.isAnalyzing ? "ANALYZING..." : "QUANTUM ANALYSIS"}
               onClick={performCyberAnalysis}
               variant="primary"
               icon="fa-chart-line"
               disabled={state.isAnalyzing}
-            />
+            / key={234856}>
 
-            <CyberButton
+            <CyberButton;
               label={state.autoRefresh ? "AUTO ON" : "AUTO OFF"}
-              onClick={() =>
+              onClick={() = key={27904}>
                 setState((prev) => ({
                   ...prev,
                   autoRefresh: !prev.autoRefresh,
@@ -342,19 +340,19 @@ const CyberAnalyticsHub: React.FC = () => {
               icon="fa-refresh"
             />
 
-            <StatusIndicator
+            <StatusIndicator;
               status={state.isAnalyzing ? "warning" : "active"}
               label={
-                state.lastUpdate
+                state.lastUpdate;
                   ? `Updated: ${state.lastUpdate.toLocaleTimeString()}`
                   : "Ready"
               }
-            />
+            / key={250648}>
           </div>
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex space-x-4 mb-6">
+        <div className="flex space-x-4 mb-6" key={676161}>
           {(
             [
               { key: "overview", label: "Overview", icon: "fa-eye" },
@@ -366,12 +364,12 @@ const CyberAnalyticsHub: React.FC = () => {
               },
               { key: "risk", label: "Risk Analysis", icon: "fa-shield-alt" },
               { key: "insights", label: "AI Insights", icon: "fa-lightbulb" },
-            ] as const
+            ] as const;
           ).map((tab) => (
-            <CyberButton
+            <CyberButton;
               key={tab.key}
               label={tab.label}
-              onClick={() =>
+              onClick={() = key={948946}>
                 setState((prev) => ({ ...prev, selectedTab: tab.key }))
               }
               variant={state.selectedTab === tab.key ? "primary" : "ghost"}
@@ -384,19 +382,19 @@ const CyberAnalyticsHub: React.FC = () => {
 
       {/* Overview Tab */}
       {state.selectedTab === "overview" && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={881323}>
           {state.metrics.map((metric, index) => (
-            <motion.div
+            <motion.div;
               key={metric.name}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
-            >
-              <MetricCard
+             key={445680}>
+              <MetricCard;
                 label={metric.name}
                 value={`${metric.value.toFixed(1)}${metric.unit}`}
                 icon={metric.icon}
-                change={`${metric.change > 0 ? "+" : ""}${metric.change.toFixed(1)}${metric.unit}`}
+                change={`${metric.change  key={189912}> 0 ? "+" : ""}${metric.change.toFixed(1)}${metric.unit}`}
                 trend={metric.trend}
               />
             </motion.div>
@@ -406,10 +404,10 @@ const CyberAnalyticsHub: React.FC = () => {
 
       {/* Models Tab */}
       {state.selectedTab === "models" && (
-        <GlassCard title="AI Model Performance" glowing={true}>
-          <div className="space-y-4">
+        <GlassCard title="AI Model Performance" glowing={true} key={58199}>
+          <div className="space-y-4" key={160407}>
             {state.modelAnalytics.map((model, index) => (
-              <motion.div
+              <motion.div;
                 key={model.modelName}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -420,14 +418,14 @@ const CyberAnalyticsHub: React.FC = () => {
                   backdropFilter: "blur(20px) saturate(180%)",
                   border: "1px solid rgba(255, 255, 255, 0.1)",
                 }}
-              >
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-lg font-bold text-white">
+               key={949597}>
+                <div className="flex justify-between items-start mb-4" key={413486}>
+                  <div key={241917}>
+                    <h3 className="text-lg font-bold text-white" key={472694}>
                       {model.modelName}
                     </h3>
-                    <div className="flex items-center space-x-2 mt-1">
-                      <div
+                    <div className="flex items-center space-x-2 mt-1" key={590221}>
+                      <div;
                         className={`w-2 h-2 rounded-full animate-pulse ${
                           model.status === "active"
                             ? "bg-green-400"
@@ -435,46 +433,46 @@ const CyberAnalyticsHub: React.FC = () => {
                               ? "bg-yellow-400"
                               : "bg-red-400"
                         }`}
-                      />
-                      <span
+                      / key={962807}>
+                      <span;
                         className={`text-sm font-medium ${getStatusColor(model.status)}`}
-                      >
+                       key={859081}>
                         {model.status.toUpperCase()}
                       </span>
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold text-electric-400">
+                  <div className="text-right" key={144468}>
+                    <div className="text-2xl font-bold text-electric-400" key={321205}>
                       {model.accuracy.toFixed(1)}%
                     </div>
-                    <div className="text-xs text-gray-400">Accuracy</div>
+                    <div className="text-xs text-gray-400" key={588004}>Accuracy</div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-4 gap-4">
-                  <div className="text-center p-3 glass-card rounded-lg">
-                    <div className="text-lg font-bold text-green-400">
+                <div className="grid grid-cols-4 gap-4" key={99198}>
+                  <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                    <div className="text-lg font-bold text-green-400" key={499793}>
                       {model.confidence.toFixed(1)}%
                     </div>
-                    <div className="text-xs text-gray-400">Confidence</div>
+                    <div className="text-xs text-gray-400" key={588004}>Confidence</div>
                   </div>
-                  <div className="text-center p-3 glass-card rounded-lg">
-                    <div className="text-lg font-bold text-blue-400">
+                  <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                    <div className="text-lg font-bold text-blue-400" key={930283}>
                       {model.predictions.toLocaleString()}
                     </div>
-                    <div className="text-xs text-gray-400">Predictions</div>
+                    <div className="text-xs text-gray-400" key={588004}>Predictions</div>
                   </div>
-                  <div className="text-center p-3 glass-card rounded-lg">
-                    <div className="text-lg font-bold text-purple-400">
+                  <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                    <div className="text-lg font-bold text-purple-400" key={77027}>
                       {model.profitability.toFixed(1)}%
                     </div>
-                    <div className="text-xs text-gray-400">Profitability</div>
+                    <div className="text-xs text-gray-400" key={588004}>Profitability</div>
                   </div>
-                  <div className="text-center p-3 glass-card rounded-lg">
-                    <div className="text-lg font-bold text-yellow-400">
+                  <div className="text-center p-3 glass-card rounded-lg" key={17998}>
+                    <div className="text-lg font-bold text-yellow-400" key={712325}>
                       {model.lastUpdate.toLocaleTimeString()}
                     </div>
-                    <div className="text-xs text-gray-400">Last Update</div>
+                    <div className="text-xs text-gray-400" key={588004}>Last Update</div>
                   </div>
                 </div>
               </motion.div>
@@ -485,31 +483,31 @@ const CyberAnalyticsHub: React.FC = () => {
 
       {/* Performance Tab */}
       {state.selectedTab === "performance" && (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <GlassCard title="Performance Overview">
-            <div className="space-y-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8" key={119153}>
+          <GlassCard title="Performance Overview" key={944960}>
+            <div className="space-y-4" key={160407}>
               {state.metrics.slice(0, 3).map((metric, index) => (
-                <div
+                <div;
                   key={metric.name}
                   className={`p-4 rounded-lg border ${getMetricStatusColor(metric.status)}`}
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="font-semibold text-white">
+                 key={382996}>
+                  <div className="flex justify-between items-center" key={795957}>
+                    <div key={241917}>
+                      <div className="font-semibold text-white" key={93613}>
                         {metric.name}
                       </div>
-                      <div className="text-sm text-gray-400">
+                      <div className="text-sm text-gray-400" key={372957}>
                         {metric.description}
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-xl font-bold text-electric-400">
+                    <div className="text-right" key={144468}>
+                      <div className="text-xl font-bold text-electric-400" key={723623}>
                         {metric.value.toFixed(1)}
                         {metric.unit}
                       </div>
-                      <div
+                      <div;
                         className={`text-sm ${metric.trend === "up" ? "text-green-400" : "text-red-400"}`}
-                      >
+                       key={385759}>
                         {metric.change > 0 ? "+" : ""}
                         {metric.change.toFixed(1)}
                         {metric.unit}
@@ -521,15 +519,15 @@ const CyberAnalyticsHub: React.FC = () => {
             </div>
           </GlassCard>
 
-          <GlassCard title="Real-Time Chart">
-            <div className="h-64 bg-gradient-to-br from-electric-400/20 to-purple-500/20 rounded-lg flex items-center justify-center">
-              <div className="text-center">
-                <Activity className="w-12 h-12 text-electric-400 mx-auto mb-4" />
-                <div className="text-electric-400 font-bold">
-                  Real-Time Performance Chart
+          <GlassCard title="Real-Time Chart" key={722251}>
+            <div className="h-64 bg-gradient-to-br from-electric-400/20 to-purple-500/20 rounded-lg flex items-center justify-center" key={332700}>
+              <div className="text-center" key={120206}>
+                <Activity className="w-12 h-12 text-electric-400 mx-auto mb-4" / key={519903}>
+                <div className="text-electric-400 font-bold" key={280620}>
+                  Real-Time Performance Chart;
                 </div>
-                <div className="text-sm text-gray-400">
-                  Interactive visualization placeholder
+                <div className="text-sm text-gray-400" key={372957}>
+                  Interactive visualization placeholder;
                 </div>
               </div>
             </div>
@@ -538,9 +536,9 @@ const CyberAnalyticsHub: React.FC = () => {
       )}
 
       {/* Legacy Integration */}
-      <GlassCard title="Advanced Analytics Integration">
-        <div className="p-4 glass-card rounded-lg">
-          <AdvancedAnalyticsHub />
+      <GlassCard title="Advanced Analytics Integration" key={482825}>
+        <div className="p-4 glass-card rounded-lg" key={629818}>
+          <AdvancedAnalyticsHub / key={342526}>
         </div>
       </GlassCard>
     </div>

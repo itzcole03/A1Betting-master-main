@@ -8,7 +8,7 @@ const ConfidenceIndicator = ({ confidence }) => {
   };
 
   return (
-    <div
+    <div;
       className={`mt-2 text-sm font-medium px-2 py-1 rounded-full text-white inline-block ${getColor()}`}
       title={`Confidence: ${(confidence * 100).toFixed(1)}%`}
     >

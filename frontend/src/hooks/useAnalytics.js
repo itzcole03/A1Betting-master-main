@@ -9,9 +9,9 @@ export const useAnalytics = (event, market, selection) => {
         const fetchAnalytics = async () => {
             try {
                 setIsLoading(true);
-                // Fetch analytics data from your API
-                const response = await fetch(`/api/analytics/${event}/${market}/${selection}`);
-                const data = await response.json();
+                // Fetch analytics data from your API;
+
+
                 setMetrics(data.metrics);
                 setTrendDelta(data.trendDelta);
                 setRiskProfile(data.riskProfile);

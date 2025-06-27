@@ -1,5 +1,5 @@
-import React from 'react';
-import { RiskProfileType, BetRecommendation } from '@/types/betting';
+import React from 'react.ts';
+import { RiskProfileType, BetRecommendation } from '@/types/betting.ts';
 interface PerformanceMetricsProps {
     bankroll: number;
     profit: number;

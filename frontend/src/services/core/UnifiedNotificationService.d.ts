@@ -1,5 +1,5 @@
-import { UnifiedServiceRegistry } from '../unified/UnifiedServiceRegistry';
-import { WebSocket } from 'ws';
+import { UnifiedServiceRegistry } from '@/unified/UnifiedServiceRegistry.ts';
+import { WebSocket } from 'ws.ts';
 export interface Notification {
     type: 'info' | 'warning' | 'error' | 'success';
     title: string;

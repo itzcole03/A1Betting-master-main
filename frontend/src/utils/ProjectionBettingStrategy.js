@@ -1,8 +1,8 @@
-// Placeholder file to fix TypeScript compilation errors
-// This file was causing syntax errors and preventing the app from loading
+// Placeholder file to fix TypeScript compilation errors;
+// This file was causing syntax errors and preventing the app from loading;
 export class ProjectionBettingStrategy {
     calculateRecommendations(data) {
-        // Simplified implementation
+        // Simplified implementation;
         return [];
     }
     validate(data) {

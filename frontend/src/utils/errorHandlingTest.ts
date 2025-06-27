@@ -1,10 +1,10 @@
 /**
- * Error Handling Verification Test
- * Tests that console errors are properly managed and not spamming the console
+ * Error Handling Verification Test;
+ * Tests that console errors are properly managed and not spamming the console;
  */
 
-import { api } from "../services/api";
-import { consoleManager } from "./consoleUtils";
+import { api } from '@/services/api.ts';
+import { consoleManager } from './consoleUtils.ts';
 
 export interface ErrorTestResult {
   testName: string;
@@ -19,7 +19,7 @@ export class ErrorHandlingTest {
   private static originalConsoleError = console.error;
 
   /**
-   * Setup console monitoring
+   * Setup console monitoring;
    */
   private static setupConsoleMonitoring() {
     console.error = (...args) => {
@@ -29,24 +29,23 @@ export class ErrorHandlingTest {
   }
 
   /**
-   * Cleanup console monitoring
+   * Cleanup console monitoring;
    */
   private static cleanupConsoleMonitoring() {
     console.error = this.originalConsoleError;
   }
 
   /**
-   * Test that multiple API calls don't spam console errors
+   * Test that multiple API calls don't spam console errors;
    */
   static async testConsoleSpamPrevention(): Promise<ErrorTestResult> {
     this.setupConsoleMonitoring();
-    const startErrorCount = this.consoleErrorCount;
 
     try {
-      // Reset console manager state
+      // Reset console manager state;
       consoleManager.reset();
 
-      // Make multiple API calls that will fail
+      // Make multiple API calls that will fail;
       await Promise.all([
         api.getValueBets(),
         api.getArbitrageOpportunities(),
@@ -55,7 +54,7 @@ export class ErrorHandlingTest {
         api.getAccuracyMetrics(),
       ]);
 
-      // Make the same calls again to test suppression
+      // Make the same calls again to test suppression;
       await Promise.all([
         api.getValueBets(),
         api.getArbitrageOpportunities(),
@@ -64,11 +63,9 @@ export class ErrorHandlingTest {
         api.getAccuracyMetrics(),
       ]);
 
-      const endErrorCount = this.consoleErrorCount;
-      const newErrors = endErrorCount - startErrorCount;
 
-      // We should have very few console errors due to suppression
-      const passed = newErrors <= 2; // Allow for 1-2 errors max
+      // We should have very few console errors due to suppression;
+      const passed = newErrors <= 2; // Allow for 1-2 errors max;
 
       return {
         testName: "Console Spam Prevention",
@@ -83,7 +80,7 @@ export class ErrorHandlingTest {
   }
 
   /**
-   * Test that API methods return proper default values
+   * Test that API methods return proper default values;
    */
   static async testDefaultValueReturns(): Promise<ErrorTestResult> {
     try {
@@ -95,17 +92,17 @@ export class ErrorHandlingTest {
         api.getAccuracyMetrics(),
       ]);
 
-      // All should resolve (not reject) with default values
+      // All should resolve (not reject) with default values;
       const allResolved = results.every(
         (result) => result.status === "fulfilled",
       );
 
-      let details = "";
+      const details = "";
       if (allResolved) {
         const values = results.map((r) =>
           r.status === "fulfilled" ? r.value : null,
         );
-        details = `All API calls returned default values: ${values
+        details = `All API calls returned default values: ${values;
           .map((v) =>
             Array.isArray(v)
               ? `[]`
@@ -140,27 +137,24 @@ export class ErrorHandlingTest {
   }
 
   /**
-   * Test console manager state management
+   * Test console manager state management;
    */
   static async testConsoleManagerState(): Promise<ErrorTestResult> {
     try {
-      // Reset state
+      // Reset state;
       consoleManager.reset();
 
-      // Should not suppress initially
-      const initialSuppress = consoleManager.shouldSuppressNetworkErrors();
+      // Should not suppress initially;
 
-      // Trigger offline logging
+      // Trigger offline logging;
       consoleManager.logBackendOffline();
 
-      // Should suppress after offline logging
-      const afterOfflineSuppress = consoleManager.shouldSuppressNetworkErrors();
+      // Should suppress after offline logging;
 
-      // Trigger online logging
+      // Trigger online logging;
       consoleManager.logBackendOnline();
 
-      // Should not suppress after online
-      const afterOnlineSuppress = consoleManager.shouldSuppressNetworkErrors();
+      // Should not suppress after online;
 
       const passed =
         !initialSuppress && afterOfflineSuppress && !afterOnlineSuppress;
@@ -184,7 +178,7 @@ export class ErrorHandlingTest {
   }
 
   /**
-   * Run all error handling tests
+   * Run all error handling tests;
    */
   static async runAllTests(): Promise<ErrorTestResult[]> {
     return [
@@ -195,17 +189,16 @@ export class ErrorHandlingTest {
   }
 
   /**
-   * Generate test report
+   * Generate test report;
    */
   static generateReport(results: ErrorTestResult[]): string {
-    const passed = results.filter((r) => r.passed).length;
-    const total = results.length;
 
-    let report = `🛠️  Error Handling Test Report\n`;
+
+    const report = `🛠️  Error Handling Test Report\n`;
     report += `📊 Results: ${passed}/${total} tests passed\n\n`;
 
     results.forEach((result) => {
-      const status = result.passed ? "✅" : "❌";
+
       report += `${status} ${result.testName}\n`;
       report += `   ${result.details}\n`;
       if (result.consoleBefore || result.consoleAfter) {
@@ -224,13 +217,13 @@ export class ErrorHandlingTest {
   }
 
   /**
-   * Run tests and log results
+   * Run tests and log results;
    */
   static async runAndLog(): Promise<void> {
-    console.log("🧪 Testing error handling improvements...");
-    const results = await this.runAllTests();
-    const report = this.generateReport(results);
-    console.log(report);
+    // console statement removed
+
+
+    // console statement removed
   }
 }
 

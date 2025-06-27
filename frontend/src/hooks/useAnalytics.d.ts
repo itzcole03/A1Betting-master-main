@@ -1,4 +1,4 @@
-import { PerformanceMetrics, TrendDelta, RiskProfile } from '../types/analytics';
+import { PerformanceMetrics, TrendDelta, RiskProfile } from '@/types/analytics.ts';
 interface AnalyticsResult {
     metrics: PerformanceMetrics;
     trendDelta: TrendDelta;

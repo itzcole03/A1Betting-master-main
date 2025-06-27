@@ -1,4 +1,4 @@
-import { BookOdds, BettingOpportunity, TeaserLeg, TeaserStrategy } from '@/types/betting';
+import { BookOdds, BettingOpportunity, TeaserLeg, TeaserStrategy } from '@/types/betting.ts';
 export declare class BettingStrategyService {
     private static instance;
     private historicalData;

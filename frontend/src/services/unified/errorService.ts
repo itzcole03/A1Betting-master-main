@@ -1,5 +1,5 @@
-import UnifiedNotificationService from './notificationService';
-import UnifiedSettingsService from './settingsService';
+import UnifiedNotificationService from './notificationService.ts';
+import UnifiedSettingsService from './settingsService.ts';
 
 interface ErrorDetails {
   code: string;
@@ -32,7 +32,7 @@ class UnifiedErrorService {
     showNotifications: true,
     reportToServer: true,
     maxStoredErrors: 100,
-    autoClearInterval: 24 * 60 * 60 * 1000, // 24 hours
+    autoClearInterval: 24 * 60 * 60 * 1000, // 24 hours;
   };
 
   protected constructor() {
@@ -51,12 +51,12 @@ class UnifiedErrorService {
 
   private loadErrors(): void {
     try {
-      const stored = localStorage.getItem(this.STORAGE_KEY);
+
       if (stored) {
         this.errors = JSON.parse(stored);
       }
     } catch (error) {
-      console.error('Error loading stored errors:', error);
+      // console statement removed
       this.errors = [];
     }
   }
@@ -65,7 +65,7 @@ class UnifiedErrorService {
     try {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.errors));
     } catch (error) {
-      console.error('Error saving errors:', error);
+      // console statement removed
     }
   }
 
@@ -79,7 +79,7 @@ class UnifiedErrorService {
     error: Error | string,
     source: string,
     severity: ErrorDetails['severity'] = 'medium',
-    context?: any
+    context?: any;
   ): void {
     const errorDetails: ErrorDetails = {
       code: this.generateErrorCode(error),
@@ -91,42 +91,41 @@ class UnifiedErrorService {
       context,
     };
 
-    // Store error
+    // Store error;
     this.errors.unshift(errorDetails);
     if (this.errors.length > this.config.maxStoredErrors) {
       this.errors = this.errors.slice(0, this.config.maxStoredErrors);
     }
     this.saveErrors();
 
-    // Log to console if enabled
+    // Log to console if enabled;
     if (this.config.logToConsole) {
       this.logToConsole(errorDetails);
     }
 
-    // Show notification if enabled
+    // Show notification if enabled;
     if (this.config.showNotifications) {
       this.showNotification(errorDetails);
     }
 
-    // Report to server if enabled
+    // Report to server if enabled;
     if (this.config.reportToServer) {
       this.reportToServer(errorDetails);
     }
 
-    // Dispatch error event
+    // Dispatch error event;
     this.dispatchErrorEvent(errorDetails);
   }
 
   private generateErrorCode(error: Error | string): string {
-    const prefix = 'ESA';
-    const timestamp = Date.now().toString(36);
-    const random = Math.random().toString(36).substring(2, 5);
+
+
+
     return `${prefix}-${timestamp}-${random}`;
   }
 
   private logToConsole(error: ErrorDetails): void {
-    const isDebug = this.settingsService.isDebugMode();
-    const logMethod = error.severity === 'critical' ? 'error' : 'warn';
+
 
     if (isDebug) {
       console[logMethod]('Error Details:', {
@@ -143,8 +142,7 @@ class UnifiedErrorService {
   }
 
   private showNotification(error: ErrorDetails): void {
-    const message = `[${error.code}] ${error.message}`;
-    const title = `Error in ${error.source}`;
+
 
     switch (error.severity) {
       case 'critical':
@@ -164,7 +162,7 @@ class UnifiedErrorService {
 
   private async reportToServer(error: ErrorDetails): Promise<void> {
     try {
-      const settings = this.settingsService.getSettings();
+
       const response = await fetch(`${settings.apiUrl}/api/errors`, {
         method: 'POST',
         headers: {
@@ -177,7 +175,7 @@ class UnifiedErrorService {
         throw new Error('Failed to report error to server');
       }
     } catch (error) {
-      console.error('Error reporting to server:', error);
+      // console statement removed
     }
   }
 
@@ -206,7 +204,7 @@ class UnifiedErrorService {
   }
 
   public clearOldErrors(maxAge: number): void {
-    const cutoff = Date.now() - maxAge;
+
     this.errors = this.errors.filter(error => error.timestamp > cutoff);
     this.saveErrors();
   }

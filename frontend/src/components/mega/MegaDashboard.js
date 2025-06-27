@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
 import { CYBER_COLORS, CYBER_GRADIENTS, CyberContainer, CyberText, CyberButton, } from "./CyberTheme";
 import { Brain, Target, BarChart3, Zap, TrendingUp, DollarSign, Activity, Cpu, Database, Wifi, } from "lucide-react";
-// MEGA DASHBOARD - Consolidates all dashboard components with cyber theme
+// MEGA DASHBOARD - Consolidates all dashboard components with cyber theme;
 const MegaDashboard = ({ currentSection = "dashboard", connectedSources = 12, dataQuality = 87, userStats = {}, liveMetrics = {}, className = "", }) => {
     const [activeTab, setActiveTab] = useState("overview");
     const [autoRefresh, setAutoRefresh] = useState(true);
@@ -14,7 +14,7 @@ const MegaDashboard = ({ currentSection = "dashboard", connectedSources = 12, da
         totalPredictions: 1847,
         success: 87.6,
     });
-    // Auto-refresh metrics every 10 seconds
+    // Auto-refresh metrics every 10 seconds;
     useEffect(() => {
         if (!autoRefresh)
             return;
@@ -80,7 +80,7 @@ const MegaDashboard = ({ currentSection = "dashboard", connectedSources = 12, da
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
             gap: "24px",
         }, children: [dashboardCards.map((card, index) => {
-                const Icon = card.icon;
+
                 return (_jsx(CyberContainer, { variant: "card", style: { padding: "20px" }, children: _jsxs("div", { style: {
                             display: "flex",
                             justifyContent: "space-between",
@@ -145,7 +145,7 @@ const MegaDashboard = ({ currentSection = "dashboard", connectedSources = 12, da
                             justifyContent: "space-between",
                             alignItems: "center",
                             padding: "8px 0",
-                            borderBottom: index < systemStats.length - 1
+                            borderBottom: index < systemStats.length - 1;
                                 ? "1px solid rgba(255, 255, 255, 0.05)"
                                 : "none",
                         }, children: [_jsx(CyberText, { variant: "body", color: "secondary", children: stat.label }), _jsx(CyberText, { variant: "body", style: { color: stat.color, fontWeight: "600" }, children: stat.value })] }, index)))] }), _jsxs(CyberContainer, { variant: "card", style: { padding: "20px" }, children: [_jsxs(CyberText, { variant: "title", style: {
@@ -176,7 +176,7 @@ const MegaDashboard = ({ currentSection = "dashboard", connectedSources = 12, da
                             alignItems: "center",
                             marginBottom: "16px",
                         }, children: [_jsxs("div", { children: [_jsx(CyberText, { variant: "title", style: { fontSize: "28px", marginBottom: "4px" }, children: "A1Betting Dashboard" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Quantum-powered sports betting intelligence platform" })] }), _jsxs("div", { style: { display: "flex", alignItems: "center", gap: "12px" }, children: [_jsxs("div", { style: { display: "flex", alignItems: "center", gap: "8px" }, children: [_jsx(Wifi, { size: 16, color: CYBER_COLORS.primary }), _jsx(CyberText, { variant: "caption", color: "accent", children: "Live" })] }), _jsxs(CyberButton, { variant: autoRefresh ? "primary" : "secondary", onClick: () => setAutoRefresh(!autoRefresh), children: ["Auto-refresh: ", autoRefresh ? "ON" : "OFF"] })] })] }), _jsx("div", { style: { display: "flex", gap: "8px" }, children: tabs.map((tab) => {
-                            const Icon = tab.icon;
+
                             return (_jsx(CyberButton, { variant: activeTab === tab.key ? "primary" : "secondary", active: activeTab === tab.key, onClick: () => setActiveTab(tab.key), icon: _jsx(Icon, { size: 16 }), style: { marginBottom: 0, width: "auto", padding: "8px 16px" }, children: tab.label }, tab.key));
                         }) })] }), _jsxs("div", { style: { minHeight: "500px" }, children: [activeTab === "overview" && renderOverviewTab(), activeTab === "system" && renderSystemTab(), activeTab === "realtime" && (_jsxs(CyberContainer, { variant: "card", style: { padding: "40px", textAlign: "center" }, children: [_jsx(Zap, { size: 48, color: CYBER_COLORS.primary, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "Real-time Feed Coming Soon" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Live predictions and betting opportunities will be displayed here" })] })), activeTab === "analytics" && (_jsxs(CyberContainer, { variant: "card", style: { padding: "40px", textAlign: "center" }, children: [_jsx(Brain, { size: 48, color: CYBER_COLORS.secondary, style: { marginBottom: "16px", margin: "0 auto" } }), _jsx(CyberText, { variant: "title", style: { marginBottom: "8px" }, children: "Advanced Analytics" }), _jsx(CyberText, { variant: "body", color: "muted", children: "Deep ML insights and performance analytics" })] }))] })] }));
 };

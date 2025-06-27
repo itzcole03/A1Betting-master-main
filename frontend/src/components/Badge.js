@@ -21,10 +21,10 @@ const glowColors = {
     info: 'shadow-blue-500/20',
 };
 export const Badge = React.forwardRef(({ variant = 'default', size = 'md', glow = false, dot = false, className, children, ...props }, ref) => {
-    const baseClasses = 'inline-flex items-center gap-1.5 font-medium rounded-full';
-    const variantClasses = variants[variant];
-    const sizeClasses = sizes[size];
-    const glowClasses = glow ? `shadow-lg ${glowColors[variant]}` : '';
+
+
+
+
     return (_jsxs("span", { ref: ref, className: cn(baseClasses, variantClasses, sizeClasses, glowClasses, className), ...props, children: [dot && (_jsx("span", { className: cn('h-2 w-2 rounded-full', {
                     'bg-gray-500 dark:bg-gray-400': variant === 'default',
                     'bg-green-500 dark:bg-green-400': variant === 'success',

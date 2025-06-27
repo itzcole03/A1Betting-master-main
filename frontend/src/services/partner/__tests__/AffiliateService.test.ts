@@ -1,10 +1,9 @@
-import { affiliateService, AffiliateLink, AffiliateOffer } from '../AffiliateService';
+import { affiliateService, AffiliateLink, AffiliateOffer } from '@/AffiliateService.ts';
 
 global.fetch = jest.fn();
 
 describe('AffiliateService', () => {
-  const userId = 'user123';
-  const linkId = 'link456';
+
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -16,7 +15,7 @@ describe('AffiliateService', () => {
       { id: '2', partnerName: 'PartnerB', url: 'https://b.com', active: false }
     ];
     (fetch as jest.Mock).mockResolvedValue({ ok: true, json: async () => mockLinks });
-    const links = await affiliateService.getAffiliateLinks(userId);
+
     expect(links).toEqual(mockLinks);
     expect(fetch).toHaveBeenCalled();
   });
@@ -42,7 +41,7 @@ describe('AffiliateService', () => {
       { id: '1', partnerName: 'PartnerA', description: 'Offer1', url: 'https://a.com', validFrom: '2025-01-01', validTo: '2025-12-31', isActive: true }
     ];
     (fetch as jest.Mock).mockResolvedValue({ ok: true, json: async () => mockOffers });
-    const offers = await affiliateService.getAffiliateOffers();
+
     expect(offers).toEqual(mockOffers);
     expect(fetch).toHaveBeenCalled();
   });

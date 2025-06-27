@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react.ts';
 
 
 
@@ -28,12 +28,12 @@ export const useForm = <T extends Record<string, any>>({
   validationRules = {},
   onSubmit,
   validateOnChange = false,
-  validateOnBlur = true
+  validateOnBlur = true;
 }: UseFormOptions<T>) => {
   const [values, setValues] = useState<T>(initialValues);
   const [errors, setErrors] = useState<FormErrors<T>>({});
   const [touched, setTouched] = useState<Record<keyof T, boolean>>(() => {
-    const touchedFields = {} as Record<keyof T, boolean>;
+
     Object.keys(initialValues).forEach((key) => {
       touchedFields[key as keyof T] = false;
     });
@@ -43,7 +43,7 @@ export const useForm = <T extends Record<string, any>>({
 
   const validateField = useCallback(
     (name: keyof T, value: T[keyof T]): string | undefined => {
-      const fieldRules = validationRules[name];
+
       if (!fieldRules) return undefined;
 
       for (const rule of fieldRules) {
@@ -59,10 +59,10 @@ export const useForm = <T extends Record<string, any>>({
 
   const validateForm = useCallback((): FormErrors<T> => {
     const newErrors: FormErrors<T> = {};
-    let hasErrors = false;
+    const hasErrors = false;
 
     Object.keys(values).forEach((key) => {
-      const error = validateField(key as keyof T, values[key as keyof T]);
+
       if (error) {
         newErrors[key as keyof T] = error;
         hasErrors = true;
@@ -76,7 +76,7 @@ export const useForm = <T extends Record<string, any>>({
     (name: keyof T, value: T[keyof T]) => {
       setValues((prev) => ({ ...prev, [name]: value }));
       if (validateOnChange) {
-        const error = validateField(name, value);
+
         setErrors((prev) => ({ ...prev, [name]: error }));
       }
     },
@@ -87,7 +87,7 @@ export const useForm = <T extends Record<string, any>>({
     (name: keyof T) => {
       setTouched((prev) => ({ ...prev, [name]: true }));
       if (validateOnBlur) {
-        const error = validateField(name, values[name]);
+
         setErrors((prev) => ({ ...prev, [name]: error }));
       }
     },
@@ -100,7 +100,6 @@ export const useForm = <T extends Record<string, any>>({
         e.preventDefault();
       }
 
-      const formErrors = validateForm();
       setErrors(formErrors);
 
       if (Object.keys(formErrors).length === 0 && onSubmit) {
@@ -108,7 +107,7 @@ export const useForm = <T extends Record<string, any>>({
         try {
           await onSubmit(values);
         } catch (error) {
-          console.error('Form submission error:', error);
+          // console statement removed
         } finally {
           setIsSubmitting(false);
         }
@@ -159,6 +158,6 @@ export const useForm = <T extends Record<string, any>>({
     setFieldValue,
     setFieldError,
     validateField,
-    validateForm
+    validateForm;
   };
 }; 

@@ -1,7 +1,7 @@
-import { EventBus } from '@/core/EventBus';
-import { unifiedMonitor } from './UnifiedMonitor';
-import { SystemError, ErrorCategory, ErrorSeverity, ErrorContext } from './UnifiedError';
-import { EventMap } from '../types/core';
+import { EventBus } from '@/core/EventBus.ts';
+import { unifiedMonitor } from './UnifiedMonitor.ts';
+import { SystemError, ErrorCategory, ErrorSeverity, ErrorContext } from './UnifiedError.ts';
+import { EventMap } from '@/types/core.ts';
 
 export interface ModelVersion {
   id: string;
@@ -39,7 +39,7 @@ export class ModelVersioning {
   private constructor() {
     this.config = {
       autoUpdate: true,
-      versionCheckInterval: 1000 * 60 * 60, // 1 hour
+      versionCheckInterval: 1000 * 60 * 60, // 1 hour;
       minAccuracyThreshold: 0.7,
       maxVersionsToKeep: 5,
     };
@@ -66,9 +66,7 @@ export class ModelVersioning {
         this.versions.set(modelId, []);
       }
 
-      const modelVersions = this.versions.get(modelId)!;
-
-      // Validate version metrics
+      // Validate version metrics;
       if (version.metrics.accuracy < this.config.minAccuracyThreshold) {
         const errorContext: Partial<ErrorContext> = {
           code: 'MODEL_VERSION_REJECTED',
@@ -87,25 +85,25 @@ export class ModelVersioning {
         throw new SystemError('MODEL_VERSION_REJECTED', errorContext);
       }
 
-      // Add new version
+      // Add new version;
       modelVersions.push(version);
 
-      // Sort versions by timestamp
+      // Sort versions by timestamp;
       modelVersions.sort((a, b) => b.timestamp - a.timestamp);
 
-      // Keep only the latest versions
+      // Keep only the latest versions;
       if (modelVersions.length > this.config.maxVersionsToKeep) {
         modelVersions.splice(this.config.maxVersionsToKeep);
       }
 
-      // Emit version update event
+      // Emit version update event;
       this.eventBus.emit('model:version:updated', {
         modelId,
         version,
         totalVersions: modelVersions.length,
       });
 
-      // Record metrics
+      // Record metrics;
       unifiedMonitor.recordMetric('model_version_registered', 1);
       unifiedMonitor.recordMetric('model_accuracy', version.metrics.accuracy);
     } catch (error) {
@@ -124,7 +122,7 @@ export class ModelVersioning {
   }
 
   public getLatestVersion(modelId: string): ModelVersion | null {
-    const versions = this.versions.get(modelId);
+
     return versions && versions.length > 0 ? versions[0] : null;
   }
 
@@ -134,14 +132,12 @@ export class ModelVersioning {
 
   public async validateVersion(modelId: string, version: ModelVersion): Promise<boolean> {
     try {
-      const latestVersion = this.getLatestVersion(modelId);
 
       if (!latestVersion) {
-        return true; // First version is always valid
+        return true; // First version is always valid;
       }
 
-      // Check if new version is better than current
-      const isBetter = version.metrics.accuracy > latestVersion.metrics.accuracy;
+      // Check if new version is better than current;
 
       if (!isBetter) {
         unifiedMonitor.recordMetric('model_version_rejected', 1);
@@ -166,7 +162,7 @@ export class ModelVersioning {
   public setConfig(config: Partial<ModelVersionConfig>): void {
     this.config = { ...this.config, ...config };
 
-    // Update version check interval if changed
+    // Update version check interval if changed;
     if (config.versionCheckInterval) {
       if (this.versionCheckInterval) {
         clearInterval(this.versionCheckInterval);
@@ -186,9 +182,9 @@ export class ModelVersioning {
   private async checkForUpdates(): Promise<void> {
     try {
       for (const [modelId, versions] of Array.from(this.versions.entries())) {
-        const latestVersion = versions[0];
+
         if (latestVersion) {
-          // Emit check event
+          // Emit check event;
           this.eventBus.emit('model:version:check', {
             modelId,
             currentVersion: latestVersion,
@@ -210,13 +206,13 @@ export class ModelVersioning {
 
   private handleModelUpdate(modelId: string, version: ModelVersion): void {
     this.registerModelVersion(modelId, version).catch(error => {
-      console.error(`Failed to handle model update for ${modelId}:`, error);
+      // console statement removed
     });
   }
 
   public async rollbackToVersion(modelId: string, targetVersion: string): Promise<void> {
     try {
-      const versions = this.versions.get(modelId);
+
       if (!versions) {
         throw new SystemError('MODEL_NOT_FOUND', {
           code: 'MODEL_NOT_FOUND',
@@ -228,7 +224,6 @@ export class ModelVersioning {
         });
       }
 
-      const targetVersionIndex = versions.findIndex(v => v.version === targetVersion);
       if (targetVersionIndex === -1) {
         throw new SystemError('VERSION_NOT_FOUND', {
           code: 'VERSION_NOT_FOUND',
@@ -240,11 +235,11 @@ export class ModelVersioning {
         });
       }
 
-      // Remove all versions after the target version
-      const rolledBackVersions = versions.slice(targetVersionIndex);
+      // Remove all versions after the target version;
+
       this.versions.set(modelId, rolledBackVersions);
 
-      // Emit rollback event
+      // Emit rollback event;
       this.eventBus.emit('model:version:rolled_back', {
         modelId,
         targetVersion,
@@ -252,7 +247,7 @@ export class ModelVersioning {
         timestamp: Date.now(),
       });
 
-      // Record metrics
+      // Record metrics;
       unifiedMonitor.recordMetric('model_version_rollback', 1);
       unifiedMonitor.recordMetric('model_versions_after_rollback', rolledBackVersions.length);
     } catch (error) {
@@ -267,7 +262,7 @@ export class ModelVersioning {
   public async compareVersions(
     modelId: string,
     version1: string,
-    version2: string
+    version2: string;
   ): Promise<{
     differences: {
       metrics: Record<string, { v1: number; v2: number; diff: number }>;
@@ -277,7 +272,7 @@ export class ModelVersioning {
     timestamp: number;
   }> {
     try {
-      const versions = this.versions.get(modelId);
+
       if (!versions) {
         throw new SystemError('MODEL_NOT_FOUND', {
           code: 'MODEL_NOT_FOUND',
@@ -289,8 +284,6 @@ export class ModelVersioning {
         });
       }
 
-      const v1 = versions.find(v => v.version === version1);
-      const v2 = versions.find(v => v.version === version2);
 
       if (!v1 || !v2) {
         throw new SystemError('VERSION_NOT_FOUND', {
@@ -303,9 +296,9 @@ export class ModelVersioning {
         });
       }
 
-      // Compare metrics
+      // Compare metrics;
       const metricDiffs: Record<string, { v1: number; v2: number; diff: number }> = {};
-      const metricKeys = ['accuracy', 'precision', 'recall', 'f1Score'] as const;
+
       metricKeys.forEach(metric => {
         metricDiffs[metric] = {
           v1: v1.metrics[metric],
@@ -314,14 +307,14 @@ export class ModelVersioning {
         };
       });
 
-      // Compare features
+      // Compare features;
       const features = {
         added: v2.features.filter(f => !v1.features.includes(f)),
         removed: v1.features.filter(f => !v2.features.includes(f)),
         modified: v1.features.filter(f => v2.features.includes(f)),
       };
 
-      // Compare metadata
+      // Compare metadata;
       const metadataDiffs: Record<string, { v1: any; v2: any }> = {};
       const metadataKeys = [
         'trainingDataSize',
@@ -338,7 +331,7 @@ export class ModelVersioning {
         }
       });
 
-      // Emit comparison event
+      // Emit comparison event;
       this.eventBus.emit('model:version:compared', {
         modelId,
         version1,

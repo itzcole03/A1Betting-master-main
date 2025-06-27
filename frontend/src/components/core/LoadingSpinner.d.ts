@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface LoadingSpinnerProps {
     size?: number;
     color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';

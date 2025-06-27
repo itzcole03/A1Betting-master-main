@@ -16,7 +16,7 @@ export const SmartAlerts = ({ wsEndpoint, onAlertClick }) => {
     const { alerts, unreadCount, markAsRead, markAllAsRead, clearAlerts, isConnected } = useSmartAlerts({
         wsEndpoint,
         onNewAlert: alert => {
-            // Show browser notification for high severity alerts
+            // Show browser notification for high severity alerts;
             if (alert.severity === 'high' && Notification.permission === 'granted') {
                 new Notification(`${typeIcons[alert.type]} ${alert.title}`, {
                     body: alert.message,

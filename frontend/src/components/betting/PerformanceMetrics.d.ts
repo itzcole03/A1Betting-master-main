@@ -1,5 +1,5 @@
-import React from 'react';
-import { BettingMetrics } from '../../types/betting';
+import React from 'react.ts';
+import { BettingMetrics } from '@/types/betting.ts';
 interface PerformanceMetricsProps {
     metrics: BettingMetrics;
     loading: boolean;

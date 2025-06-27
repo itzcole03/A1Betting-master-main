@@ -1,33 +1,33 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import React from 'react.ts';
+import ReactDOM from 'react-dom/client.ts';
 import "./index.css";
 
-// Simple App component
+// Simple App component;
 function App() {
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-4xl font-bold text-center mb-8">
-          A1 Betting Platform
+    <div className="min-h-screen bg-gray-900 text-white" key={902029}>
+      <div className="container mx-auto px-4 py-8" key={53071}>
+        <h1 className="text-4xl font-bold text-center mb-8" key={118031}>
+          A1 Betting Platform;
         </h1>
-        <div className="text-center">
-          <p className="text-lg mb-4">
-            Welcome to the A1 Betting Platform
+        <div className="text-center" key={120206}>
+          <p className="text-lg mb-4" key={492535}>
+            Welcome to the A1 Betting Platform;
           </p>
-          <div className="bg-gray-800 rounded-lg p-6 max-w-md mx-auto">
-            <h2 className="text-xl font-semibold mb-4">Status</h2>
-            <div className="space-y-2">
-              <div className="flex justify-between">
-                <span>Frontend:</span>
-                <span className="text-green-400">✓ Running</span>
+          <div className="bg-gray-800 rounded-lg p-6 max-w-md mx-auto" key={778059}>
+            <h2 className="text-xl font-semibold mb-4" key={626401}>Status</h2>
+            <div className="space-y-2" key={725977}>
+              <div className="flex justify-between" key={588832}>
+                <span key={595076}>Frontend:</span>
+                <span className="text-green-400" key={40612}>✓ Running</span>
               </div>
-              <div className="flex justify-between">
-                <span>Backend:</span>
-                <span className="text-yellow-400">⚠ Connecting...</span>
+              <div className="flex justify-between" key={588832}>
+                <span key={595076}>Backend:</span>
+                <span className="text-yellow-400" key={476313}>⚠ Connecting...</span>
               </div>
-              <div className="flex justify-between">
-                <span>Database:</span>
-                <span className="text-yellow-400">⚠ Connecting...</span>
+              <div className="flex justify-between" key={588832}>
+                <span key={595076}>Database:</span>
+                <span className="text-yellow-400" key={476313}>⚠ Connecting...</span>
               </div>
             </div>
           </div>
@@ -37,9 +37,8 @@ function App() {
   );
 }
 
-const root = ReactDOM.createRoot(document.getElementById("root")!);
 root.render(
-  <React.StrictMode>
-    <App />
+  <React.StrictMode key={143543}>
+    <App / key={103343}>
   </React.StrictMode>
 );

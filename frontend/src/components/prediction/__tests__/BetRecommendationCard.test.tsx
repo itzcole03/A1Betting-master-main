@@ -1,7 +1,7 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { BetRecommendationCard } from '../BetRecommendationCard';
-import { BetRecommendation } from '../../../core/types/prediction';
+import React from 'react.ts';
+import { render, screen, fireEvent } from '@testing-library/react.ts';
+import { BetRecommendationCard } from '@/BetRecommendationCard.ts';
+import { BetRecommendation } from '@/../core/types/prediction.ts';
 
 // TODO: Skipped all tests in this file due to unstable BetRecommendationCard logic or outdated mocks. Fix and re-enable.
 describe.skip('BetRecommendationCard', () => {
@@ -28,7 +28,7 @@ describe.skip('BetRecommendationCard', () => {
   it.skip('renders recommendation details correctly', () => {
   // TODO: Fix test logic or component rendering for expected value color. Skipped for stabilization.
 
-    render(<BetRecommendationCard recommendation={mockRecommendation} />);
+    render(<BetRecommendationCard recommendation={mockRecommendation} / key={19140}>);
 
     expect(screen.getByText('model1')).toBeInTheDocument();
     expect(screen.getByText('LOW')).toBeInTheDocument();
@@ -41,9 +41,8 @@ describe.skip('BetRecommendationCard', () => {
   it.skip('calls onViewDetails when info button is clicked', () => {
   // TODO: Fix test logic or component event for info button. Skipped for stabilization.
 
-    const onViewDetails = jest.fn();
     render(
-      <BetRecommendationCard recommendation={mockRecommendation} onViewDetails={onViewDetails} />
+      <BetRecommendationCard recommendation={mockRecommendation} onViewDetails={onViewDetails} / key={58259}>
     );
 
     fireEvent.click(screen.getByRole('button'));
@@ -51,41 +50,40 @@ describe.skip('BetRecommendationCard', () => {
   });
 
   it('displays correct risk level color', () => {
-    const { rerender } = render(<BetRecommendationCard recommendation={mockRecommendation} />);
+    const { rerender } = render(<BetRecommendationCard recommendation={mockRecommendation} / key={19140}>);
 
-    // Low risk should be success color
+    // Low risk should be success color;
     expect(screen.getByText('LOW')).toHaveStyle({ color: expect.stringContaining('success') });
 
-    // Test medium risk
+    // Test medium risk;
     rerender(
-      <BetRecommendationCard recommendation={{ ...mockRecommendation, riskLevel: 'medium' }} />
+      <BetRecommendationCard recommendation={{ ...mockRecommendation, riskLevel: 'medium' }} / key={230416}>
     );
     expect(screen.getByText('MEDIUM')).toHaveStyle({ color: expect.stringContaining('warning') });
 
-    // Test high risk
+    // Test high risk;
     rerender(
-      <BetRecommendationCard recommendation={{ ...mockRecommendation, riskLevel: 'high' }} />
+      <BetRecommendationCard recommendation={{ ...mockRecommendation, riskLevel: 'high' }} / key={51155}>
     );
     expect(screen.getByText('HIGH')).toHaveStyle({ color: expect.stringContaining('error') });
   });
 
   it('displays correct expected value color', () => {
-    const { rerender } = render(<BetRecommendationCard recommendation={mockRecommendation} />);
+    const { rerender } = render(<BetRecommendationCard recommendation={mockRecommendation} / key={19140}>);
 
-    // Positive expected value should be success color
+    // Positive expected value should be success color;
     expect(screen.getByText('$50.00')).toHaveStyle({ color: expect.stringContaining('success') });
 
-    // Test negative expected value
+    // Test negative expected value;
     rerender(
-      <BetRecommendationCard recommendation={{ ...mockRecommendation, expectedValue: -50 }} />
+      <BetRecommendationCard recommendation={{ ...mockRecommendation, expectedValue: -50 }} / key={428627}>
     );
     expect(screen.getByText('-$50.00')).toHaveStyle({ color: expect.stringContaining('error') });
   });
 
   it('displays confidence progress bar', () => {
-    render(<BetRecommendationCard recommendation={mockRecommendation} />);
+    render(<BetRecommendationCard recommendation={mockRecommendation} / key={19140}>);
 
-    const progressBar = screen.getByRole('progressbar');
     expect(progressBar).toBeInTheDocument();
     expect(progressBar).toHaveAttribute('aria-valuenow', '85');
   });

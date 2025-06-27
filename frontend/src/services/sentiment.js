@@ -8,13 +8,13 @@ class SentimentService {
     }
     async getSentiment(entity, options) {
         try {
-            // Scrape data from multiple sources
+            // Scrape data from multiple sources;
             const [redditData, espnData, rotowireData] = await Promise.all([
                 this.scrapeReddit(entity),
                 this.scrapeESPN(entity),
                 this.scrapeRotowire(entity),
             ]);
-            // Combine and analyze the data
+            // Combine and analyze the data;
             const combinedData = this.combineSentimentData([
                 { name: 'Reddit', data: redditData },
                 { name: 'ESPN', data: espnData },
@@ -34,7 +34,7 @@ class SentimentService {
             };
         }
         catch (error) {
-            console.error('Failed to get sentiment:', error);
+            // console statement removed
             throw error;
         }
     }
@@ -58,13 +58,13 @@ class SentimentService {
             return this.analyzeRedditSentiment(posts);
         }
         catch (error) {
-            console.error('Failed to scrape Reddit:', error);
+            // console statement removed
             return { score: 0, volume: 0 };
         }
     }
     async scrapeESPN(entity) {
         try {
-            const response = await axios.get(`https://www.espn.com/search/_/q/${encodeURIComponent(entity)}`);
+
             const $ = cheerio.load(response.data);
             const articles = $('.article')
                 .map((_, el) => ({
@@ -76,13 +76,13 @@ class SentimentService {
             return this.analyzeESPNSentiment(articles);
         }
         catch (error) {
-            console.error('Failed to scrape ESPN:', error);
+            // console statement removed
             return { score: 0, volume: 0 };
         }
     }
     async scrapeRotowire(entity) {
         try {
-            const response = await axios.get(`https://www.rotowire.com/search.php?search=${encodeURIComponent(entity)}`);
+
             const $ = cheerio.load(response.data);
             const news = $('.news-item')
                 .map((_, el) => ({
@@ -94,13 +94,13 @@ class SentimentService {
             return this.analyzeRotowireSentiment(news);
         }
         catch (error) {
-            console.error('Failed to scrape Rotowire:', error);
+            // console statement removed
             return { score: 0, volume: 0 };
         }
     }
     analyzeRedditSentiment(posts) {
         const totalScore = posts.reduce((acc, post) => {
-            const postScore = (post.score + post.comments) / 1000;
+
             return acc + postScore;
         }, 0);
         return {
@@ -110,11 +110,11 @@ class SentimentService {
     }
     analyzeESPNSentiment(articles) {
         const totalScore = articles.reduce((acc, article) => {
-            const positiveWords = ['win', 'great', 'excellent', 'strong', 'impressive'];
-            const negativeWords = ['loss', 'poor', 'weak', 'disappointing', 'struggling'];
-            const text = `${article.title} ${article.summary}`.toLowerCase();
-            const positiveCount = positiveWords.filter(word => text.includes(word)).length;
-            const negativeCount = negativeWords.filter(word => text.includes(word)).length;
+
+
+
+
+
             return acc + (positiveCount - negativeCount);
         }, 0);
         return {
@@ -124,11 +124,11 @@ class SentimentService {
     }
     analyzeRotowireSentiment(news) {
         const totalScore = news.reduce((acc, item) => {
-            const positiveWords = ['upgrade', 'improving', 'healthy', 'starting', 'productive'];
-            const negativeWords = ['downgrade', 'injured', 'questionable', 'limited', 'struggling'];
-            const text = `${item.title} ${item.content}`.toLowerCase();
-            const positiveCount = positiveWords.filter(word => text.includes(word)).length;
-            const negativeCount = negativeWords.filter(word => text.includes(word)).length;
+
+
+
+
+
             return acc + (positiveCount - negativeCount);
         }, 0);
         return {
@@ -148,15 +148,15 @@ class SentimentService {
         }, 0);
     }
     calculateConfidence(combinedData) {
-        const totalVolume = combinedData.reduce((acc, source) => acc + source.data.volume, 0);
-        return Math.min(totalVolume / 100, 1); // Normalize to 0-1 range
+
+        return Math.min(totalVolume / 100, 1); // Normalize to 0-1 range;
     }
     generateTimeline(combinedData) {
-        // Implement timeline generation based on the data
+        // Implement timeline generation based on the data;
         return [];
     }
     extractAspects(combinedData) {
-        // Implement aspect extraction from the data
+        // Implement aspect extraction from the data;
         return {};
     }
 }

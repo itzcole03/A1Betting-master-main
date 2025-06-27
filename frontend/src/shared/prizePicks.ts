@@ -1,4 +1,4 @@
-// Shared PrizePicks types and utilities
+// Shared PrizePicks types and utilities;
 
 export interface PrizePicksProps {
     playerId: string;

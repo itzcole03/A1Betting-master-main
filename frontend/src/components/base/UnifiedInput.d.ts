@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 type InputAttributes = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size'>;
 export interface UnifiedInputProps extends InputAttributes {
     variant?: 'default' | 'premium';

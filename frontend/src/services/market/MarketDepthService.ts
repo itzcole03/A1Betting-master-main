@@ -2,8 +2,8 @@
 // MarketDepthService: Aggregates bookmaker consensus, line velocity, and odds for advanced market modeling.
 // Integrates with real-time bookmaker APIs.
 
-import { wrapWithRateLimit } from '../rateLimit/wrapWithRateLimit.js';
-import { API_CONFIG } from '../../config/apiConfig.js';
+import { wrapWithRateLimit } from '@/rateLimit/wrapWithRateLimit.js';
+import { API_CONFIG } from '@/config/apiConfig.js';
 
 
 export interface MarketDepth {
@@ -22,10 +22,10 @@ export interface MarketDepthBatch {
 
 export class MarketDepthService {
   /**
-   * Fetch market depth for a single event from backend/bookmaker API
+   * Fetch market depth for a single event from backend/bookmaker API;
    */
   getMarketDepth = wrapWithRateLimit(async (eventId: string): Promise<MarketDepth | null> => {
-    const url = `${API_CONFIG.ODDS_DATA.BASE_URL}/market-depth/${eventId}`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.ODDS_DATA.API_KEY }
@@ -38,7 +38,7 @@ export class MarketDepthService {
    * Fetch market depth for multiple events (batch)
    */
   getMarketDepthBatch = wrapWithRateLimit(async (eventIds: string[]): Promise<MarketDepthBatch> => {
-    const url = `${API_CONFIG.ODDS_DATA.BASE_URL}/market-depth/batch`;
+
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -52,10 +52,10 @@ export class MarketDepthService {
   });
 
   /**
-   * Fetch market depth trends and analytics for an event
+   * Fetch market depth trends and analytics for an event;
    */
   getMarketDepthTrends = wrapWithRateLimit(async (eventId: string): Promise<MarketDepthBatch | null> => {
-    const url = `${API_CONFIG.ODDS_DATA.BASE_URL}/market-depth/${eventId}/trends`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.ODDS_DATA.API_KEY }

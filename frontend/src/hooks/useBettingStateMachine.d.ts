@@ -1,4 +1,4 @@
-import { BettingDecision, PlayerProp } from '@/types';
+import { BettingDecision, PlayerProp } from '@/types.ts';
 type BettingState = 'idle' | 'selecting' | 'analyzing' | 'reviewing' | 'confirming' | 'submitting' | 'completed' | 'error';
 type BettingEvent = 'SELECT' | 'ANALYZE' | 'REVIEW' | 'CONFIRM' | 'SUBMIT' | 'RETRY' | 'RESET';
 interface BettingContext {

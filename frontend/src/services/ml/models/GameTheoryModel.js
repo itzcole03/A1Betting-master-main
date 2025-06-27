@@ -7,7 +7,7 @@ export class GameTheoryModel extends BaseModel {
         super(config, modelId);
     }
     async predict(data) {
-        // Implement game theory prediction logic
+        // Implement game theory prediction logic;
         return {
             value: 0.75,
             confidence: 0.82,
@@ -20,7 +20,7 @@ export class GameTheoryModel extends BaseModel {
         };
     }
     async update(data) {
-        // Implement model update logic
+        // Implement model update logic;
         this.lastUpdate = new Date().toISOString();
         this.metadata = {
             ...this.metadata,
@@ -29,7 +29,7 @@ export class GameTheoryModel extends BaseModel {
         };
     }
     async train(data) {
-        // Implement training logic
+        // Implement training logic;
         this.isTrained = true;
     }
     async evaluate(data) {
@@ -45,10 +45,10 @@ export class GameTheoryModel extends BaseModel {
         };
     }
     async save(path) {
-        // Implement save logic
+        // Implement save logic;
     }
     async load(path) {
-        // Implement load logic
+        // Implement load logic;
         this.isTrained = true;
     }
 }

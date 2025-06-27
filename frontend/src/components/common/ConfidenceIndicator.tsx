@@ -1,5 +1,5 @@
-import React from 'react';
-import Tooltip from '@mui/material/Tooltip';
+import React from 'react.ts';
+import Tooltip from '@mui/material/Tooltip.ts';
 
 interface ConfidenceIndicatorProps {
   value: number;
@@ -23,20 +23,19 @@ const getSizeClasses = (size: 'small' | 'medium' | 'large'): string => {
   }
 };
 
-export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps> = ({
+export const ConfidenceIndicator: React.FC<ConfidenceIndicatorProps key={853618}> = ({
   value,
   size = 'medium',
 }) => {
-  const color = getConfidenceColor(value);
-  const sizeClasses = getSizeClasses(size);
+
 
   return (
-    <Tooltip title={`${Math.round(value * 100)}% Confidence`}>
-      <div
+    <Tooltip title={`${Math.round(value * 100)}% Confidence`} key={804880}>
+      <div;
         aria-label={`Confidence level: ${Math.round(value * 100)}%`}
         className={`${sizeClasses} ${color} rounded-full transition-colors duration-300`}
         role="status"
-      />
+      / key={881968}>
     </Tooltip>
   );
 };

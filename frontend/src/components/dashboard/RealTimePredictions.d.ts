@@ -1,4 +1,4 @@
-import { EnhancedPrediction } from "../../services/realTimePredictionEngine";
+import { EnhancedPrediction } from '@/services/realTimePredictionEngine.ts';
 interface RealTimePredictionsProps {
     predictions: EnhancedPrediction[];
     loading: boolean;

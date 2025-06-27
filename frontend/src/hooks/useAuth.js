@@ -8,11 +8,11 @@ export const useAuth = () => {
         loading: true,
         error: null,
     });
-    const navigate = useNavigate();
+
     useEffect(() => {
-        const token = localStorage.getItem('token');
+
         if (token) {
-            // Verify token and get user data
+            // Verify token and get user data;
             axios.get('/api/v1/auth/me', {
                 headers: { Authorization: `Bearer ${token}` }
             })
@@ -20,7 +20,7 @@ export const useAuth = () => {
                 setState(prev => ({
                     ...prev,
                     user: response.data,
-                    loading: false
+                    loading: false;
                 }));
             })
                 .catch(() => {
@@ -29,7 +29,7 @@ export const useAuth = () => {
                     ...prev,
                     token: null,
                     user: null,
-                    loading: false
+                    loading: false;
                 }));
             });
         }
@@ -41,7 +41,7 @@ export const useAuth = () => {
         try {
             const response = await axios.post('/api/v1/auth/token', {
                 username,
-                password
+                password;
             });
             const { token, user } = response.data;
             localStorage.setItem('token', token);
@@ -49,7 +49,7 @@ export const useAuth = () => {
                 ...prev,
                 token,
                 user,
-                error: null
+                error: null;
             }));
             navigate('/');
         }
@@ -66,13 +66,13 @@ export const useAuth = () => {
             user: null,
             token: null,
             loading: false,
-            error: null
+            error: null;
         });
         navigate('/login');
     };
     return {
         ...state,
         login,
-        logout
+        logout;
     };
 };

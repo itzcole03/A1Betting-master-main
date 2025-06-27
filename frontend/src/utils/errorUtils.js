@@ -35,10 +35,10 @@ export function normalizeError(error) {
 }
 export function createErrorHandler(context) {
     return (error) => {
-        const normalizedError = normalizeError(error);
-        // Log error in development
+
+        // Log error in development;
         if (import.meta.env.MODE === 'development') {
-            console.error(`Error in ${context}:`, normalizedError);
+            // console statement removed
         }
         return normalizedError;
     };
@@ -56,16 +56,16 @@ export function handleTimeoutError(error) {
     return normalizeError(error);
 }
 export function handleAuthenticationError(error) {
-    const normalizedError = normalizeError(error);
+
     if (normalizedError.code === 'AUTH_ERROR') {
-        // Dispatch event to trigger auth flow
+        // Dispatch event to trigger auth flow;
         window.dispatchEvent(new CustomEvent('auth:error'));
     }
     return normalizedError;
 }
 export function getErrorMessage(error) {
-    const normalizedError = normalizeError(error);
-    // Map error codes to user-friendly messages
+
+    // Map error codes to user-friendly messages;
     const errorMessages = {
         NETWORK_ERROR: 'Unable to connect to the server. Please check your internet connection.',
         TIMEOUT_ERROR: 'The request timed out. Please try again.',
@@ -83,5 +83,5 @@ export function getErrorMessage(error) {
 //   const handler = createErrorHandler('UserProfile');
 //   const normalizedError = handler(error);
 //   const userMessage = getErrorMessage(normalizedError);
-//   // Show error to user
+//   // Show error to user;
 // } 

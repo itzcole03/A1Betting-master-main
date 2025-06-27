@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useMemo, useCallback  } from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 import {
   Card,
   CardContent,
@@ -42,7 +42,7 @@ import {
   Stepper,
   Step,
   StepLabel,
-} from "@mui/material";
+} from '@mui/material.ts';
 import {
   TrendingUp,
   TrendingDown,
@@ -80,7 +80,7 @@ import {
   FlashOn,
   AccessTime,
   Cached,
-} from "@mui/icons-material";
+} from '@mui/icons-material.ts';
 import {
   LineChart,
   Line,
@@ -97,13 +97,13 @@ import {
   ScatterChart,
   Scatter,
   ComposedChart,
-} from "recharts";
+} from 'recharts.ts';
 import {
   formatCurrency,
   formatPercentage,
   formatOdds,
   formatDateTime,
-} from "../utils/formatters";
+} from '@/utils/formatters.ts';
 
 interface ArbitrageOpportunity {
   id: string;
@@ -130,20 +130,20 @@ interface ArbitrageOpportunity {
     payout: number;
   };
 
-  // Arbitrage Metrics
+  // Arbitrage Metrics;
   profitMargin: number;
   totalStake: number;
   guaranteedProfit: number;
   roi: number;
 
-  // Risk & Timing
+  // Risk & Timing;
   riskLevel: "low" | "medium" | "high";
   timeToExpiry: number;
   lastUpdate: Date;
   discoveryTime: Date;
   confidence: number;
 
-  // Market Data
+  // Market Data;
   volume: {
     sideA: number;
     sideB: number;
@@ -153,12 +153,12 @@ interface ArbitrageOpportunity {
     sideB: number;
   };
 
-  // Execution
+  // Execution;
   status: "active" | "executing" | "completed" | "expired" | "failed";
   executionTime?: Date;
   actualProfit?: number;
 
-  // Metadata
+  // Metadata;
   tags: string[];
   bookmakerPair: string;
   isBookmarked: boolean;
@@ -209,28 +209,28 @@ const COLORS = {
 };
 
 export const ArbitrageOpportunities: React.FC = () => {
-  // State Management
-  const [opportunities, setOpportunities] = useState<ArbitrageOpportunity[]>(
+  // State Management;
+  const [opportunities, setOpportunities] = useState<ArbitrageOpportunity[] key={128378}>(
     [],
   );
   const [filteredOpportunities, setFilteredOpportunities] = useState<
     ArbitrageOpportunity[]
   >([]);
   const [selectedOpportunity, setSelectedOpportunity] =
-    useState<ArbitrageOpportunity | null>(null);
-  const [executionPlan, setExecutionPlan] = useState<ExecutionPlan | null>(
+    useState<ArbitrageOpportunity | null key={407613}>(null);
+  const [executionPlan, setExecutionPlan] = useState<ExecutionPlan | null key={842518}>(
     null,
   );
   const [customStake, setCustomStake] = useState(1000);
 
-  // UI State
+  // UI State;
   const [isLoading, setIsLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
   const [onlyBookmarked, setOnlyBookmarked] = useState(false);
   const [showExecutionDialog, setShowExecutionDialog] = useState(false);
   const [showCalculatorDialog, setShowCalculatorDialog] = useState(false);
 
-  // Filters
+  // Filters;
   const [filters, setFilters] = useState({
     sport: "all",
     minProfit: 0,
@@ -240,10 +240,10 @@ export const ArbitrageOpportunities: React.FC = () => {
     timeToExpiry: "all",
   });
 
-  // Real-time Data Loading
+  // Real-time Data Loading;
   const loadArbitrageData = useCallback(async () => {
     try {
-      // Simulate loading real-time arbitrage opportunities
+      // Simulate loading real-time arbitrage opportunities;
       const mockOpportunities: ArbitrageOpportunity[] = [
         {
           id: "arb-001",
@@ -446,25 +446,25 @@ export const ArbitrageOpportunities: React.FC = () => {
 
       setOpportunities(mockOpportunities);
     } catch (error) {
-      console.error("Failed to load arbitrage data:", error);
+      // console statement removed
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Load data on mount and auto-refresh
+  // Load data on mount and auto-refresh;
   useEffect(() => {
     loadArbitrageData();
 
     if (autoRefresh) {
-      const interval = setInterval(loadArbitrageData, 10000); // Refresh every 10 seconds
+      const interval = setInterval(loadArbitrageData, 10000); // Refresh every 10 seconds;
       return () => clearInterval(interval);
     }
   }, [loadArbitrageData, autoRefresh]);
 
-  // Filter opportunities
+  // Filter opportunities;
   useEffect(() => {
-    let filtered = opportunities;
+    const filtered = opportunities;
 
     if (filters.sport !== "all") {
       filtered = filtered.filter((opp) => opp.sport === filters.sport);
@@ -483,8 +483,8 @@ export const ArbitrageOpportunities: React.FC = () => {
     }
 
     if (filters.maxRisk !== "high") {
-      const riskOrder = { low: 0, medium: 1, high: 2 };
-      const maxRiskLevel = riskOrder[filters.maxRisk as keyof typeof riskOrder];
+
+
       filtered = filtered.filter(
         (opp) => riskOrder[opp.riskLevel] <= maxRiskLevel,
       );
@@ -500,13 +500,13 @@ export const ArbitrageOpportunities: React.FC = () => {
       filtered = filtered.filter((opp) => opp.isBookmarked);
     }
 
-    // Sort by profit margin descending
+    // Sort by profit margin descending;
     filtered.sort((a, b) => b.profitMargin - a.profitMargin);
 
     setFilteredOpportunities(filtered);
   }, [opportunities, filters, onlyBookmarked]);
 
-  // Calculate arbitrage for custom stake
+  // Calculate arbitrage for custom stake;
   const calculateArbitrage = useCallback(
     (
       opportunity: ArbitrageOpportunity,
@@ -514,17 +514,12 @@ export const ArbitrageOpportunities: React.FC = () => {
     ): ArbitrageCalculation => {
       const { sideA, sideB } = opportunity;
 
-      // Calculate optimal allocation
-      const totalImpliedProb = 1 / sideA.odds + 1 / sideB.odds;
-      const stakeA = stake / (sideA.odds * totalImpliedProb);
-      const stakeB = stake / (sideB.odds * totalImpliedProb);
+      // Calculate optimal allocation;
 
-      const payoutA = stakeA * sideA.odds;
-      const payoutB = stakeB * sideB.odds;
 
-      const profit = Math.min(payoutA, payoutB) - stake;
-      const margin = profit / stake;
-      const roi = margin;
+
+
+
 
       return {
         stake,
@@ -540,11 +535,11 @@ export const ArbitrageOpportunities: React.FC = () => {
     [],
   );
 
-  // Event Handlers
+  // Event Handlers;
   const handleBookmark = useCallback((opportunityId: string) => {
     setOpportunities((prev) =>
       prev.map((opp) =>
-        opp.id === opportunityId
+        opp.id === opportunityId;
           ? { ...opp, isBookmarked: !opp.isBookmarked }
           : opp,
       ),
@@ -552,7 +547,7 @@ export const ArbitrageOpportunities: React.FC = () => {
   }, []);
 
   const handleExecute = useCallback((opportunity: ArbitrageOpportunity) => {
-    // Create execution plan
+    // Create execution plan;
     const plan: ExecutionPlan = {
       opportunity,
       steps: [
@@ -573,7 +568,7 @@ export const ArbitrageOpportunities: React.FC = () => {
           status: "pending",
         },
       ],
-      totalTime: 45, // seconds
+      totalTime: 45, // seconds;
       riskLevel: opportunity.riskLevel,
     };
 
@@ -585,13 +580,12 @@ export const ArbitrageOpportunities: React.FC = () => {
     if (!executionPlan) return;
 
     try {
-      // Simulate execution
-      for (let i = 0; i < executionPlan.steps.length; i++) {
-        const step = executionPlan.steps[i];
+      // Simulate execution;
+      for (const i = 0; i < executionPlan.steps.length; i++) {
 
-        // Update step status to executing
+        // Update step status to executing;
         setExecutionPlan((prev) =>
-          prev
+          prev;
             ? {
                 ...prev,
                 steps: prev.steps.map((s, idx) =>
@@ -601,12 +595,12 @@ export const ArbitrageOpportunities: React.FC = () => {
             : null,
         );
 
-        // Simulate API call delay
+        // Simulate API call delay;
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
-        // Update step status to completed
+        // Update step status to completed;
         setExecutionPlan((prev) =>
-          prev
+          prev;
             ? {
                 ...prev,
                 steps: prev.steps.map((s, idx) =>
@@ -617,10 +611,10 @@ export const ArbitrageOpportunities: React.FC = () => {
         );
       }
 
-      // Update opportunity status
+      // Update opportunity status;
       setOpportunities((prev) =>
         prev.map((opp) =>
-          opp.id === executionPlan.opportunity.id
+          opp.id === executionPlan.opportunity.id;
             ? {
                 ...opp,
                 status: "completed",
@@ -636,7 +630,7 @@ export const ArbitrageOpportunities: React.FC = () => {
         setExecutionPlan(null);
       }, 2000);
     } catch (error) {
-      console.error("Execution failed:", error);
+      // console statement removed
     }
   }, [executionPlan]);
 
@@ -662,17 +656,17 @@ export const ArbitrageOpportunities: React.FC = () => {
     const blob = new Blob([JSON.stringify(exportData, null, 2)], {
       type: "application/json",
     });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+
+
     a.href = url;
     a.download = `arbitrage-opportunities-${Date.now()}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }, [filteredOpportunities, opportunities]);
 
-  // Summary metrics
+  // Summary metrics;
   const summaryMetrics = useMemo(() => {
-    const active = opportunities.filter((opp) => opp.status === "active");
+
     const avgMargin =
       active.reduce((sum, opp) => sum + opp.profitMargin, 0) /
       Math.max(active.length, 1);
@@ -696,173 +690,173 @@ export const ArbitrageOpportunities: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Box
+      <Box;
         display="flex"
         justifyContent="center"
         alignItems="center"
         height={400}
-      >
-        <LinearProgress sx={{ width: "50%" }} />
+       key={219816}>
+        <LinearProgress sx={{ width: "50%" }} / key={592693}>
       </Box>
     );
   }
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="w-full"
-    >
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <Box
+     key={253890}>
+      <Card sx={{ mb: 3 }} key={857343}>
+        <CardContent key={452065}>
+          <Box;
             display="flex"
             justifyContent="space-between"
             alignItems="center"
             mb={2}
-          >
-            <Typography
+           key={167950}>
+            <Typography;
               variant="h5"
               component="h2"
               sx={{ display: "flex", alignItems: "center", gap: 1 }}
-            >
-              <SwapHoriz />
-              Arbitrage Opportunities
-              <Badge badgeContent={summaryMetrics.activeCount} color="success">
-                <MonetizationOn />
+             key={972323}>
+              <SwapHoriz / key={903320}>
+              Arbitrage Opportunities;
+              <Badge badgeContent={summaryMetrics.activeCount} color="success" key={589937}>
+                <MonetizationOn / key={90951}>
               </Badge>
               {summaryMetrics.executingCount > 0 && (
-                <Badge
+                <Badge;
                   badgeContent={summaryMetrics.executingCount}
                   color="warning"
-                >
-                  <Cached className="animate-spin" />
+                 key={460043}>
+                  <Cached className="animate-spin" / key={952201}>
                 </Badge>
               )}
             </Typography>
-            <Box display="flex" gap={1} alignItems="center">
-              <FormControlLabel
+            <Box display="flex" gap={1} alignItems="center" key={695772}>
+              <FormControlLabel;
                 control={
-                  <Switch
+                  <Switch;
                     checked={autoRefresh}
-                    onChange={(e) => setAutoRefresh(e.target.checked)}
+                    onChange={(e) = key={196002}> setAutoRefresh(e.target.checked)}
                   />
                 }
                 label="Auto Refresh"
               />
-              <FormControlLabel
+              <FormControlLabel;
                 control={
-                  <Switch
+                  <Switch;
                     checked={onlyBookmarked}
-                    onChange={(e) => setOnlyBookmarked(e.target.checked)}
+                    onChange={(e) = key={809646}> setOnlyBookmarked(e.target.checked)}
                   />
                 }
                 label="Bookmarked"
               />
-              <IconButton onClick={loadArbitrageData}>
-                <Refresh />
+              <IconButton onClick={loadArbitrageData} key={219372}>
+                <Refresh / key={393498}>
               </IconButton>
-              <IconButton onClick={exportData}>
-                <Download />
+              <IconButton onClick={exportData} key={183970}>
+                <Download / key={173972}>
               </IconButton>
             </Box>
           </Box>
 
           {/* Summary Cards */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="success.main">
+          <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="success.main" key={386495}>
                   {summaryMetrics.activeCount}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Active Opportunities
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Active Opportunities;
                 </Typography>
-                <Box mt={1}>
-                  <Chip
+                <Box mt={1} key={51953}>
+                  <Chip;
                     label={`${summaryMetrics.executingCount} executing`}
                     color="warning"
                     size="small"
-                  />
+                  / key={623741}>
                 </Box>
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="primary.main">
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="primary.main" key={559183}>
                   {formatPercentage(summaryMetrics.avgMargin)}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Avg Profit Margin
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Avg Profit Margin;
                 </Typography>
-                <Box mt={1}>
-                  <LinearProgress
+                <Box mt={1} key={51953}>
+                  <LinearProgress;
                     variant="determinate"
                     value={summaryMetrics.avgMargin * 1000}
                     color="primary"
-                  />
+                  / key={671872}>
                 </Box>
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="secondary.main">
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="secondary.main" key={711142}>
                   {formatCurrency(summaryMetrics.totalProfit)}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Total Potential Profit
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Total Potential Profit;
                 </Typography>
-                <Box mt={1}>
-                  <MonetizationOn color="secondary" fontSize="small" />
+                <Box mt={1} key={51953}>
+                  <MonetizationOn color="secondary" fontSize="small" / key={604525}>
                 </Box>
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="info.main">
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="info.main" key={656320}>
                   {formatPercentage(summaryMetrics.avgConfidence)}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Avg Confidence
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Avg Confidence;
                 </Typography>
-                <Box mt={1}>
-                  <VerifiedUser color="info" fontSize="small" />
+                <Box mt={1} key={51953}>
+                  <VerifiedUser color="info" fontSize="small" / key={142228}>
                 </Box>
               </Paper>
             </Grid>
           </Grid>
 
           {/* Filters */}
-          <Grid container spacing={2} sx={{ mb: 2 }}>
-            <Grid item xs={2}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Sport</InputLabel>
-                <Select
+          <Grid container spacing={2} sx={{ mb: 2 }} key={795993}>
+            <Grid item xs={2} key={114891}>
+              <FormControl fullWidth size="small" key={82290}>
+                <InputLabel key={405232}>Sport</InputLabel>
+                <Select;
                   value={filters.sport}
-                  onChange={(e) =>
+                  onChange={(e) = key={632798}>
                     setFilters((prev) => ({ ...prev, sport: e.target.value }))
                   }
                 >
-                  <MenuItem value="all">All Sports</MenuItem>
-                  <MenuItem value="Basketball">Basketball</MenuItem>
-                  <MenuItem value="Football">Football</MenuItem>
-                  <MenuItem value="Soccer">Soccer</MenuItem>
-                  <MenuItem value="Tennis">Tennis</MenuItem>
+                  <MenuItem value="all" key={641531}>All Sports</MenuItem>
+                  <MenuItem value="Basketball" key={779545}>Basketball</MenuItem>
+                  <MenuItem value="Football" key={266762}>Football</MenuItem>
+                  <MenuItem value="Soccer" key={112472}>Soccer</MenuItem>
+                  <MenuItem value="Tennis" key={904604}>Tennis</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={2}>
-              <TextField
-                fullWidth
+            <Grid item xs={2} key={114891}>
+              <TextField;
+                fullWidth;
                 size="small"
                 label="Min Profit ($)"
                 type="number"
                 value={filters.minProfit}
-                onChange={(e) =>
+                onChange={(e) = key={463347}>
                   setFilters((prev) => ({
                     ...prev,
                     minProfit: Number(e.target.value),
@@ -870,14 +864,14 @@ export const ArbitrageOpportunities: React.FC = () => {
                 }
               />
             </Grid>
-            <Grid item xs={2}>
-              <TextField
-                fullWidth
+            <Grid item xs={2} key={114891}>
+              <TextField;
+                fullWidth;
                 size="small"
                 label="Min Margin (%)"
                 type="number"
                 value={filters.minMargin * 100}
-                onChange={(e) =>
+                onChange={(e) = key={255165}>
                   setFilters((prev) => ({
                     ...prev,
                     minMargin: Number(e.target.value) / 100,
@@ -885,155 +879,155 @@ export const ArbitrageOpportunities: React.FC = () => {
                 }
               />
             </Grid>
-            <Grid item xs={2}>
-              <FormControl fullWidth size="small">
-                <InputLabel>Max Risk</InputLabel>
-                <Select
+            <Grid item xs={2} key={114891}>
+              <FormControl fullWidth size="small" key={82290}>
+                <InputLabel key={405232}>Max Risk</InputLabel>
+                <Select;
                   value={filters.maxRisk}
-                  onChange={(e) =>
+                  onChange={(e) = key={246093}>
                     setFilters((prev) => ({ ...prev, maxRisk: e.target.value }))
                   }
                 >
-                  <MenuItem value="low">Low Risk Only</MenuItem>
-                  <MenuItem value="medium">Low + Medium</MenuItem>
-                  <MenuItem value="high">All Risk Levels</MenuItem>
+                  <MenuItem value="low" key={779692}>Low Risk Only</MenuItem>
+                  <MenuItem value="medium" key={834279}>Low + Medium</MenuItem>
+                  <MenuItem value="high" key={949756}>All Risk Levels</MenuItem>
                 </Select>
               </FormControl>
             </Grid>
-            <Grid item xs={2}>
-              <Button
-                fullWidth
+            <Grid item xs={2} key={114891}>
+              <Button;
+                fullWidth;
                 variant="outlined"
-                onClick={() => {
+                onClick={() = key={582954}> {
                   setSelectedOpportunity(filteredOpportunities[0] || null);
                   setShowCalculatorDialog(true);
                 }}
-                startIcon={<Calculate />}
+                startIcon={<Calculate / key={125773}>}
                 disabled={filteredOpportunities.length === 0}
               >
-                Calculator
+                Calculator;
               </Button>
             </Grid>
-            <Grid item xs={2}>
-              <Typography variant="caption" color="textSecondary">
+            <Grid item xs={2} key={114891}>
+              <Typography variant="caption" color="textSecondary" key={15591}>
                 Showing {filteredOpportunities.length} of {opportunities.length}
               </Typography>
             </Grid>
           </Grid>
 
           {/* Opportunities Table */}
-          <TableContainer component={Paper}>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Event & Market</TableCell>
-                  <TableCell>Side A</TableCell>
-                  <TableCell>Side B</TableCell>
-                  <TableCell>Profit</TableCell>
-                  <TableCell>Margin</TableCell>
-                  <TableCell>Risk</TableCell>
-                  <TableCell>Confidence</TableCell>
-                  <TableCell>Expiry</TableCell>
-                  <TableCell>Status</TableCell>
-                  <TableCell>Actions</TableCell>
+          <TableContainer component={Paper} key={746829}>
+            <Table size="small" key={822594}>
+              <TableHead key={813147}>
+                <TableRow key={300096}>
+                  <TableCell key={942983}>Event & Market</TableCell>
+                  <TableCell key={942983}>Side A</TableCell>
+                  <TableCell key={942983}>Side B</TableCell>
+                  <TableCell key={942983}>Profit</TableCell>
+                  <TableCell key={942983}>Margin</TableCell>
+                  <TableCell key={942983}>Risk</TableCell>
+                  <TableCell key={942983}>Confidence</TableCell>
+                  <TableCell key={942983}>Expiry</TableCell>
+                  <TableCell key={942983}>Status</TableCell>
+                  <TableCell key={942983}>Actions</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody key={923191}>
                 {filteredOpportunities.map((opportunity) => (
-                  <TableRow
+                  <TableRow;
                     key={opportunity.id}
                     sx={{
                       "&:hover": { backgroundColor: "action.hover" },
                       backgroundColor:
-                        opportunity.profitMargin > 0.03
+                        opportunity.profitMargin  key={861710}> 0.03;
                           ? "success.light"
                           : "inherit",
                       opacity: opportunity.status === "expired" ? 0.6 : 1,
                     }}
                   >
-                    <TableCell>
-                      <Box>
-                        <Typography variant="body2" fontWeight="bold">
+                    <TableCell key={942983}>
+                      <Box key={485947}>
+                        <Typography variant="body2" fontWeight="bold" key={973159}>
                           {opportunity.event}
                         </Typography>
-                        <Typography variant="caption" color="textSecondary">
+                        <Typography variant="caption" color="textSecondary" key={15591}>
                           {opportunity.sport} • {opportunity.market}
                         </Typography>
-                        <Box display="flex" gap={0.5} mt={0.5}>
+                        <Box display="flex" gap={0.5} mt={0.5} key={53083}>
                           {opportunity.tags.slice(0, 2).map((tag) => (
-                            <Chip
+                            <Chip;
                               key={tag}
                               label={tag}
                               size="small"
                               variant="outlined"
-                            />
+                            / key={208419}>
                           ))}
                         </Box>
                       </Box>
                     </TableCell>
 
-                    <TableCell>
-                      <Box>
-                        <Typography variant="body2" fontWeight="bold">
+                    <TableCell key={942983}>
+                      <Box key={485947}>
+                        <Typography variant="body2" fontWeight="bold" key={973159}>
                           {opportunity.sideA.selection}
                         </Typography>
-                        <Typography variant="caption" color="textSecondary">
+                        <Typography variant="caption" color="textSecondary" key={15591}>
                           {opportunity.sideA.bookmaker} @{" "}
                           {formatOdds(opportunity.sideA.odds)}
                         </Typography>
-                        <Typography variant="caption" display="block">
+                        <Typography variant="caption" display="block" key={58065}>
                           Stake: {formatCurrency(opportunity.sideA.stake)}
                         </Typography>
                       </Box>
                     </TableCell>
 
-                    <TableCell>
-                      <Box>
-                        <Typography variant="body2" fontWeight="bold">
+                    <TableCell key={942983}>
+                      <Box key={485947}>
+                        <Typography variant="body2" fontWeight="bold" key={973159}>
                           {opportunity.sideB.selection}
                         </Typography>
-                        <Typography variant="caption" color="textSecondary">
+                        <Typography variant="caption" color="textSecondary" key={15591}>
                           {opportunity.sideB.bookmaker} @{" "}
                           {formatOdds(opportunity.sideB.odds)}
                         </Typography>
-                        <Typography variant="caption" display="block">
+                        <Typography variant="caption" display="block" key={58065}>
                           Stake: {formatCurrency(opportunity.sideB.stake)}
                         </Typography>
                       </Box>
                     </TableCell>
 
-                    <TableCell>
-                      <Typography
+                    <TableCell key={942983}>
+                      <Typography;
                         variant="body2"
                         fontWeight="bold"
                         color="success.main"
-                      >
+                       key={723493}>
                         {formatCurrency(opportunity.guaranteedProfit)}
                       </Typography>
-                      <Typography variant="caption" color="textSecondary">
+                      <Typography variant="caption" color="textSecondary" key={15591}>
                         Total: {formatCurrency(opportunity.totalStake)}
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
-                      <Chip
+                    <TableCell key={942983}>
+                      <Chip;
                         label={formatPercentage(opportunity.profitMargin)}
                         color={
-                          opportunity.profitMargin > 0.03
+                          opportunity.profitMargin  key={131975}> 0.03;
                             ? "success"
-                            : opportunity.profitMargin > 0.015
+                            : opportunity.profitMargin > 0.015;
                               ? "warning"
                               : "default"
                         }
                         size="small"
                       />
-                      <Typography variant="caption" display="block">
+                      <Typography variant="caption" display="block" key={58065}>
                         ROI: {formatPercentage(opportunity.roi)}
                       </Typography>
                     </TableCell>
 
-                    <TableCell>
-                      <Chip
+                    <TableCell key={942983}>
+                      <Chip;
                         label={opportunity.riskLevel}
                         color={
                           opportunity.riskLevel === "low"
@@ -1043,40 +1037,40 @@ export const ArbitrageOpportunities: React.FC = () => {
                               : "error"
                         }
                         size="small"
-                      />
+                      / key={807926}>
                     </TableCell>
 
-                    <TableCell>
-                      <Box display="flex" alignItems="center" gap={1}>
-                        <LinearProgress
+                    <TableCell key={942983}>
+                      <Box display="flex" alignItems="center" gap={1} key={161969}>
+                        <LinearProgress;
                           variant="determinate"
                           value={opportunity.confidence * 100}
                           sx={{ width: 40, height: 6 }}
                           color={
-                            opportunity.confidence > 0.9
+                            opportunity.confidence  key={356992}> 0.9;
                               ? "success"
-                              : opportunity.confidence > 0.8
+                              : opportunity.confidence > 0.8;
                                 ? "warning"
                                 : "error"
                           }
                         />
-                        <Typography variant="caption">
+                        <Typography variant="caption" key={472228}>
                           {formatPercentage(opportunity.confidence)}
                         </Typography>
                       </Box>
                     </TableCell>
 
-                    <TableCell>
-                      <Typography variant="caption">
-                        {Math.floor(opportunity.timeToExpiry / 60000)}m
+                    <TableCell key={942983}>
+                      <Typography variant="caption" key={472228}>
+                        {Math.floor(opportunity.timeToExpiry / 60000)}m;
                       </Typography>
                       {opportunity.timeToExpiry < 900000 && (
-                        <FlashOn color="warning" fontSize="small" />
+                        <FlashOn color="warning" fontSize="small" / key={174931}>
                       )}
                     </TableCell>
 
-                    <TableCell>
-                      <Chip
+                    <TableCell key={942983}>
+                      <Chip;
                         label={opportunity.status}
                         color={
                           opportunity.status === "active"
@@ -1092,49 +1086,49 @@ export const ArbitrageOpportunities: React.FC = () => {
                         size="small"
                         icon={
                           opportunity.status === "active" ? (
-                            <CheckCircle />
+                            <CheckCircle / key={858078}>
                           ) : opportunity.status === "executing" ? (
-                            <Cached className="animate-spin" />
+                            <Cached className="animate-spin" / key={952201}>
                           ) : opportunity.status === "expired" ? (
-                            <AccessTime />
-                          ) : undefined
+                            <AccessTime / key={713370}>
+                          ) : undefined;
                         }
                       />
                     </TableCell>
 
-                    <TableCell>
-                      <Box display="flex" gap={0.5}>
-                        <IconButton
+                    <TableCell key={942983}>
+                      <Box display="flex" gap={0.5} key={201875}>
+                        <IconButton;
                           size="small"
-                          onClick={() => handleBookmark(opportunity.id)}
+                          onClick={() = key={410277}> handleBookmark(opportunity.id)}
                         >
                           {opportunity.isBookmarked ? (
-                            <Bookmark />
+                            <Bookmark / key={773064}>
                           ) : (
-                            <BookmarkBorder />
+                            <BookmarkBorder / key={837768}>
                           )}
                         </IconButton>
 
                         {opportunity.status === "active" && (
-                          <Button
+                          <Button;
                             size="small"
                             variant="contained"
                             color="success"
-                            onClick={() => handleExecute(opportunity)}
-                            startIcon={<PlayArrow />}
+                            onClick={() = key={284940}> handleExecute(opportunity)}
+                            startIcon={<PlayArrow / key={629440}>}
                           >
-                            Execute
+                            Execute;
                           </Button>
                         )}
 
-                        <IconButton
+                        <IconButton;
                           size="small"
-                          onClick={() => {
+                          onClick={() = key={410277}> {
                             setSelectedOpportunity(opportunity);
                             setShowCalculatorDialog(true);
                           }}
                         >
-                          <Calculate />
+                          <Calculate / key={125773}>
                         </IconButton>
                       </Box>
                     </TableCell>
@@ -1145,8 +1139,8 @@ export const ArbitrageOpportunities: React.FC = () => {
           </TableContainer>
 
           {filteredOpportunities.length === 0 && (
-            <Alert severity="info" sx={{ mt: 2 }}>
-              No arbitrage opportunities found matching your filters. Try
+            <Alert severity="info" sx={{ mt: 2 }} key={550011}>
+              No arbitrage opportunities found matching your filters. Try;
               adjusting the filters or wait for new opportunities to appear.
             </Alert>
           )}
@@ -1154,37 +1148,37 @@ export const ArbitrageOpportunities: React.FC = () => {
       </Card>
 
       {/* Execution Dialog */}
-      <Dialog
+      <Dialog;
         open={showExecutionDialog}
-        onClose={() => setShowExecutionDialog(false)}
+        onClose={() = key={263204}> setShowExecutionDialog(false)}
         maxWidth="md"
-        fullWidth
+        fullWidth;
       >
-        <DialogTitle>Execute Arbitrage Opportunity</DialogTitle>
-        <DialogContent>
+        <DialogTitle key={731539}>Execute Arbitrage Opportunity</DialogTitle>
+        <DialogContent key={509164}>
           {executionPlan && (
-            <Box>
-              <Typography variant="h6" gutterBottom>
+            <Box key={485947}>
+              <Typography variant="h6" gutterBottom key={90207}>
                 {executionPlan.opportunity.event} -{" "}
                 {executionPlan.opportunity.market}
               </Typography>
 
-              <Grid container spacing={2} sx={{ mb: 3 }}>
-                <Grid item xs={4}>
-                  <Typography variant="caption">Guaranteed Profit</Typography>
-                  <Typography variant="h5" color="success.main">
+              <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
+                <Grid item xs={4} key={686152}>
+                  <Typography variant="caption" key={472228}>Guaranteed Profit</Typography>
+                  <Typography variant="h5" color="success.main" key={850965}>
                     {formatCurrency(executionPlan.opportunity.guaranteedProfit)}
                   </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="caption">Profit Margin</Typography>
-                  <Typography variant="h5">
+                <Grid item xs={4} key={686152}>
+                  <Typography variant="caption" key={472228}>Profit Margin</Typography>
+                  <Typography variant="h5" key={944884}>
                     {formatPercentage(executionPlan.opportunity.profitMargin)}
                   </Typography>
                 </Grid>
-                <Grid item xs={4}>
-                  <Typography variant="caption">Risk Level</Typography>
-                  <Chip
+                <Grid item xs={4} key={686152}>
+                  <Typography variant="caption" key={472228}>Risk Level</Typography>
+                  <Chip;
                     label={executionPlan.riskLevel}
                     color={
                       executionPlan.riskLevel === "low"
@@ -1193,39 +1187,39 @@ export const ArbitrageOpportunities: React.FC = () => {
                           ? "warning"
                           : "error"
                     }
-                  />
+                  / key={219563}>
                 </Grid>
               </Grid>
 
-              <Stepper
+              <Stepper;
                 activeStep={executionPlan.steps.findIndex(
-                  (step) => step.status === "pending",
+                  (step) = key={430527}> step.status === "pending",
                 )}
                 orientation="vertical"
               >
                 {executionPlan.steps.map((step, index) => (
-                  <Step key={step.step}>
-                    <StepLabel
+                  <Step key={step.step} key={123624}>
+                    <StepLabel;
                       icon={
                         step.status === "completed" ? (
-                          <CheckCircle color="success" />
+                          <CheckCircle color="success" / key={995313}>
                         ) : step.status === "executing" ? (
-                          <Cached className="animate-spin" />
+                          <Cached className="animate-spin" / key={952201}>
                         ) : step.status === "failed" ? (
-                          <Error color="error" />
+                          <Error color="error" / key={755825}>
                         ) : (
-                          step.step
+                          step.step;
                         )
                       }
                     >
                       {step.action}
                     </StepLabel>
-                    <Box sx={{ ml: 3, mb: 2 }}>
-                      <Typography variant="body2">
+                    <Box sx={{ ml: 3, mb: 2 }} key={391959}>
+                      <Typography variant="body2" key={679167}>
                         {step.bookmaker} • {formatCurrency(step.amount)} @{" "}
                         {formatOdds(step.odds)}
                       </Typography>
-                      <Chip
+                      <Chip;
                         label={step.status}
                         size="small"
                         color={
@@ -1237,7 +1231,7 @@ export const ArbitrageOpportunities: React.FC = () => {
                                 ? "error"
                                 : "default"
                         }
-                      />
+                      / key={403315}>
                     </Box>
                   </Step>
                 ))}
@@ -1245,43 +1239,43 @@ export const ArbitrageOpportunities: React.FC = () => {
             </Box>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowExecutionDialog(false)}>Cancel</Button>
+        <DialogActions key={432689}>
+          <Button onClick={() = key={331038}> setShowExecutionDialog(false)}>Cancel</Button>
           {executionPlan &&
             executionPlan.steps.every((step) => step.status === "pending") && (
-              <Button
+              <Button;
                 variant="contained"
                 color="success"
                 onClick={handleExecutePlan}
-                startIcon={<PlayArrow />}
+                startIcon={<PlayArrow / key={571735}>}
               >
-                Execute Plan
+                Execute Plan;
               </Button>
             )}
         </DialogActions>
       </Dialog>
 
       {/* Calculator Dialog */}
-      <Dialog
+      <Dialog;
         open={showCalculatorDialog}
-        onClose={() => setShowCalculatorDialog(false)}
+        onClose={() = key={245651}> setShowCalculatorDialog(false)}
         maxWidth="sm"
-        fullWidth
+        fullWidth;
       >
-        <DialogTitle>Arbitrage Calculator</DialogTitle>
-        <DialogContent>
+        <DialogTitle key={731539}>Arbitrage Calculator</DialogTitle>
+        <DialogContent key={509164}>
           {selectedOpportunity && (
-            <Box>
-              <Typography variant="h6" gutterBottom>
+            <Box key={485947}>
+              <Typography variant="h6" gutterBottom key={90207}>
                 {selectedOpportunity.event}
               </Typography>
 
-              <TextField
-                fullWidth
+              <TextField;
+                fullWidth;
                 label="Total Stake"
                 type="number"
                 value={customStake}
-                onChange={(e) => setCustomStake(Number(e.target.value))}
+                onChange={(e) = key={34375}> setCustomStake(Number(e.target.value))}
                 sx={{ mb: 2 }}
               />
 
@@ -1291,33 +1285,33 @@ export const ArbitrageOpportunities: React.FC = () => {
                   customStake,
                 );
                 return (
-                  <Stack spacing={2}>
-                    <Box>
-                      <Typography variant="subtitle2">
-                        Stake Allocation
+                  <Stack spacing={2} key={169333}>
+                    <Box key={485947}>
+                      <Typography variant="subtitle2" key={895}>
+                        Stake Allocation;
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" key={679167}>
                         {selectedOpportunity.sideA.bookmaker}:{" "}
                         {formatCurrency(calc.allocation.sideA)}
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" key={679167}>
                         {selectedOpportunity.sideB.bookmaker}:{" "}
                         {formatCurrency(calc.allocation.sideB)}
                       </Typography>
                     </Box>
 
-                    <Box>
-                      <Typography variant="subtitle2">Results</Typography>
-                      <Typography variant="body2">
+                    <Box key={485947}>
+                      <Typography variant="subtitle2" key={895}>Results</Typography>
+                      <Typography variant="body2" key={679167}>
                         Guaranteed Profit:{" "}
-                        <strong>{formatCurrency(calc.profit)}</strong>
+                        <strong key={829099}>{formatCurrency(calc.profit)}</strong>
                       </Typography>
-                      <Typography variant="body2">
+                      <Typography variant="body2" key={679167}>
                         Profit Margin:{" "}
-                        <strong>{formatPercentage(calc.margin)}</strong>
+                        <strong key={829099}>{formatPercentage(calc.margin)}</strong>
                       </Typography>
-                      <Typography variant="body2">
-                        ROI: <strong>{formatPercentage(calc.roi)}</strong>
+                      <Typography variant="body2" key={679167}>
+                        ROI: <strong key={829099}>{formatPercentage(calc.roi)}</strong>
                       </Typography>
                     </Box>
                   </Stack>
@@ -1326,8 +1320,8 @@ export const ArbitrageOpportunities: React.FC = () => {
             </Box>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowCalculatorDialog(false)}>Close</Button>
+        <DialogActions key={432689}>
+          <Button onClick={() = key={331038}> setShowCalculatorDialog(false)}>Close</Button>
         </DialogActions>
       </Dialog>
     </motion.div>

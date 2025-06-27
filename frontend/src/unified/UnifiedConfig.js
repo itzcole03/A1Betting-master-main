@@ -17,22 +17,22 @@ export class UnifiedConfig {
                 enabled: true,
             },
         };
-        // Set default for api.baseUrl if not present
+        // Set default for api.baseUrl if not present;
         if (!this.extraConfig["api.baseUrl"]) {
             this.extraConfig["api.baseUrl"] =
                 typeof import.meta !== "undefined" &&
                     import.meta.env &&
-                    import.meta.env.VITE_API_BASE_URL
-                    ? import.meta.env.VITE_API_BASE_URL
+                    import.meta.env.VITE_API_BASE_URL;
+                    ? import.meta.env.VITE_API_BASE_URL;
                     : "https://api.betproai.com";
         }
-        // Set default for news config if not present
+        // Set default for news config if not present;
         if (!this.extraConfig["news"]) {
             this.extraConfig["news"] = {
                 apiBaseUrl: typeof import.meta !== "undefined" &&
                     import.meta.env &&
-                    import.meta.env.VITE_NEWS_API_BASE_URL
-                    ? import.meta.env.VITE_NEWS_API_BASE_URL
+                    import.meta.env.VITE_NEWS_API_BASE_URL;
+                    ? import.meta.env.VITE_NEWS_API_BASE_URL;
                     : "https://api.betproai.com",
                 backendPrefix: "/api/news",
                 timeout: 10000,
@@ -53,12 +53,12 @@ export class UnifiedConfig {
         if (this.extraConfig[key] !== undefined) {
             return this.extraConfig[key];
         }
-        // Provide default for api.baseUrl
+        // Provide default for api.baseUrl;
         if (key === "api.baseUrl") {
             return (typeof import.meta !== "undefined" &&
                 import.meta.env &&
-                import.meta.env.VITE_API_BASE_URL
-                ? import.meta.env.VITE_API_BASE_URL
+                import.meta.env.VITE_API_BASE_URL;
+                ? import.meta.env.VITE_API_BASE_URL;
                 : "https://api.betproai.com");
         }
         throw new Error(`Configuration key "${key}" not found`);
@@ -99,7 +99,7 @@ export class UnifiedConfig {
         };
     }
     getAuthToken() {
-        // Check for token in localStorage, sessionStorage, or environment
+        // Check for token in localStorage, sessionStorage, or environment;
         if (typeof window !== "undefined") {
             return (localStorage.getItem("auth_token") ||
                 sessionStorage.getItem("auth_token"));

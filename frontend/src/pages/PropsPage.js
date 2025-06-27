@@ -4,7 +4,7 @@ import GlassCard from '../components/ui/GlassCard';
 import EnhancedPropCard from '../components/ui/EnhancedPropCard';
 import { notificationService } from '@/services/notification';
 import { sportsAnalytics } from '@/services/sportsAnalytics';
-// Sample data for demonstration
+// Sample data for demonstration;
 const samplePlayers = [
     {
         player: {
@@ -135,7 +135,7 @@ const samplePlayers = [
         ],
     },
 ];
-// Sample trending props
+// Sample trending props;
 const sampleTrendingProps = [
     {
         id: 'trend_1',
@@ -176,7 +176,7 @@ export const PropsPage = () => {
     const loadPropPrediction = async (propId) => {
         setIsLoading(true);
         try {
-            const prediction = await sportsAnalytics.analyzeProp(selectedSport, propId);
+
             setPropPrediction(prediction);
         }
         catch (error) {

@@ -47,19 +47,19 @@ export class UnifiedBettingSystem {
         return UnifiedBettingSystem.instance;
     }
     async initialize() {
-        const traceId = this.performanceMonitor.startTrace('betting-system-init');
+
         await this.predictionEngine.initialize();
         await this.strategyEngine.initialize();
         this.performanceMonitor.endTrace(traceId);
     }
     async analyzeBettingOpportunity(context) {
-        const historicalTrends = await this.analyzeHistoricalTrends(context);
-        const marketSignals = await this.analyzeMarketSignals(context);
-        const riskFactors = await this.analyzeRiskFactors(context);
+
+
+
         const { confidence, expectedValue } = this.calculateMetrics(historicalTrends, marketSignals, riskFactors);
-        const type = (expectedValue > 0 ? 'over' : 'under');
-        // Fix: stake is not defined in this scope, use a calculated value
-        const stake = this.calculateOptimalStake(expectedValue, confidence);
+
+        // Fix: stake is not defined in this scope, use a calculated value;
+
         const decision = {
             id: `decision_${Date.now()}`,
             type,
@@ -73,27 +73,27 @@ export class UnifiedBettingSystem {
                 riskScore: 0,
             },
         };
-        // this.eventBus.emit('bettingDecision', decision); // Commented out unavailable eventBus usage
+        // this.eventBus.emit('bettingDecision', decision); // Commented out unavailable eventBus usage;
         return decision;
     }
     calculatePerformanceMetrics(bets) {
-        const completedBets = bets.filter(bet => bet.result && bet.result !== 'pending');
-        const wins = completedBets.filter(bet => bet.result === 'win');
-        const totalStake = completedBets.reduce((sum, bet) => sum + bet.stake, 0);
+
+
+
         const totalReturn = completedBets.reduce((sum, bet) => {
             if (bet.result === 'win') {
                 return sum + (bet.profitLoss ?? 0);
             }
             return sum - bet.stake;
         }, 0);
-        const winRate = completedBets.length ? wins.length / completedBets.length : 0;
-        const roi = totalStake ? totalReturn / totalStake : 0;
-        const profitLoss = totalReturn;
-        const returns = completedBets.map(bet => bet.result === 'win' && bet.stake
-            ? ((bet.profitLoss ?? 0) - bet.stake) / bet.stake
+
+
+
+        const returns = completedBets.map(bet => bet.result === 'win' && bet.stake;
+            ? ((bet.profitLoss ?? 0) - bet.stake) / bet.stake;
             : -1);
-        const sharpeRatio = this.calculateSharpeRatio(returns);
-        const clvAnalysis = this.calculateAverageClv(completedBets);
+
+
         return {
             totalBets: completedBets.length,
             winRate: winRate * 100,
@@ -114,10 +114,10 @@ export class UnifiedBettingSystem {
         };
     }
     analyzeClv(bet) {
-        const clvValue = this.calculateClvValue(bet);
-        const edgeRetention = this.calculateEdgeRetention([bet]);
-        const marketEfficiency = this.calculateMarketEfficiency(bet);
-        const timeValue = this.calculateTimingImpact(bet); // Restored timeValue calculation
+
+
+
+        const timeValue = this.calculateTimingImpact(bet); // Restored timeValue calculation;
         return {
             clvValue,
             edgeRetention,
@@ -143,46 +143,46 @@ export class UnifiedBettingSystem {
         };
     }
     async analyzeHistoricalTrends(context) {
-        // Implement historical analysis
+        // Implement historical analysis;
         return [];
     }
     async analyzeMarketSignals(context) {
-        // Implement market signal analysis
+        // Implement market signal analysis;
         return [];
     }
     async analyzeRiskFactors(context) {
-        // Implement risk factor analysis
+        // Implement risk factor analysis;
         return [];
     }
     calculateMetrics(historicalTrends, marketSignals, riskFactors) {
-        // Implement metric calculation
+        // Implement metric calculation;
         return { confidence: 0.7, expectedValue: 0.05 };
     }
     calculateOptimalStake(expectedValue, confidence) {
-        // TODO: Replace with actual strategyConfig if/when available
-        const kellyFraction = 0.5;
-        const minStake = 10;
-        const maxStakeLimit = 1000;
-        const kellyStake = (expectedValue * confidence) / kellyFraction;
+        // TODO: Replace with actual strategyConfig if/when available;
+
+
+
+
         return Math.min(Math.max(kellyStake, minStake), maxStakeLimit);
     }
     calculateVariance(returns) {
-        const mean = returns.reduce((sum, r) => sum + r, 0) / returns.length;
+
         return returns.reduce((sum, r) => sum + Math.pow(r - mean, 2), 0) / returns.length;
     }
     calculateSharpeRatio(returns) {
-        const mean = returns.reduce((sum, r) => sum + r, 0) / returns.length;
-        const stdDev = Math.sqrt(this.calculateVariance(returns));
-        const riskFreeRate = 0.02 / 365; // Daily risk-free rate
+
+
+        const riskFreeRate = 0.02 / 365; // Daily risk-free rate;
         return (mean - riskFreeRate) / stdDev;
     }
     calculateAverageOdds(bets) {
         return bets.length ? bets.reduce((sum, bet) => sum + (bet.odds ?? 0), 0) / bets.length : 0;
     }
     calculateMaxDrawdown(bets) {
-        let maxDrawdown = 0;
-        let peak = 0;
-        let balance = 0;
+        const maxDrawdown = 0;
+        const peak = 0;
+        const balance = 0;
         bets.forEach(bet => {
             if (bet.result && bet.result.toLowerCase() === 'win') {
                 balance += (bet.payout ?? 0) - (bet.stake ?? 0);
@@ -193,7 +193,7 @@ export class UnifiedBettingSystem {
             if (balance > peak) {
                 peak = balance;
             }
-            const drawdown = peak ? (peak - balance) / peak : 0;
+
             if (drawdown > maxDrawdown) {
                 maxDrawdown = drawdown;
             }
@@ -206,24 +206,24 @@ export class UnifiedBettingSystem {
         return ((bet.metadata.closingOdds - (bet.odds ?? 0)) / (bet.odds ?? 1)) * 100;
     }
     calculateEdgeRetention(bets) {
-        const expectedWinRate = bets.length
-            ? bets.reduce((sum, bet) => sum + (bet.metadata?.confidence ?? 0), 0) / bets.length
+        const expectedWinRate = bets.length;
+            ? bets.reduce((sum, bet) => sum + (bet.metadata?.confidence ?? 0), 0) / bets.length;
             : 0;
-        const actualWinRate = bets.length
-            ? bets.filter(bet => bet.result && bet.result.toUpperCase() === 'WIN').length / bets.length
+        const actualWinRate = bets.length;
+            ? bets.filter(bet => bet.result && bet.result.toUpperCase() === 'WIN').length / bets.length;
             : 0;
         return expectedWinRate ? (actualWinRate / expectedWinRate) * 100 : 0;
     }
     calculateMarketEfficiency(bet) {
         if (!bet.metadata || typeof bet.metadata.closingOdds !== 'number')
             return 1;
-        const movement = Math.abs(bet.metadata.closingOdds - (bet.odds ?? 0));
+
         return bet.odds ? 1 - movement / bet.odds : 1;
     }
     calculateTimingImpact(bet) {
         if (!bet.metadata || typeof bet.metadata.closingLine !== 'number')
             return 0;
-        const timeToClose = (bet.metadata.closingLine - (bet.timestamp ?? 0)) / 3600000;
+
         return 1 - timeToClose / 24;
     }
     calculatePriceMovement(bet) {
@@ -236,7 +236,7 @@ export class UnifiedBettingSystem {
     }
     calculateProfitByStrategy(bets) {
         return bets.reduce((acc, bet) => {
-            const strategy = bet.metadata?.predictionFactors?.[0] || 'unknown';
+
             const profit = bet.result && bet.result.toUpperCase() === 'WIN'
                 ? (bet.payout ?? 0) - (bet.stake ?? 0)
                 : -(bet.stake ?? 0);
@@ -245,15 +245,15 @@ export class UnifiedBettingSystem {
         }, {});
     }
     calculateSharpnessScore(bets) {
-        const clvScore = this.calculateAverageClv(bets).clvValue;
-        const winRate = bets.length
+
+        const winRate = bets.length;
             ? bets.filter(bet => bet.result && bet.result.toUpperCase() === 'WIN')
-                .length / bets.length
+                .length / bets.length;
             : 0;
         return clvScore * 0.6 + winRate * 100 * 0.4;
     }
     calculateAverageClv(bets) {
-        const betsWithClv = bets.filter(bet => bet.metadata && typeof bet.metadata.closingOdds === 'number');
+
         if (betsWithClv.length === 0) {
             return {
                 clvValue: 0,
@@ -261,8 +261,8 @@ export class UnifiedBettingSystem {
                 marketEfficiency: 1,
             };
         }
-        const clvValues = betsWithClv.map(bet => this.calculateClvValue(bet));
-        const avgClv = clvValues.reduce((sum, clv) => sum + clv, 0) / clvValues.length;
+
+
         return {
             clvValue: avgClv,
             edgeRetention: this.calculateEdgeRetention(betsWithClv),
@@ -271,8 +271,8 @@ export class UnifiedBettingSystem {
         };
     }
     setupEventListeners() {
-        // TODO: Refactor or re-implement event listeners to match available EventBus API
-        // Commenting out broken event bus usage for now
+        // TODO: Refactor or re-implement event listeners to match available EventBus API;
+        // Commenting out broken event bus usage for now;
         /*
         this.eventBus.on('market:update', async event => { ... });
         this.eventBus.on('prediction:feedback', async event => { ... });
@@ -285,17 +285,17 @@ export class UnifiedBettingSystem {
     async handleMarketUpdate(update) {
         // Commented out: this.dataEngine.handleMarketUpdate(update);
         // Commented out: this.eventBus.publish({ ... });
-        // TODO: Implement with available APIs
+        // TODO: Implement with available APIs;
     }
     async handlePredictionFeedback(feedback) {
         // Commented out: this.eventBus.publish({ ... });
-        // TODO: Implement with available APIs
+        // TODO: Implement with available APIs;
         // Commented out: unifiedState.getState();
         // Commented out: unifiedState.updateState({ ... });
     }
     async handleStrategyResult(result) {
         // Commented out: this.eventBus.publish({ ... });
-        // TODO: Implement with available APIs
+        // TODO: Implement with available APIs;
         // Commented out: unifiedState.getState();
         // Commented out: unifiedState.updateState({ ... });
     }
@@ -304,9 +304,9 @@ export class UnifiedBettingSystem {
         // Commented out: const state = unifiedState.getState();
         try {
             // Commented out: this.monitor.logError(...)
-            // TODO: Implement error logging if/when monitor is available
-            // Commented out: circuit breaker logic
-            // Commented out: eventBus.publish
+            // TODO: Implement error logging if/when monitor is available;
+            // Commented out: circuit breaker logic;
+            // Commented out: eventBus.publish;
             // Commented out: switch(alert.type) { ... }
         }
         catch (error) {
@@ -316,34 +316,34 @@ export class UnifiedBettingSystem {
         }
     }
     shouldActivateCircuitBreaker(alert) {
-        // Commented out: configManager, unifiedState, monitor usage
+        // Commented out: configManager, unifiedState, monitor usage;
         return false;
     }
     async stopActiveBettingOperations() {
         // Commented out: unifiedState.getState();
-        // Commented out: cancelBet logic
+        // Commented out: cancelBet logic;
         // Commented out: this.predictionEngine.stopAllPredictions();
         // Commented out: unifiedState.updateState({ ... });
     }
     async cancelBet(betId) {
         // Commented out: unifiedState.getState();
-        // Commented out: bet lookup and update
+        // Commented out: bet lookup and update;
         // Commented out: this.eventBus.publish({ ... });
     }
     async mitigateOddsRisk(alert) {
-        // Commented out: configManager, monitor usage
+        // Commented out: configManager, monitor usage;
     }
     async mitigateInjuryRisk(alert) {
-        // Commented out: configManager, monitor usage
+        // Commented out: configManager, monitor usage;
     }
     async mitigateWeatherRisk(alert) {
-        // Commented out: configManager, monitor usage
+        // Commented out: configManager, monitor usage;
     }
     async mitigateLineMovementRisk(alert) {
-        // Commented out: configManager, monitor usage
+        // Commented out: configManager, monitor usage;
     }
     async mitigateSystemRisk(alert) {
-        // Commented out: configManager, monitor usage
+        // Commented out: configManager, monitor usage;
     }
     registerStrategy(strategy) {
         if (this.strategies.has(strategy.id)) {
@@ -356,7 +356,7 @@ export class UnifiedBettingSystem {
         // Commented out: unifiedState.getState();
         // Commented out: unifiedState.updateBettingState({ ... });
         // Commented out: this.eventBus.emit('metric:recorded', ...)
-        // Return a dummy BettingDecision for now
+        // Return a dummy BettingDecision for now;
         return {
             id: `decision_${Date.now()}`,
             odds,
@@ -408,15 +408,15 @@ export class UnifiedBettingSystem {
         return { ...defaultContext, ...context };
     }
     validateSystemConstraints(state, context) {
-        // Check number of active bets
+        // Check number of active bets;
         if (state.betting.activeBets.size >= this.MAX_ACTIVE_BETS) {
             return false;
         }
-        // Check odds range
+        // Check odds range;
         if (context.odds < context.minOdds || context.odds > context.maxOdds) {
             return false;
         }
-        // Check system status
+        // Check system status;
         if (state.status !== 'ready') {
             return false;
         }
@@ -424,12 +424,12 @@ export class UnifiedBettingSystem {
     }
     getApplicableStrategies(prediction, context) {
         return Array.from(this.strategies.values()).filter(strategy => {
-            // Commented out: strategy.metadata.minConfidence, riskLevel checks
+            // Commented out: strategy.metadata.minConfidence, riskLevel checks;
             return true;
         });
     }
     aggregateDecisions(decisions, prediction) {
-        const positiveBets = decisions.filter(d => d.shouldBet);
+
         if (positiveBets.length === 0) {
             return {
                 id: `decision_${Date.now()}`,
@@ -445,13 +445,13 @@ export class UnifiedBettingSystem {
                 },
             };
         }
-        // Calculate weighted stake and confidence
-        const totalConfidence = positiveBets.reduce((sum, d) => sum + d.confidence, 0);
-        const weightedStake = positiveBets.reduce((sum, d) => sum + d.stake * (d.confidence / totalConfidence), 0);
-        const averageConfidence = totalConfidence / positiveBets.length;
-        // Combine factors and calculate risk
-        const allFactors = Array.from(new Set(positiveBets.flatMap(d => d.metadata.factors)));
-        const averageRisk = positiveBets.reduce((sum, d) => sum + d.metadata.riskScore, 0) / positiveBets.length;
+        // Calculate weighted stake and confidence;
+
+
+
+        // Combine factors and calculate risk;
+
+
         return {
             id: `decision_${Date.now()}`,
             odds: 1,
@@ -486,21 +486,21 @@ export class UnifiedBettingSystem {
             marketEfficiency: 0.2,
             exposure: 0.3,
         };
-        const confidenceRisk = 1 - prediction.confidence;
-        const recentPerformanceRisk = 1 - (context.metrics.winRate || 0);
-        const marketEfficiencyRisk = 1 - (context.metrics.marketEfficiencyScore || 0);
-        const exposureRisk = this.calculateExposureRisk(context);
+
+
+
+
         return (confidenceRisk * weights.confidence +
             recentPerformanceRisk * weights.recentPerformance +
             marketEfficiencyRisk * weights.marketEfficiency +
             exposureRisk * weights.exposure);
     }
     calculateExposureRisk(context) {
-        const totalExposure = context.recentBets.reduce((sum, bet) => sum + bet.stake, 0);
+
         return Math.min(1, totalExposure / (context.bankroll * context.maxRiskPerBet));
     }
     determineBetType(decisions) {
-        const types = decisions.map(d => d.type);
+
         return types.includes('parlay') ? 'parlay' : 'single';
     }
     calculatePayout(bet, result) {
@@ -513,7 +513,7 @@ export class UnifiedBettingSystem {
         return 0;
     }
     updatePerformanceMetrics(payout) {
-        const state = unifiedState.getState();
+
         const currentMetrics = state.betting.performance || {
             totalBets: 0,
             winRate: 0,
@@ -528,9 +528,9 @@ export class UnifiedBettingSystem {
             sharpeRatio: 0,
             betterThanExpected: 0,
         };
-        const totalBets = currentMetrics.totalBets + 1;
-        const profitLoss = currentMetrics.profitLoss + payout;
-        const roi = profitLoss / (totalBets * 100); // Assuming average stake of 100
+
+
+        const roi = profitLoss / (totalBets * 100); // Assuming average stake of 100;
         return {
             ...currentMetrics,
             totalBets,
@@ -564,18 +564,18 @@ export class UnifiedBettingSystem {
         };
     }
     async handleOpportunity(opportunity) {
-        const traceId = this.performanceMonitor.startTrace('handle-opportunity');
+
         try {
-            // Check if we should take this opportunity
+            // Check if we should take this opportunity;
             if (!this.shouldTakeOpportunity(opportunity)) {
                 this.performanceMonitor.endTrace(traceId);
                 return;
             }
-            // Calculate optimal stake
-            const stake = this.calculateOptimalStake(opportunity.expectedValue, opportunity.confidence);
-            // Create betting position
-            const position = await this.createPosition(opportunity, stake);
-            // Update metrics
+            // Calculate optimal stake;
+
+            // Create betting position;
+
+            // Update metrics;
             this.updateMetrics(position);
             this.performanceMonitor.endTrace(traceId);
         }
@@ -585,18 +585,18 @@ export class UnifiedBettingSystem {
         }
     }
     shouldTakeOpportunity(opportunity) {
-        // Check confidence threshold
+        // Check confidence threshold;
         if (opportunity.confidence < 0.7)
             return false;
-        // Check current exposure
-        const currentExposure = this.calculateCurrentExposure();
+        // Check current exposure;
+
         if (currentExposure >= this.riskProfile.maxExposure)
             return false;
-        // Check number of open positions
+        // Check number of open positions;
         if (this.getOpenPositions().length >= this.riskProfile.maxPositions)
             return false;
-        // Check risk factors
-        const riskFactors = opportunity.analysis.riskFactors;
+        // Check risk factors;
+
         if (riskFactors.includes('high_volatility') || riskFactors.includes('low_liquidity')) {
             return false;
         }
@@ -642,11 +642,11 @@ export class UnifiedBettingSystem {
         return Array.from(this.positions.values()).filter(p => p.status === 'open');
     }
     async closePosition(positionId, closePrice) {
-        const position = this.positions.get(positionId);
+
         if (!position || position.status !== 'open') {
             throw new Error(`Cannot close position ${positionId}`);
         }
-        const pnl = this.calculatePnl(position, closePrice);
+
         position.status = 'closed';
         position.closePrice = closePrice;
         position.closeTimestamp = Date.now();
@@ -654,8 +654,8 @@ export class UnifiedBettingSystem {
         this.updateMetrics(position);
     }
     calculatePnl(position, closePrice) {
-        const priceChange = closePrice - position.entryPrice;
-        const multiplier = position.type === 'over' ? 1 : -1;
+
+
         return position.stake * priceChange * multiplier;
     }
     getMetrics() {
@@ -671,24 +671,24 @@ export class UnifiedBettingSystem {
         return Array.from(this.positions.values());
     }
     async evaluatePosition(positionId, closePrice) {
-        const position = this.positions.get(positionId);
+
         if (!position || position.status !== 'open') {
             throw new Error(`Invalid position ${positionId}`);
         }
-        // Use uppercase for BetType if needed
+        // Use uppercase for BetType if needed;
         // Commented out: this.dataEngine.getMarketData(position.propId);
-        const currentPnl = this.calculatePnl(position, closePrice);
-        const pnlPercent = currentPnl / position.stake;
-        // Determine risk level
-        let riskLevel = 'low';
+
+
+        // Determine risk level;
+        const riskLevel = 'low';
         if (pnlPercent <= -this.riskProfile.stopLoss) {
             riskLevel = 'high';
         }
         else if (pnlPercent < 0) {
             riskLevel = 'medium';
         }
-        // Generate recommendation
-        let recommendation = 'hold';
+        // Generate recommendation;
+        const recommendation = 'hold';
         if (pnlPercent <= -this.riskProfile.stopLoss || pnlPercent >= this.riskProfile.profitTarget) {
             recommendation = 'close';
         }
@@ -703,7 +703,7 @@ export class UnifiedBettingSystem {
             const opportunity = {
                 id: prediction.id,
                 propId: prediction.id,
-                type: 'OVER', // Use uppercase for BetType
+                type: 'OVER', // Use uppercase for BetType;
                 confidence: prediction.confidence,
                 expectedValue: 0,
                 timestamp: Date.now(),
@@ -722,7 +722,7 @@ export class UnifiedBettingSystem {
             return {
                 id: `strategy-${Date.now()}`,
                 opportunityId: opportunity.id,
-                riskAssessment: {}, // Use any for missing fields
+                riskAssessment: {}, // Use any for missing fields;
                 recommendedStake: 0,
                 entryPoints: [],
                 exitPoints: [],
@@ -742,24 +742,24 @@ export class UnifiedBettingSystem {
         }
     }
     async updateBankrollState(betType, stake, odds, result) {
-        const profitLoss = this.calculateProfitLoss(stake, odds, result);
+
         this.bankrollState = {
             ...this.bankrollState,
             currentAmount: this.bankrollState.currentAmount + profitLoss,
             totalWagered: this.bankrollState.totalWagered + stake,
             totalWon: result.toLowerCase() === 'win'
-                ? this.bankrollState.totalWon + profitLoss
+                ? this.bankrollState.totalWon + profitLoss;
                 : this.bankrollState.totalWon,
             totalLost: result.toLowerCase() === 'loss'
-                ? this.bankrollState.totalLost + stake
+                ? this.bankrollState.totalLost + stake;
                 : this.bankrollState.totalLost,
             openPositions: result.toLowerCase() === 'pending'
-                ? this.bankrollState.openPositions + 1
+                ? this.bankrollState.openPositions + 1;
                 : this.bankrollState.openPositions,
             maxDrawdown: Math.min(this.bankrollState.maxDrawdown, profitLoss),
             lastUpdate: Date.now(),
         };
-        // TODO: Add event emit if/when eventBus is available
+        // TODO: Add event emit if/when eventBus is available;
     }
     calculateProfitLoss(stake, odds, result) {
         if (result.toLowerCase() === 'win') {

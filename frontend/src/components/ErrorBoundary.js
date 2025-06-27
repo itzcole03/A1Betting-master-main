@@ -11,7 +11,7 @@ class ErrorBoundary extends Component {
         return { hasError: true, error };
     }
     componentDidCatch(error, errorInfo) {
-        console.error("Theme ErrorBoundary caught an error:", error, errorInfo);
+        // console statement removed
     }
     render() {
         if (this.state.hasError) {

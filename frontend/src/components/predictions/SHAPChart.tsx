@@ -1,5 +1,5 @@
-import React from 'react';
-import { useMemo } from "react";
+import React from 'react.ts';
+import { useMemo } from 'react.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import SafeChart from "../ui/SafeChart";
+import SafeChart from '@/ui/SafeChart.ts';
 
 ChartJS.register(
   CategoryScale,
@@ -76,7 +76,7 @@ export function SHAPChart({ shapValues, className = "" }: SHAPChartProps) {
       tooltip: {
         callbacks: {
           label: (context: any) => {
-            const value = context.raw;
+
             return `Impact: ${value > 0 ? "+" : ""}${value.toFixed(3)}`;
           },
         },
@@ -98,7 +98,7 @@ export function SHAPChart({ shapValues, className = "" }: SHAPChartProps) {
         ticks: {
           color: "rgb(107, 114, 128)",
           callback: (value: any) => {
-            const label = chartData.labels[value];
+
             return label.length > 20 ? label.substring(0, 17) + "..." : label;
           },
         },
@@ -107,13 +107,13 @@ export function SHAPChart({ shapValues, className = "" }: SHAPChartProps) {
   };
 
   return (
-    <div className={`h-[400px] w-full ${className}`}>
-      <SafeChart
+    <div className={`h-[400px] w-full ${className}`} key={862989}>
+      <SafeChart;
         type="bar"
         data={chartData}
         options={options}
         loadingMessage="Loading SHAP analysis..."
-      />
+      / key={806444}>
     </div>
   );
 }

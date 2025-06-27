@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import SafeChart from "./ui/SafeChart";
+import React, { useEffect, useState  } from 'react.ts';
+import SafeChart from './ui/SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +10,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { webSocketBatching } from "../services/WebSocketBatching";
-import { EventBus } from "../unified/EventBus";
+import { webSocketBatching } from '@/services/WebSocketBatching.ts';
+import { EventBus } from '@/unified/EventBus.ts';
 
 ChartJS.register(
   CategoryScale,
@@ -32,7 +32,7 @@ interface BatchMetrics {
 }
 
 export const WebSocketBatchingAnalytics: React.FC = () => {
-  const [metrics, setMetrics] = useState<BatchMetrics>({
+  const [metrics, setMetrics] = useState<BatchMetrics key={813397}>({
     totalBatches: 0,
     totalMessages: 0,
     averageBatchSize: 0,
@@ -40,17 +40,16 @@ export const WebSocketBatchingAnalytics: React.FC = () => {
     lastBatchTime: 0,
   });
 
-  const [batchSizes, setBatchSizes] = useState<number[]>([]);
-  const [compressionRatios, setCompressionRatios] = useState<number[]>([]);
-  const [timestamps, setTimestamps] = useState<number[]>([]);
+  const [batchSizes, setBatchSizes] = useState<number[] key={753439}>([]);
+  const [compressionRatios, setCompressionRatios] = useState<number[] key={753439}>([]);
+  const [timestamps, setTimestamps] = useState<number[] key={753439}>([]);
 
   useEffect(() => {
     const updateMetrics = () => {
-      const currentMetrics = webSocketBatching.getMetrics();
+
       setMetrics(currentMetrics);
     };
 
-    const interval = setInterval(updateMetrics, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -68,7 +67,6 @@ export const WebSocketBatchingAnalytics: React.FC = () => {
       setTimestamps((prev) => [...prev.slice(-20), event.timestamp]);
     };
 
-    const eventBus = EventBus.getInstance();
     eventBus.subscribe("websocket:batch:sent", handleBatchSent);
 
     return () => {
@@ -113,24 +111,24 @@ export const WebSocketBatchingAnalytics: React.FC = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">WebSocket Batching Analytics</h2>
+    <div className="p-4 bg-white rounded-lg shadow" key={603773}>
+      <h2 className="text-2xl font-bold mb-4" key={946196}>WebSocket Batching Analytics</h2>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="p-4 bg-gray-50 rounded">
-          <h3 className="text-lg font-semibold mb-2">Total Metrics</h3>
-          <div className="space-y-2">
-            <p>Total Batches: {metrics.totalBatches}</p>
-            <p>Total Messages: {metrics.totalMessages}</p>
-            <p>Average Batch Size: {metrics.averageBatchSize.toFixed(2)}</p>
+      <div className="grid grid-cols-2 gap-4 mb-6" key={938054}>
+        <div className="p-4 bg-gray-50 rounded" key={426536}>
+          <h3 className="text-lg font-semibold mb-2" key={82841}>Total Metrics</h3>
+          <div className="space-y-2" key={725977}>
+            <p key={161203}>Total Batches: {metrics.totalBatches}</p>
+            <p key={161203}>Total Messages: {metrics.totalMessages}</p>
+            <p key={161203}>Average Batch Size: {metrics.averageBatchSize.toFixed(2)}</p>
           </div>
         </div>
 
-        <div className="p-4 bg-gray-50 rounded">
-          <h3 className="text-lg font-semibold mb-2">Performance Metrics</h3>
-          <div className="space-y-2">
-            <p>Compression Ratio: {metrics.compressionRatio.toFixed(2)}x</p>
-            <p>
+        <div className="p-4 bg-gray-50 rounded" key={426536}>
+          <h3 className="text-lg font-semibold mb-2" key={82841}>Performance Metrics</h3>
+          <div className="space-y-2" key={725977}>
+            <p key={161203}>Compression Ratio: {metrics.compressionRatio.toFixed(2)}x</p>
+            <p key={161203}>
               Last Batch Time:{" "}
               {new Date(metrics.lastBatchTime).toLocaleTimeString()}
             </p>
@@ -138,13 +136,13 @@ export const WebSocketBatchingAnalytics: React.FC = () => {
         </div>
       </div>
 
-      <div className="h-64">
-        <SafeChart
+      <div className="h-64" key={118048}>
+        <SafeChart;
           type="line"
           data={chartData}
           options={chartOptions}
           loadingMessage="Loading batching metrics..."
-        />
+        / key={310547}>
       </div>
     </div>
   );

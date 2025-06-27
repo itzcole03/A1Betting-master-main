@@ -20,12 +20,12 @@ export class PrizePicksService {
     }
     async getAvailableProps(params) {
         try {
-            const cacheKey = `props:${JSON.stringify(params)}`;
-            const cachedProps = await cache.get(cacheKey);
+
+
             if (cachedProps) {
                 return cachedProps;
             }
-            const props = await this.fetchProps(params);
+
             await cache.set(cacheKey, props);
             return props;
         }
@@ -35,16 +35,16 @@ export class PrizePicksService {
         }
     }
     async fetchProps(params) {
-        // Implementation of prop fetching logic
+        // Implementation of prop fetching logic;
         return [];
     }
     async generateOptimizedLineup(params) {
         try {
             const { predictions, props, investmentAmount, strategyMode, portfolioSize } = params;
-            // Filter props based on predictions and strategy
-            const filteredProps = this.filterPropsByStrategy(props, predictions, strategyMode);
-            // Calculate optimal portfolio
-            const portfolio = this.calculateOptimalPortfolio(filteredProps, investmentAmount, portfolioSize);
+            // Filter props based on predictions and strategy;
+
+            // Calculate optimal portfolio;
+
             return portfolio;
         }
         catch (error) {
@@ -53,11 +53,11 @@ export class PrizePicksService {
         }
     }
     filterPropsByStrategy(props, predictions, strategyMode) {
-        // Implementation of strategy-based filtering
+        // Implementation of strategy-based filtering;
         return props;
     }
     calculateOptimalPortfolio(props, investmentAmount, portfolioSize) {
-        // Implementation of portfolio optimization
+        // Implementation of portfolio optimization;
         return [];
     }
     calculateMultiplier(portfolioSize) {
@@ -77,20 +77,20 @@ export class PrizePicksService {
                     sports: league ? [league] : [],
                     timeWindow: statType || '',
                 });
-                const projections = data ?? [];
+
                 return transformData(projections, this.transformProjections, 'prizepicks.fetchProjections');
             }
             catch (error) {
                 handleApiError(error, 'prizepicks.fetchProjections');
-                return []; // Return empty array on error
+                return []; // Return empty array on error;
             }
         }, 'prizepicks.fetchProjections');
     }
     async fetchPlayerDetails(playerId) {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchPlayers({ sports: [] }); // No playerId-based fetch, fallback to fetching all and filtering
-                const player = Array.isArray(data) ? data.find(p => p.id === playerId) : undefined;
+                const data = await this.adapter.fetchPlayers({ sports: [] }); // No playerId-based fetch, fallback to fetching all and filtering;
+
                 return transformData(player, this.transformPlayerDetails, 'prizepicks.fetchPlayerDetails');
             }
             catch (error) {
@@ -101,13 +101,13 @@ export class PrizePicksService {
     async fetchLines(propId) {
         return measurePerformance(async () => {
             try {
-                const data = await this.adapter.fetchLines({ propIds: [propId] });
-                const lines = data ?? null;
+
+
                 return transformData(lines, this.transformLines, 'prizepicks.fetchLines');
             }
             catch (error) {
                 handleApiError(error, 'prizepicks.fetchLines');
-                return null; // Return null on error
+                return null; // Return null on error;
             }
         }, 'prizepicks.fetchLines');
     }
@@ -139,7 +139,7 @@ export class PrizePicksService {
         };
     }
     transformLines(data) {
-        // If data is an array, return the first element or an empty array as fallback
+        // If data is an array, return the first element or an empty array as fallback;
         if (Array.isArray(data)) {
             return data.length > 0 ? data[0] : [];
         }
@@ -149,11 +149,11 @@ export class PrizePicksService {
     parseOdds(ptOld, type) {
         if (!ptOld)
             return undefined;
-        const parts = ptOld.toLowerCase().split(' ');
-        const part = parts.find(p => p.startsWith(type));
+
+
         if (!part)
             return undefined;
-        const val = parseInt(part.substring(1));
+
         return isNaN(val) ? undefined : val;
     }
 }

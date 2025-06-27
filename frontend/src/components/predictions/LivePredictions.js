@@ -2,8 +2,8 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { motion } from 'framer-motion';
 import { formatPercentage, formatTimeAgo } from '../../utils/formatters';
 export const LivePredictions = ({ predictions }) => {
-    // Sort predictions by timestamp, most recent first
-    const sortedPredictions = [...predictions].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime());
+    // Sort predictions by timestamp, most recent first;
+
     const getStatusColor = (status) => {
         switch (status) {
             case 'won':

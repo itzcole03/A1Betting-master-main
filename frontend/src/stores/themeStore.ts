@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand.ts';
+import { persist } from 'zustand/middleware.ts';
 
 export interface ThemeState {
   mode: 'light' | 'dark';

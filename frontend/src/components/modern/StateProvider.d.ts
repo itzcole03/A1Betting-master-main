@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode } from 'react.ts';
 interface Prop {
     id: string;
     player: string;

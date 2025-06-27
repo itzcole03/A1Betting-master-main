@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import {
   Box,
   Card,
@@ -8,14 +8,14 @@ import {
   Tooltip,
   IconButton,
   LinearProgress,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
   Info as InfoIcon,
   Warning as WarningIcon,
-} from '@mui/icons-material';
-import { formatPercentage, formatTimeAgo } from '@/utils/formatters';
+} from '@mui/icons-material.ts';
+import { formatPercentage, formatTimeAgo } from '@/utils/formatters.ts';
 
 interface Pattern {
   name: string;
@@ -41,7 +41,7 @@ interface PatternRecognitionProps {
   onPatternSelect: (pattern: Pattern) => void;
 }
 
-const PatternRecognition: React.FC<PatternRecognitionProps> = ({
+const PatternRecognition: React.FC<PatternRecognitionProps key={825057}> = ({
   patterns,
   lineMovement,
   onPatternSelect,
@@ -60,26 +60,26 @@ const PatternRecognition: React.FC<PatternRecognitionProps> = ({
   const getSignificanceIcon = (significance: LineMovement['significance']) => {
     switch (significance) {
       case 'high':
-        return <TrendingUpIcon />;
+        return <TrendingUpIcon / key={780325}>;
       case 'medium':
-        return <WarningIcon />;
+        return <WarningIcon / key={78709}>;
       case 'low':
-        return <TrendingDownIcon />;
+        return <TrendingDownIcon / key={929577}>;
     }
   };
 
   return (
-    <Box sx={{ p: 3 }}>
-      <Typography gutterBottom variant="h5">
-        Pattern Recognition
-        <Tooltip title="Historical patterns and line movement analysis">
-          <IconButton>
-            <InfoIcon />
+    <Box sx={{ p: 3 }} key={486541}>
+      <Typography gutterBottom variant="h5" key={760269}>
+        Pattern Recognition;
+        <Tooltip title="Historical patterns and line movement analysis" key={694587}>
+          <IconButton key={49502}>
+            <InfoIcon / key={352040}>
           </IconButton>
         </Tooltip>
       </Typography>
 
-      <Box
+      <Box;
         sx={{
           display: 'grid',
           gridTemplateColumns: {
@@ -88,32 +88,32 @@ const PatternRecognition: React.FC<PatternRecognitionProps> = ({
           },
           gap: 3,
         }}
-      >
+       key={854733}>
         {/* Line Movement Card */}
-        <Card>
-          <CardContent>
-            <Typography gutterBottom variant="h6">
-              Line Movement
+        <Card key={650115}>
+          <CardContent key={452065}>
+            <Typography gutterBottom variant="h6" key={368112}>
+              Line Movement;
             </Typography>
-            <Box sx={{ mb: 2 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                <Typography color="text.secondary" variant="body2">
-                  Initial Line
+            <Box sx={{ mb: 2 }} key={144601}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }} key={386900}>
+                <Typography color="text.secondary" variant="body2" key={497604}>
+                  Initial Line;
                 </Typography>
-                <Typography variant="body2">{lineMovement.initial}</Typography>
+                <Typography variant="body2" key={679167}>{lineMovement.initial}</Typography>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                <Typography color="text.secondary" variant="body2">
-                  Current Line
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }} key={386900}>
+                <Typography color="text.secondary" variant="body2" key={497604}>
+                  Current Line;
                 </Typography>
-                <Typography variant="body2">{lineMovement.current}</Typography>
+                <Typography variant="body2" key={679167}>{lineMovement.current}</Typography>
               </Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                <Typography color="text.secondary" variant="body2">
-                  Change
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }} key={386900}>
+                <Typography color="text.secondary" variant="body2" key={497604}>
+                  Change;
                 </Typography>
-                <Typography
-                  color={lineMovement.change > 0 ? 'success.main' : 'error.main'}
+                <Typography;
+                  color={lineMovement.change  key={224537}> 0 ? 'success.main' : 'error.main'}
                   variant="body2"
                 >
                   {lineMovement.change > 0 ? '+' : ''}
@@ -121,25 +121,25 @@ const PatternRecognition: React.FC<PatternRecognitionProps> = ({
                 </Typography>
               </Box>
             </Box>
-            <Chip
+            <Chip;
               color={getSignificanceColor(lineMovement.significance)}
               icon={getSignificanceIcon(lineMovement.significance)}
               label={`${lineMovement.significance.toUpperCase()} Significance`}
-            />
-            <Typography color="text.secondary" sx={{ display: 'block', mt: 1 }} variant="caption">
+            / key={370758}>
+            <Typography color="text.secondary" sx={{ display: 'block', mt: 1 }} variant="caption" key={704868}>
               Updated {formatTimeAgo(lineMovement.timestamp)}
             </Typography>
           </CardContent>
         </Card>
 
         {/* Patterns Card */}
-        <Card>
-          <CardContent>
-            <Typography gutterBottom variant="h6">
-              Identified Patterns
+        <Card key={650115}>
+          <CardContent key={452065}>
+            <Typography gutterBottom variant="h6" key={368112}>
+              Identified Patterns;
             </Typography>
             {patterns.map((pattern, index) => (
-              <Box
+              <Box;
                 key={index}
                 sx={{
                   mb: 2,
@@ -152,41 +152,41 @@ const PatternRecognition: React.FC<PatternRecognitionProps> = ({
                     bgcolor: 'action.hover',
                   },
                 }}
-                onClick={() => onPatternSelect(pattern)}
+                onClick={() = key={916929}> onPatternSelect(pattern)}
               >
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
-                  <Typography variant="subtitle2">{pattern.name}</Typography>
-                  <Chip
-                    color={pattern.matchScore >= 0.8 ? 'success' : 'warning'}
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }} key={386900}>
+                  <Typography variant="subtitle2" key={895}>{pattern.name}</Typography>
+                  <Chip;
+                    color={pattern.matchScore  key={671333}>= 0.8 ? 'success' : 'warning'}
                     label={`${formatPercentage(pattern.matchScore)} Match`}
                     size="small"
                   />
                 </Box>
-                <Typography gutterBottom color="text.secondary" variant="body2">
+                <Typography gutterBottom color="text.secondary" variant="body2" key={760822}>
                   {pattern.description}
                 </Typography>
-                <Box sx={{ mt: 1 }}>
-                  <Typography gutterBottom color="text.secondary" variant="caption">
-                    Success Rate
+                <Box sx={{ mt: 1 }} key={75957}>
+                  <Typography gutterBottom color="text.secondary" variant="caption" key={684789}>
+                    Success Rate;
                   </Typography>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    <LinearProgress
-                      color={pattern.successRate >= 0.6 ? 'success' : 'warning'}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }} key={109447}>
+                    <LinearProgress;
+                      color={pattern.successRate  key={587854}>= 0.6 ? 'success' : 'warning'}
                       sx={{ flexGrow: 1, height: 4, borderRadius: 2 }}
                       value={pattern.successRate * 100}
                       variant="determinate"
                     />
-                    <Typography variant="caption">
+                    <Typography variant="caption" key={472228}>
                       {formatPercentage(pattern.successRate)}
                     </Typography>
                   </Box>
                 </Box>
-                <Typography
+                <Typography;
                   color="text.secondary"
                   sx={{ display: 'block', mt: 1 }}
                   variant="caption"
-                >
-                  Last seen {formatTimeAgo(pattern.lastOccurrence)} • {pattern.sampleSize} samples
+                 key={768531}>
+                  Last seen {formatTimeAgo(pattern.lastOccurrence)} • {pattern.sampleSize} samples;
                 </Typography>
               </Box>
             ))}

@@ -2,26 +2,26 @@
 // RefereeService: Provides referee stats and advanced modeling for sports events.
 // Integrates with external referee APIs for real-time data.
 
-import { wrapWithRateLimit } from '../rateLimit/wrapWithRateLimit.js';
-import { API_CONFIG } from '../../config/apiConfig.js';
+import { wrapWithRateLimit } from '@/rateLimit/wrapWithRateLimit.js';
+import { API_CONFIG } from '@/config/apiConfig.js';
 
 
 export interface RefereeStats {
   id: string;
   name: string;
-  foulRate: number; // average fouls per game
-  techFrequency?: number; // technical fouls per game
-  homeBias?: number; // positive means favors home team
+  foulRate: number; // average fouls per game;
+  techFrequency?: number; // technical fouls per game;
+  homeBias?: number; // positive means favors home team;
   ejectionsPerGame?: number;
 }
 
 
 export class RefereeService {
   /**
-   * Fetch referee stats from backend/external API
+   * Fetch referee stats from backend/external API;
    */
   getRefereeStats = wrapWithRateLimit(async (refereeId: string): Promise<RefereeStats | null> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/${refereeId}/stats`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }
@@ -31,10 +31,10 @@ export class RefereeService {
   });
 
   /**
-   * Batch fetch referee stats by IDs
+   * Batch fetch referee stats by IDs;
    */
   getRefereeStatsBatch = wrapWithRateLimit(async (refereeIds: string[]): Promise<RefereeStats[]> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/batch`;
+
     const res = await fetch(url, {
       method: 'POST',
       headers: {
@@ -48,10 +48,10 @@ export class RefereeService {
   });
 
   /**
-   * Search referees by name
+   * Search referees by name;
    */
   searchReferees = wrapWithRateLimit(async (query: string): Promise<RefereeStats[]> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/search?q=${encodeURIComponent(query)}`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }
@@ -61,10 +61,10 @@ export class RefereeService {
   });
 
   /**
-   * Fetch advanced modeling/analytics for a referee
+   * Fetch advanced modeling/analytics for a referee;
    */
   getRefereeModeling = wrapWithRateLimit(async (refereeId: string): Promise<Record<string, unknown>> => {
-    const url = `${API_CONFIG.SPORTS_DATA.BASE_URL}/referees/${refereeId}/modeling`;
+
     const res = await fetch(url, {
       method: 'GET',
       headers: { 'x-api-key': API_CONFIG.SPORTS_DATA.API_KEY }

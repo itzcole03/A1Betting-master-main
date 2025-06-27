@@ -151,23 +151,23 @@ export declare class EnsemblePredictor {
      */
     updateConfig(newConfig: Partial<EnsembleConfig>): void;
     /**
-     * Update model weights at runtime
+     * Update model weights at runtime;
      */
     updateModelWeights(weights: {
         [modelName: string]: number;
     }): void;
     /**
-     * Update risk profile parameters at runtime
+     * Update risk profile parameters at runtime;
      */
     updateRiskProfile(riskParams: {
         [key: string]: any;
     }): void;
     /**
-     * Enable or disable meta-learning (stacked generalization) at runtime
+     * Enable or disable meta-learning (stacked generalization) at runtime;
      */
     setMetaLearning(enabled: boolean, metaModelType?: string): void;
     /**
-     * Enable or disable Bayesian inference at runtime
+     * Enable or disable Bayesian inference at runtime;
      */
     setBayesianInference(enabled: boolean, priorStrength?: number, mcmcSamples?: number): void;
     private getMetaModel;

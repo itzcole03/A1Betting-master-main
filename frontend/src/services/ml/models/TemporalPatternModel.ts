@@ -2,8 +2,8 @@
  * Model for analyzing temporal patterns and generating predictions.
  */
 
-import { BaseModel } from './BaseModel';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types';
+import { BaseModel } from './BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
 
 interface TemporalPatternConfig extends ModelConfig {
   features: string[];
@@ -19,8 +19,8 @@ interface TemporalPatternOutput {
 
 export class TemporalPatternModel extends BaseModel {
   protected config: ModelConfig;
-  private microTrendWindow: number = 5; // Last 5 games
-  private macroTrendWindow: number = 20; // Last 20 games
+  private microTrendWindow: number = 5; // Last 5 games;
+  private macroTrendWindow: number = 20; // Last 20 games;
   private circadianThreshold: number = 0.7;
   private cyclicalThreshold: number = 0.6;
 
@@ -30,7 +30,7 @@ export class TemporalPatternModel extends BaseModel {
   }
 
   async predict(data: unknown): Promise<ModelPrediction> {
-    // Implement temporal pattern prediction logic
+    // Implement temporal pattern prediction logic;
     return {
       timestamp: new Date().toISOString(),
       input: data,
@@ -45,7 +45,7 @@ export class TemporalPatternModel extends BaseModel {
   }
 
   async update(data: unknown): Promise<void> {
-    // Implement model update logic
+    // Implement model update logic;
     this.lastUpdate = new Date().toISOString();
     this.metadata = {
       ...this.metadata,
@@ -55,7 +55,7 @@ export class TemporalPatternModel extends BaseModel {
   }
 
   async train(data: any[]): Promise<void> {
-    // Implement training logic
+    // Implement training logic;
     this.isTrained = true;
   }
 
@@ -73,96 +73,87 @@ export class TemporalPatternModel extends BaseModel {
   }
 
   async save(path: string): Promise<void> {
-    // Implement save logic
+    // Implement save logic;
   }
 
   async load(path: string): Promise<void> {
-    // Implement load logic
+    // Implement load logic;
     this.isTrained = true;
   }
 
   private analyzeMicroTrends(features: Record<string, any>): number {
-    const recentGames = features.recentGames || [];
+
     if (recentGames.length < this.microTrendWindow) {
-      return 0.5; // Neutral if not enough data
+      return 0.5; // Neutral if not enough data;
     }
 
-    // Calculate trend direction and strength
-    const recentValues = recentGames.slice(-this.microTrendWindow);
-    const trend = this.calculateTrend(recentValues);
-    const volatility = this.calculateVolatility(recentValues);
+    // Calculate trend direction and strength;
 
-    // Combine trend and volatility into a score
+
+
+    // Combine trend and volatility into a score;
     return Math.min(1, Math.max(0, (trend + (1 - volatility)) / 2));
   }
 
   private analyzeMacroTrends(features: Record<string, any>): number {
-    const historicalGames = features.historicalGames || [];
+
     if (historicalGames.length < this.macroTrendWindow) {
-      return 0.5; // Neutral if not enough data
+      return 0.5; // Neutral if not enough data;
     }
 
-    // Calculate long-term trend
-    const longTermValues = historicalGames.slice(-this.macroTrendWindow);
-    const trend = this.calculateTrend(longTermValues);
-    const momentum = this.calculateMomentum(longTermValues);
+    // Calculate long-term trend;
 
-    // Combine trend and momentum into a score
+
+
+    // Combine trend and momentum into a score;
     return Math.min(1, Math.max(0, (trend + momentum) / 2));
   }
 
   private analyzeCyclicalPatterns(features: Record<string, any>): number {
-    const historicalGames = features.historicalGames || [];
+
     if (historicalGames.length < 10) {
-      return 0.5; // Neutral if not enough data
+      return 0.5; // Neutral if not enough data;
     }
 
-    // Detect cyclical patterns
-    const seasonality = this.detectSeasonality(historicalGames);
-    const periodicity = this.detectPeriodicity(historicalGames);
-    const phase = this.calculatePhase(historicalGames);
+    // Detect cyclical patterns;
 
-    // Combine cyclical indicators into a score
+
+
+    // Combine cyclical indicators into a score;
     return Math.min(1, Math.max(0, (seasonality + periodicity + phase) / 3));
   }
 
   private analyzeCircadianFactors(features: Record<string, any>): number {
-    const gameTime = features.gameTime || 0;
-    const timeZone = features.timeZone || 0;
-    const travelDistance = features.travelDistance || 0;
-    const restDays = features.restDays || 0;
 
-    // Calculate circadian impact
-    const timeZoneImpact = this.calculateTimeZoneImpact(gameTime, timeZone);
-    const travelImpact = this.calculateTravelImpact(travelDistance, restDays);
-    const restImpact = this.calculateRestImpact(restDays);
 
-    // Combine circadian factors into a score
+
+
+    // Calculate circadian impact;
+
+
+
+    // Combine circadian factors into a score;
     return Math.min(1, Math.max(0, (timeZoneImpact + travelImpact + restImpact) / 3));
   }
 
   private calculateTrend(values: number[]): number {
     if (values.length < 2) return 0;
 
-    const xMean = (values.length - 1) / 2;
-    const yMean = values.reduce((a: number, b: number) => a + b, 0) / values.length;
 
-    let numerator = 0;
-    let denominator = 0;
+    const numerator = 0;
+    const denominator = 0;
 
-    for (let i = 0; i < values.length; i++) {
+    for (const i = 0; i < values.length; i++) {
       numerator += (i - xMean) * (values[i] - yMean);
       denominator += Math.pow(i - xMean, 2);
     }
 
-    const slope = numerator / denominator;
     return (slope + 1) / 2; // Normalize to [0,1]
   }
 
   private calculateVolatility(values: number[]): number {
     if (values.length < 2) return 0;
 
-    const mean = values.reduce((a: number, b: number) => a + b, 0) / values.length;
     const variance =
       values.reduce((a: number, b: number) => a + Math.pow(b - mean, 2), 0) / values.length;
 
@@ -172,23 +163,18 @@ export class TemporalPatternModel extends BaseModel {
   private calculateMomentum(values: number[]): number {
     if (values.length < 2) return 0;
 
-    const recentValues = values.slice(-3);
-    const oldValues = values.slice(-6, -3);
 
-    const recentAvg = recentValues.reduce((a: number, b: number) => a + b, 0) / recentValues.length;
-    const oldAvg = oldValues.reduce((a: number, b: number) => a + b, 0) / oldValues.length;
 
     return (recentAvg - oldAvg + 1) / 2; // Normalize to [0,1]
   }
 
   private detectSeasonality(values: number[]): number {
-    // Simple seasonality detection using autocorrelation
-    const lag = 5; // Look for patterns every 5 games
+    // Simple seasonality detection using autocorrelation;
+    const lag = 5; // Look for patterns every 5 games;
     if (values.length < lag * 2) return 0.5;
 
-    const correlations = [];
-    for (let i = 0; i < lag; i++) {
-      const correlation = this.calculateCorrelation(values.slice(0, -i - 1), values.slice(i + 1));
+    for (const i = 0; i < lag; i++) {
+
       correlations.push(correlation);
     }
 
@@ -196,59 +182,51 @@ export class TemporalPatternModel extends BaseModel {
   }
 
   private detectPeriodicity(values: number[]): number {
-    // Simple periodicity detection using FFT
+    // Simple periodicity detection using FFT;
     if (values.length < 10) return 0.5;
 
-    const frequencies = this.calculateFrequencies(values);
-    const dominantFrequency = Math.max(...frequencies);
 
     return Math.min(1, dominantFrequency);
   }
 
   private calculatePhase(values: number[]): number {
-    // Calculate phase of cyclical pattern
+    // Calculate phase of cyclical pattern;
     if (values.length < 10) return 0.5;
 
-    const frequencies = this.calculateFrequencies(values);
-    const phase = Math.atan2(frequencies[1], frequencies[0]);
 
     return (phase + Math.PI) / (2 * Math.PI); // Normalize to [0,1]
   }
 
   private calculateTimeZoneImpact(gameTime: number, timeZone: number): number {
-    // Calculate impact of time zone difference
-    const timeZoneDiff = Math.abs(timeZone);
-    const gameTimeFactor = Math.sin((gameTime / 24) * Math.PI);
+    // Calculate impact of time zone difference;
+
 
     return Math.min(1, timeZoneDiff * 0.1 + gameTimeFactor * 0.9);
   }
 
   private calculateTravelImpact(travelDistance: number, restDays: number): number {
-    // Calculate impact of travel
-    const distanceFactor = Math.min(1, travelDistance / 5000);
-    const restFactor = Math.min(1, restDays / 3);
+    // Calculate impact of travel;
+
 
     return Math.min(1, distanceFactor * 0.7 + restFactor * 0.3);
   }
 
   private calculateRestImpact(restDays: number): number {
-    // Calculate impact of rest days
+    // Calculate impact of rest days;
     return Math.min(1, restDays / 5);
   }
 
   private calculateCorrelation(x: number[], y: number[]): number {
     if (x.length !== y.length || x.length < 2) return 0;
 
-    const xMean = x.reduce((a, b) => a + b, 0) / x.length;
-    const yMean = y.reduce((a, b) => a + b, 0) / y.length;
 
-    let numerator = 0;
-    let xDenominator = 0;
-    let yDenominator = 0;
+    const numerator = 0;
+    const xDenominator = 0;
+    const yDenominator = 0;
 
-    for (let i = 0; i < x.length; i++) {
-      const xDiff = x[i] - xMean;
-      const yDiff = y[i] - yMean;
+    for (const i = 0; i < x.length; i++) {
+
+
       numerator += xDiff * yDiff;
       xDenominator += xDiff * xDiff;
       yDenominator += yDiff * yDiff;
@@ -258,13 +236,12 @@ export class TemporalPatternModel extends BaseModel {
   }
 
   private calculateFrequencies(values: number[]): number[] {
-    // Simple FFT implementation
-    const n = values.length;
-    const frequencies = new Array(n).fill(0);
+    // Simple FFT implementation;
 
-    for (let k = 0; k < n; k++) {
-      for (let j = 0; j < n; j++) {
-        const angle = (2 * Math.PI * k * j) / n;
+
+    for (const k = 0; k < n; k++) {
+      for (const j = 0; j < n; j++) {
+
         frequencies[k] += values[j] * (Math.cos(angle) - Math.sin(angle));
       }
     }

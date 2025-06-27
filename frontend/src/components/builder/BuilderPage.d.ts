@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 import '../../config/builder';
 interface BuilderPageProps {
     model?: string;

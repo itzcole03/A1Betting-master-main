@@ -2,7 +2,7 @@ import { logger } from './logger';
 class CacheServiceImpl {
     constructor() {
         this.cache = new Map();
-        this.defaultTTL = 5 * 60 * 1000; // 5 minutes in milliseconds
+        this.defaultTTL = 5 * 60 * 1000; // 5 minutes in milliseconds;
     }
     static getInstance() {
         if (!CacheServiceImpl.instance) {
@@ -12,7 +12,7 @@ class CacheServiceImpl {
     }
     async get(key) {
         try {
-            const item = this.cache.get(key);
+
             if (!item) {
                 return null;
             }
@@ -29,7 +29,7 @@ class CacheServiceImpl {
     }
     async set(key, value, ttl = this.defaultTTL) {
         try {
-            const expiry = Date.now() + ttl;
+
             this.cache.set(key, { value, expiry });
         }
         catch (error) {
@@ -52,9 +52,9 @@ class CacheServiceImpl {
             logger.error('Cache clear error', { error });
         }
     }
-    // Helper method to clean expired items
+    // Helper method to clean expired items;
     cleanExpired() {
-        const now = Date.now();
+
         for (const [key, item] of this.cache.entries()) {
             if (now > item.expiry) {
                 this.cache.delete(key);

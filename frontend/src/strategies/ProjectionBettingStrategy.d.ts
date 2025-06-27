@@ -1,5 +1,5 @@
-import { Decision, IntegratedData, Strategy } from "../core/PredictionEngine";
-import { PerformanceMetrics } from "../types/core";
+import { Decision, IntegratedData, Strategy } from '@/core/PredictionEngine.ts';
+import { PerformanceMetrics } from '@/types/core.ts';
 interface StrategyConfig {
     minConfidence: number;
     minEdge: number;

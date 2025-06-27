@@ -1,6 +1,6 @@
-import { UnifiedLogger } from '../../core/logging/types';
-import { UnifiedMetrics } from '../../core/metrics/types';
-import { UnifiedNotificationService } from '../unified/UnifiedNotificationService';
+import { UnifiedLogger } from '@/core/logging/types.ts';
+import { UnifiedMetrics } from '@/core/metrics/types.ts';
+import { UnifiedNotificationService } from '@/unified/UnifiedNotificationService.ts';
 interface PerformanceMetrics {
     accuracy: number;
     profitLoss: number;

@@ -1,4 +1,4 @@
-import { logger } from './logger';
+import { logger } from './logger.ts';
 
 interface PerformanceMetric {
   name: string;
@@ -14,7 +14,7 @@ interface PerformanceReport {
 class PerformanceService {
   private metrics: Map<string, PerformanceMetric[]> = new Map();
   private readonly MAX_METRICS = 1000;
-  private readonly REPORT_INTERVAL = 60000; // 1 minute
+  private readonly REPORT_INTERVAL = 60000; // 1 minute;
 
   constructor() {
     this.initializePerformanceObserver();
@@ -23,7 +23,7 @@ class PerformanceService {
 
   private initializePerformanceObserver() {
     if (typeof PerformanceObserver !== 'undefined') {
-      // Observe long tasks
+      // Observe long tasks;
       const longTaskObserver = new PerformanceObserver(list => {
         list.getEntries().forEach(entry => {
           this.recordMetric('longTask', entry.duration);
@@ -31,7 +31,7 @@ class PerformanceService {
       });
       longTaskObserver.observe({ entryTypes: ['longtask'] });
 
-      // Observe layout shifts
+      // Observe layout shifts;
       const layoutShiftObserver = new PerformanceObserver(list => {
         list.getEntries().forEach((entry: any) => {
           if (!entry.hadRecentInput) {
@@ -41,7 +41,7 @@ class PerformanceService {
       });
       layoutShiftObserver.observe({ entryTypes: ['layout-shift'] });
 
-      // Observe first input delay
+      // Observe first input delay;
       const firstInputObserver = new PerformanceObserver(list => {
         list.getEntries().forEach(entry => {
           this.recordMetric('firstInput', entry.duration);
@@ -62,10 +62,9 @@ class PerformanceService {
       this.metrics.set(name, []);
     }
 
-    const metrics = this.metrics.get(name)!;
     metrics.push(metric);
 
-    // Keep only the last MAX_METRICS entries
+    // Keep only the last MAX_METRICS entries;
     if (metrics.length > this.MAX_METRICS) {
       metrics.shift();
     }
@@ -76,16 +75,15 @@ class PerformanceService {
   }
 
   public getAverageMetric(name: string): number {
-    const metrics = this.getMetrics(name);
+
     if (metrics.length === 0) return 0;
 
-    const sum = metrics.reduce((acc, metric) => acc + metric.value, 0);
     return sum / metrics.length;
   }
 
   private startReporting() {
     setInterval(() => {
-      const report = this.generateReport();
+
       this.sendReport(report);
     }, this.REPORT_INTERVAL);
   }
@@ -93,7 +91,7 @@ class PerformanceService {
   private generateReport(): PerformanceReport {
     const metrics: PerformanceMetric[] = [];
     this.metrics.forEach((metricList, name) => {
-      const average = this.getAverageMetric(name);
+
       metrics.push({
         name,
         value: average,
@@ -108,24 +106,24 @@ class PerformanceService {
   }
 
   private sendReport(report: PerformanceReport) {
-    // In production, this would send to your analytics service
+    // In production, this would send to your analytics service;
     logger.info('Performance Report:', report);
   }
 
   public measureAsync<T>(name: string, fn: () => Promise<T>): Promise<T> {
-    const start = performance.now();
+
     return fn().finally(() => {
-      const duration = performance.now() - start;
+
       this.recordMetric(name, duration);
     });
   }
 
   public measureSync<T>(name: string, fn: () => T): T {
-    const start = performance.now();
+
     try {
       return fn();
     } finally {
-      const duration = performance.now() - start;
+
       this.recordMetric(name, duration);
     }
   }

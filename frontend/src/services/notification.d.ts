@@ -1,5 +1,5 @@
-import { EventEmitter } from 'events';
-import { ToastNotification } from '@/types';
+import { EventEmitter } from 'events.ts';
+import { ToastNotification } from '@/types.ts';
 export type NotificationType = 'info' | 'warning' | 'error' | 'success';
 export type NotificationData = Record<string, any>;
 export declare class NotificationService extends EventEmitter {

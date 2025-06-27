@@ -1,4 +1,4 @@
-import { PlayerProp, Entry } from '../types/core';
+import { PlayerProp, Entry } from '@/types/core.ts';
 export declare const MIN_WIN_RATE = 0.84;
 export declare function isTeamDiversified(props: PlayerProp[], maxPerTeam?: number): boolean;
 /**

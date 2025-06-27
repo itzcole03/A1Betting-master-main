@@ -1,15 +1,15 @@
-import { z } from 'zod';
-import { UnifiedLogger } from '../../../core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../../core/UnifiedErrorHandler';
+import { z } from 'zod.ts';
+import { UnifiedLogger } from '@/../core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/../core/UnifiedErrorHandler.ts';
 import {
   HistoricalGameData,
   PlayerStats,
   TeamStats,
   VenueStats,
   OfficialStats,
-} from '../../data/HistoricalDataService';
+} from '@/data/HistoricalDataService.ts';
 
-// Feature schemas
+// Feature schemas;
 export const FeatureSchema = z.object({
   name: z.string(),
   value: z.number(),
@@ -23,7 +23,7 @@ export const FeatureSetSchema = z.object({
   metadata: z.record(z.unknown()).optional(),
 });
 
-// Type definitions
+// Type definitions;
 export type Feature = z.infer<typeof FeatureSchema>;
 export type FeatureSet = z.infer<typeof FeatureSetSchema>;
 
@@ -98,9 +98,9 @@ export class AdvancedFeatureEngineeringService {
         features.push(...(await this.generateOfficialFeatures(data.officialStats, options)));
       }
 
-      // Filter features by importance
+      // Filter features by importance;
       const filteredFeatures = features.filter(
-        feature => feature.importance >= this.config.importanceThreshold
+        feature => feature.importance >= this.config.importanceThreshold;
       );
 
       const featureSet: FeatureSet = {
@@ -132,25 +132,25 @@ export class AdvancedFeatureEngineeringService {
   ): Promise<Feature[]> {
     const features: Feature[] = [];
 
-    // Basic game features
+    // Basic game features;
     features.push(...this.calculateBasicGameFeatures(games));
 
-    // Rolling averages
+    // Rolling averages;
     if (options.includeRolling) {
       features.push(...this.calculateRollingAverages(games));
     }
 
-    // Exponential smoothing
+    // Exponential smoothing;
     if (options.includeExponential) {
       features.push(...this.calculateExponentialSmoothing(games));
     }
 
-    // Interaction features
+    // Interaction features;
     if (options.includeInteraction) {
       features.push(...this.calculateInteractionFeatures(games));
     }
 
-    // Advanced features
+    // Advanced features;
     if (options.includeAdvanced) {
       features.push(...this.calculateAdvancedGameFeatures(games));
     }
@@ -164,25 +164,25 @@ export class AdvancedFeatureEngineeringService {
   ): Promise<Feature[]> {
     const features: Feature[] = [];
 
-    // Basic player features
+    // Basic player features;
     features.push(...this.calculateBasicPlayerFeatures(players));
 
-    // Rolling averages
+    // Rolling averages;
     if (options.includeRolling) {
       features.push(...this.calculatePlayerRollingAverages(players));
     }
 
-    // Exponential smoothing
+    // Exponential smoothing;
     if (options.includeExponential) {
       features.push(...this.calculatePlayerExponentialSmoothing(players));
     }
 
-    // Interaction features
+    // Interaction features;
     if (options.includeInteraction) {
       features.push(...this.calculatePlayerInteractionFeatures(players));
     }
 
-    // Advanced features
+    // Advanced features;
     if (options.includeAdvanced) {
       features.push(...this.calculateAdvancedPlayerFeatures(players));
     }
@@ -196,25 +196,25 @@ export class AdvancedFeatureEngineeringService {
   ): Promise<Feature[]> {
     const features: Feature[] = [];
 
-    // Basic team features
+    // Basic team features;
     features.push(...this.calculateBasicTeamFeatures(teams));
 
-    // Rolling averages
+    // Rolling averages;
     if (options.includeRolling) {
       features.push(...this.calculateTeamRollingAverages(teams));
     }
 
-    // Exponential smoothing
+    // Exponential smoothing;
     if (options.includeExponential) {
       features.push(...this.calculateTeamExponentialSmoothing(teams));
     }
 
-    // Interaction features
+    // Interaction features;
     if (options.includeInteraction) {
       features.push(...this.calculateTeamInteractionFeatures(teams));
     }
 
-    // Advanced features
+    // Advanced features;
     if (options.includeAdvanced) {
       features.push(...this.calculateAdvancedTeamFeatures(teams));
     }
@@ -228,20 +228,20 @@ export class AdvancedFeatureEngineeringService {
   ): Promise<Feature[]> {
     const features: Feature[] = [];
 
-    // Basic venue features
+    // Basic venue features;
     features.push(...this.calculateBasicVenueFeatures(venues));
 
-    // Weather impact features
+    // Weather impact features;
     if (options.includeAdvanced) {
       features.push(...this.calculateWeatherImpactFeatures(venues));
     }
 
-    // Surface impact features
+    // Surface impact features;
     if (options.includeAdvanced) {
       features.push(...this.calculateSurfaceImpactFeatures(venues));
     }
 
-    // Altitude impact features
+    // Altitude impact features;
     if (options.includeAdvanced) {
       features.push(...this.calculateAltitudeImpactFeatures(venues));
     }
@@ -255,20 +255,20 @@ export class AdvancedFeatureEngineeringService {
   ): Promise<Feature[]> {
     const features: Feature[] = [];
 
-    // Basic official features
+    // Basic official features;
     features.push(...this.calculateBasicOfficialFeatures(officials));
 
-    // Tendency features
+    // Tendency features;
     if (options.includeAdvanced) {
       features.push(...this.calculateOfficialTendencyFeatures(officials));
     }
 
-    // Bias features
+    // Bias features;
     if (options.includeAdvanced) {
       features.push(...this.calculateOfficialBiasFeatures(officials));
     }
 
-    // Consistency features
+    // Consistency features;
     if (options.includeAdvanced) {
       features.push(...this.calculateOfficialConsistencyFeatures(officials));
     }
@@ -277,117 +277,117 @@ export class AdvancedFeatureEngineeringService {
   }
 
   private calculateBasicGameFeatures(games: HistoricalGameData[]): Feature[] {
-    // Implement basic game feature calculation
+    // Implement basic game feature calculation;
     return [];
   }
 
   private calculateRollingAverages(games: HistoricalGameData[]): Feature[] {
-    // Implement rolling average calculation
+    // Implement rolling average calculation;
     return [];
   }
 
   private calculateExponentialSmoothing(games: HistoricalGameData[]): Feature[] {
-    // Implement exponential smoothing calculation
+    // Implement exponential smoothing calculation;
     return [];
   }
 
   private calculateInteractionFeatures(games: HistoricalGameData[]): Feature[] {
-    // Implement interaction feature calculation
+    // Implement interaction feature calculation;
     return [];
   }
 
   private calculateAdvancedGameFeatures(games: HistoricalGameData[]): Feature[] {
-    // Implement advanced game feature calculation
+    // Implement advanced game feature calculation;
     return [];
   }
 
   private calculateBasicPlayerFeatures(players: PlayerStats[]): Feature[] {
-    // Implement basic player feature calculation
+    // Implement basic player feature calculation;
     return [];
   }
 
   private calculatePlayerRollingAverages(players: PlayerStats[]): Feature[] {
-    // Implement player rolling average calculation
+    // Implement player rolling average calculation;
     return [];
   }
 
   private calculatePlayerExponentialSmoothing(players: PlayerStats[]): Feature[] {
-    // Implement player exponential smoothing calculation
+    // Implement player exponential smoothing calculation;
     return [];
   }
 
   private calculatePlayerInteractionFeatures(players: PlayerStats[]): Feature[] {
-    // Implement player interaction feature calculation
+    // Implement player interaction feature calculation;
     return [];
   }
 
   private calculateAdvancedPlayerFeatures(players: PlayerStats[]): Feature[] {
-    // Implement advanced player feature calculation
+    // Implement advanced player feature calculation;
     return [];
   }
 
   private calculateBasicTeamFeatures(teams: TeamStats[]): Feature[] {
-    // Implement basic team feature calculation
+    // Implement basic team feature calculation;
     return [];
   }
 
   private calculateTeamRollingAverages(teams: TeamStats[]): Feature[] {
-    // Implement team rolling average calculation
+    // Implement team rolling average calculation;
     return [];
   }
 
   private calculateTeamExponentialSmoothing(teams: TeamStats[]): Feature[] {
-    // Implement team exponential smoothing calculation
+    // Implement team exponential smoothing calculation;
     return [];
   }
 
   private calculateTeamInteractionFeatures(teams: TeamStats[]): Feature[] {
-    // Implement team interaction feature calculation
+    // Implement team interaction feature calculation;
     return [];
   }
 
   private calculateAdvancedTeamFeatures(teams: TeamStats[]): Feature[] {
-    // Implement advanced team feature calculation
+    // Implement advanced team feature calculation;
     return [];
   }
 
   private calculateBasicVenueFeatures(venues: VenueStats[]): Feature[] {
-    // Implement basic venue feature calculation
+    // Implement basic venue feature calculation;
     return [];
   }
 
   private calculateWeatherImpactFeatures(venues: VenueStats[]): Feature[] {
-    // Implement weather impact feature calculation
+    // Implement weather impact feature calculation;
     return [];
   }
 
   private calculateSurfaceImpactFeatures(venues: VenueStats[]): Feature[] {
-    // Implement surface impact feature calculation
+    // Implement surface impact feature calculation;
     return [];
   }
 
   private calculateAltitudeImpactFeatures(venues: VenueStats[]): Feature[] {
-    // Implement altitude impact feature calculation
+    // Implement altitude impact feature calculation;
     return [];
   }
 
   private calculateBasicOfficialFeatures(officials: OfficialStats[]): Feature[] {
-    // Implement basic official feature calculation
+    // Implement basic official feature calculation;
     return [];
   }
 
   private calculateOfficialTendencyFeatures(officials: OfficialStats[]): Feature[] {
-    // Implement official tendency feature calculation
+    // Implement official tendency feature calculation;
     return [];
   }
 
   private calculateOfficialBiasFeatures(officials: OfficialStats[]): Feature[] {
-    // Implement official bias feature calculation
+    // Implement official bias feature calculation;
     return [];
   }
 
   private calculateOfficialConsistencyFeatures(officials: OfficialStats[]): Feature[] {
-    // Implement official consistency feature calculation
+    // Implement official consistency feature calculation;
     return [];
   }
 

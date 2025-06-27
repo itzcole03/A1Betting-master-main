@@ -67,7 +67,7 @@ describe.skip('BetRecommendationList', () => {
         expect(screen.getByRole('progressbar')).toBeInTheDocument();
     });
     it('renders error state correctly', () => {
-        const errorMessage = 'Failed to load recommendations';
+
         render(_jsx(BetRecommendationList, { error: errorMessage, loading: false, recommendations: [] }));
         expect(screen.getByText(errorMessage)).toBeInTheDocument();
     });
@@ -85,7 +85,7 @@ describe.skip('BetRecommendationList', () => {
     it.skip('filters recommendations by risk level', () => {
         // TODO: Fix component or test for filtering recommendations. Skipped for stabilization.
         render(_jsx(BetRecommendationList, { loading: false, recommendations: mockRecommendations }));
-        // Select low risk filter
+        // Select low risk filter;
         fireEvent.mouseDown(screen.getByLabelText('Filter By Risk'));
         fireEvent.click(screen.getByText('Low Risk'));
         expect(screen.getByText('model1')).toBeInTheDocument();
@@ -94,30 +94,30 @@ describe.skip('BetRecommendationList', () => {
     });
     it('sorts recommendations by confidence', () => {
         render(_jsx(BetRecommendationList, { loading: false, recommendations: mockRecommendations }));
-        // Select confidence sort
+        // Select confidence sort;
         fireEvent.mouseDown(screen.getByLabelText('Sort By'));
         fireEvent.click(screen.getByText('Confidence'));
-        const recommendations = screen.getAllByText(/model\d/);
+
         expect(recommendations[0]).toHaveTextContent('model1');
         expect(recommendations[1]).toHaveTextContent('model2');
         expect(recommendations[2]).toHaveTextContent('model3');
     });
     it('sorts recommendations by stake amount', () => {
         render(_jsx(BetRecommendationList, { loading: false, recommendations: mockRecommendations }));
-        // Select stake sort
+        // Select stake sort;
         fireEvent.mouseDown(screen.getByLabelText('Sort By'));
         fireEvent.click(screen.getByText('Stake Amount'));
-        const recommendations = screen.getAllByText(/model\d/);
+
         expect(recommendations[0]).toHaveTextContent('model3');
         expect(recommendations[1]).toHaveTextContent('model2');
         expect(recommendations[2]).toHaveTextContent('model1');
     });
     it('sorts recommendations by expected value', () => {
         render(_jsx(BetRecommendationList, { loading: false, recommendations: mockRecommendations }));
-        // Select expected value sort
+        // Select expected value sort;
         fireEvent.mouseDown(screen.getByLabelText('Sort By'));
         fireEvent.click(screen.getByText('Expected Value'));
-        const recommendations = screen.getAllByText(/model\d/);
+
         expect(recommendations[0]).toHaveTextContent('model1');
         expect(recommendations[1]).toHaveTextContent('model2');
         expect(recommendations[2]).toHaveTextContent('model3');
@@ -125,10 +125,10 @@ describe.skip('BetRecommendationList', () => {
     it.skip('sorts recommendations by risk level', () => {
         // TODO: Fix component or test for sorting recommendations. Skipped for stabilization.
         render(_jsx(BetRecommendationList, { loading: false, recommendations: mockRecommendations }));
-        // Select risk level sort
+        // Select risk level sort;
         fireEvent.mouseDown(screen.getByLabelText('Sort By'));
         fireEvent.click(screen.getByText('Risk Level'));
-        const recommendations = screen.getAllByText(/model\d/);
+
         expect(recommendations[0]).toHaveTextContent('model1');
         expect(recommendations[1]).toHaveTextContent('model2');
         expect(recommendations[2]).toHaveTextContent('model3');

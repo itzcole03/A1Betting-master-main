@@ -2,11 +2,11 @@ import { apiClient } from '../api/client';
 export class SecurityService {
     static async authenticate(credentials) {
         try {
-            const response = await apiClient.post('/auth/login', credentials);
+
             return response.data;
         }
         catch (error) {
-            console.error('Authentication failed:', error);
+            // console statement removed
             return false;
         }
     }
@@ -16,7 +16,7 @@ export class SecurityService {
             return true;
         }
         catch (error) {
-            console.error('Logout failed:', error);
+            // console statement removed
             return false;
         }
     }

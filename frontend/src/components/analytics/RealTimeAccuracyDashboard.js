@@ -9,7 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Activity, AlertTriangle, CheckCircle, TrendingUp, TrendingDown, Zap, Brain, RefreshCw, Gauge, } from "lucide-react";
 import { Line, Radar } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, BarElement, RadialLinearScale, Title, Tooltip, Legend, ArcElement, Filler, } from "chart.js";
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, RadialLinearScale, Title, Tooltip, Legend, ArcElement, Filler);
 export const RealTimeAccuracyDashboard = () => {
     const [currentMetrics, setCurrentMetrics] = useState(null);
@@ -19,15 +19,15 @@ export const RealTimeAccuracyDashboard = () => {
     const [isOptimizing, setIsOptimizing] = useState(false);
     const [lastUpdate, setLastUpdate] = useState(null);
     const [connectionStatus, setConnectionStatus] = useState("connecting");
-    // Fetch current accuracy metrics
+    // Fetch current accuracy metrics;
     const fetchCurrentMetrics = useCallback(async () => {
         try {
             setConnectionStatus("connecting");
-            const response = await fetch("/api/v4/accuracy/current-metrics");
+
             if (response.ok) {
-                const data = await response.json();
+
                 setCurrentMetrics(data);
-                setMetricsHistory((prev) => [...prev.slice(-100), data]); // Keep last 100 points
+                setMetricsHistory((prev) => [...prev.slice(-100), data]); // Keep last 100 points;
                 setLastUpdate(new Date());
                 setConnectionStatus("connected");
             }
@@ -36,24 +36,24 @@ export const RealTimeAccuracyDashboard = () => {
             }
         }
         catch (error) {
-            console.error("Error fetching accuracy metrics:", error);
+            // console statement removed
             setConnectionStatus("disconnected");
         }
     }, []);
-    // Fetch active alerts
+    // Fetch active alerts;
     const fetchAlerts = useCallback(async () => {
         try {
-            const response = await fetch("/api/v4/accuracy/alerts");
+
             if (response.ok) {
-                const data = await response.json();
+
                 setAlerts(data);
             }
         }
         catch (error) {
-            console.error("Error fetching alerts:", error);
+            // console statement removed
         }
     }, []);
-    // Trigger accuracy optimization
+    // Trigger accuracy optimization;
     const triggerOptimization = useCallback(async (strategy = "quantum_ensemble") => {
         setIsOptimizing(true);
         try {
@@ -68,9 +68,9 @@ export const RealTimeAccuracyDashboard = () => {
                 }),
             });
             if (response.ok) {
-                const result = await response.json();
-                console.log("Optimization triggered:", result);
-                // Refresh metrics after optimization
+
+                // console statement removed
+                // Refresh metrics after optimization;
                 setTimeout(() => {
                     fetchCurrentMetrics();
                     fetchAlerts();
@@ -78,26 +78,26 @@ export const RealTimeAccuracyDashboard = () => {
             }
         }
         catch (error) {
-            console.error("Error triggering optimization:", error);
+            // console statement removed
         }
         finally {
             setIsOptimizing(false);
         }
     }, [fetchCurrentMetrics, fetchAlerts]);
-    // Real-time updates
+    // Real-time updates;
     useEffect(() => {
         if (!isLive)
             return;
         const fetchData = async () => {
             await Promise.all([fetchCurrentMetrics(), fetchAlerts()]);
         };
-        // Initial fetch
+        // Initial fetch;
         fetchData();
-        // Set up real-time polling
-        const interval = setInterval(fetchData, 5000); // Update every 5 seconds
+        // Set up real-time polling;
+        const interval = setInterval(fetchData, 5000); // Update every 5 seconds;
         return () => clearInterval(interval);
     }, [isLive, fetchCurrentMetrics, fetchAlerts]);
-    // Get accuracy level styling
+    // Get accuracy level styling;
     const getAccuracyLevel = (accuracy) => {
         if (accuracy >= 0.97)
             return {
@@ -141,11 +141,11 @@ export const RealTimeAccuracyDashboard = () => {
             border: "border-red-500",
         };
     };
-    // Chart data for accuracy trends
+    // Chart data for accuracy trends;
     const accuracyTrendData = useMemo(() => {
         if (metricsHistory.length < 2)
             return null;
-        const labels = metricsHistory.map((m) => new Date(m.timestamp).toLocaleTimeString());
+
         return {
             labels,
             datasets: [
@@ -176,7 +176,7 @@ export const RealTimeAccuracyDashboard = () => {
             ],
         };
     }, [metricsHistory]);
-    // Performance radar chart data
+    // Performance radar chart data;
     const performanceRadarData = useMemo(() => {
         if (!currentMetrics)
             return null;
@@ -213,7 +213,7 @@ export const RealTimeAccuracyDashboard = () => {
     if (!currentMetrics) {
         return (_jsx("div", { className: "flex items-center justify-center h-96", children: _jsxs("div", { className: "text-center", children: [_jsx(Activity, { className: "w-8 h-8 animate-pulse mx-auto mb-4 text-gray-400" }), _jsx("p", { className: "text-gray-500", children: "Loading real-time accuracy dashboard..." })] }) }));
     }
-    const accuracyLevel = getAccuracyLevel(currentMetrics.overall_accuracy);
+
     return (_jsxs("div", { className: "space-y-6 p-6", children: [_jsxs("div", { className: "flex items-center justify-between", children: [_jsxs("div", { children: [_jsx("h1", { className: "text-3xl font-bold text-gray-900", children: "Real-Time Accuracy Monitor" }), _jsxs("div", { className: "flex items-center gap-4 mt-2", children: [_jsxs("div", { className: "flex items-center gap-2", children: [_jsx("div", { className: `w-3 h-3 rounded-full ${connectionStatus === "connected"
                                                     ? "bg-green-500"
                                                     : connectionStatus === "connecting"

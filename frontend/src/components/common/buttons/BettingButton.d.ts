@@ -1,5 +1,5 @@
-import React from 'react';
-import { ButtonProps } from './Button';
+import React from 'react.ts';
+import { ButtonProps } from './Button.ts';
 export interface BettingButtonProps extends Omit<ButtonProps, 'variant'> {
     betType?: 'straight' | 'parlay' | 'teaser';
     odds?: number;

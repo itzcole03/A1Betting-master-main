@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// Integration hook for connecting existing services with the cyber UI
+// Integration hook for connecting existing services with the cyber UI;
 export const useCyberIntegration = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [realTimeData, setRealTimeData] = useState({
@@ -17,7 +17,7 @@ export const useCyberIntegration = () => {
             avgLatency: "0.7ms",
         },
     });
-    // Simulate real-time data updates
+    // Simulate real-time data updates;
     useEffect(() => {
         const interval = setInterval(() => {
             const newEvent = {
@@ -28,7 +28,7 @@ export const useCyberIntegration = () => {
             };
             setRealTimeData((prev) => ({
                 ...prev,
-                events: [newEvent, ...prev.events.slice(0, 9)], // Keep last 10 events
+                events: [newEvent, ...prev.events.slice(0, 9)], // Keep last 10 events;
                 metrics: {
                     ...prev.metrics,
                     eventsPerMin: prev.metrics.eventsPerMin + Math.floor(Math.random() * 10) - 5,
@@ -51,17 +51,17 @@ export const useCyberIntegration = () => {
         ];
         return messages[Math.floor(Math.random() * messages.length)];
     };
-    // Integration methods for existing services
+    // Integration methods for existing services;
     const connectToUnifiedMoneyMaker = async () => {
         setIsLoading(true);
         try {
-            // Here you would integrate with the existing UnifiedMoneyMaker component
-            // Import and use the actual service
-            console.log("Connecting to UnifiedMoneyMaker...");
+            // Here you would integrate with the existing UnifiedMoneyMaker component;
+            // Import and use the actual service;
+            // console statement removed
             return { success: true };
         }
         catch (error) {
-            console.error("Failed to connect to UnifiedMoneyMaker:", error);
+            // console statement removed
             return { success: false, error };
         }
         finally {
@@ -71,12 +71,12 @@ export const useCyberIntegration = () => {
     const connectToPrizePicksService = async () => {
         setIsLoading(true);
         try {
-            // Here you would integrate with the existing PrizePicks services
-            console.log("Connecting to PrizePicks services...");
+            // Here you would integrate with the existing PrizePicks services;
+            // console statement removed
             return { success: true };
         }
         catch (error) {
-            console.error("Failed to connect to PrizePicks:", error);
+            // console statement removed
             return { success: false, error };
         }
         finally {
@@ -86,12 +86,12 @@ export const useCyberIntegration = () => {
     const connectToAnalyticsServices = async () => {
         setIsLoading(true);
         try {
-            // Here you would integrate with existing analytics services
-            console.log("Connecting to Analytics services...");
+            // Here you would integrate with existing analytics services;
+            // console statement removed
             return { success: true };
         }
         catch (error) {
-            console.error("Failed to connect to Analytics:", error);
+            // console statement removed
             return { success: false, error };
         }
         finally {
@@ -106,14 +106,14 @@ export const useCyberIntegration = () => {
         connectToAnalyticsServices,
     };
 };
-// Hook for managing cyber theme state
+// Hook for managing cyber theme state;
 export const useCyberTheme = () => {
     const [animations, setAnimations] = useState(true);
     const [glowEffects, setGlowEffects] = useState(true);
     const [particleEffects, setParticleEffects] = useState(false);
-    const toggleAnimations = () => setAnimations(!animations);
-    const toggleGlowEffects = () => setGlowEffects(!glowEffects);
-    const toggleParticleEffects = () => setParticleEffects(!particleEffects);
+
+
+
     return {
         animations,
         glowEffects,

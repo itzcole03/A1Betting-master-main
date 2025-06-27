@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React, { useState, useEffect, useCallback, useMemo  } from 'react.ts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.ts';
+import { Button } from '@/components/ui/button.ts';
+import { Badge } from '@/components/ui/badge.ts';
+import { Progress } from '@/components/ui/progress.ts';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.ts';
 import {
   Target,
   TrendingUp,
@@ -16,8 +16,8 @@ import {
   Brain,
   Eye,
   Settings,
-} from "lucide-react";
-import SafeChart from "../ui/SafeChart";
+} from 'lucide-react.ts';
+import SafeChart from '@/ui/SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -32,7 +32,7 @@ import {
   Filler,
 } from "chart.js";
 
-// Register Chart.js components
+// Register Chart.js components;
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -54,10 +54,10 @@ interface PredictionWithConfidence {
   model_agreement: number;
   quantum_fidelity: number;
   prediction_interval: [number, number];
-  individual_predictions: Record<string, number>;
-  model_weights: Record<string, number>;
-  feature_importance: Record<string, number>;
-  shap_values: Record<string, number>;
+  individual_predictions: Record<string, number key={817366}>;
+  model_weights: Record<string, number key={817366}>;
+  feature_importance: Record<string, number key={817366}>;
+  shap_values: Record<string, number key={817366}>;
   processing_time: number;
   timestamp: string;
   context: {
@@ -85,20 +85,20 @@ interface ConfidenceDistribution {
 }
 
 export const AdvancedConfidenceVisualizer: React.FC = () => {
-  const [predictions, setPredictions] = useState<PredictionWithConfidence[]>(
+  const [predictions, setPredictions] = useState<PredictionWithConfidence[] key={23669}>(
     [],
   );
   const [confidenceMetrics, setConfidenceMetrics] =
-    useState<ConfidenceMetrics | null>(null);
+    useState<ConfidenceMetrics | null key={664625}>(null);
   const [confidenceDistribution, setConfidenceDistribution] =
-    useState<ConfidenceDistribution | null>(null);
+    useState<ConfidenceDistribution | null key={974591}>(null);
   const [selectedPrediction, setSelectedPrediction] =
-    useState<PredictionWithConfidence | null>(null);
+    useState<PredictionWithConfidence | null key={79686}>(null);
   const [timeRange, setTimeRange] = useState("1h");
   const [confidenceThreshold, setConfidenceThreshold] = useState(0.8);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch prediction data with confidence metrics
+  // Fetch prediction data with confidence metrics;
   const fetchPredictionData = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -109,21 +109,21 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
       ]);
 
       if (predictionsRes.ok) {
-        const predictionsData = await predictionsRes.json();
+
         setPredictions(predictionsData);
       }
 
       if (metricsRes.ok) {
-        const metricsData = await metricsRes.json();
+
         setConfidenceMetrics(metricsData);
       }
 
       if (distributionRes.ok) {
-        const distributionData = await distributionRes.json();
+
         setConfidenceDistribution(distributionData);
       }
     } catch (error) {
-      console.error("Error fetching prediction data:", error);
+      // console statement removed
     } finally {
       setIsLoading(false);
     }
@@ -131,11 +131,11 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
 
   useEffect(() => {
     fetchPredictionData();
-    const interval = setInterval(fetchPredictionData, 30000); // Update every 30 seconds
+    const interval = setInterval(fetchPredictionData, 30000); // Update every 30 seconds;
     return () => clearInterval(interval);
   }, [fetchPredictionData]);
 
-  // Get confidence level styling
+  // Get confidence level styling;
   const getConfidenceLevel = (confidence: number) => {
     if (confidence >= 0.95)
       return {
@@ -180,12 +180,12 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
     };
   };
 
-  // High confidence predictions
+  // High confidence predictions;
   const highConfidencePredictions = useMemo(() => {
     return predictions.filter((p) => p.confidence_score >= confidenceThreshold);
   }, [predictions, confidenceThreshold]);
 
-  // Confidence trend chart data
+  // Confidence trend chart data;
   const confidenceTrendData = useMemo(() => {
     if (!predictions.length) return null;
 
@@ -227,7 +227,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
     };
   }, [predictions]);
 
-  // Confidence distribution chart
+  // Confidence distribution chart;
   const confidenceDistributionData = useMemo(() => {
     if (!confidenceDistribution) return null;
 
@@ -254,7 +254,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
     };
   }, [confidenceDistribution]);
 
-  // Uncertainty visualization data
+  // Uncertainty visualization data;
   const uncertaintyScatterData = useMemo(() => {
     if (!predictions.length) return null;
 
@@ -262,7 +262,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
       datasets: [
         {
           label: "High Confidence",
-          data: predictions
+          data: predictions;
             .filter((p) => p.confidence_score >= 0.8)
             .map((p) => ({
               x: p.confidence_score * 100,
@@ -273,7 +273,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
         },
         {
           label: "Medium Confidence",
-          data: predictions
+          data: predictions;
             .filter(
               (p) => p.confidence_score >= 0.6 && p.confidence_score < 0.8,
             )
@@ -286,7 +286,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
         },
         {
           label: "Low Confidence",
-          data: predictions
+          data: predictions;
             .filter((p) => p.confidence_score < 0.6)
             .map((p) => ({
               x: p.confidence_score * 100,
@@ -299,12 +299,10 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
     };
   }, [predictions]);
 
-  // Model contribution radar chart
+  // Model contribution radar chart;
   const modelContributionData = useMemo(() => {
     if (!selectedPrediction?.model_weights) return null;
 
-    const models = Object.keys(selectedPrediction.model_weights);
-    const weights = Object.values(selectedPrediction.model_weights);
 
     return {
       labels: models.map((name) => name.replace("_", " ").toUpperCase()),
@@ -325,114 +323,114 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-96">
-        <div className="text-center">
-          <Brain className="w-8 h-8 animate-pulse mx-auto mb-4 text-gray-400" />
-          <p className="text-gray-500">Loading confidence analysis...</p>
+      <div className="flex items-center justify-center h-96" key={797634}>
+        <div className="text-center" key={120206}>
+          <Brain className="w-8 h-8 animate-pulse mx-auto mb-4 text-gray-400" / key={528679}>
+          <p className="text-gray-500" key={992645}>Loading confidence analysis...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="space-y-6 p-6" key={80798}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">
-            Advanced Confidence Analysis
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <h1 className="text-3xl font-bold text-gray-900" key={314869}>
+            Advanced Confidence Analysis;
           </h1>
-          <p className="text-gray-600 mt-1">
-            Real-time prediction confidence and uncertainty visualization
+          <p className="text-gray-600 mt-1" key={187387}>
+            Real-time prediction confidence and uncertainty visualization;
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button onClick={fetchPredictionData} variant="outline">
-            <Eye className="w-4 h-4 mr-2" />
-            Refresh
+        <div className="flex gap-3" key={13535}>
+          <Button onClick={fetchPredictionData} variant="outline" key={482895}>
+            <Eye className="w-4 h-4 mr-2" / key={634971}>
+            Refresh;
           </Button>
         </div>
       </div>
 
       {/* Key Metrics */}
       {confidenceMetrics && (
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          <Card className="border-l-4 border-l-blue-500">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Overall Confidence
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6" key={481236}>
+          <Card className="border-l-4 border-l-blue-500" key={510169}>
+            <CardHeader className="pb-2" key={21346}>
+              <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+                Overall Confidence;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-gray-900">
+            <CardContent key={452065}>
+              <div className="text-2xl font-bold text-gray-900" key={584455}>
                 {(confidenceMetrics.overall_confidence * 100).toFixed(1)}%
               </div>
-              <Progress
+              <Progress;
                 value={confidenceMetrics.overall_confidence * 100}
                 className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Average prediction confidence
+              / key={659283}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
+                Average prediction confidence;
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-green-500">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Model Consensus
+          <Card className="border-l-4 border-l-green-500" key={766926}>
+            <CardHeader className="pb-2" key={21346}>
+              <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+                Model Consensus;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-gray-900">
+            <CardContent key={452065}>
+              <div className="text-2xl font-bold text-gray-900" key={584455}>
                 {(confidenceMetrics.model_consensus * 100).toFixed(1)}%
               </div>
-              <Progress
+              <Progress;
                 value={confidenceMetrics.model_consensus * 100}
                 className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Inter-model agreement
+              / key={852076}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
+                Inter-model agreement;
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-purple-500">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Calibration Score
+          <Card className="border-l-4 border-l-purple-500" key={284497}>
+            <CardHeader className="pb-2" key={21346}>
+              <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+                Calibration Score;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-gray-900">
+            <CardContent key={452065}>
+              <div className="text-2xl font-bold text-gray-900" key={584455}>
                 {(confidenceMetrics.calibration_score * 100).toFixed(1)}%
               </div>
-              <Progress
+              <Progress;
                 value={confidenceMetrics.calibration_score * 100}
                 className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Confidence calibration quality
+              / key={959072}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
+                Confidence calibration quality;
               </p>
             </CardContent>
           </Card>
 
-          <Card className="border-l-4 border-l-orange-500">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-sm font-medium text-gray-600">
-                Coverage Probability
+          <Card className="border-l-4 border-l-orange-500" key={363372}>
+            <CardHeader className="pb-2" key={21346}>
+              <CardTitle className="text-sm font-medium text-gray-600" key={89430}>
+                Coverage Probability;
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold text-gray-900">
+            <CardContent key={452065}>
+              <div className="text-2xl font-bold text-gray-900" key={584455}>
                 {(confidenceMetrics.coverage_probability * 100).toFixed(1)}%
               </div>
-              <Progress
+              <Progress;
                 value={confidenceMetrics.coverage_probability * 100}
                 className="mt-2"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                Prediction interval accuracy
+              / key={282771}>
+              <p className="text-xs text-gray-500 mt-1" key={68770}>
+                Prediction interval accuracy;
               </p>
             </CardContent>
           </Card>
@@ -440,28 +438,28 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
       )}
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="trends" className="w-full">
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="trends">Confidence Trends</TabsTrigger>
-          <TabsTrigger value="distribution">Distribution</TabsTrigger>
-          <TabsTrigger value="uncertainty">Uncertainty</TabsTrigger>
-          <TabsTrigger value="predictions">High Confidence</TabsTrigger>
-          <TabsTrigger value="analysis">Detailed Analysis</TabsTrigger>
+      <Tabs defaultValue="trends" className="w-full" key={221555}>
+        <TabsList className="grid w-full grid-cols-5" key={73711}>
+          <TabsTrigger value="trends" key={139054}>Confidence Trends</TabsTrigger>
+          <TabsTrigger value="distribution" key={607089}>Distribution</TabsTrigger>
+          <TabsTrigger value="uncertainty" key={33165}>Uncertainty</TabsTrigger>
+          <TabsTrigger value="predictions" key={91472}>High Confidence</TabsTrigger>
+          <TabsTrigger value="analysis" key={89597}>Detailed Analysis</TabsTrigger>
         </TabsList>
 
         {/* Confidence Trends */}
-        <TabsContent value="trends">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <TrendingUp className="w-5 h-5 mr-2 text-blue-600" />
-                Real-time Confidence Trends
+        <TabsContent value="trends" key={594427}>
+          <Card key={650115}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center" key={762707}>
+                <TrendingUp className="w-5 h-5 mr-2 text-blue-600" / key={329707}>
+                Real-time Confidence Trends;
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent key={452065}>
               {confidenceTrendData && (
-                <div className="h-80">
-                  <SafeChart
+                <div className="h-80" key={286132}>
+                  <SafeChart;
                     type="line"
                     data={confidenceTrendData}
                     options={{
@@ -493,7 +491,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
                         intersect: false,
                       },
                     }}
-                  />
+                  / key={307501}>
                 </div>
               )}
             </CardContent>
@@ -501,18 +499,18 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
         </TabsContent>
 
         {/* Confidence Distribution */}
-        <TabsContent value="distribution">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <BarChart3 className="w-5 h-5 mr-2 text-green-600" />
-                Confidence Distribution & Calibration
+        <TabsContent value="distribution" key={317193}>
+          <Card key={650115}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center" key={762707}>
+                <BarChart3 className="w-5 h-5 mr-2 text-green-600" / key={894818}>
+                Confidence Distribution & Calibration;
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent key={452065}>
               {confidenceDistributionData && (
-                <div className="h-80">
-                  <Bar
+                <div className="h-80" key={286132}>
+                  <Bar;
                     data={confidenceDistributionData}
                     options={{
                       responsive: true,
@@ -551,7 +549,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
                         },
                       },
                     }}
-                  />
+                  / key={570431}>
                 </div>
               )}
             </CardContent>
@@ -559,18 +557,18 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
         </TabsContent>
 
         {/* Uncertainty Analysis */}
-        <TabsContent value="uncertainty">
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <AlertTriangle className="w-5 h-5 mr-2 text-orange-600" />
-                Confidence vs Uncertainty
+        <TabsContent value="uncertainty" key={96852}>
+          <Card key={650115}>
+            <CardHeader key={236869}>
+              <CardTitle className="flex items-center" key={762707}>
+                <AlertTriangle className="w-5 h-5 mr-2 text-orange-600" / key={637784}>
+                Confidence vs Uncertainty;
               </CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent key={452065}>
               {uncertaintyScatterData && (
-                <div className="h-80">
-                  <Scatter
+                <div className="h-80" key={286132}>
+                  <Scatter;
                     data={uncertaintyScatterData}
                     options={{
                       responsive: true,
@@ -605,7 +603,7 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
                         },
                       },
                     }}
-                  />
+                  / key={775629}>
                 </div>
               )}
             </CardContent>
@@ -613,57 +611,57 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
         </TabsContent>
 
         {/* High Confidence Predictions */}
-        <TabsContent value="predictions">
-          <div className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold">
-                High Confidence Predictions
+        <TabsContent value="predictions" key={570693}>
+          <div className="space-y-4" key={160407}>
+            <div className="flex items-center justify-between" key={96335}>
+              <h3 className="text-lg font-semibold" key={304656}>
+                High Confidence Predictions;
               </h3>
-              <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-600">Threshold:</span>
-                <select
+              <div className="flex items-center gap-2" key={100294}>
+                <span className="text-sm text-gray-600" key={279234}>Threshold:</span>
+                <select;
                   value={confidenceThreshold}
-                  onChange={(e) =>
+                  onChange={(e) = key={225214}>
                     setConfidenceThreshold(Number(e.target.value))
                   }
                   className="px-3 py-1 border rounded"
                 >
-                  <option value={0.95}>95%</option>
-                  <option value={0.9}>90%</option>
-                  <option value={0.85}>85%</option>
-                  <option value={0.8}>80%</option>
-                  <option value={0.75}>75%</option>
+                  <option value={0.95} key={478431}>95%</option>
+                  <option value={0.9} key={336879}>90%</option>
+                  <option value={0.85} key={880418}>85%</option>
+                  <option value={0.8} key={407359}>80%</option>
+                  <option value={0.75} key={741636}>75%</option>
                 </select>
               </div>
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-4" key={449070}>
               {highConfidencePredictions.map((prediction) => {
                 const confidenceLevel = getConfidenceLevel(
                   prediction.confidence_score,
                 );
                 return (
-                  <Card
+                  <Card;
                     key={prediction.prediction_id}
                     className={`${confidenceLevel.border} ${confidenceLevel.bg} cursor-pointer hover:shadow-md transition-all`}
-                    onClick={() => setSelectedPrediction(prediction)}
+                    onClick={() = key={844107}> setSelectedPrediction(prediction)}
                   >
-                    <CardContent className="p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="flex items-center gap-3">
-                          <Badge
+                    <CardContent className="p-4" key={706827}>
+                      <div className="flex items-center justify-between mb-3" key={56204}>
+                        <div className="flex items-center gap-3" key={443099}>
+                          <Badge;
                             className={`${confidenceLevel.color} ${confidenceLevel.bg}`}
-                          >
+                           key={291412}>
                             {confidenceLevel.level}
                           </Badge>
-                          <span className="font-medium">
+                          <span className="font-medium" key={514486}>
                             {prediction.context.sport} -{" "}
                             {prediction.context.event_type}
                           </span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4 text-gray-400" />
-                          <span className="text-sm text-gray-500">
+                        <div className="flex items-center gap-2" key={100294}>
+                          <Clock className="w-4 h-4 text-gray-400" / key={652081}>
+                          <span className="text-sm text-gray-500" key={346858}>
                             {new Date(
                               prediction.timestamp,
                             ).toLocaleTimeString()}
@@ -671,43 +669,43 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
                         </div>
                       </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                        <div>
-                          <p className="text-sm text-gray-600">Prediction</p>
-                          <p className="text-lg font-bold text-gray-900">
+                      <div className="grid grid-cols-1 md:grid-cols-4 gap-4" key={426410}>
+                        <div key={241917}>
+                          <p className="text-sm text-gray-600" key={656535}>Prediction</p>
+                          <p className="text-lg font-bold text-gray-900" key={241254}>
                             {prediction.final_prediction.toFixed(2)}
                           </p>
                         </div>
-                        <div>
-                          <p className="text-sm text-gray-600">Confidence</p>
-                          <p className="text-lg font-bold text-gray-900">
+                        <div key={241917}>
+                          <p className="text-sm text-gray-600" key={656535}>Confidence</p>
+                          <p className="text-lg font-bold text-gray-900" key={241254}>
                             {(prediction.confidence_score * 100).toFixed(1)}%
                           </p>
                         </div>
-                        <div>
-                          <p className="text-sm text-gray-600">
-                            Model Agreement
+                        <div key={241917}>
+                          <p className="text-sm text-gray-600" key={656535}>
+                            Model Agreement;
                           </p>
-                          <p className="text-lg font-bold text-gray-900">
+                          <p className="text-lg font-bold text-gray-900" key={241254}>
                             {(prediction.model_agreement * 100).toFixed(1)}%
                           </p>
                         </div>
-                        <div>
-                          <p className="text-sm text-gray-600">
-                            Uncertainty Range
+                        <div key={241917}>
+                          <p className="text-sm text-gray-600" key={656535}>
+                            Uncertainty Range;
                           </p>
-                          <p className="text-lg font-bold text-gray-900">
+                          <p className="text-lg font-bold text-gray-900" key={241254}>
                             [{prediction.uncertainty_bounds[0].toFixed(2)},{" "}
                             {prediction.uncertainty_bounds[1].toFixed(2)}]
                           </p>
                         </div>
                       </div>
 
-                      <div className="mt-3">
-                        <Progress
+                      <div className="mt-3" key={661115}>
+                        <Progress;
                           value={prediction.confidence_score * 100}
                           className="h-2"
-                        />
+                        / key={721982}>
                       </div>
                     </CardContent>
                   </Card>
@@ -718,21 +716,21 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
         </TabsContent>
 
         {/* Detailed Analysis */}
-        <TabsContent value="analysis">
+        <TabsContent value="analysis" key={202358}>
           {selectedPrediction ? (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6" key={813322}>
               {/* Model Contribution Radar */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Gauge className="w-5 h-5 mr-2 text-purple-600" />
-                    Model Contributions
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Gauge className="w-5 h-5 mr-2 text-purple-600" / key={570770}>
+                    Model Contributions;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
+                <CardContent key={452065}>
                   {modelContributionData && (
-                    <div className="h-64">
-                      <Radar
+                    <div className="h-64" key={118048}>
+                      <Radar;
                         data={modelContributionData}
                         options={{
                           responsive: true,
@@ -754,36 +752,36 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
                             },
                           },
                         }}
-                      />
+                      / key={605541}>
                     </div>
                   )}
                 </CardContent>
               </Card>
 
               {/* Prediction Details */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center">
-                    <Target className="w-5 h-5 mr-2 text-green-600" />
-                    Prediction Details
+              <Card key={650115}>
+                <CardHeader key={236869}>
+                  <CardTitle className="flex items-center" key={762707}>
+                    <Target className="w-5 h-5 mr-2 text-green-600" / key={902291}>
+                    Prediction Details;
                   </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">
-                          Final Prediction
+                <CardContent key={452065}>
+                  <div className="space-y-4" key={160407}>
+                    <div className="grid grid-cols-2 gap-4" key={354810}>
+                      <div key={241917}>
+                        <p className="text-sm font-medium text-gray-600" key={275140}>
+                          Final Prediction;
                         </p>
-                        <p className="text-xl font-bold text-gray-900">
+                        <p className="text-xl font-bold text-gray-900" key={299883}>
                           {selectedPrediction.final_prediction.toFixed(3)}
                         </p>
                       </div>
-                      <div>
-                        <p className="text-sm font-medium text-gray-600">
-                          Quantum Fidelity
+                      <div key={241917}>
+                        <p className="text-sm font-medium text-gray-600" key={275140}>
+                          Quantum Fidelity;
                         </p>
-                        <p className="text-xl font-bold text-purple-600">
+                        <p className="text-xl font-bold text-purple-600" key={229589}>
                           {(selectedPrediction.quantum_fidelity * 100).toFixed(
                             1,
                           )}
@@ -792,12 +790,12 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
                       </div>
                     </div>
 
-                    <div>
-                      <p className="text-sm font-medium text-gray-600 mb-2">
-                        Prediction Interval
+                    <div key={241917}>
+                      <p className="text-sm font-medium text-gray-600 mb-2" key={560334}>
+                        Prediction Interval;
                       </p>
-                      <div className="bg-gray-100 p-3 rounded-lg">
-                        <p className="text-center font-mono">
+                      <div className="bg-gray-100 p-3 rounded-lg" key={668779}>
+                        <p className="text-center font-mono" key={869241}>
                           [
                           {selectedPrediction.prediction_interval[0].toFixed(3)}
                           ,{" "}
@@ -807,28 +805,28 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
                       </div>
                     </div>
 
-                    <div>
-                      <p className="text-sm font-medium text-gray-600 mb-2">
-                        Processing Time
+                    <div key={241917}>
+                      <p className="text-sm font-medium text-gray-600 mb-2" key={560334}>
+                        Processing Time;
                       </p>
-                      <p className="text-lg font-semibold text-gray-900">
+                      <p className="text-lg font-semibold text-gray-900" key={933787}>
                         {(selectedPrediction.processing_time * 1000).toFixed(1)}
-                        ms
+                        ms;
                       </p>
                     </div>
 
-                    <div>
-                      <p className="text-sm font-medium text-gray-600 mb-2">
-                        Context
+                    <div key={241917}>
+                      <p className="text-sm font-medium text-gray-600 mb-2" key={560334}>
+                        Context;
                       </p>
-                      <div className="space-y-1">
-                        <Badge variant="outline">
+                      <div className="space-y-1" key={204202}>
+                        <Badge variant="outline" key={93734}>
                           {selectedPrediction.context.sport}
                         </Badge>
-                        <Badge variant="outline">
+                        <Badge variant="outline" key={93734}>
                           {selectedPrediction.context.event_type}
                         </Badge>
-                        <Badge variant="outline">
+                        <Badge variant="outline" key={93734}>
                           {selectedPrediction.context.market_type}
                         </Badge>
                       </div>
@@ -838,12 +836,12 @@ export const AdvancedConfidenceVisualizer: React.FC = () => {
               </Card>
             </div>
           ) : (
-            <Card>
-              <CardContent className="p-8 text-center">
-                <Brain className="w-12 h-12 mx-auto mb-4 text-gray-400" />
-                <p className="text-gray-500">
-                  Select a prediction from the High Confidence tab to view
-                  detailed analysis
+            <Card key={650115}>
+              <CardContent className="p-8 text-center" key={791975}>
+                <Brain className="w-12 h-12 mx-auto mb-4 text-gray-400" / key={439890}>
+                <p className="text-gray-500" key={992645}>
+                  Select a prediction from the High Confidence tab to view;
+                  detailed analysis;
                 </p>
               </CardContent>
             </Card>

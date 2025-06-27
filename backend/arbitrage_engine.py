@@ -5,7 +5,7 @@ Real-time arbitrage detection, market making opportunities, and inefficiency exp
 import logging
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -170,8 +170,8 @@ class ArbitrageCalculator:
 
             return opportunities
 
-        except Exception as e:
-            logger.error(f"Arbitrage detection failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Arbitrage detection failed: {e!s}")
             return []
 
     def _group_odds_data(
@@ -239,8 +239,8 @@ class ArbitrageCalculator:
                                 minimum_profit=arb_result["guaranteed_profit"] * 0.5,
                                 maximum_exposure=arb_result["total_stake"] * 2,
                                 confidence_score=arb_result["confidence"],
-                                detection_time=datetime.utcnow(),
-                                expiry_time=datetime.utcnow() + timedelta(minutes=30),
+                                detection_time=datetime.now(timezone.utc),
+                                expiry_time=datetime.now(timezone.utc) + timedelta(minutes=30),
                                 source_quality=min(
                                     odds1.get("quality", 0.8), odds2.get("quality", 0.8)
                                 ),
@@ -251,8 +251,8 @@ class ArbitrageCalculator:
 
             return opportunities
 
-        except Exception as e:
-            logger.error(f"Two-way arbitrage calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Two-way arbitrage calculation failed: {e!s}")
             return []
 
     def _calculate_two_way_math(
@@ -307,8 +307,8 @@ class ArbitrageCalculator:
                 },
             }
 
-        except Exception as e:
-            logger.error(f"Two-way arbitrage math failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Two-way arbitrage math failed: {e!s}")
             return None
 
     async def _calculate_three_way_arbitrage(
@@ -389,8 +389,8 @@ class ArbitrageCalculator:
                         minimum_profit=guaranteed_profit * 0.5,
                         maximum_exposure=sum(stakes) * 2,
                         confidence_score=0.8,
-                        detection_time=datetime.utcnow(),
-                        expiry_time=datetime.utcnow() + timedelta(minutes=20),
+                        detection_time=datetime.now(timezone.utc),
+                        expiry_time=datetime.now(timezone.utc) + timedelta(minutes=20),
                         source_quality=min(
                             odds.get("quality", 0.8) for odds in best_odds.values()
                         ),
@@ -405,8 +405,8 @@ class ArbitrageCalculator:
 
             return opportunities
 
-        except Exception as e:
-            logger.error(f"Three-way arbitrage calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Three-way arbitrage calculation failed: {e!s}")
             return []
 
     async def _calculate_cross_market_arbitrage(
@@ -464,7 +464,7 @@ class ArbitrageCalculator:
         for odds in odds_list:
             # Time risk
             time_since_update = (
-                datetime.utcnow() - odds.get("timestamp", datetime.utcnow())
+                datetime.now(timezone.utc) - odds.get("timestamp", datetime.now(timezone.utc))
             ).total_seconds()
             time_risk = min(
                 time_since_update / 300, 1.0
@@ -502,7 +502,7 @@ class ArbitrageCalculator:
     def _calculate_timing_risk(self, odds_list: List[Dict[str, Any]]) -> float:
         """Calculate timing risk for arbitrage"""
         # Risk that odds will change before execution
-        timestamps = [odds.get("timestamp", datetime.utcnow()) for odds in odds_list]
+        timestamps = [odds.get("timestamp", datetime.now(timezone.utc)) for odds in odds_list]
 
         if len(timestamps) < 2:
             return 0.5
@@ -601,8 +601,8 @@ class MarketInefficiencyDetector:
 
             return inefficiencies
 
-        except Exception as e:
-            logger.error(f"Market inefficiency detection failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Market inefficiency detection failed: {e!s}")
             return []
 
     async def _detect_pricing_errors(
@@ -681,8 +681,8 @@ class MarketInefficiencyDetector:
                             / consensus_fair_value,
                             information_risk=0.1,
                             execution_risk=0.1,
-                            detection_time=datetime.utcnow(),
-                            window_expiry=datetime.utcnow() + timedelta(hours=2),
+                            detection_time=datetime.now(timezone.utc),
+                            window_expiry=datetime.now(timezone.utc) + timedelta(hours=2),
                             urgency_score=min(expected_value * 10, 1.0),
                             metadata={
                                 "fair_value_methods": fair_values,
@@ -694,8 +694,8 @@ class MarketInefficiencyDetector:
 
             return inefficiencies
 
-        except Exception as e:
-            logger.error(f"Pricing error detection failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Pricing error detection failed: {e!s}")
             return []
 
     async def _calculate_fair_value(
@@ -737,8 +737,8 @@ class MarketInefficiencyDetector:
 
             return fair_values
 
-        except Exception as e:
-            logger.error(f"Fair value calculation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Fair value calculation failed: {e!s}")
             return {}
 
     async def _detect_information_lag(
@@ -788,8 +788,8 @@ class MarketInefficiencyDetector:
                             model_uncertainty=0.2,
                             information_risk=0.3,  # Higher due to information lag
                             execution_risk=0.1,
-                            detection_time=datetime.utcnow(),
-                            window_expiry=datetime.utcnow() + timedelta(minutes=30),
+                            detection_time=datetime.now(timezone.utc),
+                            window_expiry=datetime.now(timezone.utc) + timedelta(minutes=30),
                             urgency_score=0.8,  # High urgency
                             metadata={
                                 "info_lag_seconds": info_lag,
@@ -801,8 +801,8 @@ class MarketInefficiencyDetector:
 
             return inefficiencies
 
-        except Exception as e:
-            logger.error(f"Information lag detection failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Information lag detection failed: {e!s}")
             return []
 
     async def _detect_behavioral_biases(
@@ -867,8 +867,8 @@ class MarketInefficiencyDetector:
 
             return inefficiencies
 
-        except Exception as e:
-            logger.error(f"Behavioral bias detection failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Behavioral bias detection failed: {e!s}")
             return []
 
     def _create_bias_inefficiency(
@@ -909,8 +909,8 @@ class MarketInefficiencyDetector:
                 model_uncertainty=0.15,
                 information_risk=0.1,
                 execution_risk=0.1,
-                detection_time=datetime.utcnow(),
-                window_expiry=datetime.utcnow() + timedelta(hours=1),
+                detection_time=datetime.now(timezone.utc),
+                window_expiry=datetime.now(timezone.utc) + timedelta(hours=1),
                 urgency_score=bias_magnitude * 2,
                 metadata={
                     "bias_type": bias_type,
@@ -920,8 +920,8 @@ class MarketInefficiencyDetector:
                 },
             )
 
-        except Exception as e:
-            logger.error(f"Bias inefficiency creation failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Bias inefficiency creation failed: {e!s}")
             return None
 
     async def _detect_steam_moves(
@@ -987,8 +987,8 @@ class MarketInefficiencyDetector:
                         model_uncertainty=0.2,
                         information_risk=0.15,
                         execution_risk=0.2,  # Higher due to moving line
-                        detection_time=datetime.utcnow(),
-                        window_expiry=datetime.utcnow() + timedelta(hours=1),
+                        detection_time=datetime.now(timezone.utc),
+                        window_expiry=datetime.now(timezone.utc) + timedelta(hours=1),
                         urgency_score=0.9,  # High urgency for steam moves
                         metadata={
                             "line_movement_percentage": line_movement * 100,
@@ -1001,8 +1001,8 @@ class MarketInefficiencyDetector:
 
             return inefficiencies
 
-        except Exception as e:
-            logger.error(f"Steam move detection failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Steam move detection failed: {e!s}")
             return []
 
     async def _detect_reverse_line_movement(
@@ -1094,7 +1094,7 @@ class UltraArbitrageEngine:
             # Store in history
             for opp in arbitrage_opportunities:
                 self.opportunity_history.append(
-                    {"type": "arbitrage", "data": opp, "timestamp": datetime.utcnow()}
+                    {"type": "arbitrage", "data": opp, "timestamp": datetime.now(timezone.utc)}
                 )
 
             for opp in market_inefficiencies:
@@ -1102,7 +1102,7 @@ class UltraArbitrageEngine:
                     {
                         "type": "inefficiency",
                         "data": opp,
-                        "timestamp": datetime.utcnow(),
+                        "timestamp": datetime.now(timezone.utc),
                     }
                 )
 
@@ -1111,17 +1111,17 @@ class UltraArbitrageEngine:
                 "market_inefficiencies": market_inefficiencies,
                 "total_opportunities": len(arbitrage_opportunities)
                 + len(market_inefficiencies),
-                "scan_timestamp": datetime.utcnow().isoformat(),
+                "scan_timestamp": datetime.now(timezone.utc).isoformat(),
                 "performance_metrics": self.performance_metrics,
             }
 
-        except Exception as e:
-            logger.error(f"Opportunity scan failed: {e!s}")
+        except Exception as e:  # pylint: disable=broad-exception-caught
+            logger.error("Opportunity scan failed: {e!s}")
             return {
                 "arbitrage_opportunities": [],
                 "market_inefficiencies": [],
                 "total_opportunities": 0,
-                "scan_timestamp": datetime.utcnow().isoformat(),
+                "scan_timestamp": datetime.now(timezone.utc).isoformat(),
                 "error": str(e),
             }
 
@@ -1134,7 +1134,7 @@ class UltraArbitrageEngine:
             "execution_tracker_size": len(self.execution_tracker),
             "arbitrage_calculator_status": "operational",
             "inefficiency_detector_status": "operational",
-            "last_health_check": datetime.utcnow().isoformat(),
+            "last_health_check": datetime.now(timezone.utc).isoformat(),
         }
 
 

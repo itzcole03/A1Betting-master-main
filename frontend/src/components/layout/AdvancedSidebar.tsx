@@ -1,7 +1,7 @@
-import React from "react";
-import CyberSidebar from "./CyberSidebar";
+import React from 'react.ts';
+import CyberSidebar from './CyberSidebar.ts';
 
-// Legacy interface for backward compatibility
+// Legacy interface for backward compatibility;
 interface AdvancedSidebarProps {
   currentSection?: string;
   onSectionChange?: (section: string) => void;
@@ -14,23 +14,23 @@ interface AdvancedSidebarProps {
   className?: string;
 }
 
-// Adapter component to maintain backward compatibility
-export const AdvancedSidebar: React.FC<AdvancedSidebarProps> = ({
+// Adapter component to maintain backward compatibility;
+export const AdvancedSidebar: React.FC<AdvancedSidebarProps key={975637}> = ({
   currentSection,
   onSectionChange,
   isOpen,
   onClose,
   className,
-  ...rest
+  ...rest;
 }) => {
   return (
-    <CyberSidebar
+    <CyberSidebar;
       currentPage={currentSection}
       onPageChange={onSectionChange}
       isOpen={isOpen}
       onClose={onClose}
       className={className}
-    />
+    / key={404877}>
   );
 };
 

@@ -1,6 +1,6 @@
 import { UnifiedConfig } from '../unified/UnifiedConfig.js';
 export async function getLineupSynergyFeatures(lineupIds, sport, context) {
-    const config = UnifiedConfig.getInstance();
+
     if (!config.get('enableLineupSynergyModel')) {
         throw new Error('LineupSynergyModel is disabled by config.');
     }
@@ -10,9 +10,9 @@ export async function getLineupSynergyFeatures(lineupIds, sport, context) {
         experienceTogether: Math.random(),
         diversity: Math.random(),
     };
-    // Generate SHAP insights
+    // Generate SHAP insights;
     const { calculateShap } = await import('../utils/shap.js');
-    const shap = calculateShap(features, 'lineup');
+
     return {
         features,
         shapInsights: [shap],

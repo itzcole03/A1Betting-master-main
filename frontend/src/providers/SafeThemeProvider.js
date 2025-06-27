@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 import { createContext, useContext, useEffect, useState, } from "react";
 // ============================================================================
-// SAFE THEME DEFINITIONS
+// SAFE THEME DEFINITIONS;
 // ============================================================================
 const CYBER_LIGHT_THEME = {
     variant: "cyber-light",
@@ -72,7 +72,7 @@ const CYBER_DARK_THEME = {
     },
 };
 // ============================================================================
-// SAFE THEME FUNCTIONS
+// SAFE THEME FUNCTIONS;
 // ============================================================================
 const getThemeConfig = (variant) => {
     switch (variant) {
@@ -84,26 +84,26 @@ const getThemeConfig = (variant) => {
     }
 };
 // ============================================================================
-// CONTEXT
+// CONTEXT;
 // ============================================================================
-const ThemeContext = createContext(undefined);
+
 export const SafeThemeProvider = ({ children, defaultVariant = "cyber-light", enablePersistence = true, }) => {
     const [variant, setVariantState] = useState(() => {
         if (enablePersistence && typeof window !== "undefined") {
             try {
-                const saved = localStorage.getItem("theme-variant");
+
                 if (saved === "cyber-light" || saved === "cyber-dark") {
                     return saved;
                 }
             }
             catch (error) {
-                console.warn("Failed to load theme from localStorage:", error);
+                // console statement removed
             }
         }
         return defaultVariant;
     });
-    const theme = getThemeConfig(variant);
-    const isDark = variant === "cyber-dark";
+
+
     const setVariant = (newVariant) => {
         setVariantState(newVariant);
         if (enablePersistence && typeof window !== "undefined") {
@@ -111,22 +111,22 @@ export const SafeThemeProvider = ({ children, defaultVariant = "cyber-light", en
                 localStorage.setItem("theme-variant", newVariant);
             }
             catch (error) {
-                console.warn("Failed to save theme to localStorage:", error);
+                // console statement removed
             }
         }
     };
     const toggleDarkMode = () => {
-        const newVariant = isDark ? "cyber-light" : "cyber-dark";
+
         setVariant(newVariant);
     };
-    // Apply theme to document
+    // Apply theme to document;
     useEffect(() => {
         if (typeof window === "undefined")
             return;
         try {
-            const root = document.documentElement;
-            const body = document.body;
-            // Set CSS custom properties
+
+
+            // Set CSS custom properties;
             root.style.setProperty("--color-primary", theme.colors.primary);
             root.style.setProperty("--color-secondary", theme.colors.secondary);
             root.style.setProperty("--color-accent", theme.colors.accent);
@@ -139,17 +139,17 @@ export const SafeThemeProvider = ({ children, defaultVariant = "cyber-light", en
             root.style.setProperty("--color-success", theme.colors.success);
             root.style.setProperty("--color-warning", theme.colors.warning);
             root.style.setProperty("--color-error", theme.colors.error);
-            // Set gradient variables
+            // Set gradient variables;
             root.style.setProperty("--gradient-primary", theme.gradients.primary);
             root.style.setProperty("--gradient-secondary", theme.gradients.secondary);
             root.style.setProperty("--gradient-background", theme.gradients.background);
-            // Clear existing theme classes
+            // Clear existing theme classes;
             body.className = body.className.replace(/theme-[\w-]+/g, "");
             root.classList.remove("dark", "light", "cyber-light", "cyber-dark");
-            // Add current theme classes
+            // Add current theme classes;
             body.classList.add(`theme-${variant}`);
             root.classList.add(variant);
-            // Set dark/light mode classes
+            // Set dark/light mode classes;
             if (isDark) {
                 root.classList.add("dark");
                 body.classList.add("dark");
@@ -158,13 +158,13 @@ export const SafeThemeProvider = ({ children, defaultVariant = "cyber-light", en
                 root.classList.add("light");
                 body.classList.add("light");
             }
-            // Apply background and text color
+            // Apply background and text color;
             body.style.background = theme.colors.background;
             body.style.color = theme.colors.text.primary;
             body.style.fontFamily = '"Inter", system-ui, sans-serif';
             body.style.minHeight = "100vh";
-            // Apply to root as well for consistency
-            const rootElement = document.getElementById("root");
+            // Apply to root as well for consistency;
+
             if (rootElement) {
                 rootElement.style.background = theme.colors.background;
                 rootElement.style.color = theme.colors.text.primary;
@@ -172,7 +172,7 @@ export const SafeThemeProvider = ({ children, defaultVariant = "cyber-light", en
             }
         }
         catch (error) {
-            console.error("Failed to apply theme:", error);
+            // console statement removed
         }
     }, [theme, variant, isDark]);
     return (_jsx(ThemeContext.Provider, { value: {
@@ -184,13 +184,13 @@ export const SafeThemeProvider = ({ children, defaultVariant = "cyber-light", en
         }, children: children }));
 };
 // ============================================================================
-// HOOKS
+// HOOKS;
 // ============================================================================
 export const useTheme = () => {
-    const context = useContext(ThemeContext);
+
     if (context === undefined) {
-        // Return safe fallback instead of throwing
-        console.warn("useTheme called outside of SafeThemeProvider, using fallback");
+        // Return safe fallback instead of throwing;
+        // console statement removed
         return {
             theme: CYBER_LIGHT_THEME,
             variant: "cyber-light",

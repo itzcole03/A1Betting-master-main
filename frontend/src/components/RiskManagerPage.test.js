@@ -3,7 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import axios from 'axios';
 import RiskManagerPage from './RiskManagerPage';
 import MockAdapter from 'axios-mock-adapter';
-const mock = new MockAdapter(axios);
+
 describe('RiskManagerPage Integration', () => {
     afterEach(() => {
         mock.reset();

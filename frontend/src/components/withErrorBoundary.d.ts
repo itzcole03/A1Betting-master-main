@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface WithErrorBoundaryOptions {
     fallback?: React.ReactNode;
     onError?: (error: Error, errorInfo: React.ErrorInfo) => void;

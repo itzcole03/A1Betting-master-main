@@ -1,11 +1,11 @@
-import { useState, useEffect, useMemo } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { UnifiedServiceRegistry } from '../services/unified/UnifiedServiceRegistry';
-import { UnifiedAnalyticsService } from '../services/unified/UnifiedAnalyticsService';
-import { webSocketManager } from '../services/unified/WebSocketManager';
-import { UnifiedErrorService } from '../services/unified/UnifiedErrorService';
+import { useState, useEffect, useMemo } from 'react.ts';
+import { useQuery } from '@tanstack/react-query.ts';
+import { UnifiedServiceRegistry } from '@/services/unified/UnifiedServiceRegistry.ts';
+import { UnifiedAnalyticsService } from '@/services/unified/UnifiedAnalyticsService.ts';
+import { webSocketManager } from '@/services/unified/WebSocketManager.ts';
+import { UnifiedErrorService } from '@/services/unified/UnifiedErrorService.ts';
 
-// Types
+// Types;
 export interface AnalyticsConfig {
   ml?: {
     autoUpdate?: boolean;
@@ -17,7 +17,7 @@ export interface AnalyticsConfig {
   realtime?: boolean;
 }
 
-// Stronger typing for MLAnalyticsResult
+// Stronger typing for MLAnalyticsResult;
 export interface MLAnalyticsResult {
   predictions: number[];
   probabilities: number[];
@@ -124,10 +124,8 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
     realtime: { data: null, loading: false, error: null },
   });
 
-  const serviceRegistry = UnifiedServiceRegistry.getInstance();
-  const analyticsService = serviceRegistry.getService<UnifiedAnalyticsService>('analytics');
-  // Use 'as any' to bypass BaseService constraint for errorService
-  const errorService = serviceRegistry.getService('error') as UnifiedErrorService | undefined;
+
+  // Use 'as any' to bypass BaseService constraint for errorService;
 
   // --- ML Analytics (using getModelPerformance as a proxy for ML analytics) ---
   const mlQuery = useQuery<ModelPerformance[] | null, AnalyticsError>({
@@ -135,11 +133,11 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
     queryFn: async () => {
       if (!analyticsService) throw { message: 'Analytics service unavailable' };
       try {
-        const result = await analyticsService.getModelPerformance('', '', '');
+
         setState(prev => ({
           ...prev,
           ml: {
-            data: result
+            data: result;
               ? {
                   predictions: [],
                   probabilities: [],
@@ -151,7 +149,7 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
             error: null,
           },
         }));
-        return result
+        return result;
           ? [{ model: 'default', metrics: result, timestamp: new Date().toISOString() }]
           : null;
       } catch (error) {
@@ -184,11 +182,11 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
     queryFn: async () => {
       if (!analyticsService) throw { message: 'Analytics service unavailable' };
       try {
-        const result = await analyticsService.getPerformanceMetrics('week');
+
         setState(prev => ({
           ...prev,
           performance: {
-            data: result
+            data: result;
               ? [{ model: 'default', metrics: result, timestamp: new Date().toISOString() }]
               : null,
             loading: false,
@@ -238,13 +236,13 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
     queryFn: async () => {
       if (!analyticsService) throw { message: 'Analytics service unavailable' };
       try {
-        const result = await analyticsService.getBettingStats('', '', '');
+
         setState(prev => ({
           ...prev,
           betting: {
-            data: result
+            data: result;
               ? {
-                  roi: 0, // Not available in result
+                  roi: 0, // Not available in result;
                   winRate: result.winRate ?? 0,
                   profitLoss: result.profitLoss ?? 0,
                   riskMetrics: { var: 0, sharpe: 0, sortino: 0 },
@@ -255,9 +253,9 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
             error: null,
           },
         }));
-        return result
+        return result;
           ? {
-              roi: 0, // Not available in result
+              roi: 0, // Not available in result;
               winRate: result.winRate ?? 0,
               profitLoss: result.profitLoss ?? 0,
               riskMetrics: { var: 0, sharpe: 0, sortino: 0 },
@@ -399,9 +397,9 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
     [state.realtime, realtimeQuery.refetch]
   );
 
-  // TODO: Add more granular loading/error states if needed
-  // TODO: Add ARIA live region support for analytics-driven UI updates
-  // TODO: Add more comprehensive test coverage for analytics hook
+  // TODO: Add more granular loading/error states if needed;
+  // TODO: Add ARIA live region support for analytics-driven UI updates;
+  // TODO: Add more comprehensive test coverage for analytics hook;
 
   return {
     ml,
@@ -423,4 +421,4 @@ export const useUnifiedAnalytics = (config: AnalyticsConfig = {}) => {
       state.realtime.error,
   };
 };
-// END useUnifiedAnalytics
+// END useUnifiedAnalytics;

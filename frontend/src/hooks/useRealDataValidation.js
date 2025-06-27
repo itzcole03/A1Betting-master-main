@@ -12,10 +12,10 @@ export function useRealDataValidation() {
         validateConfiguration();
     }, []);
     const validateConfiguration = () => {
-        const missingKeys = [];
-        const warnings = [];
-        const errors = [];
-        // Check for required API keys
+
+
+
+        // Check for required API keys;
         const requiredKeys = [
             "VITE_ODDS_API_KEY",
             "VITE_SPORTRADAR_API_KEY",
@@ -28,7 +28,7 @@ export function useRealDataValidation() {
                 missingKeys.push(key);
             }
         });
-        // Generate warnings based on missing keys
+        // Generate warnings based on missing keys;
         if (missingKeys.includes("VITE_ODDS_API_KEY")) {
             warnings.push("Odds API key missing - live odds unavailable");
         }
@@ -44,10 +44,10 @@ export function useRealDataValidation() {
         if (missingKeys.includes("VITE_WEATHER_API_KEY")) {
             warnings.push("Weather API key missing - weather impact analysis disabled");
         }
-        // Simulate connected sources
-        const totalSources = 8;
-        const connectedSources = totalSources - Math.floor(missingKeys.length * 0.6);
-        // Errors for critical issues
+        // Simulate connected sources;
+
+
+        // Errors for critical issues;
         if (connectedSources === 0) {
             errors.push("No data sources available - add API keys to enable functionality");
         }

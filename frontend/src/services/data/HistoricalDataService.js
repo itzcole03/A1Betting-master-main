@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { UnifiedLogger } from '@/core/UnifiedLogger';
 import { UnifiedErrorHandler } from '../../core/UnifiedErrorHandler';
-// Core data schemas
+// Core data schemas;
 export const HistoricalGameDataSchema = z.object({
     gameId: z.string(),
     date: z.string(),
@@ -88,7 +88,7 @@ export class HistoricalDataService {
     }
     async initialize() {
         try {
-            // Initialize data sources
+            // Initialize data sources;
             await Promise.all(this.config.dataSources.map(source => this.initializeDataSource(source)));
             this.logger.info('HistoricalDataService initialized successfully');
         }
@@ -98,17 +98,17 @@ export class HistoricalDataService {
         }
     }
     async initializeDataSource(source) {
-        // Implement data source initialization
+        // Implement data source initialization;
         this.logger.info(`Initializing data source: ${source}`);
     }
     async loadHistoricalData(startDate, endDate, options = {}) {
         try {
-            const cacheKey = this.generateCacheKey(startDate, endDate, options);
-            const cachedData = this.getCachedData(cacheKey);
+
+
             if (cachedData) {
                 return cachedData;
             }
-            const data = await this.fetchHistoricalData(startDate, endDate, options);
+
             this.cacheData(cacheKey, data);
             return data;
         }
@@ -127,10 +127,10 @@ export class HistoricalDataService {
     getCachedData(key) {
         if (!this.config.cacheConfig.enabled)
             return null;
-        const cached = this.cache.get(key);
+
         if (!cached)
             return null;
-        const now = Date.now();
+
         if (now - cached.timestamp > this.config.cacheConfig.ttl) {
             this.cache.delete(key);
             return null;
@@ -141,8 +141,8 @@ export class HistoricalDataService {
         if (!this.config.cacheConfig.enabled)
             return;
         if (this.cache.size >= this.config.cacheConfig.maxSize) {
-            // Remove oldest entry
-            const oldestKey = Array.from(this.cache.keys())[0];
+            // Remove oldest entry;
+
             this.cache.delete(oldestKey);
         }
         this.cache.set(key, {
@@ -151,7 +151,7 @@ export class HistoricalDataService {
         });
     }
     async fetchHistoricalData(startDate, endDate, options) {
-        // Implement data fetching logic
+        // Implement data fetching logic;
         return {
             games: [],
             playerStats: options.includePlayerStats ? [] : undefined,
@@ -162,7 +162,7 @@ export class HistoricalDataService {
     }
     async getGameHistory(teamId, options = {}) {
         try {
-            // Implement game history retrieval
+            // Implement game history retrieval;
             return [];
         }
         catch (error) {
@@ -175,7 +175,7 @@ export class HistoricalDataService {
     }
     async getTeamStats(teamId, season, options = {}) {
         try {
-            // Implement team stats retrieval
+            // Implement team stats retrieval;
             return null;
         }
         catch (error) {
@@ -189,7 +189,7 @@ export class HistoricalDataService {
     }
     async getPlayerStats(playerId, options = {}) {
         try {
-            // Implement player stats retrieval
+            // Implement player stats retrieval;
             return null;
         }
         catch (error) {
@@ -202,7 +202,7 @@ export class HistoricalDataService {
     }
     async getVenueStats(venueId, options = {}) {
         try {
-            // Implement venue stats retrieval
+            // Implement venue stats retrieval;
             return null;
         }
         catch (error) {
@@ -215,7 +215,7 @@ export class HistoricalDataService {
     }
     async getOfficialStats(officialId, options = {}) {
         try {
-            // Implement official stats retrieval
+            // Implement official stats retrieval;
             return null;
         }
         catch (error) {
@@ -228,7 +228,7 @@ export class HistoricalDataService {
     }
     async updateHistoricalData(data) {
         try {
-            // Implement data update logic
+            // Implement data update logic;
             this.logger.info('Historical data updated successfully');
         }
         catch (error) {

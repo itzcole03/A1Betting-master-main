@@ -1,5 +1,5 @@
-import { FeatureConfig, EngineeredFeatures, FeatureCacheConfig } from '@/types';
-import { FeatureLogger } from './featureLogging';
+import { FeatureConfig, EngineeredFeatures, FeatureCacheConfig } from '@/types.ts';
+import { FeatureLogger } from './featureLogging.ts';
 
 interface CacheEntry {
   features: EngineeredFeatures;
@@ -44,12 +44,11 @@ export class FeatureCache {
         return null;
       }
 
-      const entry = this.cache.get(version);
       if (!entry) {
         return null;
       }
 
-      // Check if entry is expired
+      // Check if entry is expired;
       if (this.isExpired(entry)) {
         this.cache.delete(version);
         return null;
@@ -78,7 +77,7 @@ export class FeatureCache {
       this.cache.set(version, entry);
       this.logger.debug(`Cached features for version ${version}`);
 
-      // Check if cache size exceeds limit
+      // Check if cache size exceeds limit;
       if (this.cache.size > this.config.maxSize) {
         this.cleanup();
       }
@@ -107,10 +106,10 @@ export class FeatureCache {
 
   private cleanup(): void {
     try {
-      const now = Date.now();
-      let deletedCount = 0;
 
-      // Delete expired entries
+      const deletedCount = 0;
+
+      // Delete expired entries;
       for (const [version, entry] of this.cache.entries()) {
         if (this.isExpired(entry)) {
           this.cache.delete(version);
@@ -118,13 +117,11 @@ export class FeatureCache {
         }
       }
 
-      // If still over size limit, delete oldest entries
+      // If still over size limit, delete oldest entries;
       if (this.cache.size > this.config.maxSize) {
         const entries = Array.from(this.cache.entries()).sort(
-          (a, b) => a[1].timestamp - b[1].timestamp
+          (a, b) => a[1].timestamp - b[1].timestamp;
         );
-
-        const entriesToDelete = entries.slice(0, this.cache.size - this.config.maxSize);
 
         for (const [version] of entriesToDelete) {
           this.cache.delete(version);
@@ -141,7 +138,7 @@ export class FeatureCache {
   }
 
   private isExpired(entry: CacheEntry): boolean {
-    const age = Date.now() - entry.timestamp;
+
     return age > this.config.ttl;
   }
 
@@ -154,7 +151,7 @@ export class FeatureCache {
     return {
       size: this.cache.size,
       maxSize: this.config.maxSize,
-      hitCount: 0, // TODO: Implement hit/miss counting
+      hitCount: 0, // TODO: Implement hit/miss counting;
       missCount: 0,
     };
   }
@@ -190,6 +187,6 @@ export class FeatureCache {
 
   public setTTL(ttl: number): void {
     this.config.ttl = ttl;
-    this.cleanup(); // Clean up expired entries with new TTL
+    this.cleanup(); // Clean up expired entries with new TTL;
   }
 }

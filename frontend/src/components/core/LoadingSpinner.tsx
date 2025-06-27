@@ -1,22 +1,22 @@
-import React from 'react';
-import { CircularProgress, Box } from '@mui/material';
+import React from 'react.ts';
+import { CircularProgress, Box } from '@mui/material.ts';
 
 interface LoadingSpinnerProps {
   size?: number;
   color?: 'primary' | 'secondary' | 'error' | 'info' | 'success' | 'warning';
 }
 
-const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({ size = 24, color = 'primary' }) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps key={366419}> = ({ size = 24, color = 'primary' }) => {
   return (
-    <Box
+    <Box;
       sx={{
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         p: 1,
       }}
-    >
-      <CircularProgress color={color} size={size} />
+     key={483172}>
+      <CircularProgress color={color} size={size} / key={439750}>
     </Box>
   );
 };

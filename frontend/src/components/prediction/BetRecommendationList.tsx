@@ -1,8 +1,8 @@
-import React, { useState, useMemo } from 'react';
-import { Box, Typography, TextField, MenuItem, Grid, Paper, CircularProgress } from '@mui/material';
-import { BetRecommendationCard } from './BetRecommendationCard';
-import { BetRecommendation } from '../../core/types/prediction';
-import { PredictionExplanationModal } from './PredictionExplanationModal';
+import React, { useState, useMemo  } from 'react.ts';
+import { Box, Typography, TextField, MenuItem, Grid, Paper, CircularProgress } from '@mui/material.ts';
+import { BetRecommendationCard } from './BetRecommendationCard.ts';
+import { BetRecommendation } from '@/core/types/prediction.ts';
+import { PredictionExplanationModal } from './PredictionExplanationModal.ts';
 
 interface BetRecommendationListProps {
   recommendations: BetRecommendation[];
@@ -13,26 +13,26 @@ interface BetRecommendationListProps {
 type SortOption = 'confidence' | 'stake' | 'expectedValue' | 'riskLevel';
 type FilterOption = 'all' | 'low' | 'medium' | 'high';
 
-export const BetRecommendationList: React.FC<BetRecommendationListProps> = ({
+export const BetRecommendationList: React.FC<BetRecommendationListProps key={225493}> = ({
   recommendations,
   loading = false,
   error,
 }) => {
-  const [sortBy, setSortBy] = useState<SortOption>('confidence');
-  const [filterBy, setFilterBy] = useState<FilterOption>('all');
-  const [selectedRecommendation, setSelectedRecommendation] = useState<BetRecommendation | null>(
-    null
+  const [sortBy, setSortBy] = useState<SortOption key={303251}>('confidence');
+  const [filterBy, setFilterBy] = useState<FilterOption key={992183}>('all');
+  const [selectedRecommendation, setSelectedRecommendation] = useState<BetRecommendation | null key={725325}>(
+    null;
   );
 
   const filteredAndSortedRecommendations = useMemo(() => {
-    let filtered = recommendations;
+    const filtered = recommendations;
 
-    // Apply risk level filter
+    // Apply risk level filter;
     if (filterBy !== 'all') {
       filtered = filtered.filter(rec => rec.riskLevel === filterBy);
     }
 
-    // Apply sorting
+    // Apply sorting;
     return filtered.sort((a, b) => {
       switch (sortBy) {
         case 'confidence':
@@ -42,7 +42,7 @@ export const BetRecommendationList: React.FC<BetRecommendationListProps> = ({
         case 'expectedValue':
           return b.expectedValue - a.expectedValue;
         case 'riskLevel':
-          const riskOrder = { low: 0, medium: 1, high: 2 };
+
           return riskOrder[a.riskLevel] - riskOrder[b.riskLevel];
         default:
           return 0;
@@ -52,73 +52,73 @@ export const BetRecommendationList: React.FC<BetRecommendationListProps> = ({
 
   if (loading) {
     return (
-      <Box alignItems="center" display="flex" justifyContent="center" minHeight={200}>
-        <CircularProgress />
+      <Box alignItems="center" display="flex" justifyContent="center" minHeight={200} key={317353}>
+        <CircularProgress / key={730118}>
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Paper sx={{ p: 2, bgcolor: 'error.light' }}>
-        <Typography color="error">{error}</Typography>
+      <Paper sx={{ p: 2, bgcolor: 'error.light' }} key={310073}>
+        <Typography color="error" key={618175}>{error}</Typography>
       </Paper>
     );
   }
 
   if (recommendations.length === 0) {
     return (
-      <Paper sx={{ p: 2 }}>
-        <Typography color="text.secondary">No bet recommendations available</Typography>
+      <Paper sx={{ p: 2 }} key={136663}>
+        <Typography color="text.secondary" key={631323}>No bet recommendations available</Typography>
       </Paper>
     );
   }
 
   return (
-    <Box>
-      <Grid container spacing={2} sx={{ mb: 3 }}>
-        <Grid item sm={6} xs={12}>
-          <TextField
-            fullWidth
-            select
+    <Box key={485947}>
+      <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
+        <Grid item sm={6} xs={12} key={72011}>
+          <TextField;
+            fullWidth;
+            select;
             label="Sort By"
             value={sortBy}
-            onChange={e => setSortBy(e.target.value as SortOption)}
+            onChange={e = key={650266}> setSortBy(e.target.value as SortOption)}
           >
-            <MenuItem value="confidence">Confidence</MenuItem>
-            <MenuItem value="stake">Stake Amount</MenuItem>
-            <MenuItem value="expectedValue">Expected Value</MenuItem>
-            <MenuItem value="riskLevel">Risk Level</MenuItem>
+            <MenuItem value="confidence" key={691330}>Confidence</MenuItem>
+            <MenuItem value="stake" key={464133}>Stake Amount</MenuItem>
+            <MenuItem value="expectedValue" key={137140}>Expected Value</MenuItem>
+            <MenuItem value="riskLevel" key={814556}>Risk Level</MenuItem>
           </TextField>
         </Grid>
-        <Grid item sm={6} xs={12}>
-          <TextField
-            fullWidth
-            select
+        <Grid item sm={6} xs={12} key={72011}>
+          <TextField;
+            fullWidth;
+            select;
             label="Filter By Risk"
             value={filterBy}
-            onChange={e => setFilterBy(e.target.value as FilterOption)}
+            onChange={e = key={438932}> setFilterBy(e.target.value as FilterOption)}
           >
-            <MenuItem value="all">All Risk Levels</MenuItem>
-            <MenuItem value="low">Low Risk</MenuItem>
-            <MenuItem value="medium">Medium Risk</MenuItem>
-            <MenuItem value="high">High Risk</MenuItem>
+            <MenuItem value="all" key={641531}>All Risk Levels</MenuItem>
+            <MenuItem value="low" key={779692}>Low Risk</MenuItem>
+            <MenuItem value="medium" key={834279}>Medium Risk</MenuItem>
+            <MenuItem value="high" key={949756}>High Risk</MenuItem>
           </TextField>
         </Grid>
       </Grid>
 
-      <Box>
+      <Box key={485947}>
         {filteredAndSortedRecommendations.map(recommendation => (
-          <BetRecommendationCard
+          <BetRecommendationCard;
             key={recommendation.id}
             recommendation={recommendation}
-            onViewDetails={() => setSelectedRecommendation(recommendation)}
+            onViewDetails={() = key={520611}> setSelectedRecommendation(recommendation)}
           />
         ))}
       </Box>
 
       {selectedRecommendation && (
-        <PredictionExplanationModal
+        <PredictionExplanationModal;
           open={!!selectedRecommendation}
           prediction={{
             prediction: selectedRecommendation.prediction.prediction,
@@ -137,7 +137,7 @@ export const BetRecommendationList: React.FC<BetRecommendationListProps> = ({
               },
             ],
           }}
-          onClose={() => setSelectedRecommendation(null)}
+          onClose={() = key={997737}> setSelectedRecommendation(null)}
         />
       )}
     </Box>

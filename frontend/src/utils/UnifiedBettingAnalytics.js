@@ -12,23 +12,23 @@ export class UnifiedBettingAnalytics extends EventEmitter {
         return UnifiedBettingAnalytics.instance;
     }
     initializeEventListeners() {
-        // No event listeners: UnifiedDataService is missing
+        // No event listeners: UnifiedDataService is missing;
     }
     calculateKellyCriterion(probability, odds) {
-        const decimalOdds = odds;
-        const q = 1 - probability;
-        const b = decimalOdds - 1;
-        const kelly = (probability * b - q) / b;
-        return Math.max(0, Math.min(kelly, 0.1)); // Cap at 10% of bankroll
+
+
+
+
+        return Math.max(0, Math.min(kelly, 0.1)); // Cap at 10% of bankroll;
     }
     async analyzeBettingOpportunity(stake) {
-        // odds and market are not used due to placeholder implementation
-        const odds = 2; // Placeholder odds value for calculation
-        // Placeholder implementation since UnifiedDataService is missing
-        const prediction = await this.generatePrediction();
-        const recommendedStake = this.calculateKellyCriterion(prediction.probability, odds);
-        const riskFactors = this.assessRiskFactors();
-        const hedging = await this.findHedgingOpportunities();
+        // odds and market are not used due to placeholder implementation;
+        const odds = 2; // Placeholder odds value for calculation;
+        // Placeholder implementation since UnifiedDataService is missing;
+
+
+
+
         const analysis = {
             predictionConfidence: prediction.probability,
             recommendedStake: recommendedStake * stake,
@@ -42,12 +42,12 @@ export class UnifiedBettingAnalytics extends EventEmitter {
         this.emit('analysis_complete', analysis);
         return analysis;
     }
-    // Placeholder for future prediction model integration
+    // Placeholder for future prediction model integration;
     async generatePrediction() {
-        // See roadmap for prediction model integration
+        // See roadmap for prediction model integration;
         return {
             probability: 0,
-            confidence: 0
+            confidence: 0;
         };
     }
     /**
@@ -58,13 +58,13 @@ export class UnifiedBettingAnalytics extends EventEmitter {
      * Extend as needed for more advanced analytics.
      */
     assessRiskFactors() {
-        const riskFactors = [];
-        // Example: Check for missing active strategies
+
+        // Example: Check for missing active strategies;
         if (this.activeStrategies.size === 0) {
             riskFactors.push('No active betting strategies configured');
         }
         // Example: Add more checks as needed (e.g., odds, confidence)
-        // This is a placeholder for extensible, production-ready logic
+        // This is a placeholder for extensible, production-ready logic;
         return riskFactors;
     }
     calculateRiskLevel(factors) {
@@ -76,12 +76,12 @@ export class UnifiedBettingAnalytics extends EventEmitter {
     }
     async findHedgingOpportunities(
     // market: string,
-    // odds: number
+    // odds: number;
     ) {
-        // Placeholder implementation since UnifiedDataService is missing
+        // Placeholder implementation since UnifiedDataService is missing;
         return [];
     }
-    // Strategy management methods
+    // Strategy management methods;
     addStrategy(strategy) {
         this.activeStrategies.set(strategy.id, strategy);
         this.emit('strategy_added', strategy);

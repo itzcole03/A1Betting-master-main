@@ -1,4 +1,4 @@
-import { PrizePicksData } from '../types/prizePicks';
+import { PrizePicksData } from '@/types/prizePicks.ts';
 interface PrizePicksAdapterConfig {
     apiKey?: string;
     baseUrl?: string;

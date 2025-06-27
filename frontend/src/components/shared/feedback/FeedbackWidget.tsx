@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react.ts';
 import {
   Fab,
   Modal,
@@ -9,9 +9,9 @@ import {
   Button,
   Snackbar,
   Alert,
-} from '@mui/material';
-import { Feedback as FeedbackIcon } from '@mui/icons-material';
-import { useStorage } from '../hooks/useStorage';
+} from '@mui/material.ts';
+import { Feedback as FeedbackIcon } from '@mui/icons-material.ts';
+import { useStorage } from '@/hooks/useStorage.ts';
 
 interface FeedbackData {
   rating: number;
@@ -21,12 +21,11 @@ interface FeedbackData {
 
 export const FeedbackWidget: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const [rating, setRating] = useState<number | null>(null);
+  const [rating, setRating] = useState<number | null key={564007}>(null);
   const [comment, setComment] = useState('');
   const [snackbar, setSnackbar] = useState({ open: false, message: '' });
   const { clearAllCaches } = useStorage();
 
-  const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
     setRating(null);
@@ -41,12 +40,12 @@ export const FeedbackWidget: React.FC = () => {
         timestamp: Date.now(),
       };
 
-      // Store feedback in localStorage
-      const existingFeedback = JSON.parse(localStorage.getItem('userFeedback') || '[]');
+      // Store feedback in localStorage;
+
       existingFeedback.push(feedback);
       localStorage.setItem('userFeedback', JSON.stringify(existingFeedback));
 
-      // Show success message
+      // Show success message;
       setSnackbar({
         open: true,
         message: 'Thank you for your feedback!',
@@ -63,7 +62,7 @@ export const FeedbackWidget: React.FC = () => {
 
   return (
     <>
-      <Fab
+      <Fab;
         aria-label="feedback"
         color="primary"
         sx={{
@@ -73,11 +72,11 @@ export const FeedbackWidget: React.FC = () => {
           zIndex: 1000,
         }}
         onClick={handleOpen}
-      >
-        <FeedbackIcon />
+       key={698704}>
+        <FeedbackIcon / key={426276}>
       </Fab>
 
-      <Modal
+      <Modal;
         aria-labelledby="feedback-modal"
         open={open}
         sx={{
@@ -86,8 +85,8 @@ export const FeedbackWidget: React.FC = () => {
           justifyContent: 'center',
         }}
         onClose={handleClose}
-      >
-        <Box
+       key={660769}>
+        <Box;
           sx={{
             position: 'relative',
             width: 400,
@@ -96,44 +95,44 @@ export const FeedbackWidget: React.FC = () => {
             boxShadow: 24,
             p: 4,
           }}
-        >
-          <Typography gutterBottom component="h2" variant="h6">
-            Share Your Feedback
+         key={85343}>
+          <Typography gutterBottom component="h2" variant="h6" key={564720}>
+            Share Your Feedback;
           </Typography>
 
-          <Box sx={{ mb: 3 }}>
-            <Typography component="legend">How was your experience?</Typography>
-            <Rating size="large" value={rating} onChange={(_, newValue) => setRating(newValue)} />
+          <Box sx={{ mb: 3 }} key={864484}>
+            <Typography component="legend" key={332366}>How was your experience?</Typography>
+            <Rating size="large" value={rating} onChange={(_, newValue) = key={796443}> setRating(newValue)} />
           </Box>
 
-          <TextField
-            fullWidth
-            multiline
+          <TextField;
+            fullWidth;
+            multiline;
             label="Additional Comments"
             rows={4}
             sx={{ mb: 3 }}
             value={comment}
-            onChange={e => setComment(e.target.value)}
+            onChange={e = key={700331}> setComment(e.target.value)}
           />
 
-          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }}>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button disabled={!rating} variant="contained" onClick={handleSubmit}>
-              Submit
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2 }} key={402260}>
+            <Button onClick={handleClose} key={215779}>Cancel</Button>
+            <Button disabled={!rating} variant="contained" onClick={handleSubmit} key={103842}>
+              Submit;
             </Button>
           </Box>
         </Box>
       </Modal>
 
-      <Snackbar
+      <Snackbar;
         autoHideDuration={6000}
         open={snackbar.open}
-        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        onClose={() = key={907322}> setSnackbar({ ...snackbar, open: false })}
       >
-        <Alert
+        <Alert;
           severity="success"
           sx={{ width: '100%' }}
-          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          onClose={() = key={855010}> setSnackbar({ ...snackbar, open: false })}
         >
           {snackbar.message}
         </Alert>

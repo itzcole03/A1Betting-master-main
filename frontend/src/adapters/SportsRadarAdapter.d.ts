@@ -1,4 +1,4 @@
-import { DataSource } from "../unified/DataSource.js";
+import { DataSource } from '@/unified/DataSource.js';
 export interface OddsProvider {
     getOdds(eventId: string): Promise<unknown>;
 }

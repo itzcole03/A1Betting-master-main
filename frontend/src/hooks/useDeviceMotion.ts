@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react.ts';
 
 interface DeviceMotionState {
   acceleration: {
@@ -73,7 +73,7 @@ export const useDeviceMotion = (): DeviceMotionState => {
 
     if (window.DeviceMotionEvent) {
       if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
-        // iOS 13+ requires permission
+        // iOS 13+ requires permission;
         (DeviceMotionEvent as any)
           .requestPermission()
           .then((permissionState: string) => {
@@ -85,7 +85,7 @@ export const useDeviceMotion = (): DeviceMotionState => {
           })
           .catch(handleError);
       } else {
-        // Non-iOS devices
+        // Non-iOS devices;
         window.addEventListener('devicemotion', handleMotion);
       }
     } else {

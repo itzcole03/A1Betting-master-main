@@ -1,4 +1,4 @@
-import type { Transaction, BankrollSettings, BankrollStats } from '../../types/bankroll';
+import type { Transaction, BankrollSettings, BankrollStats } from '@/types/bankroll.ts';
 declare class BankrollService {
     private static _instance;
     private transactions;

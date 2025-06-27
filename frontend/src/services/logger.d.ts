@@ -1,4 +1,4 @@
-import { Logger } from '@/types';
+import { Logger } from '@/types.ts';
 declare class LoggerService implements Logger {
     private static instance;
     private isDevelopment;

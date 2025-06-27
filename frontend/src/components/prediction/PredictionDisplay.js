@@ -61,13 +61,13 @@ const PredictionCard = styled(Card)(({ theme }) => ({
 }));
 export const PredictionDisplay = ({ eventId, marketId, selectionId, className = '', showAdvancedMetrics = false, onPredictionUpdate, }) => {
     const { ml } = useUnifiedAnalytics({ ml: { autoUpdate: false } });
-    const predictionService = usePredictionService();
+
     const { riskProfile } = useRiskProfile();
-    const eventBus = EventBus.getInstance();
-    const errorHandler = ErrorHandler.getInstance();
-    const performanceMonitor = PerformanceMonitor.getInstance();
-    const modelVersioning = ModelVersioning.getInstance();
-    const filterStore = useFilterStore();
+
+
+
+
+
     const [sortOrder, setSortOrder] = useState('desc');
     const [filterType, setFilterType] = useState('all');
     const [filterAnchorEl, setFilterAnchorEl] = useState(null);
@@ -82,9 +82,9 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
     const [isLoading, setIsLoading] = useState(true);
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedPrediction, setSelectedPrediction] = useState(null);
-    const serviceRegistry = UnifiedServiceRegistry.getInstance();
-    const webSocketService = serviceRegistry.getService('websocket');
-    // Memoize prediction for performance
+
+
+    // Memoize prediction for performance;
     const prediction = useMemo(() => {
         if (!ml || !ml.mlResult)
             return null;
@@ -93,28 +93,28 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
         }
         return null;
     }, [ml, eventId]);
-    // Calculate optimal stake when prediction or risk profile changes
+    // Calculate optimal stake when prediction or risk profile changes;
     useEffect(() => {
         if (prediction && riskProfile) {
-            predictionService
+            predictionService;
                 .calculateOptimalStake(prediction, prediction.odds, riskProfile.level)
                 .then(setOptimalStake)
                 .catch(console.error);
         }
     }, [prediction, riskProfile, predictionService]);
-    // WebSocket connection for real-time updates
+    // WebSocket connection for real-time updates;
     useEffect(() => {
         let unsub;
-        let isMounted = true;
-        let reconnectTimeout = null;
-        let reconnectAttempts = 0;
-        const maxReconnectAttempts = 5;
-        const reconnectInterval = 3000;
+        const isMounted = true;
+        const reconnectTimeout = null;
+        const reconnectAttempts = 0;
+
+
         const handlePredictionUpdate = useCallback((data) => {
             if (!isMounted)
                 return;
             if (data.eventId === eventId) {
-                setPredictionHistory(prev => [...prev, data].slice(-10)); // Keep last 10 predictions
+                setPredictionHistory(prev => [...prev, data].slice(-10)); // Keep last 10 predictions;
                 onPredictionUpdate?.(data);
                 setConnectionStatus('Connected');
             }
@@ -147,22 +147,22 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
                 clearTimeout(reconnectTimeout);
         };
     }, [eventId, webSocketService, onPredictionUpdate]);
-    // Handle prediction updates
+    // Handle prediction updates;
     useEffect(() => {
         if (prediction) {
-            const newChangedValues = new Set();
+
             if (prediction.confidence)
                 newChangedValues.add('confidence');
             if (prediction.recommended_stake)
                 newChangedValues.add('stake');
             setChangedValues(newChangedValues);
-            const timeout = setTimeout(() => setChangedValues(new Set()), 1000);
+
             return () => clearTimeout(timeout);
         }
     }, [prediction]);
     useEffect(() => {
-        const componentId = 'prediction-display';
-        const startTime = performance.now();
+
+
         const loadPredictions = async () => {
             try {
                 const data = await predictionService.getPredictions({
@@ -173,7 +173,7 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
                     minConfidence: filterStore.minConfidence,
                     maxConfidence: filterStore.maxConfidence,
                     projectedReturn: filterStore.projectedReturn,
-                    // add any other filters as needed
+                    // add any other filters as needed;
                 });
                 setPredictions(data);
                 setError(null);
@@ -186,7 +186,7 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
                 });
             }
             catch (err) {
-                const error = err;
+
                 setError(error.message);
                 errorHandler.handleError(error, {
                     code: 'PREDICTION_LOAD_ERROR',
@@ -214,7 +214,7 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
         };
         const handlePredictionUpdate = (update) => {
             setPredictions(prev => {
-                const newPredictions = prev.map(p => (p.id === update.id ? { ...p, ...update } : p));
+
                 performanceMonitor.updateComponentMetrics(componentId, {
                     renderCount: 1,
                     renderTime: performance.now() - startTime,
@@ -241,11 +241,11 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
                 lastUpdate: Date.now(),
             });
         };
-        // Subscribe to real-time updates
-        const unsubscribe = predictionService.subscribeToUpdates(handlePredictionUpdate, handleError);
-        // Load initial predictions
+        // Subscribe to real-time updates;
+
+        // Load initial predictions;
         loadPredictions();
-        // Cleanup
+        // Cleanup;
         return () => {
             unsubscribe();
             performanceMonitor.updateComponentMetrics(componentId, {
@@ -277,9 +277,9 @@ export const PredictionDisplay = ({ eventId, marketId, selectionId, className = 
     const { prediction: value, confidence, uncertainty, kelly_fraction, model_predictions, shap_values, feature_importance, timestamp, } = prediction;
     return (_jsxs(PredictionContainer, { className: className, children: [_jsxs(Box, { alignItems: "center", display: "flex", justifyContent: "space-between", mb: 2, children: [_jsx(Typography, { variant: "h6", children: "Prediction Details" }), _jsxs(Box, { alignItems: "center", display: "flex", gap: 1, children: [_jsx(Chip, { color: connectionStatus === 'Connected' ? 'success' : 'warning', label: connectionStatus, size: "small" }), _jsxs(ControlsContainer, { children: [_jsx(IconButton, { size: "small", onClick: e => setFilterAnchorEl(e.currentTarget), children: _jsx(FilterListIcon, {}) }), _jsx(IconButton, { size: "small", onClick: e => setSortAnchorEl(e.currentTarget), children: _jsx(SortIcon, {}) })] })] })] }), _jsxs(Grid, { container: true, spacing: 2, children: [_jsx(Grid, { item: true, md: 6, xs: 12, children: _jsxs(Box, { mb: 3, children: [_jsxs(Box, { alignItems: "center", display: "flex", justifyContent: "space-between", mb: 1, children: [_jsx(Typography, { variant: "subtitle1", children: "Prediction" }), _jsx(ValueDisplay, { changed: changedValues.has('value'), children: _jsx(Typography, { variant: "h5", children: value.toFixed(2) }) })] }), _jsxs(Box, { alignItems: "center", display: "flex", gap: 1, children: [_jsx(Typography, { color: "textSecondary", variant: "body2", children: "Confidence:" }), _jsx(Box, { flex: 1, children: _jsx(ConfidenceBar, { sx: {
                                                     '& .MuiLinearProgress-bar': {
-                                                        backgroundColor: confidence > 0.7
+                                                        backgroundColor: confidence > 0.7;
                                                             ? 'success.main'
-                                                            : confidence > 0.5
+                                                            : confidence > 0.5;
                                                                 ? 'warning.main'
                                                                 : 'error.main',
                                                     },

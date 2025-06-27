@@ -1,6 +1,6 @@
-import { APIError, AppError } from "../core/UnifiedError";
-import axios from "axios";
-import { unifiedMonitor } from "../core/UnifiedMonitor";
+import { APIError, AppError } from '@/core/UnifiedError.ts';
+import axios from 'axios.ts';
+import { unifiedMonitor } from '@/core/UnifiedMonitor.ts';
 import {
   BettingStrategyRequest, // { propositions: FrontendProposition[], bankroll: number, riskLevel: string }
   BettingStrategyResponse, // Should be BettingOpportunity[]
@@ -8,10 +8,8 @@ import {
   FrontendBetLeg, // { propId, marketKey, outcome, odds, playerId, gameId?, description? }
   FrontendBetPlacementRequest, // { bets: BettingOpportunity[] }
   BetPlacementResponse, // { betId, success, message, transactionId }
-} from "../../../shared/betting";
+} from '@/../shared/betting.ts';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL;
-const BETTING_BACKEND_PREFIX = `${API_BASE_URL}/api/betting`;
 
 // --- Backend Type Definitions (mirroring Pydantic models from betting_route.py) ---
 interface BackendBetLeg {
@@ -30,9 +28,9 @@ interface BackendStrategyBet {
   stake: number;
   potential_payout: number;
   status: string;
-  created_at: string; // datetime string
+  created_at: string; // datetime string;
   type?: string; // e.g., 'parlay', 'single'
-  // Note: 'description' is not a direct field on the backend Pydantic StrategyBet model
+  // Note: 'description' is not a direct field on the backend Pydantic StrategyBet model;
 }
 
 interface BackendBetPlacementResult {
@@ -77,7 +75,7 @@ export const calculateBettingStrategy = async (
     "http.client",
   );
   try {
-    const endpoint = `${BETTING_BACKEND_PREFIX}/calculate-strategy`;
+
     const backendRequestPayload = {
       available_propositions: request.propositions,
       bankroll: request.bankroll,
@@ -101,10 +99,10 @@ export const calculateBettingStrategy = async (
         // Construct description based on available data or set a default.
         description: `Strategy bet for ${Array.isArray(bet.legs) ? bet.legs.length : 0} leg(s)`,
         expectedValue: bet.potential_payout - bet.stake,
-        confidence: 0.75, // Mock confidence, backend doesn't provide this for now
+        confidence: 0.75, // Mock confidence, backend doesn't provide this for now;
         type:
           bet.type ||
-          (Array.isArray(bet.legs) && bet.legs.length > 1
+          (Array.isArray(bet.legs) && bet.legs.length > 1;
             ? "parlay"
             : "single"),
         legs: (Array.isArray(bet.legs) ? bet.legs : []).map(
@@ -166,8 +164,8 @@ export const placeBets = async (
     "http.client",
   );
   try {
-    const endpoint = `${BETTING_BACKEND_PREFIX}/place-bet`;
-    // Backend expects List[BackendStrategyBet] as BetPlacementRequest
+
+    // Backend expects List[BackendStrategyBet] as BetPlacementRequest;
     const backendPayload: BackendStrategyBet[] = request.bets.map(
       (opp: BettingOpportunity): BackendStrategyBet => ({
         bet_id: opp.id,
@@ -182,10 +180,10 @@ export const placeBets = async (
             description: leg.description,
           }),
         ),
-        stake: opp.stakeSuggestion || 0, // Ensure stake is a number
-        potential_payout: opp.potentialPayout || 0, // Ensure potential_payout is a number
-        status: opp.status || "pending_placement", // Pass current status or a default
-        created_at: new Date().toISOString(), // Backend will likely overwrite this
+        stake: opp.stakeSuggestion || 0, // Ensure stake is a number;
+        potential_payout: opp.potentialPayout || 0, // Ensure potential_payout is a number;
+        status: opp.status || "pending_placement", // Pass current status or a default;
+        created_at: new Date().toISOString(), // Backend will likely overwrite this;
         type: opp.type,
       }),
     );
@@ -211,7 +209,7 @@ export const placeBets = async (
 
     return mappedResponse;
   } catch (error: any) {
-    const errContext = { service: "bettingStrategy", operation: "placeBets" };
+
     unifiedMonitor.reportError(error, errContext);
     if (trace) {
       trace.setHttpStatus(error.response?.status || 500);

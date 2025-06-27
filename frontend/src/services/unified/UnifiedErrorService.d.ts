@@ -1,5 +1,5 @@
-import { BaseService } from "./BaseService";
-import { UnifiedServiceRegistry } from "./UnifiedServiceRegistry";
+import { BaseService } from './BaseService.ts';
+import { UnifiedServiceRegistry } from './UnifiedServiceRegistry.ts';
 export interface ErrorContext {
     code: string;
     message: string;

@@ -1,30 +1,28 @@
-import { useState, useCallback } from 'react';
-import { Prediction, RiskProfile } from '../types/core';
-import { EventBus } from '../unified/EventBus';
-import { ErrorHandler } from '../core/ErrorHandler';
-import { PerformanceMonitor } from '../unified/PerformanceMonitor';
-import { ModelVersioning } from '../unified/ModelVersioning';
+import { useState, useCallback } from 'react.ts';
+import { Prediction, RiskProfile } from '@/types/core.ts';
+import { EventBus } from '@/unified/EventBus.ts';
+import { ErrorHandler } from '@/core/ErrorHandler.ts';
+import { PerformanceMonitor } from '@/unified/PerformanceMonitor.ts';
+import { ModelVersioning } from '@/unified/ModelVersioning.ts';
 
 export const usePredictionService = () => {
-  const eventBus = EventBus.getInstance();
-  const errorHandler = ErrorHandler.getInstance();
-  const performanceMonitor = PerformanceMonitor.getInstance();
-  const modelVersioning = ModelVersioning.getInstance();
+
+
+
 
   const getPredictions = useCallback(async (riskProfile: RiskProfile): Promise<Prediction[]> => {
-    const startTime = performance.now();
-    try {
-      // Get current model version
-      const currentModel = modelVersioning.getCurrentVersion();
 
-      // Emit event to request predictions
+    try {
+      // Get current model version;
+
+      // Emit event to request predictions;
       eventBus.emit('prediction:request', {
         riskProfile,
         modelVersion: currentModel.version,
         timestamp: Date.now(),
       });
 
-      // Wait for predictions response
+      // Wait for predictions response;
       const response = await new Promise<Prediction[]>((resolve, reject) => {
         const timeout = setTimeout(() => {
           reject(new Error('Prediction request timed out'));
@@ -49,7 +47,7 @@ export const usePredictionService = () => {
 
       return response;
     } catch (error) {
-      const err = error as Error;
+
       errorHandler.handleError(err, {
         code: 'PREDICTION_REQUEST_ERROR',
         category: 'BUSINESS',
@@ -77,7 +75,6 @@ export const usePredictionService = () => {
 
   const subscribeToUpdates = useCallback(
     (onUpdate: (prediction: Prediction) => void, onError: (error: Error) => void) => {
-      const startTime = performance.now();
 
       const handleUpdate = (prediction: Prediction) => {
         try {
@@ -90,7 +87,7 @@ export const usePredictionService = () => {
             lastUpdate: Date.now(),
           });
         } catch (error) {
-          const err = error as Error;
+
           onError(err);
           errorHandler.handleError(err, {
             code: 'PREDICTION_UPDATE_ERROR',

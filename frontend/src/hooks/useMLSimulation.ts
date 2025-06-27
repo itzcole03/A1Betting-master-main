@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { MLSimulationService } from '../services/MLSimulationService';
+import { useState, useEffect, useCallback } from 'react.ts';
+import { MLSimulationService } from '@/services/MLSimulationService.ts';
 import {
   Team,
   Player,
@@ -8,7 +8,7 @@ import {
   PlayerStats,
   PlayerForm,
   InjuryStatus,
-} from '@/types/betting';
+} from '@/types/betting.ts';
 
 export const useMLSimulation = () => {
   const [simulationService] = useState(() => new MLSimulationService());

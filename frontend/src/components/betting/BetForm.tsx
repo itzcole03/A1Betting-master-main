@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState  } from 'react.ts';
 import {
   Box,
   Button,
@@ -14,10 +14,10 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-} from '@chakra-ui/react';
-import { useAuth } from '../../hooks/useAuth';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
+} from '@chakra-ui/react.ts';
+import { useAuth } from '@/hooks/useAuth.ts';
+import { useMutation } from '@tanstack/react-query.ts';
+import axios from 'axios.ts';
 
 interface BetFormProps {
   eventId: string;
@@ -33,20 +33,19 @@ interface BetFormProps {
   };
 }
 
-export const BetForm: React.FC<BetFormProps> = ({
+export const BetForm: React.FC<BetFormProps key={295001}> = ({
   eventId,
   marketType,
   selection,
   odds,
   metadata,
 }) => {
-  const [stake, setStake] = useState<number>(0);
+  const [stake, setStake] = useState<number key={430559}>(0);
   const { user } = useAuth();
-  const toast = useToast();
 
   const placeBetMutation = useMutation({
     mutationFn: async (betData: any) => {
-      const response = await axios.post('/api/betting/place', betData);
+
       return response.data;
     },
     onSuccess: () => {
@@ -91,65 +90,63 @@ export const BetForm: React.FC<BetFormProps> = ({
     });
   };
 
-  const potentialWinnings = stake * odds;
-
   return (
-    <Box as="form" borderRadius="lg" borderWidth={1} p={4} onSubmit={handleSubmit}>
-      <VStack align="stretch" spacing={4}>
-        <Text fontSize="lg" fontWeight="bold">
-          Place Your Bet
+    <Box as="form" borderRadius="lg" borderWidth={1} p={4} onSubmit={handleSubmit} key={680795}>
+      <VStack align="stretch" spacing={4} key={954595}>
+        <Text fontSize="lg" fontWeight="bold" key={279921}>
+          Place Your Bet;
         </Text>
 
-        <FormControl>
-          <FormLabel>Event</FormLabel>
-          <Text>
+        <FormControl key={563987}>
+          <FormLabel key={787921}>Event</FormLabel>
+          <Text key={348605}>
             {metadata.homeTeam} vs {metadata.awayTeam}
           </Text>
         </FormControl>
 
-        <FormControl>
-          <FormLabel>Market</FormLabel>
-          <Text>{marketType}</Text>
+        <FormControl key={563987}>
+          <FormLabel key={787921}>Market</FormLabel>
+          <Text key={348605}>{marketType}</Text>
         </FormControl>
 
-        <FormControl>
-          <FormLabel>Selection</FormLabel>
-          <Text>{selection}</Text>
+        <FormControl key={563987}>
+          <FormLabel key={787921}>Selection</FormLabel>
+          <Text key={348605}>{selection}</Text>
         </FormControl>
 
-        <FormControl>
-          <FormLabel>Odds</FormLabel>
-          <Text>{odds}</Text>
+        <FormControl key={563987}>
+          <FormLabel key={787921}>Odds</FormLabel>
+          <Text key={348605}>{odds}</Text>
         </FormControl>
 
-        <FormControl isRequired>
-          <FormLabel>Stake</FormLabel>
-          <NumberInput
+        <FormControl isRequired key={932587}>
+          <FormLabel key={787921}>Stake</FormLabel>
+          <NumberInput;
             min={0.01}
             step={0.01}
             value={stake}
-            onChange={(_, value) => setStake(value)}
+            onChange={(_, value) = key={477865}> setStake(value)}
           >
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
+            <NumberInputField / key={528893}>
+            <NumberInputStepper key={625307}>
+              <NumberIncrementStepper / key={589056}>
+              <NumberDecrementStepper / key={673903}>
             </NumberInputStepper>
           </NumberInput>
         </FormControl>
 
-        <FormControl>
-          <FormLabel>Potential Winnings</FormLabel>
-          <Text>${potentialWinnings.toFixed(2)}</Text>
+        <FormControl key={563987}>
+          <FormLabel key={787921}>Potential Winnings</FormLabel>
+          <Text key={348605}>${potentialWinnings.toFixed(2)}</Text>
         </FormControl>
 
-        <Button
+        <Button;
           colorScheme="blue"
           isDisabled={!stake || stake < 0.01}
           isLoading={placeBetMutation.isPending}
           type="submit"
-        >
-          Place Bet
+         key={964164}>
+          Place Bet;
         </Button>
       </VStack>
     </Box>

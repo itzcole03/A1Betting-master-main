@@ -1,4 +1,4 @@
-import { DataPoint } from '@/core';
+import { DataPoint } from '@/core.ts';
 export type BetType = 'OVER' | 'UNDER';
 export interface StrategyMetrics {
     totalRecommendations: number;

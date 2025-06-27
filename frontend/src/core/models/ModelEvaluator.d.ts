@@ -1,4 +1,4 @@
-import { ModelVersion, ModelEvaluation, ModelEvaluatorConfig } from '@/types';
+import { ModelVersion, ModelEvaluation, ModelEvaluatorConfig } from '@/types.ts';
 export declare class ModelEvaluator {
     private config;
     private logger;

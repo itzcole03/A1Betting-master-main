@@ -1,6 +1,6 @@
 # A1Betting API Documentation
 
-Generated on: 2025-06-26 23:23:22
+Generated on: 2025-06-27 03:38:51
 
 ## Overview
 
@@ -174,7 +174,7 @@ Accuracy optimization request model
 
 ## ArbitrageOpportunity
 
-**File:** `backend\main.py:104`
+**File:** `backend\main.py:107`
 
 **Description:**
 Arbitrage opportunity model
@@ -284,7 +284,7 @@ Request model for behavioral pattern analysis
 
 ## BettingOpportunity
 
-**File:** `backend\main.py:88`
+**File:** `backend\main.py:91`
 
 **Description:**
 Betting opportunity model
@@ -828,7 +828,7 @@ Response model containing generated text
 
 ## HealthCheckResponse
 
-**File:** `backend\main.py:76`
+**File:** `backend\main.py:79`
 
 **Description:**
 Health check response model

@@ -43,13 +43,13 @@ export const useMediaQuery = () => {
                 isReducedMotion: mediaQueryLists.reducedMotion.matches,
             });
         };
-        // Initial check
+        // Initial check;
         updateMediaQuery();
-        // Add event listeners
+        // Add event listeners;
         Object.values(mediaQueryLists).forEach(mediaQueryList => {
             mediaQueryList.addEventListener('change', updateMediaQuery);
         });
-        // Cleanup
+        // Cleanup;
         return () => {
             Object.values(mediaQueryLists).forEach(mediaQueryList => {
                 mediaQueryList.removeEventListener('change', updateMediaQuery);

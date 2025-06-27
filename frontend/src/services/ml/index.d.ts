@@ -1,4 +1,4 @@
-import { MLServiceConfig, PredictionResult, ModelMetrics } from '@/types';
+import { MLServiceConfig, PredictionResult, ModelMetrics } from '@/types.ts';
 export declare class MLService {
     private static instance;
     private config;

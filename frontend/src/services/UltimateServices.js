@@ -1,11 +1,11 @@
 /**
- * 🚀 A1BETTING QUANTUM PLATFORM - ULTIMATE SERVICES CONSOLIDATION
+ * 🚀 A1BETTING QUANTUM PLATFORM - ULTIMATE SERVICES CONSOLIDATION;
  *
- * Consolidates 150+ scattered services into 8 intelligent mega-services
- * Preserves all functionality while maintaining cyber theme integration
+ * Consolidates 150+ scattered services into 8 intelligent mega-services;
+ * Preserves all functionality while maintaining cyber theme integration;
  */
 import { BehaviorSubject, Subject } from "rxjs";
-// 🎯 1. UNIFIED DATA SERVICE - Consolidates 25+ data services
+// 🎯 1. UNIFIED DATA SERVICE - Consolidates 25+ data services;
 export class UltimateDataService {
     constructor() {
         this.dataSources = new BehaviorSubject([]);
@@ -18,17 +18,17 @@ export class UltimateDataService {
             isOnline: true,
         });
     }
-    // Real-time data streams
+    // Real-time data streams;
     getLiveData() {
         return this.liveData.asObservable();
     }
-    // System health monitoring
+    // System health monitoring;
     getSystemMetrics() {
         return this.connectionStatus.asObservable();
     }
-    // Prize picks data integration
+    // Prize picks data integration;
     async fetchPrizePicksData() {
-        // Simulated high-quality data fetch
+        // Simulated high-quality data fetch;
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve([
@@ -54,7 +54,7 @@ export class UltimateDataService {
             }, 500);
         });
     }
-    // ESPN data integration
+    // ESPN data integration;
     async fetchESPNData() {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -75,10 +75,10 @@ export class UltimateDataService {
             }, 300);
         });
     }
-    // Auto-update system metrics
+    // Auto-update system metrics;
     startMetricsUpdater() {
         setInterval(() => {
-            const current = this.connectionStatus.value;
+
             this.connectionStatus.next({
                 ...current,
                 connectedSources: Math.floor(Math.random() * 5) + 10,
@@ -89,15 +89,15 @@ export class UltimateDataService {
         }, 30000);
     }
 }
-// 🧠 2. QUANTUM ML SERVICE - Consolidates 30+ ML services
+// 🧠 2. QUANTUM ML SERVICE - Consolidates 30+ ML services;
 export class QuantumMLService {
     constructor() {
         this.predictions = new BehaviorSubject([]);
         this.modelAccuracy = new BehaviorSubject(97.3);
     }
-    // Advanced prediction engine
+    // Advanced prediction engine;
     async generatePredictions(data) {
-        // Sophisticated ML simulation
+        // Sophisticated ML simulation;
         const predictions = data.map((item, index) => ({
             id: `pred_${Date.now()}_${index}`,
             type: "player_prop",
@@ -110,7 +110,7 @@ export class QuantumMLService {
         this.predictions.next(predictions);
         return predictions;
     }
-    // SHAP analysis for explainable AI
+    // SHAP analysis for explainable AI;
     async getSHAPAnalysis(predictionId) {
         return {
             features: [
@@ -124,11 +124,11 @@ export class QuantumMLService {
             recommendation: "STRONG BUY",
         };
     }
-    // Model performance tracking
+    // Model performance tracking;
     getModelAccuracy() {
         return this.modelAccuracy.asObservable();
     }
-    // Ensemble predictions
+    // Ensemble predictions;
     async getEnsemblePredictions() {
         return {
             models: ["Random Forest", "Neural Network", "XGBoost", "LSTM"],
@@ -138,13 +138,13 @@ export class QuantumMLService {
         };
     }
 }
-// 💰 3. ULTIMATE BETTING SERVICE - Consolidates 20+ betting services
+// 💰 3. ULTIMATE BETTING SERVICE - Consolidates 20+ betting services;
 export class UltimateBettingService {
     constructor() {
         this.opportunities = new BehaviorSubject([]);
         this.betHistory = new BehaviorSubject([]);
     }
-    // Arbitrage detection
+    // Arbitrage detection;
     async findArbitrageOpportunities() {
         const opportunities = [
             {
@@ -173,13 +173,13 @@ export class UltimateBettingService {
         this.opportunities.next(opportunities);
         return opportunities;
     }
-    // Kelly criterion stake sizing
+    // Kelly criterion stake sizing;
     calculateKellyStake(bankroll, odds, winProbability) {
-        const decimalOdds = odds / 100 + 1;
-        const kellyFraction = (winProbability * decimalOdds - 1) / (decimalOdds - 1);
-        return Math.max(0, kellyFraction * bankroll * 0.25); // Conservative 25% Kelly
+
+
+        return Math.max(0, kellyFraction * bankroll * 0.25); // Conservative 25% Kelly;
     }
-    // Place bet simulation
+    // Place bet simulation;
     async placeBet(bet) {
         const betResult = {
             id: `bet_${Date.now()}`,
@@ -188,26 +188,26 @@ export class UltimateBettingService {
             timestamp: new Date(),
             expectedValue: bet.stake * (bet.winProbability - 0.5) * 2,
         };
-        const currentHistory = this.betHistory.value;
+
         this.betHistory.next([betResult, ...currentHistory]);
         return betResult;
     }
-    // Get live opportunities
+    // Get live opportunities;
     getOpportunities() {
         return this.opportunities.asObservable();
     }
-    // Betting history
+    // Betting history;
     getBetHistory() {
         return this.betHistory.asObservable();
     }
 }
-// 📊 4. QUANTUM ANALYTICS SERVICE - Consolidates 25+ analytics services
+// 📊 4. QUANTUM ANALYTICS SERVICE - Consolidates 25+ analytics services;
 export class QuantumAnalyticsService {
     constructor() {
         this.performanceMetrics = new BehaviorSubject({});
         this.userStats = new BehaviorSubject({});
     }
-    // Generate comprehensive analytics
+    // Generate comprehensive analytics;
     async generateAnalytics(userId) {
         const analytics = {
             performance: {
@@ -245,11 +245,11 @@ export class QuantumAnalyticsService {
         this.performanceMetrics.next(analytics);
         return analytics;
     }
-    // Real-time performance tracking
+    // Real-time performance tracking;
     getPerformanceMetrics() {
         return this.performanceMetrics.asObservable();
     }
-    // Advanced risk analysis
+    // Advanced risk analysis;
     async getRiskAnalysis() {
         return {
             currentRisk: "LOW",
@@ -264,15 +264,15 @@ export class QuantumAnalyticsService {
         };
     }
 }
-// 🔐 5. QUANTUM AUTH SERVICE - Consolidates 8+ auth services
+// 🔐 5. QUANTUM AUTH SERVICE - Consolidates 8+ auth services;
 export class QuantumAuthService {
     constructor() {
         this.currentUser = new BehaviorSubject(null);
         this.isAuthenticated = new BehaviorSubject(false);
     }
-    // Quantum-grade authentication
+    // Quantum-grade authentication;
     async login(email, password) {
-        // Simulated secure login
+        // Simulated secure login;
         const user = {
             id: "user_quantum_001",
             name: "Alex Chen",
@@ -287,27 +287,27 @@ export class QuantumAuthService {
         this.isAuthenticated.next(true);
         return user;
     }
-    // Get current user
+    // Get current user;
     getCurrentUser() {
         return this.currentUser.asObservable();
     }
-    // Authentication status
+    // Authentication status;
     getAuthStatus() {
         return this.isAuthenticated.asObservable();
     }
-    // Logout
+    // Logout;
     logout() {
         this.currentUser.next(null);
         this.isAuthenticated.next(false);
     }
 }
-// 🚨 6. QUANTUM NOTIFICATION SERVICE - Consolidates 12+ notification services
+// 🚨 6. QUANTUM NOTIFICATION SERVICE - Consolidates 12+ notification services;
 export class QuantumNotificationService {
     constructor() {
         this.notifications = new BehaviorSubject([]);
         this.alerts = new Subject();
     }
-    // Smart alert system
+    // Smart alert system;
     createAlert(type, message, data) {
         const alert = {
             id: `alert_${Date.now()}`,
@@ -315,31 +315,31 @@ export class QuantumNotificationService {
             message,
             data,
             timestamp: new Date(),
-            cybertheme: true, // Enable cyber styling
+            cybertheme: true, // Enable cyber styling;
         };
         this.alerts.next(alert);
-        // Add to notifications history
-        const current = this.notifications.value;
-        this.notifications.next([alert, ...current.slice(0, 49)]); // Keep last 50
+        // Add to notifications history;
+
+        this.notifications.next([alert, ...current.slice(0, 49)]); // Keep last 50;
     }
-    // Real-time alerts
+    // Real-time alerts;
     getAlerts() {
         return this.alerts.asObservable();
     }
-    // Notification history
+    // Notification history;
     getNotifications() {
         return this.notifications.asObservable();
     }
-    // Arbitrage alerts
+    // Arbitrage alerts;
     createArbitrageAlert(opportunity) {
         this.createAlert("success", `🎯 Arbitrage Found: ${opportunity.profitMargin}% profit!`, opportunity);
     }
-    // Prediction alerts
+    // Prediction alerts;
     createPredictionAlert(prediction) {
         this.createAlert("info", `🧠 High Confidence Prediction: ${prediction.confidence}%`, prediction);
     }
 }
-// 🎛️ 7. QUANTUM SETTINGS SERVICE - Consolidates 15+ settings services
+// 🎛️ 7. QUANTUM SETTINGS SERVICE - Consolidates 15+ settings services;
 export class QuantumSettingsService {
     constructor() {
         this.settings = new BehaviorSubject({
@@ -355,42 +355,42 @@ export class QuantumSettingsService {
             refreshInterval: 30000,
         });
     }
-    // Get all settings
+    // Get all settings;
     getSettings() {
         return this.settings.asObservable();
     }
-    // Update settings
+    // Update settings;
     updateSetting(key, value) {
-        const current = this.settings.value;
+
         this.settings.next({
             ...current,
             [key]: value,
         });
     }
-    // Bulk update settings
+    // Bulk update settings;
     updateSettings(newSettings) {
-        const current = this.settings.value;
+
         this.settings.next({
             ...current,
             ...newSettings,
         });
     }
-    // Export settings
+    // Export settings;
     exportSettings() {
         return JSON.stringify(this.settings.value, null, 2);
     }
-    // Import settings
+    // Import settings;
     importSettings(settingsJson) {
         try {
-            const imported = JSON.parse(settingsJson);
+
             this.settings.next(imported);
         }
         catch (error) {
-            console.error("Invalid settings format");
+            // console statement removed
         }
     }
 }
-// 🌐 8. QUANTUM WEBSOCKET SERVICE - Consolidates 10+ real-time services
+// 🌐 8. QUANTUM WEBSOCKET SERVICE - Consolidates 10+ real-time services;
 export class QuantumWebSocketService {
     constructor() {
         this.liveUpdates = new Subject();
@@ -398,17 +398,17 @@ export class QuantumWebSocketService {
         this.reconnectAttempts = 0;
         this.maxReconnectAttempts = 5;
     }
-    // Start live data connection
+    // Start live data connection;
     connect() {
-        // Simulated WebSocket connection with cyber theme
-        console.log("🔌 Connecting to Quantum Data Stream...");
+        // Simulated WebSocket connection with cyber theme;
+        // console statement removed
         setTimeout(() => {
             this.connectionStatus.next(true);
             this.reconnectAttempts = 0;
             this.startLiveUpdates();
         }, 1000);
     }
-    // Live updates simulation
+    // Live updates simulation;
     startLiveUpdates() {
         setInterval(() => {
             if (this.connectionStatus.value) {
@@ -424,23 +424,23 @@ export class QuantumWebSocketService {
             }
         }, 5000);
     }
-    // Get live updates
+    // Get live updates;
     getLiveUpdates() {
         return this.liveUpdates.asObservable();
     }
-    // Connection status
+    // Connection status;
     getConnectionStatus() {
         return this.connectionStatus.asObservable();
     }
-    // Disconnect
+    // Disconnect;
     disconnect() {
         this.connectionStatus.next(false);
     }
 }
-// 🚀 ULTIMATE SERVICES MANAGER - Single point of access
+// 🚀 ULTIMATE SERVICES MANAGER - Single point of access;
 export class UltimateServicesManager {
     constructor() {
-        // Initialize all services
+        // Initialize all services;
         this.data = new UltimateDataService();
         this.ml = new QuantumMLService();
         this.betting = new UltimateBettingService();
@@ -449,35 +449,20 @@ export class UltimateServicesManager {
         this.notifications = new QuantumNotificationService();
         this.settings = new QuantumSettingsService();
         this.websocket = new QuantumWebSocketService();
-        // Auto-start core services
+        // Auto-start core services;
         this.initialize();
     }
     initialize() {
-        console.log(`
-🚀 QUANTUM SERVICES INITIALIZED 🚀
-===================================
-• Data Service: ✅ Online
-• ML Service: ✅ Ready  
-• Betting Service: ✅ Active
-• Analytics Service: ✅ Computing
-• Auth Service: ✅ Secure
-• Notifications: ✅ Monitoring
-• Settings: ✅ Loaded
-• WebSocket: ✅ Connecting
-
-🎨 Cyber Theme: PRESERVED
-📊 Performance: OPTIMIZED
-⚡ Real-time: ENABLED
-    `);
-        // Start core processes
+        // console statement removed
+        // Start core processes;
         this.data.startMetricsUpdater();
         this.websocket.connect();
-        // Welcome notification with cyber theme
+        // Welcome notification with cyber theme;
         setTimeout(() => {
             this.notifications.createAlert("success", "🌟 Welcome to A1Betting Quantum Platform! All systems online.", { theme: "cyber", animated: true });
         }, 2000);
     }
-    // Health check for all services
+    // Health check for all services;
     async healthCheck() {
         return {
             status: "OPTIMAL",
@@ -500,6 +485,6 @@ export class UltimateServicesManager {
         };
     }
 }
-// Global services instance - Singleton pattern
+// Global services instance - Singleton pattern;
 export const QuantumServices = new UltimateServicesManager();
 export default QuantumServices;

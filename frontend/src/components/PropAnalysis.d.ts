@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react.ts';
 interface PropAnalysisProps {
     playerId: string;
     playerName: string;

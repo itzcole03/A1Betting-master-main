@@ -1,7 +1,7 @@
-import { MLService } from './MLService';
-import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types';
-import { ModelManager } from './ModelManager';
-import { FeatureLogger } from '../../services/analytics/featureLogging';
+import { MLService } from './MLService.ts';
+import { ModelMetadata, ModelVersion, ModelEvaluation, ModelTrainingConfig } from '@/types.ts';
+import { ModelManager } from './ModelManager.ts';
+import { FeatureLogger } from '@/services/analytics/featureLogging.ts';
 
 export abstract class BaseMLService implements MLService {
   protected modelManager: ModelManager;
@@ -12,7 +12,7 @@ export abstract class BaseMLService implements MLService {
     this.logger = new FeatureLogger(config.loggerConfig);
   }
 
-  // Model Management
+  // Model Management;
   async createModel(metadata: ModelMetadata): Promise<string> {
     try {
       return await this.modelManager.createModel(metadata);
@@ -49,7 +49,7 @@ export abstract class BaseMLService implements MLService {
     }
   }
 
-  // Version Management
+  // Version Management;
   async getVersions(modelId: string): Promise<ModelVersion[]> {
     try {
       return await this.modelManager.getModelVersions(modelId);
@@ -61,8 +61,8 @@ export abstract class BaseMLService implements MLService {
 
   async getVersion(modelId: string, version: string): Promise<ModelVersion> {
     try {
-      const versions = await this.getVersions(modelId);
-      const modelVersion = versions.find(v => v.version === version);
+
+
       if (!modelVersion) {
         throw new Error(`Version ${version} not found for model ${modelId}`);
       }
@@ -75,9 +75,9 @@ export abstract class BaseMLService implements MLService {
 
   async deleteVersion(modelId: string, version: string): Promise<void> {
     try {
-      const versions = await this.getVersions(modelId);
-      const updatedVersions = versions.filter(v => v.version !== version);
-      // Implementation depends on storage mechanism
+
+
+      // Implementation depends on storage mechanism;
       this.logger.info(`Deleted version ${version} for model ${modelId}`);
     } catch (error) {
       this.logger.error(`Failed to delete version ${version} for model ${modelId}`, error);
@@ -85,15 +85,15 @@ export abstract class BaseMLService implements MLService {
     }
   }
 
-  // Training
+  // Training;
   abstract train(modelId: string, data: any, config: ModelTrainingConfig): Promise<ModelVersion>;
   abstract retrain(modelId: string, data: any, config: ModelTrainingConfig): Promise<ModelVersion>;
 
-  // Prediction
+  // Prediction;
   abstract predict(modelId: string, data: any): Promise<any>;
   abstract predictBatch(modelId: string, data: any[]): Promise<any[]>;
 
-  // Evaluation
+  // Evaluation;
   async evaluate(modelId: string, data: any): Promise<ModelEvaluation> {
     try {
       return await this.modelManager.evaluateModel(modelId, data);
@@ -105,8 +105,8 @@ export abstract class BaseMLService implements MLService {
 
   async evaluateVersion(modelId: string, version: string, data: any): Promise<ModelEvaluation> {
     try {
-      const modelVersion = await this.getVersion(modelId, version);
-      // Implementation depends on evaluation mechanism
+
+      // Implementation depends on evaluation mechanism;
       return {} as ModelEvaluation;
     } catch (error) {
       this.logger.error(`Failed to evaluate version ${version} for model ${modelId}`, error);
@@ -114,21 +114,21 @@ export abstract class BaseMLService implements MLService {
     }
   }
 
-  // Performance
+  // Performance;
   abstract getPerformanceMetrics(modelId: string): Promise<{
     trainingTime: number;
     inferenceTime: number;
     memoryUsage: number;
   }>;
 
-  // Feature Management
+  // Feature Management;
   abstract getFeatureImportance(modelId: string): Promise<Record<string, number>>;
   abstract updateFeatures(modelId: string, features: string[]): Promise<void>;
 
-  // Model Registry
+  // Model Registry;
   async registerModel(modelId: string): Promise<void> {
     try {
-      // Implementation depends on registry mechanism
+      // Implementation depends on registry mechanism;
       this.logger.info(`Registered model ${modelId}`);
     } catch (error) {
       this.logger.error(`Failed to register model ${modelId}`, error);
@@ -138,7 +138,7 @@ export abstract class BaseMLService implements MLService {
 
   async unregisterModel(modelId: string): Promise<void> {
     try {
-      // Implementation depends on registry mechanism
+      // Implementation depends on registry mechanism;
       this.logger.info(`Unregistered model ${modelId}`);
     } catch (error) {
       this.logger.error(`Failed to unregister model ${modelId}`, error);
@@ -146,13 +146,13 @@ export abstract class BaseMLService implements MLService {
     }
   }
 
-  // Model State
+  // Model State;
   abstract saveModel(modelId: string): Promise<void>;
   abstract loadModel(modelId: string): Promise<void>;
   abstract exportModel(modelId: string, format: string): Promise<any>;
   abstract importModel(data: any, format: string): Promise<string>;
 
-  // Model Monitoring
+  // Model Monitoring;
   abstract getModelStatus(modelId: string): Promise<{
     status: 'active' | 'archived' | 'deprecated';
     lastUpdated: Date;
@@ -163,18 +163,18 @@ export abstract class BaseMLService implements MLService {
     };
   }>;
 
-  // Model Optimization
+  // Model Optimization;
   abstract optimize(modelId: string, config: any): Promise<void>;
   abstract tuneHyperparameters(modelId: string, config: any): Promise<ModelVersion>;
 
-  // Model Validation
+  // Model Validation;
   abstract validateModel(modelId: string): Promise<{
     isValid: boolean;
     issues: string[];
     recommendations: string[];
   }>;
 
-  // Model Documentation
+  // Model Documentation;
   abstract getModelDocumentation(modelId: string): Promise<{
     description: string;
     architecture: string;
@@ -182,7 +182,7 @@ export abstract class BaseMLService implements MLService {
     examples: any[];
   }>;
 
-  // Model Lifecycle
+  // Model Lifecycle;
   async archiveModel(modelId: string): Promise<void> {
     try {
       await this.updateModel(modelId, { status: 'archived' });

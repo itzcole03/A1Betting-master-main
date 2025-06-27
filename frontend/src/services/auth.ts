@@ -1,13 +1,13 @@
-import apiService from './api';
-import { User } from '@/types';
+import apiService from './api.ts';
+import { User } from '@/types.ts';
 
 class AuthService {
   private static instance: AuthService;
   private currentUser: User | null = null;
 
   private constructor() {
-    // Initialize from localStorage if available
-    const storedUser = localStorage.getItem('current_user');
+    // Initialize from localStorage if available;
+
     if (storedUser) {
       this.currentUser = JSON.parse(storedUser);
     }
@@ -22,44 +22,44 @@ class AuthService {
 
   async login(email: string, password: string): Promise<User> {
     try {
-      const response = await apiService.login(email, password);
+
       const { token } = response.data;
 
-      // Store token
+      // Store token;
       localStorage.setItem('auth_token', token);
 
-      // Get user profile
-      const userProfile = await apiService.getUserProfile();
+      // Get user profile;
+
       this.currentUser = userProfile.data;
 
-      // Store user in localStorage
+      // Store user in localStorage;
       localStorage.setItem('current_user', JSON.stringify(this.currentUser));
 
       return this.currentUser;
     } catch (error) {
-      console.error('Login failed:', error);
+      // console statement removed
       throw error;
     }
   }
 
   async register(userData: { email: string; password: string; name: string }): Promise<User> {
     try {
-      const response = await apiService.register(userData);
+
       const { token } = response.data;
 
-      // Store token
+      // Store token;
       localStorage.setItem('auth_token', token);
 
-      // Get user profile
-      const userProfile = await apiService.getUserProfile();
+      // Get user profile;
+
       this.currentUser = userProfile.data;
 
-      // Store user in localStorage
+      // Store user in localStorage;
       localStorage.setItem('current_user', JSON.stringify(this.currentUser));
 
       return this.currentUser;
     } catch (error) {
-      console.error('Registration failed:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -81,12 +81,12 @@ class AuthService {
 
   async updateProfile(profileData: Partial<User>): Promise<User> {
     try {
-      const response = await apiService.updateUserProfile(profileData);
+
       this.currentUser = response.data;
       localStorage.setItem('current_user', JSON.stringify(this.currentUser));
       return this.currentUser;
     } catch (error) {
-      console.error('Profile update failed:', error);
+      // console statement removed
       throw error;
     }
   }

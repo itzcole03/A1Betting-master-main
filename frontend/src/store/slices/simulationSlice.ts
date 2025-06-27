@@ -1,8 +1,8 @@
-// simulationSlice.ts
-// Zustand slice for bet simulation input/result state
+// simulationSlice.ts;
+// Zustand slice for bet simulation input/result state;
 
-import { create } from 'zustand';
-import type { BetSimulationInput, BetSimulationResult } from '../../types/simulation';
+import { create } from 'zustand.ts';
+import type { BetSimulationInput, BetSimulationResult } from '@/types/simulation.ts';
 
 interface SimulationState {
   input: BetSimulationInput | null;

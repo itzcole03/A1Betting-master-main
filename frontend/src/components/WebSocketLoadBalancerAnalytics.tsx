@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import SafeChart from "./ui/SafeChart";
+import React, { useEffect, useState  } from 'react.ts';
+import SafeChart from './ui/SafeChart.ts';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,8 +10,8 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import { webSocketLoadBalancer } from "../services/WebSocketLoadBalancer";
-import { EventBus } from "../unified/EventBus";
+import { webSocketLoadBalancer } from '@/services/WebSocketLoadBalancer.ts';
+import { EventBus } from '@/unified/EventBus.ts';
 
 ChartJS.register(
   CategoryScale,
@@ -33,33 +33,32 @@ interface ServerMetrics {
 interface LoadBalancerMetrics {
   totalConnections: number;
   activeServers: number;
-  serverMetrics: Map<string, ServerMetrics>;
+  serverMetrics: Map<string, ServerMetrics key={896826}>;
   lastHealthCheck: number;
 }
 
 export const WebSocketLoadBalancerAnalytics: React.FC = () => {
-  const [metrics, setMetrics] = useState<LoadBalancerMetrics>({
+  const [metrics, setMetrics] = useState<LoadBalancerMetrics key={274416}>({
     totalConnections: 0,
     activeServers: 0,
     serverMetrics: new Map(),
     lastHealthCheck: 0,
   });
 
-  const [serverLatencies, setServerLatencies] = useState<Map<string, number[]>>(
+  const [serverLatencies, setServerLatencies] = useState<Map<string, number[] key={815621}>>(
     new Map(),
   );
   const [serverErrorRates, setServerErrorRates] = useState<
-    Map<string, number[]>
+    Map<string, number[] key={90749}>
   >(new Map());
-  const [timestamps, setTimestamps] = useState<number[]>([]);
+  const [timestamps, setTimestamps] = useState<number[] key={753439}>([]);
 
   useEffect(() => {
     const updateMetrics = () => {
-      const currentMetrics = webSocketLoadBalancer.getMetrics();
+
       setMetrics(currentMetrics);
     };
 
-    const interval = setInterval(updateMetrics, 1000);
     return () => clearInterval(interval);
   }, []);
 
@@ -68,7 +67,7 @@ export const WebSocketLoadBalancerAnalytics: React.FC = () => {
       const { server, metrics, timestamp } = event;
 
       setServerLatencies((prev) => {
-        const latencies = prev.get(server) || [];
+
         return new Map(prev).set(server, [
           ...latencies.slice(-20),
           metrics.latency,
@@ -76,7 +75,7 @@ export const WebSocketLoadBalancerAnalytics: React.FC = () => {
       });
 
       setServerErrorRates((prev) => {
-        const rates = prev.get(server) || [];
+
         return new Map(prev).set(server, [
           ...rates.slice(-20),
           metrics.errorRate,
@@ -86,7 +85,6 @@ export const WebSocketLoadBalancerAnalytics: React.FC = () => {
       setTimestamps((prev) => [...prev.slice(-20), timestamp]);
     };
 
-    const eventBus = EventBus.getInstance();
     eventBus.subscribe("websocket:server:health", handleServerHealth);
 
     return () => {
@@ -148,34 +146,34 @@ export const WebSocketLoadBalancerAnalytics: React.FC = () => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow">
-      <h2 className="text-2xl font-bold mb-4">
-        WebSocket Load Balancer Analytics
+    <div className="p-4 bg-white rounded-lg shadow" key={603773}>
+      <h2 className="text-2xl font-bold mb-4" key={946196}>
+        WebSocket Load Balancer Analytics;
       </h2>
 
-      <div className="grid grid-cols-2 gap-4 mb-6">
-        <div className="p-4 bg-gray-50 rounded">
-          <h3 className="text-lg font-semibold mb-2">Overall Metrics</h3>
-          <div className="space-y-2">
-            <p>Total Connections: {metrics.totalConnections}</p>
-            <p>Active Servers: {metrics.activeServers}</p>
-            <p>
+      <div className="grid grid-cols-2 gap-4 mb-6" key={938054}>
+        <div className="p-4 bg-gray-50 rounded" key={426536}>
+          <h3 className="text-lg font-semibold mb-2" key={82841}>Overall Metrics</h3>
+          <div className="space-y-2" key={725977}>
+            <p key={161203}>Total Connections: {metrics.totalConnections}</p>
+            <p key={161203}>Active Servers: {metrics.activeServers}</p>
+            <p key={161203}>
               Last Health Check:{" "}
               {new Date(metrics.lastHealthCheck).toLocaleTimeString()}
             </p>
           </div>
         </div>
 
-        <div className="p-4 bg-gray-50 rounded">
-          <h3 className="text-lg font-semibold mb-2">Server Status</h3>
-          <div className="space-y-2">
+        <div className="p-4 bg-gray-50 rounded" key={426536}>
+          <h3 className="text-lg font-semibold mb-2" key={82841}>Server Status</h3>
+          <div className="space-y-2" key={725977}>
             {Array.from(metrics.serverMetrics.entries()).map(
               ([server, metrics]) => (
-                <div key={server} className="border-b pb-2">
-                  <p className="font-medium">Server {server}</p>
-                  <p>Connections: {metrics.connections}</p>
-                  <p>Latency: {metrics.latency}ms</p>
-                  <p>Error Rate: {(metrics.errorRate * 100).toFixed(2)}%</p>
+                <div key={server} className="border-b pb-2" key={193539}>
+                  <p className="font-medium" key={787187}>Server {server}</p>
+                  <p key={161203}>Connections: {metrics.connections}</p>
+                  <p key={161203}>Latency: {metrics.latency}ms</p>
+                  <p key={161203}>Error Rate: {(metrics.errorRate * 100).toFixed(2)}%</p>
                 </div>
               ),
             )}
@@ -183,22 +181,22 @@ export const WebSocketLoadBalancerAnalytics: React.FC = () => {
         </div>
       </div>
 
-      <div className="space-y-6">
-        <div className="h-64">
-          <SafeChart
+      <div className="space-y-6" key={501869}>
+        <div className="h-64" key={118048}>
+          <SafeChart;
             type="line"
             data={chartData}
             options={chartOptions}
             loadingMessage="Loading server metrics..."
-          />
+          / key={604754}>
         </div>
-        <div className="h-64">
-          <SafeChart
+        <div className="h-64" key={118048}>
+          <SafeChart;
             type="line"
             data={errorRateData}
             options={errorRateOptions}
             loadingMessage="Loading error rate data..."
-          />
+          / key={889052}>
         </div>
       </div>
     </div>

@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { Feature, FeatureSet } from '../featureEngineering/AdvancedFeatureEngineeringService';
+import { z } from 'zod.ts';
+import { Feature, FeatureSet } from '@/featureEngineering/AdvancedFeatureEngineeringService.ts';
 export declare const ModelConfigSchema: z.ZodObject<{
     name: z.ZodString;
     type: z.ZodEnum<["xgboost", "lstm", "transformer", "ensemble"]>;

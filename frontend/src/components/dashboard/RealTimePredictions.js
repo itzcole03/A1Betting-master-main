@@ -1,17 +1,17 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useEffect } from "react";
 export function RealTimePredictions({ predictions: propPredictions, loading: propLoading, } = {}) {
-    // State declarations first
+    // State declarations first;
     const [predictions, setPredictions] = useState([]);
     const [loading, setLoading] = useState(false);
     const [selectedSport, setSelectedSport] = useState("All");
     const [selectedType, setSelectedType] = useState("All");
-    const types = ["All", "game", "player_prop"];
-    // Mock data setup
+
+    // Mock data setup;
     useEffect(() => {
         if (!propPredictions) {
             setLoading(true);
-            // Simulate loading and then set mock data
+            // Simulate loading and then set mock data;
             setTimeout(() => {
                 setPredictions([
                     {
@@ -62,13 +62,13 @@ export function RealTimePredictions({ predictions: propPredictions, loading: pro
             setLoading(propLoading || false);
         }
     }, [propPredictions, propLoading]);
-    // Safe filtering with proper checks
-    const safePredictions = Array.isArray(predictions) ? predictions : [];
+    // Safe filtering with proper checks;
+
     const filteredPredictions = safePredictions.filter((pred) => {
         if (!pred)
-            return false; // Additional safety check
-        const sportMatch = selectedSport === "All" || pred.sport === selectedSport;
-        const typeMatch = selectedType === "All" || pred.type === selectedType;
+            return false; // Additional safety check;
+
+
         return sportMatch && typeMatch;
     });
     const getValueGradeColor = (grade) => {

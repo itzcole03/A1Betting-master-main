@@ -1,11 +1,11 @@
-import * as tf from '@tensorflow/tfjs';
-import dayjs from 'dayjs';
-import { PlayerPropService } from '../betting/PlayerPropService';
-import { dataIntegrationService } from '../data/dataIntegrationService';
-import { FeatureEngineeringService } from './featureEngineeringService';
-import { ModelTrainingService } from './modelTrainingService';
+import * as tf from '@tensorflow/tfjs.ts';
+import dayjs from 'dayjs.ts';
+import { PlayerPropService } from '@/betting/PlayerPropService.ts';
+import { dataIntegrationService } from '@/data/dataIntegrationService.ts';
+import { FeatureEngineeringService } from './featureEngineeringService.ts';
+import { ModelTrainingService } from './modelTrainingService.ts';
 
-// Enhanced interfaces for BacktestingService
+// Enhanced interfaces for BacktestingService;
 export interface BacktestData {
   props: BacktestProp[];
   models: BacktestModel[];
@@ -196,7 +196,7 @@ export class BacktestingService {
   constructor(
     playerPropService: PlayerPropService,
     modelTraining: ModelTrainingService,
-    featureEngineering: FeatureEngineeringService
+    featureEngineering: FeatureEngineeringService;
   ) {
     this.playerPropService = playerPropService;
     this.modelTraining = modelTraining;
@@ -205,76 +205,74 @@ export class BacktestingService {
 
   public async runBacktest(config: BacktestConfig): Promise<BacktestResult> {
     try {
-      // Load historical data
-      const historicalData = await this.loadHistoricalData(config);
+      // Load historical data;
 
-      // Initialize tracking variables
-      let bankroll = config.initialBankroll;
-      let maxBankroll = bankroll;
-      let currentDrawdown = 0;
-      let maxDrawdown = 0;
+      // Initialize tracking variables;
+      const bankroll = config.initialBankroll;
+      const maxBankroll = bankroll;
+      const currentDrawdown = 0;
+      const maxDrawdown = 0;
       const dailyPnL: Record<string, number> = {};
       const bets: SimulatedBet[] = [];
 
-      // Run simulation
+      // Run simulation;
       for (const date of this.getDateRange(config.startDate, config.endDate)) {
-        const dayData = historicalData[date];
+
         if (!dayData) continue;
 
-        // Get available props for the day
-        const availableProps = await this.getAvailableProps(dayData);
+        // Get available props for the day;
 
-        // Analyze props and generate predictions
+        // Analyze props and generate predictions;
         const propAnalyses = await Promise.all(
           availableProps.map(prop => this.analyzeProp(prop, config.modelIds))
         );
 
-        // Filter qualified props
+        // Filter qualified props;
         const qualifiedProps = propAnalyses.filter(analysis =>
           this.qualifiesProp(analysis, config)
         );
 
-        // Optimize lineup if needed
+        // Optimize lineup if needed;
         const selectedProps =
-          config.targetLegs > 1
+          config.targetLegs > 1;
             ? await this.optimizeLineup(qualifiedProps, config)
             : qualifiedProps;
 
-        // Place simulated bets
+        // Place simulated bets;
         for (const prop of selectedProps) {
-          const bet = await this.simulateBet(prop, bankroll, config);
+
           bets.push(bet);
 
-          // Update bankroll and metrics
+          // Update bankroll and metrics;
           bankroll += bet.result.pnl;
           maxBankroll = Math.max(maxBankroll, bankroll);
           currentDrawdown = (maxBankroll - bankroll) / maxBankroll;
           maxDrawdown = Math.max(maxDrawdown, currentDrawdown);
 
-          // Update daily P&L
-          const day = dayjs(bet.timestamp).format('YYYY-MM-DD');
+          // Update daily P&L;
+
           dailyPnL[day] = (dailyPnL[day] || 0) + bet.result.pnl;
         }
 
-        // Check stop loss and drawdown limits
+        // Check stop loss and drawdown limits;
         if (this.shouldStopTrading(bankroll, maxDrawdown, config)) {
           break;
         }
       }
 
-      // Calculate final metrics
+      // Calculate final metrics;
       return this.calculateBacktestResults(bets, config, {
         finalBankroll: bankroll,
         maxDrawdown,
         dailyPnL,
       });
     } catch (error) {
-      console.error('Backtest failed:', error);
+      // console statement removed
       throw error;
     }
   }
   private async loadHistoricalData(config: BacktestConfig): Promise<Record<string, HistoricalData[]>> {
-    // Load historical data from data integration service
+    // Load historical data from data integration service;
     const data = await dataIntegrationService.fetchHistoricalData({
       startDate: config.startDate,
       endDate: config.endDate,
@@ -284,11 +282,11 @@ export class BacktestingService {
     return this.organizeDataByDate(data);
   }
   private organizeDataByDate(data: HistoricalData[]): Record<string, HistoricalData[]> {
-    // Organize raw data by date for efficient access
+    // Organize raw data by date for efficient access;
     const organized: Record<string, HistoricalData[]> = {};
 
     for (const item of data) {
-      const date = dayjs(item.timestamp).format('YYYY-MM-DD');
+
       organized[date] = organized[date] || [];
       organized[date].push(item);
     }
@@ -298,8 +296,7 @@ export class BacktestingService {
 
   private getDateRange(startDate: string, endDate: string): string[] {
     const dates: string[] = [];
-    let currentDate = dayjs(startDate);
-    const end = dayjs(endDate);
+    const currentDate = dayjs(startDate);
 
     while (currentDate.isBefore(end) || currentDate.isSame(end)) {
       dates.push(currentDate.format('YYYY-MM-DD'));
@@ -309,7 +306,7 @@ export class BacktestingService {
     return dates;
   }
   private async getAvailableProps(dayData: HistoricalData[]): Promise<BacktestProp[]> {
-    // Extract available props from day's data
+    // Extract available props from day's data;
     return dayData.flatMap(item =>
       item.marketData.map(market => ({
         id: market.propId,
@@ -325,17 +322,16 @@ export class BacktestingService {
     );
   }
   private async analyzeProp(prop: BacktestProp, modelIds: string[]): Promise<PropAnalysis> {
-    // Get predictions from each model
+    // Get predictions from each model;
     const predictions = await Promise.all(
       modelIds.map(async modelId => {
-        const model = await this.modelTraining.loadModel(modelId);
+
         if (!model) throw new Error(`Model ${modelId} not found`);
 
         const features = await this.featureEngineering.engineerFeatures(prop.playerName, prop.propType, {
           /* raw data */
         });
 
-        const prediction = await this.predict(model, features);
         return {
           modelId,
           prediction: prediction.value,
@@ -349,33 +345,30 @@ export class BacktestingService {
       })
     );
 
-    // Combine predictions using ensemble weights
+    // Combine predictions using ensemble weights;
     return this.combineModelPredictions(predictions, prop);
   }
   private async predict(model: BacktestModel, features: Features): Promise<{ value: number; confidence: number }> {
-    // Make prediction using model
+    // Make prediction using model;
     if (model.model instanceof tf.LayersModel) {
-      const tensor = tf.tensor2d([features.numerical]);
-      const prediction = model.model.predict(tensor) as tf.Tensor;
-      const value = (await prediction.data())[0];
+
+
+
       prediction.dispose();
       tensor.dispose();
-      return { value, confidence: 0.8 }; // Default confidence
+      return { value, confidence: 0.8 }; // Default confidence;
     }
 
-    const prediction = model.model.predict([features.numerical])[0];
-    return { value: prediction, confidence: 0.8 }; // Default confidence
+    return { value: prediction, confidence: 0.8 }; // Default confidence;
   }
   private combineModelPredictions(predictions: ModelPrediction[], prop: BacktestProp): PropAnalysis {
-    // Combine predictions using weighted ensemble
-    const totalWeight = predictions.reduce((sum, p) => sum + p.confidence, 0);
+    // Combine predictions using weighted ensemble;
+
     const weightedPrediction =
       predictions.reduce((sum, p) => {
         return sum + p.prediction * p.confidence;
       }, 0) / totalWeight;
 
-    const combinedConfidence = Math.min(...predictions.map(p => p.confidence));
-    const edge = this.calculateEdge(weightedPrediction, prop);
 
     return {
       prop,
@@ -384,12 +377,12 @@ export class BacktestingService {
       combinedConfidence,
       edge,
       riskScore: this.calculateRiskScore(prop),
-      qualifies: false, // Will be set later
+      qualifies: false, // Will be set later;
       metadata: {},
     };
   }
   private calculateEdge(predictedValue: number, prop: BacktestProp): number {
-    const impliedProbability = 1 / prop.odds; // Simplified
+    const impliedProbability = 1 / prop.odds; // Simplified;
     return Math.abs(predictedValue - impliedProbability);
   }
 
@@ -397,19 +390,19 @@ export class BacktestingService {
     return (
       analysis.combinedConfidence >= config.minConfidence &&
       analysis.edge >= config.minValue &&
-      analysis.riskScore <= config.maxRisk
+      analysis.riskScore <= config.maxRisk;
     );
   }
 
   private calculateRiskScore(_analysis: BacktestProp): number {
-    // Calculate risk score based on various factors
-    return Math.random(); // Placeholder implementation
+    // Calculate risk score based on various factors;
+    return Math.random(); // Placeholder implementation;
   }
   private async optimizeLineup(props: PropAnalysis[], config: BacktestConfig): Promise<BacktestProp[]> {
-    // Use player prop service to optimize lineup
+    // Use player prop service to optimize lineup;
     const optimization = await this.playerPropService.optimizeLineup(
       props.map(p => p.prop),
-      config.targetLegs
+      config.targetLegs;
     );
 
     return optimization.legs;
@@ -418,13 +411,11 @@ export class BacktestingService {
   private async simulateBet(
     prop: PropAnalysis,
     bankroll: number,
-    config: BacktestConfig
+    config: BacktestConfig;
   ): Promise<SimulatedBet> {
-    const stake = this.calculateStakeSize(prop, bankroll, config);
-    const side = prop.combinedPrediction > prop.prop.line ? 'over' : 'under';
-    const odds = prop.prop.odds;
 
-    const actualValue = await this.getActualValue(prop.prop);
+
+
     const won =
       (side === 'over' && actualValue > prop.prop.line) ||
       (side === 'under' && actualValue < prop.prop.line);
@@ -459,26 +450,24 @@ export class BacktestingService {
   }
 
   private calculateKellyStake(prop: PropAnalysis, bankroll: number, config: BacktestConfig): number {
-    const edge = prop.edge;
-    const odds = prop.prop.odds;
-    const probability = prop.combinedPrediction;
 
-    const kellyFraction = (edge * probability) / (odds - 1);
-    const adjustedKelly = kellyFraction * 0.5; // Half Kelly for safety
+
+
+    const adjustedKelly = kellyFraction * 0.5; // Half Kelly for safety;
 
     return Math.min(bankroll * adjustedKelly, bankroll * config.riskManagement.maxPositionSize);
   }
 
   private async getActualValue(prop: BacktestProp): Promise<number> {
-    // In real backtest, this would fetch the actual result
-    // This is a placeholder implementation
+    // In real backtest, this would fetch the actual result;
+    // This is a placeholder implementation;
     return prop.line + (Math.random() - 0.5) * 5;
   }
 
   private shouldStopTrading(bankroll: number, drawdown: number, config: BacktestConfig): boolean {
     return (
       bankroll <= config.initialBankroll * (1 - config.riskManagement.stopLoss) ||
-      drawdown >= config.riskManagement.maxDrawdown
+      drawdown >= config.riskManagement.maxDrawdown;
     );
   }
 
@@ -491,8 +480,7 @@ export class BacktestingService {
       dailyPnL: Record<string, number>;
     }
   ): BacktestResult {
-    const winningBets = bets.filter(bet => bet.result.won);
-    const dailyReturns = Object.values(metrics.dailyPnL).map(pnl => pnl / config.initialBankroll);
+
 
     return {
       summary: {
@@ -514,46 +502,46 @@ export class BacktestingService {
   }
 
   private calculateSharpeRatio(returns: number[]): number {
-    const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
-    const variance = returns.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / returns.length;
-    const stdDev = Math.sqrt(variance);
-    const riskFreeRate = 0.02 / 252; // Assuming 2% annual risk-free rate
 
-    return ((mean - riskFreeRate) / stdDev) * Math.sqrt(252); // Annualized
+
+
+    const riskFreeRate = 0.02 / 252; // Assuming 2% annual risk-free rate;
+
+    return ((mean - riskFreeRate) / stdDev) * Math.sqrt(252); // Annualized;
   }
 
   private calculateOptimalKellyFraction(bets: SimulatedBet[]): number {
-    const winRate = bets.filter(bet => bet.result.won).length / bets.length;
+
     const avgWin =
       bets.filter(bet => bet.result.won).reduce((sum, bet) => sum + bet.result.pnl, 0) /
       bets.filter(bet => bet.result.won).length;
     const avgLoss = Math.abs(
       bets.filter(bet => !bet.result.won).reduce((sum, bet) => sum + bet.result.pnl, 0) /
-      bets.filter(bet => !bet.result.won).length
+      bets.filter(bet => !bet.result.won).length;
     );
 
     return winRate / avgLoss - (1 - winRate) / avgWin;
   }
   private calculateModelPerformance(_bets: SimulatedBet[]): Record<string, Record<string, number>> {
-    // Calculate performance metrics for each model
-    // This is a placeholder implementation
+    // Calculate performance metrics for each model;
+    // This is a placeholder implementation;
     return {};
   }
 
   private calculatePropTypePerformance(_bets: SimulatedBet[]): Record<string, Record<string, number>> {
-    // Calculate performance metrics for each prop type
-    // This is a placeholder implementation
+    // Calculate performance metrics for each prop type;
+    // This is a placeholder implementation;
     return {};
   }
 
   private calculateTimeSeriesMetrics(_bets: SimulatedBet[], _config: BacktestConfig): TimeSeriesMetric[] {
-    // Calculate time series metrics
-    // This is a placeholder implementation
+    // Calculate time series metrics;
+    // This is a placeholder implementation;
     return [];
   }
 
   private calculateRiskMetrics(returns: number[]): BacktestResult['riskMetrics'] {
-    // Calculate risk metrics
+    // Calculate risk metrics;
     return {
       valueAtRisk: this.calculateVaR(returns, 0.95),
       expectedShortfall: this.calculateExpectedShortfall(returns, 0.95),
@@ -563,25 +551,25 @@ export class BacktestingService {
   }
 
   private calculateVaR(returns: number[], confidence: number): number {
-    const sortedReturns = [...returns].sort((a, b) => a - b);
-    const index = Math.floor(returns.length * (1 - confidence));
+
+
     return -sortedReturns[index];
   }
 
   private calculateExpectedShortfall(returns: number[], confidence: number): number {
-    const var95 = this.calculateVaR(returns, confidence);
-    const tailReturns = returns.filter(r => r < -var95);
+
+
     return -(tailReturns.reduce((a, b) => a + b, 0) / tailReturns.length);
   }
   private calculateBetaSharpe(_returns: number[]): number {
-    // Calculate beta-adjusted Sharpe ratio
-    // This is a placeholder implementation
+    // Calculate beta-adjusted Sharpe ratio;
+    // This is a placeholder implementation;
     return 0;
   }
 
   private calculateInformationRatio(_returns: number[]): number {
-    // Calculate information ratio
-    // This is a placeholder implementation
+    // Calculate information ratio;
+    // This is a placeholder implementation;
     return 0;
   }
 }
@@ -589,5 +577,5 @@ export class BacktestingService {
 export const backtestingService = new BacktestingService(
   playerPropService,
   modelTrainingService,
-  featureEngineeringService
+  featureEngineeringService;
 );

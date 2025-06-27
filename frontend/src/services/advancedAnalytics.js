@@ -1,16 +1,16 @@
 export class AdvancedAnalytics {
     async analyzePlayerProp(player, statType, line, dataSources) {
-        // Run multiple ML models
-        const models = await this.runMLModels(player, statType, line);
-        // Calculate ensemble prediction
-        const prediction = this.calculateEnsemblePrediction(models);
-        const confidence = this.calculateEnsembleConfidence(models);
-        // Calculate advanced metrics
-        const metrics = this.calculateAdvancedMetrics(prediction, line, confidence);
-        // Analyze external factors
-        const injuries = await this.analyzeInjuries(player);
-        const weather = await this.analyzeWeather(player);
-        const sentiment = await this.analyzeSentiment(player);
+        // Run multiple ML models;
+
+        // Calculate ensemble prediction;
+
+
+        // Calculate advanced metrics;
+
+        // Analyze external factors;
+
+
+
         return {
             player,
             statType,
@@ -25,26 +25,26 @@ export class AdvancedAnalytics {
         };
     }
     async runMLModels(player, statType, line) {
-        const models = [];
-        // Random Forest Model
-        const rfPrediction = await this.runRandomForest(player, statType, line);
+
+        // Random Forest Model;
+
         models.push(rfPrediction);
-        // XGBoost Model
-        const xgbPrediction = await this.runXGBoost(player, statType, line);
+        // XGBoost Model;
+
         models.push(xgbPrediction);
-        // Neural Network Model
-        const nnPrediction = await this.runNeuralNetwork(player, statType, line);
+        // Neural Network Model;
+
         models.push(nnPrediction);
-        // Linear Regression Model
-        const lrPrediction = await this.runLinearRegression(player, statType, line);
+        // Linear Regression Model;
+
         models.push(lrPrediction);
         return models;
     }
     async runRandomForest(player, statType, line) {
-        // Simulate Random Forest prediction
-        const baseValue = player.stats?.[statType.toLowerCase()] || line;
-        const formFactor = this.calculateFormFactor(player.recentForm);
-        const prediction = baseValue * (0.9 + formFactor * 0.2);
+        // Simulate Random Forest prediction;
+
+
+
         return {
             prediction,
             confidence: 0.82 + Math.random() * 0.12,
@@ -59,10 +59,10 @@ export class AdvancedAnalytics {
         };
     }
     async runXGBoost(player, statType, line) {
-        // Simulate XGBoost prediction
-        const baseValue = player.stats?.[statType.toLowerCase()] || line;
-        const formFactor = this.calculateFormFactor(player.recentForm);
-        const prediction = baseValue * (0.88 + formFactor * 0.24);
+        // Simulate XGBoost prediction;
+
+
+
         return {
             prediction,
             confidence: 0.86 + Math.random() * 0.1,
@@ -77,10 +77,10 @@ export class AdvancedAnalytics {
         };
     }
     async runNeuralNetwork(player, statType, line) {
-        // Simulate Neural Network prediction
-        const baseValue = player.stats?.[statType.toLowerCase()] || line;
-        const formFactor = this.calculateFormFactor(player.recentForm);
-        const prediction = baseValue * (0.92 + formFactor * 0.16);
+        // Simulate Neural Network prediction;
+
+
+
         return {
             prediction,
             confidence: 0.89 + Math.random() * 0.08,
@@ -95,10 +95,10 @@ export class AdvancedAnalytics {
         };
     }
     async runLinearRegression(player, statType, line) {
-        // Simulate Linear Regression prediction
-        const baseValue = player.stats?.[statType.toLowerCase()] || line;
-        const formFactor = this.calculateFormFactor(player.recentForm);
-        const prediction = baseValue * (0.94 + formFactor * 0.12);
+        // Simulate Linear Regression prediction;
+
+
+
         return {
             prediction,
             confidence: 0.75 + Math.random() * 0.15,
@@ -113,47 +113,47 @@ export class AdvancedAnalytics {
     }
     calculateFormFactor(recentForm) {
         if (!recentForm || recentForm.length === 0) {
-            return 0.5; // Neutral
+            return 0.5; // Neutral;
         }
-        // Weight recent games more heavily
-        const weights = [0.1, 0.1, 0.15, 0.15, 0.2, 0.3];
-        const recent = recentForm.slice(-6);
-        let weightedSum = 0;
-        let totalWeight = 0;
+        // Weight recent games more heavily;
+
+
+        const weightedSum = 0;
+        const totalWeight = 0;
         recent.forEach((form, index) => {
-            const weight = weights[index] || 0.1;
+
             weightedSum += form * weight;
             totalWeight += weight;
         });
         return totalWeight > 0 ? weightedSum / totalWeight : 0.5;
     }
     calculateEnsemblePrediction(models) {
-        // Weighted average based on model confidence
-        let weightedSum = 0;
-        let totalWeight = 0;
+        // Weighted average based on model confidence;
+        const weightedSum = 0;
+        const totalWeight = 0;
         models.forEach((model) => {
-            const weight = model.confidence;
+
             weightedSum += model.prediction * weight;
             totalWeight += weight;
         });
         return totalWeight > 0 ? weightedSum / totalWeight : 0;
     }
     calculateEnsembleConfidence(models) {
-        // Average confidence adjusted for model agreement
-        const avgConfidence = models.reduce((sum, model) => sum + model.confidence, 0) / models.length;
+        // Average confidence adjusted for model agreement;
+
         // Calculate prediction variance (lower variance = higher confidence)
-        const predictions = models.map((m) => m.prediction);
-        const avgPrediction = predictions.reduce((sum, pred) => sum + pred, 0) / predictions.length;
-        const variance = predictions.reduce((sum, pred) => sum + Math.pow(pred - avgPrediction, 2), 0) / predictions.length;
-        const standardDeviation = Math.sqrt(variance);
-        // Lower std dev = higher confidence
-        const agreementFactor = Math.max(0, 1 - standardDeviation / avgPrediction);
+
+
+
+
+        // Lower std dev = higher confidence;
+
         return avgConfidence * (0.8 + agreementFactor * 0.2);
     }
     calculateAdvancedMetrics(prediction, line, confidence) {
-        const expectedValue = this.calculateExpectedValue(prediction, line, confidence);
-        const kellyOptimal = this.calculateKellyOptimal(prediction, line);
-        const sharpeRatio = this.calculateSharpeRatio(expectedValue, confidence);
+
+
+
         return {
             kellyOptimal,
             sharpeRatio,
@@ -166,25 +166,25 @@ export class AdvancedAnalytics {
         };
     }
     calculateExpectedValue(prediction, line, confidence) {
-        const probability = confidence;
-        const isOver = prediction > line;
-        const winProbability = isOver ? probability : 1 - probability;
-        const odds = 1.91; // -110 odds
+
+
+
+        const odds = 1.91; // -110 odds;
         return (winProbability * (odds - 1) - (1 - winProbability)) * 100;
     }
     calculateKellyOptimal(prediction, line) {
-        const probability = prediction > line ? 0.52 : 0.48; // Slight edge
-        const odds = 1.91; // -110 odds
-        const q = 1 - probability;
-        const b = odds - 1;
+        const probability = prediction > line ? 0.52 : 0.48; // Slight edge;
+        const odds = 1.91; // -110 odds;
+
+
         return Math.max(0, (b * probability - q) / b);
     }
     calculateSharpeRatio(expectedValue, confidence) {
-        const risk = 1 - confidence;
+
         return Math.max(0, expectedValue / Math.max(0.1, risk * 100));
     }
     async analyzeInjuries(player) {
-        // Simulate injury analysis
+        // Simulate injury analysis;
         return [
             {
                 type: "Minor",
@@ -194,7 +194,7 @@ export class AdvancedAnalytics {
         ];
     }
     async analyzeWeather(player) {
-        // Simulate weather analysis
+        // Simulate weather analysis;
         return {
             gameImpactScore: Math.random() * 0.05,
             conditions: "Clear",
@@ -203,7 +203,7 @@ export class AdvancedAnalytics {
         };
     }
     async analyzeSentiment(player) {
-        // Simulate sentiment analysis
+        // Simulate sentiment analysis;
         return {
             socialMediaScore: (Math.random() - 0.5) * 0.2,
             newsScore: (Math.random() - 0.5) * 0.1,

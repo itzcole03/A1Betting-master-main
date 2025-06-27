@@ -18,7 +18,7 @@ def calculate_confidence(model, X: np.ndarray, model_type: str) -> float:
             return 0.8
         else:
             return 0.7
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         return 0.5
 
 
@@ -48,6 +48,6 @@ def model_correlation(cv1: List[float], cv2: List[float]) -> float:
             arr1 = np.array(cv1[:n], dtype=float)
             arr2 = np.array(cv2[:n], dtype=float)
             corr = float(np.corrcoef(arr1, arr2)[0, 1])
-    except Exception:
+    except Exception:  # pylint: disable=broad-exception-caught
         corr = 0.0
     return max(0.0, min(1.0, corr))

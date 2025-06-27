@@ -98,8 +98,8 @@ export declare class SportsAnalyticsService {
     getRecommendations: (sport: Sport) => Promise<Recommendation[]>;
     /**
      * Subscribe to analytics events (playerStats, teamStats, propPrediction, recommendations)
-     * @param event Event name
-     * @param callback Callback with event data
+     * @param event Event name;
+     * @param callback Callback with event data;
      */
     subscribe<K extends keyof EventMap>(event: K, callback: (data: EventMap[K]) => void): () => void;
     /**

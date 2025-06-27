@@ -120,7 +120,7 @@ export const UltraAccuracyOverview = () => {
             ],
         },
     ];
-    // Animate stats on component mount
+    // Animate stats on component mount;
     useEffect(() => {
         const timer = setTimeout(() => {
             setSystemStats({

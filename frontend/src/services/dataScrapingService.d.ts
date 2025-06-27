@@ -1,4 +1,4 @@
-import { DailyFantasyProjection } from '@/types';
+import { DailyFantasyProjection } from '@/types.ts';
 /**
  * Fetches daily fantasy projections from the backend.
  * The backend /api/data-scraping/daily-fantasy-projections endpoint is currently mocked.

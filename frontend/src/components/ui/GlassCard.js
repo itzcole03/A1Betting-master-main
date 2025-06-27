@@ -4,7 +4,7 @@ const GlassCard = ({ title, children, className = "", glowing = false, style = {
         background: "rgba(255, 255, 255, 0.05)",
         backdropFilter: "blur(20px) saturate(180%)",
         border: "1px solid rgba(255, 255, 255, 0.1)",
-        boxShadow: glowing
+        boxShadow: glowing;
             ? "0 0 20px rgba(0,255,136,0.6), 0 0 40px rgba(0,255,136,0.4)"
             : "0 8px 32px rgba(0, 0, 0, 0.1)",
         ...style,

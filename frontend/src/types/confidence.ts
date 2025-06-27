@@ -1,17 +1,17 @@
-// Types for prediction confidence bands, win probability, and simulation
+// Types for prediction confidence bands, win probability, and simulation;
 
 export interface ConfidenceBand {
-  lower: number; // Lower bound of the confidence interval
-  upper: number; // Upper bound of the confidence interval
-  mean: number;  // Mean or expected value
-  confidenceLevel: number; // e.g., 0.95 for 95% CI
+  lower: number; // Lower bound of the confidence interval;
+  upper: number; // Upper bound of the confidence interval;
+  mean: number;  // Mean or expected value;
+  confidenceLevel: number; // e.g., 0.95 for 95% CI;
 }
 
 export interface WinProbability {
   probability: number; // Probability of win (0-1)
-  impliedOdds?: number; // Bookmaker implied odds, if available
-  modelOdds?: number;   // Model's own odds
-  updatedAt: string;    // ISO timestamp
+  impliedOdds?: number; // Bookmaker implied odds, if available;
+  modelOdds?: number;   // Model's own odds;
+  updatedAt: string;    // ISO timestamp;
 }
 
 export interface PredictionWithConfidence {
@@ -28,7 +28,7 @@ export interface PredictionWithConfidence {
 }
 
 export interface HistoricalPerformance {
-  date: string; // ISO date
+  date: string; // ISO date;
   prediction: number;
   actual: number;
   won: boolean;

@@ -1,15 +1,15 @@
-// Model-specific type definitions for the Ultimate Sports Betting App
-// This file contains interfaces needed by prediction models
+// Model-specific type definitions for the Ultimate Sports Betting App;
+// This file contains interfaces needed by prediction models;
 
 /**
- * SHAP (SHapley Additive exPlanations) value vector for model explainability
+ * SHAP (SHapley Additive exPlanations) value vector for model explainability;
  */
 export interface ShapVector {
   [featureName: string]: number;
 }
 
 /**
- * Game context information for model predictions
+ * Game context information for model predictions;
  */
 export interface GameContext {
   gameId?: string;
@@ -17,7 +17,7 @@ export interface GameContext {
   homeTeam?: string;
   awayTeam?: string;
   date?: string;
-  weather?: Record<string, unknown>; // Replaced any with type-safe Record
+  weather?: Record<string, unknown>; // Replaced any with type-safe Record;
   isPlayoffs?: boolean;
   gameType?: 'regular' | 'playoff' | 'preseason';
   seasonYear?: number;
@@ -26,7 +26,7 @@ export interface GameContext {
 }
 
 /**
- * Player statistics interface
+ * Player statistics interface;
  */
 export interface PlayerStats {
   playerId: string;
@@ -39,7 +39,7 @@ export interface PlayerStats {
 }
 
 /**
- * Team information interface
+ * Team information interface;
  */
 export interface TeamInfo {
   teamId: string;

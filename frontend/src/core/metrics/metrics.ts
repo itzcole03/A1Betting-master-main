@@ -1,11 +1,11 @@
-import { UnifiedMetrics } from '@/types';
+import { UnifiedMetrics } from '@/types.ts';
 
 class Metrics implements UnifiedMetrics {
   private metrics: Map<string, number> = new Map();
   private tags: Map<string, Record<string, string>> = new Map();
 
   track(name: string, value?: number, tags?: Record<string, string>): void {
-    const key = this.getMetricKey(name, tags);
+
     this.metrics.set(key, value || 1);
     if (tags) {
       this.tags.set(key, tags);
@@ -13,8 +13,8 @@ class Metrics implements UnifiedMetrics {
   }
 
   increment(name: string, value?: number, tags?: Record<string, string>): void {
-    const key = this.getMetricKey(name, tags);
-    const currentValue = this.metrics.get(key) || 0;
+
+
     this.metrics.set(key, currentValue + (value || 1));
     if (tags) {
       this.tags.set(key, tags);
@@ -22,7 +22,7 @@ class Metrics implements UnifiedMetrics {
   }
 
   gauge(name: string, value: number, tags?: Record<string, string>): void {
-    const key = this.getMetricKey(name, tags);
+
     this.metrics.set(key, value);
     if (tags) {
       this.tags.set(key, tags);
@@ -30,7 +30,7 @@ class Metrics implements UnifiedMetrics {
   }
 
   timing(name: string, value: number, tags?: Record<string, string>): void {
-    const key = this.getMetricKey(name, tags);
+
     this.metrics.set(key, value);
     if (tags) {
       this.tags.set(key, tags);
@@ -38,7 +38,7 @@ class Metrics implements UnifiedMetrics {
   }
 
   histogram(name: string, value: number, tags?: Record<string, string>): void {
-    const key = this.getMetricKey(name, tags);
+
     this.metrics.set(key, value);
     if (tags) {
       this.tags.set(key, tags);
@@ -67,8 +67,6 @@ class Metrics implements UnifiedMetrics {
     this.tags.clear();
   }
 }
-
-const metricsInstance = new Metrics();
 
 export function getMetrics(): UnifiedMetrics {
   return metricsInstance;

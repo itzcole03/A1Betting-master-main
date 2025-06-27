@@ -1,6 +1,6 @@
-import { MLServiceConfig, PredictionResult, ModelMetrics } from '@/types';
-import { logger } from '../logger';
-import { cache } from '../cache';
+import { MLServiceConfig, PredictionResult, ModelMetrics } from '@/types.ts';
+import { logger } from '@/logger.ts';
+import { cache } from '@/cache.ts';
 
 export class MLService {
   private static instance: MLService;
@@ -37,13 +37,12 @@ export class MLService {
     timeWindow: string;
   }): Promise<PredictionResult[]> {
     try {
-      const cacheKey = `prediction:${JSON.stringify(params)}`;
-      const cachedResult = await cache.get(cacheKey);
+
+
       if (cachedResult) {
         return cachedResult;
       }
 
-      const result = await this.executePrediction(params);
       await cache.set(cacheKey, result);
       return result;
     } catch (error) {
@@ -58,7 +57,7 @@ export class MLService {
     sports: string[];
     timeWindow: string;
   }): Promise<PredictionResult[]> {
-    // Implementation of prediction logic
+    // Implementation of prediction logic;
     return [];
   }
 

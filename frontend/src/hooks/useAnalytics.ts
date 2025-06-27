@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { PerformanceMetrics, TrendDelta, RiskProfile } from '../types/analytics';
+import { useState, useEffect } from 'react.ts';
+import { PerformanceMetrics, TrendDelta, RiskProfile } from '@/types/analytics.ts';
 
 interface AnalyticsResult {
   metrics: PerformanceMetrics;
@@ -20,9 +20,8 @@ export const useAnalytics = (event: string, market: string, selection: string): 
     const fetchAnalytics = async () => {
       try {
         setIsLoading(true);
-        // Fetch analytics data from your API
-        const response = await fetch(`/api/analytics/${event}/${market}/${selection}`);
-        const data = await response.json();
+        // Fetch analytics data from your API;
+
 
         setMetrics(data.metrics);
         setTrendDelta(data.trendDelta);

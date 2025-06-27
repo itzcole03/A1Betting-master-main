@@ -1,4 +1,4 @@
-import { RiskProfile } from '@/types/core';
+import { RiskProfile } from '@/types/core.ts';
 export declare class RiskProfileService {
     private static instance;
     private readonly eventBus;

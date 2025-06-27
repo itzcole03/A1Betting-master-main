@@ -1,7 +1,7 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { motion } from "framer-motion";
 import { BarChart3, Clock } from "lucide-react";
-// Import our real components
+// Import our real components;
 import MetricsOverview from "./MetricsOverview";
 import LiveOpportunities from "./LiveOpportunities";
 import ModernActivityFeed from "../ui/ModernActivityFeed";

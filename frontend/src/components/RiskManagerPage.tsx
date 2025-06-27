@@ -1,6 +1,6 @@
 
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect  } from 'react.ts';
+import axios from 'axios.ts';
 
 interface RiskProfile {
   id: string;
@@ -26,24 +26,24 @@ interface ActiveBet {
 
 const RiskManagerPage: React.FC = () => {
 
-  // State for risk profiles and active bets
-  const [profiles, setProfiles] = useState<RiskProfile[]>([]);
-  const [activeBets, setActiveBets] = useState<ActiveBet[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  // State for risk profiles and active bets;
+  const [profiles, setProfiles] = useState<RiskProfile[] key={152814}>([]);
+  const [activeBets, setActiveBets] = useState<ActiveBet[] key={49202}>([]);
+  const [loading, setLoading] = useState<boolean key={575407}>(true);
+  const [error, setError] = useState<string | null key={121216}>(null);
 
-  // Modal state for creating new profile
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  // Modal state for creating new profile;
+  const [isModalOpen, setIsModalOpen] = useState<boolean key={575407}>(false);
 
-  // Fetch risk profiles and active bets on mount
+  // Fetch risk profiles and active bets on mount;
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       setError(null);
       try {
         const [profilesRes, betsRes] = await Promise.all([
-          axios.get<RiskProfile[]>('/api/risk-profiles'),
-          axios.get<ActiveBet[]>('/api/active-bets'),
+          axios.get<RiskProfile[] key={152814}>('/api/risk-profiles'),
+          axios.get<ActiveBet[] key={49202}>('/api/active-bets'),
         ]);
         setProfiles(profilesRes.data);
         setActiveBets(betsRes.data);
@@ -62,10 +62,8 @@ const RiskManagerPage: React.FC = () => {
     fetchData();
   }, []);
 
-  const activeProfile = profiles.find(p => p.isActive);
-  const totalExposure = activeBets.reduce((sum, bet) => sum + bet.stake, 0);
-  const maxPotentialLoss = totalExposure;
-  const maxPotentialWin = activeBets.reduce((sum, bet) => sum + bet.potentialWin, 0);
+
+
 
   const getRiskColor = (risk: ActiveBet['risk']) => {
     switch (risk) {
@@ -83,127 +81,127 @@ const RiskManagerPage: React.FC = () => {
 
   return (
     <>
-      <main className="section space-y-6 lg:space-y-8 animate-fade-in">
-        <div className="modern-card p-6 lg:p-8">
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8">
-            <h1 className="text-2xl lg:text-3xl font-bold">⚖️ Risk Manager</h1>
-            <button className="modern-button" onClick={() => setIsModalOpen(true)}>
-              Create New Profile
+      <main className="section space-y-6 lg:space-y-8 animate-fade-in" key={94246}>
+        <div className="modern-card p-6 lg:p-8" key={672448}>
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 mb-8" key={204340}>
+            <h1 className="text-2xl lg:text-3xl font-bold" key={809535}>⚖️ Risk Manager</h1>
+            <button className="modern-button" onClick={() = key={307658}> setIsModalOpen(true)}>
+              Create New Profile;
             </button>
           </div>
           {/* Loading/Error State */}
           {loading ? (
-            <div className="text-center text-gray-500 dark:text-gray-400">Loading...</div>
+            <div className="text-center text-gray-500 dark:text-gray-400" key={302845}>Loading...</div>
           ) : error ? (
-            <div className="text-center text-red-600">{error}</div>
+            <div className="text-center text-red-600" key={855401}>{error}</div>
           ) : (
             <>
               {/* Overview Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div className="modern-card p-6">
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                    Active Profile
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8" key={427438}>
+                <div className="modern-card p-6" key={889527}>
+                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" key={885729}>
+                    Active Profile;
                   </h3>
-                  <p className="text-2xl font-bold">{activeProfile?.name || 'None'}</p>
+                  <p className="text-2xl font-bold" key={180814}>{activeProfile?.name || 'None'}</p>
                 </div>
-                <div className="modern-card p-6">
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                    Total Exposure
+                <div className="modern-card p-6" key={889527}>
+                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" key={885729}>
+                    Total Exposure;
                   </h3>
-                  <p className="text-2xl font-bold">${totalExposure.toFixed(2)}</p>
+                  <p className="text-2xl font-bold" key={180814}>${totalExposure.toFixed(2)}</p>
                 </div>
-                <div className="modern-card p-6">
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                    Max Potential Loss
+                <div className="modern-card p-6" key={889527}>
+                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" key={885729}>
+                    Max Potential Loss;
                   </h3>
-                  <p className="text-2xl font-bold text-red-600">-${maxPotentialLoss.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-red-600" key={803748}>-${maxPotentialLoss.toFixed(2)}</p>
                 </div>
-                <div className="modern-card p-6">
-                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
-                    Max Potential Win
+                <div className="modern-card p-6" key={889527}>
+                  <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2" key={885729}>
+                    Max Potential Win;
                   </h3>
-                  <p className="text-2xl font-bold text-green-600">+${maxPotentialWin.toFixed(2)}</p>
+                  <p className="text-2xl font-bold text-green-600" key={401802}>+${maxPotentialWin.toFixed(2)}</p>
                 </div>
               </div>
               {/* Risk Profiles */}
-              <div className="mb-8">
-                <h2 className="text-lg font-bold mb-4">Risk Profiles</h2>
+              <div className="mb-8" key={286587}>
+                <h2 className="text-lg font-bold mb-4" key={518720}>Risk Profiles</h2>
                 {profiles.length === 0 ? (
-                  <div className="text-gray-500 dark:text-gray-400">
+                  <div className="text-gray-500 dark:text-gray-400" key={960786}>
                     No risk profiles available.
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={881323}>
                     {profiles.map(profile => (
-                      <div
+                      <div;
                         key={profile.id}
                         className={`modern-card p-6 ${profile.isActive ? 'ring-2 ring-primary-500' : ''}`}
-                      >
-                        <div className="flex justify-between items-start mb-4">
-                          <h3 className="text-lg font-bold">{profile.name}</h3>
+                       key={250667}>
+                        <div className="flex justify-between items-start mb-4" key={413486}>
+                          <h3 className="text-lg font-bold" key={818660}>{profile.name}</h3>
                           {profile.isActive && (
-                            <span className="px-2 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full">
-                              Active
+                            <span className="px-2 py-1 bg-primary-100 text-primary-700 text-xs font-medium rounded-full" key={206463}>
+                              Active;
                             </span>
                           )}
                         </div>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-500 dark:text-gray-400">Max Stake</span>
-                            <span className="font-medium">${profile.maxStake}</span>
+                        <div className="space-y-2 text-sm" key={726391}>
+                          <div className="flex justify-between" key={588832}>
+                            <span className="text-gray-500 dark:text-gray-400" key={45201}>Max Stake</span>
+                            <span className="font-medium" key={514486}>${profile.maxStake}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-500 dark:text-gray-400">Max Exposure</span>
-                            <span className="font-medium">${profile.maxExposure}</span>
+                          <div className="flex justify-between" key={588832}>
+                            <span className="text-gray-500 dark:text-gray-400" key={45201}>Max Exposure</span>
+                            <span className="font-medium" key={514486}>${profile.maxExposure}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-500 dark:text-gray-400">Stop Loss</span>
-                            <span className="font-medium">-${profile.stopLoss}</span>
+                          <div className="flex justify-between" key={588832}>
+                            <span className="text-gray-500 dark:text-gray-400" key={45201}>Stop Loss</span>
+                            <span className="font-medium" key={514486}>-${profile.stopLoss}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-500 dark:text-gray-400">Take Profit</span>
-                            <span className="font-medium">+${profile.takeProfit}</span>
+                          <div className="flex justify-between" key={588832}>
+                            <span className="text-gray-500 dark:text-gray-400" key={45201}>Take Profit</span>
+                            <span className="font-medium" key={514486}>+${profile.takeProfit}</span>
                           </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-500 dark:text-gray-400">Kelly Fraction</span>
-                            <span className="font-medium">{profile.kellyFraction}x</span>
+                          <div className="flex justify-between" key={588832}>
+                            <span className="text-gray-500 dark:text-gray-400" key={45201}>Kelly Fraction</span>
+                            <span className="font-medium" key={514486}>{profile.kellyFraction}x</span>
                           </div>
                         </div>
-                        {!profile.isActive && <button className="modern-button mt-4">Set Active</button>}
+                        {!profile.isActive && <button className="modern-button mt-4" key={503706}>Set Active</button>}
                       </div>
                     ))}
                   </div>
                 )}
               </div>
               {/* Active Bets */}
-              <div>
-                <h2 className="text-lg font-bold mb-4">Active Bets</h2>
+              <div key={241917}>
+                <h2 className="text-lg font-bold mb-4" key={518720}>Active Bets</h2>
                 {activeBets.length === 0 ? (
-                  <div className="text-gray-500 dark:text-gray-400">
+                  <div className="text-gray-500 dark:text-gray-400" key={960786}>
                     No active bets.
                   </div>
                 ) : (
-                  <div className="overflow-x-auto">
-                    <table className="modern-table w-full">
-                      <thead>
-                        <tr>
-                          <th>Event</th>
-                          <th>Stake</th>
-                          <th>Odds</th>
-                          <th>Potential Win</th>
-                          <th>Risk</th>
-                          <th>Expires At</th>
+                  <div className="overflow-x-auto" key={522094}>
+                    <table className="modern-table w-full" key={636329}>
+                      <thead key={851248}>
+                        <tr key={70014}>
+                          <th key={221562}>Event</th>
+                          <th key={221562}>Stake</th>
+                          <th key={221562}>Odds</th>
+                          <th key={221562}>Potential Win</th>
+                          <th key={221562}>Risk</th>
+                          <th key={221562}>Expires At</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody key={453335}>
                         {activeBets.map(bet => (
-                          <tr key={bet.id}>
-                            <td>{bet.event}</td>
-                            <td>${bet.stake}</td>
-                            <td>{bet.odds}</td>
-                            <td>${bet.potentialWin}</td>
-                            <td className={getRiskColor(bet.risk)}>{bet.risk}</td>
-                            <td>{new Date(bet.expiresAt).toLocaleString()}</td>
+                          <tr key={bet.id} key={451658}>
+                            <td key={212562}>{bet.event}</td>
+                            <td key={212562}>${bet.stake}</td>
+                            <td key={212562}>{bet.odds}</td>
+                            <td key={212562}>${bet.potentialWin}</td>
+                            <td className={getRiskColor(bet.risk)} key={812724}>{bet.risk}</td>
+                            <td key={212562}>{new Date(bet.expiresAt).toLocaleString()}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -216,11 +214,11 @@ const RiskManagerPage: React.FC = () => {
         </div>
         {/* Modal for creating new profile */}
         {isModalOpen && (
-          <div className="modal-backdrop">
-            <div className="modal">
-              <h2 className="text-lg font-bold mb-4">Create New Profile</h2>
-              <CreateProfileForm
-                onSuccess={(profile) => {
+          <div className="modal-backdrop" key={180516}>
+            <div className="modal" key={226119}>
+              <h2 className="text-lg font-bold mb-4" key={518720}>Create New Profile</h2>
+              <CreateProfileForm;
+                onSuccess={(profile) = key={267709}> {
                   setProfiles((prev) => [...prev, profile]);
                   setIsModalOpen(false);
                 }}
@@ -246,8 +244,8 @@ type CreateProfileFormProps = {
  * Modal form for creating a new risk profile.
  * Integrates with /api/risk-profiles endpoint.
  */
-const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onSuccess, onCancel }) => {
-  const [form, setForm] = React.useState<Omit<RiskProfile, 'id' | 'isActive'>>({
+const CreateProfileForm: React.FC<CreateProfileFormProps key={692594}> = ({ onSuccess, onCancel }) => {
+  const [form, setForm] = React.useState<Omit<RiskProfile, 'id' | 'isActive' key={877228}>>({
     name: '',
     maxStake: 0,
     maxExposure: 0,
@@ -256,9 +254,9 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onSuccess, onCanc
     kellyFraction: 1,
   });
   const [submitting, setSubmitting] = React.useState(false);
-  const [error, setError] = React.useState<string | null>(null);
+  const [error, setError] = React.useState<string | null key={121216}>(null);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement key={553350}>) => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: name === 'name' ? value : Number(value) }));
   };
@@ -268,7 +266,7 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onSuccess, onCanc
     setSubmitting(true);
     setError(null);
     try {
-      const res = await axios.post<RiskProfile>('/api/risk-profiles', form);
+
       onSuccess(res.data);
     } catch (err: unknown) {
       if (axios.isAxiosError && axios.isAxiosError(err)) {
@@ -284,40 +282,40 @@ const CreateProfileForm: React.FC<CreateProfileFormProps> = ({ onSuccess, onCanc
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-        <label className="block text-sm font-medium mb-1">Name</label>
-        <input name="name" value={form.name} onChange={handleChange} className="modern-input w-full" required placeholder="Profile Name" title="Profile Name" />
+    <form onSubmit={handleSubmit} className="space-y-4" key={188153}>
+      <div key={241917}>
+        <label className="block text-sm font-medium mb-1" key={200751}>Name</label>
+        <input name="name" value={form.name} onChange={handleChange} className="modern-input w-full" required placeholder="Profile Name" title="Profile Name" / key={333434}>
       </div>
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-1">Max Stake</label>
-          <input name="maxStake" type="number" value={form.maxStake} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Max Stake" title="Max Stake" />
+      <div className="grid grid-cols-2 gap-4" key={354810}>
+        <div key={241917}>
+          <label className="block text-sm font-medium mb-1" key={200751}>Max Stake</label>
+          <input name="maxStake" type="number" value={form.maxStake} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Max Stake" title="Max Stake" / key={616111}>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Max Exposure</label>
-          <input name="maxExposure" type="number" value={form.maxExposure} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Max Exposure" title="Max Exposure" />
+        <div key={241917}>
+          <label className="block text-sm font-medium mb-1" key={200751}>Max Exposure</label>
+          <input name="maxExposure" type="number" value={form.maxExposure} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Max Exposure" title="Max Exposure" / key={718024}>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Stop Loss</label>
-          <input name="stopLoss" type="number" value={form.stopLoss} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Stop Loss" title="Stop Loss" />
+        <div key={241917}>
+          <label className="block text-sm font-medium mb-1" key={200751}>Stop Loss</label>
+          <input name="stopLoss" type="number" value={form.stopLoss} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Stop Loss" title="Stop Loss" / key={274070}>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Take Profit</label>
-          <input name="takeProfit" type="number" value={form.takeProfit} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Take Profit" title="Take Profit" />
+        <div key={241917}>
+          <label className="block text-sm font-medium mb-1" key={200751}>Take Profit</label>
+          <input name="takeProfit" type="number" value={form.takeProfit} onChange={handleChange} className="modern-input w-full" min={0} required placeholder="Take Profit" title="Take Profit" / key={747806}>
         </div>
-        <div>
-          <label className="block text-sm font-medium mb-1">Kelly Fraction</label>
-          <input name="kellyFraction" type="number" value={form.kellyFraction} onChange={handleChange} className="modern-input w-full" min={0.01} step={0.01} required placeholder="Kelly Fraction" title="Kelly Fraction" />
+        <div key={241917}>
+          <label className="block text-sm font-medium mb-1" key={200751}>Kelly Fraction</label>
+          <input name="kellyFraction" type="number" value={form.kellyFraction} onChange={handleChange} className="modern-input w-full" min={0.01} step={0.01} required placeholder="Kelly Fraction" title="Kelly Fraction" / key={3152}>
         </div>
       </div>
-      {error && <div className="text-red-600 text-sm">{error}</div>}
-      <div className="flex gap-2 mt-4">
-        <button type="submit" className="modern-button" disabled={submitting}>
+      {error && <div className="text-red-600 text-sm" key={79448}>{error}</div>}
+      <div className="flex gap-2 mt-4" key={396830}>
+        <button type="submit" className="modern-button" disabled={submitting} key={998670}>
           {submitting ? 'Creating...' : 'Create'}
         </button>
-        <button type="button" className="modern-button" onClick={onCancel} disabled={submitting}>
-          Cancel
+        <button type="button" className="modern-button" onClick={onCancel} disabled={submitting} key={2862}>
+          Cancel;
         </button>
       </div>
     </form>

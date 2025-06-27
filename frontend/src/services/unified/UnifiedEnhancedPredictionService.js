@@ -1,6 +1,6 @@
 /**
- * Unified Enhanced Prediction Service
- * Orchestrates all enhanced mathematical prediction services
+ * Unified Enhanced Prediction Service;
+ * Orchestrates all enhanced mathematical prediction services;
  */
 import { UnifiedLogger } from "./UnifiedLogger";
 import { UnifiedCache } from "./UnifiedCache";
@@ -19,11 +19,11 @@ class UnifiedEnhancedPredictionService {
         return UnifiedEnhancedPredictionService.instance;
     }
     /**
-     * Generate a unified enhanced prediction
+     * Generate a unified enhanced prediction;
      */
     async generatePrediction(request) {
-        const startTime = Date.now();
-        const predictionId = `pred_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+
         try {
             this.logger.info("Starting unified enhanced prediction", {
                 predictionId,
@@ -31,9 +31,9 @@ class UnifiedEnhancedPredictionService {
                 sport: request.sport,
                 processingLevel: request.processing_level,
             });
-            // Step 1: Input validation and preprocessing
+            // Step 1: Input validation and preprocessing;
             this.validatePredictionRequest(request);
-            // Step 2: Get unified prediction from backend
+            // Step 2: Get unified prediction from backend;
             const unifiedResult = await this.backendService.getUnifiedPrediction({
                 event_id: request.event_id,
                 sport: request.sport,
@@ -41,15 +41,15 @@ class UnifiedEnhancedPredictionService {
                 include_all_enhancements: request.processing_level !== "basic",
                 processing_level: request.processing_level,
             });
-            // Step 3: Calculate additional metrics and analysis
-            const additionalAnalysis = await this.performAdditionalAnalysis(request, unifiedResult);
-            // Step 4: Generate explainability insights
-            const explainability = await this.generateExplainability(request, unifiedResult);
-            // Step 5: Create recommendations
-            const recommendations = this.generateRecommendations(unifiedResult, additionalAnalysis);
-            // Step 6: Validate outputs
-            const validationResults = this.validatePredictionResults(unifiedResult);
-            const totalProcessingTime = Date.now() - startTime;
+            // Step 3: Calculate additional metrics and analysis;
+
+            // Step 4: Generate explainability insights;
+
+            // Step 5: Create recommendations;
+
+            // Step 6: Validate outputs;
+
+
             const response = {
                 prediction_id: predictionId,
                 event_id: request.event_id,
@@ -57,7 +57,7 @@ class UnifiedEnhancedPredictionService {
                 timestamp: new Date().toISOString(),
                 final_prediction: unifiedResult.predictions.enhanced_revolutionary,
                 prediction_confidence: unifiedResult.unified_confidence,
-                uncertainty_bounds: unifiedResult.enhanced_revolutionary
+                uncertainty_bounds: unifiedResult.enhanced_revolutionary;
                     .uncertainty_bounds,
                 confidence_intervals: {
                     "90%": unifiedResult.enhanced_revolutionary.confidence_intervals["90%"],
@@ -91,7 +91,7 @@ class UnifiedEnhancedPredictionService {
                     original_features: request.features,
                     engineered_features: unifiedResult.feature_engineering.engineered_features,
                     feature_importance: unifiedResult.feature_engineering.feature_importance,
-                    feature_interactions: unifiedResult.feature_engineering.information_theory_metrics
+                    feature_interactions: unifiedResult.feature_engineering.information_theory_metrics;
                         .mutual_information,
                     dimensionality_reduction: unifiedResult.feature_engineering.dimensionality_reduction,
                 },
@@ -108,8 +108,8 @@ class UnifiedEnhancedPredictionService {
                     total_processing_time: totalProcessingTime,
                     component_processing_times: unifiedResult.enhanced_revolutionary.component_processing_times,
                     memory_usage: unifiedResult.enhanced_revolutionary.memory_usage,
-                    gpu_utilization: request.use_gpu_acceleration
-                        ? additionalAnalysis.gpu_utilization
+                    gpu_utilization: request.use_gpu_acceleration;
+                        ? additionalAnalysis.gpu_utilization;
                         : undefined,
                     cache_hit_rate: additionalAnalysis.cache_hit_rate,
                     accuracy_estimate: additionalAnalysis.accuracy_estimate,
@@ -125,10 +125,10 @@ class UnifiedEnhancedPredictionService {
                 explainability,
                 recommendations,
             };
-            // Cache the result if requested
+            // Cache the result if requested;
             if (request.cache_results) {
-                const cacheKey = `unified_prediction:${request.event_id}:${JSON.stringify(request.features)}`;
-                await this.cache.set(cacheKey, response, 300); // Cache for 5 minutes
+
+                await this.cache.set(cacheKey, response, 300); // Cache for 5 minutes;
             }
             this.logger.info("Unified enhanced prediction completed successfully", {
                 predictionId,
@@ -151,16 +151,16 @@ class UnifiedEnhancedPredictionService {
         }
     }
     /**
-     * Get model performance metrics
+     * Get model performance metrics;
      */
     async getModelPerformance() {
         try {
-            const modelStatus = await this.backendService.getEnhancedModelStatus();
+
             return modelStatus.models.map((model) => ({
                 model_id: model.id,
                 model_name: model.name,
                 accuracy: model.accuracy,
-                precision: 0.85, // Would come from backend
+                precision: 0.85, // Would come from backend;
                 recall: 0.82,
                 f1_score: 0.83,
                 auc_roc: 0.89,
@@ -168,7 +168,7 @@ class UnifiedEnhancedPredictionService {
                 prediction_speed: model.performance_metrics.prediction_speed,
                 memory_usage: model.performance_metrics.memory_usage,
                 last_update: model.last_update,
-                training_data_size: 10000, // Would come from backend
+                training_data_size: 10000, // Would come from backend;
                 feature_count: 150,
                 mathematical_properties: model.mathematical_properties,
             }));
@@ -179,12 +179,12 @@ class UnifiedEnhancedPredictionService {
         }
     }
     /**
-     * Get system health metrics
+     * Get system health metrics;
      */
     async getSystemHealth() {
         try {
-            const healthCheck = await this.backendService.healthCheck();
-            const modelStatus = await this.backendService.getEnhancedModelStatus();
+
+
             return {
                 overall_status: healthCheck.status === "healthy" ? "healthy" : "degraded",
                 component_status: {
@@ -193,8 +193,8 @@ class UnifiedEnhancedPredictionService {
                 },
                 error_rate: modelStatus.system_health.error_rate,
                 average_response_time: modelStatus.system_health.average_response_time,
-                throughput: 50, // Would be calculated from metrics
-                cpu_usage: 45, // Would come from system monitoring
+                throughput: 50, // Would be calculated from metrics;
+                cpu_usage: 45, // Would come from system monitoring;
                 memory_usage: 60,
                 gpu_usage: 30,
                 cache_efficiency: 85,
@@ -208,15 +208,15 @@ class UnifiedEnhancedPredictionService {
         }
     }
     /**
-     * Get batch predictions for multiple events
+     * Get batch predictions for multiple events;
      */
     async getBatchPredictions(requests) {
-        const results = [];
-        const batchSize = 5; // Process in batches to avoid overwhelming the system
-        for (let i = 0; i < requests.length; i += batchSize) {
-            const batch = requests.slice(i, i + batchSize);
+
+        const batchSize = 5; // Process in batches to avoid overwhelming the system;
+        for (const i = 0; i < requests.length; i += batchSize) {
+
             try {
-                const batchResults = await Promise.all(batch.map((request) => this.generatePrediction(request)));
+
                 results.push(...batchResults);
             }
             catch (error) {
@@ -224,7 +224,7 @@ class UnifiedEnhancedPredictionService {
                     batchIndex: Math.floor(i / batchSize),
                     error: error.message,
                 });
-                // Continue with next batch even if this one fails
+                // Continue with next batch even if this one fails;
             }
         }
         this.logger.info("Batch predictions completed", {
@@ -235,12 +235,12 @@ class UnifiedEnhancedPredictionService {
         return results;
     }
     /**
-     * Get real-time prediction updates
+     * Get real-time prediction updates;
      */
     async getRealTimePredictionUpdates(predictionId) {
         try {
-            // This would typically use WebSockets or Server-Sent Events
-            // For now, we'll simulate with an API call
+            // This would typically use WebSockets or Server-Sent Events;
+            // For now, we'll simulate with an API call;
             const updates = {
                 timestamp: new Date().toISOString(),
                 prediction_confidence: 0.85 + Math.random() * 0.1,
@@ -267,7 +267,7 @@ class UnifiedEnhancedPredictionService {
             throw error;
         }
     }
-    // Private helper methods
+    // Private helper methods;
     validatePredictionRequest(request) {
         if (!request.event_id || !request.sport || !request.features) {
             throw new Error("Missing required fields: event_id, sport, or features");
@@ -283,7 +283,7 @@ class UnifiedEnhancedPredictionService {
         }
     }
     async performAdditionalAnalysis(request, unifiedResult) {
-        // Simulate additional analysis
+        // Simulate additional analysis;
         return {
             data_quality_score: 0.92,
             outlier_detected: false,
@@ -336,23 +336,23 @@ class UnifiedEnhancedPredictionService {
         };
     }
     generateRecommendations(unifiedResult, additionalAnalysis) {
-        const confidence = unifiedResult.unified_confidence;
-        const rigorScore = unifiedResult.mathematical_analysis.mathematical_rigor_score;
+
+
         return {
             confidence_level: confidence > 0.8 ? "high" : confidence > 0.6 ? "medium" : "low",
-            risk_level: unifiedResult.risk_assessment.portfolio_risk.value_at_risk > 0.2
+            risk_level: unifiedResult.risk_assessment.portfolio_risk.value_at_risk > 0.2;
                 ? "high"
-                : unifiedResult.risk_assessment.portfolio_risk.value_at_risk > 0.1
+                : unifiedResult.risk_assessment.portfolio_risk.value_at_risk > 0.1;
                     ? "medium"
                     : "low",
             suggested_actions: [
-                confidence > 0.8
+                confidence > 0.8;
                     ? "High confidence prediction - consider larger position"
                     : "Lower confidence - reduce position size",
-                rigorScore > 90
+                rigorScore > 90;
                     ? "Strong mathematical foundation - reliable prediction"
                     : "Review model assumptions",
-                additionalAnalysis.outlier_detected
+                additionalAnalysis.outlier_detected;
                     ? "Outlier detected - exercise caution"
                     : "Normal data pattern detected",
             ],
@@ -381,8 +381,8 @@ class UnifiedEnhancedPredictionService {
         };
     }
     validatePredictionResults(unifiedResult) {
-        const prediction = unifiedResult.predictions.enhanced_revolutionary;
-        const confidence = unifiedResult.unified_confidence;
+
+
         return {
             output_valid: !isNaN(prediction) &&
                 isFinite(prediction) &&

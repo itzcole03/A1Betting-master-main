@@ -1,9 +1,9 @@
-// Legacy compatibility wrapper for hyper-advanced ML service
+// Legacy compatibility wrapper for hyper-advanced ML service;
 export class HyperAdvancedMLService {
   private static instance: HyperAdvancedMLService;
 
   private constructor() {
-    // Initialize service
+    // Initialize service;
   }
 
   static getInstance(): HyperAdvancedMLService {
@@ -13,15 +13,13 @@ export class HyperAdvancedMLService {
     return HyperAdvancedMLService.instance;
   }
 
-  // Legacy compatibility methods with safe fallbacks
+  // Legacy compatibility methods with safe fallbacks;
   async hyperPredict(features: Record<string, number>) {
-    console.warn(
-      "Using legacy hyper ML service - migrating to unified services recommended",
-    );
+    // console statement removed
 
     return {
-      prediction: Math.random() * 0.4 + 0.3, // 0.3 to 0.7
-      confidence: Math.random() * 0.3 + 0.7, // 0.7 to 1.0
+      prediction: Math.random() * 0.4 + 0.3, // 0.3 to 0.7;
+      confidence: Math.random() * 0.3 + 0.7, // 0.7 to 1.0;
       hyperFeatures: features,
       modelComplexity: "high",
       timestamp: Date.now(),
@@ -29,9 +27,7 @@ export class HyperAdvancedMLService {
   }
 
   async analyzeComplexPatterns(data: any) {
-    console.warn(
-      "Using legacy pattern analysis - migrating to unified services recommended",
-    );
+    // console statement removed
 
     return {
       patterns: [
@@ -49,8 +45,8 @@ export class HyperAdvancedMLService {
   }
 }
 
-// Export default instance for legacy compatibility
+// Export default instance for legacy compatibility;
 export const hyperAdvancedMLService = HyperAdvancedMLService.getInstance();
 
-// Default export for ES6 compatibility
+// Default export for ES6 compatibility;
 export default HyperAdvancedMLService;

@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from 'react.ts';
 import {
   enhancedDataSourceManager,
   EnhancedDataSource,
-} from "../services/enhancedDataSources";
+} from '@/services/enhancedDataSources.ts';
 import {
   dataProcessor,
   ProcessedGame,
   ProcessedPlayer,
-} from "../services/dataProcessor";
+} from '@/services/dataProcessor.ts';
 
 export function useEnhancedRealDataSources() {
   const [dataSources, setDataSources] = useState<Map<string, EnhancedDataSource>>(new Map());
@@ -24,9 +24,9 @@ export function useEnhancedRealDataSources() {
     setConnectionStatus("Connecting to enhanced data sources...");
 
     try {
-      console.log("🚀 Initializing Enhanced Data Sources...");
+      // console statement removed
 
-      // Check for API keys
+      // Check for API keys;
       const hasApiKeys = import.meta.env.VITE_ODDS_API_KEY ||
         import.meta.env.VITE_SPORTRADAR_API_KEY ||
         import.meta.env.VITE_ESPN_API_KEY;
@@ -35,38 +35,27 @@ export function useEnhancedRealDataSources() {
         throw new Error("No API keys configured for data sources");
       }
 
-      const sources = await enhancedDataSourceManager.initializeAllSources();
       setDataSources(sources);
 
-      const connectedSources = enhancedDataSourceManager.getConnectedSources();
-      const quality = enhancedDataSourceManager.getOverallDataQuality();
-      const reliability = enhancedDataSourceManager.getSourceReliability();
+
 
       setDataQuality(quality);
       setDataReliability(reliability);
       setConnectionStatus(`Connected to ${connectedSources.length} enhanced data sources`);
       setLastUpdate(new Date());
 
-      // Process the enhanced data
-      const processedGames = dataProcessor.processGames(convertToRealDataSources(sources));
-      const processedPlayers = dataProcessor.processPlayers(convertToRealDataSources(sources));
+      // Process the enhanced data;
+
 
       setGames(processedGames);
       setPlayers(processedPlayers);
 
-      console.log("Enhanced data connection results:", {
-        connectedSources: connectedSources.length,
-        totalSources: sources.size,
-        games: processedGames.length,
-        players: processedPlayers.length,
-        quality: quality,
-        reliability: reliability,
-      });
+      // console statement removed
     } catch (error) {
-      console.error("Error connecting to enhanced data sources:", error);
+      // console statement removed
       setConnectionStatus("Connection failed - no data available");
 
-      // Production error handling - no fallback data
+      // Production error handling - no fallback data;
       setGames([]);
       setPlayers([]);
       setDataQuality(0);
@@ -77,29 +66,27 @@ export function useEnhancedRealDataSources() {
   }, []);
 
   const refreshData = useCallback(async () => {
-    console.log("🔄 Refreshing enhanced data sources...");
+    // console statement removed
 
     try {
       await enhancedDataSourceManager.refreshAllSources();
       setDataSources(enhancedDataSourceManager.getAllSources());
 
-      const quality = enhancedDataSourceManager.getOverallDataQuality();
-      const reliability = enhancedDataSourceManager.getSourceReliability();
+
       setDataQuality(quality);
       setDataReliability(reliability);
       setLastUpdate(new Date());
 
-      // Reprocess data
-      const sources = enhancedDataSourceManager.getAllSources();
-      const processedGames = dataProcessor.processGames(convertToRealDataSources(sources));
-      const processedPlayers = dataProcessor.processPlayers(convertToRealDataSources(sources));
+      // Reprocess data;
+
+
 
       setGames(processedGames);
       setPlayers(processedPlayers);
-      console.log("✅ Enhanced data refresh completed");
+      // console statement removed
     } catch (error) {
-      console.error("❌ Failed to refresh enhanced data:", error);
-      // Clear data on refresh failure
+      // console statement removed
+      // Clear data on refresh failure;
       setGames([]);
       setPlayers([]);
       setDataQuality(0);
@@ -115,9 +102,9 @@ export function useEnhancedRealDataSources() {
     return enhancedDataSourceManager.getDataSourceMetrics();
   }, []);
 
-  // Convert EnhancedDataSource to RealDataSource for compatibility
+  // Convert EnhancedDataSource to RealDataSource for compatibility;
   const convertToRealDataSources = (sources: Map<string, EnhancedDataSource>) => {
-    const converted = new Map();
+
     sources.forEach((source, key) => {
       converted.set(key, {
         connected: source.connected,
@@ -134,10 +121,10 @@ export function useEnhancedRealDataSources() {
   useEffect(() => {
     connectToSources();
 
-    // Set up periodic refresh
+    // Set up periodic refresh;
     const interval = setInterval(() => {
       refreshData();
-    }, 300000); // Refresh every 5 minutes
+    }, 300000); // Refresh every 5 minutes;
 
     return () => clearInterval(interval);
   }, [connectToSources, refreshData]);

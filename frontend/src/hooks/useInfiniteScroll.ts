@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react.ts';
 
 
 
@@ -21,26 +21,26 @@ export function useInfiniteScroll<T>(
 ): UseInfiniteScrollResult {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-  const containerRef = useRef<HTMLElement>(null);
-  const observer = useRef<IntersectionObserver | null>(null);
+
+
   const loadMore = useCallback(async () => {
     if (isLoading || !hasMore) return;
 
     setIsLoading(true);
     try {
-      const newItems = await fetchMore();
+
       if (newItems.length === 0) {
         setHasMore(false);
       }
     } catch (error) {
-      console.error('Error loading more items:', error);
+      // console statement removed
       setHasMore(false);
     } finally {
       setIsLoading(false);
     }
   }, [isLoading, hasMore, fetchMore]);
   useEffect(() => {
-    const container = containerRef.current;
+
     if (!container) return;
 
     const { threshold = 0.5, rootMargin = '20px', root = null } = options;
@@ -55,7 +55,7 @@ export function useInfiniteScroll<T>(
       {
         threshold,
         rootMargin,
-        root
+        root;
       }
     );
 
@@ -72,6 +72,6 @@ export function useInfiniteScroll<T>(
     isLoading,
     hasMore,
     loadMore,
-    containerRef
+    containerRef;
   };
 } 

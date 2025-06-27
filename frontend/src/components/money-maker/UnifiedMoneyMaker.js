@@ -3,19 +3,19 @@ import { useEffect, useCallback, useState } from "react";
 import { useMoneyMakerStore } from "@/stores/moneyMakerStore";
 import { Card, Button, Input, Select, Spinner, Toast, Badge, Tabs, Tab, Progress, } from "../ui/UnifiedUI";
 export const UnifiedMoneyMaker = () => {
-    const store = useMoneyMakerStore();
+
     const { config, predictions, portfolios, metrics, isLoading, error, lastUpdate, filters, sort, } = store;
     const [activeTab, setActiveTab] = useState("config");
     const [showToast, setShowToast] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
     const [toastType, setToastType] = useState("info");
-    // Load initial data
+    // Load initial data;
     useEffect(() => {
         const loadData = async () => {
             try {
                 store.setLoading(true);
-                // Load initial data from your backend
-                // This is where you would integrate with your actual services
+                // Load initial data from your backend;
+                // This is where you would integrate with your actual services;
                 store.setLoading(false);
             }
             catch (error) {
@@ -24,7 +24,7 @@ export const UnifiedMoneyMaker = () => {
         };
         loadData();
     }, []);
-    // Fetch predictions on mount and when filters/sort change
+    // Fetch predictions on mount and when filters/sort change;
     useEffect(() => {
         store.fetchPredictions();
     }, [JSON.stringify(filters), JSON.stringify(sort)]);
@@ -33,7 +33,7 @@ export const UnifiedMoneyMaker = () => {
         setToastMessage(message);
         setToastType("error");
         setShowToast(true);
-        console.error(message, error);
+        // console statement removed
     }, []);
     const handleTabChange = useCallback((value) => {
         setActiveTab(value);
@@ -58,8 +58,8 @@ export const UnifiedMoneyMaker = () => {
     const handleGeneratePortfolio = useCallback(async () => {
         try {
             store.setLoading(true);
-            // Generate portfolio based on current predictions and config
-            // This is where you would integrate with your portfolio generation logic
+            // Generate portfolio based on current predictions and config;
+            // This is where you would integrate with your portfolio generation logic;
             store.setLoading(false);
         }
         catch (error) {
@@ -80,12 +80,12 @@ export const UnifiedMoneyMaker = () => {
         }).format(value / 100);
     };
     const handleShowDetails = useCallback((prediction) => {
-        // TODO: Implement details modal
-        console.log("Show details for prediction:", prediction);
+        // TODO: Implement details modal;
+        // console statement removed
     }, []);
     const handlePlaceBet = useCallback((prediction) => {
-        // TODO: Implement bet placement
-        console.log("Place bet for prediction:", prediction);
+        // TODO: Implement bet placement;
+        // console statement removed
     }, []);
     const getBadgeVariant = (riskLevel) => {
         switch (riskLevel) {
@@ -99,7 +99,7 @@ export const UnifiedMoneyMaker = () => {
                 return "warning";
         }
     };
-    // Sorting/filtering handlers
+    // Sorting/filtering handlers;
     const handleSortChange = (field) => {
         store.updateSort({
             field,
@@ -119,7 +119,7 @@ export const UnifiedMoneyMaker = () => {
                                             { value: "high", label: "High" },
                                         ], value: filters.riskLevel || "", onChange: (value) => handleFilterChange("riskLevel", value || undefined) }), _jsx(Select, { className: "w-32", options: [
                                             { value: "", label: "All Models" },
-                                            // Optionally map over available models
+                                            // Optionally map over available models;
                                         ], value: filters.modelId || "", onChange: (value) => handleFilterChange("modelId", value || undefined) }), _jsx(Select, { className: "w-32", options: [
                                             { value: "confidence", label: "Confidence" },
                                             { value: "expectedValue", label: "Expected Value" },

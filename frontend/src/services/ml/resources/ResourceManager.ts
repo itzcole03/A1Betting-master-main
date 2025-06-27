@@ -1,5 +1,5 @@
-import { BaseModel } from '../models/BaseModel';
-// Minimal browser-compatible EventEmitter
+import { BaseModel } from '@/models/BaseModel.ts';
+// Minimal browser-compatible EventEmitter;
 class EventEmitter {
   private listeners: { [event: string]: Function[] } = {};
   on(event: string, fn: Function) {
@@ -14,7 +14,7 @@ class EventEmitter {
     (this.listeners[event] || []).forEach(fn => fn(...args));
   }
 }
-// import * as tf from '@tensorflow/tfjs-node'; // Disabled for browser compatibility
+// import * as tf from '@tensorflow/tfjs-node.ts'; // Disabled for browser compatibility;
 
 interface ResourceAllocation {
   modelId: string;
@@ -45,36 +45,34 @@ export class ResourceManager extends EventEmitter {
 
   private async initializeResources(): Promise<void> {
     try {
-      // GPU/CPU info collection disabled for browser build
+      // GPU/CPU info collection disabled for browser build;
       this.totalGPUMemory = 0;
       this.gpuMemoryLimit = 0;
       this.totalCPUMemory = 0;
       this.cpuMemoryLimit = 0;
     } catch (error) {
-      console.error('Failed to initialize resources:', error);
-      // Fallback to conservative limits
-      this.totalGPUMemory = 4 * 1024 * 1024 * 1024; // 4GB
+      // console statement removed
+      // Fallback to conservative limits;
+      this.totalGPUMemory = 4 * 1024 * 1024 * 1024; // 4GB;
       this.gpuMemoryLimit = this.totalGPUMemory * 0.5;
-      this.totalCPUMemory = 8 * 1024 * 1024 * 1024; // 8GB
+      this.totalCPUMemory = 8 * 1024 * 1024 * 1024; // 8GB;
       this.cpuMemoryLimit = this.totalCPUMemory * 0.5;
     }
   }
 
   public async allocateResources(model: BaseModel): Promise<void> {
-    const modelId = model.config.name;
 
     if (this.allocations.has(modelId)) {
       throw new Error(`Resources already allocated for model ${modelId}`);
     }
 
     try {
-      // Get model resource requirements
-      const requirements = await this.getModelRequirements(model);
+      // Get model resource requirements;
 
-      // Check if resources are available
+      // Check if resources are available;
       await this.checkResourceAvailability(requirements);
 
-      // Allocate resources
+      // Allocate resources;
       this.allocations.set(modelId, {
         modelId,
         gpuMemory: requirements.gpuMemory,
@@ -93,7 +91,7 @@ export class ResourceManager extends EventEmitter {
   }
 
   public async releaseResources(modelId: string): Promise<void> {
-    const allocation = this.allocations.get(modelId);
+
     if (allocation) {
       this.allocations.delete(modelId);
       this.emit('resourcesReleased', { modelId, allocation });
@@ -104,21 +102,21 @@ export class ResourceManager extends EventEmitter {
     gpuMemory: number;
     cpuMemory: number;
   }> {
-    // Estimate resource requirements based on model type and configuration
-    const baseMemory = 100 * 1024 * 1024; // 100MB base memory
+    // Estimate resource requirements based on model type and configuration;
+    const baseMemory = 100 * 1024 * 1024; // 100MB base memory;
 
-    let gpuMemory = baseMemory;
-    let cpuMemory = baseMemory;
+    const gpuMemory = baseMemory;
+    const cpuMemory = baseMemory;
 
     switch (model.config.type) {
       case 'deepLearning':
-        gpuMemory *= 4; // Deep learning models need more GPU memory
+        gpuMemory *= 4; // Deep learning models need more GPU memory;
         break;
       case 'timeSeries':
-        cpuMemory *= 2; // Time series models need more CPU memory
+        cpuMemory *= 2; // Time series models need more CPU memory;
         break;
       case 'optimization':
-        cpuMemory *= 3; // Optimization models need more CPU memory
+        cpuMemory *= 3; // Optimization models need more CPU memory;
         break;
     }
 
@@ -129,8 +127,7 @@ export class ResourceManager extends EventEmitter {
     gpuMemory: number;
     cpuMemory: number;
   }): Promise<void> {
-    const currentGPUUsage = this.getCurrentGPUUsage();
-    const currentCPUUsage = this.getCurrentCPUUsage();
+
 
     if (currentGPUUsage + requirements.gpuMemory > this.gpuMemoryLimit) {
       throw new Error('Insufficient GPU memory available');
@@ -144,14 +141,14 @@ export class ResourceManager extends EventEmitter {
   private getCurrentGPUUsage(): number {
     return Array.from(this.allocations.values()).reduce(
       (total, allocation) => total + allocation.gpuMemory,
-      0
+      0;
     );
   }
 
   private getCurrentCPUUsage(): number {
     return Array.from(this.allocations.values()).reduce(
       (total, allocation) => total + allocation.cpuMemory,
-      0
+      0;
     );
   }
 
@@ -159,8 +156,7 @@ export class ResourceManager extends EventEmitter {
     gpu: { used: number; total: number; percentage: number };
     cpu: { used: number; total: number; percentage: number };
   } {
-    const gpuUsed = this.getCurrentGPUUsage();
-    const cpuUsed = this.getCurrentCPUUsage();
+
 
     return {
       gpu: {
@@ -177,11 +173,11 @@ export class ResourceManager extends EventEmitter {
   }
 
   public async cleanup(): Promise<void> {
-    // Release all allocated resources
-    const modelIds = Array.from(this.allocations.keys());
+    // Release all allocated resources;
+
     await Promise.all(modelIds.map(id => this.releaseResources(id)));
 
-    // Clear GPU memory
+    // Clear GPU memory;
     await tf.disposeVariables();
 
     this.emit('cleanupComplete');

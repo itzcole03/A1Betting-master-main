@@ -1,20 +1,18 @@
-#!/usr/bin/env node
+#!/usr/bin/env node;
 
 /**
- * Comprehensive File Cleanup Script - Phase 3
+ * Comprehensive File Cleanup Script - Phase 3;
  *
- * Removes obsolete duplicate files that have been consolidated into Universal Systems
+ * Removes obsolete duplicate files that have been consolidated into Universal Systems;
  */
 
-const fs = require("fs");
-const path = require("path");
 
 // ============================================================================
-// FILES TO REMOVE
+// FILES TO REMOVE;
 // ============================================================================
 
 const filesToRemove = [
-  // MoneyMaker Ecosystem - ALL variants now consolidated
+  // MoneyMaker Ecosystem - ALL variants now consolidated;
   "components/MoneyMaker/UltimateMoneyMaker.tsx",
   "components/MoneyMaker/UltimateMoneyMaker.js",
   "components/MoneyMaker/UltimateMoneyMaker.d.ts",
@@ -57,12 +55,12 @@ const filesToRemove = [
   "components/UltimateMoneyMakerEnhanced.js",
   "components/UltimateMoneyMakerEnhanced.d.ts",
 
-  // Strategy Components - consolidated into UniversalMoneyMaker
+  // Strategy Components - consolidated into UniversalMoneyMaker;
   "components/strategy/UnifiedMoneyMakerIntegration.tsx",
   "components/strategy/UnifiedMoneyMakerIntegration.js",
   "components/strategy/UnifiedMoneyMakerIntegration.d.ts",
 
-  // PayoutPreview variants - consolidated
+  // PayoutPreview variants - consolidated;
   "components/PayoutPreview.tsx",
   "components/PayoutPreview.js",
   "components/PayoutPreview.d.ts",
@@ -76,7 +74,7 @@ const filesToRemove = [
   "components/prediction/PayoutPreview.js",
   "components/prediction/PayoutPreview.d.ts",
 
-  // Analytics Ecosystem - ALL variants now consolidated
+  // Analytics Ecosystem - ALL variants now consolidated;
   "components/analytics/AdvancedAnalytics.tsx",
   "components/analytics/AdvancedAnalytics.js",
   "components/analytics/AdvancedAnalytics.d.ts",
@@ -142,7 +140,7 @@ const filesToRemove = [
   "components/AnalyticsPage.js",
   "components/AnalyticsPage.d.ts",
 
-  // Prediction Ecosystem - ALL variants now consolidated
+  // Prediction Ecosystem - ALL variants now consolidated;
   "components/predictions/BettingOpportunities.tsx",
   "components/predictions/BettingOpportunities.js",
   "components/predictions/BettingOpportunities.d.ts",
@@ -198,7 +196,7 @@ const filesToRemove = [
   "components/MLPredictions.js",
   "components/MLPredictions.d.ts",
 
-  // Dashboard variants - consolidated in Phase 1
+  // Dashboard variants - consolidated in Phase 1;
   "components/dashboard/Dashboard.tsx",
   "components/dashboard/Dashboard.js",
   "components/dashboard/Dashboard.d.ts",
@@ -212,7 +210,7 @@ const filesToRemove = [
   "components/features/dashboard/Dashboard.js",
   "components/features/dashboard/Dashboard.d.ts",
 
-  // Button variants - consolidated in Phase 1
+  // Button variants - consolidated in Phase 1;
   "components/common/buttons/Button.tsx",
   "components/common/buttons/Button.js",
   "components/common/buttons/Button.d.ts",
@@ -232,7 +230,7 @@ const filesToRemove = [
   "components/Button.js",
   "components/Button.d.ts",
 
-  // Theme variants - consolidated in Phase 1
+  // Theme variants - consolidated in Phase 1;
   "providers/ThemeProvider.tsx",
   "providers/ThemeProvider.js",
   "providers/ThemeProvider.d.ts",
@@ -246,7 +244,7 @@ const filesToRemove = [
   "store/useThemeStore.js",
   "store/useThemeStore.d.ts",
 
-  // Hook duplicates - consolidated in Phase 1
+  // Hook duplicates - consolidated in Phase 1;
   "hooks/useTheme.tsx",
   "hooks/useTheme.js",
   "hooks/useTheme.d.ts",
@@ -297,35 +295,32 @@ const directoriesToCleanup = [
 ];
 
 // ============================================================================
-// UTILITY FUNCTIONS
+// UTILITY FUNCTIONS;
 // ============================================================================
 
 function removeFile(filePath) {
-  const fullPath = path.join(__dirname, "..", filePath);
 
   if (fs.existsSync(fullPath)) {
     try {
       fs.unlinkSync(fullPath);
-      console.log(`✅ Removed: ${filePath}`);
+      // console statement removed
       return true;
     } catch (error) {
-      console.error(`❌ Failed to remove ${filePath}:`, error.message);
+      // console statement removed
       return false;
     }
   } else {
-    console.log(`⚠️  File not found: ${filePath}`);
+    // console statement removed
     return false;
   }
 }
 
 function removeDirectoryIfEmpty(dirPath) {
-  const fullPath = path.join(__dirname, "..", dirPath);
 
   if (fs.existsSync(fullPath)) {
     try {
-      const files = fs.readdirSync(fullPath);
 
-      // Only remove if directory is empty or only contains generated files
+      // Only remove if directory is empty or only contains generated files;
       const meaningfulFiles = files.filter(
         (file) =>
           !file.startsWith(".") &&
@@ -336,14 +331,14 @@ function removeDirectoryIfEmpty(dirPath) {
 
       if (meaningfulFiles.length === 0) {
         fs.rmSync(fullPath, { recursive: true, force: true });
-        console.log(`🗂️  Removed empty directory: ${dirPath}`);
+        // console statement removed
         return true;
       } else {
-        console.log(`📁 Keeping directory (has files): ${dirPath}`);
+        // console statement removed: ${dirPath}`);
         return false;
       }
     } catch (error) {
-      console.error(`❌ Failed to remove directory ${dirPath}:`, error.message);
+      // console statement removed
       return false;
     }
   }
@@ -352,44 +347,44 @@ function removeDirectoryIfEmpty(dirPath) {
 }
 
 function createSummaryReport(removedFiles, removedDirs) {
-  const report = `# Phase 3 Cleanup Summary Report
+  const report = `# Phase 3 Cleanup Summary Report;
 
-## 📊 Cleanup Results
+## 📊 Cleanup Results;
 
 ### Files Removed: ${removedFiles}
 ### Directories Cleaned: ${removedDirs}
 
-## ✅ Consolidation Status
+## ✅ Consolidation Status;
 
-### MoneyMaker System
-- ✅ Removed ${filesToRemove.filter((f) => f.includes("MoneyMaker") || f.includes("money-maker")).length} duplicate files
-- ✅ All functionality preserved in UniversalMoneyMaker
+### MoneyMaker System;
+- ✅ Removed ${filesToRemove.filter((f) => f.includes("MoneyMaker") || f.includes("money-maker")).length} duplicate files;
+- ✅ All functionality preserved in UniversalMoneyMaker;
 
-### Analytics System  
-- ✅ Removed ${filesToRemove.filter((f) => f.includes("analytics") || f.includes("Analytics")).length} duplicate files
-- ✅ All functionality preserved in UniversalAnalytics
+### Analytics System;  
+- ✅ Removed ${filesToRemove.filter((f) => f.includes("analytics") || f.includes("Analytics")).length} duplicate files;
+- ✅ All functionality preserved in UniversalAnalytics;
 
-### Prediction System
-- ✅ Removed ${filesToRemove.filter((f) => f.includes("prediction") || f.includes("Prediction")).length} duplicate files
-- ✅ All functionality preserved in UniversalPredictions
+### Prediction System;
+- ✅ Removed ${filesToRemove.filter((f) => f.includes("prediction") || f.includes("Prediction")).length} duplicate files;
+- ✅ All functionality preserved in UniversalPredictions;
 
-### Dashboard System
-- ✅ Removed ${filesToRemove.filter((f) => f.includes("dashboard") || f.includes("Dashboard")).length} duplicate files  
-- ✅ All functionality preserved in UniversalDashboard
+### Dashboard System;
+- ✅ Removed ${filesToRemove.filter((f) => f.includes("dashboard") || f.includes("Dashboard")).length} duplicate files;  
+- ✅ All functionality preserved in UniversalDashboard;
 
-### Button System
-- ✅ Removed ${filesToRemove.filter((f) => f.includes("button") || f.includes("Button")).length} duplicate files
-- ✅ All functionality preserved in UniversalButton
+### Button System;
+- ✅ Removed ${filesToRemove.filter((f) => f.includes("button") || f.includes("Button")).length} duplicate files;
+- ✅ All functionality preserved in UniversalButton;
 
-### Theme System
-- ✅ Removed ${filesToRemove.filter((f) => f.includes("theme") || f.includes("Theme")).length} duplicate files
-- ✅ All functionality preserved in UniversalThemeProvider
+### Theme System;
+- ✅ Removed ${filesToRemove.filter((f) => f.includes("theme") || f.includes("Theme")).length} duplicate files;
+- ✅ All functionality preserved in UniversalThemeProvider;
 
-### Hooks System
-- ✅ Removed ${filesToRemove.filter((f) => f.includes("hooks/")).length} duplicate hooks
-- ✅ All functionality preserved in UniversalHooks
+### Hooks System;
+- ✅ Removed ${filesToRemove.filter((f) => f.includes("hooks/")).length} duplicate hooks;
+- ✅ All functionality preserved in UniversalHooks;
 
-## 🎯 Final Status
+## 🎯 Final Status;
 
 **Total Files Consolidated: ${filesToRemove.length}**
 **Consolidation Rate: ~98.5%**
@@ -407,42 +402,40 @@ Phase 3 cleanup completed successfully!
 }
 
 // ============================================================================
-// MAIN EXECUTION
+// MAIN EXECUTION;
 // ============================================================================
 
 function main() {
-  console.log("🧹 Starting Phase 3 Comprehensive Cleanup...\n");
+  // console statement removed
 
-  let removedFiles = 0;
-  let removedDirs = 0;
+  const removedFiles = 0;
+  const removedDirs = 0;
 
-  // Remove individual files
-  console.log("📄 Removing obsolete duplicate files...\n");
+  // Remove individual files;
+  // console statement removed
   for (const file of filesToRemove) {
     if (removeFile(file)) {
       removedFiles++;
     }
   }
 
-  console.log(`\n📁 Cleaning up empty directories...\n`);
+  // console statement removed
   for (const dir of directoriesToCleanup) {
     if (removeDirectoryIfEmpty(dir)) {
       removedDirs++;
     }
   }
 
-  // Create summary report
+  // Create summary report;
   createSummaryReport(removedFiles, removedDirs);
 
-  console.log(`\n🎉 Phase 3 Cleanup Complete!`);
-  console.log(
-    `📊 Removed ${removedFiles} files and ${removedDirs} directories`,
-  );
-  console.log(`✨ Codebase is now fully consolidated!\n`);
-  console.log(`📋 Summary report generated: PHASE_3_CLEANUP_REPORT.md\n`);
+  // console statement removed
+  // console statement removed
+  // console statement removed
+  // console statement removed
 }
 
-// Run if called directly
+// Run if called directly;
 if (require.main === module) {
   main();
 }

@@ -1,6 +1,6 @@
-import { create } from 'zustand';
-import { devtools } from 'zustand/middleware';
-import { OddsData, MarketOdds } from '@/types/betting';
+import { create } from 'zustand.ts';
+import { devtools } from 'zustand/middleware.ts';
+import { OddsData, MarketOdds } from '@/types/betting.ts';
 
 interface OddsState {
   oddsByEvent: Record<string, OddsData>;
@@ -25,11 +25,11 @@ export const useOddsStore = create<OddsState>()(
 
       updateOdds: (eventId: string, market: MarketOdds) =>
         set(state => {
-          const currentOdds = state.oddsByEvent[eventId];
+
           if (!currentOdds) return state;
 
           const updatedMarkets = currentOdds.markets.map(m =>
-            m.market_type === market.market_type ? market : m
+            m.market_type === market.market_type ? market : m;
           );
 
           return {
@@ -45,7 +45,7 @@ export const useOddsStore = create<OddsState>()(
         }),
 
       getOddsForEvent: (eventId: string) => {
-        const state = get();
+
         return state.oddsByEvent[eventId] || null;
       },
 

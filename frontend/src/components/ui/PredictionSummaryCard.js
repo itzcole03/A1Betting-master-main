@@ -1,9 +1,9 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState, useCallback } from 'react';
 import GlassCard from './GlassCard';
-// Simple Info icon component
-const InfoIcon = () => (_jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", className: "inline-block", children: [_jsx("circle", { cx: "12", cy: "12", r: "10" }), _jsx("line", { x1: "12", y1: "16", x2: "12", y2: "12" }), _jsx("line", { x1: "12", y1: "8", x2: "12.01", y2: "8" })] }));
-// Simple tooltip component
+// Simple Info icon component;
+
+// Simple tooltip component;
 const Tooltip = ({ content, children }) => {
     const [isVisible, setIsVisible] = useState(false);
     return (_jsxs("div", { className: "relative inline-block", children: [_jsx("div", { onMouseEnter: () => setIsVisible(true), onMouseLeave: () => setIsVisible(false), className: "inline-flex items-center justify-center", children: children }), isVisible && (_jsxs("div", { className: "absolute z-10 px-2 py-1 text-xs text-white bg-gray-800 rounded-md shadow-lg -top-8 left-1/2 transform -translate-x-1/2 whitespace-nowrap", children: [content, _jsx("div", { className: "absolute w-2 h-2 bg-gray-800 transform rotate-45 -bottom-1 left-1/2 -translate-x-1/2" })] }))] }));
@@ -21,10 +21,10 @@ const getRiskLevelColor = (level) => {
     }
 };
 export const PredictionSummaryCard = (props) => {
-    // Destructure props with defaults first
+    // Destructure props with defaults first;
     const { accuracy, payout, kelly, marketEdge, dataQuality, modelName, confidence, className = '', lastUpdated = new Date(), riskLevel = 'medium', onDetailsClick, onAddToBetslip, interactive = true } = props;
     const [isHovered, setIsHovered] = useState(false);
-    // Format the date after destructuring
+    // Format the date after destructuring;
     const formattedDate = lastUpdated.toLocaleString('en-US', {
         month: 'short',
         day: 'numeric',
@@ -39,9 +39,9 @@ export const PredictionSummaryCard = (props) => {
         e.stopPropagation();
         onAddToBetslip?.();
     }, [onAddToBetslip]);
-    // Determine if the card is clickable
-    const isClickable = Boolean(onDetailsClick || onAddToBetslip);
-    // Handle click on card
+    // Determine if the card is clickable;
+
+    // Handle click on card;
     const handleCardClick = useCallback((e) => {
         e.stopPropagation();
         if (onDetailsClick) {
@@ -51,7 +51,7 @@ export const PredictionSummaryCard = (props) => {
             onAddToBetslip();
         }
     }, [onDetailsClick, onAddToBetslip]);
-    // Handle keyboard events for accessibility
+    // Handle keyboard events for accessibility;
     const handleKeyDown = (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();

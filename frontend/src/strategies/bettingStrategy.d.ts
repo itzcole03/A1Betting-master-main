@@ -1,7 +1,7 @@
 import { BettingStrategyRequest, // { propositions: FrontendProposition[], bankroll: number, riskLevel: string }
 BettingStrategyResponse, // { propId, marketKey, outcome, odds, playerId, gameId?, description? }
 FrontendBetPlacementRequest, // { bets: BettingOpportunity[] } 
-BetPlacementResponse } from '../../../shared/betting';
+BetPlacementResponse } from '@/../shared/betting.ts';
 /**
  * Calculates a betting strategy based on selected props, bankroll, and risk level.
  * Calls the backend's /api/betting/calculate-strategy endpoint (currently mocked).

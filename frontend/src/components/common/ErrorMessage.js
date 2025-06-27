@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { Box, Typography, Button } from '@mui/material';
 import { Error as ErrorIcon } from '@mui/icons-material';
 export const ErrorMessage = ({ error, onRetry }) => {
-    const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
+
     return (_jsxs(Box, { sx: {
             display: 'flex',
             flexDirection: 'column',

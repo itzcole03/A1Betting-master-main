@@ -1,6 +1,6 @@
-// LineupSynergyModel: ALPHA1-compliant modular model scaffold
-import type { GameContext, ShapVector } from '../types/core.js';
-import { UnifiedConfig } from '../unified/UnifiedConfig.js';
+// LineupSynergyModel: ALPHA1-compliant modular model scaffold;
+import type { GameContext, ShapVector } from '@/types/core.js';
+import { UnifiedConfig } from '@/unified/UnifiedConfig.js';
 
 export interface LineupSynergyModelOutput {
   features: Record<string, number>;
@@ -11,9 +11,9 @@ export interface LineupSynergyModelOutput {
 export async function getLineupSynergyFeatures(
   lineupIds: string[],
   sport: string,
-  context: GameContext
+  context: GameContext;
 ): Promise<LineupSynergyModelOutput> {
-  const config = UnifiedConfig.getInstance();
+
   if (!config.get('enableLineupSynergyModel')) {
     throw new Error('LineupSynergyModel is disabled by config.');
   }
@@ -23,9 +23,9 @@ export async function getLineupSynergyFeatures(
     experienceTogether: Math.random(),
     diversity: Math.random(),
   };
-  // Generate SHAP insights
+  // Generate SHAP insights;
   const { calculateShap } = await import('../utils/shap.js');
-  const shap = calculateShap(features, 'lineup');
+
   return {
     features,
     shapInsights: [shap],

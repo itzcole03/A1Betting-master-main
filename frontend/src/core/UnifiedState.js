@@ -1,8 +1,8 @@
-// src/core/UnifiedState.ts
+// src/core/UnifiedState.ts;
 class UnifiedStateSingleton {
     constructor() {
         this.state = {};
-        // Initialize with any default critical states if necessary
+        // Initialize with any default critical states if necessary;
         // this.state.INITIAL_LOAD_COMPLETE = false;
     }
     set(key, value) {
@@ -12,7 +12,7 @@ class UnifiedStateSingleton {
         // If reactivity is needed, consider Zustand or an event bus.
     }
     get(key, defaultValue) {
-        const value = this.state[key];
+
         return value !== undefined ? value : defaultValue;
     }
     remove(key) {
@@ -26,11 +26,11 @@ class UnifiedStateSingleton {
         this.state = {};
     }
 }
-// Export a singleton instance
+// Export a singleton instance;
 export const unifiedState = new UnifiedStateSingleton();
 // // Example Usage:
 // unifiedState.set('SYSTEM_MAINTENANCE_MODE', true);
 // const isInMaintenance = unifiedState.get<boolean>('SYSTEM_MAINTENANCE_MODE', false);
 // if (isInMaintenance) {
-//   console.warn('Application is currently in maintenance mode.');
+//   // console statement removed
 // }

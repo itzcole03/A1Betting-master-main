@@ -58,7 +58,7 @@ export interface PredictionError {
   details?: unknown;
 }
 
-export interface ModelPrediction
+export interface ModelPrediction;
   extends Omit<
     Prediction,
     | 'id'

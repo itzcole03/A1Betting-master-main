@@ -1,4 +1,4 @@
-import { EventEmitter } from "eventemitter3";
+import { EventEmitter } from 'eventemitter3.ts';
 export interface MLModelConfig {
     name: string;
     type: "xgboost" | "lightgbm" | "randomforest" | "neural_network" | "ensemble";

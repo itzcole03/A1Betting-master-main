@@ -1,7 +1,7 @@
-import { EventEmitter } from 'events';
-import { Notification } from './notification/notificationManager';
-import { Sportsbook } from '@/types/betting';
-import { NotificationPreferences } from './notification/notificationManager';
+import { EventEmitter } from 'events.ts';
+import { Notification } from './notification/notificationManager.ts';
+import { Sportsbook } from '@/types/betting.ts';
+import { NotificationPreferences } from './notification/notificationManager.ts';
 interface VolumeData {
     totalVolume: number;
     lastUpdate: number;
@@ -30,19 +30,19 @@ export declare class BettingOpportunityService extends EventEmitter {
     private readonly CLEANUP_INTERVAL;
     private constructor();
     /**
-     * Get the singleton instance
+     * Get the singleton instance;
      */
     static getInstance(): BettingOpportunityService;
     /**
-     * Start monitoring for betting opportunities
+     * Start monitoring for betting opportunities;
      */
     startMonitoring(): void;
     /**
-     * Stop monitoring for betting opportunities
+     * Stop monitoring for betting opportunities;
      */
     stopMonitoring(): void;
     /**
-     * Handle new arbitrage opportunities
+     * Handle new arbitrage opportunities;
      */
     private handleArbitrageOpportunity;
     private updateMarketMetrics;
@@ -50,7 +50,7 @@ export declare class BettingOpportunityService extends EventEmitter {
     private calculateVolatility;
     private calculateTrend;
     /**
-     * Handle odds updates from line shopping service
+     * Handle odds updates from line shopping service;
      */
     private handleOddsUpdate;
     private handlePrediction;
@@ -58,27 +58,27 @@ export declare class BettingOpportunityService extends EventEmitter {
     private handleMarketAnomaly;
     private handleMarketEfficiency;
     /**
-     * Register a sportsbook for line shopping
+     * Register a sportsbook for line shopping;
      */
     registerSportsbook(sportsbook: Sportsbook): void;
     /**
-     * Update notification preferences
+     * Update notification preferences;
      */
     updateNotificationPreferences(preferences: Partial<NotificationPreferences>): void;
     /**
-     * Get all current notifications
+     * Get all current notifications;
      */
     getNotifications(): Notification[];
     /**
-     * Mark notification as read
+     * Mark notification as read;
      */
     markNotificationAsRead(notificationId: string): void;
     /**
-     * Clear expired opportunities and notifications
+     * Clear expired opportunities and notifications;
      */
     cleanup(): void;
     /**
-     * Get current monitoring status
+     * Get current monitoring status;
      */
     isActive(): boolean;
     getMarketMetrics(eventId: string): MarketMetrics | undefined;

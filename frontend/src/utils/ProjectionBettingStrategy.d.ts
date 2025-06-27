@@ -6,8 +6,8 @@ type ExtendedIntegratedData = Omit<IntegratedData, 'sentiment'> & {
     trends?: Record<string, unknown>;
     timestamp?: number;
 };
-import { ProjectionAnalysis } from "../analyzers/ProjectionAnalyzer";
-import { Decision, IntegratedData, Recommendation, Strategy } from "../core/PredictionEngine";
+import { ProjectionAnalysis } from '@/analyzers/ProjectionAnalyzer.ts';
+import { Decision, IntegratedData, Recommendation, Strategy } from '@/core/PredictionEngine.ts';
 export interface ProjectionPlugin {
     statType: string;
     evaluate: (projection: ProjectionAnalysis, config: StrategyConfig) => Recommendation[];

@@ -1,4 +1,4 @@
-import { DataPoint } from '@/types/core';
+import { DataPoint } from '@/types/core.ts';
 
 export type BetType = 'OVER' | 'UNDER';
 
@@ -41,7 +41,7 @@ export interface MarketData {
   movement: 'up' | 'down' | 'stable';
 }
 
-// Add to EventTypes
+// Add to EventTypes;
 export interface StrategyEvents {
   'strategy:recommendation': StrategyRecommendation;
   'strategy:opportunities': DataPoint[];

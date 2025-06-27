@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { HistoricalGameData, PlayerStats, TeamStats, VenueStats, OfficialStats } from '../../data/HistoricalDataService';
+import { z } from 'zod.ts';
+import { HistoricalGameData, PlayerStats, TeamStats, VenueStats, OfficialStats } from '@/data/HistoricalDataService.ts';
 export declare const FeatureSchema: z.ZodObject<{
     name: z.ZodString;
     value: z.ZodNumber;

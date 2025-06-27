@@ -1,6 +1,6 @@
 /**
- * Production-Ready DailyFantasy Service
- * Integrates with backend DailyFantasy API endpoints
+ * Production-Ready DailyFantasy Service;
+ * Integrates with backend DailyFantasy API endpoints;
  */
 
 export interface DailyFantasyPlayer {
@@ -43,7 +43,7 @@ export interface DailyFantasyProjection {
 class EnhancedDailyFantasyService {
   private baseUrl: string;
   private cache: Map<string, { data: any; timestamp: number }>;
-  private cacheTTL: number = 300000; // 5 minutes
+  private cacheTTL: number = 300000; // 5 minutes;
 
   constructor() {
     this.baseUrl = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
@@ -54,15 +54,12 @@ class EnhancedDailyFantasyService {
     endpoint: string,
     options: RequestInit = {},
   ): Promise<T> {
-    const cacheKey = `${endpoint}:${JSON.stringify(options)}`;
 
-    // Check cache first
-    const cached = this.cache.get(cacheKey);
+    // Check cache first;
+
     if (cached && Date.now() - cached.timestamp < this.cacheTTL) {
       return cached.data;
     }
-
-    const url = `${this.baseUrl}${endpoint}`;
 
     try {
       const response = await fetch(url, {
@@ -78,9 +75,7 @@ class EnhancedDailyFantasyService {
         );
       }
 
-      const data = await response.json();
-
-      // Cache the response
+      // Cache the response;
       this.cache.set(cacheKey, {
         data,
         timestamp: Date.now(),
@@ -88,39 +83,39 @@ class EnhancedDailyFantasyService {
 
       return data;
     } catch (error) {
-      console.error("DailyFantasy API request failed:", error);
+      // console statement removed
       throw error;
     }
   }
 
   /**
-   * Get contests by sport
+   * Get contests by sport;
    */
   async getContests(sport: string): Promise<DailyFantasyContest[]> {
-    const endpoint = `/api/dailyfantasy/contests/${sport}`;
+
     return await this.makeRequest<DailyFantasyContest[]>(endpoint);
   }
 
   /**
-   * Get players for a specific contest
+   * Get players for a specific contest;
    */
   async getPlayers(contestId: string): Promise<DailyFantasyPlayer[]> {
-    const endpoint = `/api/dailyfantasy/contests/${contestId}/players`;
+
     return await this.makeRequest<DailyFantasyPlayer[]>(endpoint);
   }
 
   /**
-   * Get player projections
+   * Get player projections;
    */
   async getPlayerProjections(
     playerId: string,
   ): Promise<DailyFantasyProjection> {
-    const endpoint = `/api/dailyfantasy/players/${playerId}/projections`;
+
     return await this.makeRequest<DailyFantasyProjection>(endpoint);
   }
 
   /**
-   * Generate optimal lineup
+   * Generate optimal lineup;
    */
   async getOptimalLineup(
     contestId: string,
@@ -128,7 +123,7 @@ class EnhancedDailyFantasyService {
     budget?: number,
     constraints?: Record<string, any>,
   ): Promise<DailyFantasyLineup> {
-    const endpoint = "/api/dailyfantasy/lineups/optimize";
+
     const options: RequestInit = {
       method: "POST",
       body: JSON.stringify({
@@ -142,11 +137,11 @@ class EnhancedDailyFantasyService {
   }
 
   /**
-   * Health check for DailyFantasy API
+   * Health check for DailyFantasy API;
    */
   async healthCheck(): Promise<{ status: string; message?: string }> {
     try {
-      const contests = await this.getContests("nba");
+
       return {
         status: "healthy",
         message: `Found ${contests.length} NBA contests`,
@@ -160,14 +155,14 @@ class EnhancedDailyFantasyService {
   }
 
   /**
-   * Clear cache
+   * Clear cache;
    */
   clearCache(): void {
     this.cache.clear();
   }
 
   /**
-   * Get cache statistics
+   * Get cache statistics;
    */
   getCacheStats(): { size: number; totalRequests: number } {
     return {
@@ -177,5 +172,5 @@ class EnhancedDailyFantasyService {
   }
 }
 
-// Export singleton instance
+// Export singleton instance;
 export const dailyFantasyService = new EnhancedDailyFantasyService();

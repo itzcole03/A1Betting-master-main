@@ -32,7 +32,7 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       onwarn(warning, warn) {
-        // Suppress certain warnings
+        // Suppress certain warnings;
         if (warning.code === "UNRESOLVED_IMPORT") return;
         warn(warning);
       },

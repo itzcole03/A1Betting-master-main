@@ -6,7 +6,7 @@ export interface PrizePicksEntry {
   payout: number;
   createdAt?: string;
   updatedAt?: string;
-  [key: string]: unknown; // allow extension for future compatibility, type-safe
+  [key: string]: unknown; // allow extension for future compatibility, type-safe;
 }
 
 export interface PrizePicksPlayer {
@@ -28,7 +28,7 @@ export interface PrizePicksProjection {
   gameId?: string;
   startTime?: string;
   opponent?: string;
-  // Add additional fields as needed from shared/prizePicks.ts
+  // Add additional fields as needed from shared/prizePicks.ts;
   [key: string]: unknown;
 }
 
@@ -38,7 +38,7 @@ export interface PrizePicksLeague {
   sport: string;
 }
 
-// Overall structure of data you might get from a PrizePicks API endpoint
+// Overall structure of data you might get from a PrizePicks API endpoint;
 export interface PrizePicksData {
   projections: PrizePicksProjection[];
   players?: PrizePicksPlayer[];
@@ -101,15 +101,15 @@ export interface FilterOptions {
 }
 
 export const PRIZEPICKS_CONFIG = {
-  UPDATE_INTERVAL: 60000, // 60 seconds
+  UPDATE_INTERVAL: 60000, // 60 seconds;
   BATCH_SIZE: 50,
   MAX_RETRY_ATTEMPTS: 3,
-  CACHE_DURATION: 300000, // 5 minutes
+  CACHE_DURATION: 300000, // 5 minutes;
   GOBLIN_CONFIDENCE_THRESHOLD: 0.65,
   DEMON_RISK_THRESHOLD: 0.4,
   VALUE_BET_THRESHOLD: 3,
   HIGH_CONFIDENCE_THRESHOLD: 0.7,
-  TRENDING_THRESHOLD: 100, // Minimum pick count to be considered trending
+  TRENDING_THRESHOLD: 100, // Minimum pick count to be considered trending;
   PROCESSING_CHUNK_SIZE: 20,
   FILTER_DEBOUNCE_MS: 300,
 } as const;

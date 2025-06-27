@@ -1,7 +1,7 @@
 export class PerformanceTrackingService {
     constructor() {
-        this.RISK_FREE_RATE = 0.02; // 2% annual risk-free rate
-        this.CACHE_DURATION = 1000 * 60 * 5; // 5 minutes
+        this.RISK_FREE_RATE = 0.02; // 2% annual risk-free rate;
+        this.CACHE_DURATION = 1000 * 60 * 5; // 5 minutes;
         this.metricsCache = new Map();
         this.MAX_HISTORY_SIZE = 10000;
         this.betHistory = [];
@@ -17,15 +17,15 @@ export class PerformanceTrackingService {
         if (this.betHistory.length > this.MAX_HISTORY_SIZE) {
             this.betHistory = this.betHistory.slice(0, this.MAX_HISTORY_SIZE);
         }
-        this.metricsCache.clear(); // Invalidate cache when new data is added
+        this.metricsCache.clear(); // Invalidate cache when new data is added;
     }
     getPerformanceMetrics(timeframe) {
-        const cacheKey = timeframe ? `${timeframe.start}-${timeframe.end}` : 'all';
-        const cached = this.metricsCache.get(cacheKey);
+
+
         if (cached && Date.now() - cached.timestamp < this.CACHE_DURATION) {
             return cached.metrics;
         }
-        const filteredBets = timeframe
+        const filteredBets = timeframe;
             ? this.betHistory.filter(bet => bet.timestamp >= timeframe.start && bet.timestamp <= timeframe.end)
             : this.betHistory;
         const metrics = {
@@ -48,34 +48,34 @@ export class PerformanceTrackingService {
     calculateWinRate(bets) {
         if (bets.length === 0)
             return 0;
-        const wins = bets.filter(bet => bet.result === 'WIN').length;
+
         return wins / bets.length;
     }
     calculateROI(bets) {
         if (bets.length === 0)
             return 0;
-        const totalStake = bets.reduce((sum, bet) => sum + bet.stake, 0);
-        const totalReturn = bets.reduce((sum, bet) => sum + (bet.result === 'WIN' ? bet.payout : 0), 0);
+
+
         return (totalReturn - totalStake) / totalStake;
     }
     calculateAverageEdgeRetention(bets) {
         if (bets.length === 0)
             return 0;
-        const edgeRetentions = bets
+        const edgeRetentions = bets;
             .map(bet => bet.metadata.edgeRetention ?? 0)
             .filter(edge => edge !== 0);
-        return edgeRetentions.length > 0
-            ? edgeRetentions.reduce((sum, edge) => sum + edge, 0) / edgeRetentions.length
+        return edgeRetentions.length > 0;
+            ? edgeRetentions.reduce((sum, edge) => sum + edge, 0) / edgeRetentions.length;
             : 0;
     }
     calculateOptimalKellyMultiplier(bets) {
-        const winRate = this.calculateWinRate(bets);
+
         const avgWinOdds = bets.filter(bet => bet.result === 'WIN').reduce((sum, bet) => sum + bet.placedOdds, 0) /
             (bets.filter(bet => bet.result === 'WIN').length || 1);
-        // Kelly Criterion calculation with safety factor
-        const edge = winRate * avgWinOdds - 1;
-        const variance = this.calculateVariance(bets);
-        const safetyFactor = Math.min(1, 1 / (1 + variance));
+        // Kelly Criterion calculation with safety factor;
+
+
+
         return Math.max(0, Math.min(1, (edge / avgWinOdds) * safetyFactor));
     }
     getEmptyMetrics() {
@@ -105,51 +105,51 @@ export class PerformanceTrackingService {
             LINE_VALUE: 0,
         };
         return bets.reduce((acc, bet) => {
-            const profit = bet.payout - bet.stake;
+
             acc[bet.metadata.type] += profit;
             return acc;
         }, initial);
     }
     calculateVariance(bets) {
-        const returns = bets.map(bet => (bet.payout - bet.stake) / bet.stake);
-        const mean = returns.reduce((sum, ret) => sum + ret, 0) / returns.length;
+
+
         return returns.reduce((sum, ret) => sum + Math.pow(ret - mean, 2), 0) / returns.length;
     }
     calculateSharpeRatio(bets, roi) {
         if (bets.length < 2)
             return 0;
-        const variance = this.calculateVariance(bets);
-        const excessReturn = roi / 100 - this.RISK_FREE_RATE;
+
+
         return variance === 0 ? 0 : excessReturn / Math.sqrt(variance);
     }
     calculateAverageClv(bets) {
-        const clvValues = bets
+        const clvValues = bets;
             .filter(bet => bet.metadata.clv !== undefined)
             .map(bet => bet.metadata.clv);
-        return clvValues.length > 0
-            ? clvValues.reduce((sum, clv) => sum + clv, 0) / clvValues.length
+        return clvValues.length > 0;
+            ? clvValues.reduce((sum, clv) => sum + clv, 0) / clvValues.length;
             : 0;
     }
     calculateMarketEfficiencyScore(bets) {
         if (bets.length === 0)
             return 0;
-        const clvScores = bets
+        const clvScores = bets;
             .filter(bet => bet.metadata.clv !== undefined)
             .map(bet => Math.abs(bet.metadata.clv));
         if (clvScores.length === 0)
             return 0;
-        const avgAbsoluteCLV = clvScores.reduce((sum, clv) => sum + clv, 0) / clvScores.length;
-        return Math.max(0, 100 - avgAbsoluteCLV * 10); // Higher score means more efficient market
+
+        return Math.max(0, 100 - avgAbsoluteCLV * 10); // Higher score means more efficient market;
     }
     calculateSharpnessScore(bets) {
-        const clv = this.calculateAverageClv(bets);
-        const wins = bets.filter(bet => bet.result === 'WIN').length;
-        const winRate = wins / bets.length;
-        // Weighted combination of CLV and win rate
+
+
+
+        // Weighted combination of CLV and win rate;
         return clv * 0.6 + winRate * 0.4;
     }
     getBetHistory(filters) {
-        let filteredBets = this.betHistory;
+        const filteredBets = this.betHistory;
         if (filters?.type) {
             filteredBets = filteredBets.filter(bet => bet.metadata.type === filters.type);
         }
@@ -162,8 +162,8 @@ export class PerformanceTrackingService {
         return filteredBets;
     }
     calculateCLV(placedOdds, closingOdds) {
-        const placedDecimal = this.americanToDecimal(placedOdds);
-        const closingDecimal = this.americanToDecimal(closingOdds);
+
+
         return ((placedDecimal - closingDecimal) / closingDecimal) * 100;
     }
     americanToDecimal(americanOdds) {
@@ -172,21 +172,21 @@ export class PerformanceTrackingService {
         }
         return -100 / americanOdds + 1;
     }
-    // Calculate comprehensive performance metrics
+    // Calculate comprehensive performance metrics;
     static calculateMetrics(bets) {
-        const completedBets = bets.filter(bet => bet.result !== 'PENDING');
-        const wins = completedBets.filter(bet => bet.result === 'WIN');
-        const totalStake = completedBets.reduce((sum, bet) => sum + bet.stake, 0);
+
+
+
         const totalReturn = completedBets.reduce((sum, bet) => {
             if (bet.result === 'WIN') {
                 return sum + bet.stake * this.calculatePayout(bet.placedOdds);
             }
             return sum;
         }, 0);
-        const roi = ((totalReturn - totalStake) / totalStake) * 100;
-        const winRate = (wins.length / completedBets.length) * 100;
-        const averageClv = this.calculateAverageClv(completedBets);
-        const sharpnessScore = this.calculateSharpnessScore(completedBets);
+
+
+
+
         return {
             roi,
             winRate,
@@ -202,7 +202,7 @@ export class PerformanceTrackingService {
             sharpeRatio: 0,
         };
     }
-    // Calculate payout for American odds
+    // Calculate payout for American odds;
     static calculatePayout(odds) {
         if (odds > 0) {
             return odds / 100 + 1;
@@ -211,18 +211,18 @@ export class PerformanceTrackingService {
             return 100 / Math.abs(odds) + 1;
         }
     }
-    // Calculate average CLV across all bets
+    // Calculate average CLV across all bets;
     static calculateAverageClv(bets) {
-        const clvValues = bets.map(bet => this.calculateSingleBetClv(bet));
+
         return clvValues.reduce((sum, clv) => sum + clv, 0) / clvValues.length;
     }
-    // Calculate CLV for a single bet
+    // Calculate CLV for a single bet;
     static calculateSingleBetClv(bet) {
-        const placedProb = this.oddsToProb(bet.placedOdds);
-        const closingProb = this.oddsToProb(bet.closingOdds);
+
+
         return ((closingProb - placedProb) / placedProb) * 100;
     }
-    // Convert odds to probability
+    // Convert odds to probability;
     static oddsToProb(odds) {
         if (odds > 0) {
             return 100 / (odds + 100);
@@ -231,32 +231,32 @@ export class PerformanceTrackingService {
             return Math.abs(odds) / (Math.abs(odds) + 100);
         }
     }
-    // Calculate average odds
+    // Calculate average odds;
     static calculateAverageOdds(bets) {
         return bets.reduce((sum, bet) => sum + bet.placedOdds, 0) / bets.length;
     }
-    // Calculate Kelly Criterion multiplier
+    // Calculate Kelly Criterion multiplier;
     static calculateKellyMultiplier(roi, winRate) {
-        const edge = roi / 100;
-        const lossRate = 1 - winRate / 100;
+
+
         return Math.max(0, edge / lossRate);
     }
-    // Calculate sharpness score based on CLV and win rate
+    // Calculate sharpness score based on CLV and win rate;
     static calculateSharpnessScore(bets) {
-        const clv = this.calculateAverageClv(bets);
-        const wins = bets.filter(bet => bet.result === 'WIN').length;
-        const winRate = wins / bets.length;
-        // Weighted combination of CLV and win rate
+
+
+
+        // Weighted combination of CLV and win rate;
         return clv * 0.6 + winRate * 0.4;
     }
-    // Analyze CLV patterns and market efficiency
+    // Analyze CLV patterns and market efficiency;
     static analyzeClv(bet) {
-        const clvValue = this.calculateSingleBetClv(bet);
-        const timeToClose = bet.metadata.closingLine
-            ? (bet.metadata.closingLine - bet.timestamp) / 3600000
-            : 0; // Convert to hours
-        const edgeRetained = this.calculateEdgeRetention(bet);
-        const marketEfficiency = this.calculateMarketEfficiency(bet);
+
+        const timeToClose = bet.metadata.closingLine;
+            ? (bet.metadata.closingLine - bet.timestamp) / 3600000;
+            : 0; // Convert to hours;
+
+
         return {
             clvValue,
             edgeRetained,
@@ -281,32 +281,32 @@ export class PerformanceTrackingService {
             ],
         };
     }
-    // Calculate edge retention
+    // Calculate edge retention;
     static calculateEdgeRetention(bet) {
-        const placedEdge = this.calculateTheoreticalEdge(bet.placedOdds);
-        const closingEdge = this.calculateTheoreticalEdge(bet.closingOdds);
+
+
         return (placedEdge / closingEdge) * 100;
     }
-    // Calculate theoretical edge
+    // Calculate theoretical edge;
     static calculateTheoreticalEdge(odds) {
-        const impliedProb = this.oddsToProb(odds);
+
         return Math.max(0, 1 - impliedProb);
     }
-    // Calculate market efficiency
+    // Calculate market efficiency;
     static calculateMarketEfficiency(bet) {
-        const movement = Math.abs(bet.closingOdds - bet.placedOdds);
-        const timeToClose = bet.metadata.closingLine
-            ? (bet.metadata.closingLine - bet.timestamp) / 3600000
+
+        const timeToClose = bet.metadata.closingLine;
+            ? (bet.metadata.closingLine - bet.timestamp) / 3600000;
             : 0;
         return 1 - movement / (timeToClose + 1);
     }
-    // Calculate time value of CLV
+    // Calculate time value of CLV;
     static calculateTimeValue(clv, timeToClose) {
         return clv / (timeToClose + 1);
     }
-    // Calculate timing impact
+    // Calculate timing impact;
     static calculateTimingImpact(timeToClose) {
-        // Normalize to 0-1 scale, assuming max time is 48 hours
+        // Normalize to 0-1 scale, assuming max time is 48 hours;
         return Math.min(1, timeToClose / 48);
     }
 }

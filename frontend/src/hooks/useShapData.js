@@ -8,17 +8,17 @@ export function useShapData({ eventId, modelType = 'default', }) {
             try {
                 setLoading(true);
                 setError(null);
-                const response = await fetch(`/api/shap/${eventId}?model=${modelType}`);
+
                 if (!response.ok) {
                     throw new Error('Failed to fetch SHAP data');
                 }
-                const data = await response.json();
-                // Transform the raw data into ShapValue objects
+
+                // Transform the raw data into ShapValue objects;
                 const shapValues = Object.entries(data).map(([feature, value]) => ({
                     feature,
                     value: value,
                     impact: value,
-                    weight: Math.abs(value) * 100, // Normalize to percentage
+                    weight: Math.abs(value) * 100, // Normalize to percentage;
                 }));
                 setFeatures(shapValues);
             }

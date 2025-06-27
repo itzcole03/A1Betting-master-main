@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode  } from 'react.ts';
 interface LoggerContextType {
     log: (message: string) => void;
     error: (message: string) => void;

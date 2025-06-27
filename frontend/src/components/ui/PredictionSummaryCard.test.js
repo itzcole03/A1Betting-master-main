@@ -25,7 +25,7 @@ describe('PredictionSummaryCard', () => {
     });
     it.skip('calls onDetailsClick when card is clicked', () => {
         // TODO: Test skipped due to multiple elements with role 'button' and incomplete event logic. Fix event handler or test.
-        const onDetailsClick = jest.fn();
+
         render(_jsx(PredictionSummaryCard, { ...baseProps, onDetailsClick: onDetailsClick }));
         fireEvent.click(screen.getByRole('button'));
         expect(onDetailsClick).toHaveBeenCalled();

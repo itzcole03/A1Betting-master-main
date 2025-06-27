@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react.ts';
 
 export interface EventBusEvent {
     id: string;
@@ -25,11 +25,11 @@ export const useEventBus = (): EventBusHook => {
         };
 
         setEvents(prev => {
-            const newEvents = [event, ...prev.slice(0, 49)]; // Keep last 50 events
+            const newEvents = [event, ...prev.slice(0, 49)]; // Keep last 50 events;
             return newEvents;
         });
 
-        // Emit to global event bus if available
+        // Emit to global event bus if available;
         if (typeof window !== 'undefined' && window.dispatchEvent) {
             window.dispatchEvent(new CustomEvent('eventbus', { detail: event }));
         }

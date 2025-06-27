@@ -5,8 +5,8 @@ import { Box, Button, TextField, Link, Typography, Alert, Grid } from '@mui/mate
 import { useStore } from '@/store';
 import { apiService } from '@/services/api';
 export default function RegisterPage() {
-    const navigate = useNavigate();
-    const setUser = useStore(state => state.setUser);
+
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',

@@ -6,8 +6,8 @@ export const BettingHistory = ({ eventId, marketId, selectionId, className = '',
     const [bets, setBets] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const serviceRegistry = UnifiedServiceRegistry.getInstance();
-    const bettingService = serviceRegistry.getService('betting');
+
+
     useEffect(() => {
         const loadBets = async () => {
             try {
@@ -18,7 +18,7 @@ export const BettingHistory = ({ eventId, marketId, selectionId, className = '',
                     setBets([]);
                     return;
                 }
-                const history = await bettingService.getBettingHistory(eventId, marketId, selectionId);
+
                 setBets(history);
             }
             catch (err) {
@@ -63,7 +63,7 @@ export const BettingHistory = ({ eventId, marketId, selectionId, className = '',
                                                 ? 'success'
                                                 : bet.outcome === 'lost'
                                                     ? 'danger'
-                                                    : 'info', children: bet.outcome }), _jsxs("p", { className: `font-semibold ${getOutcomeColor(bet.outcome)}`, children: [bet.outcome === 'won' ? '+' : bet.outcome === 'lost' ? '-' : '', bet.stake.toFixed(2)] })] }), _jsxs("p", { className: "text-sm text-gray-600", children: ["Odds: ", bet.odds.toFixed(2)] })] })] }, bet.id))) }), _jsx("div", { className: "mt-6 pt-4 border-t border-gray-200", children: _jsxs("div", { className: "grid grid-cols-3 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Total Bets" }), _jsx("p", { className: "text-lg font-semibold", children: bets.length })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Win Rate" }), _jsxs("p", { className: "text-lg font-semibold", children: [((bets.filter(b => b.outcome === 'won').length / bets.length) * 100).toFixed(1), "%"] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Profit/Loss" }), _jsx("p", { className: "text-lg font-semibold", children: bets
+                                                    : 'info', children: bet.outcome }), _jsxs("p", { className: `font-semibold ${getOutcomeColor(bet.outcome)}`, children: [bet.outcome === 'won' ? '+' : bet.outcome === 'lost' ? '-' : '', bet.stake.toFixed(2)] })] }), _jsxs("p", { className: "text-sm text-gray-600", children: ["Odds: ", bet.odds.toFixed(2)] })] })] }, bet.id))) }), _jsx("div", { className: "mt-6 pt-4 border-t border-gray-200", children: _jsxs("div", { className: "grid grid-cols-3 gap-4", children: [_jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Total Bets" }), _jsx("p", { className: "text-lg font-semibold", children: bets.length })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Win Rate" }), _jsxs("p", { className: "text-lg font-semibold", children: [((bets.filter(b => b.outcome === 'won').length / bets.length) * 100).toFixed(1), "%"] })] }), _jsxs("div", { children: [_jsx("p", { className: "text-sm text-gray-600", children: "Profit/Loss" }), _jsx("p", { className: "text-lg font-semibold", children: bets;
                                         .reduce((acc, bet) => {
                                         if (bet.outcome === 'won')
                                             return acc + (bet.stake * bet.odds - bet.stake);

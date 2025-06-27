@@ -4,7 +4,7 @@ export function Table({ data, columns, loading = false, onSort, sortKey, sortDir
     const handleSort = (key) => {
         if (!onSort || !columns.find(col => col.key === key)?.sortable)
             return;
-        const newDirection = sortKey === key && sortDirection === 'asc' ? 'desc' : 'asc';
+
         onSort(key, newDirection);
     };
     const renderSortIcon = (key) => {

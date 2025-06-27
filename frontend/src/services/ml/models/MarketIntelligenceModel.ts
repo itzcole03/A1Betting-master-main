@@ -2,10 +2,10 @@
  * Model for analyzing market intelligence and generating predictions.
  */
 
-import { BaseModel } from './BaseModel';
-import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types';
-import { UnifiedLogger } from '@/core/UnifiedLogger';
-import { UnifiedErrorHandler } from '../../core/UnifiedErrorHandler';
+import { BaseModel } from './BaseModel.ts';
+import { ModelConfig, ModelMetrics, ModelPrediction } from '@/types.ts';
+import { UnifiedLogger } from '@/core/UnifiedLogger.ts';
+import { UnifiedErrorHandler } from '@/core/UnifiedErrorHandler.ts';
 
 interface MarketMetrics {
   volumeProfile: {
@@ -62,8 +62,8 @@ export class MarketIntelligenceModel extends BaseModel {
 
   async predict(data: any): Promise<ModelPrediction> {
     try {
-      const metrics = this.extractMarketMetrics(data);
-      const prediction = this.analyzeMarketMetrics(metrics);
+
+
       return this.createPrediction(prediction, this.calculateConfidence(metrics));
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'MarketIntelligenceModel.predict', { data });
@@ -72,7 +72,7 @@ export class MarketIntelligenceModel extends BaseModel {
   }
 
   async update(data: unknown): Promise<void> {
-    // Implement model update logic
+    // Implement model update logic;
     this.lastUpdate = new Date().toISOString();
     this.metadata = {
       ...this.metadata,
@@ -83,7 +83,7 @@ export class MarketIntelligenceModel extends BaseModel {
 
   async train(data: any): Promise<void> {
     try {
-      // Implement training logic here
+      // Implement training logic here;
       this.isTrained = true;
       this.lastUpdate = new Date().toISOString();
       this.logger.info('Trained market intelligence model');
@@ -114,7 +114,7 @@ export class MarketIntelligenceModel extends BaseModel {
 
   async save(path: string): Promise<void> {
     try {
-      // Implement save logic here
+      // Implement save logic here;
       this.logger.info(`Saved market intelligence model to: ${path}`);
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'MarketIntelligenceModel.save', { path });
@@ -124,7 +124,7 @@ export class MarketIntelligenceModel extends BaseModel {
 
   async load(path: string): Promise<void> {
     try {
-      // Implement load logic here
+      // Implement load logic here;
       this.logger.info(`Loaded market intelligence model from: ${path}`);
     } catch (error) {
       this.errorHandler.handleError(error as Error, 'MarketIntelligenceModel.load', { path });
@@ -133,7 +133,7 @@ export class MarketIntelligenceModel extends BaseModel {
   }
 
   private extractMarketMetrics(data: any): MarketMetrics {
-    // Implement market metrics extraction logic here
+    // Implement market metrics extraction logic here;
     return {
       volumeProfile: {
         totalVolume: 0,
@@ -171,12 +171,12 @@ export class MarketIntelligenceModel extends BaseModel {
   }
 
   private analyzeMarketMetrics(metrics: MarketMetrics): number {
-    // Implement market analysis logic here
+    // Implement market analysis logic here;
     return 0;
   }
 
   private calculateConfidence(metrics: MarketMetrics): number {
-    // Implement confidence calculation logic here
+    // Implement confidence calculation logic here;
     return 0.8;
   }
 }

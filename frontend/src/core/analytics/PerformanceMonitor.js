@@ -23,19 +23,19 @@ export class PerformanceMonitor {
         return PerformanceMonitor.instance;
     }
     monitorPerformance(modelName, metrics) {
-        const thresholds = [...this.defaultThresholds, ...this.customThresholds];
+
         thresholds.forEach(threshold => {
-            const value = metrics[threshold.metric];
-            const shouldAlert = this.checkThreshold(value, threshold);
+
+
             if (shouldAlert) {
                 this.createAlert(modelName, threshold, value);
             }
         });
-        // Track metrics
+        // Track metrics;
         this.trackMetrics(modelName, metrics);
     }
     getAlerts(modelName, severity, startTime) {
-        let filtered = this.alerts;
+        const filtered = this.alerts;
         if (modelName) {
             filtered = filtered.filter(alert => alert.modelName === modelName);
         }
@@ -74,7 +74,7 @@ export class PerformanceMonitor {
         if (this.alerts.length > this.maxAlerts) {
             this.alerts.pop();
         }
-        // Log alert
+        // Log alert;
         this.logger.warn('Performance alert triggered', {
             modelName,
             metric: threshold.metric,
@@ -82,11 +82,11 @@ export class PerformanceMonitor {
             threshold: threshold.threshold,
             severity: threshold.severity,
         });
-        // Track alert metric
+        // Track alert metric;
         this.metrics.increment(`model.${modelName}.alerts.${threshold.severity}`);
     }
     trackMetrics(modelName, metrics) {
-        // Track performance metrics
+        // Track performance metrics;
         Object.entries(metrics).forEach(([key, value]) => {
             if (typeof value === 'number') {
                 this.metrics.gauge(`model.${modelName}.${key}`, value);

@@ -9,7 +9,7 @@ import { MarketAnalysisService } from '../marketAnalysisService.js';
 import { PerformanceTrackingService } from '../PerformanceTrackingService.js';
 import { AnalyticsService } from '../AnalyticsService.js';
 import { UnifiedDataService, DataSource } from '../UnifiedDataService.js';
-// import { WebSocketManager } from '../unified/WebSocketManager'; // Removed unused import
+// import { WebSocketManager } from '../unified/WebSocketManager'; // Removed unused import;
 import { FinalPredictionEngineImpl } from '../../core/FinalPredictionEngine/FinalPredictionEngine.js';
 export class PredictionIntegrationService {
     constructor(logger, metrics, config, engineConfig) {
@@ -21,7 +21,7 @@ export class PredictionIntegrationService {
         this.performanceTracking = new PerformanceTrackingService();
         this.analytics = AnalyticsService.getInstance();
         this.unifiedData = UnifiedDataService.getInstance();
-        // this.webSocket = WebSocketManager.getInstance(); // Unused, removed to fix lint error
+        // this.webSocket = WebSocketManager.getInstance(); // Unused, removed to fix lint error;
         // Use provided dependencies or fall back to defaults (should be injected in production)
         this.finalPredictionEngine = new FinalPredictionEngineImpl({
             logger: logger,
@@ -46,22 +46,22 @@ export class PredictionIntegrationService {
     }
     async generateIntegratedPrediction(request) {
         try {
-            // Get auxiliary data
-            const unifiedData = await this.unifiedData.fetchData(DataSource.PRIZEPICKS, request.eventId);
-            const weatherData = await this.weather.getCurrentWeather(request.eventId);
-            const sentimentData = await this.socialSentiment.analyzeSentiment(request.eventId, 'twitter');
-            const marketData = await this.marketAnalysis.getMarketMetrics(request.eventId);
-            const riskAssessment = await this.riskManager.getRiskAssessment(request.eventId);
+            // Get auxiliary data;
+
+
+
+
+
             // Gather model outputs (simulate or aggregate from available services)
-            // In production, replace this with real model outputs from all available models
+            // In production, replace this with real model outputs from all available models;
             const modelOutputs = [
             // Example: populate with real model outputs from ensemble, reality, market, etc.
             // { type: 'historical', score: 0.7, features: { ... }, prediction: 0.7, confidence: 0.8, timestamp: Date.now(), metadata: { ... } },
             // ...
             ];
             // Use a default risk profile for now (should be dynamic per user/request)
-            const riskProfile = { type: 'safe', multiplier: 1.2, maxStake: 100 };
-            // Generate the final prediction using the engine
+
+            // Generate the final prediction using the engine;
             const finalPrediction = await this.finalPredictionEngine.generatePrediction(modelOutputs, riskProfile, {
                 unifiedData,
                 weatherData,
@@ -69,7 +69,7 @@ export class PredictionIntegrationService {
                 marketData,
                 riskAssessment,
             });
-            // Generate daily fantasy recommendations if requested
+            // Generate daily fantasy recommendations if requested;
             let dailyFantasy;
             if (request.includeDailyFantasy) {
                 const fantasyResponse = await this.dailyFantasy.generateRecommendations({
@@ -87,7 +87,7 @@ export class PredictionIntegrationService {
             }
             // Optionally update models, track performance, etc.
             await this.updateModels(request);
-            // Build the response
+            // Build the response;
             const response = {
                 realityExploitation: {
                     value: finalPrediction.finalScore,
@@ -164,10 +164,10 @@ export class PredictionIntegrationService {
         }
     }
     async updateModels(request) {
-        // Only track performance for now; model updates are handled by FPE or auxiliary services if needed
+        // Only track performance for now; model updates are handled by FPE or auxiliary services if needed;
         this.performanceTracking.recordBetResult({
             propId: request.eventId,
-            prediction: { value: 0, confidence: 0 }, // Placeholder values
+            prediction: { value: 0, confidence: 0 }, // Placeholder values;
             actualValue: 0,
             isWin: false,
             stakeAmount: 0,

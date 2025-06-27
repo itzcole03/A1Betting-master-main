@@ -1,21 +1,21 @@
 /**
- * 🚀 A1BETTING QUANTUM PLATFORM - ULTIMATE UTILITIES CONSOLIDATION
+ * 🚀 A1BETTING QUANTUM PLATFORM - ULTIMATE UTILITIES CONSOLIDATION;
  *
- * Consolidates 200+ scattered utilities into organized categories
- * Preserves all functionality while maintaining cyber theme integration
+ * Consolidates 200+ scattered utilities into organized categories;
+ * Preserves all functionality while maintaining cyber theme integration;
  */
 
 // ===============================
-// 🎯 CORE UTILITIES
+// 🎯 CORE UTILITIES;
 // ===============================
 
 export const CoreUtils = {
-  // Unique ID generation
+  // Unique ID generation;
   generateId: (prefix = "id"): string => {
     return `${prefix}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
   },
 
-  // Debounce function
+  // Debounce function;
   debounce: <T extends (...args: any[]) => any>(
     func: T,
     wait: number,
@@ -27,7 +27,7 @@ export const CoreUtils = {
     };
   },
 
-  // Throttle function
+  // Throttle function;
   throttle: <T extends (...args: any[]) => any>(
     func: T,
     limit: number,
@@ -42,14 +42,14 @@ export const CoreUtils = {
     };
   },
 
-  // Deep clone object
+  // Deep clone object;
   deepClone: <T>(obj: T): T => {
     if (obj === null || typeof obj !== "object") return obj;
     if (obj instanceof Date) return new Date(obj.getTime()) as unknown as T;
     if (obj instanceof Array)
       return obj.map((item) => CoreUtils.deepClone(item)) as unknown as T;
     if (typeof obj === "object") {
-      const cloned = {} as T;
+
       Object.keys(obj).forEach((key) => {
         (cloned as any)[key] = CoreUtils.deepClone((obj as any)[key]);
       });
@@ -58,7 +58,7 @@ export const CoreUtils = {
     return obj;
   },
 
-  // Safe JSON parse
+  // Safe JSON parse;
   safeJsonParse: <T = any>(json: string, fallback: T): T => {
     try {
       return JSON.parse(json);
@@ -67,7 +67,7 @@ export const CoreUtils = {
     }
   },
 
-  // Format currency
+  // Format currency;
   formatCurrency: (amount: number, currency = "USD"): string => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -77,18 +77,18 @@ export const CoreUtils = {
     }).format(amount);
   },
 
-  // Format percentage
+  // Format percentage;
   formatPercentage: (value: number, decimals = 1): string => {
     return `${value.toFixed(decimals)}%`;
   },
 
-  // Clamp number between min and max
+  // Clamp number between min and max;
   clamp: (value: number, min: number, max: number): number => {
     return Math.min(Math.max(value, min), max);
   },
 
-  // Generate random number in range
-  // WARNING: This should NOT be used for generating mock/fake data in production
+  // Generate random number in range;
+  // WARNING: This should NOT be used for generating mock/fake data in production;
   // Only for legitimate randomization needs (e.g., noise reduction, UI animations)
   randomInRange: (min: number, max: number): number => {
     return Math.random() * (max - min) + min;
@@ -96,11 +96,11 @@ export const CoreUtils = {
 };
 
 // ===============================
-// 🎲 ODDS & BETTING UTILITIES
+// 🎲 ODDS & BETTING UTILITIES;
 // ===============================
 
 export const OddsUtils = {
-  // Convert American odds to decimal
+  // Convert American odds to decimal;
   americanToDecimal: (odds: number): number => {
     if (odds > 0) {
       return odds / 100 + 1;
@@ -109,7 +109,7 @@ export const OddsUtils = {
     }
   },
 
-  // Convert decimal odds to American
+  // Convert decimal odds to American;
   decimalToAmerican: (decimal: number): number => {
     if (decimal >= 2) {
       return Math.round((decimal - 1) * 100);
@@ -118,45 +118,45 @@ export const OddsUtils = {
     }
   },
 
-  // Convert odds to implied probability
+  // Convert odds to implied probability;
   oddsToImpliedProbability: (odds: number): number => {
     const decimal =
-      typeof odds === "number" && odds > 0
+      typeof odds === "number" && odds > 0;
         ? OddsUtils.americanToDecimal(odds)
         : odds;
     return (1 / decimal) * 100;
   },
 
-  // Calculate potential payout
+  // Calculate potential payout;
   calculatePayout: (stake: number, odds: number): number => {
-    const decimal = OddsUtils.americanToDecimal(odds);
+
     return stake * decimal;
   },
 
-  // Calculate profit
+  // Calculate profit;
   calculateProfit: (stake: number, odds: number): number => {
     return OddsUtils.calculatePayout(stake, odds) - stake;
   },
 
-  // Calculate parlay odds
+  // Calculate parlay odds;
   calculateParlayOdds: (odds: number[]): number => {
-    const decimals = odds.map(OddsUtils.americanToDecimal);
-    const combinedDecimal = decimals.reduce((acc, decimal) => acc * decimal, 1);
+
+
     return OddsUtils.decimalToAmerican(combinedDecimal);
   },
 
-  // Kelly Criterion calculator
+  // Kelly Criterion calculator;
   kellyStake: (
     bankroll: number,
     odds: number,
     winProbability: number,
   ): number => {
-    const decimal = OddsUtils.americanToDecimal(odds);
-    const kellyFraction = (winProbability * decimal - 1) / (decimal - 1);
+
+
     return Math.max(0, kellyFraction * bankroll);
   },
 
-  // Calculate arbitrage opportunity
+  // Calculate arbitrage opportunity;
   calculateArbitrage: (
     odds1: number,
     odds2: number,
@@ -165,16 +165,12 @@ export const OddsUtils = {
     profit: number;
     stakes: { bet1: number; bet2: number };
   } => {
-    const decimal1 = OddsUtils.americanToDecimal(odds1);
-    const decimal2 = OddsUtils.americanToDecimal(odds2);
 
-    const totalImplied = 1 / decimal1 + 1 / decimal2;
-    const isArbitrage = totalImplied < 1;
-    const profit = isArbitrage ? (1 - totalImplied) * 100 : 0;
 
-    const totalStake = 100; // Example $100 total
-    const stake1 = totalStake / decimal1 / totalImplied;
-    const stake2 = totalStake / decimal2 / totalImplied;
+
+
+    const totalStake = 100; // Example $100 total;
+
 
     return {
       isArbitrage,
@@ -185,43 +181,42 @@ export const OddsUtils = {
 };
 
 // ===============================
-// 📊 ANALYTICS UTILITIES
+// 📊 ANALYTICS UTILITIES;
 // ===============================
 
 export const AnalyticsUtils = {
-  // Calculate win rate
+  // Calculate win rate;
   calculateWinRate: (wins: number, total: number): number => {
     return total > 0 ? (wins / total) * 100 : 0;
   },
 
-  // Calculate ROI
+  // Calculate ROI;
   calculateROI: (profit: number, investment: number): number => {
     return investment > 0 ? (profit / investment) * 100 : 0;
   },
 
-  // Calculate Sharpe ratio
+  // Calculate Sharpe ratio;
   calculateSharpeRatio: (returns: number[], riskFreeRate = 0.02): number => {
-    const avgReturn = returns.reduce((sum, r) => sum + r, 0) / returns.length;
+
     const variance =
       returns.reduce((sum, r) => sum + Math.pow(r - avgReturn, 2), 0) /
       returns.length;
-    const standardDeviation = Math.sqrt(variance);
 
-    return standardDeviation > 0
-      ? (avgReturn - riskFreeRate) / standardDeviation
+    return standardDeviation > 0;
+      ? (avgReturn - riskFreeRate) / standardDeviation;
       : 0;
   },
 
-  // Calculate maximum drawdown
+  // Calculate maximum drawdown;
   calculateMaxDrawdown: (values: number[]): number => {
-    let maxDrawdown = 0;
-    let peak = values[0];
+    const maxDrawdown = 0;
+    const peak = values[0];
 
     for (const value of values) {
       if (value > peak) {
         peak = value;
       }
-      const drawdown = (peak - value) / peak;
+
       maxDrawdown = Math.max(maxDrawdown, drawdown);
     }
 
@@ -234,11 +229,11 @@ export const AnalyticsUtils = {
   ): { current: number; max: number; type: "win" | "loss" } => {
     if (results.length === 0) return { current: 0, max: 0, type: "win" };
 
-    let currentStreak = 1;
-    let maxStreak = 1;
-    let currentType = results[results.length - 1] ? "win" : "loss";
+    const currentStreak = 1;
+    const maxStreak = 1;
+    const currentType = results[results.length - 1] ? "win" : "loss";
 
-    for (let i = results.length - 2; i >= 0; i--) {
+    for (const i = results.length - 2; i >= 0; i--) {
       if (results[i] === results[i + 1]) {
         currentStreak++;
         maxStreak = Math.max(maxStreak, currentStreak);
@@ -250,16 +245,15 @@ export const AnalyticsUtils = {
     return { current: currentStreak, max: maxStreak, type: currentType };
   },
 
-  // Calculate confidence interval
+  // Calculate confidence interval;
   calculateConfidenceInterval: (
     data: number[],
     confidence = 0.95,
   ): { lower: number; upper: number; mean: number } => {
-    const sorted = [...data].sort((a, b) => a - b);
-    const mean = data.reduce((sum, val) => sum + val, 0) / data.length;
-    const alpha = 1 - confidence;
-    const lowerIndex = Math.floor((alpha / 2) * data.length);
-    const upperIndex = Math.ceil((1 - alpha / 2) * data.length) - 1;
+
+
+
+
 
     return {
       lower: sorted[lowerIndex],
@@ -270,13 +264,12 @@ export const AnalyticsUtils = {
 };
 
 // ===============================
-// 🕒 DATE & TIME UTILITIES
+// 🕒 DATE & TIME UTILITIES;
 // ===============================
 
 export const DateUtils = {
-  // Format date for display
+  // Format date for display;
   formatDate: (date: Date | string, format = "MMM dd, yyyy"): string => {
-    const d = new Date(date);
 
     const formats: { [key: string]: string } = {
       "MMM dd, yyyy": d.toLocaleDateString("en-US", {
@@ -297,9 +290,9 @@ export const DateUtils = {
     return formats[format] || d.toLocaleDateString();
   },
 
-  // Format time
+  // Format time;
   formatTime: (date: Date | string, includeSeconds = false): string => {
-    const d = new Date(date);
+
     const options: Intl.DateTimeFormatOptions = {
       hour: "2-digit",
       minute: "2-digit",
@@ -310,12 +303,11 @@ export const DateUtils = {
 
   // Get relative time (e.g., "2 hours ago")
   getRelativeTime: (date: Date | string): string => {
-    const now = new Date();
-    const target = new Date(date);
-    const diffMs = now.getTime() - target.getTime();
-    const diffMinutes = Math.floor(diffMs / (1000 * 60));
-    const diffHours = Math.floor(diffMinutes / 60);
-    const diffDays = Math.floor(diffHours / 24);
+
+
+
+
+
 
     if (diffMinutes < 1) return "Just now";
     if (diffMinutes < 60) return `${diffMinutes}m ago`;
@@ -324,23 +316,23 @@ export const DateUtils = {
     return DateUtils.formatDate(target);
   },
 
-  // Check if date is today
+  // Check if date is today;
   isToday: (date: Date | string): boolean => {
-    const d = new Date(date);
-    const today = new Date();
+
+
     return d.toDateString() === today.toDateString();
   },
 
-  // Get business days between dates
+  // Get business days between dates;
   getBusinessDays: (startDate: Date, endDate: Date): number => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-    let businessDays = 0;
+
+
+    const businessDays = 0;
 
     while (start <= end) {
-      const dayOfWeek = start.getDay();
+
       if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-        // Not Sunday or Saturday
+        // Not Sunday or Saturday;
         businessDays++;
       }
       start.setDate(start.getDate() + 1);
@@ -351,23 +343,23 @@ export const DateUtils = {
 };
 
 // ===============================
-// 🔒 VALIDATION UTILITIES
+// 🔒 VALIDATION UTILITIES;
 // ===============================
 
 export const ValidationUtils = {
-  // Email validation
+  // Email validation;
   isValidEmail: (email: string): boolean => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     return emailRegex.test(email);
   },
 
-  // Phone validation
+  // Phone validation;
   isValidPhone: (phone: string): boolean => {
-    const phoneRegex = /^\+?[\d\s\-\(\)]{10,}$/;
+
     return phoneRegex.test(phone);
   },
 
-  // Password strength validation
+  // Password strength validation;
   getPasswordStrength: (
     password: string,
   ): {
@@ -376,7 +368,7 @@ export const ValidationUtils = {
     isStrong: boolean;
   } => {
     const feedback: string[] = [];
-    let score = 0;
+    const score = 0;
 
     if (password.length >= 8) score += 1;
     else feedback.push("At least 8 characters");
@@ -400,7 +392,7 @@ export const ValidationUtils = {
     };
   },
 
-  // URL validation
+  // URL validation;
   isValidUrl: (url: string): boolean => {
     try {
       new URL(url);
@@ -412,14 +404,14 @@ export const ValidationUtils = {
 
   // Credit card validation (Luhn algorithm)
   isValidCreditCard: (cardNumber: string): boolean => {
-    const clean = cardNumber.replace(/\D/g, "");
+
     if (clean.length < 13 || clean.length > 19) return false;
 
-    let sum = 0;
-    let isEven = false;
+    const sum = 0;
+    const isEven = false;
 
-    for (let i = clean.length - 1; i >= 0; i--) {
-      let digit = parseInt(clean[i]);
+    for (const i = clean.length - 1; i >= 0; i--) {
+      const digit = parseInt(clean[i]);
 
       if (isEven) {
         digit *= 2;
@@ -435,16 +427,16 @@ export const ValidationUtils = {
 };
 
 // ===============================
-// 🎨 UI & STYLING UTILITIES
+// 🎨 UI & STYLING UTILITIES;
 // ===============================
 
 export const UIUtils = {
-  // Class name combiner
+  // Class name combiner;
   cn: (...classes: (string | undefined | null | false)[]): string => {
     return classes.filter(Boolean).join(" ");
   },
 
-  // Generate cyber theme colors
+  // Generate cyber theme colors;
   getCyberColor: (
     type: "primary" | "secondary" | "accent" | "danger" | "warning" | "success",
   ): string => {
@@ -459,7 +451,7 @@ export const UIUtils = {
     return colors[type];
   },
 
-  // Generate gradient backgrounds
+  // Generate gradient backgrounds;
   getCyberGradient: (type: "background" | "button" | "card"): string => {
     const gradients = {
       background:
@@ -471,7 +463,7 @@ export const UIUtils = {
     return gradients[type];
   },
 
-  // Generate glass morphism styles
+  // Generate glass morphism styles;
   getGlassStyles: (
     intensity: "light" | "medium" | "heavy" = "medium",
   ): React.CSSProperties => {
@@ -495,7 +487,7 @@ export const UIUtils = {
     return styles[intensity];
   },
 
-  // Animate element entrance
+  // Animate element entrance;
   animateEntrance: (
     element: HTMLElement,
     type: "fade" | "slide" | "scale" = "fade",
@@ -519,7 +511,7 @@ export const UIUtils = {
     });
   },
 
-  // Generate responsive breakpoint styles
+  // Generate responsive breakpoint styles;
   getBreakpointStyles: (breakpoint: "sm" | "md" | "lg" | "xl"): string => {
     const breakpoints = {
       sm: "@media (min-width: 640px)",
@@ -532,35 +524,34 @@ export const UIUtils = {
 };
 
 // ===============================
-// 🚀 PERFORMANCE UTILITIES
+// 🚀 PERFORMANCE UTILITIES;
 // ===============================
 
 export const PerformanceUtils = {
-  // Measure function execution time
+  // Measure function execution time;
   measureTime: async <T>(
     fn: () => Promise<T> | T,
     label?: string,
   ): Promise<{ result: T; time: number }> => {
-    const start = performance.now();
-    const result = await fn();
-    const end = performance.now();
-    const time = end - start;
+
+
+
 
     if (label) {
-      console.log(`${label}: ${time.toFixed(2)}ms`);
+      // console statement removed}ms`);
     }
 
     return { result, time };
   },
 
-  // Memory usage tracking
+  // Memory usage tracking;
   getMemoryUsage: (): {
     used: number;
     total: number;
     percentage: number;
   } | null => {
     if ("memory" in performance) {
-      const memory = (performance as any).memory;
+
       return {
         used: memory.usedJSHeapSize,
         total: memory.totalJSHeapSize,
@@ -570,7 +561,7 @@ export const PerformanceUtils = {
     return null;
   },
 
-  // Lazy loading utility
+  // Lazy loading utility;
   lazyLoad: <T>(factory: () => Promise<T>): (() => Promise<T>) => {
     let promise: Promise<T> | null = null;
     return () => {
@@ -581,7 +572,7 @@ export const PerformanceUtils = {
     };
   },
 
-  // Batch operations
+  // Batch operations;
   batch: <T, R>(
     items: T[],
     batchSize: number,
@@ -590,9 +581,9 @@ export const PerformanceUtils = {
     return new Promise(async (resolve) => {
       const results: R[] = [];
 
-      for (let i = 0; i < items.length; i += batchSize) {
-        const batch = items.slice(i, i + batchSize);
-        const batchResults = await processor(batch);
+      for (const i = 0; i < items.length; i += batchSize) {
+
+
         results.push(...batchResults);
       }
 
@@ -602,11 +593,11 @@ export const PerformanceUtils = {
 };
 
 // ===============================
-// 🔧 ERROR HANDLING UTILITIES
+// 🔧 ERROR HANDLING UTILITIES;
 // ===============================
 
 export const ErrorUtils = {
-  // Safe function execution
+  // Safe function execution;
   safeExecute: <T>(
     fn: () => T,
     fallback: T,
@@ -622,7 +613,7 @@ export const ErrorUtils = {
     }
   },
 
-  // Async safe execution
+  // Async safe execution;
   safeExecuteAsync: async <T>(
     fn: () => Promise<T>,
     fallback: T,
@@ -638,7 +629,7 @@ export const ErrorUtils = {
     }
   },
 
-  // Error message extraction
+  // Error message extraction;
   getErrorMessage: (error: unknown): string => {
     if (typeof error === "string") return error;
     if (error instanceof Error) return error.message;
@@ -648,13 +639,13 @@ export const ErrorUtils = {
     return "An unknown error occurred";
   },
 
-  // Retry mechanism
+  // Retry mechanism;
   retry: async <T>(
     fn: () => Promise<T>,
     maxAttempts = 3,
     delay = 1000,
   ): Promise<T> => {
-    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    for (const attempt = 1; attempt <= maxAttempts; attempt++) {
       try {
         return await fn();
       } catch (error) {
@@ -669,7 +660,7 @@ export const ErrorUtils = {
 };
 
 // ===============================
-// 📦 EXPORT ALL UTILITIES
+// 📦 EXPORT ALL UTILITIES;
 // ===============================
 
 export const UltimateUtils = {

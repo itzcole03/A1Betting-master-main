@@ -1,6 +1,6 @@
 /**
- * Production-ready logging service
- * Replaces console.log statements with proper logging levels and filtering
+ * Production-ready logging service;
+ * Replaces console.log statements with proper logging levels and filtering;
  */
 
 export enum LogLevel {
@@ -21,10 +21,10 @@ interface LogEntry {
 class Logger {
   private logLevel: LogLevel;
   private logs: LogEntry[] = [];
-  private maxLogs = 1000; // Keep last 1000 logs
+  private maxLogs = 1000; // Keep last 1000 logs;
 
   constructor() {
-    // Set log level based on environment
+    // Set log level based on environment;
     this.logLevel = import.meta.env.DEV ? LogLevel.DEBUG : LogLevel.WARN;
   }
 
@@ -50,26 +50,26 @@ class Logger {
 
     this.logs.push(entry);
 
-    // Keep only the last maxLogs entries
+    // Keep only the last maxLogs entries;
     if (this.logs.length > this.maxLogs) {
       this.logs = this.logs.slice(-this.maxLogs);
     }
 
-    // In development, also log to console
+    // In development, also log to console;
     if (import.meta.env.DEV) {
-      const prefix = `[${entry.timestamp.toISOString()}] ${source || "App"}:`;
+
       switch (level) {
         case LogLevel.ERROR:
-          console.error(prefix, message, data);
+          // console statement removed
           break;
         case LogLevel.WARN:
-          console.warn(prefix, message, data);
+          // console statement removed
           break;
         case LogLevel.INFO:
           console.info(prefix, message, data);
           break;
         case LogLevel.DEBUG:
-          console.log(prefix, message, data);
+          // console statement removed
           break;
       }
     }
@@ -91,31 +91,31 @@ class Logger {
     this.addLog(LogLevel.DEBUG, message, data, source);
   }
 
-  // Get recent logs for debugging
+  // Get recent logs for debugging;
   getRecentLogs(count = 50): LogEntry[] {
     return this.logs.slice(-count);
   }
 
-  // Get logs by level
+  // Get logs by level;
   getLogsByLevel(level: LogLevel): LogEntry[] {
     return this.logs.filter((log) => log.level === level);
   }
 
-  // Clear logs
+  // Clear logs;
   clearLogs() {
     this.logs = [];
   }
 
-  // Set log level dynamically
+  // Set log level dynamically;
   setLogLevel(level: LogLevel) {
     this.logLevel = level;
   }
 }
 
-// Create singleton instance
+// Create singleton instance;
 export const logger = new Logger();
 
-// Convenience methods for common logging patterns
+// Convenience methods for common logging patterns;
 export const logNavigation = (from: string, to: string) => {
   logger.info(`Navigation: ${from} -> ${to}`, { from, to }, "Navigation");
 };
@@ -126,8 +126,7 @@ export const logApiCall = (
   success: boolean,
   duration?: number,
 ) => {
-  const message = `API ${method} ${endpoint} ${success ? "success" : "failed"}`;
-  const data = { endpoint, method, success, duration };
+
 
   if (success) {
     logger.info(message, data, "API");

@@ -1,6 +1,6 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { useState } from 'react';
-const API_URL = process.env.REACT_APP_API_URL || '/api';
+
 const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,14 +19,14 @@ const LoginPage = () => {
                 body: new URLSearchParams({ username: email, password }),
             });
             if (!res.ok) {
-                const data = await res.json();
+
                 throw new Error(data.detail || 'Login failed');
             }
-            const data = await res.json();
+
             // Store JWT in localStorage (or use context/Zustand for real app)
             localStorage.setItem('access_token', data.access_token);
             alert('Login successful!');
-            // Redirect or set auth state here
+            // Redirect or set auth state here;
         }
         catch (err) {
             if (err instanceof Error) {

@@ -12,25 +12,25 @@ import { ErrorBoundary } from '../components/common/ErrorBoundary';
 import { ToastProvider } from '../components/common/ToastProvider';
 import BetsTable from '../components/betting/BetsTable.tsx';
 import BetHistoryChart from '../components/betting/BetHistoryChart.tsx';
-// Alpha1 Advanced Widgets
+// Alpha1 Advanced Widgets;
 import ConfidenceBands from '../components/ui/ConfidenceBands.tsx';
 import RiskHeatMap from '../components/ui/RiskHeatMap.tsx';
 import SourceHealthBar from '../components/ui/SourceHealthBar.tsx';
 import WhatIfSimulator from '../components/advanced/WhatIfSimulator.tsx';
-// TODO: Add tests for new widgets
+// TODO: Add tests for new widgets;
 const BetsPage = () => {
-    // Example state hooks for risk profile, stake, and event selection
+    // Example state hooks for risk profile, stake, and event selection;
     const [riskProfile, setRiskProfile] = React.useState('moderate');
     const [stake, setStake] = React.useState(100);
     const [selectedEvent, setSelectedEvent] = React.useState(null);
-    const [events, setEvents] = React.useState([]); // Replace with real events from API/service
+    const [events, setEvents] = React.useState([]); // Replace with real events from API/service;
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState(null);
     // Placeholder: fetch events (replace with real fetch/service logic)
     React.useEffect(() => {
         setLoading(true);
         setTimeout(() => {
-            setEvents([]); // Replace with real event list
+            setEvents([]); // Replace with real event list;
             setLoading(false);
         }, 500);
     }, []);

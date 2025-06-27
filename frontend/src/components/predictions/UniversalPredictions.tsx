@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState, useEffect, useMemo, useCallback  } from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 import {
   Brain,
   TrendingUp,
@@ -29,25 +29,25 @@ import {
   Gauge,
   LineChart,
   PieChart,
-} from "lucide-react";
+} from 'lucide-react.ts';
 
-// Import consolidated systems
-import { MegaCard, MegaButton, MegaInput, MegaAlert } from "../mega/MegaUI";
-import { useTheme } from "../../providers/SafeThemeProvider";
+// Import consolidated systems;
+import { MegaCard, MegaButton, MegaInput, MegaAlert } from '@/mega/MegaUI.ts';
+import { useTheme } from '@/providers/SafeThemeProvider.ts';
 import {
   usePredictions,
   useEngineMetrics,
   useToast,
   useDebounce,
-} from "../../hooks/UniversalHooks";
-import { UniversalServiceFactory } from "../../services/UniversalServiceLayer";
+} from '@/hooks/UniversalHooks.ts';
+import { UniversalServiceFactory } from '@/services/UniversalServiceLayer.ts';
 import {
   formatters,
   analytics as analyticsUtils,
-} from "../../utils/UniversalUtils";
+} from '@/utils/UniversalUtils.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export interface EnhancedPrediction {
@@ -103,7 +103,7 @@ interface PredictionFilters {
 }
 
 // ============================================================================
-// THEMED COMPONENTS
+// THEMED COMPONENTS;
 // ============================================================================
 
 const ThemedText: React.FC<{
@@ -135,14 +135,14 @@ const ThemedText: React.FC<{
   };
 
   return (
-    <div
+    <div;
       className={className}
       style={{
         color: colors[color],
         ...variants[variant],
         ...style,
       }}
-    >
+     key={45206}>
       {children}
     </div>
   );
@@ -156,7 +156,7 @@ const ThemedContainer: React.FC<{
   const { theme } = useTheme();
 
   return (
-    <div
+    <div;
       className={className}
       style={{
         background: theme.colors.surface,
@@ -166,28 +166,28 @@ const ThemedContainer: React.FC<{
         padding: "24px",
         ...style,
       }}
-    >
+     key={609266}>
       {children}
     </div>
   );
 };
 
 // ============================================================================
-// MAIN COMPONENT
+// MAIN COMPONENT;
 // ============================================================================
 
 export const UniversalPredictions: React.FC = () => {
-  // Theme
+  // Theme;
   const { theme, isDark } = useTheme();
 
-  // State
+  // State;
   const [viewMode, setViewMode] = useState<
     "cards" | "table" | "detailed" | "analytics"
   >("cards");
   const [isRealTimeEnabled, setIsRealTimeEnabled] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [filters, setFilters] = useState<PredictionFilters>({
+  const [filters, setFilters] = useState<PredictionFilters key={272576}>({
     sport: "all",
     market: "all",
     riskLevel: "all",
@@ -196,11 +196,10 @@ export const UniversalPredictions: React.FC = () => {
     minEdge: 0,
   });
 
-  // Hooks
-  const debouncedSearch = useDebounce(searchQuery, 300);
-  const toast = useToast();
+  // Hooks;
 
-  // Mock data for demonstration
+
+  // Mock data for demonstration;
   const enhancedPredictions: EnhancedPrediction[] = useMemo(
     () =>
       Array.from({ length: 12 }, (_, i) => ({
@@ -262,9 +261,9 @@ export const UniversalPredictions: React.FC = () => {
     [],
   );
 
-  // Filtering logic
+  // Filtering logic;
   const filteredPredictions = useMemo(() => {
-    let filtered = [...enhancedPredictions];
+    const filtered = [...enhancedPredictions];
 
     if (filters.sport !== "all") {
       filtered = filtered.filter((pred) => pred.sport === filters.sport);
@@ -283,7 +282,7 @@ export const UniversalPredictions: React.FC = () => {
     );
 
     if (debouncedSearch) {
-      const query = debouncedSearch.toLowerCase();
+
       filtered = filtered.filter(
         (pred) =>
           pred.homeTeam.toLowerCase().includes(query) ||
@@ -296,23 +295,23 @@ export const UniversalPredictions: React.FC = () => {
     return filtered;
   }, [enhancedPredictions, filters, debouncedSearch]);
 
-  // Render functions
+  // Render functions;
   const renderPredictionCard = (prediction: EnhancedPrediction) => (
-    <ThemedContainer key={prediction.id} className="space-y-4">
+    <ThemedContainer key={prediction.id} className="space-y-4" key={617776}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <ThemedText variant="body" className="font-semibold">
+      <div className="flex items-center justify-between" key={96335}>
+        <div key={241917}>
+          <ThemedText variant="body" className="font-semibold" key={774714}>
             {prediction.homeTeam} vs {prediction.awayTeam}
           </ThemedText>
-          <ThemedText variant="caption" color="muted">
+          <ThemedText variant="caption" color="muted" key={478990}>
             {prediction.sport.toUpperCase()} • {prediction.league} •{" "}
             {prediction.market}
           </ThemedText>
         </div>
 
-        <div className="flex items-center gap-2">
-          <div
+        <div className="flex items-center gap-2" key={100294}>
+          <div;
             className={`px-2 py-1 rounded text-xs ${
               prediction.status === "live"
                 ? "bg-red-500 text-white"
@@ -320,106 +319,106 @@ export const UniversalPredictions: React.FC = () => {
                   ? "bg-blue-500 text-white"
                   : "bg-gray-500 text-white"
             }`}
-          >
+           key={612367}>
             {prediction.status.toUpperCase()}
           </div>
         </div>
       </div>
 
       {/* Metrics Grid */}
-      <div className="grid grid-cols-4 gap-4">
-        <div className="text-center">
-          <ThemedText variant="title" style={{ color: theme.colors.primary }}>
+      <div className="grid grid-cols-4 gap-4" key={99198}>
+        <div className="text-center" key={120206}>
+          <ThemedText variant="title" style={{ color: theme.colors.primary }} key={891101}>
             {prediction.confidence.toFixed(1)}%
           </ThemedText>
-          <ThemedText variant="caption" color="muted">
-            Confidence
+          <ThemedText variant="caption" color="muted" key={478990}>
+            Confidence;
           </ThemedText>
         </div>
 
-        <div className="text-center">
-          <ThemedText variant="title" style={{ color: theme.colors.accent }}>
+        <div className="text-center" key={120206}>
+          <ThemedText variant="title" style={{ color: theme.colors.accent }} key={621814}>
             {formatters.percentage(prediction.valueEdge * 100, 1)}
           </ThemedText>
-          <ThemedText variant="caption" color="muted">
-            Value Edge
+          <ThemedText variant="caption" color="muted" key={478990}>
+            Value Edge;
           </ThemedText>
         </div>
 
-        <div className="text-center">
-          <ThemedText variant="title" style={{ color: theme.colors.primary }}>
+        <div className="text-center" key={120206}>
+          <ThemedText variant="title" style={{ color: theme.colors.primary }} key={891101}>
             {formatters.odds(prediction.odds)}
           </ThemedText>
-          <ThemedText variant="caption" color="muted">
-            Odds
+          <ThemedText variant="caption" color="muted" key={478990}>
+            Odds;
           </ThemedText>
         </div>
 
-        <div className="text-center">
-          <ThemedText variant="title" style={{ color: theme.colors.accent }}>
+        <div className="text-center" key={120206}>
+          <ThemedText variant="title" style={{ color: theme.colors.accent }} key={621814}>
             {formatters.currency(prediction.expectedValue)}
           </ThemedText>
-          <ThemedText variant="caption" color="muted">
-            Expected Value
+          <ThemedText variant="caption" color="muted" key={478990}>
+            Expected Value;
           </ThemedText>
         </div>
       </div>
 
       {/* Action Button */}
-      <MegaButton
+      <MegaButton;
         variant="primary"
-        onClick={() =>
+        onClick={() = key={634655}>
           toast.success(
             `Betting slip updated for ${prediction.homeTeam} vs ${prediction.awayTeam}`,
           )
         }
         className="w-full"
       >
-        Add to Bet Slip
+        Add to Bet Slip;
       </MegaButton>
     </ThemedContainer>
   );
 
   return (
-    <div
+    <div;
       className="space-y-6 p-6"
       style={{
         background: theme.colors.background,
         color: theme.colors.text.primary,
         minHeight: "100vh",
       }}
-    >
+     key={538481}>
       {/* Header */}
-      <ThemedContainer>
-        <div className="flex items-center justify-between">
-          <div>
-            <ThemedText variant="title" style={{ fontSize: "32px" }}>
-              Universal Predictions
+      <ThemedContainer key={20341}>
+        <div className="flex items-center justify-between" key={96335}>
+          <div key={241917}>
+            <ThemedText variant="title" style={{ fontSize: "32px" }} key={164084}>
+              Universal Predictions;
             </ThemedText>
-            <ThemedText variant="body" color="secondary">
-              AI-Enhanced Prediction Engine with Real-Time Intelligence
+            <ThemedText variant="body" color="secondary" key={100923}>
+              AI-Enhanced Prediction Engine with Real-Time Intelligence;
             </ThemedText>
           </div>
 
-          <div className="flex items-center gap-3">
-            <Brain size={20} style={{ color: theme.colors.primary }} />
-            <ThemedText variant="body" style={{ color: theme.colors.primary }}>
-              {enhancedPredictions.length} Models Active
+          <div className="flex items-center gap-3" key={443099}>
+            <Brain size={20} style={{ color: theme.colors.primary }} / key={515227}>
+            <ThemedText variant="body" style={{ color: theme.colors.primary }} key={561409}>
+              {enhancedPredictions.length} Models Active;
             </ThemedText>
           </div>
         </div>
       </ThemedContainer>
 
       {/* Filters */}
-      <ThemedContainer>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div>
-            <ThemedText variant="caption" className="mb-2">
-              Sport
+      <ThemedContainer key={20341}>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" key={293803}>
+          <div key={241917}>
+            <ThemedText variant="caption" className="mb-2" key={271209}>
+              Sport;
             </ThemedText>
-            <select
+            <select;
               value={filters.sport}
-              onChange={(e) =>
+              onChange={(e) = key={729566}>
                 setFilters((prev) => ({ ...prev, sport: e.target.value }))
               }
               style={{
@@ -431,21 +430,21 @@ export const UniversalPredictions: React.FC = () => {
                 width: "100%",
               }}
             >
-              <option value="all">All Sports</option>
-              <option value="nfl">NFL</option>
-              <option value="nba">NBA</option>
-              <option value="mlb">MLB</option>
-              <option value="nhl">NHL</option>
+              <option value="all" key={673287}>All Sports</option>
+              <option value="nfl" key={256859}>NFL</option>
+              <option value="nba" key={373935}>NBA</option>
+              <option value="mlb" key={383384}>MLB</option>
+              <option value="nhl" key={648730}>NHL</option>
             </select>
           </div>
 
-          <div>
-            <ThemedText variant="caption" className="mb-2">
-              Market
+          <div key={241917}>
+            <ThemedText variant="caption" className="mb-2" key={271209}>
+              Market;
             </ThemedText>
-            <select
+            <select;
               value={filters.market}
-              onChange={(e) =>
+              onChange={(e) = key={740728}>
                 setFilters((prev) => ({ ...prev, market: e.target.value }))
               }
               style={{
@@ -457,21 +456,21 @@ export const UniversalPredictions: React.FC = () => {
                 width: "100%",
               }}
             >
-              <option value="all">All Markets</option>
-              <option value="Moneyline">Moneyline</option>
-              <option value="Spread">Spread</option>
-              <option value="Total">Total</option>
-              <option value="Props">Props</option>
+              <option value="all" key={673287}>All Markets</option>
+              <option value="Moneyline" key={619163}>Moneyline</option>
+              <option value="Spread" key={576692}>Spread</option>
+              <option value="Total" key={149566}>Total</option>
+              <option value="Props" key={714952}>Props</option>
             </select>
           </div>
 
-          <div>
-            <ThemedText variant="caption" className="mb-2">
-              Status
+          <div key={241917}>
+            <ThemedText variant="caption" className="mb-2" key={271209}>
+              Status;
             </ThemedText>
-            <select
+            <select;
               value={filters.status}
-              onChange={(e) =>
+              onChange={(e) = key={631335}>
                 setFilters((prev) => ({ ...prev, status: e.target.value }))
               }
               style={{
@@ -483,20 +482,20 @@ export const UniversalPredictions: React.FC = () => {
                 width: "100%",
               }}
             >
-              <option value="all">All Status</option>
-              <option value="upcoming">Upcoming</option>
-              <option value="live">Live</option>
-              <option value="completed">Completed</option>
+              <option value="all" key={673287}>All Status</option>
+              <option value="upcoming" key={522495}>Upcoming</option>
+              <option value="live" key={785230}>Live</option>
+              <option value="completed" key={394961}>Completed</option>
             </select>
           </div>
 
-          <div>
-            <ThemedText variant="caption" className="mb-2">
-              View Mode
+          <div key={241917}>
+            <ThemedText variant="caption" className="mb-2" key={271209}>
+              View Mode;
             </ThemedText>
-            <select
+            <select;
               value={viewMode}
-              onChange={(e) => setViewMode(e.target.value as any)}
+              onChange={(e) = key={930581}> setViewMode(e.target.value as any)}
               style={{
                 background: theme.colors.surface,
                 border: `1px solid ${theme.colors.border}`,
@@ -506,36 +505,36 @@ export const UniversalPredictions: React.FC = () => {
                 width: "100%",
               }}
             >
-              <option value="cards">Cards</option>
-              <option value="table">Table</option>
-              <option value="detailed">Detailed</option>
-              <option value="analytics">Analytics</option>
+              <option value="cards" key={170545}>Cards</option>
+              <option value="table" key={706675}>Table</option>
+              <option value="detailed" key={348029}>Detailed</option>
+              <option value="analytics" key={151786}>Analytics</option>
             </select>
           </div>
         </div>
 
         {/* Search */}
-        <div className="mb-4">
-          <MegaInput
+        <div className="mb-4" key={158827}>
+          <MegaInput;
             type="text"
             placeholder="Search teams, leagues, markets..."
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            icon={<Target size={16} />}
+            onChange={(e) = key={8070}> setSearchQuery(e.target.value)}
+            icon={<Target size={16} / key={345075}>}
           />
         </div>
       </ThemedContainer>
 
       {/* Predictions Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={881323}>
         {filteredPredictions.map(renderPredictionCard)}
       </div>
 
       {/* Empty State */}
       {filteredPredictions.length === 0 && (
-        <ThemedContainer>
-          <div className="text-center py-8">
-            <ThemedText variant="body" color="muted">
+        <ThemedContainer key={20341}>
+          <div className="text-center py-8" key={715292}>
+            <ThemedText variant="body" color="muted" key={263981}>
               No predictions found matching your criteria.
             </ThemedText>
           </div>

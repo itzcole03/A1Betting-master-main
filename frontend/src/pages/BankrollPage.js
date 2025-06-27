@@ -4,18 +4,18 @@ import GlassCard from '../components/ui/GlassCard';
 import GlowButton from '../components/ui/GlowButton';
 import Tooltip from '../components/ui/Tooltip';
 const fetchTransactions = async () => {
-    // Replace with real API call
-    const res = await fetch('/api/transactions');
+    // Replace with real API call;
+
     if (!res.ok)
         throw new Error('Failed to fetch transactions');
     return res.json();
 };
 const fetchActiveBetsCount = async () => {
-    // Replace with real API call
-    const res = await fetch('/api/active-bets/count');
+    // Replace with real API call;
+
     if (!res.ok)
         throw new Error('Failed to fetch active bets count');
-    const data = await res.json();
+
     return data.count;
 };
 const BankrollPage = () => {
@@ -38,10 +38,10 @@ const BankrollPage = () => {
             setLoading(false);
         });
     }, []);
-    const currentBalance = transactions[transactions.length - 1]?.balance || 0;
-    const initialBalance = transactions[0]?.balance || 0;
-    const profitLoss = currentBalance - initialBalance;
-    const roi = initialBalance !== 0 ? ((profitLoss / initialBalance) * 100).toFixed(2) : '0.00';
+
+
+
+
     const getTransactionColor = (type) => {
         switch (type) {
             case 'deposit':

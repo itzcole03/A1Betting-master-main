@@ -1,5 +1,5 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState, useMemo, useCallback  } from 'react.ts';
+import { motion, AnimatePresence } from 'framer-motion.ts';
 import {
   Card,
   CardContent,
@@ -32,7 +32,7 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
-} from "@mui/material";
+} from '@mui/material.ts';
 import {
   TrendingUp,
   TrendingDown,
@@ -52,7 +52,7 @@ import {
   BarChart,
   CandlestickChart,
   TrendingFlat,
-} from "@mui/icons-material";
+} from '@mui/icons-material.ts';
 import {
   LineChart,
   Line,
@@ -75,8 +75,8 @@ import {
   Bar,
   PieChart as RechartsPieChart,
   Cell,
-} from "recharts";
-import { MarketAnalysisService } from "../services/marketAnalysisService";
+} from 'recharts.ts';
+import { MarketAnalysisService } from '@/services/marketAnalysisService.ts';
 import type {
   MarketMetrics,
   MarketEfficiencyMetrics,
@@ -88,12 +88,12 @@ import type {
   MarketDepth,
   LiquidityMetrics,
   MarketVolatility,
-} from "../types/betting";
+} from '@/types/betting.ts';
 import {
   formatCurrency,
   formatPercentage,
   formatDateTime,
-} from "../utils/formatters";
+} from '@/utils/formatters.ts';
 
 interface MarketAnalysisDashboardProps {
   eventId?: string;
@@ -121,67 +121,65 @@ const COLORS = {
   info: "#0288d1",
 };
 
-const PIE_COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884D8"];
-
 export const MarketAnalysisDashboard: React.FC<
-  MarketAnalysisDashboardProps
+  MarketAnalysisDashboardProps;
 > = ({
   eventId = "default",
   autoRefresh = true,
   refreshInterval = 30000,
   showAdvancedMetrics = true,
 }) => {
-  // State Management
+  // State Management;
   const [activeTab, setActiveTab] = useState(0);
   const [timeRange, setTimeRange] = useState<"1h" | "6h" | "24h" | "7d">("6h");
   const [selectedMetric, setSelectedMetric] = useState<
     "volume" | "odds" | "efficiency" | "sentiment"
   >("volume");
 
-  // Market Data State
-  const [metrics, setMetrics] = useState<MarketMetrics | null>(null);
-  const [efficiency, setEfficiency] = useState<MarketEfficiencyMetrics | null>(
+  // Market Data State;
+  const [metrics, setMetrics] = useState<MarketMetrics | null key={244872}>(null);
+  const [efficiency, setEfficiency] = useState<MarketEfficiencyMetrics | null key={993145}>(
     null,
   );
-  const [anomalies, setAnomalies] = useState<MarketAnomaly[]>([]);
-  const [oddsMovements, setOddsMovements] = useState<OddsMovement[]>([]);
-  const [volumeAnalysis, setVolumeAnalysis] = useState<VolumeAnalysis | null>(
+  const [anomalies, setAnomalies] = useState<MarketAnomaly[] key={626353}>([]);
+  const [oddsMovements, setOddsMovements] = useState<OddsMovement[] key={425207}>([]);
+  const [volumeAnalysis, setVolumeAnalysis] = useState<VolumeAnalysis | null key={459172}>(
     null,
   );
-  const [sentimentData, setSentimentData] = useState<SentimentData | null>(
+  const [sentimentData, setSentimentData] = useState<SentimentData | null key={723204}>(
     null,
   );
   const [arbitrageOpportunities, setArbitrageOpportunities] = useState<
     ArbitrageOpportunity[]
   >([]);
-  const [marketDepth, setMarketDepth] = useState<MarketDepth | null>(null);
+  const [marketDepth, setMarketDepth] = useState<MarketDepth | null key={826189}>(null);
   const [liquidityMetrics, setLiquidityMetrics] =
-    useState<LiquidityMetrics | null>(null);
-  const [volatilityData, setVolatilityData] = useState<MarketVolatility | null>(
+    useState<LiquidityMetrics | null key={235880}>(null);
+  const [volatilityData, setVolatilityData] = useState<MarketVolatility | null key={700432}>(
     null,
   );
   const [historicalSnapshots, setHistoricalSnapshots] = useState<
     MarketSnapshot[]
   >([]);
 
-  // UI State
+  // UI State;
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [lastUpdate, setLastUpdate] = useState<Date>(new Date());
+  const [error, setError] = useState<string | null key={121216}>(null);
+  const [lastUpdate, setLastUpdate] = useState<Date key={141202}>(new Date());
 
-  // Service Instance
+  // Service Instance;
   const marketAnalysisService = useMemo(
     () => MarketAnalysisService.getInstance(),
     [],
   );
 
-  // Data Loading Functions
+  // Data Loading Functions;
   const loadMarketData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
     try {
-      // Load all market data in parallel
+      // Load all market data in parallel;
       const [
         metricsData,
         efficiencyData,
@@ -217,7 +215,7 @@ export const MarketAnalysisDashboard: React.FC<
       setLiquidityMetrics(liquidityData);
       setVolatilityData(volatilityInfo);
 
-      // Create historical snapshot
+      // Create historical snapshot;
       if (metricsData && efficiencyData && sentimentInfo) {
         const snapshot: MarketSnapshot = {
           timestamp: Date.now(),
@@ -230,8 +228,8 @@ export const MarketAnalysisDashboard: React.FC<
         };
 
         setHistoricalSnapshots((prev) => {
-          const updated = [...prev, snapshot];
-          // Keep last 100 snapshots
+
+          // Keep last 100 snapshots;
           return updated.slice(-100);
         });
       }
@@ -239,23 +237,23 @@ export const MarketAnalysisDashboard: React.FC<
       setLastUpdate(new Date());
     } catch (err) {
       setError("Failed to load market data");
-      console.error("Market data loading error:", err);
+      // console statement removed
     } finally {
       setIsLoading(false);
     }
   }, [eventId, timeRange, marketAnalysisService]);
 
-  // Auto-refresh Effect
+  // Auto-refresh Effect;
   useEffect(() => {
     loadMarketData();
 
     if (autoRefresh) {
-      const interval = setInterval(loadMarketData, refreshInterval);
+
       return () => clearInterval(interval);
     }
   }, [loadMarketData, autoRefresh, refreshInterval]);
 
-  // Chart Data Preparation
+  // Chart Data Preparation;
   const chartData = useMemo(() => {
     if (!oddsMovements.length) return [];
 
@@ -298,14 +296,14 @@ export const MarketAnalysisDashboard: React.FC<
     return {
       bids: marketDepth.bids.map((bid, index) => ({
         price: bid.odds,
-        cumulative: marketDepth.bids
+        cumulative: marketDepth.bids;
           .slice(0, index + 1)
           .reduce((sum, b) => sum + b.volume, 0),
         volume: bid.volume,
       })),
       asks: marketDepth.asks.map((ask, index) => ({
         price: ask.odds,
-        cumulative: marketDepth.asks
+        cumulative: marketDepth.asks;
           .slice(0, index + 1)
           .reduce((sum, a) => sum + a.volume, 0),
         volume: ask.volume,
@@ -313,7 +311,7 @@ export const MarketAnalysisDashboard: React.FC<
     };
   }, [marketDepth]);
 
-  // Export Functions
+  // Export Functions;
   const exportAnalysis = useCallback(() => {
     const exportData = {
       timestamp: new Date().toISOString(),
@@ -336,8 +334,8 @@ export const MarketAnalysisDashboard: React.FC<
     const blob = new Blob([JSON.stringify(exportData, null, 2)], {
       type: "application/json",
     });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
+
+
     a.href = url;
     a.download = `market-analysis-${eventId}-${Date.now()}.json`;
     a.click();
@@ -354,12 +352,11 @@ export const MarketAnalysisDashboard: React.FC<
     sentimentData,
   ]);
 
-  // Risk Assessment
+  // Risk Assessment;
   const riskAssessment = useMemo(() => {
     if (!metrics || !efficiency || !volatilityData) return null;
 
-    const riskFactors = [];
-    let riskScore = 0;
+    const riskScore = 0;
 
     if (efficiency.overallEfficiency < 0.7) {
       riskFactors.push("Low market efficiency detected");
@@ -399,24 +396,24 @@ export const MarketAnalysisDashboard: React.FC<
 
   if (isLoading && !metrics) {
     return (
-      <Box
+      <Box;
         display="flex"
         justifyContent="center"
         alignItems="center"
         height={400}
-      >
-        <LinearProgress sx={{ width: "50%" }} />
+       key={219816}>
+        <LinearProgress sx={{ width: "50%" }} / key={592693}>
       </Box>
     );
   }
 
   if (error) {
     return (
-      <Alert
+      <Alert;
         severity="error"
         action={
-          <Button color="inherit" size="small" onClick={loadMarketData}>
-            Retry
+          <Button color="inherit" size="small" onClick={loadMarketData} key={331154}>
+            Retry;
           </Button>
         }
       >
@@ -426,112 +423,112 @@ export const MarketAnalysisDashboard: React.FC<
   }
 
   return (
-    <motion.div
+    <motion.div;
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
       className="w-full"
-    >
-      <Card sx={{ mb: 3 }}>
-        <CardContent>
-          <Box
+     key={253890}>
+      <Card sx={{ mb: 3 }} key={857343}>
+        <CardContent key={452065}>
+          <Box;
             display="flex"
             justifyContent="space-between"
             alignItems="center"
             mb={2}
-          >
-            <Typography
+           key={167950}>
+            <Typography;
               variant="h5"
               component="h2"
               sx={{ display: "flex", alignItems: "center", gap: 1 }}
-            >
-              <Assessment />
-              Market Analysis Dashboard
-              <Chip
+             key={972323}>
+              <Assessment / key={701819}>
+              Market Analysis Dashboard;
+              <Chip;
                 label={eventId}
                 color="primary"
                 size="small"
                 sx={{ ml: 1 }}
-              />
+              / key={13484}>
             </Typography>
-            <Box display="flex" gap={1} alignItems="center">
-              <FormControl size="small" sx={{ minWidth: 120 }}>
-                <InputLabel>Time Range</InputLabel>
-                <Select
+            <Box display="flex" gap={1} alignItems="center" key={695772}>
+              <FormControl size="small" sx={{ minWidth: 120 }} key={402711}>
+                <InputLabel key={405232}>Time Range</InputLabel>
+                <Select;
                   value={timeRange}
-                  onChange={(e) => setTimeRange(e.target.value as any)}
+                  onChange={(e) = key={213937}> setTimeRange(e.target.value as any)}
                 >
-                  <MenuItem value="1h">1 Hour</MenuItem>
-                  <MenuItem value="6h">6 Hours</MenuItem>
-                  <MenuItem value="24h">24 Hours</MenuItem>
-                  <MenuItem value="7d">7 Days</MenuItem>
+                  <MenuItem value="1h" key={394961}>1 Hour</MenuItem>
+                  <MenuItem value="6h" key={742844}>6 Hours</MenuItem>
+                  <MenuItem value="24h" key={15738}>24 Hours</MenuItem>
+                  <MenuItem value="7d" key={760577}>7 Days</MenuItem>
                 </Select>
               </FormControl>
-              <Tooltip title="Last updated">
-                <Chip
+              <Tooltip title="Last updated" key={854868}>
+                <Chip;
                   label={lastUpdate.toLocaleTimeString()}
                   size="small"
-                  icon={<Timeline />}
+                  icon={<Timeline / key={88564}>}
                 />
               </Tooltip>
-              <IconButton onClick={loadMarketData} disabled={isLoading}>
-                <Refresh />
+              <IconButton onClick={loadMarketData} disabled={isLoading} key={794490}>
+                <Refresh / key={393498}>
               </IconButton>
-              <IconButton onClick={exportAnalysis}>
-                <Download />
+              <IconButton onClick={exportAnalysis} key={288593}>
+                <Download / key={173972}>
               </IconButton>
             </Box>
           </Box>
 
           {/* Key Metrics Overview */}
-          <Grid container spacing={2} sx={{ mb: 3 }}>
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="primary.main">
+          <Grid container spacing={2} sx={{ mb: 3 }} key={482082}>
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="primary.main" key={559183}>
                   {formatCurrency(metrics?.totalVolume || 0)}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Total Volume
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Total Volume;
                 </Typography>
-                <Box
+                <Box;
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                   mt={1}
-                >
+                 key={823464}>
                   {volumeAnalysis && volumeAnalysis.change24h > 0 ? (
-                    <TrendingUp color="success" fontSize="small" />
+                    <TrendingUp color="success" fontSize="small" / key={904448}>
                   ) : (
-                    <TrendingDown color="error" fontSize="small" />
+                    <TrendingDown color="error" fontSize="small" / key={982590}>
                   )}
-                  <Typography variant="caption" sx={{ ml: 0.5 }}>
+                  <Typography variant="caption" sx={{ ml: 0.5 }} key={136077}>
                     {formatPercentage((volumeAnalysis?.change24h || 0) / 100)}
                   </Typography>
                 </Box>
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="secondary.main">
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="secondary.main" key={711142}>
                   {formatPercentage((efficiency?.overallEfficiency || 0) / 100)}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Market Efficiency
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Market Efficiency;
                 </Typography>
-                <Box mt={1}>
-                  <Chip
+                <Box mt={1} key={51953}>
+                  <Chip;
                     label={
-                      (efficiency?.overallEfficiency || 0) > 0.8
+                      (efficiency?.overallEfficiency || 0)  key={834668}> 0.8;
                         ? "High"
-                        : (efficiency?.overallEfficiency || 0) > 0.6
+                        : (efficiency?.overallEfficiency || 0) > 0.6;
                           ? "Medium"
                           : "Low"
                     }
                     color={
-                      (efficiency?.overallEfficiency || 0) > 0.8
+                      (efficiency?.overallEfficiency || 0) > 0.8;
                         ? "success"
-                        : (efficiency?.overallEfficiency || 0) > 0.6
+                        : (efficiency?.overallEfficiency || 0) > 0.6;
                           ? "warning"
                           : "error"
                     }
@@ -541,27 +538,27 @@ export const MarketAnalysisDashboard: React.FC<
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="warning.main">
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="warning.main" key={388248}>
                   {anomalies.length}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Market Anomalies
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Market Anomalies;
                 </Typography>
-                <Box mt={1}>
-                  <Chip
+                <Box mt={1} key={51953}>
+                  <Chip;
                     label={
-                      anomalies.length > 5
+                      anomalies.length  key={221981}> 5;
                         ? "High Alert"
-                        : anomalies.length > 2
+                        : anomalies.length > 2;
                           ? "Moderate"
                           : "Normal"
                     }
                     color={
-                      anomalies.length > 5
+                      anomalies.length > 5;
                         ? "error"
-                        : anomalies.length > 2
+                        : anomalies.length > 2;
                           ? "warning"
                           : "success"
                     }
@@ -571,27 +568,27 @@ export const MarketAnalysisDashboard: React.FC<
               </Paper>
             </Grid>
 
-            <Grid item xs={12} sm={6} md={3}>
-              <Paper sx={{ p: 2, textAlign: "center" }}>
-                <Typography variant="h4" color="success.main">
+            <Grid item xs={12} sm={6} md={3} key={214380}>
+              <Paper sx={{ p: 2, textAlign: "center" }} key={534920}>
+                <Typography variant="h4" color="success.main" key={386495}>
                   {arbitrageOpportunities.length}
                 </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  Arbitrage Opportunities
+                <Typography variant="caption" color="textSecondary" key={15591}>
+                  Arbitrage Opportunities;
                 </Typography>
-                <Box mt={1}>
-                  <Chip
+                <Box mt={1} key={51953}>
+                  <Chip;
                     label={
-                      arbitrageOpportunities.length > 3
+                      arbitrageOpportunities.length  key={153171}> 3;
                         ? "Excellent"
-                        : arbitrageOpportunities.length > 1
+                        : arbitrageOpportunities.length > 1;
                           ? "Good"
                           : "Limited"
                     }
                     color={
-                      arbitrageOpportunities.length > 3
+                      arbitrageOpportunities.length > 3;
                         ? "success"
-                        : arbitrageOpportunities.length > 1
+                        : arbitrageOpportunities.length > 1;
                           ? "warning"
                           : "default"
                     }
@@ -604,7 +601,7 @@ export const MarketAnalysisDashboard: React.FC<
 
           {/* Risk Assessment */}
           {riskAssessment && (
-            <Alert
+            <Alert;
               severity={
                 riskAssessment.level === "high"
                   ? "error"
@@ -613,23 +610,23 @@ export const MarketAnalysisDashboard: React.FC<
                     : "success"
               }
               sx={{ mb: 3 }}
-            >
-              <Typography variant="subtitle2" gutterBottom>
+             key={698375}>
+              <Typography variant="subtitle2" gutterBottom key={263945}>
                 Risk Assessment: {riskAssessment.level.toUpperCase()} (Score:{" "}
                 {riskAssessment.score}/10)
               </Typography>
-              <Typography variant="body2" gutterBottom>
+              <Typography variant="body2" gutterBottom key={645732}>
                 {riskAssessment.recommendation}
               </Typography>
               {riskAssessment.factors.length > 0 && (
-                <Box mt={1}>
-                  <Typography variant="caption" color="textSecondary">
+                <Box mt={1} key={51953}>
+                  <Typography variant="caption" color="textSecondary" key={15591}>
                     Risk Factors:
                   </Typography>
-                  <ul style={{ margin: 0, paddingLeft: 16 }}>
+                  <ul style={{ margin: 0, paddingLeft: 16 }} key={459208}>
                     {riskAssessment.factors.map((factor, index) => (
-                      <li key={index}>
-                        <Typography variant="caption">{factor}</Typography>
+                      <li key={index} key={760236}>
+                        <Typography variant="caption" key={472228}>{factor}</Typography>
                       </li>
                     ))}
                   </ul>
@@ -639,75 +636,75 @@ export const MarketAnalysisDashboard: React.FC<
           )}
 
           {/* Tab Navigation */}
-          <Tabs
+          <Tabs;
             value={activeTab}
-            onChange={(_, newValue) => setActiveTab(newValue)}
+            onChange={(_, newValue) = key={995268}> setActiveTab(newValue)}
             sx={{ borderBottom: 1, borderColor: "divider", mb: 2 }}
           >
-            <Tab label="Market Trends" icon={<ShowChart />} />
-            <Tab label="Volume Analysis" icon={<BarChart />} />
-            <Tab label="Sentiment" icon={<PieChart />} />
-            <Tab label="Market Depth" icon={<CandlestickChart />} />
-            <Tab label="Anomalies" icon={<Warning />} />
-            <Tab label="Arbitrage" icon={<MonetizationOn />} />
+            <Tab label="Market Trends" icon={<ShowChart / key={326363}>} />
+            <Tab label="Volume Analysis" icon={<BarChart / key={569066}>} />
+            <Tab label="Sentiment" icon={<PieChart / key={973452}>} />
+            <Tab label="Market Depth" icon={<CandlestickChart / key={334326}>} />
+            <Tab label="Anomalies" icon={<Warning / key={311094}>} />
+            <Tab label="Arbitrage" icon={<MonetizationOn / key={346150}>} />
           </Tabs>
 
           {/* Market Trends Tab */}
           {activeTab === 0 && (
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Odds Movement & Efficiency
+            <Grid container spacing={3} key={459826}>
+              <Grid item xs={12} md={8} key={230289}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Odds Movement & Efficiency;
                   </Typography>
-                  <ResponsiveContainer width="100%" height={400}>
-                    <LineChart data={chartData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="timestamp" />
-                      <YAxis yAxisId="left" />
-                      <YAxis yAxisId="right" orientation="right" />
-                      <RechartsTooltip />
-                      <Legend />
-                      <Line
+                  <ResponsiveContainer width="100%" height={400} key={114808}>
+                    <LineChart data={chartData} key={187147}>
+                      <CartesianGrid strokeDasharray="3 3" / key={580708}>
+                      <XAxis dataKey="timestamp" / key={223901}>
+                      <YAxis yAxisId="left" / key={951284}>
+                      <YAxis yAxisId="right" orientation="right" / key={346631}>
+                      <RechartsTooltip / key={2217}>
+                      <Legend / key={913243}>
+                      <Line;
                         yAxisId="left"
                         type="monotone"
                         dataKey="odds"
                         stroke={COLORS.primary}
                         strokeWidth={2}
                         name="Odds"
-                      />
-                      <Line
+                      / key={864148}>
+                      <Line;
                         yAxisId="right"
                         type="monotone"
                         dataKey="efficiency"
                         stroke={COLORS.success}
                         strokeWidth={2}
                         name="Efficiency"
-                      />
+                      / key={352495}>
                     </LineChart>
                   </ResponsiveContainer>
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={4}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Volatility Analysis
+              <Grid item xs={12} md={4} key={796413}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Volatility Analysis;
                   </Typography>
                   {volatilityData && (
-                    <Stack spacing={2}>
-                      <Box>
-                        <Typography variant="caption">
-                          Current Volatility
+                    <Stack spacing={2} key={169333}>
+                      <Box key={485947}>
+                        <Typography variant="caption" key={472228}>
+                          Current Volatility;
                         </Typography>
-                        <Typography
+                        <Typography;
                           variant="h4"
                           color={
-                            volatilityData.currentVolatility >
-                            volatilityData.avgVolatility * 1.5
+                            volatilityData.currentVolatility  key={720815}>
+                            volatilityData.avgVolatility * 1.5;
                               ? "error.main"
                               : volatilityData.currentVolatility >
-                                  volatilityData.avgVolatility
+                                  volatilityData.avgVolatility;
                                 ? "warning.main"
                                 : "success.main"
                           }
@@ -718,23 +715,23 @@ export const MarketAnalysisDashboard: React.FC<
                         </Typography>
                       </Box>
 
-                      <Divider />
+                      <Divider / key={11977}>
 
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">24h Average</Typography>
-                        <Typography variant="body2">
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>24h Average</Typography>
+                        <Typography variant="body2" key={679167}>
                           {formatPercentage(volatilityData.avgVolatility / 100)}
                         </Typography>
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">24h High</Typography>
-                        <Typography variant="body2">
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>24h High</Typography>
+                        <Typography variant="body2" key={679167}>
                           {formatPercentage(volatilityData.maxVolatility / 100)}
                         </Typography>
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">24h Low</Typography>
-                        <Typography variant="body2">
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>24h Low</Typography>
+                        <Typography variant="body2" key={679167}>
                           {formatPercentage(volatilityData.minVolatility / 100)}
                         </Typography>
                       </Box>
@@ -747,53 +744,53 @@ export const MarketAnalysisDashboard: React.FC<
 
           {/* Volume Analysis Tab */}
           {activeTab === 1 && (
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Hourly Volume Distribution
+            <Grid container spacing={3} key={459826}>
+              <Grid item xs={12} md={8} key={230289}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Hourly Volume Distribution;
                   </Typography>
-                  <ResponsiveContainer width="100%" height={400}>
-                    <RechartsBarChart data={volumeDistributionData}>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="hour" />
-                      <YAxis />
-                      <RechartsTooltip />
-                      <Bar dataKey="volume" fill={COLORS.primary} />
+                  <ResponsiveContainer width="100%" height={400} key={114808}>
+                    <RechartsBarChart data={volumeDistributionData} key={935419}>
+                      <CartesianGrid strokeDasharray="3 3" / key={580708}>
+                      <XAxis dataKey="hour" / key={169066}>
+                      <YAxis / key={190086}>
+                      <RechartsTooltip / key={2217}>
+                      <Bar dataKey="volume" fill={COLORS.primary} / key={818901}>
                     </RechartsBarChart>
                   </ResponsiveContainer>
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={4}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Volume Metrics
+              <Grid item xs={12} md={4} key={796413}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Volume Metrics;
                   </Typography>
                   {volumeAnalysis && (
-                    <Stack spacing={2}>
-                      <Box>
-                        <Typography variant="caption">
-                          Peak Hour Volume
+                    <Stack spacing={2} key={169333}>
+                      <Box key={485947}>
+                        <Typography variant="caption" key={472228}>
+                          Peak Hour Volume;
                         </Typography>
-                        <Typography variant="h5">
+                        <Typography variant="h5" key={944884}>
                           {formatCurrency(volumeAnalysis.peakHourVolume)}
                         </Typography>
                       </Box>
-                      <Box>
-                        <Typography variant="caption">
-                          Average Hourly
+                      <Box key={485947}>
+                        <Typography variant="caption" key={472228}>
+                          Average Hourly;
                         </Typography>
-                        <Typography variant="h6">
+                        <Typography variant="h6" key={93421}>
                           {formatCurrency(volumeAnalysis.avgHourlyVolume)}
                         </Typography>
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">24h Change</Typography>
-                        <Typography
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>24h Change</Typography>
+                        <Typography;
                           variant="body2"
                           color={
-                            volumeAnalysis.change24h >= 0
+                            volumeAnalysis.change24h  key={603471}>= 0;
                               ? "success.main"
                               : "error.main"
                           }
@@ -801,11 +798,11 @@ export const MarketAnalysisDashboard: React.FC<
                           {formatPercentage(volumeAnalysis.change24h / 100)}
                         </Typography>
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">
-                          Volume Velocity
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>
+                          Volume Velocity;
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography variant="body2" key={679167}>
                           {volumeAnalysis.velocity.toFixed(2)}
                         </Typography>
                       </Box>
@@ -818,52 +815,52 @@ export const MarketAnalysisDashboard: React.FC<
 
           {/* Sentiment Tab */}
           {activeTab === 2 && (
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Market Sentiment Distribution
+            <Grid container spacing={3} key={459826}>
+              <Grid item xs={12} md={6} key={637329}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Market Sentiment Distribution;
                   </Typography>
-                  <ResponsiveContainer width="100%" height={300}>
-                    <RechartsPieChart>
-                      <Pie
+                  <ResponsiveContainer width="100%" height={300} key={757181}>
+                    <RechartsPieChart key={697175}>
+                      <Pie;
                         data={sentimentChartData}
                         dataKey="value"
                         nameKey="name"
                         cx="50%"
                         cy="50%"
                         outerRadius={80}
-                        label={({ name, percent }) =>
+                        label={({ name, percent }) = key={194953}>
                           `${name} ${(percent * 100).toFixed(0)}%`
                         }
                       >
                         {sentimentChartData.map((entry, index) => (
-                          <Cell key={`cell-${index}`} fill={entry.color} />
+                          <Cell key={`cell-${index}`} fill={entry.color} / key={116639}>
                         ))}
                       </Pie>
-                      <RechartsTooltip />
+                      <RechartsTooltip / key={2217}>
                     </RechartsPieChart>
                   </ResponsiveContainer>
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={6}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Sentiment Analysis
+              <Grid item xs={12} md={6} key={637329}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Sentiment Analysis;
                   </Typography>
                   {sentimentData && (
-                    <Stack spacing={2}>
-                      <Box>
-                        <Typography variant="caption">
-                          Overall Sentiment Score
+                    <Stack spacing={2} key={169333}>
+                      <Box key={485947}>
+                        <Typography variant="caption" key={472228}>
+                          Overall Sentiment Score;
                         </Typography>
-                        <Typography
+                        <Typography;
                           variant="h4"
                           color={
-                            sentimentData.overall > 0.6
+                            sentimentData.overall  key={873356}> 0.6;
                               ? "success.main"
-                              : sentimentData.overall > 0.4
+                              : sentimentData.overall > 0.4;
                                 ? "warning.main"
                                 : "error.main"
                           }
@@ -872,60 +869,60 @@ export const MarketAnalysisDashboard: React.FC<
                         </Typography>
                       </Box>
 
-                      <Divider />
+                      <Divider / key={11977}>
 
-                      <Box>
-                        <Typography variant="subtitle2" gutterBottom>
-                          Sentiment Breakdown
+                      <Box key={485947}>
+                        <Typography variant="subtitle2" gutterBottom key={263945}>
+                          Sentiment Breakdown;
                         </Typography>
-                        <Stack spacing={1}>
-                          <Box display="flex" justifyContent="space-between">
-                            <Typography variant="caption">Positive</Typography>
-                            <Typography variant="body2" color="success.main">
+                        <Stack spacing={1} key={41946}>
+                          <Box display="flex" justifyContent="space-between" key={904131}>
+                            <Typography variant="caption" key={472228}>Positive</Typography>
+                            <Typography variant="body2" color="success.main" key={698567}>
                               {formatPercentage(sentimentData.positive / 100)}
                             </Typography>
                           </Box>
-                          <Box display="flex" justifyContent="space-between">
-                            <Typography variant="caption">Neutral</Typography>
-                            <Typography variant="body2">
+                          <Box display="flex" justifyContent="space-between" key={904131}>
+                            <Typography variant="caption" key={472228}>Neutral</Typography>
+                            <Typography variant="body2" key={679167}>
                               {formatPercentage(sentimentData.neutral / 100)}
                             </Typography>
                           </Box>
-                          <Box display="flex" justifyContent="space-between">
-                            <Typography variant="caption">Negative</Typography>
-                            <Typography variant="body2" color="error.main">
+                          <Box display="flex" justifyContent="space-between" key={904131}>
+                            <Typography variant="caption" key={472228}>Negative</Typography>
+                            <Typography variant="body2" color="error.main" key={837392}>
                               {formatPercentage(sentimentData.negative / 100)}
                             </Typography>
                           </Box>
                         </Stack>
                       </Box>
 
-                      <Box>
-                        <Typography variant="subtitle2" gutterBottom>
-                          Key Indicators
+                      <Box key={485947}>
+                        <Typography variant="subtitle2" gutterBottom key={263945}>
+                          Key Indicators;
                         </Typography>
-                        <Stack spacing={1}>
-                          <Box display="flex" justifyContent="space-between">
-                            <Typography variant="caption">
-                              Volume Sentiment
+                        <Stack spacing={1} key={41946}>
+                          <Box display="flex" justifyContent="space-between" key={904131}>
+                            <Typography variant="caption" key={472228}>
+                              Volume Sentiment;
                             </Typography>
-                            <Typography variant="body2">
+                            <Typography variant="body2" key={679167}>
                               {sentimentData.volumeWeighted.toFixed(2)}
                             </Typography>
                           </Box>
-                          <Box display="flex" justifyContent="space-between">
-                            <Typography variant="caption">
-                              Social Media Score
+                          <Box display="flex" justifyContent="space-between" key={904131}>
+                            <Typography variant="caption" key={472228}>
+                              Social Media Score;
                             </Typography>
-                            <Typography variant="body2">
+                            <Typography variant="body2" key={679167}>
                               {sentimentData.socialMedia.toFixed(2)}
                             </Typography>
                           </Box>
-                          <Box display="flex" justifyContent="space-between">
-                            <Typography variant="caption">
-                              News Impact
+                          <Box display="flex" justifyContent="space-between" key={904131}>
+                            <Typography variant="caption" key={472228}>
+                              News Impact;
                             </Typography>
-                            <Typography variant="body2">
+                            <Typography variant="body2" key={679167}>
                               {sentimentData.newsImpact.toFixed(2)}
                             </Typography>
                           </Box>
@@ -940,19 +937,19 @@ export const MarketAnalysisDashboard: React.FC<
 
           {/* Market Depth Tab */}
           {activeTab === 3 && (
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={8}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Order Book Depth
+            <Grid container spacing={3} key={459826}>
+              <Grid item xs={12} md={8} key={230289}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Order Book Depth;
                   </Typography>
-                  <ResponsiveContainer width="100%" height={400}>
-                    <AreaChart>
-                      <CartesianGrid strokeDasharray="3 3" />
-                      <XAxis dataKey="price" />
-                      <YAxis />
-                      <RechartsTooltip />
-                      <Area
+                  <ResponsiveContainer width="100%" height={400} key={114808}>
+                    <AreaChart key={534590}>
+                      <CartesianGrid strokeDasharray="3 3" / key={580708}>
+                      <XAxis dataKey="price" / key={44198}>
+                      <YAxis / key={190086}>
+                      <RechartsTooltip / key={2217}>
+                      <Area;
                         type="monotone"
                         dataKey="cumulative"
                         stackId="1"
@@ -961,8 +958,8 @@ export const MarketAnalysisDashboard: React.FC<
                         fillOpacity={0.3}
                         data={marketDepthData.bids}
                         name="Bids"
-                      />
-                      <Area
+                      / key={171160}>
+                      <Area;
                         type="monotone"
                         dataKey="cumulative"
                         stackId="2"
@@ -971,29 +968,29 @@ export const MarketAnalysisDashboard: React.FC<
                         fillOpacity={0.3}
                         data={marketDepthData.asks}
                         name="Asks"
-                      />
+                      / key={600963}>
                     </AreaChart>
                   </ResponsiveContainer>
                 </Paper>
               </Grid>
 
-              <Grid item xs={12} md={4}>
-                <Paper sx={{ p: 2 }}>
-                  <Typography variant="h6" gutterBottom>
-                    Liquidity Metrics
+              <Grid item xs={12} md={4} key={796413}>
+                <Paper sx={{ p: 2 }} key={136663}>
+                  <Typography variant="h6" gutterBottom key={90207}>
+                    Liquidity Metrics;
                   </Typography>
                   {liquidityMetrics && (
-                    <Stack spacing={2}>
-                      <Box>
-                        <Typography variant="caption">
-                          Bid-Ask Spread
+                    <Stack spacing={2} key={169333}>
+                      <Box key={485947}>
+                        <Typography variant="caption" key={472228}>
+                          Bid-Ask Spread;
                         </Typography>
-                        <Typography
+                        <Typography;
                           variant="h5"
                           color={
-                            liquidityMetrics.bidAskSpread > 0.1
+                            liquidityMetrics.bidAskSpread  key={439443}> 0.1;
                               ? "error.main"
-                              : liquidityMetrics.bidAskSpread > 0.05
+                              : liquidityMetrics.bidAskSpread > 0.05;
                                 ? "warning.main"
                                 : "success.main"
                           }
@@ -1004,33 +1001,33 @@ export const MarketAnalysisDashboard: React.FC<
                         </Typography>
                       </Box>
 
-                      <Divider />
+                      <Divider / key={11977}>
 
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">Market Impact</Typography>
-                        <Typography variant="body2">
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>Market Impact</Typography>
+                        <Typography variant="body2" key={679167}>
                           {liquidityMetrics.marketImpact.toFixed(4)}
                         </Typography>
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">Depth Ratio</Typography>
-                        <Typography variant="body2">
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>Depth Ratio</Typography>
+                        <Typography variant="body2" key={679167}>
                           {liquidityMetrics.depthRatio.toFixed(2)}
                         </Typography>
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">Turnover Rate</Typography>
-                        <Typography variant="body2">
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>Turnover Rate</Typography>
+                        <Typography variant="body2" key={679167}>
                           {formatPercentage(
                             liquidityMetrics.turnoverRate / 100,
                           )}
                         </Typography>
                       </Box>
-                      <Box display="flex" justifyContent="space-between">
-                        <Typography variant="caption">
-                          Resilience Score
+                      <Box display="flex" justifyContent="space-between" key={904131}>
+                        <Typography variant="caption" key={472228}>
+                          Resilience Score;
                         </Typography>
-                        <Typography variant="body2">
+                        <Typography variant="body2" key={679167}>
                           {liquidityMetrics.resilienceScore.toFixed(2)}
                         </Typography>
                       </Box>
@@ -1043,26 +1040,26 @@ export const MarketAnalysisDashboard: React.FC<
 
           {/* Anomalies Tab */}
           {activeTab === 4 && (
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                Market Anomalies
+            <Paper sx={{ p: 2 }} key={136663}>
+              <Typography variant="h6" gutterBottom key={90207}>
+                Market Anomalies;
               </Typography>
 
               {anomalies.length > 0 ? (
-                <Stack spacing={2}>
+                <Stack spacing={2} key={169333}>
                   {anomalies.map((anomaly, index) => (
-                    <Accordion key={index}>
-                      <AccordionSummary expandIcon={<ExpandMore />}>
-                        <Box
+                    <Accordion key={index} key={36511}>
+                      <AccordionSummary expandIcon={<ExpandMore / key={963648}>}>
+                        <Box;
                           display="flex"
                           justifyContent="space-between"
                           width="100%"
-                        >
-                          <Typography variant="subtitle1">
+                         key={499775}>
+                          <Typography variant="subtitle1" key={265838}>
                             {anomaly.type}
                           </Typography>
-                          <Box display="flex" gap={1}>
-                            <Chip
+                          <Box display="flex" gap={1} key={999669}>
+                            <Chip;
                               label={anomaly.severity}
                               color={
                                 anomaly.severity === "high"
@@ -1072,41 +1069,41 @@ export const MarketAnalysisDashboard: React.FC<
                                     : "info"
                               }
                               size="small"
-                            />
-                            <Chip
+                            / key={259307}>
+                            <Chip;
                               label={formatDateTime(anomaly.timestamp)}
                               size="small"
                               variant="outlined"
-                            />
+                            / key={662346}>
                           </Box>
                         </Box>
                       </AccordionSummary>
-                      <AccordionDetails>
-                        <Grid container spacing={2}>
-                          <Grid item xs={12} md={8}>
-                            <Typography variant="body2" gutterBottom>
-                              <strong>Description:</strong>{" "}
+                      <AccordionDetails key={487497}>
+                        <Grid container spacing={2} key={272161}>
+                          <Grid item xs={12} md={8} key={230289}>
+                            <Typography variant="body2" gutterBottom key={645732}>
+                              <strong key={829099}>Description:</strong>{" "}
                               {anomaly.description}
                             </Typography>
-                            <Typography variant="body2" gutterBottom>
-                              <strong>Impact:</strong> {anomaly.impact}
+                            <Typography variant="body2" gutterBottom key={645732}>
+                              <strong key={829099}>Impact:</strong> {anomaly.impact}
                             </Typography>
-                            <Typography variant="body2">
-                              <strong>Recommendation:</strong>{" "}
+                            <Typography variant="body2" key={679167}>
+                              <strong key={829099}>Recommendation:</strong>{" "}
                               {anomaly.recommendation}
                             </Typography>
                           </Grid>
-                          <Grid item xs={12} md={4}>
-                            <Box>
-                              <Typography variant="caption">
-                                Confidence Score
+                          <Grid item xs={12} md={4} key={796413}>
+                            <Box key={485947}>
+                              <Typography variant="caption" key={472228}>
+                                Confidence Score;
                               </Typography>
-                              <LinearProgress
+                              <LinearProgress;
                                 variant="determinate"
                                 value={anomaly.confidence * 100}
                                 sx={{ mt: 1, mb: 2 }}
-                              />
-                              <Typography variant="body2">
+                              / key={179894}>
+                              <Typography variant="body2" key={679167}>
                                 {formatPercentage(anomaly.confidence)}
                               </Typography>
                             </Box>
@@ -1117,7 +1114,7 @@ export const MarketAnalysisDashboard: React.FC<
                   ))}
                 </Stack>
               ) : (
-                <Alert severity="success">
+                <Alert severity="success" key={903826}>
                   No market anomalies detected in the current time range.
                 </Alert>
               )}
@@ -1126,45 +1123,45 @@ export const MarketAnalysisDashboard: React.FC<
 
           {/* Arbitrage Tab */}
           {activeTab === 5 && (
-            <Paper sx={{ p: 2 }}>
-              <Typography variant="h6" gutterBottom>
-                Arbitrage Opportunities
+            <Paper sx={{ p: 2 }} key={136663}>
+              <Typography variant="h6" gutterBottom key={90207}>
+                Arbitrage Opportunities;
               </Typography>
 
               {arbitrageOpportunities.length > 0 ? (
-                <TableContainer>
-                  <Table>
-                    <TableHead>
-                      <TableRow>
-                        <TableCell>Market</TableCell>
-                        <TableCell>Bookmaker 1</TableCell>
-                        <TableCell>Bookmaker 2</TableCell>
-                        <TableCell>Profit %</TableCell>
-                        <TableCell>ROI</TableCell>
-                        <TableCell>Risk Level</TableCell>
-                        <TableCell>Action</TableCell>
+                <TableContainer key={611233}>
+                  <Table key={889668}>
+                    <TableHead key={813147}>
+                      <TableRow key={300096}>
+                        <TableCell key={942983}>Market</TableCell>
+                        <TableCell key={942983}>Bookmaker 1</TableCell>
+                        <TableCell key={942983}>Bookmaker 2</TableCell>
+                        <TableCell key={942983}>Profit %</TableCell>
+                        <TableCell key={942983}>ROI</TableCell>
+                        <TableCell key={942983}>Risk Level</TableCell>
+                        <TableCell key={942983}>Action</TableCell>
                       </TableRow>
                     </TableHead>
-                    <TableBody>
+                    <TableBody key={923191}>
                       {arbitrageOpportunities.map((opportunity, index) => (
-                        <TableRow key={index}>
-                          <TableCell>{opportunity.market}</TableCell>
-                          <TableCell>
+                        <TableRow key={index} key={177740}>
+                          <TableCell key={942983}>{opportunity.market}</TableCell>
+                          <TableCell key={942983}>
                             {opportunity.bookmaker1} @ {opportunity.odds1}
                           </TableCell>
-                          <TableCell>
+                          <TableCell key={942983}>
                             {opportunity.bookmaker2} @ {opportunity.odds2}
                           </TableCell>
-                          <TableCell>
-                            <Typography color="success.main" fontWeight="bold">
+                          <TableCell key={942983}>
+                            <Typography color="success.main" fontWeight="bold" key={50717}>
                               {formatPercentage(opportunity.profitMargin / 100)}
                             </Typography>
                           </TableCell>
-                          <TableCell>
+                          <TableCell key={942983}>
                             {formatPercentage(opportunity.roi / 100)}
                           </TableCell>
-                          <TableCell>
-                            <Chip
+                          <TableCell key={942983}>
+                            <Chip;
                               label={opportunity.riskLevel}
                               color={
                                 opportunity.riskLevel === "low"
@@ -1174,11 +1171,11 @@ export const MarketAnalysisDashboard: React.FC<
                                     : "error"
                               }
                               size="small"
-                            />
+                            / key={782300}>
                           </TableCell>
-                          <TableCell>
-                            <Button size="small" variant="outlined">
-                              Execute
+                          <TableCell key={942983}>
+                            <Button size="small" variant="outlined" key={990265}>
+                              Execute;
                             </Button>
                           </TableCell>
                         </TableRow>
@@ -1187,7 +1184,7 @@ export const MarketAnalysisDashboard: React.FC<
                   </Table>
                 </TableContainer>
               ) : (
-                <Alert severity="info">
+                <Alert severity="info" key={150543}>
                   No arbitrage opportunities currently available.
                 </Alert>
               )}

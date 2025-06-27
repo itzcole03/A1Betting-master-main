@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect  } from 'react.ts';
 import {
   Box,
   Card,
@@ -19,7 +19,7 @@ import {
   InputLabel,
   Select,
   MenuItem,
-} from '@mui/material';
+} from '@mui/material.ts';
 import {
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
@@ -27,11 +27,11 @@ import {
   StarBorder as StarBorderIcon,
   Info as InfoIcon,
   AttachMoney as MoneyIcon,
-} from '@mui/icons-material';
-import { styled } from '@mui/material/styles';
-import { sportsAnalytics } from '@/services/sportsAnalytics';
-import { riskManagement } from '@/services/riskManagement';
-import { Sport } from '@/services/sportsAnalytics';
+} from '@mui/icons-material.ts';
+import { styled } from '@mui/material/styles.ts';
+import { sportsAnalytics } from '@/services/sportsAnalytics.ts';
+import { riskManagement } from '@/services/riskManagement.ts';
+import { Sport } from '@/services/sportsAnalytics.ts';
 
 const RecommendationsCard = styled(Card)(({ theme }) => ({
   background: 'rgba(255, 255, 255, 0.9)',
@@ -59,15 +59,15 @@ interface Recommendation {
 }
 
 export const BettingRecommendations: React.FC<{ sport: Sport }> = ({ sport }) => {
-  const [recommendations, setRecommendations] = useState<Recommendation[]>([]);
-  const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | null>(null);
+  const [recommendations, setRecommendations] = useState<Recommendation[] key={269974}>([]);
+  const [selectedRecommendation, setSelectedRecommendation] = useState<Recommendation | null key={445609}>(null);
   const [betDialogOpen, setBetDialogOpen] = useState(false);
   const [betAmount, setBetAmount] = useState('');
   const [betType, setBetType] = useState('straight');
 
   useEffect(() => {
     const loadRecommendations = async () => {
-      const sportRecommendations = await sportsAnalytics.getRecommendations(sport);
+
       setRecommendations(sportRecommendations);
     };
 
@@ -88,7 +88,7 @@ export const BettingRecommendations: React.FC<{ sport: Sport }> = ({ sport }) =>
 
   const handlePlaceBet = () => {
     if (selectedRecommendation && betAmount) {
-      const amount = parseFloat(betAmount);
+
       riskManagement.placeBet({
         recommendationId: selectedRecommendation.id,
         amount,
@@ -103,9 +103,9 @@ export const BettingRecommendations: React.FC<{ sport: Sport }> = ({ sport }) =>
   const toggleFavorite = (recommendationId: string) => {
     setRecommendations(prev =>
       prev.map(rec =>
-        rec.id === recommendationId
+        rec.id === recommendationId;
           ? { ...rec, favorite: !rec.favorite }
-          : rec
+          : rec;
       )
     );
   };
@@ -131,16 +131,16 @@ export const BettingRecommendations: React.FC<{ sport: Sport }> = ({ sport }) =>
 
   return (
     <>
-      <RecommendationsCard>
-        <CardContent>
-          <Typography variant="h6" gutterBottom>
-            Betting Recommendations
+      <RecommendationsCard key={891499}>
+        <CardContent key={452065}>
+          <Typography variant="h6" gutterBottom key={90207}>
+            Betting Recommendations;
           </Typography>
 
-          <Grid container spacing={2}>
+          <Grid container spacing={2} key={272161}>
             {recommendations.map((recommendation) => (
-              <Grid item xs={12} key={recommendation.id}>
-                <Box
+              <Grid item xs={12} key={recommendation.id} key={693129}>
+                <Box;
                   sx={{
                     p: 2,
                     border: '1px solid',
@@ -148,50 +148,50 @@ export const BettingRecommendations: React.FC<{ sport: Sport }> = ({ sport }) =>
                     borderRadius: 1,
                     position: 'relative',
                   }}
-                >
-                  <Box display="flex" justifyContent="space-between" alignItems="flex-start">
-                    <Box>
-                      <Typography variant="subtitle1">
+                 key={353740}>
+                  <Box display="flex" justifyContent="space-between" alignItems="flex-start" key={211010}>
+                    <Box key={485947}>
+                      <Typography variant="subtitle1" key={265838}>
                         {recommendation.event}
                       </Typography>
-                      <Typography variant="body2" color="textSecondary">
+                      <Typography variant="body2" color="textSecondary" key={565471}>
                         {recommendation.betType}
                       </Typography>
                     </Box>
-                    <Box display="flex" gap={1}>
-                      <Chip
+                    <Box display="flex" gap={1} key={999669}>
+                      <Chip;
                         size="small"
                         label={`${recommendation.odds}x`}
                         color="primary"
-                      />
-                      <Chip
+                      / key={734894}>
+                      <Chip;
                         size="small"
                         label={`${recommendation.confidence}% confidence`}
                         color={getConfidenceColor(recommendation.confidence)}
-                      />
-                      <Chip
+                      / key={652096}>
+                      <Chip;
                         size="small"
                         label={recommendation.risk.toUpperCase()}
                         color={getRiskColor(recommendation.risk)}
-                      />
-                      <IconButton
+                      / key={515698}>
+                      <IconButton;
                         size="small"
-                        onClick={() => toggleFavorite(recommendation.id)}
+                        onClick={() = key={376118}> toggleFavorite(recommendation.id)}
                       >
                         {recommendation.favorite ? (
-                          <StarIcon color="warning" />
+                          <StarIcon color="warning" / key={417111}>
                         ) : (
-                          <StarBorderIcon />
+                          <StarBorderIcon / key={108672}>
                         )}
                       </IconButton>
                     </Box>
                   </Box>
 
-                  <Box mt={1}>
-                    <Typography variant="body2" color="textSecondary">
+                  <Box mt={1} key={51953}>
+                    <Typography variant="body2" color="textSecondary" key={565471}>
                       Edge: {recommendation.edge.toFixed(2)}%
                     </Typography>
-                    <LinearProgress
+                    <LinearProgress;
                       variant="determinate"
                       value={recommendation.confidence}
                       sx={{
@@ -202,23 +202,23 @@ export const BettingRecommendations: React.FC<{ sport: Sport }> = ({ sport }) =>
                           bgcolor: getConfidenceColor(recommendation.confidence),
                         },
                       }}
-                    />
+                    / key={147219}>
                   </Box>
 
-                  <Box mt={2}>
-                    <Typography variant="body2">
+                  <Box mt={2} key={781906}>
+                    <Typography variant="body2" key={679167}>
                       {recommendation.analysis}
                     </Typography>
                   </Box>
 
-                  <Box mt={2} display="flex" justifyContent="flex-end">
-                    <Button
+                  <Box mt={2} display="flex" justifyContent="flex-end" key={344032}>
+                    <Button;
                       variant="contained"
                       color="primary"
-                      startIcon={<MoneyIcon />}
+                      startIcon={<MoneyIcon / key={770208}>}
                       onClick={() => handleBetClick(recommendation)}
                     >
-                      Place Bet
+                      Place Bet;
                     </Button>
                   </Box>
                 </Box>
@@ -228,60 +228,60 @@ export const BettingRecommendations: React.FC<{ sport: Sport }> = ({ sport }) =>
         </CardContent>
       </RecommendationsCard>
 
-      <Dialog open={betDialogOpen} onClose={() => setBetDialogOpen(false)}>
-        <DialogTitle>Place Bet</DialogTitle>
-        <DialogContent>
+      <Dialog open={betDialogOpen} onClose={() = key={287958}> setBetDialogOpen(false)}>
+        <DialogTitle key={731539}>Place Bet</DialogTitle>
+        <DialogContent key={509164}>
           {selectedRecommendation && (
-            <Box sx={{ pt: 2 }}>
-              <Typography variant="subtitle1" gutterBottom>
+            <Box sx={{ pt: 2 }} key={848896}>
+              <Typography variant="subtitle1" gutterBottom key={9738}>
                 {selectedRecommendation.event}
               </Typography>
-              <Typography variant="body2" color="textSecondary" gutterBottom>
-                {selectedRecommendation.betType} @ {selectedRecommendation.odds}x
+              <Typography variant="body2" color="textSecondary" gutterBottom key={269573}>
+                {selectedRecommendation.betType} @ {selectedRecommendation.odds}x;
               </Typography>
 
-              <FormControl fullWidth sx={{ mt: 2 }}>
-                <InputLabel>Bet Type</InputLabel>
-                <Select
+              <FormControl fullWidth sx={{ mt: 2 }} key={502139}>
+                <InputLabel key={405232}>Bet Type</InputLabel>
+                <Select;
                   value={betType}
                   label="Bet Type"
-                  onChange={(e) => setBetType(e.target.value)}
+                  onChange={(e) = key={794759}> setBetType(e.target.value)}
                 >
-                  <MenuItem value="straight">Straight Bet</MenuItem>
-                  <MenuItem value="parlay">Parlay</MenuItem>
-                  <MenuItem value="teaser">Teaser</MenuItem>
+                  <MenuItem value="straight" key={28976}>Straight Bet</MenuItem>
+                  <MenuItem value="parlay" key={426313}>Parlay</MenuItem>
+                  <MenuItem value="teaser" key={916865}>Teaser</MenuItem>
                 </Select>
               </FormControl>
 
-              <TextField
-                fullWidth
+              <TextField;
+                fullWidth;
                 label="Bet Amount"
                 type="number"
                 value={betAmount}
-                onChange={(e) => setBetAmount(e.target.value)}
+                onChange={(e) = key={151913}> setBetAmount(e.target.value)}
                 sx={{ mt: 2 }}
                 InputProps={{
-                  startAdornment: <MoneyIcon color="action" />,
+                  startAdornment: <MoneyIcon color="action" / key={631425}>,
                 }}
               />
 
-              <Box mt={2}>
-                <Typography variant="body2" color="textSecondary">
+              <Box mt={2} key={781906}>
+                <Typography variant="body2" color="textSecondary" key={565471}>
                   Potential Payout: ${selectedRecommendation.odds * (parseFloat(betAmount) || 0)}
                 </Typography>
               </Box>
             </Box>
           )}
         </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setBetDialogOpen(false)}>Cancel</Button>
-          <Button
+        <DialogActions key={432689}>
+          <Button onClick={() = key={331038}> setBetDialogOpen(false)}>Cancel</Button>
+          <Button;
             variant="contained"
             color="primary"
             onClick={handlePlaceBet}
             disabled={!betAmount || parseFloat(betAmount) <= 0}
-          >
-            Confirm Bet
+           key={245169}>
+            Confirm Bet;
           </Button>
         </DialogActions>
       </Dialog>

@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion, Variants } from 'framer-motion';
+import React from 'react.ts';
+import { motion, Variants } from 'framer-motion.ts';
 import {
   FaFilter,
   FaChartBar,
@@ -8,9 +8,9 @@ import {
   FaFire,
   FaHistory,
   FaTimes,
-} from 'react-icons/fa';
-import { Sport, PropType } from '@/types';
-import { useFilterStore } from '../stores/filterStore';
+} from 'react-icons/fa.ts';
+import { Sport, PropType } from '@/types.ts';
+import { useFilterStore } from '@/stores/filterStore.ts';
 
 const filterVariants: Variants = {
   initial: { opacity: 0, y: -20 },
@@ -46,7 +46,7 @@ const payoutFilters = [
   { id: 'low', label: 'Low Payout (<2x)', icon: FaMoneyBillWave },
 ];
 
-export const FilterBar: React.FC = () => {
+export const FilterBar: React.FC = () = key={883390}> {
   const { activeFilters, toggleFilter, clearFilters } = useFilterStore();
 
   const isFilterActive = (filterId: string) => {
@@ -58,10 +58,10 @@ export const FilterBar: React.FC = () => {
     label: string;
     icon?: React.ElementType;
   }> = ({ id, label, icon: Icon }) => (
-    <motion.button
+    <motion.button;
       className={`
-        inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium
-        transition-colors duration-200
+        inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium;
+        transition-colors duration-200;
         ${
           isFilterActive(id)
             ? 'bg-primary-500 text-white'
@@ -70,84 +70,84 @@ export const FilterBar: React.FC = () => {
       `}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      onClick={() => toggleFilter(id)}
+      onClick={() = key={264445}> toggleFilter(id)}
     >
-      {Icon && <Icon className="w-4 h-4 mr-2" />}
+      {Icon && <Icon className="w-4 h-4 mr-2" / key={604463}>}
       {label}
     </motion.button>
   );
 
   return (
-    <motion.div
+    <motion.div;
       animate="animate"
       className="glass-morphism rounded-xl p-6 mb-6 space-y-6"
       exit="exit"
       initial="initial"
       variants={filterVariants}
-    >
+     key={62323}>
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-2">
-          <FaFilter className="w-5 h-5 text-primary-500" />
-          <h2 className="text-lg font-semibold text-gray-900 dark:text-white">Filters</h2>
+      <div className="flex items-center justify-between" key={96335}>
+        <div className="flex items-center space-x-2" key={740830}>
+          <FaFilter className="w-5 h-5 text-primary-500" / key={460445}>
+          <h2 className="text-lg font-semibold text-gray-900 dark:text-white" key={867356}>Filters</h2>
         </div>
         {activeFilters.size > 0 && (
-          <button
+          <button;
             className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 flex items-center space-x-1"
             onClick={clearFilters}
-          >
-            <FaTimes className="w-4 h-4" />
-            <span>Clear All</span>
+           key={315777}>
+            <FaTimes className="w-4 h-4" / key={756871}>
+            <span key={595076}>Clear All</span>
           </button>
         )}
       </div>
 
       {/* Sports */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Sports</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className="space-y-2" key={725977}>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300" key={396373}>Sports</h3>
+        <div className="flex flex-wrap gap-2" key={835928}>
           {sportFilters.map(({ id, label }) => (
-            <FilterButton key={id} id={id} label={label} />
+            <FilterButton key={id} id={id} label={label} / key={912157}>
           ))}
         </div>
       </div>
 
       {/* Prop Types */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Prop Types</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className="space-y-2" key={725977}>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300" key={396373}>Prop Types</h3>
+        <div className="flex flex-wrap gap-2" key={835928}>
           {propTypeFilters.map(({ id, label }) => (
-            <FilterButton key={id} id={id} label={label} />
+            <FilterButton key={id} id={id} label={label} / key={912157}>
           ))}
         </div>
       </div>
 
       {/* Confidence Levels */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Confidence Level</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className="space-y-2" key={725977}>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300" key={396373}>Confidence Level</h3>
+        <div className="flex flex-wrap gap-2" key={835928}>
           {confidenceFilters.map(({ id, label, icon }) => (
-            <FilterButton key={id} icon={icon} id={`confidence_${id}`} label={label} />
+            <FilterButton key={id} icon={icon} id={`confidence_${id}`} label={label} / key={599628}>
           ))}
         </div>
       </div>
 
       {/* Payout Ranges */}
-      <div className="space-y-2">
-        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300">Potential Payout</h3>
-        <div className="flex flex-wrap gap-2">
+      <div className="space-y-2" key={725977}>
+        <h3 className="text-sm font-medium text-gray-700 dark:text-gray-300" key={396373}>Potential Payout</h3>
+        <div className="flex flex-wrap gap-2" key={835928}>
           {payoutFilters.map(({ id, label, icon }) => (
-            <FilterButton key={id} icon={icon} id={`payout_${id}`} label={label} />
+            <FilterButton key={id} icon={icon} id={`payout_${id}`} label={label} / key={897888}>
           ))}
         </div>
       </div>
 
       {/* Active Filters Summary */}
       {activeFilters.size > 0 && (
-        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
-          <div className="flex items-center space-x-2">
-            <FaHistory className="w-4 h-4 text-gray-500" />
-            <span className="text-sm text-gray-600 dark:text-gray-400">
+        <div className="pt-4 border-t border-gray-200 dark:border-gray-700" key={440181}>
+          <div className="flex items-center space-x-2" key={740830}>
+            <FaHistory className="w-4 h-4 text-gray-500" / key={684213}>
+            <span className="text-sm text-gray-600 dark:text-gray-400" key={10584}>
               {activeFilters.size} active filter{activeFilters.size !== 1 ? 's' : ''}
             </span>
           </div>

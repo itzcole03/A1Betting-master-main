@@ -8,15 +8,15 @@ export function RealtimePredictionDisplay({ predictionId, className = '', }) {
     const { isConnected, isConnecting, lastMessageTimestamp, isStale } = useRealtimePredictions({
         channels: ['predictions'],
         onError: error => {
-            console.error('WebSocket error:', error);
+            // console statement removed
         },
     });
     const { getPrediction, getConfidenceColor } = usePredictions();
-    const prediction = getPrediction(predictionId);
+
     const formatTimestamp = (timestamp) => {
         if (!timestamp)
             return 'Never';
-        const date = new Date(timestamp);
+
         return date.toLocaleTimeString();
     };
     if (!prediction) {

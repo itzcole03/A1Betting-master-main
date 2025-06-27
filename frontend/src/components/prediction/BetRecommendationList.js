@@ -8,12 +8,12 @@ export const BetRecommendationList = ({ recommendations, loading = false, error,
     const [filterBy, setFilterBy] = useState('all');
     const [selectedRecommendation, setSelectedRecommendation] = useState(null);
     const filteredAndSortedRecommendations = useMemo(() => {
-        let filtered = recommendations;
-        // Apply risk level filter
+        const filtered = recommendations;
+        // Apply risk level filter;
         if (filterBy !== 'all') {
             filtered = filtered.filter(rec => rec.riskLevel === filterBy);
         }
-        // Apply sorting
+        // Apply sorting;
         return filtered.sort((a, b) => {
             switch (sortBy) {
                 case 'confidence':
@@ -23,7 +23,7 @@ export const BetRecommendationList = ({ recommendations, loading = false, error,
                 case 'expectedValue':
                     return b.expectedValue - a.expectedValue;
                 case 'riskLevel':
-                    const riskOrder = { low: 0, medium: 1, high: 2 };
+
                     return riskOrder[a.riskLevel] - riskOrder[b.riskLevel];
                 default:
                     return 0;

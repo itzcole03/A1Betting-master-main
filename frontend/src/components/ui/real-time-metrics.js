@@ -5,14 +5,14 @@ export const RealTimeMetrics = ({ initialMetrics = {
     predictions: 0,
     opportunities: 0,
     activeModels: 0,
-    totalProfit: 0
+    totalProfit: 0;
 } }) => {
     const [metrics, setMetrics] = useState(initialMetrics);
     useEffect(() => {
         WebSocketManager.instance.subscribe('metrics:update', (data) => {
             setMetrics(prev => ({
                 ...prev,
-                ...data
+                ...data;
             }));
         });
         return () => {

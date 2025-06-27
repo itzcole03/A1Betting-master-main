@@ -1,5 +1,5 @@
-import EventEmitter from 'eventemitter3';
-import { PredictionResult } from './UnifiedPredictionService';
+import EventEmitter from 'eventemitter3.ts';
+import { PredictionResult } from './UnifiedPredictionService.ts';
 
 
 
@@ -47,7 +47,7 @@ export class PerformanceTrackingService extends EventEmitter {
     processingTime: 0,
   };
 
-  // User Performance Tracking
+  // User Performance Tracking;
   public recordBetResult(result: BetResult): void {
     this.betHistory.push(result);
     this.emit('betRecorded', result);
@@ -57,11 +57,11 @@ export class PerformanceTrackingService extends EventEmitter {
   public getPerformanceMetrics(
     timeRange?: { start: number; end: number }
   ): PerformanceMetrics {
-    let relevantBets = this.betHistory;
+    const relevantBets = this.betHistory;
     if (timeRange) {
       relevantBets = this.betHistory.filter(
         bet =>
-          bet.timestamp >= timeRange.start && bet.timestamp <= timeRange.end
+          bet.timestamp >= timeRange.start && bet.timestamp <= timeRange.end;
       );
     }
 
@@ -78,7 +78,7 @@ export class PerformanceTrackingService extends EventEmitter {
     return metrics;
   }
 
-  // System Performance Tracking
+  // System Performance Tracking;
   public updateSystemMetrics(metrics: Partial<SystemMetrics>): void {
     this.systemMetrics = { ...this.systemMetrics, ...metrics };
     this.emit('systemMetricsUpdated', this.systemMetrics);
@@ -88,17 +88,17 @@ export class PerformanceTrackingService extends EventEmitter {
     return this.systemMetrics;
   }
 
-  // Private helper methods
+  // Private helper methods;
   private calculateWinRate(bets: BetResult[]): number {
     if (bets.length === 0) return 0;
-    const wins = bets.filter(bet => bet.isWin).length;
+
     return (wins / bets.length) * 100;
   }
 
   private calculateROI(bets: BetResult[]): number {
     if (bets.length === 0) return 0;
-    const totalStake = bets.reduce((sum, bet) => sum + bet.stakeAmount, 0);
-    const totalProfit = this.calculateTotalProfitLoss(bets);
+
+
     return (totalProfit / totalStake) * 100;
   }
 
@@ -108,7 +108,7 @@ export class PerformanceTrackingService extends EventEmitter {
 
   private calculateAverageStake(bets: BetResult[]): number {
     if (bets.length === 0) return 0;
-    const totalStake = bets.reduce((sum, bet) => sum + bet.stakeAmount, 0);
+
     return totalStake / bets.length;
   }
 
@@ -116,9 +116,9 @@ export class PerformanceTrackingService extends EventEmitter {
     current: number;
     longest: number;
   } {
-    let current = 0;
-    let longest = 0;
-    let isWinStreak = false;
+    const current = 0;
+    const longest = 0;
+    const isWinStreak = false;
 
     bets.forEach((bet, index) => {
       if (index === 0) {
@@ -143,8 +143,7 @@ export class PerformanceTrackingService extends EventEmitter {
     const confidenceBuckets: PerformanceMetrics['byConfidence'] = {};
 
     bets.forEach(bet => {
-      const confidenceLevel = Math.floor(bet.prediction.confidence * 10) * 10;
-      const key = `${confidenceLevel}-${confidenceLevel + 9}`;
+
 
       if (!confidenceBuckets[key]) {
         confidenceBuckets[key] = {
@@ -167,7 +166,7 @@ export class PerformanceTrackingService extends EventEmitter {
   }
 
   private updateMetrics(): void {
-    const metrics = this.getPerformanceMetrics();
+
     this.emit('metricsUpdated', metrics);
   }
 } 

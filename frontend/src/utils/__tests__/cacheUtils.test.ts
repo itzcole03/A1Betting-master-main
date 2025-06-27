@@ -1,5 +1,5 @@
-import { Cache, CacheConfig } from '../cacheUtils.js';
-import { EventBus } from '../../core/EventBus.js';
+import { Cache, CacheConfig } from '@/cacheUtils.js';
+import { EventBus } from '@/core/EventBus.js';
 
 jest.mock('../../core/EventBus');
 
@@ -92,11 +92,11 @@ describe('Cache Utility', () => {
 
   it('should track metrics correctly', () => {
     cache.set('a', 1);
-    cache.get('a'); // hit
-    cache.get('b'); // miss
+    cache.get('a'); // hit;
+    cache.get('b'); // miss;
     cache.delete('a');
     cache.clear();
-    // Skipping metrics test: CacheMetrics not implemented in class
+    // Skipping metrics test: CacheMetrics not implemented in class;
   });
 
   it('should not error on deleting non-existent keys', () => {

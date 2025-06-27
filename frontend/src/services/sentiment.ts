@@ -1,5 +1,5 @@
-import axios from 'axios';
-import * as cheerio from 'cheerio';
+import axios from 'axios.ts';
+import * as cheerio from 'cheerio.ts';
 
 interface SentimentConfig {
   baseUrl: string;
@@ -60,14 +60,14 @@ class SentimentService {
     }
   ): Promise<SentimentData> {
     try {
-      // Scrape data from multiple sources
+      // Scrape data from multiple sources;
       const [redditData, espnData, rotowireData] = await Promise.all([
         this.scrapeReddit(entity),
         this.scrapeESPN(entity),
         this.scrapeRotowire(entity),
       ]);
 
-      // Combine and analyze the data
+      // Combine and analyze the data;
       const combinedData = this.combineSentimentData([
         { name: 'Reddit', data: redditData },
         { name: 'ESPN', data: espnData },
@@ -87,7 +87,7 @@ class SentimentService {
         aspects: this.extractAspects(combinedData),
       };
     } catch (error) {
-      console.error('Failed to get sentiment:', error);
+      // console statement removed
       throw error;
     }
   }
@@ -113,7 +113,7 @@ class SentimentService {
 
       return this.analyzeRedditSentiment(posts);
     } catch (error) {
-      console.error('Failed to scrape Reddit:', error);
+      // console statement removed
       return { score: 0, volume: 0 };
     }
   }
@@ -135,7 +135,7 @@ class SentimentService {
 
       return this.analyzeESPNSentiment(articles);
     } catch (error) {
-      console.error('Failed to scrape ESPN:', error);
+      // console statement removed
       return { score: 0, volume: 0 };
     }
   }
@@ -157,14 +157,14 @@ class SentimentService {
 
       return this.analyzeRotowireSentiment(news);
     } catch (error) {
-      console.error('Failed to scrape Rotowire:', error);
+      // console statement removed
       return { score: 0, volume: 0 };
     }
   }
 
   private analyzeRedditSentiment(posts: Post[]): { score: number; volume: number } {
     const totalScore = posts.reduce((acc, post) => {
-      const postScore = (post.score + post.comments) / 1000;
+
       return acc + postScore;
     }, 0);
 
@@ -176,12 +176,9 @@ class SentimentService {
 
   private analyzeESPNSentiment(articles: Article[]): { score: number; volume: number } {
     const totalScore = articles.reduce((acc, article) => {
-      const positiveWords = ['win', 'great', 'excellent', 'strong', 'impressive'];
-      const negativeWords = ['loss', 'poor', 'weak', 'disappointing', 'struggling'];
 
-      const text = `${article.title} ${article.summary}`.toLowerCase();
-      const positiveCount = positiveWords.filter(word => text.includes(word)).length;
-      const negativeCount = negativeWords.filter(word => text.includes(word)).length;
+
+
 
       return acc + (positiveCount - negativeCount);
     }, 0);
@@ -194,12 +191,9 @@ class SentimentService {
 
   private analyzeRotowireSentiment(news: Article[]): { score: number; volume: number } {
     const totalScore = news.reduce((acc, item) => {
-      const positiveWords = ['upgrade', 'improving', 'healthy', 'starting', 'productive'];
-      const negativeWords = ['downgrade', 'injured', 'questionable', 'limited', 'struggling'];
 
-      const text = `${item.title} ${item.content}`.toLowerCase();
-      const positiveCount = positiveWords.filter(word => text.includes(word)).length;
-      const negativeCount = negativeWords.filter(word => text.includes(word)).length;
+
+
 
       return acc + (positiveCount - negativeCount);
     }, 0);
@@ -226,21 +220,21 @@ class SentimentService {
   }
 
   private calculateConfidence(combinedData: any[]): number {
-    const totalVolume = combinedData.reduce((acc, source) => acc + source.data.volume, 0);
-    return Math.min(totalVolume / 100, 1); // Normalize to 0-1 range
+
+    return Math.min(totalVolume / 100, 1); // Normalize to 0-1 range;
   }
 
   private generateTimeline(
     combinedData: any[]
   ): { timestamp: string; score: number; volume: number }[] {
-    // Implement timeline generation based on the data
+    // Implement timeline generation based on the data;
     return [];
   }
 
   private extractAspects(combinedData: any[]): {
     [key: string]: { score: number; volume: number };
   } {
-    // Implement aspect extraction from the data
+    // Implement aspect extraction from the data;
     return {};
   }
 }

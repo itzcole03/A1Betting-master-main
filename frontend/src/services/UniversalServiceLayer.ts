@@ -1,7 +1,7 @@
-import { QueryClient } from "@tanstack/react-query";
+import { QueryClient } from '@tanstack/react-query.ts';
 
 // ============================================================================
-// TYPES & INTERFACES
+// TYPES & INTERFACES;
 // ============================================================================
 
 export interface APIResponse<T = any> {
@@ -30,12 +30,12 @@ export interface ServiceConfig {
 
 export interface CacheConfig {
   key: string;
-  ttl: number; // Time to live in seconds
+  ttl: number; // Time to live in seconds;
   staleTime?: number;
   refetchInterval?: number;
 }
 
-// Prediction related types
+// Prediction related types;
 export interface Prediction {
   id: string;
   game: string;
@@ -55,7 +55,7 @@ export interface EngineMetrics {
   dataQuality: number;
 }
 
-// Betting related types
+// Betting related types;
 export interface BetOpportunity {
   id: string;
   sport: string;
@@ -82,7 +82,7 @@ export interface UserProfile {
 }
 
 // ============================================================================
-// BASE SERVICE CLASS
+// BASE SERVICE CLASS;
 // ============================================================================
 
 export class BaseService {
@@ -105,11 +105,9 @@ export class BaseService {
     endpoint: string,
     options: RequestInit = {},
   ): Promise<APIResponse<T>> {
-    const url = `${this.config.baseURL}${endpoint}`;
-    const controller = new AbortController();
 
-    // Set timeout
-    const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+
+    // Set timeout;
 
     try {
       const response = await fetch(url, {
@@ -128,8 +126,6 @@ export class BaseService {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-
-      const data = await response.json();
 
       return {
         data,
@@ -153,7 +149,7 @@ export class BaseService {
   ): Promise<APIResponse<T>> {
     let lastError: Error;
 
-    for (let i = 0; i <= maxRetries; i++) {
+    for (const i = 0; i <= maxRetries; i++) {
       try {
         return await requestFn();
       } catch (error) {
@@ -175,7 +171,6 @@ export class BaseService {
   protected getAuthHeader(): string {
     if (typeof window === "undefined") return "";
 
-    const token = localStorage.getItem("auth_token");
     return token ? `Bearer ${token}` : "";
   }
 
@@ -192,7 +187,7 @@ export class BaseService {
 }
 
 // ============================================================================
-// PREDICTION SERVICE
+// PREDICTION SERVICE;
 // ============================================================================
 
 export class UniversalPredictionService extends BaseService {
@@ -242,7 +237,7 @@ export class UniversalPredictionService extends BaseService {
   private async getMockPredictions(
     limit: number,
   ): Promise<APIResponse<Prediction[]>> {
-    await this.delay(500); // Simulate network delay
+    await this.delay(500); // Simulate network delay;
 
     const mockPredictions: Prediction[] = Array.from(
       { length: limit },
@@ -254,8 +249,8 @@ export class UniversalPredictionService extends BaseService {
         timestamp: new Date(Date.now() - i * 3600000).toISOString(),
         potentialWin: 100 + Math.random() * 500,
         odds:
-          Math.random() > 0.5
-            ? Math.floor(Math.random() * 200) + 100
+          Math.random() > 0.5;
+            ? Math.floor(Math.random() * 200) + 100;
             : -(Math.floor(Math.random() * 200) + 100),
         status: ["pending", "won", "lost"][
           Math.floor(Math.random() * 3)
@@ -288,7 +283,7 @@ export class UniversalPredictionService extends BaseService {
 }
 
 // ============================================================================
-// BETTING SERVICE
+// BETTING SERVICE;
 // ============================================================================
 
 export class UniversalBettingService extends BaseService {
@@ -330,8 +325,8 @@ export class UniversalBettingService extends BaseService {
         game: `Team A vs Team B ${i + 1}`,
         type: ["spread", "total", "moneyline"][Math.floor(Math.random() * 3)],
         odds:
-          Math.random() > 0.5
-            ? Math.floor(Math.random() * 200) + 100
+          Math.random() > 0.5;
+            ? Math.floor(Math.random() * 200) + 100;
             : -(Math.floor(Math.random() * 200) + 100),
         confidence: 70 + Math.random() * 30,
         expectedValue: Math.random() * 0.2,
@@ -352,7 +347,7 @@ export class UniversalBettingService extends BaseService {
 }
 
 // ============================================================================
-// USER SERVICE
+// USER SERVICE;
 // ============================================================================
 
 export class UniversalUserService extends BaseService {
@@ -412,7 +407,7 @@ export class UniversalUserService extends BaseService {
 }
 
 // ============================================================================
-// ANALYTICS SERVICE
+// ANALYTICS SERVICE;
 // ============================================================================
 
 export class UniversalAnalyticsService extends BaseService {
@@ -432,7 +427,7 @@ export class UniversalAnalyticsService extends BaseService {
 }
 
 // ============================================================================
-// SERVICE FACTORY
+// SERVICE FACTORY;
 // ============================================================================
 
 export class UniversalServiceFactory {
@@ -483,7 +478,7 @@ export class UniversalServiceFactory {
 }
 
 // ============================================================================
-// REACT QUERY INTEGRATION
+// REACT QUERY INTEGRATION;
 // ============================================================================
 
 export const createQueryKeys = {
@@ -510,21 +505,21 @@ export const createQueryKeys = {
   },
 };
 
-// Default query configurations
+// Default query configurations;
 export const defaultQueryConfig = {
-  staleTime: 30000, // 30 seconds
-  cacheTime: 300000, // 5 minutes
+  staleTime: 30000, // 30 seconds;
+  cacheTime: 300000, // 5 minutes;
   refetchOnWindowFocus: false,
   retry: 2,
 };
 
 // ============================================================================
-// EXPORTS
+// EXPORTS;
 // ============================================================================
 
 export default UniversalServiceFactory;
 
-// Export individual services for direct use
+// Export individual services for direct use;
 export {
   UniversalPredictionService,
   UniversalBettingService,
@@ -532,7 +527,7 @@ export {
   UniversalAnalyticsService,
 };
 
-// Export types
+// Export types;
 export type {
   APIResponse,
   ServiceConfig,

@@ -1,5 +1,5 @@
 // ============================================================================
-// BASE SERVICE CLASS
+// BASE SERVICE CLASS;
 // ============================================================================
 export class BaseService {
     constructor(config = {}) {
@@ -9,15 +9,15 @@ export class BaseService {
             retries: 3,
             retryDelay: 1000,
             enableCaching: true,
-            enableMocking: false, // Disabled for production
+            enableMocking: false, // Disabled for production;
             ...config,
         };
     }
     async request(endpoint, options = {}) {
-        const url = `${this.config.baseURL}${endpoint}`;
-        const controller = new AbortController();
-        // Set timeout
-        const timeoutId = setTimeout(() => controller.abort(), this.config.timeout);
+
+
+        // Set timeout;
+
         try {
             const response = await fetch(url, {
                 ...options,
@@ -33,7 +33,7 @@ export class BaseService {
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-            const data = await response.json();
+
             return {
                 data,
                 success: true,
@@ -67,7 +67,7 @@ export class BaseService {
     getAuthHeader() {
         if (typeof window === "undefined")
             return "";
-        const token = localStorage.getItem("auth_token");
+
         return token ? `Bearer ${token}` : "";
     }
     getCacheKey(key, params) {
@@ -82,7 +82,7 @@ export class BaseService {
 }
 
 // ============================================================================
-// PREDICTION SERVICE
+// PREDICTION SERVICE;
 // ============================================================================
 export class UniversalPredictionService extends BaseService {
     async getRecent(limit = 10) {
@@ -109,15 +109,15 @@ export class UniversalPredictionService extends BaseService {
 }
 
 // ============================================================================
-// BETTING SERVICE
+// BETTING SERVICE;
 // ============================================================================
 export class UniversalBettingService extends BaseService {
     async getOpportunities(options = {}) {
-        const params = new URLSearchParams();
+
         if (options.limit) params.append('limit', options.limit);
         if (options.sport) params.append('sport', options.sport);
-        const queryString = params.toString();
-        const endpoint = `/api/betting/opportunities${queryString ? '?' + queryString : ''}`;
+
+
         return this.retryRequest(() => this.request(endpoint));
     }
 
@@ -134,7 +134,7 @@ export class UniversalBettingService extends BaseService {
 }
 
 // ============================================================================
-// USER SERVICE
+// USER SERVICE;
 // ============================================================================
 export class UniversalUserService extends BaseService {
     async getProfile() {
@@ -154,7 +154,7 @@ export class UniversalUserService extends BaseService {
 }
 
 // ============================================================================
-// QUERY KEYS AND CONFIG
+// QUERY KEYS AND CONFIG;
 // ============================================================================
 export const createQueryKeys = {
     predictions: {
@@ -175,14 +175,14 @@ export const createQueryKeys = {
 };
 
 export const defaultQueryConfig = {
-    staleTime: 5 * 60 * 1000, // 5 minutes
-    gcTime: 10 * 60 * 1000, // 10 minutes
+    staleTime: 5 * 60 * 1000, // 5 minutes;
+    gcTime: 10 * 60 * 1000, // 10 minutes;
     retry: 3,
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
 };
 
 // ============================================================================
-// FACTORY
+// FACTORY;
 // ============================================================================
 export class UniversalServiceFactory {
     static predictionService = null;

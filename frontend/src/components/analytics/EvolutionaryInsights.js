@@ -1,11 +1,11 @@
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import React from 'react';
 import { useUnifiedAnalytics } from '@/hooks/useUnifiedAnalytics';
-const safeNumber = (n) => (typeof n === 'number' && !isNaN(n) ? n : 0);
+
 const exportToJson = (data) => {
-    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+
+
+
     a.href = url;
     a.download = 'evolutionary-insights.json';
     a.click();
@@ -25,8 +25,8 @@ const EvolutionaryInsights = ({ autoUpdateInterval = 60000, showGameTheory = tru
                         betting.refetch();
                     }, children: "Retry" })] }));
     }
-    const mlResult = ml.data;
-    const bettingResult = betting.data;
+
+
     if (!mlResult) {
         return (_jsx("div", { className: "p-4 text-gray-500", role: "status", children: "No Evolutionary analytics available." }));
     }

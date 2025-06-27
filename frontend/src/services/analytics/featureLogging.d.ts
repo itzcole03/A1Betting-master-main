@@ -1,4 +1,4 @@
-import { FeatureLoggerConfig } from '@/types';
+import { FeatureLoggerConfig } from '@/types.ts';
 export declare class FeatureLogger {
     private readonly config;
     constructor(config?: Partial<FeatureLoggerConfig>);

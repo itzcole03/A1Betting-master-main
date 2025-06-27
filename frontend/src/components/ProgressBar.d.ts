@@ -1,5 +1,5 @@
-import React from 'react';
-import { EntryStatus } from '@/types';
+import React from 'react.ts';
+import { EntryStatus } from '@/types.ts';
 interface ProgressBarProps {
     current: number;
     target: number;

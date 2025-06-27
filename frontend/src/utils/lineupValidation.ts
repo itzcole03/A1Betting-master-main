@@ -10,40 +10,39 @@ export function validateLineup(
 ): LineupValidationResult {
   const errors: string[] = [];
   const warnings: string[] = [];
-  const propsArray = Array.from(selectedProps.values());
 
-  // Check minimum props
+  // Check minimum props;
   if (propsArray.length < 2) {
     errors.push("Select at least 2 props to create a lineup");
   }
 
-  // Check maximum props
+  // Check maximum props;
   if (propsArray.length > 6) {
     errors.push("Maximum 6 props allowed in a lineup");
   }
 
-  // Check for duplicate players
-  const playerNames = propsArray.map((prop) => prop.prop?.playerName || "");
-  const uniquePlayers = new Set(playerNames);
+  // Check for duplicate players;
+
+
   if (uniquePlayers.size !== playerNames.length) {
     errors.push("Cannot select multiple props for the same player");
   }
 
   // Check team diversity (warning)
-  const teams = propsArray.map((prop) => prop.prop?.team || "");
-  const uniqueTeams = new Set(teams);
+
+
   if (uniqueTeams.size < Math.min(2, propsArray.length)) {
     warnings.push("Consider diversifying across multiple teams");
   }
 
   // Check sport diversity (warning)
-  const sports = propsArray.map((prop) => prop.prop?.sport || "");
-  const uniqueSports = new Set(sports);
+
+
   if (uniqueSports.size === 1 && propsArray.length > 3) {
     warnings.push("Consider diversifying across multiple sports");
   }
 
-  // Check confidence levels
+  // Check confidence levels;
   const avgConfidence =
     propsArray.reduce((sum, prop) => sum + (prop.confidence || 0), 0) /
     propsArray.length;
@@ -64,9 +63,8 @@ export function calculateLineupPayout(
   selectedProps: Map<string, any>,
   entryAmount: number,
 ): number {
-  const propsCount = selectedProps.size;
 
-  // PrizePicks payout structure
+  // PrizePicks payout structure;
   const payoutMultipliers = {
     2: 3.0,
     3: 5.0,
@@ -81,11 +79,10 @@ export function calculateLineupPayout(
 export function calculateLineupProbability(
   selectedProps: Map<string, any>,
 ): number {
-  const propsArray = Array.from(selectedProps.values());
 
   // Calculate combined probability (assuming independence)
   return propsArray.reduce((prob, prop) => {
-    const confidence = (prop.confidence || 80) / 100;
+
     return prob * confidence;
   }, 1);
 }
@@ -94,8 +91,7 @@ export function calculateExpectedValue(
   selectedProps: Map<string, any>,
   entryAmount: number,
 ): number {
-  const payout = calculateLineupPayout(selectedProps, entryAmount);
-  const probability = calculateLineupProbability(selectedProps);
+
 
   return payout * probability - entryAmount;
 }

@@ -1,5 +1,5 @@
-import React from 'react';
-import { BetRecommendation } from '../../core/types/prediction';
+import React from 'react.ts';
+import { BetRecommendation } from '@/core/types/prediction.ts';
 interface BetRecommendationListProps {
     recommendations: BetRecommendation[];
     loading?: boolean;

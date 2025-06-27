@@ -1,8 +1,8 @@
 /**
- * Production-ready API service with comprehensive error handling, retries, and caching
+ * Production-ready API service with comprehensive error handling, retries, and caching;
  */
 
-import { logger, logApiCall, logError } from "@/utils/logger";
+import { logger, logApiCall, logError } from '@/utils/logger.ts';
 
 interface ApiConfig {
   baseUrl: string;
@@ -52,7 +52,7 @@ export class ProductionApiService {
   }
 
   private getFromCache<T>(key: string): T | null {
-    const entry = this.cache.get(key);
+
     if (entry && this.isValidCacheEntry(entry)) {
       return entry.data;
     }
@@ -75,13 +75,13 @@ export class ProductionApiService {
     options: RequestInit = {},
     retries: number = this.config.retries,
   ): Promise<T> {
-    const startTime = Date.now();
+
     let lastError: Error;
 
-    for (let attempt = 0; attempt <= retries; attempt++) {
+    for (const attempt = 0; attempt <= retries; attempt++) {
       try {
-        const controller = new AbortController();
-        const requestId = `${url}:${Date.now()}`;
+
+
         this.abortControllers.set(requestId, controller);
 
         const timeoutId = setTimeout(
@@ -101,8 +101,6 @@ export class ProductionApiService {
           throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
 
-        const data = await response.json();
-        const duration = Date.now() - startTime;
 
         logApiCall(url, options.method || "GET", true, duration);
         return data;
@@ -110,7 +108,7 @@ export class ProductionApiService {
         lastError = error as Error;
 
         if (attempt === retries) {
-          const duration = Date.now() - startTime;
+
           logApiCall(url, options.method || "GET", false, duration);
           logError(lastError, `API request to ${url}`);
           break;
@@ -132,11 +130,10 @@ export class ProductionApiService {
   ): Promise<ApiResponse<T>> {
     try {
       const { cache = true, cacheTtl = 300000 } = options;
-      const cacheKey = this.generateCacheKey(endpoint, params);
 
-      // Check cache first
+      // Check cache first;
       if (cache) {
-        const cachedData = this.getFromCache<T>(cacheKey);
+
         if (cachedData) {
           return {
             success: true,
@@ -147,16 +144,13 @@ export class ProductionApiService {
         }
       }
 
-      const url = new URL(endpoint, this.config.baseUrl);
       if (params) {
         Object.entries(params).forEach(([key, value]) => {
           url.searchParams.append(key, String(value));
         });
       }
 
-      const data = await this.fetchWithRetry<T>(url.toString());
-
-      // Cache successful responses
+      // Cache successful responses;
       if (cache) {
         this.setCache(cacheKey, data, cacheTtl);
       }
@@ -181,7 +175,6 @@ export class ProductionApiService {
     headers?: Record<string, string>,
   ): Promise<ApiResponse<T>> {
     try {
-      const url = new URL(endpoint, this.config.baseUrl);
 
       const data = await this.fetchWithRetry<T>(url.toString(), {
         method: "POST",
@@ -212,7 +205,6 @@ export class ProductionApiService {
     headers?: Record<string, string>,
   ): Promise<ApiResponse<T>> {
     try {
-      const url = new URL(endpoint, this.config.baseUrl);
 
       const data = await this.fetchWithRetry<T>(url.toString(), {
         method: "PUT",
@@ -239,7 +231,6 @@ export class ProductionApiService {
 
   async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
     try {
-      const url = new URL(endpoint, this.config.baseUrl);
 
       const data = await this.fetchWithRetry<T>(url.toString(), {
         method: "DELETE",
@@ -259,7 +250,7 @@ export class ProductionApiService {
     }
   }
 
-  // Abort all pending requests
+  // Abort all pending requests;
   abortAllRequests(): void {
     this.abortControllers.forEach((controller) => {
       controller.abort();
@@ -267,12 +258,12 @@ export class ProductionApiService {
     this.abortControllers.clear();
   }
 
-  // Clear cache
+  // Clear cache;
   clearCache(): void {
     this.cache.clear();
   }
 
-  // Get cache stats
+  // Get cache stats;
   getCacheStats(): { size: number; keys: string[] } {
     return {
       size: this.cache.size,
@@ -280,10 +271,10 @@ export class ProductionApiService {
     };
   }
 
-  // Health check endpoint
+  // Health check endpoint;
   async healthCheck(): Promise<boolean> {
     try {
-      const response = await this.get("/health", undefined, { cache: false });
+
       return response.success;
     } catch {
       return false;
@@ -291,10 +282,10 @@ export class ProductionApiService {
   }
 }
 
-// Create singleton instance
+// Create singleton instance;
 export const productionApiService = new ProductionApiService();
 
-// Specific API endpoints with proper typing
+// Specific API endpoints with proper typing;
 export interface User {
   id: string;
   name: string;
@@ -326,9 +317,9 @@ export interface SystemHealth {
   lastUpdate: string;
 }
 
-// Typed API methods
+// Typed API methods;
 export const api = {
-  // User endpoints
+  // User endpoints;
   async getUser(userId: string): Promise<ApiResponse<User>> {
     return productionApiService.get<User>(`/users/${userId}`);
   },
@@ -340,7 +331,7 @@ export const api = {
     return productionApiService.put<User>(`/users/${userId}`, userData);
   },
 
-  // Prediction endpoints
+  // Prediction endpoints;
   async getPredictions(
     sport?: string,
     league?: string,
@@ -356,7 +347,7 @@ export const api = {
     return productionApiService.get<Prediction>(`/predictions/${predictionId}`);
   },
 
-  // System health
+  // System health;
   async getSystemHealth(): Promise<ApiResponse<SystemHealth>> {
     return productionApiService.get<SystemHealth>("/health");
   },
@@ -373,12 +364,12 @@ export const api = {
     return productionApiService.get(`/analytics/users/${userId}`);
   },
 
-  // Health check
+  // Health check;
   async healthCheck(): Promise<boolean> {
     return productionApiService.healthCheck();
   },
 
-  // PrizePicks specific endpoints
+  // PrizePicks specific endpoints;
   async getPrizePicksProps(params: {
     sport?: string;
     minConfidence?: number;
@@ -394,7 +385,7 @@ export const api = {
     return productionApiService.get<any[]>("/api/prizepicks/recommendations", params);
   },
 
-  // Money Maker Pro endpoints
+  // Money Maker Pro endpoints;
   async getBettingOpportunities(params?: {
     sport?: string;
     minEdge?: number;
@@ -410,7 +401,7 @@ export const api = {
     return productionApiService.get<any>(`/api/portfolio/${userId}/analysis`);
   },
 
-  // PropOllama chat endpoint
+  // PropOllama chat endpoint;
   async sendChatMessage(message: string, context?: any): Promise<ApiResponse<any>> {
     return productionApiService.post<any>("/api/propollama/chat", {
       message,

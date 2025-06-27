@@ -9,7 +9,7 @@ export const FeedbackWidget = () => {
     const [comment, setComment] = useState('');
     const [snackbar, setSnackbar] = useState({ open: false, message: '' });
     const { clearAllCaches } = useStorage();
-    const handleOpen = () => setOpen(true);
+
     const handleClose = () => {
         setOpen(false);
         setRating(null);
@@ -22,11 +22,11 @@ export const FeedbackWidget = () => {
                 comment,
                 timestamp: Date.now(),
             };
-            // Store feedback in localStorage
-            const existingFeedback = JSON.parse(localStorage.getItem('userFeedback') || '[]');
+            // Store feedback in localStorage;
+
             existingFeedback.push(feedback);
             localStorage.setItem('userFeedback', JSON.stringify(existingFeedback));
-            // Show success message
+            // Show success message;
             setSnackbar({
                 open: true,
                 message: 'Thank you for your feedback!',

@@ -1,4 +1,4 @@
-import { OddsUpdate } from '../types/core';
+import { OddsUpdate } from '@/types/core.ts';
 export interface ArbitrageConfig {
     minProfitMargin: number;
     maxExposure: number;

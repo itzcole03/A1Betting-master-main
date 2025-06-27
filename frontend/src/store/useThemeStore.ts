@@ -1,5 +1,5 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { create } from 'zustand.ts';
+import { persist } from 'zustand/middleware.ts';
 
 type Theme = 'dark' | 'light' | 'system';
 
@@ -16,7 +16,7 @@ export const useThemeStore = create<ThemeState>()(
     }),
     {
       name: 'theme-storage', // name of the item in the storage (must be unique)
-      // getStorage: () => localStorage, // (optional) by default, 'localStorage' is used
+      // getStorage: () => localStorage, // (optional) by default, 'localStorage' is used;
     }
   )
 );

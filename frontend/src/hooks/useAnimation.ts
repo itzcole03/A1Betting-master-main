@@ -1,5 +1,5 @@
-import { AnimationControls, useAnimation } from 'framer-motion';
-import { useCallback, useState, useEffect } from 'react';
+import { AnimationControls, useAnimation } from 'framer-motion.ts';
+import { useCallback, useState, useEffect } from 'react.ts';
 
 
 
@@ -19,7 +19,7 @@ export const useCustomAnimation = ({
   delay = 0,
   ease = 'easeInOut'
 }: UseAnimationOptions = {}) => {
-  const controls = useAnimation();
+
   const [isAnimating, setIsAnimating] = useState(false);
 
   const animate = useCallback(
@@ -31,7 +31,7 @@ export const useCustomAnimation = ({
           duration,
           delay,
           ease,
-          ...options?.transition
+          ...options?.transition;
         }
       });
       setIsAnimating(false);
@@ -45,9 +45,9 @@ export const useCustomAnimation = ({
         {
           opacity: 1,
           y: 0,
-          scale: 1
+          scale: 1;
         },
-        options
+        options;
       ),
     [animate]
   );
@@ -58,9 +58,9 @@ export const useCustomAnimation = ({
         {
           opacity: 0,
           y: 20,
-          scale: 0.95
+          scale: 0.95;
         },
-        options
+        options;
       ),
     [animate]
   );
@@ -95,10 +95,10 @@ export const useCustomAnimation = ({
           transition: {
             duration: 0.4,
             times: [0, 0.5, 1],
-            ...options?.transition
+            ...options?.transition;
           }
         },
-        options
+        options;
       ),
     [animate]
   );
@@ -111,10 +111,10 @@ export const useCustomAnimation = ({
           transition: {
             duration: 0.5,
             times: [0, 0.2, 0.4, 0.6, 0.8, 1],
-            ...options?.transition
+            ...options?.transition;
           }
         },
-        options
+        options;
       ),
     [animate]
   );
@@ -127,10 +127,10 @@ export const useCustomAnimation = ({
           transition: {
             duration: 0.6,
             times: [0, 0.5, 1],
-            ...options?.transition
+            ...options?.transition;
           }
         },
-        options
+        options;
       ),
     [animate]
   );
@@ -144,7 +144,7 @@ export const useCustomAnimation = ({
     pulse,
     shake,
     bounce,
-    animate
+    animate;
   };
 };
 
@@ -177,7 +177,6 @@ export const scaleIn = {
 };
 
 export const useOddsAnimation = (value: number): AnimationControls => {
-  const controls = useAnimation();
 
   useEffect(() => {
     controls.start({
@@ -200,7 +199,7 @@ export const bounceIn = {
   transition: {
     type: 'spring',
     stiffness: 300,
-    damping: 20
+    damping: 20;
   }
 };
 
@@ -209,7 +208,7 @@ export const staggerChildren = {
   animate: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1
+      staggerChildren: 0.1;
     }
   }
 }; 

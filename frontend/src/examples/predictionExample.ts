@@ -1,13 +1,12 @@
-import { UserPersonalizationService } from '../services/analytics/userPersonalizationService';
-import { User } from '../models/User';
-import { Bet } from '../models/Bet';
-import { Prediction } from '../models/Prediction';
+import { UserPersonalizationService } from '@/services/analytics/userPersonalizationService.ts';
+import { User } from '@/models/User.ts';
+import { Bet } from '@/models/Bet.ts';
+import { Prediction } from '@/models/Prediction.ts';
 
 async function example() {
-  // Initialize services
-  const userPersonalizationService = new UserPersonalizationService();
+  // Initialize services;
 
-  // Create a sample user
+  // Create a sample user;
   const user: User = {
     id: 'user123',
     username: 'johndoe',
@@ -30,7 +29,7 @@ async function example() {
     },
   };
 
-  // Create a sample bet
+  // Create a sample bet;
   const bet: Bet = {
     id: 'bet123',
     userId: user.id,
@@ -51,7 +50,7 @@ async function example() {
     },
   };
 
-  // Create a sample prediction
+  // Create a sample prediction;
   const prediction: Prediction = {
     id: 'pred123',
     eventId: bet.eventId,
@@ -107,26 +106,19 @@ async function example() {
     },
   };
 
-  // Update user profile with the bet and prediction
+  // Update user profile with the bet and prediction;
   userPersonalizationService.updateUserProfile(user, bet, prediction);
 
-  // Get personalized prediction
+  // Get personalized prediction;
   const personalizedPrediction = await userPersonalizationService.getPersonalizedPrediction(
     user.id,
-    prediction
+    prediction;
   );
 
-  console.log('Original Prediction:', {
-    probability: prediction.probability,
-    confidence: prediction.confidence,
-  });
+  // console statement removed
 
-  console.log('Personalized Prediction:', {
-    probability: personalizedPrediction.probability,
-    confidence: personalizedPrediction.confidence,
-    breakdown: personalizedPrediction.metadata.predictionBreakdown,
-  });
+  // console statement removed
 }
 
-// Run the example
+// Run the example;
 example().catch(console.error);

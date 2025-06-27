@@ -1,4 +1,4 @@
-import { PerformanceMetrics, ComponentMetrics } from '../types/core.js';
+import { PerformanceMetrics, ComponentMetrics } from '@/types/core.js';
 interface MetricData {
     value: number;
     timestamp: number;
@@ -10,15 +10,15 @@ export declare class PerformanceMonitor {
      */
     startTrace(name: string, metadata?: Record<string, unknown>): string;
     /**
-     * Start a new span within a trace
+     * Start a new span within a trace;
      */
     startSpan(traceId: string, name: string, metadata?: Record<string, unknown>): string;
     /**
-     * End a span and log duration
+     * End a span and log duration;
      */
     endSpan(spanId: string, error?: Error): void;
     /**
-     * End a trace and log duration
+     * End a trace and log duration;
      */
     endTrace(traceId: string, error?: Error): void;
     private static instance;

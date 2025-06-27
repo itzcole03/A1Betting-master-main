@@ -1,5 +1,5 @@
-import EventEmitter from 'eventemitter3';
-import { PredictionResult } from './UnifiedPredictionService';
+import EventEmitter from 'eventemitter3.ts';
+import { PredictionResult } from './UnifiedPredictionService.ts';
 export interface BetResult {
     propId: string;
     prediction: PredictionResult;
