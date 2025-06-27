@@ -1064,7 +1064,7 @@ app.get("/api/sportsradar/health", async (req, res) => {
       availableAPIs,
       apiStatus,
       message:
-        availableAPIs.length === 0;
+        availableAPIs.length === 0
           ? "All APIs unavailable - check API keys and network connectivity"
           : "API integration operational",
       timestamp: new Date().toISOString(),
