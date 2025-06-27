@@ -1,313 +1,345 @@
-import React, { useEffect, useState  } from 'react.ts';
-import ArbitrageOpportunities from './ArbitrageOpportunities.ts';
-import LiveOddsTicker from './LiveOddsTicker.ts'; // Changed to default import;
-import MLFactorViz from './MLFactorViz.ts';
-import ModelPerformance from './ModelPerformance.ts';
-import { UniversalMoneyMaker } from './index.ts';
-import Navbar from './navigation/Navbar.ts';
-import { PerformanceMetrics } from './PerformanceMetrics.ts';
-// eslint-disable-next-line @typescript-eslint/no-unused-vars;
-import { useAppStore } from '@/store/useAppStore.ts'; // Corrected import path;
-import { WebSocketManager } from '@/services/unified/WebSocketManager.ts';
-import { RiskProfileType, PredictionData } from '@/types/betting.ts'; // Import enum and PredictionData;
-import { ModelMetrics } from '@/types/prediction.ts';
-import { StrategyRecommendation } from '@/types/core.ts'; // Assuming this path is correct;
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import {
+  DollarSign,
+  TrendingUp,
+  Target,
+  Activity,
+  Brain,
+  BarChart3,
+  Bell,
+  Zap,
+} from 'lucide-react';
 
-// Local type definitions (consider moving to a central types file if they grow)
-interface MLInsight {
-  id: string;
-  title: string;
-  description: string;
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  balance: number;
+  tier: string;
+}
+
+interface Bet {
+  id: number;
+  match: string;
+  amount: number;
+  odds: number;
+  status: 'pending' | 'won' | 'lost';
+  potentialWinnings: number;
+  placedAt: string;
+}
+
+interface Prediction {
+  id: number;
+  match: string;
+  prediction: string;
   confidence: number;
-  timestamp: Date;
-}
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars;
-interface OddsUpdate {
-  market: string;
-  bookmaker: string;
   odds: number;
-  timestamp: Date;
+  sport: string;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars;
-interface PlayerProp {
-  playerName: string;
-  propName: string;
-  value: number;
-  odds: number;
+interface DashboardProps {
+  user: User;
+  accountBalance: number;
+  recentBets: Bet[];
+  livePredictions: Prediction[];
+  performanceStats: {
+    totalProfit: number;
+    winRate: number;
+    todayProfit: number;
+    activeBets: number;
+  };
 }
 
-type Sport = string;
-// eslint-disable-next-line @typescript-eslint/no-unused-vars;
-type PropType = string;
-
-interface ArbitrageOpportunityItem {
-  id: string;
-  sport: Sport;
-  event: string;
-  market: string;
-  outcomes: Array<{
-    bookmaker: string;
-    name: string;
-    price: number;
-  }>;
-  profitPercentage: number;
-  lastUpdated: Date;
-}
-
-// Placeholder types for WebSocket events - define properly based on actual data;
-// interface ArbitrageAlertPayload {
-//   // type: 'ARBITRAGE_ALERT';
-//   // data: Opportunity; // Assuming Opportunity would be defined in central types;
-// }
-
-// interface OddsUpdateData {
-//   // type: 'ODDS_UPDATE';
-//   // data: OddsUpdate[];
-// }
-
-// Types for PerformanceMetrics component - BetRecommendation kept local for now;
-interface BetRecommendation {
-  id: string;
-  market: string;
-  outcome: string;
-  stake: number;
-  odds: number;
-  potentialWin: number;
-  confidence?: number;
-  status: "pending" | "won" | "lost" | "void";
-  result?: "win" | "loss";
-  timestamp: Date;
-}
-
-// Type for LiveOddsTicker component data;
-type BookOdds = Record<string, number key={817366}>; // e.g. { "BookieA": 1.85, "BookieB": 1.90 }
-
-const Dashboard: React.FC = () => {
-  const [_activeView, setActiveView] = useState("overview");
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  // useToast removed as the hook is not found;
-
-  // State for PerformanceMetrics;
-  const [bankroll, _setBankroll] = useState(10000);
-  const [profit, _setProfit] = useState(1500);
-  const [riskProfile, _setRiskProfile] = useState<RiskProfileType key={114216}>(
-    RiskProfileType.MODERATE,
-  ); // Use enum;
-  const [recommendations, _setRecommendations] = useState<BetRecommendation[] key={804586}>([
-    {
-      id: "rec1",
-      market: "Game A Winner",
-      outcome: "Team X",
-      stake: 100,
-      odds: 1.5,
-      potentialWin: 150,
-      status: "won",
-      result: "win",
-      timestamp: new Date(),
-    },
-    {
-      id: "rec2",
-      market: "Game B Over/Under",
-      outcome: "Over 2.5",
-      stake: 50,
-      odds: 2.0,
-      potentialWin: 100,
-      status: "lost",
-      result: "loss",
-      timestamp: new Date(),
-    },
-  ]);
-
-  // State for LiveOddsTicker: Record<MarketName, Record<Bookmaker, Odds key={408723}>>
-  const [liveOddsData, _setLiveOddsData] = useState<Record<string, BookOdds key={396087}>>({
-    "Game X Winner": { Bookie1: 1.85, Bookie2: 1.9 },
-    "Game Y Total Points": { Bookie1: 200.5, Bookie3: 199.5 },
-  });
-
-  // State for Arbitrage Opportunities;
-  const [arbitrageOpportunities, _setArbitrageOpportunities] = useState<
-    ArbitrageOpportunityItem[]
-  >([
-    {
-      id: "arb1",
-      sport: "Soccer",
-      event: "Team A vs Team B",
-      market: "Match Winner",
-      outcomes: [
-        { bookmaker: "BookmakerX", name: "Team A", price: 2.0 },
-        { bookmaker: "BookmakerY", name: "Draw", price: 3.5 },
-        { bookmaker: "BookmakerZ", name: "Team B", price: 4.0 },
-      ],
-      profitPercentage: 2.5,
-      lastUpdated: new Date(),
-    },
-    {
-      id: "arb2",
-      sport: "Basketball",
-      event: "Team C vs Team D",
-      market: "Total Points Over/Under 210.5",
-      outcomes: [
-        { bookmaker: "BookmakerP", name: "Over 210.5", price: 1.9 },
-        { bookmaker: "BookmakerQ", name: "Under 210.5", price: 1.95 },
-      ],
-      profitPercentage: 1.8,
-      lastUpdated: new Date(),
-    },
-  ]);
-
-  // State for Model Performance (matches ModelMetrics type from src/types/prediction.ts)
-  const [modelMetricsData, _setModelMetricsData] = useState<ModelMetrics key={3980}>({
-    accuracy: 0.85,
-    precision: 0.8,
-    recall: 0.82,
-    f1Score: 0.81,
-    lastUpdated: new Date().toISOString(),
-    winRate: 0.55,
-    profitFactor: 0.1,
-    averageOdds: 1.9,
-    averageConfidence: 0.75,
-    totalPredictions: 100,
-    successfulPredictions: 55,
-  });
-
-  // State for ML Insights (original, potentially to be removed or refactored)
-  const [_mlInsightsData, _setMlInsightsData] = useState<MLInsight[] key={591431}>([
-    {
-      id: "insight1",
-      title: "High Value Bet Detected",
-      description:
-        "Strong signal for upcoming NBA game based on player performance.",
-      confidence: 0.88,
-      timestamp: new Date(),
-    },
-  ]);
-
-  // State for MLFactorViz props;
-  const [currentPlayerId, _setCurrentPlayerId] = useState<string | null key={121216}>(
-    "player123",
-  );
-  const [currentMetric, _setCurrentMetric] = useState<string | null key={121216}>("points");
-  const [currentPredictionData, _setCurrentPredictionData] = useState<
-    PredictionData | undefined;
-  >({
-    value: 25.5,
-    confidence: 0.78,
-    timestamp: Date.now(),
-  });
-  const [currentStrategyData, _setCurrentStrategyData] = useState<
-    StrategyRecommendation | undefined;
-  >({
-    confidence: 0.65,
-    expectedValue: 1.2,
-  });
+const Dashboard: React.FC<DashboardProps> = ({
+  user,
+  accountBalance,
+  recentBets,
+  livePredictions,
+  performanceStats,
+}) => {
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // TEMPORARILY DISABLED FOR DEBUGGING WEBSOCKET ISSUES;
-    // Migrated to unified WebSocketManager;
-    // WebSocketManager.getInstance();
-    // console statement removed
-    // Example WebSocket event listeners (currently commented out)
-    // wsServiceInstance.on('arbitrageAlert', (data: any) => {
-    //   // console statement removed
-    //   // Update arbitrageOpportunities state here;
-    // });
-    // wsServiceInstance.on('oddsUpdate', (data: any) => {
-    //   // console statement removed
-    //   // Update liveOddsData state here;
-    // });
-
-    return () => {
-      // Clean up WebSocket listeners if they were active;
-      // wsServiceInstance.off('arbitrageAlert');
-      // wsServiceInstance.off('oddsUpdate');
-      // Consider if disconnect is needed here or managed by WebSocketService singleton lifecycle;
-    };
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
   }, []);
 
-  const _handleViewChange = (view: string) => {
-    setActiveView(view);
-  };
-
-  const toggleSidebar = () => {
-    setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const handleMenuClick = () => {
-    // console statement removed
-    toggleSidebar();
-  };
-
-  const handleSmartSidebarClick = () => {
-    // console statement removed
-  };
+  if (isLoading) {
+    return (
+      <div className='min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center'>
+        <div className='text-white text-center'>
+          <div className='animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400 mx-auto mb-4'></div>
+          <p>Loading your dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex h-screen bg-gray-100 dark:bg-gray-900" key={453711}>
-      {/* Sidebar placeholder, actual implementation might be different */}
-      {/* <Sidebar isOpen={isSidebarOpen} activeView={activeView} onViewChange={handleViewChange} / key={274675}> */}
-      <div className="flex-1 flex flex-col overflow-hidden" key={257996}>
-        <Navbar;
-          onMenuClick={handleMenuClick}
-          onSmartSidebarClick={handleSmartSidebarClick}
-        / key={623679}>
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 dark:bg-gray-900 p-6 pt-20" key={35917}>
-          <h1 className="text-2xl font-semibold text-gray-800 dark:text-white mb-6" key={848730}>
-            AI Sports Betting Dashboard;
+    <div className='min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white p-6'>
+      <div className='max-w-7xl mx-auto'>
+        {/* Header */}
+        <motion.div
+          className='mb-8'
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h1 className='text-4xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent mb-2'>
+            Welcome back, {user.name}
           </h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" key={881323}>
-            <div className="lg:col-span-2 bg-white dark:bg-gray-800 shadow rounded-lg p-4" key={939400}>
-              <h2 className="text-lg font-semibold text-gray-700 dark:text-white mb-3" key={131496}>
-                Model Performance;
-              </h2>
-              <ModelPerformance modelMetricsData={modelMetricsData} / key={328382}>
+          <p className='text-gray-400'>Your AI Sports Betting Dashboard - {user.tier} Member</p>
+        </motion.div>
+
+        {/* Stats Grid */}
+        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8'>
+          <motion.div
+            className='bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6'
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-gray-400 text-sm'>Account Balance</p>
+                <p className='text-2xl font-bold text-white'>${accountBalance.toLocaleString()}</p>
+              </div>
+              <DollarSign className='w-8 h-8 text-yellow-400' />
             </div>
-            <div className="bg-white dark:bg-gray-800 shadow rounded-lg p-4" key={631977}>
-              <h2 className="text-lg font-semibold text-gray-700 dark:text-white mb-3" key={131496}>
-                Performance Metrics;
-              </h2>
-              <PerformanceMetrics;
-                bankroll={bankroll}
-                profit={profit}
-                recommendations={recommendations}
-                riskProfile={riskProfile}
-              / key={776884}>
+          </motion.div>
+
+          <motion.div
+            className='bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6'
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-gray-400 text-sm'>Today's Profit</p>
+                <p
+                  className={`text-2xl font-bold ${performanceStats.todayProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}
+                >
+                  {performanceStats.todayProfit >= 0 ? '+' : ''}$
+                  {performanceStats.todayProfit.toLocaleString()}
+                </p>
+              </div>
+              <TrendingUp className='w-8 h-8 text-green-400' />
             </div>
-            <div className="md:col-span-2 lg:col-span-3 bg-white dark:bg-gray-800 shadow rounded-lg p-4" key={70760}>
-              <h2 className="text-lg font-semibold text-gray-700 dark:text-white mb-3" key={131496}>
-                Live Odds;
-              </h2>
-              <LiveOddsTicker data={liveOddsData} / key={917777}>
+          </motion.div>
+
+          <motion.div
+            className='bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6'
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-gray-400 text-sm'>Win Rate</p>
+                <p className='text-2xl font-bold text-blue-400'>{performanceStats.winRate}%</p>
+              </div>
+              <Target className='w-8 h-8 text-blue-400' />
             </div>
-            <div className="lg:col-span-1 bg-white dark:bg-gray-800 shadow rounded-lg p-4" key={615339}>
-              <h2 className="text-lg font-semibold text-gray-700 dark:text-white mb-3" key={131496}>
-                Money Maker;
-              </h2>
-              <MoneyMaker / key={321154}>
+          </motion.div>
+
+          <motion.div
+            className='bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6'
+            whileHover={{ scale: 1.02 }}
+          >
+            <div className='flex items-center justify-between'>
+              <div>
+                <p className='text-gray-400 text-sm'>Active Bets</p>
+                <p className='text-2xl font-bold text-purple-400'>{performanceStats.activeBets}</p>
+              </div>
+              <Activity className='w-8 h-8 text-purple-400' />
             </div>
-            <div className="lg:col-span-2 bg-white dark:bg-gray-800 shadow rounded-lg p-4" key={939400}>
-              <h2 className="text-lg font-semibold text-gray-700 dark:text-white mb-3" key={131496}>
-                Arbitrage Opportunities;
-              </h2>
-              <ArbitrageOpportunities opportunities={arbitrageOpportunities} / key={502143}>
+          </motion.div>
+        </div>
+
+        <div className='grid grid-cols-1 lg:grid-cols-2 gap-8'>
+          {/* Recent Bets */}
+          <motion.div
+            className='bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6'
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <h3 className='text-xl font-semibold text-white mb-4 flex items-center'>
+              <BarChart3 className='w-5 h-5 mr-2' />
+              Recent Bets
+            </h3>
+            <div className='space-y-3'>
+              {recentBets.slice(0, 5).map(bet => (
+                <div
+                  key={bet.id}
+                  className='flex items-center justify-between p-3 bg-white/5 rounded-lg'
+                >
+                  <div>
+                    <p className='text-white font-medium'>{bet.match}</p>
+                    <p className='text-gray-400 text-sm'>
+                      ${bet.amount} at {bet.odds}
+                    </p>
+                  </div>
+                  <div className='text-right'>
+                    <span
+                      className={`px-2 py-1 rounded text-xs font-semibold ${
+                        bet.status === 'won'
+                          ? 'bg-green-500/20 text-green-400'
+                          : bet.status === 'lost'
+                            ? 'bg-red-500/20 text-red-400'
+                            : 'bg-yellow-500/20 text-yellow-400'
+                      }`}
+                    >
+                      {bet.status}
+                    </span>
+                    <p className='text-gray-400 text-sm mt-1'>
+                      {bet.status === 'pending'
+                        ? `Win $${bet.potentialWinnings}`
+                        : bet.status === 'won'
+                          ? `+$${bet.potentialWinnings}`
+                          : `-$${bet.amount}`}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="md:col-span-1 lg:col-span-3 bg-white dark:bg-gray-800 shadow rounded-lg p-4" key={529581}>
-              <h2 className="text-lg font-semibold text-gray-700 dark:text-white mb-3" key={131496}>
-                ML Factor Viz;
-              </h2>
-              <MLFactorViz;
-                metric={currentMetric}
-                playerId={currentPlayerId}
-                prediction={currentPredictionData}
-                strategy={currentStrategyData}
-              / key={166332}>
+          </motion.div>
+
+          {/* Live Predictions */}
+          <motion.div
+            className='bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6'
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <h3 className='text-xl font-semibold text-white mb-4 flex items-center'>
+              <Brain className='w-5 h-5 mr-2' />
+              AI Predictions
+            </h3>
+            <div className='space-y-3'>
+              {livePredictions.slice(0, 5).map(prediction => (
+                <div
+                  key={prediction.id}
+                  className='flex items-center justify-between p-3 bg-white/5 rounded-lg'
+                >
+                  <div>
+                    <p className='text-white font-medium'>{prediction.match}</p>
+                    <p className='text-gray-400 text-sm'>
+                      {prediction.prediction} • {prediction.sport}
+                    </p>
+                  </div>
+                  <div className='text-right'>
+                    <p className='text-yellow-400 font-semibold'>{prediction.odds}</p>
+                    <p className='text-green-400 text-sm'>{prediction.confidence}% confidence</p>
+                  </div>
+                </div>
+              ))}
             </div>
+          </motion.div>
+        </div>
+
+        {/* Quick Actions */}
+        <motion.div
+          className='mt-8 bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-6'
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          <h3 className='text-xl font-semibold text-white mb-4'>Quick Actions</h3>
+          <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+            <motion.button
+              className='bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-semibold py-3 px-6 rounded-lg hover:from-yellow-400 hover:to-yellow-500 transition-all flex items-center justify-center'
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Brain className='w-5 h-5 mr-2' />
+              View AI Predictions
+            </motion.button>
+
+            <motion.button
+              className='bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-green-400 hover:to-green-500 transition-all flex items-center justify-center'
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <DollarSign className='w-5 h-5 mr-2' />
+              Place New Bet
+            </motion.button>
+
+            <motion.button
+              className='bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-400 hover:to-blue-500 transition-all flex items-center justify-center'
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <BarChart3 className='w-5 h-5 mr-2' />
+              View Analytics
+            </motion.button>
           </div>
-        </main>
+        </motion.div>
       </div>
     </div>
   );
 };
 
-export default React.memo(Dashboard);
+// Default component with mock data for standalone use
+const DashboardWithMockData: React.FC = () => {
+  const mockUser: User = {
+    id: 1,
+    name: 'Elite Bettor',
+    email: 'elite@example.com',
+    balance: 2500.0,
+    tier: 'Quantum Pro',
+  };
+
+  const mockBets: Bet[] = [
+    {
+      id: 1,
+      match: 'Lakers vs Warriors',
+      amount: 100,
+      odds: 2.15,
+      status: 'won',
+      potentialWinnings: 215,
+      placedAt: '2024-01-15T10:30:00Z',
+    },
+    {
+      id: 2,
+      match: 'Cowboys vs Giants',
+      amount: 50,
+      odds: 1.85,
+      status: 'pending',
+      potentialWinnings: 92.5,
+      placedAt: '2024-01-15T14:20:00Z',
+    },
+  ];
+
+  const mockPredictions: Prediction[] = [
+    {
+      id: 1,
+      match: 'Celtics vs Heat',
+      prediction: 'Celtics -5.5',
+      confidence: 85,
+      odds: 1.95,
+      sport: 'NBA',
+    },
+    {
+      id: 2,
+      match: 'Chiefs vs Bills',
+      prediction: 'Over 47.5',
+      confidence: 78,
+      odds: 2.1,
+      sport: 'NFL',
+    },
+  ];
+
+  const mockStats = {
+    totalProfit: 1250,
+    winRate: 78.5,
+    todayProfit: 125.5,
+    activeBets: 3,
+  };
+
+  return (
+    <Dashboard
+      user={mockUser}
+      accountBalance={2500.0}
+      recentBets={mockBets}
+      livePredictions={mockPredictions}
+      performanceStats={mockStats}
+    />
+  );
+};
+
+export default DashboardWithMockData;
+export { Dashboard };
