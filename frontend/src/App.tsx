@@ -3,7 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from './components/common/theme/ThemeProvider';
 import ErrorBoundary from './components/ViteErrorBoundary';
 
-// Import the comprehensive A1Betting platform
+// Import the enhanced A1Betting platform with all consolidated features
 import A1BettingPlatform from './components/A1BettingPlatform';
 
 // Import essential styles
