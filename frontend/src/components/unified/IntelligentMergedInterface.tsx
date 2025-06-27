@@ -4,8 +4,8 @@
  * Progressive disclosure: Simple by default, advanced features available on demand;
  */
 
-import React, { useState, useEffect  } from 'react.ts';
-import { motion, AnimatePresence } from 'framer-motion.ts';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Brain,
   DollarSign,
@@ -24,18 +24,18 @@ import {
   TrendingUp,
   Menu,
   X,
-} from 'lucide-react.ts';
+} from 'lucide-react';
 
-// Import components we want to merge;
-import CyberUltimateMoneyMaker from '@/cyber/CyberUltimateMoneyMaker.ts';
-import CyberAnalyticsHub from '@/cyber/CyberAnalyticsHub.ts';
-import EnhancedRevolutionaryInterface from '@/revolutionary/EnhancedRevolutionaryInterface.ts';
-import UltraAdvancedMLDashboard from '@/ml/UltraAdvancedMLDashboard.ts';
-import { UnifiedProfile } from '@/profile/UnifiedProfile.ts';
-import UltimateSettingsPage from '@/settings/UltimateSettingsPage.ts';
+// Import components we want to merge
+import CyberUltimateMoneyMaker from '@/cyber/CyberUltimateMoneyMaker';
+import CyberAnalyticsHub from '@/cyber/CyberAnalyticsHub';
+import EnhancedRevolutionaryInterface from '@/revolutionary/EnhancedRevolutionaryInterface';
+import UltraAdvancedMLDashboard from '@/ml/UltraAdvancedMLDashboard';
+import { UnifiedProfile } from '@/profile/UnifiedProfile';
+import UltimateSettingsPage from '@/settings/UltimateSettingsPage';
 
-// Import hooks;
-import { useMockUserProfile } from '@/hooks/UniversalHooks.ts';
+// Import hooks
+import { useMockUserProfile } from '@/hooks/UniversalHooks';
 
 interface ServiceCard {
   id: string;
@@ -43,7 +43,7 @@ interface ServiceCard {
   description: string;
   icon: React.ReactNode;
   status: "ready" | "active" | "processing";
-  component: React.ComponentType<any key={295429}>;
+  component: React.ComponentType<any>;
   gradient: string;
   badge?: string;
 }
@@ -56,7 +56,7 @@ interface DashboardStats {
 }
 
 const IntelligentMergedInterface: React.FC = () => {
-  const [activeView, setActiveView] = useState<string key={278855}>("dashboard");
+  const [activeView, setActiveView] = useState<string>("dashboard");
   const [isAdvancedMode, setIsAdvancedMode] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [stats, setStats] = useState<DashboardStats key={506295}>({
