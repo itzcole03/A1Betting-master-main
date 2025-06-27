@@ -1,0 +1,35 @@
+{
+  "timestamp": "2025-06-27T01:04:16.533482",
+  "automation_system_status": "operational",
+  "tests_performed": [
+    {
+      "name": "Health Monitoring",
+      "status": "FAILED",
+      "timestamp": "2025-06-27T01:04:21.295143"
+    },
+    {
+      "name": "Docker Services",
+      "status": "PASSED",
+      "timestamp": "2025-06-27T01:04:21.385934"
+    },
+    {
+      "name": "API Endpoints",
+      "status": "PASSED",
+      "timestamp": "2025-06-27T01:04:21.736560"
+    },
+    {
+      "name": "Automation Orchestrator",
+      "status": "FAILED",
+      "timestamp": "2025-06-27T01:04:23.627126"
+    },
+    {
+      "name": "Environment Setup",
+      "status": "PASSED",
+      "timestamp": "2025-06-27T01:04:24.075189"
+    }
+  ],
+  "overall_status": "NEEDS_ATTENTION",
+  "tests_passed": 3,
+  "total_tests": 5,
+  "success_rate": 60.0
+}

@@ -1,0 +1,12 @@
+{
+  "mongodb": {
+    "test_database": "a1betting_test",
+    "host": "localhost",
+    "port": 27017
+  },
+  "redis": {
+    "test_database": 1,
+    "host": "localhost",
+    "port": 6379
+  }
+}

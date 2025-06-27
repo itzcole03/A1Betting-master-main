@@ -1,27 +1,27 @@
 {
-  "timestamp": "2025-06-26T19:04:16.040124",
+  "timestamp": "2025-06-27T01:10:33.282869",
   "overall_status": "unhealthy",
   "checks": {
     "system_resources": {
       "healthy": true,
       "details": {
-        "cpu_percent": 16.0,
-        "memory_percent": 72.8,
-        "disk_percent": 67.4
+        "cpu_percent": 13.6,
+        "memory_percent": 47.0,
+        "disk_percent": 69.0
       },
       "alerts": []
     },
     "mongodb": {
       "healthy": false,
-      "error": "No module named 'pymongo'"
+      "error": "Command dbStats requires authentication, full error: {'ok': 0.0, 'errmsg': 'Command dbStats requires authentication', 'code': 13, 'codeName': 'Unauthorized'}"
     },
     "redis": {
       "healthy": true,
       "details": {
-        "ping_time_ms": 4.3125152587890625,
-        "memory_usage_mb": 0.6609954833984375,
+        "ping_time_ms": 23.862600326538086,
+        "memory_usage_mb": 0.6600189208984375,
         "connected_clients": 1,
-        "total_commands_processed": 41
+        "total_commands_processed": 297
       }
     },
     "disk_space": {
@@ -40,15 +40,12 @@
     "docker_containers": {
       "healthy": true,
       "details": {
-        "running_containers": 12,
+        "running_containers": 9,
         "containers": [
-          "a1betting-frontend",
-          "a1betting-flower",
           "a1betting-backend",
+          "a1betting-nginx",
+          "a1betting-frontend",
           "a1betting-backup",
-          "a1betting-models",
-          "a1betting-worker",
-          "a1betting-scheduler",
           "a1betting-mongodb",
           "a1betting-grafana",
           "a1betting-prometheus",
@@ -62,24 +59,17 @@
       "note": "External API checks skipped in basic health check to avoid rate limits"
     },
     "service_backend": {
-      "healthy": false,
-      "error": "Server disconnected"
+      "healthy": true,
+      "status_code": 200,
+      "response_time_ms": 0
     },
     "ml_service": {
       "healthy": false,
-      "error": "Server disconnected"
+      "status_code": 404
     },
     "api_health": {
-      "healthy": false,
-      "error": "Server disconnected"
-    },
-    "api_predictions": {
-      "healthy": false,
-      "error": "Server disconnected"
-    },
-    "websocket": {
       "healthy": true,
-      "note": "WebSocket check skipped in basic health check"
+      "status_code": 200
     },
     "service_frontend": {
       "healthy": true,
@@ -90,19 +80,27 @@
       "healthy": true,
       "status_code": 200,
       "response_time_ms": 0
+    },
+    "api_predictions": {
+      "healthy": true,
+      "status_code": 200
+    },
+    "websocket": {
+      "healthy": true,
+      "note": "WebSocket check skipped in basic health check"
     }
   },
   "metrics": {
-    "cpu_usage_percent": 16.0,
-    "memory_usage_percent": 72.8,
-    "memory_available_gb": 8.697040557861328,
-    "disk_usage_percent": 67.4,
-    "disk_free_gb": 606.6718139648438
+    "cpu_usage_percent": 13.6,
+    "memory_usage_percent": 47.0,
+    "memory_available_gb": 16.90801239013672,
+    "disk_usage_percent": 69.0,
+    "disk_free_gb": 577.460262298584
   },
   "alerts": [
     {
       "level": "critical",
-      "message": "Failed health checks: mongodb, network_connectivity, service_backend, ml_service, api_health, api_predictions"
+      "message": "Failed health checks: mongodb, network_connectivity, ml_service"
     }
   ]
 }
