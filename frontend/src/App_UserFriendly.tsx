@@ -1,54 +1,14 @@
-import React from 'react.ts';
-import { QueryClientProvider } from '@tanstack/react-query.ts';
-
-// Import Chart.js setup (must be imported early)
-import "./utils/chartSetup";
-
-// Import the user-friendly main interface;
-import UserFriendlyApp from './components/user-friendly/UserFriendlyApp.ts';
-
-// Import theme provider;
-import { ThemeProvider } from './components/common/theme/ThemeProvider.ts';
-
-// Import optimized performance utilities;
-import { createOptimizedQueryClient } from './utils/performance.ts';
-
-// Import enhanced error boundary;
-import EnhancedErrorBoundary from './components/ui/EnhancedErrorBoundary.ts';
-
-// Import analytics;
-import { analytics } from './utils/analytics.ts';
-
-// Import styling;
-import "./App.css";
-
-// Create optimized query client with enhanced caching;
-
 /**
- * Main App Component - Enhanced with Performance Optimizations;
+ * DEPRECATED: This component has been consolidated into A1BettingPlatform.tsx
  *
- * Features:
- * - Performance-optimized query client with intelligent caching;
- * - Enhanced error boundaries with retry mechanisms;
- * - Real-time analytics and monitoring;
- * - Theme provider for consistent styling;
- * - Chart.js setup for advanced analytics;
+ * All user-friendly features have been integrated into the main platform:
+ * - Enhanced user interface with enterprise features
+ * - Real-time data integration with live APIs
+ * - Advanced performance metrics and analytics
+ *
+ * This file is kept for compatibility but all functionality
+ * is now available in the enhanced A1BettingPlatform component.
  */
-const App: React.FC = () => {
-    return (
-        <QueryClientProvider client={queryClient} key={826303}>
-            <ThemeProvider defaultTheme="dark" key={871271}>
-                <EnhancedErrorBoundary;
-                    showDetails={process.env.NODE_ENV === 'development'}
-                    onError={(error, errorInfo) = key={954439}> {
-                        analytics.trackError(error, 'App Component');
-                    }}
-                >
-                    <UserFriendlyApp / key={406081}>
-                </EnhancedErrorBoundary>
-            </ThemeProvider>
-        </QueryClientProvider>
-    );
-};
 
-export default App;
+// Re-export the enhanced A1BettingPlatform for compatibility
+export { default } from './components/A1BettingPlatform';
