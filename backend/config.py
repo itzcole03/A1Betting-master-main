@@ -6,7 +6,7 @@ import logging
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional
 
-from pydantic import field_validator
+from pydantic import ConfigDict, field_validator
 from pydantic_settings import BaseSettings
 
 logger = logging.getLogger(__name__)
@@ -70,6 +70,19 @@ class BackendConfig(BaseSettings):
     # Feature toggle for LLM endpoints
     enable_llm: bool = True  # turn off LLM routes if False
 
+    # Additional Feature Toggles
+    enable_comprehensive_testing: bool = False
+    enable_e2e_testing: bool = False
+    enable_performance_testing: bool = False
+    enable_security_headers: bool = True
+    enable_rate_limiting: bool = True
+    enable_cors_protection: bool = True
+    enable_audit_logging: bool = True
+    enable_auto_deployment: bool = False
+    enable_auto_testing: bool = False
+    enable_auto_monitoring: bool = False
+    enable_auto_backup: bool = False
+
     # Monitoring Settings
     metrics_enabled: bool = True
     prometheus_port: int = 9090
@@ -84,6 +97,14 @@ class BackendConfig(BaseSettings):
     secret_key: str = "your-secret-key-change-in-production"
     jwt_algorithm: str = "HS256"
     jwt_expiration: int = 3600
+
+    # Additional Environment Variables
+    vite_betting_enabled: bool = True
+    grafana_user: str = "admin"
+    grafana_password: str = "secure_grafana_2024"
+    model_cache_size: int = 1000
+    model_workers: int = 2
+    test_coverage_threshold: int = 80
 
     @field_validator("cors_origins", mode="before")
     def parse_cors_origins(cls, v: str | List[str]) -> List[str]:
@@ -100,9 +121,11 @@ class BackendConfig(BaseSettings):
             raise ValueError("Ensemble weights must sum to 1.0")
         return v
 
-    class Config:
-        env_file = ".env"
-        env_prefix = "A1BETTING_"
+    model_config = ConfigDict(
+        env_file=".env", 
+        env_prefix="A1BETTING_", 
+        extra="allow"
+    )
 
 
 @dataclass

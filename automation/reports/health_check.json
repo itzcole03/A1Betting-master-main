@@ -1,13 +1,13 @@
 {
-  "timestamp": "2025-06-26T12:28:55.236767",
+  "timestamp": "2025-06-26T19:04:16.040124",
   "overall_status": "unhealthy",
   "checks": {
     "system_resources": {
       "healthy": true,
       "details": {
-        "cpu_percent": 15.1,
-        "memory_percent": 36.9,
-        "disk_percent": 66.6
+        "cpu_percent": 16.0,
+        "memory_percent": 72.8,
+        "disk_percent": 67.4
       },
       "alerts": []
     },
@@ -18,10 +18,10 @@
     "redis": {
       "healthy": true,
       "details": {
-        "ping_time_ms": 29.00242805480957,
+        "ping_time_ms": 4.3125152587890625,
         "memory_usage_mb": 0.6609954833984375,
         "connected_clients": 1,
-        "total_commands_processed": 18
+        "total_commands_processed": 41
       }
     },
     "disk_space": {
@@ -40,54 +40,69 @@
     "docker_containers": {
       "healthy": true,
       "details": {
-        "running_containers": 0,
-        "containers": []
+        "running_containers": 12,
+        "containers": [
+          "a1betting-frontend",
+          "a1betting-flower",
+          "a1betting-backend",
+          "a1betting-backup",
+          "a1betting-models",
+          "a1betting-worker",
+          "a1betting-scheduler",
+          "a1betting-mongodb",
+          "a1betting-grafana",
+          "a1betting-prometheus",
+          "a1betting-postgres",
+          "a1betting-redis"
+        ]
       }
     },
     "external_apis": {
       "healthy": true,
       "note": "External API checks skipped in basic health check to avoid rate limits"
     },
-    "api_health": {
-      "healthy": false,
-      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
-    },
     "service_backend": {
       "healthy": false,
-      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+      "error": "Server disconnected"
     },
     "ml_service": {
       "healthy": false,
-      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+      "error": "Server disconnected"
+    },
+    "api_health": {
+      "healthy": false,
+      "error": "Server disconnected"
     },
     "api_predictions": {
       "healthy": false,
-      "error": "Cannot connect to host localhost:8000 ssl:default [The remote computer refused the network connection]"
+      "error": "Server disconnected"
     },
     "websocket": {
       "healthy": true,
       "note": "WebSocket check skipped in basic health check"
     },
     "service_frontend": {
-      "healthy": false,
-      "error": "Cannot connect to host localhost:3000 ssl:default [The remote computer refused the network connection]"
+      "healthy": true,
+      "status_code": 200,
+      "response_time_ms": 0
     },
     "service_monitoring": {
-      "healthy": false,
-      "error": "Cannot connect to host localhost:9090 ssl:default [The remote computer refused the network connection]"
+      "healthy": true,
+      "status_code": 200,
+      "response_time_ms": 0
     }
   },
   "metrics": {
-    "cpu_usage_percent": 15.1,
-    "memory_usage_percent": 36.9,
-    "memory_available_gb": 20.142147064208984,
-    "disk_usage_percent": 66.6,
-    "disk_free_gb": 621.2226943969727
+    "cpu_usage_percent": 16.0,
+    "memory_usage_percent": 72.8,
+    "memory_available_gb": 8.697040557861328,
+    "disk_usage_percent": 67.4,
+    "disk_free_gb": 606.6718139648438
   },
   "alerts": [
     {
       "level": "critical",
-      "message": "Failed health checks: mongodb, network_connectivity, api_health, service_backend, ml_service, api_predictions, service_frontend, service_monitoring"
+      "message": "Failed health checks: mongodb, network_connectivity, service_backend, ml_service, api_health, api_predictions"
     }
   ]
 }

@@ -49,6 +49,27 @@ services:
       - a1betting-network
     restart: unless-stopped
 
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: a1betting-mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:-admin}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:-password}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE:-a1betting}
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - a1betting-network
+    restart: unless-stopped
+
   # Main API Service
   backend:
     build:
@@ -357,6 +378,8 @@ volumes:
   postgres_data:
     driver: local
   redis_data:
+    driver: local
+  mongodb_data:
     driver: local
   prometheus_data:
     driver: local

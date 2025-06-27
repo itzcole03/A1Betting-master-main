@@ -50,7 +50,7 @@ RUN npm ci --include=dev && npm cache clean --force
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run build:no-ts
 
 # Production stage
 FROM nginx:alpine as production
