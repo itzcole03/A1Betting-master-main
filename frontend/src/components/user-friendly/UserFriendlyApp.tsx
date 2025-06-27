@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo, useCallback } from 'react.ts';
-import React from 'react.ts';
-import { useQueryClient } from '@tanstack/react-query.ts';
-import { AnimatePresence, motion } from 'framer-motion.ts';
+import { useState, useEffect, useMemo, useCallback } from 'react';
+import React from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { AnimatePresence, motion } from 'framer-motion';
 import {
   BarChart3,
   Bell,
@@ -19,32 +19,32 @@ import {
   Target,
   Shield,
   Gamepad2,
-} from 'lucide-react.ts';
+} from 'lucide-react';
 import {
   initializeSettings,
   getUserDisplayName,
   getUserEmail,
-} from '@/utils/userSettings.ts';
-import { SPORT_OPTIONS } from '@/constants/sports.ts';
-import { useWebSocket } from '@/hooks/useWebSocket.ts';
-import useUserStats from '@/hooks/useUserStats.ts';
-import { Settings } from 'lucide-react.ts';
-import OfflineIndicator from '@/ui/OfflineIndicator.ts';
-import ApiErrorBoundary from '@/ApiErrorBoundary.ts';
-import toast from 'react-hot-toast.ts';
+} from '@/utils/userSettings';
+import { SPORT_OPTIONS } from '@/constants/sports';
+import { useWebSocket } from '@/hooks/useWebSocket';
+import useUserStats from '@/hooks/useUserStats';
+import { Settings } from 'lucide-react';
+import OfflineIndicator from '@/ui/OfflineIndicator';
+import ApiErrorBoundary from '@/ApiErrorBoundary';
+import toast from 'react-hot-toast';
 
-// Import user-friendly components with enhanced AI;
-import MoneyMakerPro from './MoneyMakerPro.ts';
-import PrizePicksProNew from './PrizePicksProNew.ts';
-import PropOllama from './PropOllama.ts';
-import UserFriendlyDashboard from './UserFriendlyDashboard.ts';
-import SimpleSettings from './SimpleSettings.ts';
+// Import user-friendly components with enhanced AI
+import MoneyMakerPro from './MoneyMakerPro';
+import PrizePicksProNew from './PrizePicksProNew';
+import PropOllama from './PropOllama';
+import UserFriendlyDashboard from './UserFriendlyDashboard';
+import SimpleSettings from './SimpleSettings';
 
-// Import existing components to integrate;
-import CleanAdvancedIntelligenceHub from '@/components/intelligence/CleanAdvancedIntelligenceHub.ts';
+// Import existing components to integrate
+import CleanAdvancedIntelligenceHub from '@/components/intelligence/CleanAdvancedIntelligenceHub';
 
-// Import user profile and handlers;
-import UserProfile from '@/components/user-friendly/UserProfile.ts';
+// Import user profile and handlers
+import UserProfile from '@/components/user-friendly/UserProfile';
 import {
   handleSearchClick,
   handleNotificationClick,
