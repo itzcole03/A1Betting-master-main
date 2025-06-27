@@ -237,8 +237,8 @@ const A1BettingPlatform: React.FC = () => {
       setIsInitializing(true);
 
       try {
-        // Simulate API health check
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        // Shorter initialization time for better UX
+        await new Promise(resolve => setTimeout(resolve, 500));
 
         // Generate live opportunities based on documentation
         const mockOpportunities: LiveOpportunity[] = [
