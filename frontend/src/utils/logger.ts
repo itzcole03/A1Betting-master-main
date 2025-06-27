@@ -32,12 +32,7 @@ class Logger {
     return level <= this.logLevel;
   }
 
-  private addLog(
-    level: LogLevel,
-    message: string,
-    data?: any,
-    source?: string,
-  ) {
+  private addLog(level: LogLevel, message: string, data?: any, source?: string) {
     if (!this.shouldLog(level)) return;
 
     const entry: LogEntry = {
@@ -57,19 +52,20 @@ class Logger {
 
     // In development, also log to console;
     if (import.meta.env.DEV) {
+      const prefix = `[${LogLevel[level]}]${source ? ` [${source}]` : ''}`;
 
       switch (level) {
         case LogLevel.ERROR:
-          // console statement removed
+          console.error(prefix, message, data);
           break;
         case LogLevel.WARN:
-          // console statement removed
+          console.warn(prefix, message, data);
           break;
         case LogLevel.INFO:
           console.info(prefix, message, data);
           break;
         case LogLevel.DEBUG:
-          // console statement removed
+          console.debug(prefix, message, data);
           break;
       }
     }
@@ -98,7 +94,7 @@ class Logger {
 
   // Get logs by level;
   getLogsByLevel(level: LogLevel): LogEntry[] {
-    return this.logs.filter((log) => log.level === level);
+    return this.logs.filter(log => log.level === level);
   }
 
   // Clear logs;
@@ -117,37 +113,35 @@ export const logger = new Logger();
 
 // Convenience methods for common logging patterns;
 export const logNavigation = (from: string, to: string) => {
-  logger.info(`Navigation: ${from} -> ${to}`, { from, to }, "Navigation");
+  logger.info(`Navigation: ${from} -> ${to}`, { from, to }, 'Navigation');
 };
 
 export const logApiCall = (
   endpoint: string,
   method: string,
   success: boolean,
-  duration?: number,
+  duration?: number
 ) => {
-
-
   if (success) {
-    logger.info(message, data, "API");
+    logger.info(message, data, 'API');
   } else {
-    logger.error(message, data, "API");
+    logger.error(message, data, 'API');
   }
 };
 
 export const logUserAction = (action: string, data?: any) => {
-  logger.info(`User action: ${action}`, data, "User");
+  logger.info(`User action: ${action}`, data, 'User');
 };
 
 export const logError = (error: Error, context?: string) => {
   logger.error(
-    `Error in ${context || "unknown context"}: ${error.message}`,
+    `Error in ${context || 'unknown context'}: ${error.message}`,
     {
       name: error.name,
       message: error.message,
       stack: error.stack,
     },
-    "Error",
+    'Error'
   );
 };
 
@@ -155,6 +149,6 @@ export const logPerformance = (operation: string, duration: number) => {
   logger.debug(
     `Performance: ${operation} took ${duration}ms`,
     { operation, duration },
-    "Performance",
+    'Performance'
   );
 };
