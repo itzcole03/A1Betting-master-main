@@ -1,15 +1,10 @@
-import React, { createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
- } from 'react.ts';
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
 
 // ============================================================================
 // TYPES & INTERFACES;
 // ============================================================================
 
-export type ThemeVariant = "cyber-light" | "cyber-dark";
+export type ThemeVariant = 'cyber-light' | 'cyber-dark';
 
 export interface ThemeColors {
   primary: string;
@@ -61,78 +56,78 @@ interface ThemeContextType {
 // ============================================================================
 
 const CYBER_LIGHT_THEME: ThemeConfig = {
-  variant: "cyber-light",
+  variant: 'cyber-light',
   colors: {
-    primary: "#06ffa5",
-    secondary: "#00ff88",
-    accent: "#00d4ff",
+    primary: '#06ffa5',
+    secondary: '#00ff88',
+    accent: '#00d4ff',
     background:
-      "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%, #f8fafc 100%)",
-    surface: "rgba(255, 255, 255, 0.8)",
+      'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%, #f8fafc 100%)',
+    surface: 'rgba(255, 255, 255, 0.8)',
     text: {
-      primary: "#0f172a",
-      secondary: "#334155",
-      muted: "#64748b",
+      primary: '#0f172a',
+      secondary: '#334155',
+      muted: '#64748b',
     },
-    border: "rgba(15, 23, 42, 0.1)",
-    success: "#06ffa5",
-    warning: "#fbbf24",
-    error: "#ff4757",
+    border: 'rgba(15, 23, 42, 0.1)',
+    success: '#06ffa5',
+    warning: '#fbbf24',
+    error: '#ff4757',
   },
   gradients: {
-    primary: "linear-gradient(135deg, #06ffa5, #00ff88)",
-    secondary: "linear-gradient(135deg, #00d4ff, #7c3aed)",
+    primary: 'linear-gradient(135deg, #06ffa5, #00ff88)',
+    secondary: 'linear-gradient(135deg, #00d4ff, #7c3aed)',
     background:
-      "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%, #f8fafc 100%)",
+      'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 25%, #cbd5e1 50%, #e2e8f0 75%, #f8fafc 100%)',
   },
   effects: {
     glass:
-      "backdrop-filter: blur(20px) saturate(180%); background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(15, 23, 42, 0.1);",
-    blur: "backdrop-filter: blur(8px);",
-    shadow: "0 8px 32px rgba(15, 23, 42, 0.1), 0 0 20px rgba(6, 255, 165, 0.1)",
-    glow: "0 0 20px rgba(6, 255, 165, 0.6), 0 0 40px rgba(6, 255, 165, 0.4)",
+      'backdrop-filter: blur(20px) saturate(180%); background: rgba(255, 255, 255, 0.8); border: 1px solid rgba(15, 23, 42, 0.1);',
+    blur: 'backdrop-filter: blur(8px);',
+    shadow: '0 8px 32px rgba(15, 23, 42, 0.1), 0 0 20px rgba(6, 255, 165, 0.1)',
+    glow: '0 0 20px rgba(6, 255, 165, 0.6), 0 0 40px rgba(6, 255, 165, 0.4)',
   },
   animations: {
-    duration: "300ms",
-    easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+    duration: '300ms',
+    easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
   },
 };
 
 const CYBER_DARK_THEME: ThemeConfig = {
-  variant: "cyber-dark",
+  variant: 'cyber-dark',
   colors: {
-    primary: "#06ffa5",
-    secondary: "#00ff88",
-    accent: "#00d4ff",
+    primary: '#06ffa5',
+    secondary: '#00ff88',
+    accent: '#00d4ff',
     background:
-      "linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%)",
-    surface: "rgba(255, 255, 255, 0.05)",
+      'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%)',
+    surface: 'rgba(255, 255, 255, 0.05)',
     text: {
-      primary: "#ffffff",
-      secondary: "#e2e8f0",
-      muted: "#94a3b8",
+      primary: '#ffffff',
+      secondary: '#e2e8f0',
+      muted: '#94a3b8',
     },
-    border: "rgba(255, 255, 255, 0.1)",
-    success: "#06ffa5",
-    warning: "#fbbf24",
-    error: "#ff4757",
+    border: 'rgba(255, 255, 255, 0.1)',
+    success: '#06ffa5',
+    warning: '#fbbf24',
+    error: '#ff4757',
   },
   gradients: {
-    primary: "linear-gradient(135deg, #06ffa5, #00ff88)",
-    secondary: "linear-gradient(135deg, #00d4ff, #7c3aed)",
+    primary: 'linear-gradient(135deg, #06ffa5, #00ff88)',
+    secondary: 'linear-gradient(135deg, #00d4ff, #7c3aed)',
     background:
-      "linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%)",
+      'linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #334155 50%, #1e293b 75%, #0f172a 100%)',
   },
   effects: {
     glass:
-      "backdrop-filter: blur(20px) saturate(180%); background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);",
-    blur: "backdrop-filter: blur(8px);",
-    shadow: "0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(6, 255, 165, 0.2)",
-    glow: "0 0 20px rgba(6, 255, 165, 0.6), 0 0 40px rgba(6, 255, 165, 0.4)",
+      'backdrop-filter: blur(20px) saturate(180%); background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);',
+    blur: 'backdrop-filter: blur(8px);',
+    shadow: '0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(6, 255, 165, 0.2)',
+    glow: '0 0 20px rgba(6, 255, 165, 0.6), 0 0 40px rgba(6, 255, 165, 0.4)',
   },
   animations: {
-    duration: "300ms",
-    easing: "cubic-bezier(0.4, 0, 0.2, 1)",
+    duration: '300ms',
+    easing: 'cubic-bezier(0.4, 0, 0.2, 1)',
   },
 };
 
@@ -142,9 +137,9 @@ const CYBER_DARK_THEME: ThemeConfig = {
 
 const getThemeConfig = (variant: ThemeVariant): ThemeConfig => {
   switch (variant) {
-    case "cyber-dark":
+    case 'cyber-dark':
       return CYBER_DARK_THEME;
-    case "cyber-light":
+    case 'cyber-light':
     default:
       return CYBER_LIGHT_THEME;
   }
@@ -153,6 +148,8 @@ const getThemeConfig = (variant: ThemeVariant): ThemeConfig => {
 // ============================================================================
 // CONTEXT;
 // ============================================================================
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // ============================================================================
 // PROVIDER COMPONENT;
@@ -164,16 +161,16 @@ interface SafeThemeProviderProps {
   enablePersistence?: boolean;
 }
 
-export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = ({
+export const SafeThemeProvider: React.FC<SafeThemeProviderProps> = ({
   children,
-  defaultVariant = "cyber-light",
+  defaultVariant = 'cyber-light',
   enablePersistence = true,
 }) => {
-  const [variant, setVariantState] = useState<ThemeVariant key={921417}>(() => {
-    if (enablePersistence && typeof window !== "undefined") {
+  const [variant, setVariantState] = useState<ThemeVariant>(() => {
+    if (enablePersistence && typeof window !== 'undefined') {
       try {
-
-        if (saved === "cyber-light" || saved === "cyber-dark") {
+        const saved = localStorage.getItem('theme-variant');
+        if (saved === 'cyber-light' || saved === 'cyber-dark') {
           return saved as ThemeVariant;
         }
       } catch (error) {
@@ -183,12 +180,14 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = (
     return defaultVariant;
   });
 
+  const theme = getThemeConfig(variant);
+  const isDark = variant === 'cyber-dark';
 
   const setVariant = (newVariant: ThemeVariant) => {
     setVariantState(newVariant);
-    if (enablePersistence && typeof window !== "undefined") {
+    if (enablePersistence && typeof window !== 'undefined') {
       try {
-        localStorage.setItem("theme-variant", newVariant);
+        localStorage.setItem('theme-variant', newVariant);
       } catch (error) {
         // console statement removed
       }
@@ -196,45 +195,40 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = (
   };
 
   const toggleDarkMode = () => {
-
+    const newVariant = variant === 'cyber-dark' ? 'cyber-light' : 'cyber-dark';
     setVariant(newVariant);
   };
 
   // Apply theme to document;
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === 'undefined') return;
 
     try {
-
+      const root = document.documentElement;
+      const body = document.body;
 
       // Set CSS custom properties;
-      root.style.setProperty("--color-primary", theme.colors.primary);
-      root.style.setProperty("--color-secondary", theme.colors.secondary);
-      root.style.setProperty("--color-accent", theme.colors.accent);
-      root.style.setProperty("--color-background", theme.colors.background);
-      root.style.setProperty("--color-surface", theme.colors.surface);
-      root.style.setProperty("--color-text-primary", theme.colors.text.primary);
-      root.style.setProperty(
-        "--color-text-secondary",
-        theme.colors.text.secondary,
-      );
-      root.style.setProperty("--color-text-muted", theme.colors.text.muted);
-      root.style.setProperty("--color-border", theme.colors.border);
-      root.style.setProperty("--color-success", theme.colors.success);
-      root.style.setProperty("--color-warning", theme.colors.warning);
-      root.style.setProperty("--color-error", theme.colors.error);
+      root.style.setProperty('--color-primary', theme.colors.primary);
+      root.style.setProperty('--color-secondary', theme.colors.secondary);
+      root.style.setProperty('--color-accent', theme.colors.accent);
+      root.style.setProperty('--color-background', theme.colors.background);
+      root.style.setProperty('--color-surface', theme.colors.surface);
+      root.style.setProperty('--color-text-primary', theme.colors.text.primary);
+      root.style.setProperty('--color-text-secondary', theme.colors.text.secondary);
+      root.style.setProperty('--color-text-muted', theme.colors.text.muted);
+      root.style.setProperty('--color-border', theme.colors.border);
+      root.style.setProperty('--color-success', theme.colors.success);
+      root.style.setProperty('--color-warning', theme.colors.warning);
+      root.style.setProperty('--color-error', theme.colors.error);
 
       // Set gradient variables;
-      root.style.setProperty("--gradient-primary", theme.gradients.primary);
-      root.style.setProperty("--gradient-secondary", theme.gradients.secondary);
-      root.style.setProperty(
-        "--gradient-background",
-        theme.gradients.background,
-      );
+      root.style.setProperty('--gradient-primary', theme.gradients.primary);
+      root.style.setProperty('--gradient-secondary', theme.gradients.secondary);
+      root.style.setProperty('--gradient-background', theme.gradients.background);
 
       // Clear existing theme classes;
-      body.className = body.className.replace(/theme-[\w-]+/g, "");
-      root.classList.remove("dark", "light", "cyber-light", "cyber-dark");
+      body.className = body.className.replace(/theme-[\w-]+/g, '');
+      root.classList.remove('dark', 'light', 'cyber-light', 'cyber-dark');
 
       // Add current theme classes;
       body.classList.add(`theme-${variant}`);
@@ -242,25 +236,25 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = (
 
       // Set dark/light mode classes;
       if (isDark) {
-        root.classList.add("dark");
-        body.classList.add("dark");
+        root.classList.add('dark');
+        body.classList.add('dark');
       } else {
-        root.classList.add("light");
-        body.classList.add("light");
+        root.classList.add('light');
+        body.classList.add('light');
       }
 
       // Apply background and text color;
       body.style.background = theme.colors.background;
       body.style.color = theme.colors.text.primary;
       body.style.fontFamily = '"Inter", system-ui, sans-serif';
-      body.style.minHeight = "100vh";
+      body.style.minHeight = '100vh';
 
       // Apply to root as well for consistency;
-
+      const rootElement = document.getElementById('root');
       if (rootElement) {
         rootElement.style.background = theme.colors.background;
         rootElement.style.color = theme.colors.text.primary;
-        rootElement.style.minHeight = "100vh";
+        rootElement.style.minHeight = '100vh';
       }
     } catch (error) {
       // console statement removed
@@ -268,7 +262,7 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = (
   }, [theme, variant, isDark]);
 
   return (
-    <ThemeContext.Provider;
+    <ThemeContext.Provider
       value={{
         theme,
         variant,
@@ -276,7 +270,7 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = (
         isDark,
         toggleDarkMode,
       }}
-     key={240427}>
+    >
       {children}
     </ThemeContext.Provider>
   );
@@ -287,13 +281,14 @@ export const SafeThemeProvider: React.FC<SafeThemeProviderProps key={43887}> = (
 // ============================================================================
 
 export const useTheme = (): ThemeContextType => {
+  const context = useContext(ThemeContext);
 
   if (context === undefined) {
     // Return safe fallback instead of throwing;
     // console statement removed
     return {
       theme: CYBER_LIGHT_THEME,
-      variant: "cyber-light",
+      variant: 'cyber-light',
       setVariant: () => {},
       isDark: false,
       toggleDarkMode: () => {},
